@@ -5,7 +5,10 @@ mitm.route = {
   patch: {
     'www.google.com/search': {
       js: function() {
-        alert(0);
+        setTimeout(() => {
+          document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
+          document.querySelectorAll('.g-blk').forEach(n=>n.remove())            
+        }, 1000);
       }
     }
   }
