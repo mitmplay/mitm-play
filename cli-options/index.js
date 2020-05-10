@@ -1,14 +1,21 @@
 const fs = require('fs-extra');
-const argv = require('yargs-parser')(process.argv.slice(2))
-const port = 3000;
+let argv = require('yargs-parser')(process.argv.slice(2));
 
 global.mitm = {
   home: `${process.env.HOME}/.mitm-play`,
-  port,
+  port: 3000,
   argv,
 };
 
 fs.ensureDir(mitm.home, err =>{});
+
+let arg = argv._[0] || 'default';
+arg = `${mitm.home}/argv/${arg}.js`;
+if (fs.existsSync(arg)) {
+  const _argv = JSON.parse(fs.readFileSync(arg));
+  argv = {..._argv, ...argv};
+  global.mitm.argv = argv;
+}
 
 if (argv.go && !argv.go.match('http')) {
   argv.go = `https://${argv.go}`;
@@ -17,6 +24,15 @@ if (argv.go && !argv.go.match('http')) {
 if (argv.clear) {
   fs.remove('cache');
   fs.remove('log');
+}
+
+if (argv.save) {
+  const { save, ...rest } = argv;
+  const fpath = `${mitm.home}/argv/${save===true ? 'default' : save}.js`;
+  const body = JSON.stringify(rest, null, 2);
+  fs.ensureFile(fpath, err => {
+    fs.writeFile(fpath, body, err => {});
+  });
 }
 
 module.exports = () => {
