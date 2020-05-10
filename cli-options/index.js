@@ -22,8 +22,8 @@ if (argv.go && !argv.go.match('http')) {
 }
 
 if (argv.clear) {
-  fs.remove('cache');
-  fs.remove('log');
+  fs.remove(`${mitm.home}/cache`);
+  fs.remove(`${mitm.home}/log`);
 }
 
 if (argv.save) {
@@ -35,19 +35,23 @@ if (argv.save) {
   });
 }
 
+if (!argv.browser || ['firefox','webkit'].indexOf(argv.browser)===-1) {
+  mitm.argv.browser = 'chromium';
+}
+
 module.exports = () => {
-  console.log(argv);
-  
   if (argv.help) {
     console.log(
   `
-  Usage: mitm <cmd> [options]
+  Usage: mitm-play <profl> [options]
   
   Options:
-    --go   \t go to specific website
-    --clear\t clear cache and/or logs
-    --save \t save as default options
+    --go     \t go to specific website location
+    --browser\t set browser: chromium/firefox/webkit
+    --clear  \t clear cache and/or logs
+    --save   \t save as default <profl>
   `);
     process.exit();
-  }  
+  }
+  console.log(argv);
 }
