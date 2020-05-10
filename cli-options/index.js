@@ -37,6 +37,8 @@ if (argv.save) {
 
 if (!argv.browser || ['firefox','webkit'].indexOf(argv.browser)===-1) {
   mitm.argv.browser = 'chromium';
+} else {
+  fs.ensureDir(`${mitm.home}/.${argv.browser}`, err => {});
 }
 
 module.exports = () => {
