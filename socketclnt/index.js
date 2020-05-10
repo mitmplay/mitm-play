@@ -1,5 +1,3 @@
-// https://flaviocopes.com/websockets/
-
 module.exports = () => {
 
   var ws = new WebSocket("ws://localhost:3000/echo");
