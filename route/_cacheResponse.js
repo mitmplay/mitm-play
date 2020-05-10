@@ -1,13 +1,16 @@
 const fs = require('fs-extra');
+const _match = require('./match');
 const { addJS } = require('./fetch');
 
 function cacheResponse(arr, {url, headers, method}) {
-  if (headers.accept && headers.accept.indexOf('text/html') > -1) {
-    const {host, pathname: p} = new URL(url);
-    const stamp1 = `${host}/${p.replace('/', '_')}`;
-    const stamp2 = `${host}/resp/${p.replace('/', '_')}`;
-    const fpath1 = `${mitm.home}/cache/${stamp1}.html`;
-    const fpath2 = `${mitm.home}/cache/${stamp2}.js`;
+  const match = _match(url, 'cache');
+  if (match) {
+    const {host, pathname} = new URL(url);
+    const p = pathname.replace('/', '_');
+    const stamp1 = `${host}/${p}`;
+    const stamp2 = `${host}/resp/${p}`;
+    const fpath1 = `${mitm.home}/cache/${stamp1}${match.rt.ext}`;
+    const fpath2 = `${mitm.home}/cache/${stamp2}.json`;
     if (fs.existsSync(fpath1)) {
       const body = fs.readFileSync(fpath1);
       const {status, headers} = JSON.parse(fs.readFileSync(fpath2));
