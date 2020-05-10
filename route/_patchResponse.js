@@ -2,7 +2,7 @@ const _match = require('./match');
 const { addJS } = require('./fetch');
 const _initWebsocket = require('../socketclnt');
 
-function addWebSocket(arr, {url, headers, method}) {
+function patchResponse(arr, {url, headers, method}) {
   const match = _match(url, 'patch');
   if (match) {
     arr.push(({status, headers, body}) => { 
@@ -11,4 +11,4 @@ function addWebSocket(arr, {url, headers, method}) {
   }
 }
 
-module.exports = addWebSocket;
+module.exports = patchResponse;
