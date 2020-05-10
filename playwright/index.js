@@ -12,8 +12,6 @@ module.exports = () => {
     page.route('**', route);
     const { argv } = global.mitm;
     await page.goto(argv.go || 'http://whatsmyuseragent.org/');
-    // await page.waitForSelector('.intro-text');
-    // await page.screenshot({ path: `example-chrome.png` });
 
     exitHook(async function() {
       await browser.close();
