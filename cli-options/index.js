@@ -1,10 +1,14 @@
 const fs = require('fs-extra');
 const argv = require('yargs-parser')(process.argv.slice(2))
 const port = 3000;
+
 global.mitm = {
+  home: `${process.env.HOME}/.mitm-play`,
   port,
   argv,
 };
+
+fs.ensureDir(mitm.home, err =>{});
 
 if (argv.go && !argv.go.match('http')) {
   argv.go = `https://${argv.go}`;

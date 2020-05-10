@@ -4,7 +4,7 @@ const route = require('../route');
 
 module.exports = () => {
   (async () => {
-    const browser = await playwright.chromium.launchPersistentContext('./chrome-profile',{
+    const browser = await playwright.chromium.launchPersistentContext(`${mitm.home}/chrome-profile`,{
       headless: false
     });
     const page = await browser.pages()[0];
