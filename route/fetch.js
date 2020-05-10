@@ -10,12 +10,11 @@ function extract(route, request) {
 
 function addJS(body, fn) {
   return (body+'').replace('<head>', `<head>\n<script>(${fn})()</script>`);
-
 }
 
 function fetch(route, {url, headers, method}, handler) {
   console.log(url, JSON.stringify(headers, null, 2))
-  _fetch(url, {headers,method}).then(resp => {
+  _fetch(url, {headers,method, redirect: 'manual'}).then(resp => {
     const headers = resp.headers.raw();
     const status = resp.status;
 
