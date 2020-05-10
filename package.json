@@ -1,7 +1,7 @@
 {
-  "name": "demo-01",
-  "version": "1.0.0",
-  "description": "",
+  "name": "mitm-play",
+  "version": "0.1.0",
+  "description": "Man in the middle using playwright",
   "main": "server.js",
   "bin": {
     "mitm-play": "bin/mitm-play.js"
@@ -10,8 +10,8 @@
     "start": "node --inspect ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Widi Harsojo",
+  "license": "AGPL",
   "dependencies": {},
   "devDependencies": {
     "exit-hook": "^2.2.0",
