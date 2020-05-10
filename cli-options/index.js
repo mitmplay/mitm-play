@@ -11,7 +11,8 @@ if (argv.go && !argv.go.match('http')) {
 }
 
 if (argv.clear) {
-
+  fs.remove('cache');
+  fs.remove('log');
 }
 
 module.exports = () => {
