@@ -1,0 +1,26 @@
+{
+  "name": "demo-01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "bin": {
+    "mitm-play": "bin/mitm-play.js"
+  },
+  "scripts": {
+    "start": "node --inspect ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "exit-hook": "^2.2.0",
+    "express": "^4.17.1",
+    "fs-extra": "^9.0.0",
+    "make-fetch-happen": "^8.0.6",
+    "playwright": "^1.0.1",
+    "ws": "^7.2.5",
+    "yargs": "^15.3.1",
+    "yargs-parser": "^18.1.3"
+  }
+}
