@@ -1,6 +1,13 @@
 mitm.route = {
   cache: {
     '.js$': { ext: '' }
+  },
+  patch: {
+    'www.google.com/search': {
+      js: function() {
+        alert(0);
+      }
+    }
   }
 };
 
