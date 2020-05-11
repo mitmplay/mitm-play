@@ -1,11 +1,14 @@
 const fs = require('fs-extra');
-const { e_head } = require('./fetch');
+const _match = require('./match');
 
-function logResponse(arr, {url, headers, method}) {
-  if (headers.accept && headers.accept.indexOf('text/css') > -1) {
-    const {host, pathname: p} = new URL(url);
+function logResponse(arr, reqs) {
+  const match = _match('logs', reqs);
+  if (match) {
+    const { url } = reqs;
+    const {host, pathname} = new URL(url);
+    const p = pathname.replace('/', '_');
     const stamp = (new Date).toISOString().replace(/:/g, '_');
-    const fpath = `${mitm.home}/log/${host}/${stamp}.css`;
+    const fpath = `${mitm.home}/log/${host}/${stamp}${p}${match.rt.ext}`;
     arr.push((response) => { 
       fs.ensureFile(fpath, err => {
         fs.writeFile(fpath, response.body, err => {

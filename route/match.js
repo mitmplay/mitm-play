@@ -6,20 +6,32 @@ const js = function() {
 
 mitm.route = {
   cache: {
-    '.js$': { ext: '' }
+    'application/x-ww': { ext: '.json' }
   },
-  patch: {
+  logs: {
+    'application/json': { ext: '.json' },
+  },
+  mock: {},
+  html: {
     'www.google.com/search': {
-      el: 'e_end', //e_head, e_end
+      // el: 'e_end', //or e_head
       js,
     }
-  }
+  },
+  json: {},
+  js: {},
 };
 
-module.exports = (url, typ) => {
+module.exports = (typ, {url, headers}) => {
   const nod = mitm.route[typ];
+  let arr;
+
   for (let key in nod) {
-    const arr = url.match(key);
+    if (typ==='logs' || typ==='cache') {
+      arr = (headers['content-type']+'').match(key);
+    } else {    
+      arr = url.match(key);
+    }
     if (arr && nod[key]) {
       return {
         rt: nod[key],
@@ -28,6 +40,6 @@ module.exports = (url, typ) => {
         nod,
         key,
       }
-    } 
+    }   
   }
 }

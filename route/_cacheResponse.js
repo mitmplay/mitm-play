@@ -1,10 +1,10 @@
 const fs = require('fs-extra');
 const _match = require('./match');
-const { e_head } = require('./fetch');
 
-function cacheResponse(arr, {url, headers, method}) {
-  const match = _match(url, 'cache');
+function cacheResponse(arr, reqs) {
+  const match = _match('cache', reqs);
   if (match) {
+    const { url } = reqs;
     const {host, pathname} = new URL(url);
     const p = pathname.replace('/', '_');
     const stamp1 = `${host}/${p}`;
