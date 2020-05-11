@@ -2,43 +2,48 @@ const googlJS = function() {
   document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
   document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
   document.querySelectorAll('.g-blk').forEach(n=>n.remove())
-}
+};
+
+const resp = function(){
+  return {};
+};
 
 mitm.route = {
   cache: {
-    'application/x-ww': { ext: '.json' }
+    // 'application/x-ww': { ext: '.json' }
   },
   logs: {
-    'application/json': { ext: '.json' },
+    // 'application/json': { ext: '.json' },
   },
   mock: {},
   html: {
     'www.google.com/search': {
-      resp(resp){
-        return {...resp, status: 201};
-      },
+      resp,
       el: 'e_end', //or e_head
       js: googlJS,
-    }
+    },
+    'twimg.com': {resp},
   },
   json: {
-    'api.twitter.com': {   
-      resp(resp){
-        return {...resp, status: 201};
-      },    
-    }
+    'twimg.com': {resp},
+    'api.twitter.com': {resp}
   },
-  js: {},
+  css:  {'twimg.com': {resp}},
+  js:   {'twimg.com': {resp}},
 };
 //https://twitter.com/search?q=covid&src=typed_query
+
 module.exports = (typ, {url, headers}) => {
   const nod = mitm.route[typ];
   let arr;
+  let log;
 
   for (let key in nod) {
     if (typ==='logs' || typ==='cache') {
+      log = `(${headers['content-type']}).match(${key})`;
       arr = (headers['content-type']+'').match(key);
     } else {    
+      log = `(${url.split('?')[0]}).match(${key})`;
       arr = url.match(key);
     }
     if (arr && nod[key]) {
@@ -48,6 +53,7 @@ module.exports = (typ, {url, headers}) => {
         url,
         nod,
         key,
+        log,
       }
     }   
   }

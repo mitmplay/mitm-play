@@ -9,13 +9,13 @@ function logResponse(arr, reqs) {
     const p = pathname.replace('/', '_');
     const stamp = (new Date).toISOString().replace(/:/g, '_');
     const fpath = `${mitm.home}/log/${host}/${stamp}${p}${match.rt.ext}`;
-    arr.push((response) => { 
+    arr.push((resp) => { 
       fs.ensureFile(fpath, err => {
-        fs.writeFile(fpath, response.body, err => {
+        fs.writeFile(fpath, resp.body, err => {
           err && console.log('>> Error write log', err);
         })
       })
-      return response; 
+      return resp; 
     });
   }
 }

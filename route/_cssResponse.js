@@ -4,7 +4,7 @@ function jsonResponse(arr, reqs) {
   const match = _match('css', reqs);
   if (match) {
     arr.push((resp) => {
-      const contentType = `${headers['content-type']}`;
+      const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/css')) { 
         let resp2;
         if (match.rt.resp) {
@@ -15,6 +15,7 @@ function jsonResponse(arr, reqs) {
           ...resp2,
         };
       }
+      console.log(`>> CSS ${match.rt.log}`);
       return resp;
     });
   }

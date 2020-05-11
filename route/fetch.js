@@ -17,7 +17,7 @@ function e_end(body, fn) {
 }
 
 function fetch(route, {url, headers, method}, handler) {
-  console.log(url, JSON.stringify(headers, null, 2))
+  // console.log(url, JSON.stringify(headers, null, 2))
   _fetch(url, {headers,method, redirect: 'manual'}).then(resp => {
     const headers = resp.headers.raw();
     const status = resp.status;

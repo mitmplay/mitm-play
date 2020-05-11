@@ -6,7 +6,8 @@ function htmlResponse(arr, reqs) {
   const match = _match('html', reqs);
   if (match) {
     arr.push((resp) => {
-      const contentType = `${headers['content-type']}`;
+      
+      const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/html')) { 
         let resp2;
         if (match.rt.resp) {
@@ -21,6 +22,7 @@ function htmlResponse(arr, reqs) {
           resp.body = inject(resp.body, match.rt.js);
         }
       }
+      console.log(`>> HTML ${match.rt.log}`);
       return resp;
     });
   }

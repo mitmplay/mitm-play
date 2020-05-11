@@ -9,11 +9,13 @@ const _jsResponse = require('./_jsResponse');
 const patchReqHeader = require('./patchReqHeader');
 
 module.exports =  (route, request) => {
+  // console.log('>> ROUTE...');
   const reqs = extract(route, request);
   const respEvents = [];
+  let resp = undefined;
 
   // resp can be undefined or local cached
-  let resp = _cacheResponse(respEvents, reqs);
+  resp = _cacheResponse(respEvents, reqs);
 
   // order is important and log must not contain the body modification
   _logResponse(respEvents, reqs);
@@ -33,6 +35,7 @@ module.exports =  (route, request) => {
         resp = fn(resp);
       }
       console.log('cached1', reqs.url);
+      console.log;('------------------------------------------------------------');
       route.fulfill(resp); // exec route.fulfill()
     } else {
       // call to BE and do log or modification & respond
@@ -40,6 +43,8 @@ module.exports =  (route, request) => {
         for (const fn of respEvents) {
           resp = fn(resp);
         }
+        console.log('response', reqs.url.split('?')[0]);
+        console.log('------------------------------------------------------------');
         return resp; // exec route.fulfill()
       });  
     }
@@ -47,6 +52,7 @@ module.exports =  (route, request) => {
     if (resp) {
       // respond with cached
       console.log('cached2', reqs.url);
+      console.log;('------------------------------------------------------------');
       route.fulfill(resp); // exec route.fulfill()
     } else {
       // normal flow: with reg headers getting update
