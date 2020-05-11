@@ -2,7 +2,7 @@ const { extract, fetch } = require('./fetch');
 const _logResponse = require('./_logResponse');
 const _addWebSocket = require('./_addWebSocket');
 const _cacheResponse = require('./_cacheResponse');
-const _patchResponse = require('./_patchResponse');
+const _htmlResponse = require('./_htmlResponse');
 const patchReqHeader = require('./patchReqHeader');
 
 module.exports =  (route, request) => {
@@ -14,7 +14,7 @@ module.exports =  (route, request) => {
 
   // order is important and log must not contain the body modification
   _logResponse(respEvents, reqs);
-  _patchResponse(respEvents, reqs);
+  _htmlResponse(respEvents, reqs);
   _addWebSocket(respEvents, reqs);
 
   // respond need to log or modify

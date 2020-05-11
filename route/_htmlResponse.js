@@ -1,7 +1,7 @@
 const _match = require('./match');
 const _fetch = require('./fetch');
 
-function patchResponse(arr, reqs) {
+function htmlResponse(arr, reqs) {
   const match = _match('html', reqs);
   if ((reqs.headers.accept+'').indexOf('text/html') > -1 && match) {
     arr.push(({status, headers, body}) => { 
@@ -11,4 +11,4 @@ function patchResponse(arr, reqs) {
   }
 }
 
-module.exports = patchResponse;
+module.exports = htmlResponse;
