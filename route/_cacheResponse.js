@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const _match = require('./match');
-const { addJS } = require('./fetch');
+const { e_head } = require('./fetch');
 
 function cacheResponse(arr, {url, headers, method}) {
   const match = _match(url, 'cache');

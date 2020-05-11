@@ -8,8 +8,12 @@ function extract(route, request) {
   }
 }
 
-function addJS(body, fn) {
+function e_head(body, fn) {
   return (body+'').replace('<head>', `<head>\n<script>(${fn})()</script>`);
+}
+
+function e_end(body, fn) {
+  return (body+'').replace('</body>', `\n<script>(${fn})()</script></end>`);
 }
 
 function fetch(route, {url, headers, method}, handler) {
@@ -27,6 +31,7 @@ function fetch(route, {url, headers, method}, handler) {
 
 module.exports = {
   extract,
-  addJS,
+  e_head,
+  e_end,
   fetch,
 }

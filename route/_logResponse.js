@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const { addJS } = require('./fetch');
+const { e_head } = require('./fetch');
 
 function logResponse(arr, {url, headers, method}) {
   if (headers.accept && headers.accept.indexOf('text/css') > -1) {
