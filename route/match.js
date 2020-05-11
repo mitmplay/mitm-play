@@ -1,4 +1,4 @@
-const js = function() {
+const googlJS = function() {
   document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
   document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
   document.querySelectorAll('.g-blk').forEach(n=>n.remove())
@@ -14,14 +14,23 @@ mitm.route = {
   mock: {},
   html: {
     'www.google.com/search': {
-      // el: 'e_end', //or e_head
-      js,
+      resp(resp){
+        return {...resp, status: 201};
+      },
+      el: 'e_end', //or e_head
+      js: googlJS,
     }
   },
-  json: {},
+  json: {
+    'api.twitter.com': {   
+      resp(resp){
+        return {...resp, status: 201};
+      },    
+    }
+  },
   js: {},
 };
-
+//https://twitter.com/search?q=covid&src=typed_query
 module.exports = (typ, {url, headers}) => {
   const nod = mitm.route[typ];
   let arr;
