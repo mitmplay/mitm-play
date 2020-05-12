@@ -5,9 +5,9 @@ Man in the middle using playwright
 ## Limitation (WSL2)
 this limitation was tested on WSl2, other system not tested yet, looking up for volunter
 
-### Browser supported (Chromium but cannot play video)
-- chromium - incognito mode only 
-- firefox - no routing after page full load
+### Browser (Chromium)
+- chromium - incognito, no video
+- firefox - stale after page full load
 - webkit - response will render text not html
 
 ### Playing video in playwright (firefox on WSL2 works!)
