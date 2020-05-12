@@ -75,6 +75,12 @@ mitm.route = {
 ## Limitation
 This limitation was tested on WSL2, other system not tested yet, will need volunteer for testing on other system
 
+#### Windows
+Issue on powershell when `mitm-play` getting executed: `mitm-play : File D:\Program Files\nodejs\mitm-play.ps1 cannot be loaded because running scripts is disabled on this system."`, work-around by updating the policy:
+```
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
 #### Browser (Chromium)
 - chromium - incognito, no video _*_
 - firefox - stale after page full load
@@ -100,4 +106,5 @@ grep -E 'archive.ubuntu.com|security.ubuntu.com' /etc/apt/sources.list.d/*
 sudo apt-get update
 sudo apt install -y ffmpeg
 sudo apt install -y chromium-browser
+
 ```
