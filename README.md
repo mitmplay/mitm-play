@@ -9,10 +9,12 @@ npm install -g mitm-play
 # after installation run the demo:
 
 mitm-play --go=https://www.google.com/search?q=covid-19 --clear --save=goog
+mitm-play --go=https://twitter.com/search?q=covid&src=typed_query --clear --save=tw
 
 # next run should be simple as:
 
 mitm-play goog
+mitm-play tw
 ```
 
 # Features
@@ -31,6 +33,7 @@ The distribution contains sample Mitm to google search and twitter
 Sample built in route(s)
 ```js
 const googlJS = function() {
+  // remove unecessary html elements from google search result 
   document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
   document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
   document.querySelectorAll('.g-blk').forEach(n=>n.remove())
@@ -57,12 +60,12 @@ mitm.route = {
     'www.google.com/search': {
       resp,
       el: 'e_end', //or e_head
-      js: googlJS,
+      js: googlJS, //JS is injected at the end of html body
     },
   },
   json: {
     'twimg.com': {resp},
-    'api.twitter.com': {resp}
+    'api.twitter.com': {resp},
   },
   css:  {'twimg.com': {resp}},
   js:   {'twimg.com': {resp}},
