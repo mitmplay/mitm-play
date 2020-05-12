@@ -14,8 +14,8 @@ function jsResponse(arr, reqs) {
           ...resp,
           ...resp2,
         };
+        console.log(`>> JS ${match.log}`);
       }
-      console.log(`>> JS ${match.rt.log}`);
       return resp;
     });
   }

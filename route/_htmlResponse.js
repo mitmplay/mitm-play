@@ -21,8 +21,8 @@ function htmlResponse(arr, reqs) {
           const inject = _fetch[match.rt.el] || e_end;
           resp.body = inject(resp.body, match.rt.js);
         }
+        console.log(`>> HTML ${match.log}`);
       }
-      console.log(`>> HTML ${match.rt.log}`);
       return resp;
     });
   }

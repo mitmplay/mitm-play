@@ -43,7 +43,6 @@ module.exports =  (route, request) => {
         for (const fn of respEvents) {
           resp = fn(resp);
         }
-        console.log('response', reqs.url.split('?')[0]);
         console.log('------------------------------------------------------------');
         return resp; // exec route.fulfill()
       });  

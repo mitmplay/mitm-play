@@ -14,8 +14,8 @@ function jsonResponse(arr, reqs) {
           ...resp,
           ...resp2,
         };
+        console.log(`>> JSON ${match.log}`);
       }
-      console.log(`>> JSON ${match.rt.log}`);
       return resp;
     });
   }
