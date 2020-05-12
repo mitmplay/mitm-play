@@ -7,19 +7,15 @@ npm install -g mitm-play
 ```
 ```bash
 # after installation run the demo:
-
 mitm-play --go='https://www.google.com/search?q=covid-19' --clear --save=goog
-mitm-play --go='https://twitter.com/search?q=covid&src=typed_query' --clear --save=tw
 
 # next run should be simple as:
-
 mitm-play goog
-mitm-play tw
 ```
 
 # Features
-* `mock` __response__ (under development)
-* `skip` __request__ handler back to browser   
+* `skip` __request__ back to browser   
+* `mock` __response__ based on url & send
 * `cache` __response__ based on Content-Type header
 * `log` any __response__ based on Content-Type header
 * Update __response__ based on url and Content-Type
@@ -28,7 +24,7 @@ mitm-play tw
   * `css`
   * `js`
 
-The distribution include sample MITM route to google search and twitter 
+The distribution include sample MITM route to google search & mock 
 
 Sample built in route(s)
 ```js
@@ -39,36 +35,13 @@ const googlJS = function() {
   document.querySelectorAll('.g-blk').forEach(n=>n.remove())
 };
 
-const resp = function(){
-  return {};
-};
-
 mitm.route = {
-  cache: {
-    // 'application/x-ww': { ext: '.json' }
-  },
-  logs: {
-    // 'application/json': { ext: '.json' },
-  },
-  skip: {
-    '.(jpg|png|svg|ico|mp4)': {},
-  },
-  mock: {},
   html: {
-    'twimg.com': {resp},
-    'twitter.com': {resp},
     'www.google.com/search': {
-      resp,
       el: 'e_end', //or e_head
       js: [googlJS], //JS is injected at the end of html body
     },
   },
-  json: {
-    'twimg.com': {resp},
-    'api.twitter.com': {resp},
-  },
-  css:  {'twimg.com': {resp}},
-  js:   {'twimg.com': {resp}},
 };
 ```
 

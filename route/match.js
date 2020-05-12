@@ -14,12 +14,12 @@ const resp = function(){
 };
 
 mitm.route = {
-  cache: {
-    // 'application/x-ww': { ext: '.json' }
-  },
-  logs: {
-    // 'application/json': { ext: '.json' },
-  },
+  // cache: {
+  //   // 'application/x-ww': { ext: '.json' }
+  // },
+  // logs: {
+  //   // 'application/json': { ext: '.json' },
+  // },
   skip: {
     '.(jpeg|jpg|png|svg|ico|mp4)': {},
   },
@@ -31,20 +31,20 @@ mitm.route = {
     },
   },
   html: {
-    'twimg.com': {resp},
-    'twitter.com': {resp},
+    // 'twimg.com': {resp},
+    // 'twitter.com': {resp},
     'www.google.com/search': {
-      resp,
+      // resp,
       el: 'e_end', //or e_head
       js: [googlJS, helloMitm], //JS is injected at the end of html body
     },
   },
-  json: {
-    'twimg.com': {resp},
-    'api.twitter.com': {resp}
-  },
-  css:  {'twimg.com': {resp}},
-  js:   {'twimg.com': {resp}},
+  // json: {
+  //   'twimg.com': {resp},
+  //   'api.twitter.com': {resp}
+  // },
+  // css:  {'twimg.com': {resp}},
+  // js:   {'twimg.com': {resp}},
 };
 //https://twitter.com/search?q=covid&src=typed_query
 
