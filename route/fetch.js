@@ -23,8 +23,8 @@ function fetch(route, {url, headers, method}, handler) {
     const status = resp.status;
 
     resp.buffer().then(body => {
-      const response = handler({status, headers, body});
-      route.fulfill(response);
+      const resp = handler({url, status, headers, body});
+      route.fulfill(resp);
     })
   })
 }

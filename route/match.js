@@ -15,14 +15,18 @@ mitm.route = {
   logs: {
     // 'application/json': { ext: '.json' },
   },
+  skip: {
+    '.(jpg|png|svg|ico|mp4)': {},
+  },
   mock: {},
   html: {
+    'twimg.com': {resp},
+    'twitter.com': {resp},
     'www.google.com/search': {
       resp,
       el: 'e_end', //or e_head
       js: googlJS,
     },
-    'twimg.com': {resp},
   },
   json: {
     'twimg.com': {resp},
@@ -40,10 +44,10 @@ module.exports = (typ, {url, headers}) => {
 
   for (let key in nod) {
     if (typ==='logs' || typ==='cache') {
-      log = `(${headers['content-type']}).match(${key})`;
+      log = `>> ${typ} (${headers['content-type']}).match(${key})`;
       arr = (headers['content-type']+'').match(key);
     } else {    
-      log = `(${url.split('?')[0]}).match(${key})`;
+      log = `>> ${typ} (${url.split('?')[0]}).match(${key})`;
       arr = url.match(key);
     }
     if (arr && nod[key]) {
@@ -55,6 +59,6 @@ module.exports = (typ, {url, headers}) => {
         key,
         log,
       }
-    }   
+    }
   }
 }

@@ -5,7 +5,8 @@ function jsResponse(arr, reqs) {
   if (match) {
     arr.push((resp) => {
       const contentType = `${resp.headers['content-type']}`;
-      if (contentType.match('application/javascript')) { 
+      if (contentType.match('javascript')) {
+        console.log(match.log);
         let resp2;
         if (match.rt.resp) {
           resp2 = match.rt.resp(resp);
@@ -14,7 +15,6 @@ function jsResponse(arr, reqs) {
           ...resp,
           ...resp2,
         };
-        console.log(`>> JS ${match.log}`);
       }
       return resp;
     });
