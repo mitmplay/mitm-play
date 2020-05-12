@@ -23,7 +23,13 @@ mitm.route = {
   skip: {
     '.(jpeg|jpg|png|svg|ico|mp4)': {},
   },
-  mock: {},
+  mock: {
+    '/mock': {
+      resp() {
+        return {body: 'Hi there!'}
+      }
+    },
+  },
   html: {
     'twimg.com': {resp},
     'twitter.com': {resp},

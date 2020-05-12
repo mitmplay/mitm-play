@@ -1,4 +1,5 @@
 const _skipResponse = require('./_skipResponse');
+const _mockResponse = require('./_mockResponse');
 const _cacheResponse = require('./_cacheResponse');
 const _logResponse = require('./_logResponse');
 const _htmlResponse = require('./_htmlResponse');
@@ -16,6 +17,10 @@ module.exports =  (route, request) => {
 
   if (_skipResponse(reqs)) {
     route.continue({});
+    return;
+  }
+
+  if (_mockResponse(route, reqs)) {
     return;
   }
 
