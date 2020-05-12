@@ -21,7 +21,7 @@ mitm.route = {
     // 'application/json': { ext: '.json' },
   },
   skip: {
-    '.(jpg|png|svg|ico|mp4)': {},
+    '.(jpeg|jpg|png|svg|ico|mp4)': {},
   },
   mock: {},
   html: {

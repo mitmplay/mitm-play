@@ -99,4 +99,5 @@ grep -E 'archive.ubuntu.com|security.ubuntu.com' /etc/apt/sources.list.d/*
 
 sudo apt-get update
 sudo apt install -y ffmpeg
+sudo apt install -y chromium-browser
 ```
