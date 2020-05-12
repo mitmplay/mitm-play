@@ -2,11 +2,11 @@
 Man in the middle using playwright
 
 # Features
-* `mock` response (under development)
-* `skip` continue `request` back to browser   
-* `cache` response based on Content-Type header
-* `log` any response based on Content-Type header
-* Update response based on url and Content-Type
+* `mock` __response__ (under development)
+* `skip` __request__ handler back to browser   
+* `cache` __response__ based on Content-Type header
+* `log` any __response__ based on Content-Type header
+* Update __response__ based on url and Content-Type
   * `html` - can add js on &lt;head&gt; or end of &lt;body&gt;
   * `json`
   * `css`
