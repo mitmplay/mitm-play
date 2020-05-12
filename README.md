@@ -8,8 +8,8 @@ npm install -g mitm-play
 ```bash
 # after installation run the demo:
 
-mitm-play --go=https://www.google.com/search?q=covid-19 --clear --save=goog
-mitm-play --go=https://twitter.com/search?q=covid&src=typed_query --clear --save=tw
+mitm-play --go='https://www.google.com/search?q=covid-19' --clear --save=goog
+mitm-play --go='https://twitter.com/search?q=covid&src=typed_query' --clear --save=tw
 
 # next run should be simple as:
 
@@ -60,7 +60,7 @@ mitm.route = {
     'www.google.com/search': {
       resp,
       el: 'e_end', //or e_head
-      js: googlJS, //JS is injected at the end of html body
+      js: [googlJS], //JS is injected at the end of html body
     },
   },
   json: {

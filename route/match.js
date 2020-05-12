@@ -5,6 +5,10 @@ const googlJS = function() {
   document.querySelectorAll('.g-blk').forEach(n=>n.remove())
 };
 
+const helloMitm = function() {
+  console.log('Hello from mimt-play');
+}
+
 const resp = function(){
   return {};
 };
@@ -26,7 +30,7 @@ mitm.route = {
     'www.google.com/search': {
       resp,
       el: 'e_end', //or e_head
-      js: googlJS, //JS is injected at the end of html body
+      js: [googlJS, helloMitm], //JS is injected at the end of html body
     },
   },
   json: {

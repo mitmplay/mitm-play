@@ -9,11 +9,13 @@ function extract(route, request) {
 }
 
 function e_head(body, fn) {
-  return (body+'').replace('<head>', `<head>\n<script>(${fn})()</script>`);
+  let el = fn.map(el=>`(${el})()`).join('\n');
+  return (body+'').replace('<head>', `<head>\n<script>${el}</script>`);
 }
 
 function e_end(body, fn) {
-  return (body+'').replace('</body>', `\n<script>(${fn})()</script></end>`);
+  let el = fn.map(el=>`(${el})()`).join('\n');
+  return (body+'').replace('</body>', `\n<script>${el}</script></end>`);
 }
 
 function fetch(route, {url, headers, method}, handler) {
