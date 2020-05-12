@@ -55,13 +55,15 @@ mitm.route = {
 };
 ```
 
-## Limitation (WSL2)
-this limitation was tested on WSl2, other system not test yet, looking up for volunter
+## Limitation
+This limitation was tested on WSL2, other system not tested yet, will need volunteer for testing on other system
 
 #### Browser (Chromium)
-- chromium - incognito, no video
+- chromium - incognito, no video _*_
 - firefox - stale after page full load
 - webkit - response will render text not html
+
+_*_ recomended
 
 #### Only the first tab will have the mitm
 currently the intention is to stabilize base features, and isolate the bug only on first tab
