@@ -1,6 +1,19 @@
 # mitm-play
 Man in the middle using playwright
 
+# Installation
+```bash
+npm install -g mitm-play
+
+# after installation run it with
+
+mitm-play --go=https://www.google.com/search?q=covid-19 --clear --save=goog
+
+# next time it can be refer to goog
+
+mitm-play goog
+```
+
 # Features
 * `mock` __response__ (under development)
 * `skip` __request__ handler back to browser   
