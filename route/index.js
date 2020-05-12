@@ -41,7 +41,7 @@ module.exports =  (route, request) => {
         resp = fn(resp);
       }
       console.log('cached1', reqs.url);
-      console.log;('------------------------------------------------------------');
+      console.log('------------------------------------------------------------');
       route.fulfill(resp); // exec route.fulfill()
     } else {
       //--call to BE and do log or modification & respond
@@ -61,7 +61,7 @@ module.exports =  (route, request) => {
     if (resp) {
       //--respond with cached
       console.log('cached2', reqs.url);
-      console.log;('------------------------------------------------------------');
+      console.log('------------------------------------------------------------');
       route.fulfill(resp); // exec route.fulfill()
     } else {
       //--normal flow: with reg headers getting update
