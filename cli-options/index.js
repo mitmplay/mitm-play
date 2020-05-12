@@ -1,8 +1,10 @@
 const fs = require('fs-extra');
 let argv = require('yargs-parser')(process.argv.slice(2));
 
+const {platform, env: {HOME, HOMEPATH}} = process;
+const home = (platform === 'win32' ? HOMEPATH : HOME);
 global.mitm = {
-  home: `${process.env.HOME}/.mitm-play`,
+  home: `${home}/.mitm-play`,
   port: 3000,
   argv,
 };

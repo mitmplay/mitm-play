@@ -28,7 +28,7 @@ mitm-play tw
   * `css`
   * `js`
 
-The distribution contains sample Mitm to google search and twitter 
+The distribution include sample MITM route to google search and twitter 
 
 Sample built in route(s)
 ```js
