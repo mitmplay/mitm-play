@@ -7,7 +7,7 @@
     "mitm-play": "bin/mitm-play.js"
   },
   "scripts": {
-    "start": "node --inspect ./server.js",
+    "start": "node --inspect ./mitm-play.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Widi Harsojo",
