@@ -16,8 +16,8 @@ mitm-play goog
 # Features
 * `skip` __request__ back to browser   
 * `mock` __response__ based on url & send
-* `cache` __response__ based on Content-Type header
-* `log` any __response__ based on Content-Type header
+* `cache` __response__ based on Content-Type
+* `log` any __response__ based on Content-Type
 * Update __response__ based on url and Content-Type
   * `html` - can add js on &lt;head&gt; or end of &lt;body&gt;
   * `json`
@@ -79,5 +79,4 @@ grep -E 'archive.ubuntu.com|security.ubuntu.com' /etc/apt/sources.list.d/*
 sudo apt-get update
 sudo apt install -y ffmpeg
 sudo apt install -y chromium-browser
-
 ```
