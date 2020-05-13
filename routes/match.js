@@ -11,7 +11,7 @@ module.exports = (typ, {url, headers}) => {
       const split = url.split(/([&?;,]|:\w|url)/);
       const path = `${split[0]}${split.length>1 ? '?' : ''}`;
       log = `>> ${typ} (${path}).match(${key})`;
-      arr = url.match(key);
+      arr = path.match(key);
     }
     if (arr && routes[key]) {
       const {host, pathname} = new URL(url);

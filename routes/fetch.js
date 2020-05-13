@@ -28,6 +28,8 @@ function fetch(route, {url, headers, method}, handler) {
       const resp = handler({url, status, headers, body});
       route.fulfill(resp);
     })
+  }).catch(err => {
+    console.log('fetch error:', err);
   })
 }
 

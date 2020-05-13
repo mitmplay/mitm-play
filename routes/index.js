@@ -46,7 +46,6 @@ module.exports =  (route, request) => {
         resp = fn(resp);
       }
       console.log('cached1', reqs.url);
-      console.log('------------------------------------------------------------');
       route.fulfill(resp); // exec route.fulfill()
     } else {
       //--call to BE and do log or modification & respond
@@ -54,12 +53,6 @@ module.exports =  (route, request) => {
         for (const fn of respEvents) {
           resp = fn(resp);
         }
-        const ctype = `${resp.headers['content-type']}`;
-        if (ctype.match('(video|image)')) {
-          const arr = resp.url.split(/([&?;,]|:\w|url)/);
-          console.log(`vid ${arr[0]}${arr.length>1 ? '?' : ''}`);
-        }
-        console.log(`------------------------------------------------------------${ctype}`);
         return resp; // exec route.fulfill()
       });
     }
@@ -67,7 +60,6 @@ module.exports =  (route, request) => {
     if (resp) {
       //--respond with cached
       console.log('cached2', reqs.url);
-      console.log('------------------------------------------------------------');
       route.fulfill(resp); // exec route.fulfill()
     } else {
       //--normal flow: with reg headers getting update
