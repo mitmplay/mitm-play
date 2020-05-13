@@ -14,12 +14,14 @@ module.exports = (typ, {url, headers}) => {
       arr = url.match(key);
     }
     if (arr && nod[key]) {
+      const {host, pathname} = new URL(url);
       return {
         rt: nod[key],
-        arr,
+        pathname,
+        host,
         url,
-        nod,
         key,
+        arr,
         log,
       }
     }

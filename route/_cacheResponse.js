@@ -5,7 +5,7 @@ function cacheResponse(arr, reqs) {
   const match = _match('cache', reqs);
   if (match) {
     const { url } = reqs;
-    const {host, pathname} = new URL(url);
+    const {host, pathname} = match;
     const p = pathname.replace('/', '_');
     const stamp1 = `${host}/${p}`;
     const stamp2 = `${host}/resp/${p}`;

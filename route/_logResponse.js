@@ -5,7 +5,7 @@ function logResponse(arr, reqs) {
   const match = _match('logs', reqs);
   if (match) {
     const { url } = reqs;
-    const {host, pathname} = new URL(url);
+    const {host, pathname} = match;
     const p = pathname.replace('/', '_');
     const stamp = (new Date).toISOString().replace(/:/g, '_');
     const fpath = `${mitm.home}/log/${host}/${stamp}${p}${match.rt.ext}`;
