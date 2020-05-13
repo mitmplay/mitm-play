@@ -11,16 +11,16 @@ function htmlResponse(arr, reqs) {
       if (contentType.match('text/html')) {
         console.log(match.log);
         let resp2;
-        if (match.rt.resp) {
-          resp2 = match.rt.resp(resp);
+        if (match.route.resp) {
+          resp2 = match.route.resp(resp);
         }
         resp = {
           ...resp,
           ...resp2,
         };
-        if (match.rt.js) {
-          const inject = _fetch[match.rt.el] || e_end;
-          resp.body = inject(resp.body, match.rt.js);
+        if (match.route.js) {
+          const inject = _fetch[match.route.el] || e_end;
+          resp.body = inject(resp.body, match.route.js);
         }
       }
       return resp;

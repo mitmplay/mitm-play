@@ -8,7 +8,7 @@ function logResponse(arr, reqs) {
     const {host, pathname} = match;
     const p = pathname.replace('/', '_');
     const stamp = (new Date).toISOString().replace(/:/g, '_');
-    const fpath = `${mitm.home}/log/${host}/${stamp}${p}${match.rt.ext}`;
+    const fpath = `${mitm.home}/log/${host}/${stamp}${p}${match.route.ext}`;
     arr.push((resp) => { 
       fs.ensureFile(fpath, err => {
         fs.writeFile(fpath, resp.body, err => {

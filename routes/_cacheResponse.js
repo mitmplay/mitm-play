@@ -9,7 +9,7 @@ function cacheResponse(arr, reqs) {
     const p = pathname.replace('/', '_');
     const stamp1 = `${host}/${p}`;
     const stamp2 = `${host}/resp/${p}`;
-    const fpath1 = `${mitm.home}/cache/${stamp1}${match.rt.ext}`;
+    const fpath1 = `${mitm.home}/cache/${stamp1}${match.route.ext}`;
     const fpath2 = `${mitm.home}/cache/${stamp2}.json`;
     if (fs.existsSync(fpath1)) {
       const body = fs.readFileSync(fpath1);

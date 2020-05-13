@@ -8,8 +8,8 @@ function jsonResponse(arr, reqs) {
       if (contentType.match('text/css')) {
         console.log(match.log);
         let resp2;
-        if (match.rt.resp) {
-          resp2 = match.rt.resp(resp);
+        if (match.route.resp) {
+          resp2 = match.route.resp(resp);
         }
         resp = {
           ...resp,

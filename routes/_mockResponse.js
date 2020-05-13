@@ -9,8 +9,8 @@ function mockResponse(route, reqs) {
       contentType: 'text/plain',
       body: 'Hello mock! - mitm-play'
     };
-    if (match.rt.resp) {
-      resp2 = match.rt.resp(resp);
+    if (match.route.resp) {
+      resp2 = match.route.resp(resp);
       resp = {
         ...resp,
         ...resp2

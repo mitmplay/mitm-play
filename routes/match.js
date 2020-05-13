@@ -1,9 +1,9 @@
 module.exports = (typ, {url, headers}) => {
-  const nod = mitm.routes[typ];
+  const routes = mitm.routes[typ];
   let arr;
   let log;
 
-  for (let key in nod) {
+  for (let key in routes) {
     if (typ==='logs' || typ==='cache') {
       log = `>> ${typ} (${headers['content-type']}).match(${key})`;
       arr = (headers['content-type']+'').match(key);
@@ -13,10 +13,10 @@ module.exports = (typ, {url, headers}) => {
       log = `>> ${typ} (${path}).match(${key})`;
       arr = url.match(key);
     }
-    if (arr && nod[key]) {
+    if (arr && routes[key]) {
       const {host, pathname} = new URL(url);
       return {
-        rt: nod[key],
+        route: routes[key],
         pathname,
         host,
         url,
