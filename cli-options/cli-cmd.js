@@ -29,7 +29,7 @@ module.exports = () => {
     argv.script = `${process.cwd()}/script`.replace(/\\/g, '/');
   }
   const {host, pathname} = new URL(argv.go);
-  argv.userscript = `${argv.script}/${host}/*.js}`;
+  argv.userscript = `${argv.script}/${host}/*.js`;
 
   if (argv.clear) {
     fs.remove(`${mitm.home}/cache`);

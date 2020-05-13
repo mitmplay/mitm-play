@@ -56,7 +56,8 @@ module.exports =  (route, request) => {
         }
         const ctype = `${resp.headers['content-type']}`;
         if (ctype.match('(video|image)')) {
-          console.log('url', resp.url);
+          const arr = resp.url.split(/([&?;,]|:\w|url)/);
+          console.log(`vid ${arr[0]}${arr.length>1 ? '?' : ''}`);
         }
         console.log(`------------------------------------------------------------${ctype}`);
         return resp; // exec route.fulfill()

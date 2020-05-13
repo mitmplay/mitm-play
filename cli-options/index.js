@@ -2,6 +2,7 @@ const yargs = require('yargs-parser');
 const script = require('../script');
 const cliCmd = require('./cli-cmd');
 const route = require('./route');
+const fg = require('fast-glob');
 
 const {platform, env: {HOME, HOMEPATH}} = process;
 const home = (platform === 'win32' ? HOMEPATH : HOME);
@@ -9,7 +10,7 @@ global.mitm = {
   argv: yargs(process.argv.slice(2)),
   home: `${home}/.mitm-play`,
   port: 3000,
-  fn: {},
+  fn: {fg},
 };
 
 cliCmd();

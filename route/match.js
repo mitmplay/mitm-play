@@ -7,8 +7,10 @@ module.exports = (typ, {url, headers}) => {
     if (typ==='logs' || typ==='cache') {
       log = `>> ${typ} (${headers['content-type']}).match(${key})`;
       arr = (headers['content-type']+'').match(key);
-    } else {    
-      log = `>> ${typ} (${url.split('?')[0]}).match(${key})`;
+    } else {
+      const split = url.split(/([&?;,]|:\w|url)/);
+      const path = `${split[0]}${split.length>1 ? '?' : ''}`;
+      log = `>> ${typ} (${path}).match(${key})`;
       arr = url.match(key);
     }
     if (arr && nod[key]) {

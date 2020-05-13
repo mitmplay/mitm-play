@@ -44,7 +44,7 @@ const route = {
   //   'api.twitter.com': {resp}
   // },
   // css:  {'twimg.com': {resp}},
-  // js:   {'twimg.com': {resp}},
+  js:   {'.js$': {resp}},
   fn: {},
 };
 
