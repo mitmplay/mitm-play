@@ -45,9 +45,11 @@ const route = {
   // },
   // css:  {'twimg.com': {resp}},
   // js:   {'twimg.com': {resp}},
+  fn: {},
 };
 
 module.exports = () => {
   global.mitm.route = route;
+  global.mitm.fn.resp = resp;
   //https://twitter.com/search?q=covid&src=typed_query  
 };

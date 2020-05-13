@@ -13,7 +13,9 @@
   "author": "Widi Harsojo",
   "license": "AGPL-3.0",
   "dependencies": {
+    "chokidar": "^3.4.0",
     "exit-hook": "^2.2.0",
+    "fast-glob": "^3.2.2",
     "fs-extra": "^9.0.0",
     "make-fetch-happen": "^8.0.6",
     "playwright": "^1.0.1",

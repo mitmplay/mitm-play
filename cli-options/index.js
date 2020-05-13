@@ -1,4 +1,5 @@
 const yargs = require('yargs-parser');
+const script = require('../script');
 const cliCmd = require('./cli-cmd');
 const route = require('./route');
 
@@ -8,6 +9,7 @@ global.mitm = {
   argv: yargs(process.argv.slice(2)),
   home: `${home}/.mitm-play`,
   port: 3000,
+  fn: {},
 };
 
 cliCmd();
@@ -32,4 +34,5 @@ module.exports = () => {
   }
   console.log(argv);
   route();
+  script();
 }
