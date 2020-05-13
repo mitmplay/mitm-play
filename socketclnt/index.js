@@ -1,5 +1,4 @@
 module.exports = function() {
-
   var ws = new WebSocket("ws://localhost:3000/echo");
   window.ws = ws;
   

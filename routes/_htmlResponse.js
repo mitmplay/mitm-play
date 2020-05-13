@@ -5,8 +5,7 @@ const {e_end} = _fetch;
 function htmlResponse(arr, reqs) {
   const match = _match('html', reqs);
   if (match) {
-    arr.push((resp) => {
-      
+    arr.push((resp) => {   
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/html')) {
         console.log(match.log);

@@ -1,3 +1,15 @@
+const twitterJS = function() {
+  document.addEventListener('DOMContentLoaded', (event) => {
+    setTimeout(() => {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+        registration.unregister()
+      }});
+      console.log('unregister service worker')
+    }, 1000)
+  })
+}
+
 const {
   resp, 
   routeSet,
@@ -6,7 +18,17 @@ const {
 const routes = {
   html: {
     'twimg.com': {resp},
-    'twitter.com': {resp},
+    'twitter.com': {
+      resp({headers}) {
+        delete headers['content-security-policy'];
+        // let b = headers['content-security-policy'][0];
+        // b = b.replace(/'unsafe-inline'/g, '').replace(/'self'/g, '')
+        // headers['content-security-policy'] = b;
+        return {headers};
+      },
+      el: 'e_head',
+      js: [twitterJS],
+    },
   },
   js:   {
     'twitter.com': {resp},
