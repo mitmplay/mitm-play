@@ -4,24 +4,33 @@ const route = require('../route');
 
 module.exports = () => {
   (async () => {
-    const br = mitm.argv.browser;
-    // buggy route will not work :(
-    // const browser = await playwright[br].launchPersistentContext(`${mitm.home}/.${br}`,{
-    //   headless: false
-    // });
-    // const page = await browser.pages()[0];
-    const browser = await playwright[br].launch({
-      headless: false
-    });
-    const context = await browser.newContext();
-    const page = await context.newPage();
-    page.route(/.*/, route);
-    // page.route('**/*', (route, request) => {
-    //   console.log('>> URL', route.request().url());
-    //   route.continue({});
-    // })
+    let page, browser;
     const { argv } = global.mitm;
-    await page.goto(argv.go || 'http://whatsmyuseragent.org/');
+    const br = mitm.argv.browser;
+    if (argv.pristine) {
+      // buggy route will not work :(
+      browser = await playwright[br].launchPersistentContext(`${mitm.home}/.${br}`,{
+        headless: false
+      });
+      page = await browser.pages()[0];
+    } else {
+      browser = await playwright[br].launch({
+        headless: false
+      });
+      const context = await browser.newContext();
+      page = await context.newPage();  
+    }
+    if (argv.logurl) {
+      page.route('**/*', (route, request) => {
+        const arr = route.request().url().split(/([&?;,]|:\w|url)/);
+        console.log(`${arr[0]}${arr.length>1 ? '?' : ''}`);
+        route.continue({});
+      });
+    } else {
+      page.route(/.*/, route);
+    }
+
+    await page.goto(argv.go);
 
     exitHook(async function() {
       await browser.close();
