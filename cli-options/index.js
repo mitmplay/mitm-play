@@ -1,5 +1,6 @@
 const yargs = require('yargs-parser');
 const cliCmd = require('./cli-cmd');
+const route = require('./route');
 
 const {platform, env: {HOME, HOMEPATH}} = process;
 const home = (platform === 'win32' ? HOMEPATH : HOME);
@@ -30,4 +31,5 @@ module.exports = () => {
     process.exit();
   }
   console.log(argv);
+  route();
 }
