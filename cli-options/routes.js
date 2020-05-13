@@ -13,7 +13,7 @@ const resp = function(){
   return {};
 };
 
-const route = {
+const routes = {
   // cache: {
   //   // 'application/x-ww': { ext: '.json' }
   // },
@@ -49,7 +49,7 @@ const route = {
 };
 
 module.exports = () => {
-  global.mitm.route = route;
   global.mitm.fn.resp = resp;
+  global.mitm.routes = routes;
   //https://twitter.com/search?q=covid&src=typed_query  
 };

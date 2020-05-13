@@ -1,9 +1,9 @@
-const {route, fn: {resp}} = global.mitm;
+const {routes, fn: {resp}} = global.mitm;
 
-delete route.js['www.theverge.com'];
-route.js = {
+delete routes.js['www.theverge.com'];
+routes.js = {
   'www.theverge.com': {resp},
-  ...route.js,
+  ...routes.js,
 }
 
-console.log(JSON.stringify(route, null, 2));
+console.log(JSON.stringify(routes, null, 2));

@@ -1,7 +1,7 @@
 const yargs = require('yargs-parser');
 const script = require('../script');
 const cliCmd = require('./cli-cmd');
-const route = require('./route');
+const routes = require('./routes');
 const fg = require('fast-glob');
 
 const {platform, env: {HOME, HOMEPATH}} = process;
@@ -34,6 +34,6 @@ module.exports = () => {
     process.exit();
   }
   console.log(argv);
-  route();
+  routes();
   script();
 }

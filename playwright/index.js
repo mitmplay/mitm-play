@@ -1,6 +1,6 @@
 const playwright = require('playwright');
 const exitHook = require('exit-hook');
-const route = require('../route');
+const routes = require('../routes');
 
 module.exports = () => {
   (async () => {
@@ -27,7 +27,7 @@ module.exports = () => {
         route.continue({});
       });
     } else {
-      page.route(/.*/, route);
+      page.route(/.*/, routes);
     }
 
     await page.goto(argv.go);

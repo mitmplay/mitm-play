@@ -1,5 +1,5 @@
-const {route, fn: {resp}} = global.mitm;
+const {routes, fn: {resp}} = global.mitm;
 
-route.js['whatsmyuseragent.org'] = {resp};
+routes.js['whatsmyuseragent.org'] = {resp};
 
-console.log(JSON.stringify(route, null, 2));
+console.log(JSON.stringify(routes, null, 2));

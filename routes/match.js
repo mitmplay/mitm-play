@@ -1,5 +1,5 @@
 module.exports = (typ, {url, headers}) => {
-  const nod = mitm.route[typ];
+  const nod = mitm.routes[typ];
   let arr;
   let log;
 
