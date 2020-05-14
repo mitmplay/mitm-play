@@ -12,6 +12,13 @@
   },
   "author": "Widi Harsojo",
   "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitm-proxy/mitm-play.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mitm-proxy/mitm-play/issues"
+  },
   "dependencies": {
     "chokidar": "^3.4.0",
     "exit-hook": "^2.2.0",
@@ -26,7 +33,6 @@
     "nock": "^12.0.3"
   },
   "engines": {
-    "node": ">=10.0.0",
-    "npm": ">=6.9.0"
+    "node": ">=10.15.0"
   }
 }
