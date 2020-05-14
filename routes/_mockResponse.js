@@ -6,7 +6,9 @@ function mockResponse(route, reqs) {
     let resp2;
     let resp = {
       status: 200,
-      contentType: 'text/plain',
+      headers: {
+        'content-type': 'text/plain',
+      },
       body: 'Hello mock! - mitm-play'
     };
     if (match.route.resp) {

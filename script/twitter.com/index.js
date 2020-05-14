@@ -1,17 +1,12 @@
-// need code like this to 
-// preseve indentation
-const {
-  headerCSP,
-  twitterJS,
-} = {
-headerCSP: function({headers}) {
-  delete headers['content-security-policy'];
+const headerCSP = function({headers}) {
+  // delete headers['content-security-policy'];
   // let b = headers['content-security-policy'][0];
   // b = b.replace(/'unsafe-inline'/g, '').replace(/'self'/g, '')
   // headers['content-security-policy'] = b;
   return {headers};
-},
-twitterJS: function() {
+};
+
+const twitterJS = function() {
   document.addEventListener('DOMContentLoaded', (event) => {
     setTimeout(() => {
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
@@ -21,8 +16,16 @@ twitterJS: function() {
       console.log('unregister service worker')
     }, 1000)
   })
-}
 };
+
+const unregisterJSCode = function() {
+  return {
+    headers: {
+      'content-type': 'application/javascript'
+    },
+    body: `(${twitterJS+''})()`
+  };
+}
 
 const {
   resp, 
@@ -31,6 +34,11 @@ const {
 } = global.mitm.fn;
 
 const routes = {
+  mock: {
+    'twitter.com/mitm-play/unregister.js': {
+      resp: unregisterJSCode,
+    },
+  },
   html: {
     'twimg.com': {resp},
     'twitter.com': {

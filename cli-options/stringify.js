@@ -23,17 +23,17 @@ function stringify(obj, i=0) {
     out += i==2 ? `${tab}'${p}': ` : `${tab}${p}: `;
     const nod = obj[p];
     if (Array.isArray(nod)) {
-      ins = `[\n${stringify(nod, i+2)}${tab}]\n`;
+      ins = `[\n${stringify(nod, i+2)}${tab}],\n`;
     } else if (isObjLiteral(nod)) {
-      ins = `{\n${stringify(nod, i+2)}${tab}}\n`;
+      ins = `{\n${stringify(nod, i+2)}${tab}},\n`;
     } else if (typeof(nod==='function')) {
-      ins = (nod+'').replace(/\n/g,`\n${tab}`)+`\n`;
+      ins = (nod+'').replace(/\n/g,`\n${tab}`)+`,\n`;
     } else {
       ins = nod+ '\n';
     }
     out += ins;
   }
-  return out;
+  return i===0 ? out.replace(/ \d+: /g, ' ') : out;
 }
 
 module.exports = stringify

@@ -9,7 +9,7 @@ function extract(route, request) {
 }
 
 function script_src(body, src) {
-  let el = src.map(el=>`<script src="/mitm-play/${el}"></script>`).join('\n');
+  let el = src.map(el=>`<script nonce src="/mitm-play/${el}"></script>`).join('\n');
   let b = body+'';
   if (b.match(/<head>/i)) {
     b = b.replace(/<head>/i, `<head>\n${el}`);
