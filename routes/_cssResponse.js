@@ -1,9 +1,9 @@
 const _match = require('./match');
 
-function jsonResponse(arr, reqs) {
+function cssResponse(arr, reqs) {
   const match = _match('css', reqs);
   if (match) {
-    arr.push((resp) => {
+    arr.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/css')) {
         console.log(match.log);
@@ -21,4 +21,4 @@ function jsonResponse(arr, reqs) {
   }
 }
 
-module.exports = jsonResponse;
+module.exports = cssResponse;

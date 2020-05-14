@@ -6,4 +6,4 @@ routes.js = {
   ...routes.js,
 }
 
-console.log(JSON.stringify(routes, null, 2));
+console.log(stringify(routeSet(routes)));

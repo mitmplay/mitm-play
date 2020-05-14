@@ -8,30 +8,47 @@ function extract(route, request) {
   }
 }
 
-function e_head(body, fn) {
-  let el = fn.map(el=>`(${el})()`).join('\n');
+function script_src(body, src) {
+  let el = src.map(el=>`<script src="/mitm-play/${el}"></script>`).join('\n');
   let b = body+'';
   if (b.match(/<head>/i)) {
-    b = b.replace(/<head>/i, `<head>\n<script>${el}</script>`);
+    b = b.replace(/<head>/i, `<head>\n${el}`);
   } else {
     const h = b.match(/(<html[^>]+>)/i);
     if (!h) {
       console.log('>> err', b.length)
     } else {
-      b = b.replace(h[0], `${h[0]}\n<script>${el}</script>`);
+      b = b.replace(h[0], `${h[0]}\n${el}`);
     }
   }
   return b;
+}
 
+function e_head(body, fn) {
+  let el = fn.map(el=>`(${el})()`).join('\n');
+  const script = `\n<script>${el}</script>`;
+  let b = body+'';
+  if (b.match(/<head>/i)) {
+    b = b.replace(/<head>/i, `<head>>${script}`);
+  } else {
+    const h = b.match(/(<html[^>]+>)/i);
+    if (!h) {
+      console.log('>> err', b.length)
+    } else {
+      b = b.replace(h[0], `${h[0]}>${script}`);
+    }
+  }
+  return b;
 }
 
 function e_end(body, fn) {
   let el = fn.map(el=>`(${el})()`).join('\n');
+  const script = `\n<script>${el}</script>`;
   let b = body+'';
   if (b.match(/<\/body>/i)) {
-    b = b.replace(/<\/body>/i, `\n<script>${el}</script></body>`);
+    b = b.replace(/<\/body>/i, `${script}</body>`);
   } else {
-    b = b + `\n<script>${el}</script>`;
+    b = b + script;
   }
   return b;
 }
@@ -52,6 +69,7 @@ function fetch(route, {url, headers, method}, handler) {
 }
 
 module.exports = {
+  script_src,
   extract,
   e_head,
   e_end,

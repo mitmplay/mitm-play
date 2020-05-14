@@ -3,7 +3,7 @@ const _match = require('./match');
 function jsonResponse(arr, reqs) {
   const match = _match('json', reqs);
   if (match) {
-    arr.push((resp) => {
+    arr.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('application/json')) {
         console.log(match.log);

@@ -1,37 +1,48 @@
-const googlJS = function() {
+// to preseve indentation when stringify
+const {
+  mock,
+  resp,
+  googlJS,
+  helloMitm
+} = {
+mock: function() {
+  return {body: 'Hi there!'}
+},
+resp: function() {
+  return {};
+},
+googlJS: function() {
   // remove unecessary html elements from google search result
   document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
   document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
   document.querySelectorAll('.g-blk').forEach(n=>n.remove())
-};
-
-const helloMitm = function() {
+},
+helloMitm: function() {
   console.log('Hello from mimt-play');
-}
-
-const resp = function(){
-  return {};
+},
 };
 
 function routeSet(routes2) {
-  const {routes} = global.mitm;
+  const {routes: routes1} = global.mitm;
 
   for (let typ in routes2) {
-    if (routes[typ]) {
-      for (let key in routes2[typ]) {
-        if (routes[typ][key]) {
-          delete routes[typ][key];
+    const route1 = routes1[typ];
+    const route2 = routes2[typ];
+    if (route1) {
+      for (let key in route2) {
+        if (route1[key]) {
+          delete route1[key];
         }
       }
-      routes[typ] = {
-        ...routes[typ],
-        ...routes2[typ],
+      routes1[typ] = {
+        ...route2,
+        ...route1,
       }
-    } else {
-      routes[typ] = routes2;
+  } else {
+      routes1[typ] = routes2[typ];
     }
   }
-  return routes;
+  return routes1;
 }
 
 const routes = {
@@ -45,11 +56,7 @@ const routes = {
     '.(jpeg|jpg|png|svg|gif|ico|mp4)': {},
   },
   mock: {
-    '/mock': {
-      resp() {
-        return {body: 'Hi there!'}
-      }
-    },
+    '/mock': {resp: mock},
   },
   html: {
     'www.google.com/search': {
@@ -58,8 +65,9 @@ const routes = {
       js: [googlJS, helloMitm], //JS is injected at the end of html body
     },
   },
-  js:   {'.js$': {resp}},
-  fn: {},
+  js: {
+    '.js$': {resp},
+  },
 };
 
 module.exports = () => {
