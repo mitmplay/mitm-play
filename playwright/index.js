@@ -1,6 +1,7 @@
 const playwright = require('playwright');
 const exitHook = require('exit-hook');
 const routes = require('../routes');
+const {extract} = require('../routes/fetch')
 
 module.exports = () => {
   (async () => {
@@ -22,10 +23,11 @@ module.exports = () => {
       page = await context.newPage();  
       brcontex = context;
     }
-    if (argv.logurl) {
+    if (argv.logurl || argv.l) {
       brcontex.route('**/*', (route, request) => {
+        const {headers} = extract(route, request);
         const arr = route.request().url().split(/([&?;,]|:\w|url)/);
-        console.log(`${arr[0]}${arr.length>1 ? '?' : ''}`);
+        console.log(`${arr[0]}${arr.length>1 ? '?' : ''}`, JSON.stringify(headers, null, 2));
         route.continue({});
       });
     } else {

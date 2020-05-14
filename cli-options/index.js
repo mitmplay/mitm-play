@@ -31,7 +31,7 @@ module.exports = () => {
     --go       \t go to specific website location
     --browser  \t set browser: chromium/firefox/webkit
     --pristine \t set a pristine browser (not recommended)
-    --logurl   \t test only to log url route 
+    --logurl/-l\t test route to log url & headers 
     --clear    \t clear cache and/or logs
     --save     \t save as default <profl>
   `);

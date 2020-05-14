@@ -1,4 +1,8 @@
-const {resp} = global.mitm.fn;
+const {
+  resp,
+  routeSet,
+  stringify,
+} = global.mitm.fn;
 
 routes = {
   js: {
