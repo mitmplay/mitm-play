@@ -56,7 +56,7 @@ const routes = {
     },
   },
   css:{'twimg.com':   {resp}},
-  js: {'twitter.com': {resp}},
+  // js: {'twitter.com': {resp}},
 }
 
-console.log(stringify(routeSet(routes)));
+// console.log(stringify(routeSet(routes)));

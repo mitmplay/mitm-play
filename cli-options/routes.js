@@ -65,9 +65,9 @@ const routes = {
       js: [googlJS, helloMitm], //JS is injected at the end of html body
     },
   },
-  js: {
-    '.js$': {resp},
-  },
+  // js: {
+  //   '.js$': {resp},
+  // },
 };
 
 module.exports = () => {

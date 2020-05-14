@@ -1,12 +1,11 @@
 const WebSocket = require('ws');
+const wsclients = {};
 
 module.exports = () => {
-  const {port} = global.mitm;
-  const wss = new WebSocket.Server({ port });
-  global.mitm.wss = wss;
+  const wsserver = new WebSocket.Server({ port: 3000 });
 
   function broadcast(data, all=true) {
-    wss.clients.forEach(function each(client) {
+    wsserver.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         if (all || client !== global.mitm.ws) {
           client.send(data);
@@ -14,14 +13,20 @@ module.exports = () => {
       }
     });
   }
-  
-  wss.on('connection', function connection(ws) {
-    global.mitm.ws = ws;
-    ws.on('message', function incoming(message) {
+
+  global.wsserver = wsserver;
+  global.wsclients = wsclients;
+  global.broadcast = broadcast;
+
+  wsserver.on('connection', function connection(client, request) {
+    const {host} = new URL(request.headers.origin);
+    wsclients[host] = {client, request};
+
+    client.on('message', function incoming(message) {
       console.log('received: %s', message);
     });
-   
-    ws.send('something');
+
+    client.send('something');
   });  
 }
 //https://github.com/websockets/ws
