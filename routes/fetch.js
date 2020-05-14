@@ -24,6 +24,11 @@ function script_src(body, src) {
   return b;
 }
 
+function source(body, src) {
+  let el = src.map(el=>`(${el})()`).join('\n');
+  return `${body}${el}`;
+}
+
 function e_head(body, fn) {
   let el = fn.map(el=>`(${el})()`).join('\n');
   const script = `\n<script>${el}</script>`;
@@ -71,6 +76,7 @@ function fetch(route, {url, headers, method}, handler) {
 module.exports = {
   script_src,
   extract,
+  source,
   e_head,
   e_end,
   fetch,

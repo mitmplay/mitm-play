@@ -6,7 +6,7 @@ const headerCSP = function({headers}) {
   return {headers};
 };
 
-const twitterJS = function() {
+const unregisterJS = function() {
   document.addEventListener('DOMContentLoaded', (event) => {
     setTimeout(() => {
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
@@ -23,7 +23,7 @@ const unregisterJSCode = function() {
     headers: {
       'content-type': 'application/javascript'
     },
-    body: `(${twitterJS+''})()`
+    body: `//From resp:\n(${unregisterJS+''})()\n`
   };
 }
 
@@ -37,6 +37,7 @@ const routes = {
   mock: {
     'twitter.com/mitm-play/unregister.js': {
       resp: unregisterJSCode,
+      js: [unregisterJS],
     },
   },
   json: {
@@ -48,7 +49,7 @@ const routes = {
     'twitter.com': {
       resp: headerCSP,
       el: 'e_head',
-      js: [twitterJS],
+      js: [unregisterJS],
       src:['unregister.js'],
     },
   },

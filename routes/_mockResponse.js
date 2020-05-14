@@ -1,23 +1,36 @@
 const _match = require('./match');
+const _fetch = require('./fetch');
+const {source} = _fetch;
+
+const mock = () => {
+  return {
+    status: 200,
+    headers: {
+      'content-type': 'text/plain',
+    },
+    body: ''
+  }
+};
 
 function mockResponse(route, reqs) {
   const match = _match('mock', reqs);
   if (match) {
-    let resp2;
-    let resp = {
-      status: 200,
-      headers: {
-        'content-type': 'text/plain',
-      },
-      body: 'Hello mock! - mitm-play'
-    };
-    if (match.route.resp) {
-      resp2 = match.route.resp(resp);
-      resp = {
-        ...resp,
-        ...resp2
+    let resp = mock();
+    if (match.route.resp || match.route.js) {
+      if (match.route.resp) {
+        let resp2 = match.route.resp(resp);
+        resp = {
+          ...resp,
+          ...resp2
+        };
       };
-    };
+      if (match.route.js) {
+        resp.body = source(resp.body, match.route.js);
+        resp.headers['content-type'] = 'application/javascript';
+      }
+    } else {
+      resp.body = 'Hello mock! - mitm-play';
+    }
     console.log(match.log);
     route.fulfill(resp);
     return true;
