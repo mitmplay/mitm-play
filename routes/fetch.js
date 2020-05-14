@@ -25,7 +25,7 @@ function script_src(body, src) {
 }
 
 function source(body, src) {
-  let el = src.map(el=>`(${el})()`).join('\n');
+  let el = src.map(el=>`(${el})();`).join('\n');
   return `${body}${el}`;
 }
 

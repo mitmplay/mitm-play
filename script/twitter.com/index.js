@@ -1,3 +1,5 @@
+const _initWebsocket = require('../../socketclnt');
+
 const headerCSP = function({headers}) {
   // delete headers['content-security-policy'];
   // let b = headers['content-security-policy'][0];
@@ -18,14 +20,14 @@ const unregisterJS = function() {
   })
 };
 
-const unregisterJSCode = function() {
-  return {
-    headers: {
-      'content-type': 'application/javascript'
-    },
-    body: `//From resp:\n(${unregisterJS+''})()\n`
-  };
-}
+// const unregisterJSCode = function() {
+//   return {
+//     headers: {
+//       'content-type': 'application/javascript'
+//     },
+//     body: `//From resp:\n(${unregisterJS+''})()\n`
+//   };
+// }
 
 const {
   resp, 
@@ -36,8 +38,8 @@ const {
 const routes = {
   mock: {
     'twitter.com/mitm-play/unregister.js': {
-      resp: unregisterJSCode,
-      js: [unregisterJS],
+      // resp: unregisterJSCode,
+      js: [_initWebsocket,unregisterJS],
     },
   },
   json: {
