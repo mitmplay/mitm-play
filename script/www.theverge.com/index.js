@@ -1,9 +1,9 @@
-const {routes, fn: {resp}} = global.mitm;
+const {resp} = global.mitm.fn;
 
-delete routes.js['www.theverge.com'];
-routes.js = {
-  'www.theverge.com': {resp},
-  ...routes.js,
+routes = {
+  js: {
+    'www.theverge.com': {resp},
+  }
 }
 
 console.log(stringify(routeSet(routes)));

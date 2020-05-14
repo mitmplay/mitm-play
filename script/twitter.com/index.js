@@ -39,6 +39,10 @@ const routes = {
       resp: unregisterJSCode,
     },
   },
+  json: {
+    'twimg.com': {resp},
+    'api.twitter.com': {resp}
+  },
   html: {
     'twimg.com': {resp},
     'twitter.com': {
@@ -48,14 +52,8 @@ const routes = {
       src:['unregister.js'],
     },
   },
-  js:   {
-    'twitter.com': {resp},
-  },
-  json: {
-    'twimg.com': {resp},
-    'api.twitter.com': {resp}
-  },
-  css:  {'twimg.com': {resp}},
+  css:{'twimg.com':   {resp}},
+  js: {'twitter.com': {resp}},
 }
 
 console.log(stringify(routeSet(routes)));
