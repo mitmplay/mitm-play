@@ -55,7 +55,10 @@ module.exports = function() {
       //ws__style('.intro=>background:red;')
       const {data} = json;
       const [query,style] = data.split('=>');
-      document.querySelector(query).style.cssText = style
+      const node = document.querySelector(query);
+      if (node) {
+        node.style.cssText = style;
+      }
       console.log(json);
     }
   };
