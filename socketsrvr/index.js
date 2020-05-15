@@ -21,29 +21,58 @@ module.exports = () => {
     console.log('broadcast', pages)
   }
 
-  function broadcastPage(json) {
+  function emitpage(json) {
     const {data,regex} = json;
     const pages = [];
     wsserver.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN && client._page.match(regex)) {
+        pages.push(client._page);
         client.send(data);
       }
     });
-    console.log('broadcastPage', pages)
+    console.log('emitpage', pages)
+  }
+
+  function emit(json) {
+    this.send(json.data);
+    console.log('emit', this._page)
+  }
+
+  function help() {
+    const note = Object.keys(global.mitm.wscmd).map(x => {
+      return `* ${x}() => ws_${x}()`;
+    }).join('\n');
+    this.send(`\n
+Available functions that can be use:
+${note}\n
+double check on client implementation "ws_***()"
+on browser console type "ws"
+\n`)
+  }
+/**
+ * 
+ */
+  const _style = function(json) {
+    const {data} = json;
+    json.data = `[_style]${JSON.stringify({data})}`;
+    broadcast(json);
   }
 
   global.wsserver = wsserver;
   global.wsclients = wsclients;
   global.broadcast = broadcast;
-  global.broadcastPage = broadcastPage;
+  global.emitpage = emitpage;
   const wscmd = {
     broadcast,
-    broadcastPage,
+    emitpage,
+    emit,
+    help,
+    _style,
   }
   global.mitm.wscmd = wscmd;
 
   function messageParser(client, msg) {
-    console.log('meesssage', msg)
+    console.log('received: %s', msg);
     const arr = msg.replace(/\s+$/, '').match(/^ *\[(\w+)\] *(.+)/);
     if (arr) {
       let [,cmd,json] = arr;
@@ -56,7 +85,6 @@ module.exports = () => {
         console.error(error);
       }        
     }
-    console.log('received: %s', msg);
   }
 
   let debunk;
@@ -66,8 +94,8 @@ module.exports = () => {
     wsclients[`${host}:${page}`] = {client, request};
     client._page = `${host}:${page}`;
 
-    function incoming(message) {
-      messageParser(client, message);
+    function incoming(data) {
+      messageParser(client, data);
     }
 
     client.on('message', incoming);

@@ -10,17 +10,75 @@ module.exports = function() {
   }
 
   const ws = new WebSocket(`ws://localhost:3000/ws?page=${inIframe()}`);
-  window.ws = ws;
+  window._ws = ws;
+
+  window.ws_broadcast = (data, notme) => {
+    const msg = {data};
+    if (notme) {
+      msg.notme = notme;
+    }
+    ws.send(`[broadcast]${JSON.stringify(msg)}`);
+  }
+
+  window.ws_emitpage = (data, regex='') => {
+    const msg = {data,regex};
+    ws.send(`[emitpage]${JSON.stringify(msg)}`);
+  }
+
+  window.ws_emit = (data) => {
+    ws.send(`[emit]${JSON.stringify( {data})}`);
+  }
   
+  window.ws_help = (data, notme) => {
+    ws.send(`[help]{}`);
+  }
+
+  window.ws__style = (data, notme) => {
+    const msg = {data};
+    if (notme) {
+      msg.notme = notme;
+    }
+    ws.send(`[_style]${JSON.stringify(msg)}`);
+  }
+
   ws.onopen = function() {                 
     ws.send(`url:${(location+'').split('?')[0]}`);
     console.log("ws: sent...");
   };
-
-  ws.onmessage = function (evt) { 
-    const received_msg = evt.data;
-    console.log("ws: received...", received_msg, evt);
+/**
+ * 
+ * @param {*} event 
+ * @param {*} msg 
+ */
+  const wccmd = {
+    _style(json) {
+      //ws__style('.intro=>background:red;')
+      const {data} = json;
+      const [query,style] = data.split('=>');
+      document.querySelector(query).style.cssText = style
+      console.log(json);
+    }
   };
+
+  function messageParser(event, msg) {
+    console.log('received: %s', msg);
+    const arr = msg.replace(/\s+$/, '').match(/^ *\[(\w+)\] *(.+)/);
+    if (arr) {
+      let [,cmd,json] = arr;
+      try {
+        json = JSON.parse(json)
+        if (wccmd[cmd]) {
+          wccmd[cmd].call(event, json)
+        }
+      } catch (error) {
+        console.error(error);
+      }        
+    }
+  }
+
+  ws.onmessage = function (event) { 
+    messageParser(event, event.data);
+   };
 
   ws.onclose = function() { 
     console.log("ws: Connection is closed"); 
