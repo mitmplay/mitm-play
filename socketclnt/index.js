@@ -33,6 +33,11 @@ module.exports = function() {
     ws.send(`[help]{}`);
   }
 
+  window.ws__open = (data) => {
+    const msg = {data};
+    ws.send(`[_open]${JSON.stringify(msg)}`);
+  }
+
   window.ws__style = (data, notme) => {
     const msg = {data};
     if (notme) {
@@ -50,16 +55,21 @@ module.exports = function() {
  * @param {*} event 
  * @param {*} msg 
  */
+  let windowRef;
   const wccmd = {
-    _style(json) {
+    _style({data}) {
       //ws__style('.intro=>background:red;')
-      const {data} = json;
       const [query,style] = data.split('=>');
       const node = document.querySelector(query);
       if (node) {
         node.style.cssText = style;
       }
-      console.log(json);
+    },
+    _open({data}) {
+      const [name,url] = data.split('=>');
+      const features = 'directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,width=800,height=600';
+      windowRef = window.open(url, name, features);
+      windowRef.blur();
     }
   };
 

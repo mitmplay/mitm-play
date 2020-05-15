@@ -52,11 +52,17 @@ on browser console type "ws"
 /**
  * 
  */
-  const _style = function(json) {
-    const {data} = json;
-    json.data = `[_style]${JSON.stringify({data})}`;
-    broadcast(json);
-  }
+const _open = function(json) {
+  const {data} = json;
+  json.data = `[_open]${JSON.stringify({data})}`;
+  emit.call(this, json);
+}
+
+const _style = function(json) {
+  const {data} = json;
+  json.data = `[_style]${JSON.stringify({data})}`;
+  broadcast.call(this, json);
+}
 
   global.wsserver = wsserver;
   global.wsclients = wsclients;
@@ -67,6 +73,7 @@ on browser console type "ws"
     emitpage,
     emit,
     help,
+    _open,
     _style,
   }
   global.mitm.wscmd = wscmd;
