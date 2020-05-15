@@ -57,6 +57,12 @@ module.exports = function() {
  */
   let windowRef;
   const wccmd = {
+    _open({data}) {
+      const {url} = JSON.parse(data);
+      const features = 'directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,width=800,height=600';
+      windowRef = window.open(url, '_logs', features);
+      windowRef.blur();
+    },
     _style({data}) {
       //ws__style('.intro=>background:red;')
       const [query,style] = data.split('=>');
@@ -65,12 +71,6 @@ module.exports = function() {
         node.style.cssText = style;
       }
     },
-    _open({data}) {
-      const [name,url] = data.split('=>');
-      const features = 'directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,width=800,height=600';
-      windowRef = window.open(url, name, features);
-      windowRef.blur();
-    }
   };
 
   function messageParser(event, msg) {
@@ -79,12 +79,15 @@ module.exports = function() {
     if (arr) {
       let [,cmd,json] = arr;
       try {
-        json = JSON.parse(json)
+        json = JSON.parse(json);
+        json.data = json.data.
+        replace(/([{,])(\w+):/g, (m, $1, $2) => `${$1}"${$2}":`).  
+        replace(/:([^",/]+)/g, (m, $1) => `:"${$1}"`);
         if (wccmd[cmd]) {
           wccmd[cmd].call(event, json)
         }
       } catch (error) {
-        console.error(error);
+        console.error(json,error);
       }        
     }
   }

@@ -84,12 +84,15 @@ const _style = function(json) {
     if (arr) {
       let [,cmd,json] = arr;
       try {
-        json = JSON.parse(json)
+        json = JSON.parse(json);
+        json.data = json.data.
+        replace(/([{,])(\w+):/g, (m, $1, $2) => `${$1}"${$2}":`). 
+        replace(/:([^",/]+)/g, (m, $1) => `:"${$1}"`);
         if (wscmd[cmd]) {
           wscmd[cmd].call(client, json)
         }
       } catch (error) {
-        console.error(error);
+        console.error(json,error);
       }        
     }
   }
