@@ -15,6 +15,9 @@ const mock = () => {
 function mockResponse(route, reqs) {
   const match = _match('mock', reqs);
   if (match) {
+    if (!match.url.match('/mitm-play/websocket')) {
+      console.log(match.log);
+    }
     let resp = mock();
     if (match.route.resp || match.route.js) {
       if (match.route.resp) {
@@ -31,7 +34,6 @@ function mockResponse(route, reqs) {
     } else {
       resp.body = 'Hello mock! - mitm-play';
     }
-    console.log(match.log);
     route.fulfill(resp);
     return true;
   }

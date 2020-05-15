@@ -45,6 +45,8 @@ function routeSet(routes2) {
   return routes1;
 }
 
+const _initWebsocket = require('../socketclnt');
+
 const routes = {
   // cache: {
   //   // 'application/x-ww': { ext: '.json' }
@@ -57,6 +59,9 @@ const routes = {
   },
   mock: {
     '/mock': {resp: mock},
+    '/mitm-play/websocket.js': {
+      js: [_initWebsocket],
+    },  
   },
   html: {
     'www.google.com/search': {

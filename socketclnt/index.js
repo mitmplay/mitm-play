@@ -9,20 +9,20 @@ module.exports = function() {
     return ifrm ? 'iframe' : 'window';
   }
 
-  var ws = new WebSocket(`ws://localhost:3000/ws?page=${inIframe()}`);
+  const ws = new WebSocket(`ws://localhost:3000/ws?page=${inIframe()}`);
   window.ws = ws;
   
   ws.onopen = function() {                 
     ws.send(`url:${(location+'').split('?')[0]}`);
-    console.log("Message is sent...");
+    console.log("ws: sent...");
   };
 
   ws.onmessage = function (evt) { 
-    var received_msg = evt.data;
-    console.log("Message is received...", evt);
+    const received_msg = evt.data;
+    console.log("ws: received...", received_msg, evt);
   };
 
   ws.onclose = function() { 
-    console.log("Connection is closed..."); 
+    console.log("ws: Connection is closed"); 
   };
 }

@@ -39,7 +39,7 @@ const routes = {
   mock: {
     'twitter.com/mitm-play/unregister.js': {
       // resp: unregisterJSCode,
-      js: [_initWebsocket,unregisterJS],
+      js: [unregisterJS],
     },
   },
   json: {
