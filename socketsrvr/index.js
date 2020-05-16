@@ -6,15 +6,13 @@ module.exports = () => {
   global.wsserver = wsserver;
 
   //ex: broadcast({data:"there"});
-  function broadcast({data,notme}) {
+  function broadcast({data,_all}) {
     const pages = [];
+    const that = this;
     data = typeof(data)==='string' ? data : JSON.stringify(data);
     wsserver.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
-        if (notme && client !== this) {
-          pages.push(client._page);
-          client.send(data);
-        } else {
+        if (_all || client !== that) {
           pages.push(client._page);
           client.send(data);
         }
@@ -51,10 +49,10 @@ module.exports = () => {
       const spaces = ' '.repeat(14 - messages.length);
       return `* ${messages}${spaces} => ${x}()`;
     }).join('\n');
-    const data = {help: 
+    const data = 
 `Available functions:\n\n${note}\n
 Double check on client implementation "ws_***()".
-On browser console type "ws"`};
+On browser console type "ws"`;
     const msg = `_help${JSON.stringify({data})}`
     console.log('_help', msg);
     this.send(msg);
@@ -81,10 +79,10 @@ On browser console type "ws"`};
   //ex: ws__style({query: 'body', style: 'background: red;'})
   //    => _style({data:{query: 'body', style: 'background: red;'}})
   const _style = function(json) {
-    let {data,notme} = json;
+    let {data,_all} = json;
     data = `_style${JSON.stringify({data})}`
     console.log('_style', data);
-    broadcast.call(this, {data,notme});
+    broadcast.call(this, {data,_all});
   }
 
   // accessible from client

@@ -12,32 +12,39 @@ module.exports = function() {
   const ws = new WebSocket(`ws://localhost:3000/ws?page=${inIframe()}`);
   window._ws = ws;
 
-  window.ws_broadcast = (json, notme=true) => {
-    const msg = {data: json, notme};
+  //ex: ws_broadcast('_style{"data":{"q":"*","css":"color:yellow;"}}')
+  //ex: ws_broadcast('_ping{"data":"Hi!"}')
+  window.ws_broadcast = (json, _all=true) => {
+    const msg = {data: json, _all};
     ws.send(`broadcast${JSON.stringify(msg)}`);
   }
 
+  //ex: ws_emitpage('_style{"data":{"q":"*","css":"color:yellow;"}}')
+  //ex: ws_emitpage('_ping{"data":"Hi!"}')
   window.ws_emitpage = (json, regex='') => {
     const msg = {data: json, regex};
     ws.send(`emitpage${JSON.stringify(msg)}`);
   }
 
+  //ex: ws__ping('Hi!')
   window.ws__ping = (json) => {
     const msg = {data: json};
     ws.send(`_ping${JSON.stringify(msg)}`);
   }
   
+  //ex: ws__help()
   window.ws__help = () => {
     ws.send(`_help{}`);
   }
 
+  //ex: ws__open({url:'https://google.com'})
   window.ws__open = (json) => {
     const msg = {data: json};
     ws.send(`_open${JSON.stringify(msg)}`);
   }
 
-  window.ws__style = (json, notme=false) => {
-    const msg = {data: json, notme};
+  window.ws__style = (json, _all=true) => {
+    const msg = {data: json, _all};
     ws.send(`_style${JSON.stringify(msg)}`);
   }
 
@@ -55,25 +62,23 @@ module.exports = function() {
   const wccmd = {
     //ex: ws__help()
     _help({data}) {
-      console.log(data.help);
+      // console.log(data);
     },
     //ex: ws__ping("there") 
     _ping({data}) {
-      console.log(data);
+      // console.log(data);
     },
     //ex: ws__open({url: "https://google.com"})
     _open({data}) {
-      console.log(data);
       const features = 'directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,width=800,height=600';
       windowRef = window.open(data.url, '_logs', features);
       windowRef.blur();
     },
     //ex: ws__style('.intro=>background:red;')
     _style({data}) {
-      console.log(data);
-      const {query,style} = data;
-      document.querySelectorAll(query).forEach(
-        node => (node.style.cssText = style)
+      const {q,css} = data;
+      document.querySelectorAll(q).forEach(
+        node => (node.style.cssText = css)
       );
     },
   };
@@ -95,6 +100,7 @@ module.exports = function() {
         console.error(json,error);
       }        
       if (wccmd[cmd]) {
+        console.log(json.data);
         wccmd[cmd].call(event, json)
       }       
     }
