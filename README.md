@@ -26,23 +26,25 @@ mitm-play goog
 
 The distribution include sample MITM route to google search & mock 
 
+# Concept
+Mitm interception use namespaces routing, for start it use `default` namespace for all request that don't have **referer** header, and next request in which should having `referer` header it will try to `check host matched` with `namespace` and use that namespace to select the routing, if the namespace not found it will fallback to `default` namespace. 
+
 Sample built in route(s)
 ```js
-const googlJS = function() {
-  // remove unecessary html elements from google search result 
-  document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
-  document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
-  document.querySelectorAll('.g-blk').forEach(n=>n.remove())
-};
-
+// const googlJS = function() {..}
 mitm.route = {
-  html: {
-    'www.google.com/search': {
-      el: 'e_end', //or e_head
-      js: [googlJS], //JS is injected at the end of html body
-    },
+  default: {
+    html: {
+      'www.google.com/search': {
+        el: 'e_end', //or e_head
+        js: [googlJS], //JS is injected at the end of html body
+      },
+    }
   },
-};
+  'google.com': {
+    html: {..}
+  }
+}
 ```
 
 ## Limitation
