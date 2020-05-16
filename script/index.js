@@ -3,6 +3,7 @@ const fg = require('fast-glob');
 const chokidar = require('chokidar');
 
 const load = function(path) {
+  console.log('>> userscript', path);
   delete require.cache[require.resolve(path)];
   return require(path);
 }

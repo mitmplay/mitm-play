@@ -7,12 +7,22 @@ const fg = require('fast-glob');
 
 const {platform, env: {HOME, HOMEPATH}} = process;
 const home = (platform === 'win32' ? HOMEPATH : HOME);
+
+function tldomain(fullpath) {
+  return fullpath.
+    match(/^\w+:\/\/([\w.]+)/)[1].
+    split('.').reverse().
+    slice(0,2).reverse().
+    join('.');
+}
+
 global.mitm = {
   argv: yargs(process.argv.slice(2)),
   home: `${home}/.mitm-play`,
   port: 3000,
   fn: {
     stringify,
+    tldomain,
     fg,
   },
 };

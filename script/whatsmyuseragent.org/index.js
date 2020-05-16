@@ -1,13 +1,13 @@
 const {
   resp,
   routeSet,
-  stringify,
 } = global.mitm.fn;
 
 routes = {
   js: {
     'whatsmyuseragent.org': {resp},
+    'googleapis.com': {resp},
   }
 }
 
-console.log(stringify(routeSet(routes)));
+const ns = routeSet(routes, 'whatsmyuseragent.org', true)

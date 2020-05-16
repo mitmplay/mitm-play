@@ -32,7 +32,6 @@ const unregisterJS = function() {
 const {
   resp, 
   routeSet,
-  stringify,
 } = global.mitm.fn;
 
 const routes = {
@@ -59,4 +58,4 @@ const routes = {
   // js: {'twitter.com': {resp}},
 }
 
-// console.log(stringify(routeSet(routes)));
+const ns = routeSet(routes, 'twitter.com', true)

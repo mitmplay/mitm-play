@@ -28,8 +28,9 @@ module.exports = () => {
   if (!argv.script) {
     argv.script = `${process.cwd()}/script`.replace(/\\/g, '/');
   }
-  const {host, pathname} = new URL(argv.go);
-  argv.userscript = `${argv.script}/${host}/*.js`;
+  // const {host, pathname} = new URL(argv.go);
+  // argv.userscript = `${argv.script}/${host}/*.js`;
+  argv.userscript = `${argv.script}/**/*.js`;
 
   if (argv.clear) {
     fs.remove(`${mitm.home}/cache`);

@@ -10,4 +10,4 @@ routes = {
   }
 }
 
-console.log(stringify(routeSet(routes)));
+// console.log(stringify(routeSet(routes)));
