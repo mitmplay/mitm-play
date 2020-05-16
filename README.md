@@ -27,9 +27,13 @@ mitm-play goog
 The distribution include sample MITM route to google search & mock 
 
 # Concept
-Mitm interception use namespaces routing, for start it use `default` namespace for all request that don't have **referer** header, and next request in which should having `referer` header it will try to `check host matched` with `namespace` and use that namespace to select the routing, if the namespace not found it will fallback to `default` namespace. 
+Mitm interception use namespaces routing, for start it use `default` namespace for all request that don't have **referer** header. 
 
-Sample built in route(s)
+Next request in which should having `referer`, it will use the hostname on the `referer` header and use it to `matched` with one of `namespace` from the list and use that namespace for routing.
+
+If matching namespace was not found, it will fallback to `default` namespace. 
+
+Sample routes:
 ```js
 // const googlJS = function() {..}
 mitm.route = {
