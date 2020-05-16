@@ -12,8 +12,8 @@ module.exports = () => {
   
   fs.ensureDir(mitm.home, err =>{});
 
-  if (!argv.browser || ['chromium','webkit'].indexOf(argv.browser)===-1) {
-    argv.browser = 'firefox';
+  if (!argv.browser || ['firefox','webkit'].indexOf(argv.browser)===-1) {
+    argv.browser = 'chromium';
   } else {
     fs.ensureDir(`${mitm.home}/.${argv.browser}`, err => {});
   }

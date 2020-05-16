@@ -5,7 +5,7 @@ const {extract} = require('../routes/fetch')
 
 module.exports = () => {
   (async () => {
-    let page, browser, brcontex;
+    let page, browser, bcontext;
     const { argv } = global.mitm;
     const br = mitm.argv.browser;
     if (argv.pristine) {
@@ -14,29 +14,29 @@ module.exports = () => {
         headless: false
       });
       page = await browser.pages()[0];
-      brcontex = browser;
+      bcontext = browser;
     } else {
       browser = await playwright[br].launch({
         headless: false
       });
       const context = await browser.newContext();
       page = await context.newPage();  
-      brcontex = context;
+      bcontext = context;
     }
     if (argv.logurl || argv.l) {
-      brcontex.route('**/*', (route, request) => {
+      bcontext.route('**/*', (route, request) => {
         const {headers} = extract(route, request);
         const arr = route.request().url().split(/([&?;,]|:\w|url)/);
         console.log(`${arr[0]}${arr.length>1 ? '?' : ''}`, JSON.stringify(headers, null, 2));
         route.continue({});
       });
     } else {
-      brcontex.route(/.*/, routes);
+      bcontext.route(/.*/, routes);
     }
-    page.on('worker', worker => {
-      console.log('Worker created: ' + worker.url());
-      worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()));
-    });
+    // page.on('worker', worker => {
+    //   console.log('Worker created: ' + worker.url());
+    //   worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()));
+    // });
     
     await page.goto(argv.go);
 
