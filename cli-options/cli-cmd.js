@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 
 module.exports = () => {
-  let {argv} = mitm;
+  let {argv, fn: {clear}} = mitm;
   let arg = argv._[0] || 'default';
   arg = `${mitm.home}/argv/${arg}.js`;
   if (fs.existsSync(arg)) {
@@ -32,10 +32,7 @@ module.exports = () => {
   // argv.userscript = `${argv.script}/${host}/*.js`;
   argv.userscript = `${argv.script}/**/*.js`;
 
-  if (argv.clear) {
-    fs.remove(`${mitm.home}/cache`);
-    fs.remove(`${mitm.home}/log`);
-  }
+  clear();
 
   if (argv.save) {
     const { save, ...rest } = argv;

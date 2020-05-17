@@ -36,11 +36,11 @@ module.exports = (typ, {url, headers}) => {
     const {origin, referer} = headers;
     let orref = tldomain(origin || referer);
     const route = mitm.routes[orref]
-    let exclude = [];
+    let exclude = false;
     if (route && route.exclude) {
-      exclude = route.exclude; 
+      exclude = route.exclude.find(e => domain.match(e)); 
     }
-    if (exclude.indexOf(domain)===-1) {
+    if (!exclude) {
       match = search(orref);
     }        
   } 

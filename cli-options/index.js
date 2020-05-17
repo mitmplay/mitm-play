@@ -1,9 +1,10 @@
+const fs = require('fs-extra');
+const fg = require('fast-glob');
 const yargs = require('yargs-parser');
 const stringify = require('./stringify');
 const script = require('../script');
 const cliCmd = require('./cli-cmd');
 const routes = require('./routes');
-const fg = require('fast-glob');
 
 const {platform, env: {HOME, HOMEPATH}} = process;
 const home = (platform === 'win32' ? HOMEPATH : HOME).replace(/\\/g, '/');
@@ -16,6 +17,12 @@ function tldomain(fullpath) {
     join('.');
 }
 
+function clear() {
+  const {clear:c} = global.mitm.argv;
+  (c===true || c==='cache') && fs.remove(`${mitm.home}/cache`);
+  (c===true || c==='log') && fs.remove(`${mitm.home}/log`);
+}
+
 global.mitm = {
   argv: yargs(process.argv.slice(2)),
   home: `${home}/.mitm-play`,
@@ -23,6 +30,7 @@ global.mitm = {
   fn: {
     stringify,
     tldomain,
+    clear,
     fg,
   },
 };

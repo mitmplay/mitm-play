@@ -1,14 +1,39 @@
 const fs = require('fs-extra');
 const _match = require('./match');
 
+function filename(pathname, reqs) {
+  const accept = reqs.headers.accept || '';
+  const secFet = reqs.headers['sec-fetch-dest'] || '';
+  const arr = pathname.split('/');
+  let file = arr.pop();
+  if (file==='') {
+    file = '_';
+  }
+  file2 = file.split('.');
+  if (file2.length===1) {
+    if (accept.indexOf('html')>-1) {
+      file2.push('html');
+    } else if (accept.indexOf('css')>-1) {
+      file2.push('css');
+    } else if (secFet.indexOf('script')>-1) {
+      file2.push('js');
+    }
+  }
+  arr.push(file2.join('.'));
+  const fullpath = arr.join('/');
+  // console.log('fullpath', pathname, fullpath);
+  return fullpath;
+}
+
 function cacheResponse(arr, reqs) {
   const match = _match('cache', reqs);
   if (match) {
     console.log(match.log);
-    const {host, pathname} = match;
+    const {host, pathname: f} = match;
+    const fullpath = filename(f, reqs);
 
-    const stamp1 = `${host}${pathname}`;
-    const stamp2 = `${host}/_${pathname}`;
+    const stamp1 = `${host}${fullpath}`;
+    const stamp2 = `${host}/$${fullpath}`;
 
     const ex = match.route.ext || '';
     const cache = `${mitm.home}/cache`;

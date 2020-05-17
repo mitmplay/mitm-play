@@ -9,8 +9,10 @@ const load = function(path) {
 }
 
 const loadJS = function(path, log) {
+  const {clear} = global.mitm.fn;
   console.log(log);
   load(path);
+  clear();
 }
 
 module.exports = () => {

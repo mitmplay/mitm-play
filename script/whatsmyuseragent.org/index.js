@@ -4,12 +4,12 @@ const {
 } = global.mitm.fn;
 
 routes = {
-  //exclude: ['googleapis.com'],
+  exclude: ['google'],
   cache: {
-    '.js$': {}
+    '.*': {}
   },
   log: {
-    '.js$': {}
+    '.js$': {} 
   },
   js: {
     'whatsmyuseragent.org': {resp},

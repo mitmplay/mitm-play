@@ -15,7 +15,7 @@ function isObjLiteral(_obj) {
   );
 }
 
-function stringify(obj, i=0) {
+function stringify(obj, i=0, lf=`\n`) {
   let tab = ' '.repeat(i);
   let out = '';
   for (let p in obj) {
@@ -23,17 +23,34 @@ function stringify(obj, i=0) {
     out += i==2 ? `${tab}'${p}': ` : `${tab}${p}: `;
     const nod = obj[p];
     if (Array.isArray(nod)) {
-      ins = `[\n${stringify(nod, i+2)}${tab}],\n`;
+      const length = nod.length;
+      if (length===0) {
+        ins = `[],${lf}`;
+      } else if (length>1 || typeof(nod[0])==='function') {
+        ins = `[\n${stringify(nod, i+2)}${tab}],\n`;      
+      } else {
+        ins = `[ ${stringify(nod, 0, '')} ],${lf}`; 
+      }
     } else if (isObjLiteral(nod)) {
-      ins = `{\n${stringify(nod, i+2)}${tab}},\n`;
-    } else if (typeof(nod==='function')) {
+      if (Object.keys(nod).length) {
+        ins = `{\n${stringify(nod, i+2)}${tab}},\n`;
+      } else {
+        ins = `{},${lf}`;
+      }
+    } else if (typeof(nod)==='function') {
       ins = (nod+'').replace(/\n/g,`\n${tab}`)+`,\n`;
+    } else if (typeof(nod)==='string') {
+      ins = `'${nod}',${lf}`;
     } else {
-      ins = nod+ '\n';
+      ins = `${nod}${lf}`;
     }
     out += ins;
   }
-  return i===0 ? out.replace(/ \d+: /g, ' ') : out;
+  return out;
 }
 
-module.exports = stringify
+module.exports = o => {
+  return stringify(o).
+    replace(/( \d+: | '\d+': )/g, ' '). 
+    replace(/, \],/g,' ],')
+};
