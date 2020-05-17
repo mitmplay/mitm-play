@@ -3,6 +3,8 @@ const {
   routeSet,
 } = global.mitm.fn;
 
+const domain =  __dirname.split(/\\|\//).pop();
+
 routes = {
   exclude: ['google'],
   cache: {
@@ -12,10 +14,9 @@ routes = {
     '.js$': {} 
   },
   js: {
-    'whatsmyuseragent.org': {resp},
     'googleapis.com': {resp},
   }
 }
+routes.js[domain] = {resp}; 
 
-const ns = routeSet(routes, 'whatsmyuseragent.org', true)
- 
+const ns = routeSet(routes, domain, true)

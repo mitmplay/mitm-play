@@ -30,7 +30,7 @@ module.exports = () => {
 
   let {route} = argv;
   if (!route) {
-    route = `${process.cwd()}/script`;
+    route = `${process.cwd()}/userroute`;
   } else if (route.match(/^\.$/)) {
     route = route.replace(/^\.$/, `${process.cwd()}`);
   } else if (route.match(/^\.\//)) {

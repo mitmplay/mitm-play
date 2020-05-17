@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const fg = require('fast-glob');
 const yargs = require('yargs-parser');
 const stringify = require('./stringify');
-const script = require('../script');
+const script = require('../userroute');
 const cliCmd = require('./cli-cmd');
 const routes = require('./routes');
 
