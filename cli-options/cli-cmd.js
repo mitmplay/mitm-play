@@ -4,10 +4,13 @@ module.exports = () => {
   let {argv, fn: {clear}} = mitm;
   let arg = argv._[0] || 'default';
   arg = `${mitm.home}/argv/${arg}.js`;
-  if (fs.existsSync(arg)) {
-    const _argv = JSON.parse(fs.readFileSync(arg));
-    global.mitm.argv = {..._argv, ...argv};
-    argv = mitm.argv;
+
+  if (!argv.save) {
+    if (fs.existsSync(arg)) {
+      const _argv = JSON.parse(fs.readFileSync(arg));
+      global.mitm.argv = {..._argv, ...argv};
+      argv = mitm.argv;
+    } 
   }
   
   fs.ensureDir(mitm.home, err =>{});
@@ -25,12 +28,18 @@ module.exports = () => {
     argv.go = `https://${argv.go}`;
   }
 
-  if (!argv.script) {
-    argv.script = `${process.cwd()}/script`.replace(/\\/g, '/');
+  let {route} = argv;
+  if (!route) {
+    route = `${process.cwd()}/script`;
+  } else if (route.match(/^\.$/)) {
+    route = route.replace(/^\.$/, `${process.cwd()}`);
+  } else if (route.match(/^\.\//)) {
+    route = route.replace(/^\.\//, `${process.cwd()}/`);
+  } else if (route.match(/^\..\//)) {
+    route = route.replace(/^\..\//, `${process.cwd()}/../`);
   }
-  // const {host, pathname} = new URL(argv.go);
-  // argv.userscript = `${argv.script}/${host}/*.js`;
-  argv.userscript = `${argv.script}/**/*.js`;
+  argv.route = route.replace(/\\/g, '/');
+  mitm.data.userroute = `${route}/*/*.js`;
 
   clear();
 

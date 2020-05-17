@@ -27,6 +27,9 @@ global.mitm = {
   argv: yargs(process.argv.slice(2)),
   home: `${home}/.mitm-play`,
   port: 3000,
+  data: {
+    userroute: './**/*.js',
+  },
   fn: {
     stringify,
     tldomain,

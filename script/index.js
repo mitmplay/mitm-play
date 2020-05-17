@@ -3,8 +3,9 @@ const fg = require('fast-glob');
 const chokidar = require('chokidar');
 
 const load = function(path) {
-  console.log('>> userscript', path);
-  delete require.cache[require.resolve(path)];
+  console.log('>> userroute', path);
+  const rpath = require.resolve(path);
+  delete require.cache[rpath];
   return require(path);
 }
 
@@ -16,16 +17,16 @@ const loadJS = function(path, log) {
 }
 
 module.exports = () => {
-  const {userscript} = mitm.argv;
-  const files = fg.sync([userscript]);
+  const {userroute} = mitm.data;
+  const files = fg.sync([userroute]);
 
   if (!files.length) {
-    console.log('>> no watcher', userscript, files);
+    console.log('>> no watcher', userroute, files);
     // return;
   }
   
   // Initialize watcher.
-  const watcher = chokidar.watch(userscript, {
+  const watcher = chokidar.watch(userroute, {
     // ignored: /(^|[\/\\])\../, // ignore dotfiles
     persistent: true
   });
