@@ -45,7 +45,7 @@ module.exports =  (route, request) => {
       for (const fn of respEvents) {
         resp = fn(resp);
       }
-      console.log('cached1', reqs.url);
+      // console.log('cached1', reqs.url);
       route.fulfill(resp); // exec route.fulfill()
     } else {
       //--call to BE and do log or modification & respond
@@ -59,7 +59,7 @@ module.exports =  (route, request) => {
   } else {
     if (resp) {
       //--respond with cached
-      console.log('cached2', reqs.url);
+      // console.log('cached2', reqs.url);
       route.fulfill(resp); // exec route.fulfill()
     } else {
       //--normal flow: with reg headers getting update

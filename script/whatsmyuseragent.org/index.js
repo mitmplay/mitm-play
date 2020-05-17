@@ -4,6 +4,13 @@ const {
 } = global.mitm.fn;
 
 routes = {
+  //exclude: ['googleapis.com'],
+  cache: {
+    '.js$': {}
+  },
+  log: {
+    '.js$': {}
+  },
   js: {
     'whatsmyuseragent.org': {resp},
     'googleapis.com': {resp},
@@ -11,3 +18,4 @@ routes = {
 }
 
 const ns = routeSet(routes, 'whatsmyuseragent.org', true)
+ 

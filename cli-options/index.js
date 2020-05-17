@@ -6,7 +6,7 @@ const routes = require('./routes');
 const fg = require('fast-glob');
 
 const {platform, env: {HOME, HOMEPATH}} = process;
-const home = (platform === 'win32' ? HOMEPATH : HOME);
+const home = (platform === 'win32' ? HOMEPATH : HOME).replace(/\\/g, '/');
 
 function tldomain(fullpath) {
   return fullpath.

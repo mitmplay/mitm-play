@@ -46,9 +46,13 @@ function routeSet(routes2, namespace, print=false) {
           delete route1[key];
         }
       }
-      routes1[namespace][typ] = {
-        ...route2,
-        ...route1,
+      if (Array.isArray(route2)) {
+        routes1[namespace][typ] = route2;
+      } else {
+        routes1[namespace][typ] = {
+          ...route2,
+          ...route1,
+        }  
       }
     } else {
       routes1[namespace][typ] = routes2[typ];
@@ -66,7 +70,7 @@ const routes = {
     // cache: {
     //   // 'application/x-ww': { ext: '.json' }
     // },
-    // logs: {
+    // log: {
     //   // 'application/json': { ext: '.json' },
     // },
     skip: {

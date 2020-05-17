@@ -4,14 +4,19 @@ const _match = require('./match');
 function cacheResponse(arr, reqs) {
   const match = _match('cache', reqs);
   if (match) {
-    const { url } = reqs;
+    console.log(match.log);
     const {host, pathname} = match;
-    const p = pathname.replace('/', '_');
-    const stamp1 = `${host}/${p}`;
-    const stamp2 = `${host}/resp/${p}`;
-    const fpath1 = `${mitm.home}/cache/${stamp1}${match.route.ext}`;
-    const fpath2 = `${mitm.home}/cache/${stamp2}.json`;
+
+    const stamp1 = `${host}${pathname}`;
+    const stamp2 = `${host}/_${pathname}`;
+
+    const ex = match.route.ext || '';
+    const cache = `${mitm.home}/cache`;
+    const fpath1 = `${cache}/${stamp1}${ex}`;
+    const fpath2 = `${cache}/${stamp2}.json`;
+
     if (fs.existsSync(fpath1)) {
+      console.log(`>>       (${fpath1})`);
       const body = fs.readFileSync(fpath1);
       const {status, headers} = JSON.parse(fs.readFileSync(fpath2));
       return {status, headers, body};

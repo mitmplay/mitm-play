@@ -2,13 +2,13 @@ const fs = require('fs-extra');
 const _match = require('./match');
 
 function logResponse(arr, reqs) {
-  const match = _match('logs', reqs);
+  const match = _match('log', reqs);
   if (match) {
-    const { url } = reqs;
+    console.log(match.log);
     const {host, pathname} = match;
-    const p = pathname.replace('/', '_');
+    const ex = match.route.ext || '';
     const stamp = (new Date).toISOString().replace(/:/g, '_');
-    const fpath = `${mitm.home}/log/${host}/${stamp}${p}${match.route.ext}`;
+    const fpath = `${mitm.home}/log/${host}/${stamp}${pathname}${ex}`;
     arr.push(resp => { 
       fs.ensureFile(fpath, err => {
         fs.writeFile(fpath, resp.body, err => {
