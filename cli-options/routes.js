@@ -66,7 +66,7 @@ const routes = {
     // log: {
     //   // 'application/json': { ext: '.json' },
     // },
-    cache: {
+    skip: {
       '.(jpeg|jpg|png|svg|gif|ico|mp4)': {},
     },
     mock: {

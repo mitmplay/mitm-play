@@ -1,5 +1,6 @@
 log
 *.png
+*.tgz
 cache
 chrome-profile
 
