@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const _match = require('./match');
+const {matched,searchFN} = _match;
 
 function filename(pathname, reqs) {
   const accept = reqs.headers.accept || '';
@@ -26,7 +27,9 @@ function filename(pathname, reqs) {
 }
 
 function cacheResponse(arr, reqs) {
-  const match = _match('cache', reqs);
+  const search = searchFN('cache', reqs);
+  const match = matched(search, reqs);
+
   if (match) {
     console.log(match.log);
     const {host, pathname: f} = match;

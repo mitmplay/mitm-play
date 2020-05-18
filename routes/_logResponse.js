@@ -1,8 +1,10 @@
 const fs = require('fs-extra');
 const _match = require('./match');
+const {matched,searchFN} = _match;
 
 function logResponse(arr, reqs) {
-  const match = _match('log', reqs);
+  const search = searchFN('log', reqs);
+  const match = matched(search, reqs);
   if (match) {
     console.log(match.log);
     const {host, pathname} = match;

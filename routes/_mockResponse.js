@@ -1,5 +1,6 @@
 const _match = require('./match');
 const _fetch = require('./fetch');
+const {matched,searchFN} = _match;
 const {source} = _fetch;
 
 const mock = () => {
@@ -13,7 +14,8 @@ const mock = () => {
 };
 
 function mockResponse(route, reqs) {
-  const match = _match('mock', reqs);
+  const search = searchFN('mock', reqs);
+  const match = matched(search, reqs);
   if (match) {
     if (!match.url.match('/mitm-play/websocket')) {
       console.log(match.log);

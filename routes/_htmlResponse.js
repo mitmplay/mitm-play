@@ -1,9 +1,11 @@
 const _match = require('./match');
 const _fetch = require('./fetch');
+const {matched,searchFN} = _match;
 const {script_src,e_end} = _fetch;
 
 function htmlResponse(arr, reqs) {
-  const match = _match('html', reqs);
+  const search = searchFN('html', reqs);
+  const match = matched(search, reqs);
   if (match) {
     arr.push(resp => {   
       const contentType = `${resp.headers['content-type']}`;

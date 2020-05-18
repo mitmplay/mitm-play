@@ -1,7 +1,9 @@
 const _match = require('./match');
+const {matched,searchFN} = _match;
 
 function cssResponse(arr, reqs) {
-  const match = _match('css', reqs);
+  const search = searchFN('css', reqs);
+  const match = matched(search, reqs);
   if (match) {
     arr.push(resp => {
       const contentType = `${resp.headers['content-type']}`;

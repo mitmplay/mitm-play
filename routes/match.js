@@ -1,7 +1,5 @@
-module.exports = (typ, {url, headers}) => {
-  const {tldomain} = global.mitm.fn;
-
-  function search(namespace) {
+const searchFN = (typ, {url, headers}) => {
+  return function search(namespace) {
     if (!mitm.routes[namespace]) {
       return;
     }
@@ -27,7 +25,11 @@ module.exports = (typ, {url, headers}) => {
         }
       }
     }
-  }
+  };
+};
+
+const matched = (search, {url, headers}) => {
+  const {tldomain} = global.mitm.fn;
 
   let domain = tldomain(url);
   let match = search(domain);
@@ -47,6 +49,11 @@ module.exports = (typ, {url, headers}) => {
   if (!match) {
     match = search('default');
   };
-  // console.log('>> Match', tld, typ, !!match)
+  // console.log('>> Match', tld, !!match)
   return match;
+}
+
+module.exports = {
+  searchFN,
+  matched,
 }

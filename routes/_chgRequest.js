@@ -1,6 +1,6 @@
 const {matched} = require('./match');
 
-function skipResponse(reqs) {
+function chgRequest(reqs) {
   const {url} = reqs;
 
   function search(namespace) {
@@ -17,4 +17,4 @@ function skipResponse(reqs) {
   return matched(search, reqs);
 }
 
-module.exports = skipResponse;
+module.exports = chgRequest;
