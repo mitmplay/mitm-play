@@ -36,7 +36,7 @@ module.exports =  (route, request) => {
   _jsResponse(respEvents, reqs);
 
   //--inject websocket client to html
-  _addWebSocket(respEvents, reqs);
+  // _addWebSocket(respEvents, reqs);
 
   //--respond need to log or modify
   if (respEvents.length) {

@@ -5,7 +5,9 @@ const chokidar = require('chokidar');
 const load = function(path) {
   console.log('>> userroute', path);
   const rpath = require.resolve(path);
-  delete require.cache[rpath];
+  if (require.cache[rpath]) {
+    delete require.cache[rpath];
+  }
   return require(path);
 }
 

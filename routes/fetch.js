@@ -1,11 +1,13 @@
 const _fetch = require('make-fetch-happen');
 
 function extract(route, request) {
-  return {
-    url: route.request().url(),
-    headers: request.headers(),      
-    method: route.request.method,  
-  }
+  const {
+    _url: url, 
+    _method: method, 
+    _headers: headers,
+    _postData: body,
+  } = route._request;
+  return {url, method, headers, body};
 }
 
 function script_src(body, src) {
@@ -15,10 +17,11 @@ function script_src(body, src) {
     b = b.replace(/<head>/i, `<head>\n${el}`);
   } else {
     const h = b.match(/(<html[^>]+>)/i);
-    if (!h) {
-      console.log('>> err', b.length)
-    } else {
+    if (h) {
       b = b.replace(h[0], `${h[0]}\n${el}`);
+    } else {
+      b = `${el}\n${b}`;
+      //console.log('>> err script_src', b)
     }
   }
   return b;
@@ -58,15 +61,34 @@ function e_end(body, fn) {
   return b;
 }
 
-function fetch(route, {url, headers, method}, handler) {
-  // console.log(url, JSON.stringify(headers, null, 2))
-  _fetch(url, {headers,method, redirect: 'manual'}).then(resp => {
+function fetch(route, {url, ...reqs}, handler) {
+  // delete headers['x-requested-with'];
+  // delete headers['Upgrade-Insecure-Requests'];
+  // delete headers['access-control-allow-origin'];
+  // delete headers['access-control-allow-credentials'];
+  if (url.match('admin-ajax.php')) {
+    // headers['accept-encoding'] = 'gzip, defalte, br';
+    // headers['accept-language'] = 'en-US,en;q=0.5';
+    // headers['cache-control'] = 'max-age=0';
+    // headers['connection'] = 'keep-alive';
+    // headers['origin'] = headers['referer'];
+    // headers['host'] = 'www.androidauthority.com';
+    // headers['content-length'] = '55';
+    // headers['TE'] = 'Trailers';
+    console.log('>>>> Headers1', reqs);
+  }
+  _fetch(url, {...reqs, redirect: 'manual'}).then(resp => {
     const headers = resp.headers.raw();
     const status = resp.status;
 
+    // delete headers['access-control-allow-methods'];
+    // headers['referrer-policy'] = ['no-referrer-when-downgrade'];
     resp.buffer().then(body => {
-      const resp = handler({url, status, headers, body});
-      route.fulfill(resp);
+      if (url.match('admin-ajax.php')) {
+        console.log('>>>> Response', resp);
+      }
+      const resp2 = handler({url, status, headers, body});
+      route.fulfill(resp2);
     })
   }).catch(err => {
     console.log('fetch error:', err);
