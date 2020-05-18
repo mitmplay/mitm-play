@@ -36,16 +36,15 @@ module.exports =  (route, request) => {
   _jsResponse(respEvents, reqs);
 
   //--inject websocket client to html
-  // _addWebSocket(respEvents, reqs);
+  _addWebSocket(respEvents, reqs);
 
   //--respond need to log or modify
   if (respEvents.length) {
     if (resp) {
-      //--do log or modification of cached & respond with cached
+      //--log or respond with cached
       for (const fn of respEvents) {
         resp = fn(resp);
       }
-      // console.log('cached1', reqs.url);
       route.fulfill(resp); // exec route.fulfill()
     } else {
       //--call to BE and do log or modification & respond
@@ -59,7 +58,6 @@ module.exports =  (route, request) => {
   } else {
     if (resp) {
       //--respond with cached
-      // console.log('cached2', reqs.url);
       route.fulfill(resp); // exec route.fulfill()
     } else {
       //--normal flow: with reg headers getting update

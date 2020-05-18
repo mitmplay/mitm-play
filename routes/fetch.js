@@ -21,7 +21,6 @@ function script_src(body, src) {
       b = b.replace(h[0], `${h[0]}\n${el}`);
     } else {
       b = `${el}\n${b}`;
-      //console.log('>> err script_src', b)
     }
   }
   return b;
@@ -62,31 +61,11 @@ function e_end(body, fn) {
 }
 
 function fetch(route, {url, ...reqs}, handler) {
-  // delete headers['x-requested-with'];
-  // delete headers['Upgrade-Insecure-Requests'];
-  // delete headers['access-control-allow-origin'];
-  // delete headers['access-control-allow-credentials'];
-  if (url.match('admin-ajax.php')) {
-    // headers['accept-encoding'] = 'gzip, defalte, br';
-    // headers['accept-language'] = 'en-US,en;q=0.5';
-    // headers['cache-control'] = 'max-age=0';
-    // headers['connection'] = 'keep-alive';
-    // headers['origin'] = headers['referer'];
-    // headers['host'] = 'www.androidauthority.com';
-    // headers['content-length'] = '55';
-    // headers['TE'] = 'Trailers';
-    console.log('>>>> Headers1', reqs);
-  }
   _fetch(url, {...reqs, redirect: 'manual'}).then(resp => {
     const headers = resp.headers.raw();
     const status = resp.status;
 
-    // delete headers['access-control-allow-methods'];
-    // headers['referrer-policy'] = ['no-referrer-when-downgrade'];
     resp.buffer().then(body => {
-      if (url.match('admin-ajax.php')) {
-        console.log('>>>> Response', resp);
-      }
       const resp2 = handler({url, status, headers, body});
       route.fulfill(resp2);
     })

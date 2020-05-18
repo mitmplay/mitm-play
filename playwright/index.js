@@ -6,11 +6,11 @@ const {extract} = require('../routes/fetch')
 //https://stackoverflow.com/questions/21177387/caution-provisional-headers-are-shown-in-chrome-debugger/55865689#55865689
 const options = {headless: false};
 const args = [
-  // `--disable-extensions-except=${pathToExtension}`,
   // `--load-extension=${pathToExtension}`,
-  `--disable-features=IsolateOrigins,site-per-process`,
-  // `--disable-features=site-per-process,NetworkService,NetworkServiceInProcess`,
   // `--disable-client-side-phishing-detection=1`,
+  // `--disable-extensions-except=${pathToExtension}`,
+  // `--disable-features=site-per-process,NetworkService,NetworkServiceInProcess`,
+  `--disable-features=IsolateOrigins,site-per-process`,
   `--disable-site-isolation-trials=1`,
   `--disable-site-isolation=1`,
   `--disable-web-security=1`,
