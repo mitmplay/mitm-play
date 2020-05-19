@@ -1,20 +1,17 @@
-const {matched} = require('./match');
+const _match = require('./match');
+const {matched,searchFN} = _match;
 
 function chgRequest(reqs) {
-  const {url} = reqs;
-
-  function search(namespace) {
-    if (mitm[namespace]) {
-      let result;
-      for (let key in mitm[namespace].routes.skip) {
-        result = url.match(key);
-        if (result) {
-          return true;
-        }
-      }  
+  const search = searchFN('headers', reqs);
+  const match = matched(search, reqs);
+  if (match) {
+    console.log(match.log);
+    const _headers = match.route;
+    const {headers} = reqs;
+    for (let key in _headers) {
+      headers[key] = _headers[key];
     }
   };
-  return matched(search, reqs);
 }
 
 module.exports = chgRequest;

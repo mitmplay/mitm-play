@@ -6,6 +6,7 @@ const _htmlResponse = require('./_htmlResponse');
 const _jsonResponse = require('./_jsonResponse');
 const _cssResponse = require('./_cssResponse');
 const _jsResponse = require('./_jsResponse');
+const _chgRequest = require('./_chgRequest');
 const _addWebSocket = require('./_addWebSocket');
 const patchReqHeader = require('./patchReqHeader');
 const { extract, fetch } = require('./fetch');
@@ -23,6 +24,8 @@ module.exports =  (route, request) => {
   if (_mockResponse(route, reqs)) {
     return;
   }
+
+  _chgRequest(reqs);
 
   //--resp can be undefined or local cached
   resp = _cacheResponse(respEvents, reqs);
