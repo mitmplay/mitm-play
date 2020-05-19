@@ -24,7 +24,9 @@ module.exports = () => {
     if (argv.browser==='chromium') {
       options.args = args;
     }
-    if (argv.pristine) {
+    const _browser = require('playwright')[argv.browser];
+    console.log('>> executablePath', _browser.executablePath());
+    if (argv.pristine || argv.p) {
       // buggy route will not work :(
       browser = await playwright[br].launchPersistentContext(`${mitm.home}/.${br}`, options);
       page = await browser.pages()[0];

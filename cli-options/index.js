@@ -57,13 +57,13 @@ module.exports = () => {
   Usage: mitm-play <profl> [options]
   
   Options:
-    --help/-h  \t show this help
-    --go       \t go to specific website location
-    --browser  \t set browser: chromium/firefox/webkit
-    --pristine \t set a pristine browser (not recommended)
-    --logurl/-l\t test route to log url & headers 
-    --clear    \t clear cache and/or logs
-    --save     \t save as default <profl>
+    --help/-h     \t show this help
+    --go          \t go to specific website location
+    --browser     \t set browser: chromium/firefox/webkit
+    --pristine/-p \t set a pristine browser (not recommended)
+    --logurl/-l   \t test route to log url & headers 
+    --clear       \t clear cache and/or logs
+    --save        \t save as default <profl>
   `);
     process.exit();
   }
