@@ -57,6 +57,11 @@ function routeSet(routes2, namespace, print=false) {
 };
 
 const _initWebsocket = require('../socketclnt');
+const _global_vars = () => {
+  const {argv} = global.mitm;
+  const _g = JSON.stringify({argv}, null, 2);
+  return {body: `window.mitm = ${_g};\n`};
+};
 
 const routes = {
   default: {
@@ -72,8 +77,9 @@ const routes = {
     mock: {
       '/mock': {resp: mock},
       '/mitm-play/websocket.js': {
+        resp: _global_vars,
         js: [_initWebsocket],
-      },  
+      },
     },
     html: {
       'www.google.com/search': {
