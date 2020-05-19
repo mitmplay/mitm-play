@@ -10,11 +10,20 @@ const {platform, env: {HOME, HOMEPATH}} = process;
 const home = (platform === 'win32' ? HOMEPATH : HOME).replace(/\\/g, '/');
 
 function tldomain(fullpath) {
-  return fullpath.
+  let fp;
+  if (fullpath.match(/^chrome/)) {
+    return fullpath;
+  }
+  try {
+    fp = fullpath.
     match(/^\w+:\/\/([\w.]+)/)[1].
     split('.').reverse().
     slice(0,2).reverse().
-    join('.');
+    join('.');    
+  } catch (error) {
+    console.log('Error tldomain', error);
+  }
+  return fp;
 }
 
 function clear() {
