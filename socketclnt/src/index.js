@@ -1,13 +1,6 @@
-'use strict';
+const postmessage = require('./postmessage');
 
-var postmessage = () => {
-  function receiveMessage(event) {
-    console.log(`>> Msg: ${event.origin} => https://${location.host}`);
-  }
-  window.addEventListener("message", receiveMessage, false);
-};
-
-var src = function() {
+module.exports = function() {
   function inIframe () {
     let ifrm;
     try {
@@ -28,36 +21,36 @@ var src = function() {
   window.ws_broadcast = (json, _all=true) => {
     const msg = {data: json, _all};
     ws.send(`broadcast${JSON.stringify(msg)}`);
-  };
+  }
 
   //ex: ws_emitpage('_style{"data":{"q":"*","css":"color:yellow;"}}')
   //ex: ws_emitpage('_ping{"data":"Hi!"}')
   window.ws_emitpage = (json, regex='') => {
     const msg = {data: json, regex};
     ws.send(`emitpage${JSON.stringify(msg)}`);
-  };
+  }
 
   //ex: ws__ping('Hi!')
   window.ws__ping = (json) => {
     const msg = {data: json};
     ws.send(`_ping${JSON.stringify(msg)}`);
-  };
+  }
   
   //ex: ws__help()
   window.ws__help = () => {
     ws.send(`_help{}`);
-  };
+  }
 
   //ex: ws__open({url:'https://google.com'})
   window.ws__open = (json) => {
     const msg = {data: json};
     ws.send(`_open${JSON.stringify(msg)}`);
-  };
+  }
 
   window.ws__style = (json, _all=true) => {
     const msg = {data: json, _all};
     ws.send(`_style${JSON.stringify(msg)}`);
-  };
+  }
 
   ws.onopen = function() {                 
     ws.send(`url:${(location+'').split('?')[0]}`);
@@ -112,7 +105,7 @@ var src = function() {
       }        
       if (wccmd[cmd]) {
         console.log(json.data);
-        wccmd[cmd].call(event, json);
+        wccmd[cmd].call(event, json)
       }       
     }
   }
@@ -124,6 +117,4 @@ var src = function() {
   ws.onclose = function() { 
     console.log("ws: Connection is closed"); 
   };
-};
-
-module.exports = src;
+}
