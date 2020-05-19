@@ -1,4 +1,4 @@
-console.log('>> pwd', process.cwd());
+// console.log('>> pwd', process.cwd());
 
 require('./cli-options')();
 require('./playwright')();

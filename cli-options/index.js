@@ -3,6 +3,7 @@ const fg = require('fast-glob');
 const yargs = require('yargs-parser');
 const stringify = require('./stringify');
 const script = require('../userroute');
+const cliChg = require('./cli-chg');
 const cliCmd = require('./cli-cmd');
 const routes = require('./routes');
 
@@ -47,24 +48,29 @@ global.mitm = {
   },
 };
 
+cliChg();
 cliCmd();
 
 module.exports = () => {
   const {argv} = mitm;
-  if (argv.h || argv.help) {
+  if (argv.help) {
     console.log(
   `
   Usage: mitm-play <profl> [options]
   
   Options:
-    --help/-h     \t show this help
-    --go          \t go to specific website location
-    --browser     \t set browser: chromium/firefox/webkit
-    --pristine/-p \t set a pristine browser (not recommended)
-    --logurl/-l   \t test route to log url & headers 
-    --clear       \t clear cache and/or logs
-    --save        \t save as default <profl>
-  `);
+    -h --help     \t show this help
+    -g --go       \t go to location
+    -b --browser  \t browser: chromium/firefox/webkit
+    -p --pristine \t pristine browser not recommended
+    -l --logurl   \t test route to log url & headers
+    -r --route    \t set userscript folder of routes
+    -c --clear    \t clear cache and/or logs
+    -s --save     \t save as default <profl>
+    --chromium    \t browser = chromium
+    --firefox     \t browser = firefox
+    --webkit      \t browser = webkit
+`);
     process.exit();
   }
   console.log(argv);

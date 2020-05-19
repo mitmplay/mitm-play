@@ -26,7 +26,7 @@ module.exports = () => {
     }
     const _browser = require('playwright')[argv.browser];
     console.log('>> executablePath', _browser.executablePath());
-    if (argv.pristine || argv.p) {
+    if (argv.pristine) {
       // buggy route will not work :(
       browser = await playwright[br].launchPersistentContext(`${mitm.home}/.${br}`, options);
       page = await browser.pages()[0];
@@ -37,7 +37,7 @@ module.exports = () => {
       page = await context.newPage();  
       bcontext = context;
     }
-    if (argv.logurl || argv.l) {
+    if (argv.logurl) {
       bcontext.route('**/*', (route, request) => {
         const {url, method, headers} = extract(route, request);
         if (url.match('admin-ajax.php')) {
