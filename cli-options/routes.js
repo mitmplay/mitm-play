@@ -1,3 +1,4 @@
+const fs = require('fs-extra');
 const stringify = require('./stringify');
 
 const resp = () => {};
@@ -56,11 +57,16 @@ function routeSet(routes2, namespace, print=false) {
   return global.mitm.routes[namespace];
 };
 
-const _initWebsocket = require('../socketclnt');
+const rpath = require.resolve('../socketclnt');
+const _body = fs.readFileSync(rpath)+'';
+
 const _global_vars = () => {
   const {argv} = global.mitm;
-  const _g = JSON.stringify({argv}, null, 2);
-  return {body: `window.mitm = ${_g};\n`};
+  let _g = {argv};
+  _g = JSON.stringify(_g, null, 2);
+  _g = `window.mitm = ${_g};\nsrc()`;
+  _g = _body.replace('src()',`${_g}`);
+  return {body: `window.mitm = ${_g}`};
 };
 
 const routes = {
@@ -78,7 +84,6 @@ const routes = {
       '/mock': {resp: mock},
       '/mitm-play/websocket.js': {
         resp: _global_vars,
-        js: [_initWebsocket],
       },
     },
     html: {

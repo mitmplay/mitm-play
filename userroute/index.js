@@ -1,4 +1,3 @@
-const fs = require('fs-extra');
 const fg = require('fast-glob');
 const chokidar = require('chokidar');
 

@@ -1,5 +1,4 @@
-const { e_head, script_src } = require('./fetch');
-const _initWebsocket = require('../socketclnt');
+const { script_src } = require('./fetch');
 
 function addWebSocket(arr, reqs) {
   if ((reqs.headers.accept+'').indexOf('text/html') > -1) {
