@@ -1,12 +1,15 @@
+const _global = require('./global');
 const _client = require('./client');
-const wccmd = _client();
 
-module.exports = (event, msg) => {
-  if (msg.length>40) {
-    console.log('received: `%s...`', msg.slice(0,40));
-  } else {
-    console.log('received: `%s`', msg);
-  }
+// accessible from client
+const wscmd = {
+  ..._global(),
+  ..._client(),
+}
+global.mitm.wscmd = wscmd;
+
+module.exports = (client, msg) => {
+  console.log('received: "%s"', msg);
   const arr = msg.replace(/\s+$/, '').match(/^ *(\w+) *(\{.*)/);
   if (arr) {
     let [,cmd,json] = arr;
@@ -17,9 +20,8 @@ module.exports = (event, msg) => {
     } catch (error) {
       console.error(json,error);
     }        
-    if (wccmd[cmd]) {
-      console.log(json.data);
-      wccmd[cmd].call(event, json)
-    }       
-  }    
+    if (wscmd[cmd]) {
+      wscmd[cmd].call(client, json)
+    }
+  }
 }
