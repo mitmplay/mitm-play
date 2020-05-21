@@ -3,12 +3,8 @@ const routeMock = {
   }
 };
 
-const handlerMock = (resp) => {
-  return resp;
-}
-
 const routeRequestMock = {
-  url: "https://androidauthority.com/",
+  url: 'https://api.github.com',
   method: "GET",
   body: null,
   headers: {
@@ -21,39 +17,8 @@ const routeRequestMock = {
   },
 }
 
-const responseFetchMock = {
-  status: 301,
-  body: '',
-  headers: {
-    raw: function() {
-      return {
-        "date": ["Thu, 21 May 2020 22:28:10 GMT"],
-        "content-type": ["text/html; charset=UTF-8"],
-        "transfer-encoding": ["chunked"],
-        "connection": ["keep-alive"],
-        "expires": ["Thu, 19 Nov 1981 08:52:00 GMT"],
-        "pragma": ["no-cache"],
-        "x-redirect-by": ["WordPress"],
-        "location": ["https://www.androidauthority.com/"],
-        "x-powered-by": ["WP Engine"],
-        "x-cacheable": ["non200"],
-        "cache-control": ["max-age=600, must-revalidate"],
-        "x-cache": ["HIT: 2"],
-        "x-cache-group": ["normal"],
-        "cf-cache-status": ["DYNAMIC"],
-        "expect-ct": ["max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""],
-        "server": ["cloudflare"],
-        "cf-ray": ["5971ba9a385901c4-SIN"],
-        "cf-request-id": ["02daf2f45e000001c44aa84200000001"],
-        "x-fetch-attempts": ["1"]
-      }
-    }
-  }
-}
 
 module.exports = {
   routeMock,
-  handlerMock,
   routeRequestMock,
-  responseFetchMock,
 }

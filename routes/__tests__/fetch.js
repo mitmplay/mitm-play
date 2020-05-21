@@ -1,9 +1,10 @@
 const assert = require('assert');
 const {
+  script_src,
   extract,
   source,
   e_head,
-  script_src,
+  fetch,
 } = require('../fetch');
 
 describe('fetch.js - extract', () => {
@@ -74,4 +75,42 @@ describe('fetch.js - e_head', function() {
 <body></body>`)
   })
 
+})
+
+const {
+  routeMock,
+  routeRequestMock,
+} = require('../__fixture__/fetch');
+const nock = require('nock')
+
+describe('fetch.js - fetch', function() {
+  test('call fetch api', function(done) {
+    const scope = nock('https://api.github.com').get('/')
+    // .delay({head: 1, body: 3})
+    .reply(200, {license: {}});
+
+    const handler = resp => {
+      done();
+      return resp;
+    }
+
+    const result = fetch(routeMock, routeRequestMock, handler)
+    expect(result).toBe(undefined);
+  })
+
+  test('call fetch api with error', function() {
+    const scope = nock('http://www.google.com')
+    .get('/cat-poems')
+    .replyWithError({
+      message: 'something awful happened',
+      code: 'AWFUL_ERROR'
+    })
+
+    const handler = resp => {
+      throw 'err';
+    }
+
+    const result = fetch(routeMock, routeRequestMock, handler)
+    expect(result).toBe(undefined);
+  })
 })

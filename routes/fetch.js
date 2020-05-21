@@ -67,8 +67,8 @@ function fetch(route, {url, ...reqs}, handler) {
       const resp2 = handler({url, status, headers, body});
       route.fulfill(resp2);
     })
-  }).catch(err => {
-    console.log('fetch error:', err);
+  // }).catch(err => {
+  //   console.log('fetch error:', err);
   })
 }
 
