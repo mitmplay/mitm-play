@@ -20,33 +20,33 @@ describe('fetch.js - extract', () => {
   })
 })
 
-describe('fetch.js - script_src', function() {
-  test('insert <script> inside <html>', function() {
+describe('fetch.js - script_src', () => {
+  test('insert <script> inside <html>', () => {
     const result = script_src('<html><body></body>', ['test.js'])
     expect(result).toBe(`<html>\n<script nonce src="/mitm-play/test.js"></script><body></body>`)
   })
 
-  test('insert <script> inside <head>', function() {
+  test('insert <script> inside <head>', () => {
     const result = script_src('<html><head></head>', ['test.js'])
     expect(result).toBe(`<html><head>\n<script nonce src="/mitm-play/test.js"></script></head>`)
   })
 
-  test('insert <script> in the begening of `text` string', function() {
+  test('insert <script> in the begening of `text` string', () => {
     const result = script_src('text', ['test.js'])
     expect(result).toBe(`<script nonce src="/mitm-play/test.js"></script>\ntext`)
   })
 })
 
-describe('fetch.js - source', function() {
-  test('inject js at the end', function() {
+describe('fetch.js - source', () => {
+  test('inject js at the end', () => {
     const result = source('alert(0);', ['test.js'])
     expect(result).toBe(`alert(0);\n(test.js)();`)
   })
 })
 
-describe('fetch.js - e_head', function() {
+describe('fetch.js - e_head', () => {
   const fn = () => {alert(0)};
-  test('insert js function inside <html>', function() {
+  test('insert js function inside <html>', () => {
     const result = e_head('<html><body></body>', [fn])
     expect(result).toBe(
 `<html>
@@ -56,7 +56,7 @@ describe('fetch.js - e_head', function() {
 <body></body>`)
   })
 
-  test('insert js function inside <head>', function() {
+  test('insert js function inside <head>', () => {
     const result = e_head('<html><head></head>', [fn])
     expect(result).toBe(
 `<html><head>
@@ -66,7 +66,7 @@ describe('fetch.js - e_head', function() {
 </head>`)
   })
 
-  test('insert js function on top', function() {
+  test('insert js function on top', () => {
     const result = e_head('<body></body>', [fn])
     expect(result).toBe(`
 <script>(() => {
@@ -83,8 +83,8 @@ const {
 } = require('../__fixture__/fetch');
 const nock = require('nock')
 
-describe('fetch.js - fetch', function() {
-  test('call fetch api', function(done) {
+describe('fetch.js - fetch', () => {
+  test('call fetch api', done => {
     const scope = nock('https://api.github.com').get('/')
     // .delay({head: 1, body: 3})
     .reply(200, {license: {}});
@@ -98,7 +98,7 @@ describe('fetch.js - fetch', function() {
     expect(result).toBe(undefined);
   })
 
-  test('call fetch api with error', function() {
+  test('call fetch api with error', () => {
     const scope = nock('http://www.google.com')
     .get('/cat-poems')
     .replyWithError({
