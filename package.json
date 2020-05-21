@@ -9,7 +9,7 @@
   "scripts": {
     "wsc": "rollup -c socketclnt/rollup.js",
     "start": "node --inspect ./mitm-play.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage"
   },
   "author": "Widi Harsojo",
   "license": "AGPL-3.0",
@@ -31,6 +31,7 @@
     "yargs-parser": "^18.1.3"
   },
   "devDependencies": {
+    "jest": "^26.0.1",
     "nock": "^12.0.3",
     "rollup": "^2.10.5",
     "rollup-plugin-commonjs": "^10.1.0",

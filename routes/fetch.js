@@ -16,7 +16,7 @@ function script_src(body, src) {
   if (b.match(/<head>/i)) {
     b = b.replace(/<head>/i, `<head>\n${el}`);
   } else {
-    const h = b.match(/(<html[^>]+>)/i);
+    const h = b.match(/(<html[^>]*>)/i);
     if (h) {
       b = b.replace(h[0], `${h[0]}\n${el}`);
     } else {
@@ -28,22 +28,20 @@ function script_src(body, src) {
 
 function source(body, src) {
   let el = src.map(el=>`(${el})();`).join('\n');
-  return `${body}${el}`;
+  return `${body}\n${el}`;
 }
 
 function e_head(body, fn) {
   let el = fn.map(el=>`(${el})()`).join('\n');
-  const script = `\n<script>${el}</script>`;
+  const script = `\n<script>${el}</script>\n`;
   let b = body+'';
-  if (b.match(/<head>/i)) {
-    b = b.replace(/<head>/i, `<head>>${script}`);
+  let h = b.match(/<head[^>]*>/i);
+  !h && (h = b.match(/<html[^>]*>/i));
+
+  if (h) {
+    b = b.replace(h[0], `${h[0]}${script}`);
   } else {
-    const h = b.match(/(<html[^>]+>)/i);
-    if (!h) {
-      console.log('>> err', b.length)
-    } else {
-      b = b.replace(h[0], `${h[0]}>${script}`);
-    }
+    b = `${script}${b}`;
   }
   return b;
 }

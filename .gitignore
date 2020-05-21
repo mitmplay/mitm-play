@@ -2,6 +2,7 @@ log
 *.png
 *.tgz
 cache
+coverage
 chrome-profile
 
 # Dependency directories
