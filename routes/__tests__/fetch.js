@@ -79,7 +79,7 @@ describe('fetch.js - e_head', () => {
 
 describe('fetch.js - e_end', () => {
   const fn = () => {alert(0)};
-  test('insert js code at end of <body>', () => {
+  test('insert js code at end of </body>', () => {
     const result = e_end('<html><body>Hi</body>', [fn])
     expect(result).toBe(
 `<html><body>Hi
@@ -87,6 +87,16 @@ describe('fetch.js - e_end', () => {
     alert(0);
   })()</script>
 </body>`)
+  })
+
+  test('insert js code at end of </html>', () => {
+    const result = e_end('<html>Hi</html>', [fn])
+    expect(result).toBe(
+`<html>Hi
+<script>(() => {
+    alert(0);
+  })()</script>
+</html>`)
   })
 
   test('insert js code at end of file', () => {

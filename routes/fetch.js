@@ -52,6 +52,8 @@ function e_end(body, fn) {
   let b = body+'';
   if (b.match(/<\/body>/i)) {
     b = b.replace(/<\/body>/i, `${script}</body>`);
+  } else if (b.match(/<\/html>/i)) {
+    b = b.replace(/<\/html>/i, `${script}</html>`);
   } else {
     b = b + script;
   }
