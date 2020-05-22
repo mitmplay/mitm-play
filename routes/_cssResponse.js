@@ -9,14 +9,23 @@ function cssResponse(arr, reqs) {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/css')) {
         console.log(match.log);
-        let resp2;
-        if (match.route.resp) {
-          resp2 = match.route.resp(resp);
+        if (typeof(match.route)==='string') {
+          const token = match.route.match(/^[ \n]*=>/);
+          if (token) {
+            resp.body += match.route.replace(token[0],'');
+          } else {
+            resp.body = match.route;
+          }
+        } else {        
+          let resp2;
+          if (match.route.resp) {
+            resp2 = match.route.resp(resp);
+          }
+          resp = {
+            ...resp,
+            ...resp2,
+          };
         }
-        resp = {
-          ...resp,
-          ...resp2,
-        };
       }
       return resp;
     });

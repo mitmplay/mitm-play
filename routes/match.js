@@ -11,7 +11,7 @@ const searchFN = (typ, {url, headers}) => {
       const path = `${split[0]}${split.length>1 ? '?' : ''}`;
       const arr = path.match(key);
 
-      if (arr && routes[key]) {
+      if (arr) {
         const {host, pathname} = new URL(url);
         const log = `>> ${typ} (${path}).match(${key})`;
         return {

@@ -16,7 +16,6 @@ routes = {
   js: {
     'googleapis.com': {resp},
   }
-}
-routes.js[domain] = {resp}; 
+} 
 
 const ns = routeSet(routes, domain, true)

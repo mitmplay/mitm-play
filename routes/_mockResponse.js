@@ -21,20 +21,24 @@ function mockResponse(route, reqs) {
       console.log(match.log);
     }
     let resp = mock();
-    if (match.route.resp || match.route.js) {
-      if (match.route.resp) {
-        let resp2 = match.route.resp(resp);
-        resp = {
-          ...resp,
-          ...resp2
+    if (typeof(match.route)==='string') {
+      resp.body = match.route;
+    } else {          
+      if (match.route.resp || match.route.js) {
+        if (match.route.resp) {
+          let resp2 = match.route.resp(resp);
+          resp = {
+            ...resp,
+            ...resp2
+          };
         };
-      };
-      if (match.route.js) {
-        resp.body = source(resp.body, match.route.js);
-        resp.headers['content-type'] = 'application/javascript';
+        if (match.route.js) {
+          resp.body = source(resp.body, match.route.js);
+          resp.headers['content-type'] = 'application/javascript';
+        }
+      } else {
+        resp.body = 'Hello mock! - mitm-play';
       }
-    } else {
-      resp.body = 'Hello mock! - mitm-play';
     }
     route.fulfill(resp);
     return true;

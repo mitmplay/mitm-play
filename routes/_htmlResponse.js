@@ -12,20 +12,24 @@ function htmlResponse(arr, reqs) {
       if (contentType.match('text/html')) {
         const len = match.log.length;
         console.log(`${'-'.repeat(len)}\n${match.log}`);
-        let resp2;
-        if (match.route.resp) {
-          resp2 = match.route.resp(resp);
-        }
-        resp = {
-          ...resp,
-          ...resp2,
-        };
-        if (match.route.js) {
-          const inject = _fetch[match.route.el] || e_end;
-          resp.body = inject(resp.body, match.route.js);
-        }
-        if (match.route.src) {     
-          resp.body = script_src(resp.body, match.route.src);
+        if (typeof(match.route)==='string') {
+          resp.body = match.route;
+        } else {        
+          let resp2;
+          if (match.route.resp) {
+            resp2 = match.route.resp(resp);
+          }
+          resp = {
+            ...resp,
+            ...resp2,
+          };
+          if (match.route.js) {
+            const inject = _fetch[match.route.el] || e_end;
+            resp.body = inject(resp.body, match.route.js);
+          }
+          if (match.route.src) {     
+            resp.body = script_src(resp.body, match.route.src);
+          }
         }
       }
       return resp;

@@ -40,7 +40,7 @@ function stringify(obj, i=0, lf=`\n`) {
     } else if (typeof(nod)==='function') {
       ins = (nod+'').replace(/\n/g,`\n${tab}`)+`,\n`;
     } else if (typeof(nod)==='string') {
-      ins = `'${nod}',${lf}`;
+      ins = `'${nod.replace(/\n/g,`\n${tab}  `)}',${lf}`;
     } else {
       ins = `${nod}${lf}`;
     }
