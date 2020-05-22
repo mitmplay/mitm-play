@@ -3,9 +3,9 @@ const wccmd = _client();
 
 module.exports = (event, msg) => {
   if (msg.length>40) {
-    console.log('received: `%s...`', msg.slice(0,40));
+    console.log('>> wsmessage: `%s...`', msg.slice(0,40));
   } else {
-    console.log('received: `%s`', msg);
+    console.log('>> wsmessage: `%s`', msg);
   }
   const arr = msg.replace(/\s+$/, '').match(/^ *(\w+) *(\{.*)/);
   if (arr) {

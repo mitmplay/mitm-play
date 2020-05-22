@@ -9,7 +9,11 @@ const wscmd = {
 global.mitm.wscmd = wscmd;
 
 module.exports = (client, msg) => {
-  console.log('received: "%s"', msg);
+  if (msg.match(/\?/)) {
+    console.log('>> wsmessage: `%s...`', msg.split('?')[0]);
+  } else {
+    console.log('>> wsmessage: `%s`', msg);
+  }
   const arr = msg.replace(/\s+$/, '').match(/^ *(\w+) *(\{.*)/);
   if (arr) {
     let [,cmd,json] = arr;

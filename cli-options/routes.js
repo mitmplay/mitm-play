@@ -1,108 +1,46 @@
-const fs = require('fs-extra');
-const stringify = require('./stringify');
-
-const resp = () => {};
-const mock = function() {
-  return {body: 'Hi there!'}
-};
-const hello = function() {
-  console.log('Hello from mimt-play');
-};
-const googlJS = function() {
-  // remove unecessary html elements from google search result
-  document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
-  document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
-  document.querySelectorAll('.g-blk').forEach(n=>n.remove())
-};
-
-function routeSet(routes2, namespace, print=false) {
-  const {
-    fn: {stringify},
-    // routes: routes1,
-  } = global.mitm;
-
-  // if (!routes1[namespace]) {
-  //   routes1[namespace] = {};
-  // }
-
-  // for (let typ in routes2) {
-  //   if (!routes1[namespace][typ]) {
-  //     routes1[namespace][typ] = {};
-  //   }
-
-  //   const route1 = routes1[namespace][typ];
-  //   const route2 = routes2[typ];
-
-  //   if (route1) {
-  //     for (let key in route2) {
-  //       if (route1[key]) {
-  //         delete route1[key];
-  //       }
-  //     }
-  //     if (Array.isArray(route2)) {
-  //       routes1[namespace][typ] = route2;
-  //     } else {
-  //       routes1[namespace][typ] = {
-  //         ...route2,
-  //         ...route1,
-  //       }  
-  //     }
-  //   } else {
-  //     routes1[namespace][typ] = routes2[typ];
-  //   }
-  // }
-
-  global.mitm.routes[namespace] = routes2;
-  console.log(`>> ${namespace}\n${stringify(routes2)}`);
-  return global.mitm.routes[namespace];
-};
-
-const rpath = require.resolve('../socketclnt');
-const _body = fs.readFileSync(rpath)+'';
-
-const _global_vars = () => {
-  const {argv} = global.mitm;
-  let _g = {argv};
-  _g = JSON.stringify(_g, null, 2);
-  _g = `window.mitm = ${_g};\nsrc()`;
-  _g = _body.replace('src()',`${_g}`);
-  return {body: `window.mitm = ${_g}`};
-};
-
-const routes = {
-  default: {
-    // cache: {
-    //   // 'application/x-ww': { ext: '.json' }
-    // },
-    // log: {
-    //   // 'application/json': { ext: '.json' },
-    // },
-    skip: {
-      '.(jpeg|jpg|png|svg|gif|ico|mp4)': {},
-    },
-    mock: {
-      '/mock': {resp: mock},
-      '/mitm-play/websocket.js': {
-        resp: _global_vars,
-      },
-    },
-    html: {
-      'www.google.com/search': {
-        // resp,
-        el: 'e_end', //or e_head
-        js: [googlJS, hello], //JS is injected at the end of html body
-      },
-    },
-    // js: {
-    //   '.js$': {resp},
-    // },
-  }
-};
-
 module.exports = () => {
-  global.mitm.routes = routes;
-  global.mitm.fn.resp = resp;
-  global.mitm.fn.routeSet = routeSet;
+  const {fn: {fs,mock}} = global.mitm;
+
+  const rpath = require.resolve('../socketclnt');
+  const _body = fs.readFileSync(rpath)+'';
+  
+  const _global_vars = () => {
+    const {argv} = global.mitm;
+    let _g = {argv};
+    _g = JSON.stringify(_g, null, 2);
+    _g = `window.mitm = ${_g};\nsrc()`;
+    _g = _body.replace('src()',`${_g}`);
+    return {body: `window.mitm = ${_g}`};
+  };
+
+  global.mitm.routes = {
+    default: {
+      // cache: {'application/x-ww':  { ext: '.json' }},
+      // log:   {'application/json':  { ext: '.json' }},
+      // skip:  {'.(jpeg|jpg|png|svg|gif|ico|mp4)': {}},
+      mock: {
+        '/mitm-play/websocket.js': {
+          resp: _global_vars,
+        },
+        '/mock': {resp: mock},
+      },
+      // html: {
+      //   'www.google.com/search': {
+      //     // resp,
+      //     el: 'e_end', //or e_head
+      //     js: [googlJS, hello], //JS is injected at the end of html body
+      //   },
+      // },
+      // js: {'.js$': {resp}},
+    }
+  };
   // https://twitter.com/search?q=covid&src=typed_query  
   // console.log(`>> default\n${stringify(routes.default)}`);
 };
+
+// const googlJS = function() {
+//   // remove unecessary html elements from google search result
+//   document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
+//   document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
+//   document.querySelectorAll('.g-blk').forEach(n=>n.remove())
+// };

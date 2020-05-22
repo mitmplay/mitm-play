@@ -33,7 +33,7 @@ module.exports = () => {
           client.terminate();
         }
       });
-      console.log(Object.keys(wsclients));
+      console.log('>> wsclients:', Object.keys(wsclients));
     }, 1000)
   });  
 

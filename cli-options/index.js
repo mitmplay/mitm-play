@@ -1,37 +1,12 @@
-const fs = require('fs-extra');
-const fg = require('fast-glob');
 const yargs = require('yargs-parser');
-const stringify = require('./stringify');
 const script = require('../userroute');
+const initfn = require('./init-fn');
 const cliChg = require('./cli-chg');
 const cliCmd = require('./cli-cmd');
 const routes = require('./routes');
 
 const {platform, env: {HOME, HOMEPATH}} = process;
 const home = (platform === 'win32' ? HOMEPATH : HOME).replace(/\\/g, '/');
-
-function tldomain(fullpath) {
-  let fp;
-  if (fullpath.match(/^chrome/)) {
-    return fullpath;
-  }
-  try {
-    fp = fullpath.
-    match(/^\w+:\/\/([\w.]+)/)[1].
-    split('.').reverse().
-    slice(0,2).reverse().
-    join('.');    
-  } catch (error) {
-    console.log('Error tldomain', error);
-  }
-  return fp;
-}
-
-function clear() {
-  const {clear:c} = global.mitm.argv;
-  (c===true || c==='cache') && fs.remove(`${mitm.home}/cache`);
-  (c===true || c==='log') && fs.remove(`${mitm.home}/log`);
-}
 
 global.mitm = {
   argv: yargs(process.argv.slice(2)),
@@ -40,14 +15,10 @@ global.mitm = {
   data: {
     userroute: './**/*.js',
   },
-  fn: {
-    stringify,
-    tldomain,
-    clear,
-    fg,
-  },
+  fn: {},
 };
 
+initfn();
 cliChg();
 cliCmd();
 
