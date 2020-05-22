@@ -9,7 +9,7 @@ module.exports = () => {
    };
 
    ws.onopen = function() {                 
-    ws.send(`url:${(location+'').split('?')[0]}`);
+    ws.send(`url:${(location+'').split(/[?#]/)[0]}`);
     console.log("ws: sent...");
   };  
 

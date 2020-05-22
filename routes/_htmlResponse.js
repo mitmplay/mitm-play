@@ -10,7 +10,8 @@ function htmlResponse(arr, reqs) {
     arr.push(resp => {   
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/html')) {
-        console.log(match.log);
+        const len = match.log.length;
+        console.log(`${'-'.repeat(len)}\n${match.log}`);
         let resp2;
         if (match.route.resp) {
           resp2 = match.route.resp(resp);

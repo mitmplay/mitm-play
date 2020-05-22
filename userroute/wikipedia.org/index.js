@@ -14,6 +14,7 @@ routes = {
   //   '.js$': {} 
   // },
   js: {'.*': {resp}},
+  html: {'.*': {resp}},
 }
 
 const ns = routeSet(routes, domain, true)
