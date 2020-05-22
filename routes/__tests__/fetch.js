@@ -4,6 +4,7 @@ const {
   extract,
   source,
   e_head,
+  e_end,
   fetch,
 } = require('../fetch');
 
@@ -73,6 +74,28 @@ describe('fetch.js - e_head', () => {
     alert(0);
   })()</script>
 <body></body>`)
+  })
+})
+
+describe('fetch.js - e_end', () => {
+  const fn = () => {alert(0)};
+  test('insert js code at end of <body>', () => {
+    const result = e_end('<html><body>Hi</body>', [fn])
+    expect(result).toBe(
+`<html><body>Hi
+<script>(() => {
+    alert(0);
+  })()</script>
+</body>`)
+  })
+
+  test('insert js code at end of file', () => {
+    const result = e_end('Hi there', [fn])
+    expect(result).toBe(
+`Hi there
+<script>(() => {
+    alert(0);
+  })()</script>\n`)
   })
 
 })
