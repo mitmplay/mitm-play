@@ -1,5 +1,3 @@
-const _initWebsocket = require('../../socketclnt');
-
 const headerCSP = function({headers}) {
   // delete headers['content-security-policy'];
   // let b = headers['content-security-policy'][0];
