@@ -1,4 +1,5 @@
 const _match = require('./match');
+const addReplaceBody = require('./add-replace-body');
 const {matched,searchFN} = _match;
 
 function cssResponse(arr, reqs) {
@@ -10,12 +11,7 @@ function cssResponse(arr, reqs) {
       if (contentType.match('text/css')) {
         console.log(match.log);
         if (typeof(match.route)==='string') {
-          const token = match.route.match(/^[ \n]*=>/);
-          if (token) {
-            let body = `${resp.body}`;
-            body += match.route.replace(token[0],'');
-            resp.body = body;
-          }
+          resp.body = addReplaceBody(resp.body, match);
         } else {        
           let resp2;
           if (match.route.resp) {
