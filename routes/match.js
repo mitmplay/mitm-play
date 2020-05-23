@@ -30,12 +30,12 @@ const searchFN = (typ, {url, headers}) => {
 
 const matched = (search, {url, headers}) => {
   const {tldomain} = global.mitm.fn;
+  const {origin, referer} = headers;
 
   let domain = tldomain(url);
   let match = search(domain);
 
-  if (!match && headers.referer) {
-    const {origin, referer} = headers;
+  if (!match && (origin || referer)) {
     let orref = tldomain(origin || referer);
     const route = mitm.routes[orref]
     let exclude = false;

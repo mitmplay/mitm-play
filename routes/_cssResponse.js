@@ -12,9 +12,9 @@ function cssResponse(arr, reqs) {
         if (typeof(match.route)==='string') {
           const token = match.route.match(/^[ \n]*=>/);
           if (token) {
-            resp.body += match.route.replace(token[0],'');
-          } else {
-            resp.body = match.route;
+            let body = `${resp.body}`;
+            body += match.route.replace(token[0],'');
+            resp.body = body;
           }
         } else {        
           let resp2;

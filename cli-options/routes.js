@@ -12,7 +12,7 @@ module.exports = () => {
     _g = _body.replace('src()',`${_g}`);
     return {body: `window.mitm = ${_g}`};
   };
-
+  
   global.mitm.routes = {
     default: {
       // cache: {'application/x-ww':  { ext: '.json' }},
@@ -25,6 +25,14 @@ module.exports = () => {
         '/mock': {resp: mock},
       },
       // html: {
+      //   '.+': {
+      //     resp({headers}) {
+      //       let csp = headers['content-security-policy'];
+      //       csp && (csp[0] = csp[0].replace(/'(strict)[^ ]+/g, ''));
+      //       return {headers}
+      //     }
+      //   }
+      // },
       //   'www.google.com/search': {
       //     // resp,
       //     el: 'e_end', //or e_head

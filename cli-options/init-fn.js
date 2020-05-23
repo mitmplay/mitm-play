@@ -19,6 +19,13 @@ function tldomain(fullpath) {
   return fp;
 }
 
+function unstrictCSP({headers}) {
+  let csp = headers['content-security-policy'];
+  csp && (csp[0] = csp[0].replace(/'(strict)[^ ]+/g, ''));
+  csp && (csp[0] = csp[0].replace(/default-src [^;]+;/, ''));
+  return {headers}
+}
+
 function routeSet(routes, namespace, print=false) {
   const msg = `>> ${namespace}\n${stringify(routes)}`;
   mitm.routes[namespace] = routes;
@@ -43,6 +50,7 @@ const mock = function() {
 const resp = () => {};
 
 module.exports = () => {
+  global.mitm.fn.unstrictCSP = unstrictCSP;
   global.mitm.fn.stringify = stringify;
   global.mitm.fn.tldomain = tldomain;
   global.mitm.fn.routeSet = routeSet;

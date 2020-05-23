@@ -44,11 +44,13 @@ function cacheResponse(arr, reqs) {
     const fpath2 = `${cache}/${stamp2}.json`;
 
     if (fs.existsSync(fpath1)) {
+      // get from cache
       console.log(`>>       (${fpath1})`);
       const body = fs.readFileSync(fpath1);
       const {status, headers} = JSON.parse(fs.readFileSync(fpath2));
       return {status, headers, body};
     } else {
+      // get from remote
       arr.push(resp => { 
         const {body, ...r} = resp;
         const resp2 = JSON.stringify(r, null, 2);

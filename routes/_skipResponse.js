@@ -4,14 +4,18 @@ function skipResponse(reqs) {
   const {url} = reqs;
 
   function search(namespace) {
-    if (mitm[namespace]) {
-      let result;
-      for (let key in mitm[namespace].routes.skip) {
-        result = url.match(key);
-        if (result) {
-          return true;
-        }
-      }  
+    if (mitm.routes[namespace]) {
+      const {skip} = mitm.routes[namespace];
+      if (skip) {
+        let result;
+        for (let val of skip) {
+          result = url.match(val);
+          if (result) {
+            console.log(`>> skip (${val})`);
+            return true;
+          }
+        }  
+      }
     }
   };
   return matched(search, reqs);

@@ -1,21 +1,9 @@
-const {
-  resp,
-  routeSet,
-} = global.mitm.fn;
-
 const domain =  __dirname.split(/\\|\//).pop();
 
 routes = {
+  title: 'Developer - zdnet',
+  url: 'https://www.zdnet.com/topic/developer/',
   exclude: ['google'],
-  cache: {
-    '.*': {}
-  },
-  log: {
-    '.js$': {} 
-  },
-  js: {
-    'googleapis.com': {resp},
-  }
-} 
-
-const ns = routeSet(routes, domain, true)
+  cache: {'.js$': {}},
+}
+global.mitm.fn.routeSet(routes, domain, true)
