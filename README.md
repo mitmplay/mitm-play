@@ -26,6 +26,9 @@ routes = {
       js: [googlJS, hello], // html body
     },
   },
+  js: {
+    'gstatic.com': ''
+  }
 }
 global.mitm.fn.routeSet(routes, domain, true)
 ```
@@ -57,7 +60,9 @@ If the first action is not match then it will fallback to use `default` namespac
 
 Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those assets, it use mechaninsh in the browser call `origin` or `referer` in which will scoping to the same namespace.
 
-Ilustration route namespaces: `default`,`google.com` on nodejs global scope:  
+In the example: `google.com` having `js` content type, the action narate as: if there is a JS assets come from `gstatic.com`, then content will get replace with an empty string.
+
+Ilustration route namespaces: `default`, `google.com` on nodejs global scope:  
 ```js
 global.mitm.route = {
   'default': {
@@ -70,6 +75,10 @@ global.mitm.route = {
         js: [googlJS, hello], // html body
       },
     },
+    js: {
+      'gstatic.com': ''
+    }
   },
 }
 ```
+*-wharsojo*.
