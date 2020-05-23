@@ -32,7 +32,7 @@ global.mitm.fn.routeSet(routes, domain, true)
 
 ```bash
 # run the demo:
-mitm-play --go='https://www.google.com/search?q=covid-19' --clear --save
+mitm-play --go='google.com/search?q=covid-19' --route=. --save
 
 # next run should be simple as:
 mitm-play
@@ -49,7 +49,6 @@ mitm-play
   * `css`
   * `js`
 
-The distribution include sample MITM route to google search & mock 
 
 # Concept
 Mitm interception use namespaces routing, for start it use `default` namespace for all request that don't have **referer** header. 
@@ -58,12 +57,19 @@ Next request in which should having `referer`, it will use the hostname on the `
 
 If matching namespace was not found, it will fallback to `default` namespace. 
 
-Sample routes:
+Ilustration route namespaces: `default`,`google.com` on nodejs global scope:  
 ```js
-// const googlJS = function() {..}
-mitm.route = {
-  'default':    {html: {...}},
-  'google.com': {html: {...}},
+global.mitm.route = {
+  'default': {
+    mock: {...}
+  },
+  'google.com': {
+    html: {
+      'www.google.com/search': {
+        el: 'e_end', // JS at end of 
+        js: [googlJS, hello], // html body
+      },
+    },
+  },
 }
 ```
-
