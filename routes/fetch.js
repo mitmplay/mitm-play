@@ -32,7 +32,7 @@ function source(body, src) {
 }
 
 function e_head(body, fn) {
-  let el = fn.map(el=>`(${el})()`).join('\n');
+  let el = fn.map(el=>`(${el})();`).join('\n');
   const script = `\n<script>${el}</script>\n`;
   let b = body+'';
   let h = b.match(/<head[^>]*>/i);
@@ -47,7 +47,7 @@ function e_head(body, fn) {
 }
 
 function e_end(body, fn) {
-  let el = fn.map(el=>`(${el})()`).join('\n');
+  let el = fn.map(el=>`(${el})();`).join('\n');
   const script = `\n<script>${el}</script>\n`;
   let b = body+'';
   if (b.match(/<\/body>/i)) {

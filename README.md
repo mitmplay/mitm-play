@@ -5,12 +5,37 @@ Man in the middle using playwright
 ```bash
 npm install -g mitm-play
 ```
+
+```js
+// create new folder/file: google.com/index.js and add this content:
+const googlJS = function() {
+  document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
+  document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
+  document.querySelectorAll('.g-blk').forEach(n=>n.remove())
+};
+
+const domain =  __dirname.split(/\\|\//).pop();
+const {hello} = global.mitm.fn;
+
+routes = {
+  title: 'Search - google',
+  url: 'https://google.com/search?q=github+playwright',
+  html: {
+    'www.google.com/search': {
+      el: 'e_end', // JS at end of 
+      js: [googlJS, hello], // html body
+    },
+  },
+}
+global.mitm.fn.routeSet(routes, domain, true)
+```
+
 ```bash
-# after installation run the demo:
-mitm-play --go='https://www.google.com/search?q=covid-19' --clear --save=goog
+# run the demo:
+mitm-play --go='https://www.google.com/search?q=covid-19' --clear --save
 
 # next run should be simple as:
-mitm-play goog
+mitm-play
 ```
 
 # Features
@@ -37,52 +62,8 @@ Sample routes:
 ```js
 // const googlJS = function() {..}
 mitm.route = {
-  default: {
-    html: {
-      'www.google.com/search': {
-        el: 'e_end', //or e_head
-        js: [googlJS], //JS is injected at the end of html body
-      },
-    }
-  },
-  'google.com': {
-    html: {..}
-  }
+  'default':    {html: {...}},
+  'google.com': {html: {...}},
 }
 ```
 
-## Limitation
-This limitation was tested on Windows 10 & WSL2 (Ubuntu), other system not tested yet, will need volunteer for testing on other system
-
-#### Windows
-Issue on powershell when `mitm-play` getting executed: `...mitm-play.ps1 cannot be loaded because running scripts is disabled on this system."`, work-around by updating policy:
-```
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-#### Browser (Chromium)
-- chromium - incognito, no video _*_
-- firefox - stale after page full load
-- webkit - response will render text not html
-
-_*_ recomended
-
-#### Only the first tab will have the mitm
-currently the intention is to stabilize base features, and isolate the bug only on first tab
-
-#### Playing video in playwright (firefox on WSL2 works!)
-when testing on twitter with auto play video, target system need to have video codec installed 
-
-WSL2 - below is the step if the `apt update` failed <br> 
-https://stackoverflow.com/questions/61281700/cannot-perform-apt-update-closed
-https://github.com/microsoft/playwright/commit/222d01caaadad7419c4e54b4f36a6e9d41d8dc65
-```
-sudo sed -i -e 's/archive.ubuntu.com\|security.ubuntu.com/ \
-  old-releases.ubuntu.com/g' /etc/apt/sources.list
-
-grep -E 'archive.ubuntu.com|security.ubuntu.com' /etc/apt/sources.list.d/*
-
-sudo apt-get update
-sudo apt install -y ffmpeg
-sudo apt install -y chromium-browser
-```

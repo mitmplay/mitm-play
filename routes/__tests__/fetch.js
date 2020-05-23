@@ -53,7 +53,7 @@ describe('fetch.js - e_head', () => {
 `<html>
 <script>(() => {
     alert(0);
-  })()</script>
+  })();</script>
 <body></body>`)
   })
 
@@ -63,7 +63,7 @@ describe('fetch.js - e_head', () => {
 `<html><head>
 <script>(() => {
     alert(0);
-  })()</script>
+  })();</script>
 </head>`)
   })
 
@@ -72,7 +72,7 @@ describe('fetch.js - e_head', () => {
     expect(result).toBe(`
 <script>(() => {
     alert(0);
-  })()</script>
+  })();</script>
 <body></body>`)
   })
 })
@@ -85,7 +85,7 @@ describe('fetch.js - e_end', () => {
 `<html><body>Hi
 <script>(() => {
     alert(0);
-  })()</script>
+  })();</script>
 </body>`)
   })
 
@@ -95,7 +95,7 @@ describe('fetch.js - e_end', () => {
 `<html>Hi
 <script>(() => {
     alert(0);
-  })()</script>
+  })();</script>
 </html>`)
   })
 
@@ -105,7 +105,7 @@ describe('fetch.js - e_end', () => {
 `Hi there
 <script>(() => {
     alert(0);
-  })()</script>\n`)
+  })();</script>\n`)
   })
 
 })
