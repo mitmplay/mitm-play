@@ -42,15 +42,15 @@ mitm-play
 ```
 
 # Features
-* `skip` __request__ back to browser   
-* `mock` __response__ based on url & send
-* `cache` __response__ based on Content-Type
-* `log` any __response__ based on Content-Type
-* Update __response__ based on url and Content-Type
-  * `html` - can add js on &lt;head&gt; or end of &lt;body&gt;
-  * `json`
-  * `css`
-  * `js`
+* `skip` __request__ back to browser - browser will handle it   
+* `log` __response__ based on `url` - call to remote server
+* `mock` __response__ based on `url` - no call to remote server
+* `cache` __response__ based on `url` - subsequence call read from cache
+* Update __response__ based on `url` and `content-type` - call remote server
+  * `html` - resp - add js on &lt;head&gt; or end of &lt;body&gt;
+  * `json` - resp - response modification
+  * `css` - resp - response modification
+  * `js` - res - response modification
 
 
 # Concept
