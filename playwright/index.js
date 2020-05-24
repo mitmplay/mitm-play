@@ -22,10 +22,17 @@ module.exports = () => {
     const { argv } = global.mitm;
     const br = mitm.argv.browser;
     if (argv.browser==='chromium') {
+      if (argv.executablePath) {
+        options.executablePath = argv.executablePath;
+      }
       options.args = args;
     }
-    const _browser = require('playwright')[argv.browser];
-    console.log('>> executablePath', _browser.executablePath());
+    if (argv.executablePath) {
+      console.log('>> executablePath', argv.executablePath);
+    } else {
+      const _browser = require('playwright')[argv.browser];
+      console.log('>> executablePath', _browser.executablePath());
+    }
     if (argv.pristine) {
       // buggy route will not work :(
       browser = await playwright[br].launchPersistentContext(`${mitm.home}/.${br}`, options);
@@ -63,6 +70,9 @@ module.exports = () => {
     
     global.mitm.browser = browser;
     global.mitm.page = page;
+    page.on('close', () => {
+      process.exit();
+    })
   })();  
 }
 //  mitm-play --logurl --go='twitter.com/search?q=covid&src=typed_query' --save=twl

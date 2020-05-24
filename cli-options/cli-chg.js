@@ -21,14 +21,23 @@ module.exports = () => {
   }
 
   if (argv.chromium) {
-    delete argv.chromium;
     argv.browser = 'chromium';
+    if (typeof(argv.chromium)==='string') {
+      argv.executablePath = argv.chromium;
+    }
+    delete argv.chromium;
   } else if (argv.firefox) {
-    delete argv.firefox;
     argv.browser = 'firefox';
+    if (typeof(argv.chromium)==='string') {
+      argv.executablePath = argv.firefox;
+    }
+    delete argv.firefox;
   } else if (argv.webkit) {
-    delete argv.webkit;
     argv.browser = 'webkit';
+    if (typeof(argv.chromium)==='string') {
+      argv.executablePath = argv.webkit;
+    }
+    delete argv.webkit;
   }
 
   if (argv.b) {

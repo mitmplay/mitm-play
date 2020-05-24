@@ -24,6 +24,7 @@ cliCmd();
 
 module.exports = () => {
   const {argv} = mitm;
+  const package = require('../package.json')
   if (argv.help) {
     console.log(
   `
@@ -41,10 +42,13 @@ module.exports = () => {
     --chromium    \t browser = chromium
     --firefox     \t browser = firefox
     --webkit      \t browser = webkit
+
+  v${package.version}
 `);
     process.exit();
   }
   console.log(argv);
+  console.log(`v${package.version}\n`);
   routes();
   script();
 }
