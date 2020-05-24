@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const _match = require('./match');
 const addReplaceBody = require('./add-replace-body');
 const {matched,searchFN} = _match;
@@ -9,7 +10,7 @@ function jsResponse(arr, reqs) {
     arr.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('javascript')) {
-        console.log(match.log);
+        console.log(c.greenBright(match.log));
         if (typeof(match.route)==='string') {
           resp.body = addReplaceBody(resp.body, match);
         } else {

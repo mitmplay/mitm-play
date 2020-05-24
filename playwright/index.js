@@ -18,12 +18,15 @@ const args = [
 
 module.exports = () => {
   (async () => {
+    const {
+      argv,
+      fn: {home}
+    } = global.mitm;
     let page, browser, bcontext;
-    const { argv } = global.mitm;
     const br = mitm.argv.browser;
     if (argv.browser==='chromium') {
       if (argv.executablePath) {
-        options.executablePath = argv.executablePath;
+        options.executablePath = home(argv.executablePath);
       }
       options.args = args;
     }

@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const {matched} = require('./match');
 
 function skipResponse(reqs) {
@@ -11,7 +12,7 @@ function skipResponse(reqs) {
         for (let val of skip) {
           result = url.match(val);
           if (result) {
-            console.log(`>> skip (${val})`);
+            console.log(c.grey(`>> skip (${val})`));
             return true;
           }
         }  

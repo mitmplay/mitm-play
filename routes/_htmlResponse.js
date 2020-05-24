@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const _match = require('./match');
 const _fetch = require('./fetch');
 const {matched,searchFN} = _match;
@@ -11,7 +12,7 @@ function htmlResponse(arr, reqs) {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/html')) {
         const len = match.log.length;
-        console.log(`${'-'.repeat(len)}\n${match.log}`);
+        console.log(`${'-'.repeat(len)}\n${c.yellowBright(match.log)}`);
         if (typeof(match.route)==='string') {
           resp.body = match.route;
         } else {        

@@ -1,4 +1,5 @@
 const fs = require('fs-extra');
+const c = require('ansi-colors');
 const _match = require('./match');
 const {matched,searchFN} = _match;
 
@@ -6,7 +7,7 @@ function logResponse(arr, reqs) {
   const search = searchFN('log', reqs);
   const match = matched(search, reqs);
   if (match) {
-    console.log(match.log);
+    console.log(c.bold.gray(match.log));
     const {host, pathname} = match;
     const ex = match.route.ext || '';
     const stamp = (new Date).toISOString().replace(/:/g, '_');

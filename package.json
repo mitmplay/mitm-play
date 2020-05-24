@@ -21,6 +21,7 @@
     "url": "https://github.com/mitm-proxy/mitm-play/issues"
   },
   "dependencies": {
+    "ansi-colors": "^4.1.1",
     "chokidar": "^3.4.0",
     "exit-hook": "^2.2.0",
     "fast-glob": "^3.2.2",

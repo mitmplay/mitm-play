@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const yargs = require('yargs-parser');
 const script = require('../userroute');
 const initfn = require('./init-fn');
@@ -26,7 +27,7 @@ module.exports = () => {
   const {argv} = mitm;
   const package = require('../package.json')
   if (argv.help) {
-    console.log(
+    console.log(c.greenBright(
   `
   Usage: mitm-play <profl> [options]
   
@@ -44,11 +45,11 @@ module.exports = () => {
     --webkit      \t browser = webkit
 
   v${package.version}
-`);
+`));
     process.exit();
   }
-  console.log(argv);
-  console.log(`v${package.version}\n`);
+  console.log(c.greenBright(JSON.stringify(argv, null, 2)));
+  console.log(c.green(`v${package.version}\n`));
   routes();
   script();
 }

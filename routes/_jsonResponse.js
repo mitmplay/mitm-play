@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const _match = require('./match');
 const {matched,searchFN} = _match;
 
@@ -8,7 +9,7 @@ function jsonResponse(arr, reqs) {
     arr.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('application/json')) {
-        console.log(match.log);
+        console.log(c.yellowBright(match.log));
         if (typeof(match.route)==='string') {
           resp.body = match.route;
         } else {        

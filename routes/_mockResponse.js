@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const _match = require('./match');
 const _fetch = require('./fetch');
 const {matched,searchFN} = _match;
@@ -18,7 +19,7 @@ function mockResponse(route, reqs) {
   const match = matched(search, reqs);
   if (match) {
     if (!match.url.match('/mitm-play/websocket')) {
-      console.log(match.log);
+      console.log(c.cyanBright(match.log));
     }
     let resp = mock();
     if (typeof(match.route)==='string') {

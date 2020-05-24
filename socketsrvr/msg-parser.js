@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const _global = require('./global');
 const _client = require('./client');
 
@@ -10,9 +11,9 @@ global.mitm.wscmd = wscmd;
 
 module.exports = (client, msg) => {
   if (msg.match(/\?/)) {
-    console.log('>> wsmessage: `%s...`', msg.split('?')[0]);
+    console.log(c.blue('>> wsmessage: `%s...`'), msg.split('?')[0]);
   } else {
-    console.log('>> wsmessage: `%s`', msg);
+    console.log(c.blue('>> wsmessage: `%s`'), msg);
   }
   const arr = msg.replace(/\s+$/, '').match(/^ *(\w+) *(\{.*)/);
   if (arr) {

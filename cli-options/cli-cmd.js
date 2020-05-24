@@ -1,4 +1,5 @@
 const fs = require('fs-extra');
+const c = require('ansi-colors');
 
 module.exports = () => {
   let {argv, fn: {clear}} = mitm;
@@ -8,11 +9,11 @@ module.exports = () => {
   let saveArgs; ;
   if (fs.existsSync(arg)) {
     saveArgs = JSON.parse(fs.readFileSync(arg));
-    console.log('>> cmd: mitm-play', saveArgs._args);
+    console.log(c.green('>> cmd: mitm-play', saveArgs._args));
   }
 
   if (saveArgs && !argv.save) {
-    console.log('>> cmd2 mitm-play', process.argv.slice(2).join(' '))
+    console.log(c.green('>> cmd2 mitm-play', process.argv.slice(2).join(' ')))
     const {_args, _argv} = saveArgs;
     global.mitm.argv = {..._argv, ...argv};
     argv = mitm.argv;

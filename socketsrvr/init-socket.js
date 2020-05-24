@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const c = require('ansi-colors');
 const msgParser = require('./msg-parser');
 const wsclients = {};
 
@@ -33,7 +34,8 @@ module.exports = () => {
           client.terminate();
         }
       });
-      console.log('>> wsclients:', Object.keys(wsclients));
+      const arr = Object.keys(wsclients);
+      console.log(c.redBright(`>> wsclients: ${JSON.stringify(arr, null, 2)}`));
     }, 1000)
   });  
 

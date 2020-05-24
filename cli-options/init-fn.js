@@ -39,6 +39,12 @@ function clear() {
   (c===true || c==='log') && fs.remove(`${mitm.home}/log`);
 }
 
+function home(path) {
+  const {platform, env: {HOME, HOMEPATH}} = process;
+  const home = (platform === 'win32' ? HOMEPATH.replace(/\\/g, '/') : HOME);
+  return path.replace('~', home);
+}
+
 const hello = function() {
   console.log('Hello from mimt-play');
 };
@@ -56,6 +62,7 @@ module.exports = () => {
   global.mitm.fn.routeSet = routeSet;
   global.mitm.fn.clear = clear;
   global.mitm.fn.hello = hello;
+  global.mitm.fn.home = home;
   global.mitm.fn.mock = mock;
   global.mitm.fn.resp = resp;
   global.mitm.fn.fg = fg;
