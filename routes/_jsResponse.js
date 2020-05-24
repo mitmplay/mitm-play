@@ -10,7 +10,7 @@ function jsResponse(arr, reqs) {
     arr.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('javascript')) {
-        console.log(c.greenBright(match.log));
+        console.log(c.cyanBright(match.log));
         if (typeof(match.route)==='string') {
           resp.body = addReplaceBody(resp.body, match);
         } else {

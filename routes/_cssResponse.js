@@ -10,7 +10,7 @@ function cssResponse(arr, reqs) {
     arr.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/css')) {
-        console.log(c.blueBright(match.log));
+        console.log(c.greenBright(match.log));
         if (typeof(match.route)==='string') {
           resp.body = addReplaceBody(resp.body, match);
         } else {        
