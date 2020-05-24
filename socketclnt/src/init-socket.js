@@ -18,4 +18,5 @@ module.exports = () => {
   };
 
   window._ws = ws;
+  window._wsqueue = {};
 }

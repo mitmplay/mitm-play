@@ -28,6 +28,7 @@ module.exports = () => {
     const msg = `_ping${JSON.stringify({data})}`
     console.log('_ping', msg);
     this.send(msg);
+    return data;
   }
 
   //ex: ws__open({url: "https://google.com"})

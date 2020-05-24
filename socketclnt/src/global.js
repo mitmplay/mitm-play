@@ -1,3 +1,13 @@
+const t64 = 'Wabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZh';
+
+let nanoid = (size=8) => {
+  let id = ''
+  while (0 < size--) {
+    id += t64[ Math.random()*64 | 0]
+  }
+  return id
+}
+
 module.exports = () => {
   const {_ws} = window;
 
@@ -37,4 +47,20 @@ module.exports = () => {
     const msg = {data: json};
     _ws.send(`_open${JSON.stringify(msg)}`);
   }
+
+  window.ws__send = (cmd, data, handler) => {
+   const id = nanoid();
+   const key = `${cmd}:${id}`;
+   window._wsqueue[key] = handler;
+
+   setTimeout(function() {
+    if (window._wsqueue[key]) {
+      delete  window._wsqueue[key];
+      console.log('>> ws timeout!', key);
+    } 
+   }, 5000)
+
+   _ws.send(`${key}${JSON.stringify({data})}`);
+  }
 }
+//ws__send('_ping', 'LOL', w=>console.log('>result',w));

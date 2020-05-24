@@ -7,7 +7,7 @@ module.exports = (event, msg) => {
   } else {
     console.log('>> wsmessage: `%s`', msg);
   }
-  const arr = msg.replace(/\s+$/, '').match(/^ *(\w+) *(\{.*)/);
+  const arr = msg.replace(/\s+$/, '').match(/^ *([\w:]+) *(\{.*)/);
   if (arr) {
     let [,cmd,json] = arr;
     try {
@@ -17,7 +17,11 @@ module.exports = (event, msg) => {
     } catch (error) {
       console.error(json,error);
     }        
-    if (wccmd[cmd]) {
+    if (window._wsqueue[cmd]) {
+      handler = window._wsqueue[cmd];
+      delete window._wsqueue[cmd];
+      handler(json.data);
+    } else if (wccmd[cmd]) {
       console.log(json.data);
       wccmd[cmd].call(event, json)
     }       
