@@ -54,15 +54,15 @@ mitm-play
 
 
 # Concept
-Mitm intercept is hierarchical, first it try to match domain on the url, if match then next action is to url regex expression on each content-type listed on the route and if it match again then will execute action that register in the route.
+Mitm intercept is hierarchical, first it try to match domain on the url, if match then next action is to url regex expression on each content-type listed on the route and if it match again, then will execute an action that register in the route.
 
-If the first action is not match then it will fallback to use `default` namespace to check next action and the operation is the same as mention in first paragraph. 
+If the first action is not match, then it will fallback to use `default` namespace to check next action, and the operation is the same as mention in first paragraph. 
 
-Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those assets, it use mechaninsh in the browser call `origin` or `referer` in which will scoping to the same namespace.
+Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those assets, it use mechanism in the browser call `origin` or `referer` in which will scoping to the same namespace.
 
-In the example: `google.com` having `js` content type, the action narate as: if there is a JS assets come from `gstatic.com`, then content will get replace with an empty string.
+In `google.com` route, it have `js` content type; the action narrate as: if there is a JS assets come from `gstatic.com`, then content will get replace with an empty string.
 
-Ilustration route namespaces: `default`, `google.com` on nodejs global scope:  
+Illustration route namespaces: `default`, `google.com` on nodejs global scope:  
 ```js
 global.mitm.route = {
   'default': {
