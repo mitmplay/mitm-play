@@ -6,15 +6,20 @@ module.exports = () => {
   //ex: ws__help();
   //    => _help({})
   function _help() {
+    let messages;
     const note = Object.keys(global.mitm.wscmd).map(x => {
-      const messages = `ws_${x}()`;
-      const spaces = ' '.repeat(14 - messages.length);
-      return `* ${messages}${spaces} => ${x}()`;
+      if (x.match(/^\$/)) {
+        x = x.replace(/^\$/, '');
+        messages = `ws__send('${x}',...)`;
+      } else {
+        messages = `ws_${x}(...)`;
+      }
+      return `* ${messages}`;  
     }).join('\n');
     const data = 
-  `Available functions:\n\n${note}\n
-  Double check on client implementation "ws_***()".
-  On browser console type "ws"`;
+`Available functions:\n\n${note}\n
+Double check on client implementation "ws_***()".
+On browser console type "ws"`;
     const msg = `_help${JSON.stringify({data})}`
     console.log('_help', msg);
     this.send(msg);
@@ -48,10 +53,29 @@ module.exports = () => {
     broadcast.call(this, {data,_all});
   }
 
+  function $routes({data}) {
+    keys = Object.keys(mitm.routes);
+    const {stringify} = mitm.fn;
+    if (data) {
+      return keys.map(x => {
+        return `>> ${x}\n${stringify(mitm.routes[x])}`
+      }).join('\n');
+    } else {
+      return keys;
+    }
+  }
+
+  function $route({data}) {
+    const r = mitm.routes[data];
+    return mitm.fn.stringify(r);
+  }
+
   return {
     _style,
     _help,
     _ping,
     _open,
+    $routes,
+    $route,
   }
 }
