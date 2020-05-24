@@ -1,8 +1,8 @@
 const domain =  __dirname.split(/\\|\//).pop();
 
 routes = {
-  title: 'Developer - zdnet',
-  url: 'https://www.zdnet.com/topic/developer/',
+  title: 'My User Agent - whatsmyuseragent',
+  url: 'http://whatsmyuseragent.org/',
   exclude: ['google'],
   cache: {'.js$': {}},
 }
