@@ -35,7 +35,8 @@ module.exports = () => {
     -h --help     \t show this help
     -g --go       \t go to location
     -b --browser  \t browser: chromium/firefox/webkit
-    -p --pristine \t pristine browser not recommended
+    -p --pristine \t pristine browser, not recommended to use
+    -z --lazylog  \t debounce save after millsec last invoked
     -l --logurl   \t test route to log url & headers
     -r --route    \t set userscript folder of routes
     -c --clear    \t clear cache and/or logs

@@ -16,6 +16,11 @@ module.exports = () => {
     delete argv.r;
   }
 
+  if (argv.z) {
+    argv.lazylog = argv.z;
+    delete argv.z;
+  }
+
   if (!argv.browser || ['firefox','webkit'].indexOf(argv.browser)===-1) {
     argv.browser = 'chromium';
   }
