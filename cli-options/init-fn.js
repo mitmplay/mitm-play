@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const fg = require('fast-glob');
+const c = require('ansi-colors');
 const stringify = require('./stringify');
 
 function tldomain(fullpath) {
@@ -8,15 +9,22 @@ function tldomain(fullpath) {
     return fullpath;
   }
   try {
-    fp = fullpath.
-    match(/^\w+:\/\/([\w.]+)/)[1].
-    split('.').reverse().
-    slice(0,2).reverse().
-    join('.');    
+    fp = fullpath.match(/^\w+:\/\/([\w.]+)/);
+    if (fp) {
+      fp = fp[1].
+      split('.').reverse().
+      slice(0,3).reverse().
+      join('.');    
+    } else {
+      fp = '**tld-error**';  
+      console.log(c.redBright(`>> Error tldomain ${fullpath}`));
+    }
   } catch (error) {
-    console.log('Error tldomain', error);
+    fp = '**tld-error**';
+    console.log(c.redBright(`>> Error tldomain ${fullpath}`));
+    console.log(error);
   }
-  return fp;
+  return fp.replace('www.', '');
 }
 
 function unstrictCSP({headers}) {

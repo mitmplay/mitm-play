@@ -1,6 +1,14 @@
 const searchFN = (typ, {url, headers}) => {
-  return function search(namespace) {
-    if (!mitm.routes[namespace]) {
+  return function search(nspace) {
+    let namespace;
+    for (let id in mitm.routes) {
+      if (nspace.match(`(^${id}|.${id})`)) {
+        namespace = id;
+        break;
+      }
+    }
+
+    if (!namespace) {
       return;
     }
 

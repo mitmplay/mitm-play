@@ -1,4 +1,4 @@
-function filename(pathname, reqs) {
+function filename(pathname, reqs, hash='') {
   const accept = reqs.headers.accept || '';
   const secFet = reqs.headers['sec-fetch-dest'] || '';
   const arr = pathname.split('/');
@@ -6,7 +6,10 @@ function filename(pathname, reqs) {
   if (file==='') {
     file = '_';
   }
-  file2 = file.split('.');
+  let file2 = file.split('.');
+  if (hash) {
+    file2[0] = `${file2[0]}${hash}`;
+  }
   if (file2.length===1) {
     if (accept.indexOf('html')>-1) {
       file2.push('html');
@@ -22,9 +25,27 @@ function filename(pathname, reqs) {
   return fullpath;
 }
 
+function hashCode(txt) {
+  var hash = 0;
+  if (txt.length == 0) {
+      return '';
+  }
+  for (var i = 0; i < txt.length; i++) {
+      var char = txt.charCodeAt(i);
+      hash = ((hash<<5)-hash)+char;
+      hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash+'';
+}
+
 module.exports = (match, reqs) => {
-  const {host, pathname: f} = match;
-  const fullpath = filename(f, reqs);
+  let {host, pathname: f, url} = match;
+  let hash = '';
+  if (match.route.hashQstring) {
+    let [,params] = url.split('?');
+    hash = params ? hashCode(params) : '';  
+  }
+  const fullpath = filename(f, reqs, hash);
 
   const stamp1 = `${host}${fullpath}`;
   const stamp2 = `${host}/$${fullpath}`;

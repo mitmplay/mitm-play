@@ -1,7 +1,9 @@
 const fs = require('fs-extra');
 const c = require('ansi-colors');
 const _match = require('./match');
+const contentType = require('./content-type');
 const cacheFilepath = require('./cache-filepath');
+
 const {matched,searchFN} = _match;
 
 function cacheResponse(arr, reqs) {
@@ -9,7 +11,7 @@ function cacheResponse(arr, reqs) {
   const match = matched(search, reqs);
 
   if (match) {
-    console.log(match.log);
+    // console.log(match.log);
     const {fpath1, fpath2} = cacheFilepath(match, reqs);
 
     if (fs.existsSync(fpath1)) {
@@ -20,20 +22,22 @@ function cacheResponse(arr, reqs) {
       return {status, headers, body};
     } else {
       // get from remote
-      arr.push(resp => { 
-        const {body, ...r} = resp;
-        const resp2 = JSON.stringify(r, null, 2);
-        console.log(c.magentaBright(`>> cache (${fpath1})`));
-        fs.ensureFile(fpath1, err => {
-          fs.writeFile(fpath1, body, err => {
-            err && console.log('>> Error write cache1', err);
+      arr.push(resp => {
+        if (contentType(match, resp)) {
+          const {body, ...r} = resp;
+          const resp2 = JSON.stringify(r, null, 2);
+          console.log(c.magentaBright(`>> cache (${fpath1})`));
+          fs.ensureFile(fpath1, err => {
+            fs.writeFile(fpath1, body, err => {
+              err && console.log('>> Error write cache1', err);
+            })
           })
-        })
-        fs.ensureFile(fpath2, err => {
-          fs.writeFile(fpath2, resp2, err => {
-            err && console.log('>> Error write cache2', err);
-          })
-        })
+          fs.ensureFile(fpath2, err => {
+            fs.writeFile(fpath2, resp2, err => {
+              err && console.log('>> Error write cache2', err);
+            })
+          })  
+        }
         return resp; 
       });  
     }

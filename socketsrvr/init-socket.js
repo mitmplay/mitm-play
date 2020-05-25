@@ -12,6 +12,11 @@ module.exports = () => {
     const page = request.url.match(/page=(\w+)/)[1];
     wsclients[`${host}:${page}`] = {client, request};
     client._page = `${host}:${page}`;
+    if (page==='window') {
+      const session = (new Date).toISOString().split('.')[0].replace(/[:-]/g,'');
+      console.log(c.yellowBright(`${session}-${host}`));
+      global.mitm.session = `${session}-${host}`;
+    }
 
     function incoming(data) {
       msgParser(client, data);
@@ -36,7 +41,7 @@ module.exports = () => {
       });
       const arr = Object.keys(wsclients);
       console.log(c.redBright(`>> wsclients: ${JSON.stringify(arr, null, 2)}`));
-    }, 1000)
+    }, 1000);
   });  
 
   global.wsclients = wsclients;
