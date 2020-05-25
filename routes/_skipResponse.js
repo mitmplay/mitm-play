@@ -1,10 +1,16 @@
 const c = require('ansi-colors');
 const {matched} = require('./match');
+const nameSpace = require('./name-space');
 
 function skipResponse(reqs) {
   const {url} = reqs;
 
-  function search(namespace) {
+  function search(nspace) {
+    const namespace = nameSpace(nspace);
+    if (!namespace) {
+      return;
+    }
+ 
     if (mitm.routes[namespace]) {
       const {skip} = mitm.routes[namespace];
       if (skip) {

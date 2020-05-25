@@ -1,13 +1,8 @@
+const nameSpace = require('./name-space');
+
 const searchFN = (typ, {url, headers}) => {
   return function search(nspace) {
-    let namespace;
-    for (let id in mitm.routes) {
-      if (nspace.match(`(^${id}|.${id})`)) {
-        namespace = id;
-        break;
-      }
-    }
-
+    const namespace = nameSpace(nspace);
     if (!namespace) {
       return;
     }
