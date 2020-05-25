@@ -6,23 +6,26 @@ function filename(pathname, reqs, hash='') {
   if (file==='') {
     file = '_';
   }
+  let ext = '';
   let file2 = file.split('.');
   if (hash) {
     file2[0] = `${file2[0]}${hash}`;
   }
   if (file2.length===1) {
     if (accept.indexOf('html')>-1) {
-      file2.push('html');
+      ext = 'html';
     } else if (accept.indexOf('css')>-1) {
-      file2.push('css');
+      ext = 'css';
     } else if (secFet.indexOf('script')>-1) {
-      file2.push('js');
+      ext = 'js';
     }
+  } else {
+    ext = file2[1];
   }
-  arr.push(file2.join('.'));
-  const fullpath = arr.join('/');
-  // console.log('fullpath', pathname, fullpath);
-  return fullpath;
+  file2.push(ext);
+  arr.push(file2[0]);
+  const fpath = arr.join('/');
+  return {fpath, ext};
 }
 
 function hashCode(txt) {
@@ -45,14 +48,13 @@ module.exports = (match, reqs) => {
     let [,params] = url.split('?');
     hash = params ? hashCode(params) : '';  
   }
-  const fullpath = filename(f, reqs, hash);
+  const {fpath, ext} = filename(f, reqs, hash);
 
-  const stamp1 = `${host}${fullpath}`;
-  const stamp2 = `${host}/$${fullpath}`;
+  const stamp1 = `${host}${fpath}`;
+  const stamp2 = `${host}/$${fpath}`;
 
-  const ex = match.route.ext || '';
   const cache = `${mitm.home}/cache`;
-  const fpath1 = `${cache}/${stamp1}${ex}`;
+  const fpath1 = `${cache}/${stamp1}.${ext}`;
   const fpath2 = `${cache}/${stamp2}.json`;
-  return {fpath1, fpath2};  
+  return {fpath1, fpath2, ext};  
 }
