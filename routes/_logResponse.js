@@ -10,14 +10,13 @@ function logResponse(arr, reqs) {
   const search = searchFN('log', reqs);
   const match = matched(search, reqs);
   if (match) {
-    const {method} = reqs;
     arr.push(resp => {
       if (_ctype(match, resp)) {
         console.log(c.bold.blueBright(match.log));
         if (mitm.argv.lazylog) {
-          logLazy(match, resp, method);
+          logLazy(match, reqs, resp);
         } else {
-          logFlatten(match, resp, method);
+          logFlatten(match, reqs, resp);
         }
       }
       return resp; 

@@ -4,6 +4,7 @@ const _match = require('./match');
 const _ext = require('./filepath/ext');
 const _ctype = require('./content-type');
 const filesave = require('./filesave/filesave');
+const jsonResp = require('./filesave/json-resp');
 const cacheFilepath = require('./filepath/cache-filepath');
 
 const {matched,searchFN} = _match;
@@ -20,7 +21,7 @@ function cacheResponse(arr, reqs) {
       // get from cache
       console.log(c.greenBright(`>> cache (${fpath1})`));
       const {status, headers} = JSON.parse(fs.readFileSync(fpath2));
-      const body = fs.readFileSync(`${fpath1}.${ctype({headers})}`);
+      const body = fs.readFileSync(`${fpath1}.${_ext({headers})}`);
       return {status, headers, body};
     } else {
       // get from remote
@@ -30,17 +31,7 @@ function cacheResponse(arr, reqs) {
           let {body, ...r} = resp;
           const meta = JSON.stringify(r, null, 2);
           console.log(c.magentaBright(`>> cache (${fpath1})`));
-          if (ext==='json') {
-            try {
-              const contentLength = r.headers['content-length'];
-              if (contentLength && contentLength[0]!=='0') {
-                body = JSON.stringify(JSON.parse(`${body}`), null, 2);
-              }
-            } catch (error) {
-              console.log(c.redBright(`>> Error JSON.stringify`));
-              console.log(error);
-            }
-          }          
+          body = jsonResp({reqs, resp, ext});
           filesave({fpath1: `${fpath1}.${ext}`, body}, {fpath2, meta}, 'cache');
         }
         return resp; 

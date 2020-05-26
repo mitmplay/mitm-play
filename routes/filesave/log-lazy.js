@@ -1,12 +1,13 @@
 const c = require('ansi-colors');
 const filesave = require('./filesave');
+const jsonResp = require('./json-resp');
 const logFilepath = require('../filepath/log-filepath');
 
 let debunk;
 let _queue = [];
 
-module.exports = (match, resp, method) => {
-  _queue.push({match, resp, method});
+module.exports = (match, reqs, resp) => {
+  _queue.push({match, reqs, resp});
   debunk && clearTimeout(debunk);
   debunk = setTimeout(function() {
     const queue = _queue;
@@ -16,9 +17,10 @@ module.exports = (match, resp, method) => {
     let _path = {};
     let _index = 0;
     const stamp = (new Date).toISOString().replace(/[:-]/g, '');
-    for (let {match, resp, method} of queue) {
+    for (let {match, reqs, resp} of queue) {
       const fn = logFilepath(match, resp, stamp);
       const {pathname} = match;
+      const {method} = reqs;
       if (!_path[pathname]) {
         _path[pathname] = true;
         allpath = fn('-00');
@@ -30,17 +32,7 @@ module.exports = (match, resp, method) => {
       let {fpath1, fpath2, ext} = allpath;
       let {url, status, headers, body} = resp;
       let meta = JSON.stringify({url, method, status, headers}, null, 2);
-      if (ext==='json') {
-        try {
-            const contentLength = headers['content-length'];
-            if (contentLength && contentLength[0]!=='0') {
-              body = JSON.stringify(JSON.parse(`${body}`), null, 2);
-            }
-        } catch (error) {
-          console.log(c.redBright(`>> Error JSON.stringify`));
-          console.log(error);
-        }
-      }
+      body = jsonResp({reqs, resp, ext, meta: true});
       filesave({fpath1, body}, {fpath2, meta}, 'lazy log');
     }
    }, 5000);  
