@@ -7,13 +7,31 @@ module.exports = ({reqs, resp, ext, meta}) => {
       if (contentLength && contentLength[0]!=='0') {
         body = JSON.parse(`${body}`);
       }
+      const headers = {};
+      for (let key in resp.headers) {
+        if (key!=='set-cookie') {
+          headers[key] = resp.headers[key].join(',');
+        } else {
+          headers[key] = resp.headers[key];
+        }
+      }
+      if (method==='POST')
+         debugger;
+      let reqsBody;
+      if (reqs.body && reqs.body.match('^{"')) {
+        reqsBody = JSON.parse(reqs.body);
+      } else {
+        reqsBody = reqs.body;
+      }
       if (meta) {
         body = {
           url,
           method,
           status,
           respBody: body,
-          respHeader: resp.headers
+          reqsBody: reqsBody,
+          respHeader: headers,
+          reqsHeader: reqs.headers,
         }
       }
       body = JSON.stringify(body, null, 2);
