@@ -1,4 +1,4 @@
-const ctype = require('./ext');
+const _ext = require('./ext');
 
 function filename(pathname, resp) {
   const arr = pathname.replace(/\-/g, '_').split('/');
@@ -11,7 +11,7 @@ function filename(pathname, resp) {
   let ext = '';
   let file2 = file.split('.');
   if (file2.length===1) {
-    ext = ctype(resp);
+    ext = _ext(resp);
   } else {
     ext = file2[1];
   }

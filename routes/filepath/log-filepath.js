@@ -1,4 +1,4 @@
-const ctype = require('./ext');
+const _ext = require('./ext');
 
 function filename(pathname, resp, nanoid) {
   const arr = pathname.split('/');
@@ -12,7 +12,7 @@ function filename(pathname, resp, nanoid) {
   file2[0] = `${file2[0]}${nanoid}`;
 
   if (file2.length===1) {
-    ext = ctype(resp);
+    ext = _ext(resp);
   } else {
     ext = file2[1];
   }

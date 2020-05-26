@@ -1,6 +1,6 @@
-const fs = require('fs-extra');
 const c = require('ansi-colors');
-const logFilepath = require('./log-filepath');
+const filesave = require('./filesave');
+const logFilepath = require('../filepath/log-filepath');
 
 let debunk;
 let _queue = [];
@@ -29,7 +29,7 @@ module.exports = (match, resp, method) => {
       }
       let {fpath1, fpath2, ext} = allpath;
       let {url, status, headers, body} = resp;
-      let resp2 = JSON.stringify({url, method, status, headers}, null, 2);
+      let meta = JSON.stringify({url, method, status, headers}, null, 2);
       if (ext==='json') {
         try {
             const contentLength = headers['content-length'];
@@ -41,16 +41,7 @@ module.exports = (match, resp, method) => {
           console.log(error);
         }
       }
-      fs.ensureFile(fpath1, err => {
-        fs.writeFile(fpath1, body , err => {
-          err && console.log('>> Error write log', err);
-        })
-      })
-      fs.ensureFile(fpath2, err => {
-        fs.writeFile(fpath2, resp2, err => {
-          err && console.log('>> Error write cache2', err);
-        })
-      })
+      filesave({fpath1, body}, {fpath2, meta}, 'lazy log');
     }
    }, 5000);  
 }

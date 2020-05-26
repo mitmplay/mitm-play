@@ -1,8 +1,8 @@
 const c = require('ansi-colors');
 const _match = require('./match');
-const logLazy = require('./log-lazy');
-const logFlatten = require('./log-flatten');
-const contentType = require('./content-type');
+const _ctype = require('./content-type');
+const logLazy = require('./filesave/log-lazy');
+const logFlatten = require('./filesave/log-flatten');
 
 const {matched,searchFN} = _match;
 
@@ -12,7 +12,7 @@ function logResponse(arr, reqs) {
   if (match) {
     const {method} = reqs;
     arr.push(resp => {
-      if (contentType(match, resp)) {
+      if (_ctype(match, resp)) {
         console.log(c.bold.blueBright(match.log));
         if (mitm.argv.lazylog) {
           logLazy(match, resp, method);
