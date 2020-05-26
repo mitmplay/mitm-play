@@ -8,7 +8,16 @@ module.exports = () => {
 
   let debunk;
   wsserver.on('connection', function connection(client, request) {
-    const {host} = new URL(request.headers.origin);
+    let host;
+    try {
+      if (request.headers.origin!=='null') {
+        host = (new URL(request.headers.origin)).host;
+      } else {
+        host = 'null';
+      }
+    } catch (error) {
+      debugger;
+    }
     const page = request.url.match(/page=(\w+)/)[1];
     wsclients[`${host}:${page}`] = {client, request};
     client._page = `${host}:${page}`;
