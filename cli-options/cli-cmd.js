@@ -1,14 +1,22 @@
 const fs = require('fs-extra');
+const fg = require('fast-glob');
 const c = require('ansi-colors');
 
 module.exports = () => {
-  let {argv, fn: {clear}} = mitm;
-  let arg = argv._[0] || 'default';
-  arg = `${mitm.home}/argv/${arg}.js`;
+  let {
+    argv,
+    fn: {
+      clear,
+      loadJS,
+    }
+  } = mitm;
+
+  let prm0 = argv._[0] || 'default';
+  prm0 = `${mitm.home}/argv/${prm0}.js`;
 
   let saveArgs; ;
-  if (fs.existsSync(arg)) {
-    saveArgs = JSON.parse(fs.readFileSync(arg));
+  if (fs.existsSync(prm0)) {
+    saveArgs = JSON.parse(fs.readFileSync(prm0));
     console.log(c.green('>> cmd: mitm-play', saveArgs._args));
   }
 
@@ -22,13 +30,6 @@ module.exports = () => {
   fs.ensureDir(mitm.home, err =>{});
   fs.ensureDir(`${mitm.home}/.${argv.browser}`, err => {});
   
-  if (typeof(argv.go)!=='string') {
-    argv.go = 'http://whatsmyuseragent.org/';
-  }
-  if (!argv.go.match('http')) {
-    argv.go = `https://${argv.go}`;
-  }
-
   let {route} = argv;
   if (!route) {
     route = `${process.cwd()}/userroute`;
@@ -39,8 +40,30 @@ module.exports = () => {
   } else if (route.match(/^\..\//)) {
     route = route.replace(/^\..\//, `${process.cwd()}/../`);
   }
-  argv.route = route.replace(/\\/g, '/');
+  route = route.replace(/\\/g, '/');
+  argv.route = route;
+
   mitm.data.userroute = `${route}/*/*.js`;
+  const files = fg.sync([mitm.data.userroute]);
+  for (let file of files) {
+    loadJS(file);
+  }
+
+  if (typeof(argv.go)!=='string') {
+    if (argv._[0]) {
+      for (let namespace in mitm.routes) {
+        if (namespace.match(argv._[0])) {
+          argv.go = mitm.routes[namespace].url;
+        }
+      }  
+    }
+    if (typeof(argv.go)!=='string') {
+      argv.go = 'http://whatsmyuseragent.org/';
+    }
+  }
+  if (!argv.go.match('http')) {
+    argv.go = `https://${argv.go}`;
+  }
 
   clear();
 

@@ -41,6 +41,22 @@ function routeSet(routes, namespace, print=false) {
   return routes;
 };
 
+const load = function(path) {
+  console.log('>> userroute', path);
+  const rpath = require.resolve(path);
+  if (require.cache[rpath]) {
+    delete require.cache[rpath];
+  }
+  return require(path);
+}
+
+const loadJS = function(path, log) {
+  const {clear} = global.mitm.fn;
+  console.log(log);
+  load(path);
+  clear();
+}
+
 function clear() {
   const {clear:c} = global.mitm.argv;
   (c===true || c==='cache') && fs.remove(`${mitm.home}/cache`);
@@ -68,6 +84,7 @@ module.exports = () => {
   global.mitm.fn.stringify = stringify;
   global.mitm.fn.tldomain = tldomain;
   global.mitm.fn.routeSet = routeSet;
+  global.mitm.fn.loadJS = loadJS;
   global.mitm.fn.clear = clear;
   global.mitm.fn.hello = hello;
   global.mitm.fn.home = home;

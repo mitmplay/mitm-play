@@ -11,7 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\mitm-play.js"
+            "program": "${workspaceFolder}\\mitm-play.js",
+            "args": ["amazon", "-r='D:/Projects/userscript'"]
         }
     ]
 }

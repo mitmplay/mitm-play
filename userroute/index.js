@@ -1,24 +1,11 @@
 const fg = require('fast-glob');
 const chokidar = require('chokidar');
 
-const load = function(path) {
-  console.log('>> userroute', path);
-  const rpath = require.resolve(path);
-  if (require.cache[rpath]) {
-    delete require.cache[rpath];
-  }
-  return require(path);
-}
-
-const loadJS = function(path, log) {
-  const {clear} = global.mitm.fn;
-  console.log(log);
-  load(path);
-  clear();
-}
-
 module.exports = () => {
-  const {userroute} = mitm.data;
+  const {
+    fn: {loadJS},
+    data: {userroute},
+  } = mitm;
   const files = fg.sync([userroute]);
 
   if (!files.length) {

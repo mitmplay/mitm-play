@@ -1,6 +1,6 @@
 const c = require('ansi-colors');
 const yargs = require('yargs-parser');
-const script = require('../userroute');
+const uroute = require('../userroute');
 const initfn = require('./init-fn');
 const cliChg = require('./cli-chg');
 const cliCmd = require('./cli-cmd');
@@ -21,6 +21,7 @@ global.mitm = {
 
 initfn();
 cliChg();
+routes();
 cliCmd();
 
 module.exports = () => {
@@ -51,6 +52,5 @@ module.exports = () => {
   }
   console.log(c.greenBright(JSON.stringify(argv, null, 2)));
   console.log(c.green(`v${package.version}\n`));
-  routes();
-  script();
+  uroute();
 }
