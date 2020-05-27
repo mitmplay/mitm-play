@@ -43,17 +43,18 @@ mitm-play
 
 # Features
 
-| Feature | payload      | note                                              |
-|---------|--------------|---------------------------------------------------|
-| `skip`  | __request__  | back to browser - browser will handle it          |
-| `log`   | __response__ | based on `url` - call to remote server            |
-| `mock`  | __response__ | based on `url` - no call to remote server         |
-| `cache` | __response__ | based on `url` - subsequence call read from cache |
-| Update  | __response__ | based on `url` and `content-type` - call remote server |
-| =>      | * `html`     | - add js on &lt;head&gt; or end of &lt;body&gt; |
-| =>      | * `json`     | - response modification
-| =>      | * `css`      | - response modification
-| =>      | * `js`       | - response modification
+| Feature  | payload      | note                                       
+|----------|--------------|----------------------------------------
+| `skip`   | ----------   | array ..of `[url]` - browser will handle it    
+| `mock`   | __response__ | object of `{url}` - no call to remote server  
+| `headers`| __request__  | object of `{header}` - call to remote server
+| `cache`  | __response__ | object of `{url}` - next call read from cache 
+| `log`    | __response__ | object of `{url}` - call to remote server & logs    
+| Update   | __response__ | object of `{url}`+`(ContentType)` - call remote server
+| =>>      | * `html`     | - response handler (replace / update + JS)
+| =>>      | * `json`     | - response handler (replace / update)
+| =>>      | * `css`      | - response handler (replace / update)
+| =>>      | * `js`       | - response handler (replace / update)
 
 
 # Concept
