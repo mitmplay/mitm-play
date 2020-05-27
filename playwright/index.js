@@ -1,5 +1,6 @@
 const playwright = require('playwright');
 const exitHook = require('exit-hook');
+const c = require('ansi-colors');
 const routes = require('../routes');
 const {extract} = require('../routes/fetch')
 
@@ -25,13 +26,14 @@ module.exports = () => {
     let page, browser, bcontext;
     const br = mitm.argv.browser;
     if (argv.browser==='chromium') {
-      if (argv.executablePath) {
-        options.executablePath = home(argv.executablePath);
-      }
       options.args = args;
     }
     if (argv.executablePath) {
+      options.executablePath = home(argv.executablePath);
       console.log('>> executablePath', argv.executablePath);
+      if (argv.browser!=='chromium') {
+        console.log(c.redBright('executablePath is unsupported for non Chrome!'))
+      }
     } else {
       const _browser = require('playwright')[argv.browser];
       console.log('>> executablePath', _browser.executablePath());

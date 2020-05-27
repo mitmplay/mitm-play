@@ -1,8 +1,6 @@
 module.exports = () => {
-  const {fn: {fs,mock}} = global.mitm;
-
   const rpath = require.resolve('../socketclnt');
-  const _body = fs.readFileSync(rpath)+'';
+  const _body = global.mitm.fn.fs.readFileSync(rpath)+'';
   
   const _global_vars = () => {
     const {argv} = global.mitm;
@@ -13,17 +11,13 @@ module.exports = () => {
     return {body: `window.mitm = ${_g}`};
   };
   
+  const mock = {
+    '/mitm-play/websocket.js': {
+      resp: _global_vars,
+    },
+  }
+  global.mitm.__mock = mock;
   global.mitm.routes = {
-    default: {
-      // cache: {'application/x-ww':  { ext: '.json' }},
-      // log:   {'application/json':  { ext: '.json' }},
-      // skip:  {'.(jpeg|jpg|png|svg|gif|ico|mp4)': {}},
-      mock: {
-        '/mitm-play/websocket.js': {
-          resp: _global_vars,
-        },
-        '/mock': {resp: mock},
-      },
-    }
+    default: {mock}
   };
 };
