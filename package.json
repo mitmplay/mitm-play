@@ -28,7 +28,6 @@
     "fs-extra": "^9.0.0",
     "make-fetch-happen": "^8.0.6",
     "playwright": "^1.0.2",
-    "stringify-object": "^3.3.0",
     "ws": "^7.2.5",
     "yargs-parser": "^18.1.3"
   },
