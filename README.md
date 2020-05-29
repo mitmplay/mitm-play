@@ -1,11 +1,11 @@
 # mitm-play
 Man in the middle using playwright
 
+![mitm-play](https://raw.githubusercontent.com/mitm-proxy/mitm-play/master/docs/mitm-proxy.gif)
 # Installation
 ```bash
 npm install -g mitm-play
 ```
-![mitm-play](https://raw.githubusercontent.com/mitm-proxy/mitm-play/master/docs/mitm-proxy.gif)
 
 ```js
 // create new folder/file: google.com/index.js and add this content:
