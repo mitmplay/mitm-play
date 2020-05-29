@@ -5,6 +5,7 @@ Man in the middle using playwright
 ```bash
 npm install -g mitm-play
 ```
+![mitm-play](docs/mitm-play.gif)
 
 ```js
 // create new folder/file: google.com/index.js and add this content:

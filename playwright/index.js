@@ -5,7 +5,9 @@ const routes = require('../routes');
 const {extract} = require('../routes/fetch')
 
 //https://stackoverflow.com/questions/21177387/caution-provisional-headers-are-shown-in-chrome-debugger/55865689#55865689
-const options = {headless: false};
+const options = {
+  headless: false,
+};
 const args = [
   // `--load-extension=${pathToExtension}`,
   // `--disable-client-side-phishing-detection=1`,
@@ -45,7 +47,7 @@ module.exports = () => {
       bcontext = browser;
     } else {
       browser = await playwright[br].launch(options);
-      const context = await browser.newContext();
+      const context = await browser.newContext({viewport: { height: 734, width: 800 }});
       page = await context.newPage();  
       bcontext = context;
     }

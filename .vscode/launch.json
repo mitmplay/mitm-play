@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\mitm-play.js",
-            "args": ["amazon", "-r='D:/Projects/userscript'"]
+            // "args": ["amazon", "-r='D:/Projects/userscript'"]
         }
     ]
 }
