@@ -1,7 +1,7 @@
 # mitm-play
 Man in the middle using playwright
 
-![mitm-play](https://raw.githubusercontent.com/mitm-proxy/mitm-play/master/docs/mitm-proxy.gif)
+![mitm-play](https://raw.githubusercontent.com/mitm-proxy/user-route/master/docs/mitm-proxy.gif)
 # Installation
 ```bash
 npm install -g mitm-play
