@@ -70,6 +70,3 @@ module.exports = () => {
     delete argv.s;
   }
 }
-/*
-* mitm-play -g='https://androidauthority.com' -r='D:/Projects/userscript' -cps
-*/

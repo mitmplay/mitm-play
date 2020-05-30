@@ -51,3 +51,4 @@ module.exports = () => {
   console.log(c.green(`v${package.version}\n`));
   uroute();
 }
+//mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -cspr='.'
