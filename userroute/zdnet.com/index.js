@@ -39,7 +39,7 @@ routes = {
   },
   css: {
     // remove partner content
-    'zdnet4.cbsistatic.com': `=>${css}`
+    'cbsistatic.com': `=>${css}`
   },
 }
 global.mitm.fn.routeSet(routes, domain, true)
