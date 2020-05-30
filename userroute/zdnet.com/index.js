@@ -27,7 +27,7 @@ routes = {
   },  
   skip: [
     // skip error `request back` to browser to handle it
-    'ad.doubleclick.net/ddm/ad/',
+    'ad.doubleclick.net/ddm/',
   ],
   js: {
     // remove advertising
