@@ -14,7 +14,6 @@ function cacheResponse(arr, reqs) {
   const match = matched(search, reqs);
 
   if (match) {
-    // console.log(match.log);
     const {url} = reqs;
     let {fpath1, fpath2} = cacheFilepath(match, reqs);
     let resp2;
