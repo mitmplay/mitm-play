@@ -11,12 +11,9 @@ const home = (platform === 'win32' ? HOMEPATH : HOME).replace(/\\/g, '/');
 
 global.mitm = {
   argv: yargs(process.argv.slice(2)),
+  data: {userroute: './**/*.js'},
   home: `${home}/.mitm-play`,
   port: 3000,
-  data: {
-    userroute: './**/*.js',
-  },
-  fn: {},
 };
 
 initfn();

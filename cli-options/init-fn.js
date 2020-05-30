@@ -157,21 +157,23 @@ const mock = function() {
 const resp = () => {};
 
 module.exports = () => {
-  global.mitm.fn.unstrictCSP = unstrictCSP;
-  global.mitm.fn.stringify = stringify;
-  global.mitm.fn.chokidar = chokidar;
-  global.mitm.fn.tldomain = tldomain;
-  global.mitm.fn.routeSet = routeSet;
-  global.mitm.fn.execFile = execFile;
-  global.mitm.fn.html5vid = html5vid;
-  global.mitm.fn.loadJS = loadJS;
-  global.mitm.fn.clear = clear;
-  global.mitm.fn.hello = hello;
-  global.mitm.fn.home = home;
-  global.mitm.fn.mock = mock;
-  global.mitm.fn.resp = resp;
-  global.mitm.fn.exec = exec;
-  global.mitm.fn.fg = fg;
-  global.mitm.fn.fs = fs;
-  global.mitm.fn.c = c;
+  global.mitm.fn = {
+    unstrictCSP,
+    stringify,
+    chokidar,
+    tldomain,
+    routeSet,
+    execFile,
+    html5vid,
+    loadJS,
+    clear,
+    hello,
+    home,
+    mock,
+    resp,
+    exec,
+    fg,
+    fs,
+    c,
+  }
 }
