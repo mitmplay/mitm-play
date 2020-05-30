@@ -27,11 +27,8 @@ function mockResponse(route, reqs) {
     } else {          
       if (match.route.resp || match.route.js) {
         if (match.route.resp) {
-          let resp2 = match.route.resp(resp);
-          resp = {
-            ...resp,
-            ...resp2
-          };
+          const resp2 = match.route.resp(resp);
+          resp2 && (resp = {...resp, ...resp2});
         };
         if (match.route.js) {
           resp.body = source(resp.body, match.route.js);

@@ -1,7 +1,12 @@
 const fs = require('fs-extra');
 const fg = require('fast-glob');
 const c = require('ansi-colors');
+const chokidar = require('chokidar');
 const stringify = require('./stringify');
+const {
+  exec: _exec, 
+  execFile: _execFile,
+} = require('child_process');
 
 function tldomain(fullpath) {
   let fp;
@@ -75,6 +80,72 @@ function home(path) {
   return path.replace('~', home);
 }
 
+function _stdout({error, stdout, stderr, fn}) {
+  stdout && console.log(`stdout: ${stdout}`);
+  stderr && console.error(`stderr: ${stderr}`);
+  error && console.error(`exec error: ${error}`);
+  fn && fn();
+}
+
+function exec() {
+  const args = [].slice.call(arguments);
+  let fn;
+  if (typeof(args[args.length-1])==='function') {
+    fn = args.pop();
+  }  
+  args.push((error, stdout, stderr) => {
+    _stdout({error, stdout, stderr, fn})
+  });
+  _exec.apply(this, args);
+}
+
+function execFile() {
+  const args = [].slice.call(arguments);
+  let fn;
+  if (typeof(args[args.length-1])==='function') {
+    fn = args.pop();
+  }
+  args.push((error, stdout, stderr) => {
+    _stdout({error, stdout, stderr, fn})
+  }); 
+  _execFile.apply(this, args);
+}
+
+let debunk;
+let urlList = [];
+function html5vid({url}, fn) {
+  if (url.match(/.ts$/)) {
+    urlList.push(url.replace(/https:\//, `${mitm.home}/cache`));
+    debunk && clearTimeout(debunk);
+    debunk = setTimeout(function() {
+      clearTimeout(debunk);
+      const files = urlList;
+      urlList = [];
+      const arr = files[0].match(/(\d+)\/(pu\/vid|vid)/);
+      if (fs.existsSync(`${arr[1]}.mp4`)) {
+        return;
+      }
+      if (arr && arr[1]) {
+        const tsList = [];
+        for (let file of files) {
+          if (file.match(arr[1])) {
+            tsList.push(`file '${file}'`);
+          }
+        }
+        fs.writeFileSync(`${arr[1]}.txt`, tsList.join('\n'));
+        execFile('ffmpeg', `-f concat -safe 0 -i ${arr[1]}.txt -c copy ${arr[1]}.ts`.split(' '), () => {
+          execFile('ffmpeg', `-i ${arr[1]}.ts -acodec copy -vcodec copy ${arr[1]}.mp4`.split(' '), () => {
+            fs.remove(`${arr[1]}.txt`);
+            fs.remove(`${arr[1]}.ts`);
+            fn && fn();
+          });
+        });
+        //console.log(arr);
+      }
+    }, 1500)
+  }
+}
+
 const hello = function() {
   console.log('Hello from mimt-play');
 };
@@ -88,14 +159,19 @@ const resp = () => {};
 module.exports = () => {
   global.mitm.fn.unstrictCSP = unstrictCSP;
   global.mitm.fn.stringify = stringify;
+  global.mitm.fn.chokidar = chokidar;
   global.mitm.fn.tldomain = tldomain;
   global.mitm.fn.routeSet = routeSet;
+  global.mitm.fn.execFile = execFile;
+  global.mitm.fn.html5vid = html5vid;
   global.mitm.fn.loadJS = loadJS;
   global.mitm.fn.clear = clear;
   global.mitm.fn.hello = hello;
   global.mitm.fn.home = home;
   global.mitm.fn.mock = mock;
   global.mitm.fn.resp = resp;
+  global.mitm.fn.exec = exec;
   global.mitm.fn.fg = fg;
   global.mitm.fn.fs = fs;
+  global.mitm.fn.c = c;
 }

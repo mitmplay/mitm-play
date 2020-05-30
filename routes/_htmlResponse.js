@@ -16,14 +16,10 @@ function htmlResponse(arr, reqs) {
         if (typeof(match.route)==='string') {
           resp.body = match.route;
         } else {        
-          let resp2;
           if (match.route.resp) {
-            resp2 = match.route.resp(resp);
+            const resp2 = match.route.resp(resp);
+            resp2 && (resp = {...resp, ...resp2});
           }
-          resp = {
-            ...resp,
-            ...resp2,
-          };
           if (match.route.js) {
             const inject = _fetch[match.route.el] || e_end;
             resp.body = inject(resp.body, match.route.js);

@@ -14,13 +14,9 @@ function jsResponse(arr, reqs) {
         if (typeof(match.route)==='string') {
           resp.body = addReplaceBody(resp.body, match);
         } else {
-          let resp2;
           if (match.route.resp) {
-            resp2 = match.route.resp(resp);
-          }
-          resp = {
-            ...resp,
-            ...resp2,
+            const resp2 = match.route.resp(resp);
+            resp2 && (resp = {...resp, ...resp2});
           }
         };
       }

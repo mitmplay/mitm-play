@@ -15,7 +15,15 @@ module.exports = (resp) => {
       ext = 'json';
     } else if (ctype.indexOf('script')>-1) {
       ext = 'js';
+    } else if (ctype.indexOf('mpegURL')>-1) {
+      ext = 'm3u8';
+    } else if (ctype.indexOf('MP2T')>-1) {
+      ext = 'ts';
+    } else if (ctype.indexOf('webm')>-1) {
+      ext = 'webm';
+    } else if (ctype.indexOf('mp4')>-1) {
+      ext = 'mp4';
     }
-  }
+}
   return ext;
 }
