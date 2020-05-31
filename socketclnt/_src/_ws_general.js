@@ -51,11 +51,11 @@ module.exports = () => {
   window.ws__send = (cmd, data, handler) => {
    const id = nanoid();
    const key = `${cmd}:${id}`;
-   window._wsqueue[key] = handler || (w => console.log(w));
+   window._ws_queue[key] = handler || (w => console.log(w));
 
    setTimeout(function() {
-    if (window._wsqueue[key]) {
-      delete  window._wsqueue[key];
+    if (window._ws_queue[key]) {
+      delete  window._ws_queue[key];
       console.log('>> ws timeout!', key);
     } 
    }, 5000)

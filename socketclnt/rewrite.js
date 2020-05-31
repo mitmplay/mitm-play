@@ -5,7 +5,7 @@ module.exports = () => ({
     if (isWrite) {
       setTimeout(() => {
         let body = fs.readFileSync(file)+'';
-        body = body.replace('module.exports = src;', 'src();');
+        body = body.replace('module.exports = _src;', '_src();');
   
         fs.writeFile(file, body, err => {
           err && console.log('>> Error write bundle', err);

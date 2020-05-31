@@ -6,8 +6,8 @@ module.exports = () => {
     const {argv} = global.mitm;
     let _g = {argv};
     _g = JSON.stringify(_g, null, 2);
-    _g = `window.mitm = ${_g};\nsrc()`;
-    _g = _body.replace('src()',`${_g}`);
+    _g = `window.mitm = ${_g};\n_src()`;
+    _g = _body.replace('_src()',`${_g}`);
     return {body: `window.mitm = ${_g}`};
   };
   

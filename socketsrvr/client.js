@@ -54,20 +54,23 @@ On browser console type "ws"`;
   }
 
   function $routes({data}) {
-    keys = Object.keys(mitm.routes);
+    
     const {stringify} = mitm.fn;
-    if (data) {
-      return keys.map(x => {
+
+    if (data==='*') {
+      return Object.keys(mitm.routes).map(x => {
         return `>> ${x}\n${stringify(mitm.routes[x])}`
       }).join('\n');
+    } else if (!data) {
+      return Object.keys(mitm.routes);
     } else {
-      return keys;
+      for (let id in mitm.routes) {
+        if (id.match(data)) {
+          const r = mitm.routes[id];
+          return mitm.fn.stringify(r);
+        }
+      }
     }
-  }
-
-  function $route({data}) {
-    const r = mitm.routes[data];
-    return mitm.fn.stringify(r);
   }
 
   return {
@@ -76,6 +79,5 @@ On browser console type "ws"`;
     _ping,
     _open,
     $routes,
-    $route,
   }
 }

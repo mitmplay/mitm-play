@@ -16,6 +16,16 @@ module.exports =  (route, request) => {
   const respEvents = [];
   let resp = undefined;
 
+  // catch unknown url scheme & respond it 
+  if (reqs.url.match('(brave|edge)://')) {
+    const resp = {
+      status: 200,
+      headers: {},
+      body: ''
+    };
+    route.fulfill(resp);
+  }
+
   if (_skipResponse(reqs)) {
     route.continue({});
     return;

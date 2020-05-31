@@ -1,11 +1,11 @@
-const msgParser = require('./msg-parser');
-const inIframe = require('./in-iframe');
+const _ws_msgParser = require('./_ws_msg-parser');
+const _ws_inIframe = require('./_ws_in-iframe');
 
 module.exports = () => {
-  const ws = new WebSocket(`ws://localhost:3000/ws?page=${inIframe()}`);
+  const ws = new WebSocket(`ws://localhost:3000/ws?page=${_ws_inIframe()}`);
 
   ws.onmessage = function (event) { 
-    msgParser(event, event.data);
+    _ws_msgParser(event, event.data);
    };
 
    ws.onopen = function() {                 
@@ -18,5 +18,5 @@ module.exports = () => {
   };
 
   window._ws = ws;
-  window._wsqueue = {};
+  window._ws_queue = {};
 }

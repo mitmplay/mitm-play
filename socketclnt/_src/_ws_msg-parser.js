@@ -1,5 +1,5 @@
-const _client = require('./client');
-const wccmd = _client();
+const _ws_client = require('./_ws_client');
+const _ws_wccmd = _ws_client();
 
 module.exports = (event, msg) => {
   if (msg.length>40) {
@@ -17,13 +17,13 @@ module.exports = (event, msg) => {
     } catch (error) {
       console.error(json,error);
     }        
-    if (window._wsqueue[cmd]) {
-      handler = window._wsqueue[cmd];
-      delete window._wsqueue[cmd];
+    if (window._ws_queue[cmd]) {
+      handler = window._ws_queue[cmd];
+      delete window._ws_queue[cmd];
       handler(json.data);
-    } else if (wccmd[cmd]) {
+    } else if (_ws_wccmd[cmd]) {
       console.log(json.data);
-      wccmd[cmd].call(event, json)
+      _ws_wccmd[cmd].call(event, json)
     }       
   }    
 }
