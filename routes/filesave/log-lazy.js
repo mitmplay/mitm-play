@@ -1,5 +1,6 @@
 const c = require('ansi-colors');
 const filesave = require('./filesave');
+const metaResp = require('./meta-resp');
 const jsonResp = require('./json-resp');
 const logFilepath = require('../filepath/log-filepath');
 
@@ -20,7 +21,6 @@ module.exports = (match, reqs, resp) => {
     for (let {match, reqs, resp} of queue) {
       const fn = logFilepath(match, resp, stamp);
       const {pathname} = match;
-      const {method} = reqs;
       if (!_path[pathname]) {
         _path[pathname] = true;
         allpath = fn('-00');
@@ -29,10 +29,9 @@ module.exports = (match, reqs, resp) => {
         _index += 1;
         allpath = fn(`-${(_index+'').padStart(2,'0')}`);
       }
-      let {fpath1, fpath2, ext} = allpath;
-      let {url, status, headers, body} = resp;
-      let meta = JSON.stringify({url, method, status, headers}, null, 2);
-      body = jsonResp({reqs, resp, ext, meta: true});
+      let {fpath1, fpath2} = allpath;
+      const meta = metaResp({reqs, resp});
+      const body = jsonResp({meta, resp});
       filesave({fpath1, body}, {fpath2, meta}, 'lazy log');
     }
    }, 5000);  

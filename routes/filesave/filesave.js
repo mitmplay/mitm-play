@@ -8,7 +8,7 @@ module.exports = ({fpath1, body}, {fpath2, meta}, typ) => {
     })
   })
   fs.ensureFile(fpath2, err => {
-    fs.writeFile(fpath2, meta, err => {
+    fs.writeFile(fpath2, JSON.stringify(meta, null, 2), err => {
       err && console.log(c.redBright(`>> Error write meta ${typ}`), err);
     })
   })

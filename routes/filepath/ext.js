@@ -2,7 +2,9 @@ module.exports = (resp) => {
   let ext = '';
   let ctype = resp.headers['content-type'];
   if (ctype) {
-    ctype = ctype[0];
+    if (Array.isArray(ctype)) {
+      ctype = ctype[0];
+    }
     if (ctype.indexOf('html')>-1) {
       ext = 'html';
     } else if (ctype.indexOf('css')>-1) {
@@ -13,7 +15,8 @@ module.exports = (resp) => {
       ext = 'png';
     } else if (ctype.indexOf('json')>-1) {
       ext = 'json';
-    } else if (ctype.indexOf('script')>-1) {
+    } else if (ctype.indexOf('script')>-1
+            && ctype.indexOf('json')===-1) {
       ext = 'js';
     } else if (ctype.indexOf('mpegURL')>-1) {
       ext = 'm3u8';

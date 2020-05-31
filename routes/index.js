@@ -24,6 +24,7 @@ module.exports =  (route, request) => {
       body: ''
     };
     route.fulfill(resp);
+    return;
   }
 
   if (_skipResponse(reqs)) {
