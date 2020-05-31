@@ -39,6 +39,7 @@ module.exports = () => {
     -r --route    \t set userscript folder of routes
     -c --clear    \t clear cache and/or logs
     -s --save     \t save as default <profl>
+    --proxypac    \t set chromium proxypac 
     --chromium    \t browser = chromium
     --firefox     \t browser = firefox
     --webkit      \t browser = webkit

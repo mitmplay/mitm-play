@@ -28,6 +28,9 @@ module.exports = () => {
     let page, browser, bcontext;
     const br = mitm.argv.browser;
     if (argv.browser==='chromium') {
+      if (argv.proxypac) {
+        args.push(`--proxy-pac-url=${argv.proxypac}`);
+      }
       options.args = args;
     }
     if (argv.executablePath) {
