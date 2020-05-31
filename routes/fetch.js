@@ -61,7 +61,13 @@ function e_end(body, fn) {
 }
 
 function fetch(route, {url, ...reqs}, handler) {
-  _fetch(url, {...reqs, redirect: 'manual'}).then(resp => {
+  const {PROXY,NO_PROXY} = process.env;
+  const opts = {redirect: 'manual'};
+  if (PROXY) {
+    opts.proxy = PROXY;
+    opts.noProxy = NO_PROXY || '';
+  }
+  _fetch(url, {...reqs, ...opts}).then(resp => {
     const headers = resp.headers.raw();
     const status = resp.status;
 
