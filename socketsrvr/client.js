@@ -74,6 +74,7 @@ On browser console type "ws"`;
   }
 
   async function _sshot({path}) {
+    await global.mitm.fn.fs.ensureFile(path);
     await global.mitm.page.screenshot({path});
   }
 
