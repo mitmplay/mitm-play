@@ -17,11 +17,15 @@ function filename(pathname, reqs, hash='') {
   if (file==='') {
     file = '_';
   }
-  let file2 = file.split('.');
-  if (hash) {
-    file2[0] = `${file2[0]}${hash}`;
+  let file2 = file;
+  let ext = file.match(/\.\w+$/)
+  if (ext) {
+    file2 = file.replace(/\.\w+$/, '');
   }
-  arr.push(file2[0]);
+  if (hash) {
+    file2 = `${file2}${hash}`;
+  }
+  arr.push(file2);
   return arr.join('/');;
 }
 

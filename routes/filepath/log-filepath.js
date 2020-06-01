@@ -7,20 +7,17 @@ function filename(pathname, resp, nanoid) {
   if (file==='') {
     file = '_';
   }
-  let ext = '';
-  let file2 = file.split('.');
-  file2[0] = `${file2[0]}${nanoid}`;
 
-  if (file2.length===1) {
-    ext = _ext(resp);
+  let file2 = file;
+  let ext = file.match(/\.\w+$/)
+  if (ext) {
+    ext = ext[0];
   } else {
-    ext = file2[1];
+    ext = _ext(resp);
+    file2 = `${file}.${ext}`;
   }
-
-  file2.push(ext);  
-  arr.push(file2[0]);
-  const fpath = arr.join('/');
-  return {fpath, ext};
+  arr.push(file2);
+  return {fpath: arr.join('/'), ext};
 }
 
 module.exports = (match, resp, stamp) => {
