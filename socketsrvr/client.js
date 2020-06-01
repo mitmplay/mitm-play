@@ -73,11 +73,32 @@ On browser console type "ws"`;
     }
   }
 
+  async function _sshot({path}) {
+    await global.mitm.page.screenshot({path});
+  }
+
+  let debunk;
+  let _stamp = [];
+  function $sshot({data}) {
+    _stamp.push((new Date).toISOString().replace(/[:-]/g, ''));
+    debunk && clearTimeout(debunk);
+    debunk = setTimeout(function() {
+      const stamp = _stamp[0];
+      clearTimeout(debunk);
+      _stamp = [];
+      const {host} = data;
+      const {home, session} = global.mitm;
+      const path = `${home}/log/${session}/${stamp}-${host}-sshot.png`;
+      _sshot({path});
+    }, 500);
+  }
+
   return {
     _style,
     _help,
     _ping,
     _open,
     $routes,
+    $sshot,
   }
 }

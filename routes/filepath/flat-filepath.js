@@ -26,7 +26,7 @@ module.exports = (match, resp, stamp) => {
   const {home, session} = mitm;
   const {host,pathname} = match;
   const {fpath, ext} = filename(pathname, resp);
-  const fpath1 = `${home}/log/${session}/${host}/${stamp}${fpath}.${ext}`;
-  const fpath2 = `${home}/log/${session}/${host}/$/${stamp}${fpath}.json`;
+  const fpath1 = `${home}/log/${session}/${stamp}-${host}-${fpath}.${ext}`;
+  const fpath2 = `${home}/log/${session}/$/${stamp}-${host}-${fpath}.json`;
   return {fpath1, fpath2, ext};
 }
