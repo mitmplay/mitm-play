@@ -21,10 +21,19 @@ function filename(pathname, resp) {
 }
 
 module.exports = (match, resp, stamp) => {
-  const {home, session} = mitm;
-  const {host,pathname} = match;
+  let {host,pathname,route:{at}} = match;
   const {fpath, ext} = filename(pathname, resp);
-  const fpath1 = `${home}/log/${session}/${stamp}-${host}-${fpath}.${ext}`;
-  const fpath2 = `${home}/log/${session}/$/${stamp}-${host}-${fpath}.json`;
+  const json = ext==='json' ? '' : '.json';
+  const {home, session} = mitm;
+
+  let fpath1,fpath2;
+  if (at.match(/^\^/)) {
+    at = at.slice(1);
+    fpath1 = `${home}/log/${session}/${at}/${stamp}-${host}-${fpath}`;
+    fpath2 = `${home}/log/${session}/$/${at}/${stamp}-${host}-${fpath}${json}`;
+  } else {
+    fpath1 = `${home}/log/${session}/${stamp}--${at}@${host}-${fpath}`;
+    fpath2 = `${home}/log/${session}/$/${stamp}--${at}@${host}-${fpath}${json}`;
+  }
   return {fpath1, fpath2, ext};
 }

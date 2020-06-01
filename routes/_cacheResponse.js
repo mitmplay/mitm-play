@@ -41,7 +41,7 @@ function cacheResponse(arr, reqs) {
           fpath1 = `${fpath1}.${_ext(resp)}`;
           console.log(c.magentaBright(`>> cache (${fpath1})`));
           const meta = metaResp({reqs, resp});
-          const body = jsonResp({meta, resp});
+          const body = `${resp.body}`;
           filesave({fpath1, body}, {fpath2, meta}, 'cache');
           if (match.route.resp) {
             resp2 = match.route.resp(resp);

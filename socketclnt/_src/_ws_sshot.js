@@ -1,26 +1,34 @@
 module.exports = () => {
   const {hostname: host} = location;
-  let route;
+  let namespace;
   for (let id in mitm.routes) {
     if (host.match(id)) {
-      route = mitm.routes[id];
+      namespace = id;
       break;
     }
   }
-  console.log('>> init sshot');
-  if (document.body && route && route.sshot) {
-    console.log('>> log sshot');
-    document.body.addEventListener("click", e => {
-      const arr = document.querySelectorAll(route.sshot);
-      for (let id of arr) {
-        if (e.target===arr[id]) {
-          ws__send('sshot', {host});
-          break;
+  console.log('>> init screenshot');
+  const route = mitm.routes[namespace];
+  if (route && route.screenshot) {
+    console.log('>> log screenshot');
+    document.querySelector('html').addEventListener("click", function(e) {
+      const arr = document.querySelectorAll(route.screenshot.selector);
+      const fname = location.pathname
+      .replace(/^\//,'')
+      .replace(/\//g,'-');
+      for (let el of arr) {
+        let node = e.target;
+        while (el!==node && node!==document.body) {
+          node = node.parentNode;
+        }
+        if (node!==document.body) {
+          ws__send('screenshot', {namespace, host, fname});
+          return;
         }
       }
-    }, true);
+    });
   }
-  setTimeout(() => {
-    ws__send('sshot', {host});
-  }, 1000);
+  // setTimeout(() => {
+  //   ws__send('screenshot', {host});
+  // }, 1000);
 };
