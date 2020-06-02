@@ -13,11 +13,11 @@ const {matched,searchFN} = _match;
 function cacheResponse(arr, reqs) {
   const search = searchFN('cache', reqs);
   const match = matched(search, reqs);
+  let resp, resp2;
 
   if (match) {
     const {url} = reqs;
     let {fpath1, fpath2} = cacheFilepath(match, reqs);
-    let resp2;
 
     if (fs.existsSync(fpath2)) {
       // get from cache
@@ -33,7 +33,6 @@ function cacheResponse(arr, reqs) {
         resp2 = match.route.resp(resp);
         resp2 && (resp = {...resp, ...resp2})
       }
-      return resp;
     } else {
       // get from remote
       arr.push(resp => {
@@ -52,6 +51,7 @@ function cacheResponse(arr, reqs) {
       });  
     }
   }
+  return {match, resp}; 
 }
 
 module.exports = cacheResponse;

@@ -70,8 +70,14 @@ function fetch(route, {url, ...reqs}, handler) {
   _fetch(url, {...reqs, ...opts}).then(resp => {
     const headers = resp.headers.raw();
     const status = resp.status;
-
     resp.buffer().then(body => {
+      for (let key in headers) {
+        if (key!=='set-cookie') {
+          headers[key] = headers[key].join(',');
+        } else {
+          headers[key] = headers[key];
+        }
+      }
       const resp2 = handler({url, status, headers, body});
       route.fulfill(resp2);
     })

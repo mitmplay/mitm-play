@@ -14,7 +14,6 @@ const { extract, fetch } = require('./fetch');
 module.exports =  (route, request) => {
   const reqs = extract(route, request);
   const respEvents = [];
-  let resp = undefined;
 
   // catch unknown url scheme & respond it 
   if (reqs.url.match('(brave|edge)://')) {
@@ -38,11 +37,13 @@ module.exports =  (route, request) => {
 
   _chgRequest(reqs);
 
-  //--resp can be undefined or local cached
-  resp = _cacheResponse(respEvents, reqs);
+  //--resp can be undefined or local cached & can skip logs (.nolog)
+  let {match, resp} = _cacheResponse(respEvents, reqs);
 
   //--order is important and log must not contain the body modification
-  _logResponse(respEvents, reqs);
+  if (!match || !match.route.nolog) {
+    _logResponse(respEvents, reqs);
+  }
 
   _htmlResponse(respEvents, reqs);
   _jsonResponse(respEvents, reqs);

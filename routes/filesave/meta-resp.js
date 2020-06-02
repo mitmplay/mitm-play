@@ -4,13 +4,6 @@ module.exports = ({reqs, resp}) => {
   let {method, body: reqsBody, headers: reqsHeader} = reqs;
   let meta, {url, status, headers: respHeader} = resp;
   try {
-    for (let key in respHeader) {
-      if (key!=='set-cookie') {
-        respHeader[key] = respHeader[key].join(',');
-      } else {
-        respHeader[key] = respHeader[key];
-      }
-    }
     if (reqsBody && reqsBody.match('^{"')) {
       reqsBody = JSON.parse(reqsBody);
     }
