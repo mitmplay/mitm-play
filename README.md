@@ -118,7 +118,7 @@ Below example show three selector in `observer`:
 *  *'.input.focus'* -> **filename**: input -> **state**: `insert` or `remove`
 *  *'.panel.error'* -> **filename**: panel-error -> **state**: `insert`
 
-caveat: oberver is an *experimental feature*, take it as a grain salt, expectation of selector should be like toggling and it need a unique match to the DOM-Elemet, please do test on chrome-devtools before reporting a bug.
+Caveat: `observer` is an *experimental feature*, take it as a grain salt, expectation of selector should be like toggling and it need a unique match to the DOM-Elemet, *please do test on chrome-devtools before reporting a bug*.
 ```js
   screenshot: {
     selector: '[type=button],[type=submit],button,a',
@@ -136,6 +136,8 @@ caveat: oberver is an *experimental feature*, take it as a grain salt, expectati
   },
   log: {},
 ```
+`at` is a partion of filename and having a simple rule attach on it, will discuss specificaly on other section to this doc.
+
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
 
