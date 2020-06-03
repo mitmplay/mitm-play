@@ -83,6 +83,20 @@ global.mitm.route = {
   },
 }
 ```
+# Route Sections
+on each route you can add section supported:
+```js
+routes = {
+  url: '',
+  title: '',
+  screenshot: {},
+  direct: [],
+  skip: [],
+  cache: {},
+  log: {},
+}
+```
+
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
 
