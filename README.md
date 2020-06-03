@@ -102,7 +102,7 @@ routes = {
 }
 ```
 ## URL & Title
-mitm-procy will pickup the **`url`** when supplied with non dashes params and will try match partion of text in **`url`**, and for the `Title`, it just provide basic information about this route.
+`mitm-play` will pickup the **`url`** when supplied first params with non dashes and will try match partion of text in **`url`**, and for the `Title`, it just provide basic information about this route.
 ```js
 routes = {
   title: 'Amazon - amazon',
@@ -110,7 +110,32 @@ routes = {
 };
 // mitm-play ama -cspr='.' -> search: 'ama' in url and go to the website
 ```
+## Screenshot
+Capture/Screeshot when user *click* specific DOM-Element *match* with `selector` or state-change, like DOM-Element getting *insert* or *remove* and match **selector** inside `observer` key.
 
+Below example show three selector in `observer`:
+*  *'.field.error'* -> **filename**: field-error -> **state**: `insert` or `remove`
+*  *'.input.focus'* -> **filename**: input -> **state**: `insert` or `remove`
+*  *'.panel.error'* -> **filename**: panel-error -> **state**: `insert`
+
+caveat: oberver is an *experimental feature*, take it as a grain salt, expectation of selector should be like toggling and it need a unique match to the DOM-Elemet, please do test on chrome-devtools before reporting a bug.
+```js
+  screenshot: {
+    selector: '[type=button],[type=submit],button,a',
+    observer: {
+      /***
+       * selector must be uniq, represent not in the dom 
+       * state change couse element tobe insert or remove,
+       * or can be just class change 
+      */
+      '.field.error': 'field-error:insert,remove',
+      '.input.focus': 'input:insert,remove',
+      '.panel.error': 'panel-error:insert',
+    },
+    at: 'sshot',
+  },
+  log: {},
+```
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
 
