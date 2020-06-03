@@ -10,9 +10,10 @@ module.exports = () => {
   console.log('>> init screenshot');
   const route = mitm.routes[namespace];
   if (route && route.screenshot) {
+    const {selector} = route.screenshot;
     console.log('>> log screenshot');
     document.querySelector('html').addEventListener("click", function(e) {
-      const arr = document.querySelectorAll(route.screenshot.selector);
+      const arr = document.querySelectorAll(selector);
       const fname = location.pathname
       .replace(/^\//,'')
       .replace(/\//g,'-');
