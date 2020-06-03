@@ -87,14 +87,28 @@ global.mitm.route = {
 on each route you can add section supported:
 ```js
 routes = {
-  url: '',
-  title: '',
+  url:     '',
+  title:   '',
   screenshot: {},
-  direct: [],
-  skip: [],
-  cache: {},
-  log: {},
+  skip:    [],
+  mock:    {},
+  headers: {},
+  cache:   {},
+  log:     {},
+  html:    {},
+  json:    {},
+  css:     {},
+  js:      {}
 }
+```
+## URL & Title
+mitm-procy will pickup the **`url`** when supplied with non dashes params and will try match partion of text in **`url`**, and for the `Title`, it just provide basic information about this route.
+```js
+routes = {
+  title: 'Amazon - amazon',
+  url:  'https://www.amazon.com/b?node=229189',
+};
+// mitm-play ama -cspr='.' -> search: 'ama' in url and go to the website
 ```
 
 # User Route
