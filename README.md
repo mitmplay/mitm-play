@@ -174,6 +174,24 @@ mock: {
   },
 },
 ```
+## Headers
+Manipulate Request headers
+```js
+headers: {
+  'disqus.com/embed/comments/': {
+    'referrer-policy': 'no-referrer-when-downgrade'
+  }
+},
+```
+## Cache
+Cache the first request to your local disk so next request will serve from your local disk.
+```js
+cache: {
+  'amazon.com': {
+    contentType: ['javascript', 'image']
+  }
+},
+```
 
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
