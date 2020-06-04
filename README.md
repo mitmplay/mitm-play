@@ -89,8 +89,8 @@ on each route you can add section supported:
 routes = {
   url:     '',
   title:   '',
-  screenshot: {},
-  skip:    [],
+  screenshot: {}, //user interaction rules & oberve DOM-Element
+  skip:    [], //start routing rules
   mock:    {},
   headers: {},
   cache:   {},
@@ -98,9 +98,11 @@ routes = {
   html:    {},
   json:    {},
   css:     {},
-  js:      {}
+  js:      {}, //end routing rules
 }
 ```
+the execution order as documented start with `skip`, end with `js`, no need to implement all of routing rules. 
+
 ## URL & Title
 `mitm-play` will pickup the **`url`** when supplied first params with non dashes and will try match partion of text in **`url`**, and for the `Title`, it just provide basic information about this route.
 ```js
@@ -119,6 +121,9 @@ Below example show three selector in `observer`:
 *  *'.panel.error'* -> **filename**: panel-error -> **state**: `insert`
 
 Caveat: `observer` is an *experimental feature*, take it as a grain salt, expectation of selector should be like toggling and it need a unique match to the DOM-Element, *please do test on chrome-devtools before reporting a bug*.
+
+Caveat 2: this `Screenshot` rule(s), required successful injection of websocket client to html document, if it not success (error can be seen on chrome dev-tools),might be *content-security-policy* restrict. 
+
 ```js
 screenshot: {
   selector: '[type=button],[type=submit],button,a', //click event
