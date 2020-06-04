@@ -184,11 +184,22 @@ headers: {
 },
 ```
 ## Cache
-Cache the first request to your local disk so next request will serve from your local disk.
+`Cache` the first request to your local disk so next request will serve from your local disk.
 ```js
 cache: {
   'amazon.com': {
     contentType: ['javascript', 'image']
+  }
+},
+```
+`cache` support `resp` function, it means the result can be manipulate first before send to the browser.
+```js
+cache: {
+  'amazon.com': {
+    contentType: ['json'], //required! 
+    resp({status, headers, body}) {
+      return {body} //can be {} or combination of {status, headers, body}
+    },    
   }
 },
 ```
