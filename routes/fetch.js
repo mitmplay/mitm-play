@@ -61,11 +61,12 @@ function e_end(body, fn) {
 }
 
 function fetch(route, {url, ...reqs}, handler) {
-  const {PROXY,NO_PROXY} = process.env;
+  let {HTTP_PROXY,NO_PROXY} = process.env;
+  let {http_proxy,no_proxy} = process.env;
   const opts = {redirect: 'manual'};
-  if (PROXY) {
-    opts.proxy = PROXY;
-    opts.noProxy = NO_PROXY || '';
+  if (HTTP_PROXY || http_proxy) {
+    opts.proxy = HTTP_PROXY || http_proxy;
+    opts.noProxy = NO_PROXY || no_proxy || '';
   }
   _fetch(url, {...reqs, ...opts}).then(resp => {
     const headers = resp.headers.raw();

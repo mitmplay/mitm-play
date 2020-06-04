@@ -21,10 +21,14 @@ function filename(pathname, resp) {
 }
 
 module.exports = (match, resp, stamp) => {
-  let {host,pathname,route:{at}} = match;
+  let {host,pathname,route:{at,contentType}} = match;
   const {fpath, ext} = filename(pathname, resp);
   const json = ext==='json' ? '' : '.json';
   const {home, session} = mitm;
+
+  if (at===undefined) {
+    at = contentType.join('-');
+  }
 
   let fpath1,fpath2;
   if (at.match(/^\^/)) {

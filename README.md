@@ -161,12 +161,12 @@ exclude: ['wp-admin'],
 ## Mock
 Mocking the **response**.
 
-Basic rule: **the matcher** having value of **string of mock body**
+Basic rule: replace **response body** with **the matcher** value 
 ```js
 mock: {'2mdn.net': ''},
 ```
 
-`resp` rule: **the mock body** will be a return value of `resp` *function*
+`resp` rule: manipulate **response** with return value of `resp` *function*
 ```js
 mock: {
   'mitm-play/twitter.js': {
@@ -240,6 +240,99 @@ log: {
       return {body} //can be {} or combination of {status, headers, body}
     },    
   }
+},
+```
+
+## Html
+Manipulate the response.
+
+Basic rule: replace **response body** with **the matcher** value 
+```js
+html: {'twitter.net': ''},
+```
+
+`resp` rule: manipulate **response** with return value of `resp` *function*
+```js
+html: {
+  'twitter.com/home': {
+    resp({status, headers, body}) {
+      ....
+      return {body} //can be {} or combination of {status, headers, body}
+    },
+  },
+},
+```
+`js` rule: insert js script element into specific area in html document
+```js
+html: {
+  'www.google.com/search': {
+    el: 'e_end', // JS at end of 
+    js: [googlJS, hello], // html body
+  },
+},
+```
+
+## Json
+Manipulate the response.
+
+Basic rule: replace **response body** with **the matcher** value 
+```js
+json: {'twitter.net': '{}'},
+```
+
+`resp` rule: manipulate **response** with return value of `resp` *function*
+```js
+json: {
+  'twitter.com/home': {
+    resp({status, headers, body}) {
+      ....
+      return {body} //can be {} or combination of {status, headers, body}
+    },
+  },
+},
+```
+
+## Css
+Manipulate the response.
+
+Basic rule: replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
+```js
+const style = 'body: {color: red}';
+...
+css: {'twitter.net': style}, //or `=>${style}`
+```
+
+`resp` rule: manipulate **response** with return value of `resp` *function*
+```js
+css: {
+  'twitter.com/home': {
+    resp({status, headers, body}) {
+      ....
+      return {body} //can be {} or combination of {status, headers, body}
+    },
+  },
+},
+```
+
+## Js
+Manipulate the response.
+
+Basic rule: replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
+```js
+const code = 'alert(0);'
+...
+js: {'twitter.net': code}, //or `=>${code}`
+```
+
+`resp` rule: manipulate **response** with return value of `resp` *function*
+```js
+js: {
+  'twitter.com/home': {
+    resp({status, headers, body}) {
+      ....
+      return {body} //can be {} or combination of {status, headers, body}
+    },
+  },
 },
 ```
 
