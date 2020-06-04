@@ -83,6 +83,9 @@ global.mitm.route = {
   },
 }
 ```
+# Profile: ~/.mitm-play
+By default all save file are on the `~/.mitm-play` profile folder.
+
 # Route Sections
 on each route you can add section supported:
 ```js
