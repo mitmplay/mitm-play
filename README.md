@@ -94,6 +94,7 @@ routes = {
   title:   '',
   screenshot: {}, //user interaction rules & oberve DOM-Element
   skip:    [], //start routing rules
+  exclude: [],
   mock:    {},
   headers: {},
   cache:   {},
@@ -149,6 +150,12 @@ screenshot: {
 Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
 ```js
 skip: ['wp-admin'],
+```
+
+## Exclude *(experimantal)*
+Exclude match **`url`** rule in which having same *Origin/Referer* to the route namespace, and *`skip` don't have any restriction, plain and simple match and forget*.
+```js
+exclude: ['wp-admin'],
 ```
 
 ## Mock
