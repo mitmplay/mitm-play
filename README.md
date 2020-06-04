@@ -118,25 +118,30 @@ Below example show three selector in `observer`:
 *  *'.input.focus'* -> **filename**: input -> **state**: `insert` or `remove`
 *  *'.panel.error'* -> **filename**: panel-error -> **state**: `insert`
 
-Caveat: `observer` is an *experimental feature*, take it as a grain salt, expectation of selector should be like toggling and it need a unique match to the DOM-Elemet, *please do test on chrome-devtools before reporting a bug*.
+Caveat: `observer` is an *experimental feature*, take it as a grain salt, expectation of selector should be like toggling and it need a unique match to the DOM-Element, *please do test on chrome-devtools before reporting a bug*.
 ```js
-  screenshot: {
-    selector: '[type=button],[type=submit],button,a',
-    observer: {
-      /***
-       * selector must be uniq, represent not in the dom 
-       * state change couse element tobe insert or remove,
-       * or can be just class change 
-      */
-      '.field.error': 'field-error:insert,remove',
-      '.input.focus': 'input:insert,remove',
-      '.panel.error': 'panel-error:insert',
-    },
-    at: 'sshot',
+screenshot: {
+  selector: '[type=button],[type=submit],button,a', //click event
+  observer: {
+    /***
+     * selector must be uniq, represent not in the dom 
+     * state change couse element tobe insert or remove,
+     * or can be just class change 
+    */
+    '.field.error': 'field-error:insert,remove',
+    '.input.focus': 'input:insert,remove',
+    '.panel.error': 'panel-error:insert',
   },
-  log: {},
+  at: 'sshot', //partion of log filename
+},
 ```
 `at` is a partion of filename and having a simple rule attach on it, will discuss specificaly on other section to this doc.
+
+## Skip
+Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section.
+```js
+skip: ['wp-admin'],
+```
 
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
