@@ -336,6 +336,9 @@ js: {
 },
 ```
 
+# HTTP_PROXY & NO_PROXY
+mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system required proxy to access internet.
+
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
 
