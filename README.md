@@ -150,6 +150,18 @@ Basic rule: **the matcher** having value of **string of mock body**
 ```js
 mock: {'2mdn.net': ''},
 ```
+
+`resp` rule: **the mock body** will be a return value of `resp` *function*
+```js
+mock: {
+  'mitm-play/twitter.js': {
+    resp({status, headers, body}) {
+      return {body} //can be {} or combination of {status, headers, body}
+    },
+  },
+},
+```
+
 `js` rule: **the mock body** will be a concatenation of JS code
 ```js
 const unregisterJS = () => {
@@ -163,17 +175,8 @@ mock: {
   },
 },
 ```
+Please do not combine  `resp` with `js`, `js` will add/replace content-type to  *'application/javascript'*.
 
-`resp` rule: **the mock body** will be a return value of `resp` *function*
-```js
-mock: {
-  'mitm-play/twitter.js': {
-    resp({status, headers, body}) {
-      return {body} //can be {} or combination of {status, headers, body}
-    },
-  },
-},
-```
 ## Headers
 Manipulate Request headers
 ```js
@@ -195,6 +198,27 @@ cache: {
 `cache` support `resp` function, it means the result can be manipulate first before send to the browser.
 ```js
 cache: {
+  'amazon.com': {
+    contentType: ['json'], //required! 
+    resp({status, headers, body}) {
+      return {body} //can be {} or combination of {status, headers, body}
+    },    
+  }
+},
+```
+
+## Log
+Save the response to your local disk.
+```js
+log: {
+  'amazon.com': {
+    contentType: ['json']
+  }
+},
+```
+`log` support `resp` function, it means the result can be manipulate first before send to the browser.
+```js
+log: {
   'amazon.com': {
     contentType: ['json'], //required! 
     resp({status, headers, body}) {
