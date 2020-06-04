@@ -138,9 +138,41 @@ screenshot: {
 `at` is a partion of filename and having a simple rule attach on it, will discuss specificaly on other section to this doc.
 
 ## Skip
-Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section.
+Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
 ```js
 skip: ['wp-admin'],
+```
+
+## Mock
+Mocking the **response**.
+
+Basic rule: **the matcher** having value of **string of mock body**
+```js
+mock: {'2mdn.net': ''},
+```
+`js` rule: **the mock body** will be a concatenation of JS code
+```js
+const unregisterJS = () => {
+  ...
+  console.log('unregister service worker')
+};
+
+mock: {
+  'mitm-play/twitter.js': {
+    js: [unregisterJS],
+  },
+},
+```
+
+`resp` rule: **the mock body** will be a return value of `resp` *function*
+```js
+mock: {
+  'mitm-play/twitter.js': {
+    resp({status, headers, body}) {
+      return {body} //can be {} or combination of {status, headers, body}
+    },
+  },
+},
 ```
 
 # User Route
