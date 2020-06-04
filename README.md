@@ -122,7 +122,7 @@ Below example show three selector in `observer`:
 
 Caveat: `observer` is an *experimental feature*, take it as a grain salt, expectation of selector should be like toggling and it need a unique match to the DOM-Element, *please do test on chrome-devtools before reporting a bug*.
 
-Caveat 2: this `Screenshot` rule(s), required successful injection of websocket client to html document, if it not success (error can be seen on chrome dev-tools),might be *content-security-policy* restrict. 
+Caveat 2: this `Screenshot` rule(s), required successful injection of websocket client to html document, if it not success (error can be seen on chrome dev-tools),might be *content-security-policy* restriction. 
 
 ```js
 screenshot: {
@@ -137,10 +137,10 @@ screenshot: {
     '.input.focus': 'input:insert,remove',
     '.panel.error': 'panel-error:insert',
   },
-  at: 'sshot', //partion of log filename
+  at: 'sshot', //'^sshot' part of log filename
 },
 ```
-`at` is a partion of filename and having a simple rule attach on it, will discuss specificaly on other section to this doc.
+`at` is a partion of filename and having a simple rule attach on it. Guess what is it?.
 
 ## Skip
 Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
