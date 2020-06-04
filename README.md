@@ -152,7 +152,7 @@ Skipping back **`url`** to the browser if partion of **`url`** match text in arr
 skip: ['wp-admin'],
 ```
 
-## Exclude *(experimantal)*
+## Exclude *(experimental)*
 Exclude match **`url`** rule in which having same *Origin/Referer* to the route namespace, and *`skip` don't have any restriction, plain and simple match and forget*.
 ```js
 exclude: ['wp-admin'],
