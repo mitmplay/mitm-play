@@ -31,7 +31,7 @@ module.exports = (match, reqs, resp) => {
       }
       let {fpath1, fpath2} = allpath;
       const meta = metaResp({reqs, resp});
-      const body = jsonResp({meta, resp});
+      const body = jsonResp({meta, resp, match});
       filesave({fpath1, body}, {fpath2, meta}, 'lazy log');
     }
    }, 5000);  

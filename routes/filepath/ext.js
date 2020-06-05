@@ -13,6 +13,10 @@ module.exports = (resp) => {
       ext = 'svg';
     } else if (ctype.indexOf('png')>-1) {
       ext = 'png';
+    } else if (ctype.indexOf('gif')>-1) {
+      ext = 'gif';
+    } else if (ctype.indexOf('jpeg')>-1) {
+      ext = 'jpeg';
     } else if (ctype.indexOf('json')>-1) {
       ext = 'json';
     } else if (ctype.indexOf('script')>-1
