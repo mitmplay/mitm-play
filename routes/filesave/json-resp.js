@@ -1,19 +1,13 @@
 const c = require('ansi-colors');
 const _ext = require('../filepath/ext');
 
-module.exports = ({meta, resp, match}) => {
+module.exports = ({reqs, resp, match}) => {
   let _resp, respBody;
   respBody = `${resp.body}`;
   const {log, parse} = match.route;
   if (_ext(resp)==='json' || log) {
-    let {
-      url,
-      method,
-      status,
-      respHeader,
-      reqsHeader,
-      reqsBody,
-    } = meta;
+    let {method, body: reqsBody, headers: reqsHeader} = reqs;
+    let {url, status, headers: respHeader} = resp;
     try {
       if (typeof(log)==='string') {
         respBody = log;

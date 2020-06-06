@@ -5,7 +5,6 @@ const _ext = require('./filepath/ext');
 const _ctype = require('./content-type');
 const filesave = require('./filesave/filesave');
 const metaResp = require('./filesave/meta-resp');
-const jsonResp = require('./filesave/json-resp');
 const cacheFilepath = require('./filepath/cache-filepath');
 
 const {matched,searchFN} = _match;
