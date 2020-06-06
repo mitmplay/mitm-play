@@ -1,5 +1,4 @@
 module.exports = () => {
-  console.log('init postmessage');
   // function receiveMessage(event) {
   //   console.log(`>> Msg: ${event.origin} => https://${location.host}`);
   // }

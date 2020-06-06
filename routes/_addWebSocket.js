@@ -1,8 +1,21 @@
 const { script_src } = require('./fetch');
 
+function replaceCSP(csp) {
+  csp = csp.replace(/default-src[^;]+;/g, '');
+  csp = csp.replace(/connect-src[^;]+;/g, '');
+  csp = csp.replace(/script-src[^;]+;/g, '');
+  csp = csp.replace(/style-src[^;]+;/g, '');
+  return csp;
+}
+
 const headerchg = headers => {
-  if (headers['some-header-key']) {
-    //action...
+  let csp;
+  if (headers['content-security-policy']) {
+    csp = replaceCSP(headers['content-security-policy']);
+    headers['content-security-policy'] = csp;
+  } else if (headers['content-security-policy-report-only']) {
+    csp = replaceCSP(headers['content-security-policy-report-only']);
+    headers['content-security-policy-report-only'] = csp;
   }
 }
 

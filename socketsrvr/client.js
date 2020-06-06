@@ -1,3 +1,6 @@
+const fs = require('fs-extra');
+const c = require('ansi-colors');
+
 module.exports = () => {
   /**
    * use only by client
@@ -107,12 +110,39 @@ On browser console type "ws"`;
     }, 500);
   }
 
+  function $csp_error({data}) {
+    const {home, session} = global.mitm;
+    const {namespace,host,fname,cspviolation} = data;
+    const body = JSON.stringify(cspviolation, null, 2);
+    const stamp = (new Date).toISOString().replace(/[:-]/g, '');
+    let at = `csp`;
+    if (namespace && mitm.routes[namespace]) {
+      const {csp_error} = mitm.routes[namespace];
+      if (csp_error && csp_error.at) {
+        at = `${ csp_error.at}`;
+      }
+    };
+    let path;
+    if (at.match(/^\^/)) {
+      at = at.slice(1);
+      path = `${home}/log/${session}/${at}/${stamp}-${host}--${fname}.json`;
+    } else {
+      path = `${home}/log/${session}/${stamp}--${at}@${host}--${fname}.json`;
+    };
+    fs.ensureFile(path, err => {
+      fs.writeFile(path, body, err => {
+        err && console.log(c.redBright(`>> Error write mcspviolationta`), err);
+      });
+    });  
+  }
+
   return {
     _style,
     _help,
     _ping,
     _open,
     $routes,
+    $csp_error,
     $screenshot,
   }
 }

@@ -1,17 +1,11 @@
+const _ws_namespace = require('./_ws_namespace');
+
 module.exports = () => {
   const {hostname: host} = location;
-  let namespace;
-  for (let id in mitm.routes) {
-    if (host.match(id)) {
-      namespace = id;
-      break;
-    }
-  }
-  console.log('>> init screenshot');
+  let namespace = _ws_namespace();
   const route = mitm.routes[namespace];
   if (route && route.screenshot) {
     const {selector} = route.screenshot;
-    console.log('>> log screenshot');
     document.querySelector('html').addEventListener("click", function(e) {
       const arr = document.querySelectorAll(selector);
       const fname = location.pathname
@@ -29,7 +23,4 @@ module.exports = () => {
       }
     });
   }
-  // setTimeout(() => {
-  //   ws__send('screenshot', {host});
-  // }, 1000);
 };

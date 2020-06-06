@@ -32,7 +32,7 @@ module.exports = () => {
     }
 
     client.on('message', incoming);
-    client.send('something');
+    client.send('connected');
 
     debunk && clearTimeout(debunk);
     debunk = setTimeout(() => {

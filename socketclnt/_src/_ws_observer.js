@@ -7,7 +7,7 @@ module.exports = () => {
       break;
     }
   }
-  console.log('>> init screenshot');
+
   const route = mitm.routes[namespace];
   if (route && route.screenshot) {
     const {observer: ob} = route.screenshot;

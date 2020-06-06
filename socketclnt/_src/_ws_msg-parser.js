@@ -3,9 +3,9 @@ const _ws_wccmd = _ws_client();
 
 module.exports = (event, msg) => {
   if (msg.length>40) {
-    console.log('>> wsmessage: `%s...`', msg.slice(0,40));
+    console.log('>> ws-message: `%s...`', msg.slice(0,40));
   } else {
-    console.log('>> wsmessage: `%s`', msg);
+    console.log('>> ws-message: `%s`', msg);
   }
   const arr = msg.replace(/\s+$/, '').match(/^ *([\w:]+) *(\{.*)/);
   if (arr) {
