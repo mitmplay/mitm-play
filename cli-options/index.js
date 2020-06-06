@@ -38,6 +38,7 @@ module.exports = () => {
     -l --logurl   \t test route to log url & headers
     -r --route    \t set userscript folder of routes
     -c --clear    \t clear cache and/or logs
+    -d --delog    \t clear/delete logs
     -s --save     \t save as default <profl>
     --proxypac    \t set chromium proxypac 
     --chromium    \t browser = chromium

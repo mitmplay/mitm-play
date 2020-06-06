@@ -65,6 +65,11 @@ module.exports = () => {
     delete argv.c;
   }
 
+  if (argv.d) {
+    argv.delog = argv.d;
+    delete argv.d;
+  }
+
   if (argv.s) {
     argv.save = argv.s;
     delete argv.s;
