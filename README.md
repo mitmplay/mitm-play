@@ -223,11 +223,17 @@ cache: {
 ```
 
 ## Log
-Save the response to your local disk.
+Save the response to your local disk. by default contentType `json` will log complete request / response, for different type default log should be response payload. 
+
+Special usacase like google-analytic will send contentType of `gif` with [GET] request, and response payload is not needed, there is an option `log` to force log with complete request / response.  
 ```js
 log: {
   'amazon.com': {
     contentType: ['json']
+  },
+  'google-analytics.com/collect': {
+    contentType: ['gif'],
+    log: '<remove>',
   }
 },
 ```
