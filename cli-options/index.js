@@ -32,9 +32,10 @@ module.exports = () => {
   Options:
     -h --help     \t show this help
     -g --go       \t go to location
-    -b --browser  \t browser: chromium/firefox/webkit
+    -n --nosocket \t no websocket injection
     -p --pristine \t pristine browser, not recommended to use
     -z --lazylog  \t debounce save after millsec last invoked
+    -b --browser  \t browser: chromium/firefox/webkit
     -l --logurl   \t test route to log url & headers
     -r --route    \t set userscript folder of routes
     -c --clear    \t clear cache and/or logs
