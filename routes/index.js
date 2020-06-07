@@ -14,6 +14,7 @@ const { extract, fetch } = require('./fetch');
 module.exports =  (route, request) => {
   const reqs = extract(route, request);
   const respEvents = [];
+  const {argv} = mitm;
 
   // catch unknown url scheme & respond it 
   if (reqs.url.match('(brave|edge)://')) {
@@ -50,8 +51,10 @@ module.exports =  (route, request) => {
   _cssResponse(respEvents, reqs);
   _jsResponse(respEvents, reqs);
 
-  //--inject websocket client to html
-  _addWebSocket(respEvents, reqs);
+  if (!argv.nosocket) {
+    //--inject websocket client to html
+    _addWebSocket(respEvents, reqs);
+  }
 
   //--respond need to log or modify
   if (respEvents.length) {
