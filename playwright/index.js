@@ -74,10 +74,6 @@ module.exports = () => {
     } else {
       bcontext.route(/.*/, routes);
     }
-    // page.on('worker', worker => {
-    //   console.log('Worker created: ' + worker.url());
-    //   worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()));
-    // });
     
     await page.goto(argv.go);
 
