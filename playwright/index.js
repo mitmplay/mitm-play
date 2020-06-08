@@ -1,22 +1,18 @@
-const playwright = require('playwright');
-const exitHook = require('exit-hook');
 const c = require('ansi-colors');
+const exitHook = require('exit-hook');
+const playwright = require('playwright');
+const {extract} = require('../routes/fetch');
 const routes = require('../routes');
-const {extract} = require('../routes/fetch')
 
 //https://stackoverflow.com/questions/21177387/caution-provisional-headers-are-shown-in-chrome-debugger/55865689#55865689
-const options = {
-  headless: false,
-};
+const options = {headless: false};
 const args = [
-  // `--load-extension=${pathToExtension}`,
-  // `--disable-client-side-phishing-detection=1`,
-  // `--disable-extensions-except=${pathToExtension}`,
-  // `--disable-features=site-per-process,NetworkService,NetworkServiceInProcess`,
   `--disable-features=IsolateOrigins,site-per-process`,
   `--disable-site-isolation-trials=1`,
   `--disable-site-isolation=1`,
   `--disable-web-security=1`,
+  // `--disable-client-side-phishing-detection=1`,
+  // `--disable-features=site-per-process,NetworkService,NetworkServiceInProcess`,
 ];
 
 module.exports = () => {

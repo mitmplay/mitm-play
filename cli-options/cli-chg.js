@@ -1,12 +1,25 @@
+function argsChg(id, key) {
+  let {argv} = mitm;
+  if (argv[id]) {
+    argv[key] = argv[id];
+    delete argv[id];
+  }
+}
+
+function browser(id) {
+  let {argv} = mitm;
+  if (argv[id]) {
+    argv.browser = id;
+    if (typeof(argv[id])==='string') {
+      argv.executablePath = argv[id];
+    }
+    delete argv[id];
+    return true;
+  }  
+}
+
 module.exports = () => {
   let {argv, fn: {clear}} = mitm;
-
-  function argsChg(id, key) {
-    if (argv[id]) {
-      argv[key] = argv[id];
-      delete argv[id];
-    }
-  }
 
   argsChg('g', 'go');
   argsChg('h', 'help');
@@ -24,23 +37,7 @@ module.exports = () => {
     argv.browser = 'chromium';
   }
 
-  if (argv.chromium) {
-    argv.browser = 'chromium';
-    if (typeof(argv.chromium)==='string') {
-      argv.executablePath = argv.chromium;
-    }
-    delete argv.chromium;
-  } else if (argv.firefox) {
-    argv.browser = 'firefox';
-    if (typeof(argv.chromium)==='string') {
-      argv.executablePath = argv.firefox;
-    }
-    delete argv.firefox;
-  } else if (argv.webkit) {
-    argv.browser = 'webkit';
-    if (typeof(argv.chromium)==='string') {
-      argv.executablePath = argv.webkit;
-    }
-    delete argv.webkit;
-  }
+  let br = browser('chromium');
+  !br && (br = browser('webkit'));
+  !br && (br = browser('firefox'));
 }
