@@ -31,14 +31,15 @@ module.exports = () => {
   fs.ensureDir(`${mitm.home}/.${argv.browser}`, err => {});
   
   let {route} = argv;
+  const cwd = process.cwd();
   if (!route) {
-    route = `${process.cwd()}/userroute`;
+    route = `${cwd}/userroute`;
   } else if (route.match(/^\.$/)) {
-    route = route.replace(/^\.$/, `${process.cwd()}`);
+    route = route.replace(/^\.$/, `${cwd}`);
   } else if (route.match(/^\.\//)) {
-    route = route.replace(/^\.\//, `${process.cwd()}/`);
+    route = route.replace(/^\.\//, `${cwd}/`);
   } else if (route.match(/^\..\//)) {
-    route = route.replace(/^\..\//, `${process.cwd()}/../`);
+    route = route.replace(/^\..\//, `${cwd}/../`);
   }
   route = route.replace(/\\/g, '/');
   argv.route = route;

@@ -1,10 +1,10 @@
 const c = require('ansi-colors');
 const yargs = require('yargs-parser');
-const uroute = require('../userroute');
 const initfn = require('./init-fn');
 const cliChg = require('./cli-chg');
 const cliCmd = require('./cli-cmd');
 const routes = require('./routes');
+const uroute = require('./uroute');
 
 const {platform, env: {HOME, HOMEPATH}} = process;
 const home = (platform === 'win32' ? HOMEPATH : HOME).replace(/\\/g, '/');

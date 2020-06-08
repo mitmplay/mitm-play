@@ -1,13 +1,13 @@
+const _chgRequest = require('./_chgRequest');
+const _jsResponse = require('./_jsResponse');
+const _cssResponse = require('./_cssResponse');
+const _logResponse = require('./_logResponse');
+const _jsonResponse = require('./_jsonResponse');
+const _htmlResponse = require('./_htmlResponse');
 const _skipResponse = require('./_skipResponse');
 const _mockResponse = require('./_mockResponse');
-const _cacheResponse = require('./_cacheResponse');
-const _logResponse = require('./_logResponse');
-const _htmlResponse = require('./_htmlResponse');
-const _jsonResponse = require('./_jsonResponse');
-const _cssResponse = require('./_cssResponse');
-const _jsResponse = require('./_jsResponse');
-const _chgRequest = require('./_chgRequest');
 const _addWebSocket = require('./_addWebSocket');
+const _cacheResponse = require('./_cacheResponse');
 const patchReqHeader = require('./patchReqHeader');
 const { extract, fetch } = require('./fetch');
 
