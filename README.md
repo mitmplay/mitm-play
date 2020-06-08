@@ -2,6 +2,28 @@
 Man in the middle using playwright
 
 ![mitm-play](https://raw.githubusercontent.com/mitm-proxy/user-route/master/docs/mitm-proxy.gif)
+
+   * [Installation](#installation)
+   * [Features](#features)
+   * [Concept](#concept)
+   * [Profile: ~/.mitm-play](#profile-mitm-play)
+   * [Route Sections](#route-sections)
+      * [URL &amp; Title](#url--title)
+      * [Screenshot](#screenshot)
+      * [Exclude <em>(experimental)</em>](#exclude-experimental)
+      * [Skip](#skip)
+      * [Mock](#mock)
+      * [Headers](#headers)
+      * [Cache](#cache)
+      * [Log](#log)
+      * [Html](#html)
+      * [Json](#json)
+      * [Css](#css)
+      * [Js](#js)
+   * [HTTP_PROXY &amp; NO_PROXY](#http_proxy--no_proxy)
+   * [User Route](#user-route)
+   * [Early Stage](#early-stage)
+
 # Installation
 ```bash
 npm install -g mitm-play
@@ -146,16 +168,16 @@ screenshot: {
 ```
 `at` is a partion of filename and having a simple rule attach on it. Guess what is it?.
 
-## Skip
-Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
-```js
-skip: ['wp-admin'],
-```
-
 ## Exclude *(experimental)*
 Exclude match **`url`** rule in which having same *Origin/Referer* to the route namespace, and *`skip` don't have any restriction, plain and simple match and forget*.
 ```js
 exclude: ['wp-admin'],
+```
+
+## Skip
+Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
+```js
+skip: ['wp-admin'],
 ```
 
 ## Mock
