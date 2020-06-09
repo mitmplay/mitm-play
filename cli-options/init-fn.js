@@ -69,10 +69,10 @@ const loadJS = function(path, log) {
 }
 
 function clear() {
-  const {clear:c, delog:d} = global.mitm.argv;
-  (c===true || c==='cache') && fs.remove(`${mitm.home}/cache`);
-  (c===true || c==='log') && fs.remove(`${mitm.home}/log`);
-  (d===true && c!==true) && fs.remove(`${mitm.home}/log`);
+  const {delog:d} = global.mitm.argv;
+  (d==='all') && fs.remove(`${mitm.home}/cache`);
+  (d==='all') && fs.remove(`${mitm.home}/log`);
+  (d===true ) && fs.remove(`${mitm.home}/log`);
 }
 
 function home(path) {

@@ -24,14 +24,14 @@ module.exports = () => {
   argsChg('g', 'go');
   argsChg('h', 'help');
   argsChg('s', 'save');
-  argsChg('c', 'clear');
+  argsChg('c', 'cache');
   argsChg('d', 'delog');
   argsChg('r', 'route');
   argsChg('l', 'logurl');
   argsChg('b', 'browser');
   argsChg('z', 'lazylog');
-  argsChg('n', 'nosocket');
   argsChg('p', 'pristine');
+  argsChg('n', 'nosocket');
 
   if (!argv.browser || ['firefox','webkit'].indexOf(argv.browser)===-1) {
     argv.browser = 'chromium';

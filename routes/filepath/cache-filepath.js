@@ -40,8 +40,13 @@ module.exports = (match, reqs) => {
 
   const stamp1 = `${host}${fpath}`;
   const stamp2 = `${host}/$${fpath}`;
-
-  const cache = `${mitm.home}/cache`;
+  const _cache = mitm.argv.cache;
+  let cache ;
+  if (_cache) {
+    cache = `${mitm.home}/csave/${_cache}`;
+  } else {
+    cache = `${mitm.home}/cache`;
+  }
   const fpath1 = `${cache}/${stamp1}`;
   const fpath2 = `${cache}/${stamp2}.json`;
   return {fpath1, fpath2};  
