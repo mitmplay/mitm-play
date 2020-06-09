@@ -7,15 +7,15 @@ Minimum requirement is to add regex *`route url`* ('example1.com/with/path') wit
 
 Add *`contentType`* ('example2.com') to filter into specific content type.
 
-Cache file and folder structure is based on url and sometime url (minus `querystring`) is not uniq, additional key *`hashQstring`* is introduced, internally: Calculate a hash (aka message digest) of `querystring` and add it to filename. 
+Cache file and folder structure is based on url and sometime url (minus `querystring`) is not uniq, additional key *`querystring`* is introduced, internally: Calculate a hash (aka message digest) of `querystring` and add it to filename. 
 
-**be aware of cache busting url** as it will create useless cache, don't use  *`hashQstring`*, use only the regex *`route url`*.
+**be aware of cache busting url** as it will create useless cache, don't use  *`querystring`*, use only the regex *`route url`*.
 ```js
 cache: {
   'example1.com/with/path': {},
   'example2.com': {
     contentType: ['javascript','svg'],
-    hashQstring: true
+    querystring: true
   }
 },
 ```

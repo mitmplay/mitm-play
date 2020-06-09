@@ -46,11 +46,11 @@ function cacheResponse(arr, reqs) {
             resp2 && (resp = {...resp, ...resp2})
           }
         }
-        return resp; 
-      });  
+        return resp;
+      });
     }
   }
-  return {match, resp}; 
+  return {match, resp};
 }
 
 module.exports = cacheResponse;

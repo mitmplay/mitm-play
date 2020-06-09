@@ -32,7 +32,7 @@ function filename(pathname, reqs, hash='') {
 module.exports = (match, reqs) => {
   let {host, pathname: f, url} = match;
   let hash = '';
-  if (match.route.hashQstring) {
+  if (match.route.querystring) {
     let [,params] = url.split('?');
     hash = params ? hashCode(params) : '';  
   }
