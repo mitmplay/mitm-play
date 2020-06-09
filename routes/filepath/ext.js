@@ -24,6 +24,8 @@ module.exports = (resp) => {
       ext = 'js';
     } else if (ctype.indexOf('mpegURL')>-1) {
       ext = 'm3u8';
+    } else if (ctype.indexOf('plain')>-1) {
+      ext = 'txt';
     } else if (ctype.indexOf('MP2T')>-1) {
       ext = 'ts';
     } else if (ctype.indexOf('webm')>-1) {
