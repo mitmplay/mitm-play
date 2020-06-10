@@ -14,6 +14,7 @@ Man in the middle using playwright
       * [Skip](#skip)
       * [Mock](#mock)
       * [Headers](#headers)
+      * [Proxy](#proxy)
       * [Cache](#cache)
       * [Log](#log)
       * [Html](#html)
@@ -223,6 +224,15 @@ headers: {
   }
 },
 ```
+## Proxy
+Certain domain will request thru proxy
+```js
+// HTTP_PROXY env need to be set, cli: --proxy 
+proxy: [
+  'google-analytics.com',
+],
+```
+
 ## Cache
 `Cache` the first request to your local disk so next request will serve from your local disk.
 ```js
