@@ -5,6 +5,7 @@ const _cssResponse = require('./_cssResponse');
 const _logResponse = require('./_logResponse');
 const _jsonResponse = require('./_jsonResponse');
 const _htmlResponse = require('./_htmlResponse');
+const _proxyRequest = require('./_proxyRequest');
 const _skipResponse = require('./_skipResponse');
 const _mockResponse = require('./_mockResponse');
 const _addWebSocket = require('./_addWebSocket');
@@ -33,6 +34,12 @@ module.exports =  (route, request) => {
     console.log(c.grey(`>> skip (${skip})`));
     route.continue({});
     return;
+  }
+
+  if (argv.proxy) {
+    if (_proxyRequest(reqs)) {
+      reqs.proxy = argv.proxy;
+    }
   }
 
   if (_mockResponse(route, reqs)) {

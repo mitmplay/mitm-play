@@ -46,6 +46,7 @@ module.exports = () => {
     --chromium    \t browser = chromium
     --firefox     \t browser = firefox
     --webkit      \t browser = webkit
+    --proxy       \t a proxy request
 
   v${package.version}
 `));

@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const _fetch = require('make-fetch-happen');
 
 function extract(route, request) {
@@ -60,17 +61,25 @@ function e_end(body, fn) {
   return b;
 }
 
-function fetch(route, {url, ...reqs}, handler) {
-  let { 
-    HTTP_PROXY, NO_PROXY,
-    http_proxy, no_proxy,
-  } = process.env;
-  
+function fetch(route, {url, proxy, ...reqs}, handler) {
   const opts = {redirect: 'manual'};
-  if (HTTP_PROXY || http_proxy) {
-    opts.proxy = HTTP_PROXY || http_proxy;
-    opts.noProxy = NO_PROXY || no_proxy || '';
-  }
+
+  if (proxy) {
+    if (proxy===true) {
+      const { 
+        HTTP_PROXY, NO_PROXY,
+        http_proxy, no_proxy,
+      } = process.env;
+      if (HTTP_PROXY || http_proxy) {
+        opts.proxy = HTTP_PROXY || http_proxy;
+        opts.noProxy = NO_PROXY || no_proxy || '';
+      } 
+    } else {
+      opts.proxy = proxy;
+    }
+    console.log(c.grey(`>> proxy (${url.split(/([&?;,]|:\w|url)/)[0]})`));
+  };
+
   _fetch(url, {...reqs, ...opts}).then(resp => {
     const headers = resp.headers.raw();
     const status = resp.status;
