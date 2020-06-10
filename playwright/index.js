@@ -5,14 +5,25 @@ const {extract} = require('../routes/fetch');
 const routes = require('../routes');
 
 //https://stackoverflow.com/questions/21177387/caution-provisional-headers-are-shown-in-chrome-debugger/55865689#55865689
-const options = {headless: false};
+//https://peter.sh/experiments/chromium-command-line-switches/#enable-automation
+//https://chromedriver.chromium.org/capabilities
+const options = {
+  excludeSwitches: [
+    'enable-automation'
+  ],
+  headless: false,
+};
 const args = [
   `--disable-features=IsolateOrigins,site-per-process`,
   `--disable-site-isolation-trials=1`,
+  '--disable-session-crashed-bubble',
+  '--ignore-certificate-errors',
   `--disable-site-isolation=1`,
   `--disable-web-security=1`,
-  // `--disable-client-side-phishing-detection=1`,
-  // `--disable-features=site-per-process,NetworkService,NetworkServiceInProcess`,
+  '--disable-notifications',
+  '--disable-infobars',
+  '--force-dark-mode',
+  '--test-type',
 ];
 
 module.exports = () => {

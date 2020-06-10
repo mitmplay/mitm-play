@@ -22,6 +22,10 @@ cliChg();
 routes();
 cliCmd();
 
+if (mitm.argv.insecure) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
 module.exports = () => {
   const {argv} = mitm;
   const package = require('../package.json')
@@ -35,6 +39,7 @@ module.exports = () => {
     -u --url      \t go to specific url
     -g --group    \t create cache group/rec
     -d --delete   \t clear/delete logs or cache
+    -i --insecure \t set nodejs env to accept insecure cert
     -p --pristine \t pristine browser, not recommended to use
     -n --nosocket \t no websocket injection to html page
     -z --lazylog  \t debounce save after millsec invoked

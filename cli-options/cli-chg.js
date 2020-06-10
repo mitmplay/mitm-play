@@ -30,6 +30,7 @@ module.exports = () => {
   argsChg('l', 'logurl');
   argsChg('b', 'browser');
   argsChg('z', 'lazylog');
+  argsChg('i', 'insecure');
   argsChg('p', 'pristine');
   argsChg('n', 'nosocket');
 
