@@ -55,7 +55,7 @@ global.mitm.fn.routeSet(routes, domain, true)
 ```
 ```bash
 # run the demo:
-mitm-play --go='google.com/search?q=covid-19' --route='.' --save
+mitm-play --url='google.com/search?q=covid-19' --route='.' --save
 
 # next run should be simple as:
 mitm-play

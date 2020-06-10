@@ -10,6 +10,7 @@ const {platform, env: {HOME, HOMEPATH}} = process;
 const home = (platform === 'win32' ? HOMEPATH : HOME).replace(/\\/g, '/');
 
 global.mitm = {
+  session: (new Date).toISOString().split('.')[0].replace(/[:-]/g,''),
   argv: yargs(process.argv.slice(2)),
   data: {userroute: './**/*.js'},
   home: `${home}/.mitm-play`,
@@ -31,15 +32,15 @@ module.exports = () => {
   
   Options:
     -h --help     \t show this help
-    -g --go       \t go to location
-    -n --nosocket \t no websocket injection
+    -u --url      \t go to specific url
+    -g --group    \t create cache group/rec
+    -d --delete   \t clear/delete logs or cache
     -p --pristine \t pristine browser, not recommended to use
-    -z --lazylog  \t debounce save after millsec last invoked
+    -n --nosocket \t no websocket injection to html page
+    -z --lazylog  \t debounce save after millsec invoked
     -b --browser  \t browser: chromium/firefox/webkit
     -l --logurl   \t test route to log url & headers
     -r --route    \t set userscript folder of routes
-    -c --cache    \t create cache group/rec
-    -d --delog    \t clear/delete logs
     -s --save     \t save as default <profl>
     --proxypac    \t set chromium proxypac 
     --chromium    \t browser = chromium

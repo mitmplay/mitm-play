@@ -21,12 +21,12 @@ function browser(id) {
 module.exports = () => {
   let {argv, fn: {clear}} = mitm;
 
-  argsChg('g', 'go');
+  argsChg('u', 'url');
   argsChg('h', 'help');
   argsChg('s', 'save');
-  argsChg('c', 'cache');
-  argsChg('d', 'delog');
+  argsChg('g', 'group');
   argsChg('r', 'route');
+  argsChg('d', 'delete');
   argsChg('l', 'logurl');
   argsChg('b', 'browser');
   argsChg('z', 'lazylog');

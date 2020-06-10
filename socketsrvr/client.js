@@ -84,27 +84,35 @@ On browser console type "ws"`;
   let debunk;
   let _stamp = [];
   function $screenshot({data}) {
+    const {namespace,host,fname} = data;
+    const {home, session, routes, argv: {group}} = mitm;
     _stamp.push((new Date).toISOString().replace(/[:-]/g, ''));
     debunk && clearTimeout(debunk);
     debunk = setTimeout(function() {
       const stamp = _stamp[0];
       clearTimeout(debunk);
-      _stamp = [];
-      const {namespace,host,fname} = data;
-      const {home, session} = global.mitm;
       let at = `sshot`;
-      if (namespace && mitm.routes[namespace]) {
-        const {screenshot} = mitm.routes[namespace];
+      _stamp = [];
+      if (namespace && routes[namespace]) {
+        const {screenshot} = routes[namespace];
         if (screenshot && screenshot.at) {
           at = `${ screenshot.at}`;
         }
       };
+
+      let root;
+      if (group) {
+        root = `${home}/_group/${group}/log`;
+      } else {
+        root = `${home}/log`;
+      }
+
       let path;
       if (at.match(/^\^/)) {
         at = at.slice(1);
-        path = `${home}/log/${session}/${at}/${stamp}-${host}--${fname}.png`;
+        path = `${root}/${session}/${at}/${stamp}-${host}--${fname}.png`;
       } else {
-        path = `${home}/log/${session}/${stamp}--${at}@${host}--${fname}.png`;
+        path = `${root}/${session}/${stamp}--${at}@${host}--${fname}.png`;
       }
       _screenshot({path});
     }, 500);

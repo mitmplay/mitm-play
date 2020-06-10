@@ -38,16 +38,18 @@ module.exports = (match, reqs) => {
   }
   const fpath = filename(f, reqs, hash);
 
+  const {group} = mitm.argv;
   const stamp1 = `${host}${fpath}`;
   const stamp2 = `${host}/$${fpath}`;
-  const _cache = mitm.argv.cache;
-  let cache ;
-  if (_cache) {
-    cache = `${mitm.home}/csave/${_cache}`;
+
+  let root ;
+  if (group) {
+    root = `${mitm.home}/_group/${group}/cache`;
   } else {
-    cache = `${mitm.home}/cache`;
+    root = `${mitm.home}/cache`;
   }
-  const fpath1 = `${cache}/${stamp1}`;
-  const fpath2 = `${cache}/${stamp2}.json`;
+  
+  const fpath1 = `${root}/${stamp1}`;
+  const fpath2 = `${root}/${stamp2}.json`;
   return {fpath1, fpath2};  
 }

@@ -50,20 +50,20 @@ module.exports = () => {
     loadJS(file);
   }
 
-  if (typeof(argv.go)!=='string') {
+  if (typeof(argv.url)!=='string') {
     if (argv._[0]) {
       for (let namespace in mitm.routes) {
         if (namespace.match(argv._[0])) {
-          argv.go = mitm.routes[namespace].url;
+          argv.url = mitm.routes[namespace].url;
         }
       }  
     }
-    if (typeof(argv.go)!=='string') {
-      argv.go = 'http://whatsmyuseragent.org/';
+    if (typeof(argv.url)!=='string') {
+      argv.url = 'http://whatsmyuseragent.org/';
     }
   }
-  if (!argv.go.match('http')) {
-    argv.go = `https://${argv.go}`;
+  if (!argv.url.match('http')) {
+    argv.url = `https://${argv.url}`;
   }
 
   clear();

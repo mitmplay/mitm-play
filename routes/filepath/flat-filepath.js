@@ -23,21 +23,28 @@ function filename(pathname, resp) {
 module.exports = (match, resp, stamp) => {
   let {host,pathname,route:{at,contentType}} = match;
   const {fpath, ext} = filename(pathname, resp);
+  const {home, session, argv: {group}} = mitm;
   const json = ext==='json' ? '' : '.json';
-  const {home, session} = mitm;
 
   if (at===undefined) {
     at = contentType.join('-');
   }
 
+  let root;
+  if (group) {
+    root = `${home}/_group/${group}/log`;
+  } else {
+    root = `${home}/log`;
+  }
+
   let fpath1,fpath2;
   if (at.match(/^\^/)) {
     at = at.slice(1);
-    fpath1 = `${home}/log/${session}/${at}/${stamp}-${host}-${fpath}`;
-    fpath2 = `${home}/log/${session}/$/${at}/${stamp}-${host}-${fpath}${json}`;
+    fpath1 = `${root}/${session}/${at}/${stamp}-${host}-${fpath}`;
+    fpath2 = `${root}/${session}/$/${at}/${stamp}-${host}-${fpath}${json}`;
   } else {
-    fpath1 = `${home}/log/${session}/${stamp}--${at}@${host}-${fpath}`;
-    fpath2 = `${home}/log/${session}/$/${stamp}--${at}@${host}-${fpath}${json}`;
+    fpath1 = `${root}/${session}/${stamp}--${at}@${host}-${fpath}`;
+    fpath2 = `${root}/${session}/$/${stamp}--${at}@${host}-${fpath}${json}`;
   }
   return {fpath1, fpath2, ext};
 }

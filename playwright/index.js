@@ -71,7 +71,7 @@ module.exports = () => {
       bcontext.route(/.*/, routes);
     }
     
-    await page.goto(argv.go);
+    await page.goto(argv.url);
 
     exitHook(async function() {
       await browser.close();
@@ -84,4 +84,4 @@ module.exports = () => {
     })
   })();  
 }
-//  mitm-play --logurl --go='twitter.com/search?q=covid&src=typed_query' --save=twl
+//  mitm-play --logurl --url='twitter.com/search?q=covid&src=typed_query' --save=twl

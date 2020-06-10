@@ -40,7 +40,7 @@ global.mitm.fn.routeSet(routes, domain, true)
 ```
 run `mitm-play`:
 ```js
-mitm-play --go='www.zdnet.com/topic/developer/' --save
+mitm-play --url='www.zdnet.com/topic/developer/' --save
 ```
 Need to Identify the created `iframe` and try to empty the JS request and check request which having `error request` then skip it.
 <pre>
