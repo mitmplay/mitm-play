@@ -61,8 +61,11 @@ function e_end(body, fn) {
 }
 
 function fetch(route, {url, ...reqs}, handler) {
-  let {HTTP_PROXY,NO_PROXY} = process.env;
-  let {http_proxy,no_proxy} = process.env;
+  let { 
+    HTTP_PROXY, NO_PROXY,
+    http_proxy, no_proxy,
+  } = process.env;
+  
   const opts = {redirect: 'manual'};
   if (HTTP_PROXY || http_proxy) {
     opts.proxy = HTTP_PROXY || http_proxy;

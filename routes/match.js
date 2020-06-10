@@ -1,5 +1,27 @@
 const nameSpace = require('./name-space');
 
+const searchArr = ({typ, url}) => {
+  return function(nspace) {
+    const namespace = nameSpace(nspace);
+    if (!namespace) {
+      return;
+    }
+
+    if (mitm.routes[namespace]) {
+      let arr = mitm.routes[namespace][typ];
+      if (arr) {
+        let result;
+        for (let val of arr) {
+          result = url.match(val);
+          if (result) {
+            return val;
+          }
+        }  
+      }
+    }
+  };
+};
+
 const searchFN = (typ, {url, headers}) => {
   return function search(nspace) {
     const namespace = nameSpace(nspace);
@@ -57,6 +79,7 @@ const matched = (search, {url, headers}) => {
 }
 
 module.exports = {
+  searchArr,
   searchFN,
   matched,
 }

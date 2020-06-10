@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const _chgRequest = require('./_chgRequest');
 const _jsResponse = require('./_jsResponse');
 const _cssResponse = require('./_cssResponse');
@@ -27,7 +28,9 @@ module.exports =  (route, request) => {
     return;
   }
 
-  if (_skipResponse(reqs)) {
+  let skip = _skipResponse(reqs);
+  if (skip) {
+    console.log(c.grey(`>> skip (${skip})`));
     route.continue({});
     return;
   }
