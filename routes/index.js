@@ -63,19 +63,18 @@ module.exports =  (route, request) => {
   }
 
   if (resp) {
-    //--log or respond with cached
-    for (const fn of respEvents) {
-      resp = fn(resp);
-    }
-    route.fulfill(resp); // exec route.fulfill()
-  } else {
-    //--call to BE and do log or modification & respond
+    route.fulfill(Events(respEvents, resp));
+  } else if (respEvents.length) { //call BE 
     _chngRequest(reqs);
     fetch(route, reqs, function(resp) {
-      for (const fn of respEvents) {
-        resp = fn(resp);
-      }
-      return resp; // exec route.fulfill()
+      return Events(respEvents, resp)
     });
+  } else {
+    route.continue({});
   }
+}
+
+function Events(respEvents, resp) {
+  respEvents.forEach(fn => (resp = fn(resp)));
+  return resp;
 }
