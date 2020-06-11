@@ -39,12 +39,7 @@ function cacheResponse(arr, reqs) {
           fpath1 = `${fpath1}.${_ext(resp)}`;
           console.log(c.magentaBright(`>> cache (${fpath1})`));
           const meta = metaResp({reqs, resp});
-          let body;
-          if (meta.respHeader['content-type'].match('image/')) {
-            body = resp.body;
-          } else {
-            body = `${resp.body}`;
-          }
+          const body = resp.body;
           filesave({fpath1, body}, {fpath2, meta}, 'cache');
           if (match.route.resp) {
             resp2 = match.route.resp(resp);
