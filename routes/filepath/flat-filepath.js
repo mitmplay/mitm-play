@@ -1,3 +1,4 @@
+const {fileWithHash, hashCode} = require('./file-util');
 const _ext = require('./ext');
 
 function filename(pathname, resp) {
@@ -6,8 +7,10 @@ function filename(pathname, resp) {
   let file = arr.pop();
   if (file==='') {
     file = '_';
+  } else {
+    file = fileWithHash(file);
   }
-  
+
   let file2 = file;
   let ext = file.match(/\.\w+$/)
   if (ext) {

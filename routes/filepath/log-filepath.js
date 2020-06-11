@@ -1,3 +1,4 @@
+const {fileWithHash, hashCode} = require('./file-util');
 const _ext = require('./ext');
 
 function filename(pathname, resp, nanoid) {
@@ -6,6 +7,8 @@ function filename(pathname, resp, nanoid) {
   let file = arr.pop();
   if (file==='') {
     file = '_';
+  } else {
+    file = fileWithHash(file);
   }
 
   let file2 = file;

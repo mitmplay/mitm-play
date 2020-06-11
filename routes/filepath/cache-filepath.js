@@ -1,22 +1,14 @@
-function hashCode(txt) {
-  var hash = 0;
-  if (txt.length == 0) {
-      return '';
-  }
-  for (var i = 0; i < txt.length; i++) {
-      var char = txt.charCodeAt(i);
-      hash = ((hash<<5)-hash)+char;
-      hash = hash & hash; // Convert to 32bit integer
-  }
-  return hash+'';
-}
+const {fileWithHash, hashCode} = require('./file-util');
 
 function filename(pathname, reqs, hash='') {
   const arr = pathname.split('/');
   let file = arr.pop();
   if (file==='') {
     file = '_';
+  } else {
+    file = fileWithHash(file);
   }
+
   let file2 = file;
   let ext = file.match(/\.\w+$/)
   if (ext) {
