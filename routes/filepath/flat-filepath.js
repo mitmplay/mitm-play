@@ -41,7 +41,7 @@ module.exports = (match, resp, stamp) => {
   if (at.match(/^\^/)) {
     at = at.slice(1);
     fpath1 = `${root}/${session}/${at}/${stamp}-${host}-${fpath}`;
-    fpath2 = `${root}/${session}/$/${at}/${stamp}-${host}-${fpath}${json}`;
+    fpath2 = `${root}/${session}/${at}/$/${stamp}-${host}-${fpath}${json}`;
   } else {
     fpath1 = `${root}/${session}/${stamp}--${at}@${host}-${fpath}`;
     fpath2 = `${root}/${session}/$/${stamp}--${at}@${host}-${fpath}${json}`;
