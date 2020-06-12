@@ -1,15 +1,15 @@
 const c = require('ansi-colors');
 const {extract, fetch} = require('./fetch');
-const _jsResponse = require('./_jsResponse');
-const _chngRequest = require('./_chngRequest');
-const _cssResponse = require('./_cssResponse');
-const _logResponse = require('./_logResponse');
-const _jsonResponse = require('./_jsonResponse');
-const _htmlResponse = require('./_htmlResponse');
-const _proxyRequest = require('./_proxyRequest');
-const _skipResponse = require('./_skipResponse');
-const _mockResponse = require('./_mockResponse');
-const _addWebSocket = require('./_addWebSocket');
+const _jsResponse    = require('./_jsResponse');
+const _chngRequest   = require('./_chngRequest');
+const _cssResponse   = require('./_cssResponse');
+const _logResponse   = require('./_logResponse');
+const _jsonResponse  = require('./_jsonResponse');
+const _htmlResponse  = require('./_htmlResponse');
+const _proxyRequest  = require('./_proxyRequest');
+const _skipResponse  = require('./_skipResponse');
+const _mockResponse  = require('./_mockResponse');
+const _addWebSocket  = require('./_addWebSocket');
 const _cacheResponse = require('./_cacheResponse');
 
 const _resp = {

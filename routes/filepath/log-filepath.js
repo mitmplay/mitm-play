@@ -1,4 +1,4 @@
-const {fileWithHash, hashCode} = require('./file-util');
+const {fileWithHash} = require('./file-util');
 const _ext = require('./ext');
 
 function filename(pathname, resp, nanoid) {
