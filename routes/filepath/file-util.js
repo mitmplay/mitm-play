@@ -1,12 +1,12 @@
 function hashCode(txt) {
-  var hash = 0;
+  let hash = 0;
   if (txt.length == 0) {
-      return '';
+    return '';
   }
-  for (var i = 0; i < txt.length; i++) {
-      var char = txt.charCodeAt(i);
-      hash = ((hash<<5)-hash)+char;
-      hash = hash & hash; // Convert to 32bit integer
+  for (let i = 0; i < txt.length; i++) {
+    let char = txt.charCodeAt(i);
+    hash = ((hash<<5)-hash)+char;
+    hash = hash & hash; // Convert to 32bit integer
   }
   return hash+'';
 }

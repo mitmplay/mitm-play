@@ -7,7 +7,7 @@
     "mitm-play": "bin/mitm-play.js"
   },
   "scripts": {
-    "wsc": "rollup -c socketclnt/rollup.js",
+    "client": "rollup -c socketclnt/rollup.js",
     "start": "node --inspect ./mitm-play.js",
     "test": "jest --coverage"
   },
