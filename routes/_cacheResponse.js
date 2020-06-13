@@ -8,12 +8,11 @@ const metaResp = require('./filesave/meta-resp');
 const cacheFilepath = require('./filepath/cache-filepath');
 
 const {matched,searchFN} = _match;
-const {platform, env: {HOME, HOMEPATH}} = process;
-const home = (platform === 'win32' ? HOMEPATH : HOME).replace(/\\/g, '/');
 
 function cacheResponse(reqs, responseHandler) {
   const search = searchFN('cache', reqs);
   const match = matched(search, reqs);
+  const {fn: {tilde}} = global.mitm;
   let resp, resp2;
 
   if (match) {
@@ -27,7 +26,7 @@ function cacheResponse(reqs, responseHandler) {
         respHeader: headers
       } = JSON.parse(fs.readFileSync(fpath2));
       fpath1 = `${fpath1}.${_ext({headers})}`;
-      console.log(c.greenBright( `>> cache (${fpath1.replace(home, '~')})`));
+      console.log(c.greenBright(`>> cache (${tilde(fpath1)})`));
       const body = fs.readFileSync(fpath1);
       resp = {url, status, headers, body};
       if (match.route.resp) {
@@ -39,7 +38,7 @@ function cacheResponse(reqs, responseHandler) {
       responseHandler.push(resp => {
         if (_ctype(match, resp)) {
           fpath1 = `${fpath1}.${_ext(resp)}`;
-          console.log(c.magentaBright(`>> cache (${fpath1.replace(home, '~')})`));
+          console.log(c.magentaBright(`>> cache (${tilde(fpath1, '~')})`));
           const meta = metaResp({reqs, resp});
           const body = resp.body;
           filesave({fpath1, body}, {fpath2, meta}, 'cache');
