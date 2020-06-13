@@ -43,11 +43,11 @@ function routeSet(routes, namespace, print=false) {
   global.mitm.routes[namespace] = routes;
   if (namespace==='default') {
     global.mitm.routes.default.mock = {
-      ...mitm.routes.default.mock,
+      ...global.mitm.routes.default.mock,
       ...global.mitm.__mock
     }
   }
-  const msg = `>> ${namespace}\n${stringify(mitm.routes[namespace])}`;
+  const msg = `>> ${namespace}\n${stringify(global.mitm.routes[namespace])}`;
   print && console.log(msg);
   return routes;
 }
@@ -70,9 +70,9 @@ const loadJS = function(path, log) {
 
 function clear() {
   const {delete:d} = global.mitm.argv;
-  (d==='all') && fs.remove(`${mitm.home}/cache`);
-  (d==='all') && fs.remove(`${mitm.home}/log`);
-  (d===true ) && fs.remove(`${mitm.home}/log`);
+  (d==='all') && fs.remove(`${global.mitm.home}/cache`);
+  (d==='all') && fs.remove(`${global.mitm.home}/log`);
+  (d===true ) && fs.remove(`${global.mitm.home}/log`);
 }
 
 function home(path) {

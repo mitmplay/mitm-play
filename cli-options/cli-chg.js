@@ -1,5 +1,5 @@
 function argsChg(id, key) {
-  let {argv} = mitm;
+  let {argv} = global.mitm;
   if (argv[id]) {
     argv[key] = argv[id];
     delete argv[id];
@@ -7,7 +7,7 @@ function argsChg(id, key) {
 }
 
 function browser(id) {
-  let {argv} = mitm;
+  let {argv} = global.mitm;
   if (argv[id]) {
     argv.browser = id;
     if (typeof(argv[id])==='string') {
@@ -19,7 +19,7 @@ function browser(id) {
 }
 
 module.exports = () => {
-  let {argv, fn: {clear}} = mitm;
+  let {argv} = global.mitm;
 
   argsChg('u', 'url');
   argsChg('h', 'help');

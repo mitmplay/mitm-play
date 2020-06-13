@@ -13,7 +13,7 @@ function logResponse(arr, reqs) {
     arr.push(resp => {
       if (_ctype(match, resp)) {
         console.log(c.bold.blueBright(match.log));
-        if (mitm.argv.lazylog) {
+        if (global.mitm.argv.lazylog) {
           logLazy(match, reqs, resp);
         } else {
           logFlatten(match, reqs, resp);

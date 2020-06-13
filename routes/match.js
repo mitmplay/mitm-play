@@ -7,7 +7,7 @@ const searchArr = ({typ, url}) => {
       return;
     }
 
-    if (mitm.routes[namespace]) {
+    if (global.mitm.routes[namespace]) {
       let arr = global.mitm.routes[namespace][typ];
       if (arr) {
         let result;

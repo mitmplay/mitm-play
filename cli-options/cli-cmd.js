@@ -9,10 +9,10 @@ module.exports = () => {
       clear,
       loadJS,
     }
-  } = mitm;
+  } = global.mitm;
 
   let prm0 = argv._[0] || 'default';
-  prm0 = `${mitm.home}/argv/${prm0}.js`;
+  prm0 = `${global.mitm.home}/argv/${prm0}.js`;
 
   let saveArgs; 
   if (fs.existsSync(prm0)) {
@@ -22,13 +22,13 @@ module.exports = () => {
 
   if (saveArgs && !argv.save) {
     console.log(c.green('>> cmd2 mitm-play', process.argv.slice(2).join(' ')))
-    const {_args, _argv} = saveArgs;
+    const {_argv} = saveArgs;
     global.mitm.argv = {..._argv, ...argv};
     argv = global.mitm.argv;
   }
   
-  fs.ensureDir(mitm.home, err =>{});
-  fs.ensureDir(`${mitm.home}/.${argv.browser}`, err => {});
+  fs.ensureDir(global.mitm.home, () =>{});
+  fs.ensureDir(`${global.mitm.home}/.${argv.browser}`, () => {});
   
   let {route} = argv;
   const cwd = process.cwd();
@@ -45,7 +45,7 @@ module.exports = () => {
   argv.route = route;
 
   global.mitm.data.userroute = `${route}/*/*.js`;
-  const files = fg.sync([mitm.data.userroute]);
+  const files = fg.sync([global.mitm.data.userroute]);
   for (let file of files) {
     loadJS(file);
   }
@@ -71,10 +71,10 @@ module.exports = () => {
   if (argv.save) {
     const { save, ...rest } = argv;
     const _args = process.argv.slice(2).join(' ');
-    const fpath = `${mitm.home}/argv/${save===true ? 'default' : save}.js`;
+    const fpath = `${global.mitm.home}/argv/${save===true ? 'default' : save}.js`;
     const body = JSON.stringify({_args,_argv: rest}, null, 2);
-    fs.ensureFile(fpath, err => {
-      fs.writeFile(fpath, body, err => {});
+    fs.ensureFile(fpath, () => {
+      fs.writeFile(fpath, body, () => {});
     });
   }  
 };

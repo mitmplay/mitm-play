@@ -46,9 +46,10 @@ module.exports = (match, reqs) => {
   const {group} = global.mitm.argv;
   let root ;
   if (group) {
-    root = `${mitm.home}/_group/${group}/cache`;
+    root = `${global.mitm.home}/_group/${group}/cache`;
   } else {
-    root = `${mitm.home}/cache`;
+   
+    root = `${global.mitm.home}/cache`;
   }
   
   const fpath1 = `${root}/${stamp1}`;

@@ -5,7 +5,7 @@ module.exports = () => {
   const {
     fn: {loadJS},
     data: {userroute},
-  } = mitm;
+  } = global.mitm;
   const files = fg.sync([userroute]);
 
   if (!files.length) {

@@ -22,12 +22,12 @@ cliChg();
 routes();
 cliCmd();
 
-if (mitm.argv.insecure) {
+if (global.mitm.argv.insecure) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
 
 module.exports = () => {
-  const {argv} = mitm;
+  const {argv} = global.mitm;
   const _package = require('../package.json')
   if (argv.help) {
     console.log(c.greenBright(

@@ -25,8 +25,8 @@ function filename(pathname, resp) {
 
 module.exports = (match, resp, stamp) => {
   let {host,pathname,route:{at,contentType}} = match;
+  const {home, session, argv: {group}} = global.mitm;
   const {fpath, ext} = filename(pathname, resp);
-  const {home, session, argv: {group}} = mitm;
   const json = ext==='json' ? '' : '.json';
 
   if (at===undefined) {

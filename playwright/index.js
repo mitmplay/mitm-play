@@ -59,7 +59,7 @@ module.exports = () => {
     }
     if (argv.pristine) {
       // buggy route will not work :(
-      browser = await playwright[br].launchPersistentContext(`${mitm.home}/.${br}`, options);
+      browser = await playwright[br].launchPersistentContext(`${global.mitm.home}/.${br}`, options);
       page = await browser.pages()[0];
       bcontext = browser;
     } else {

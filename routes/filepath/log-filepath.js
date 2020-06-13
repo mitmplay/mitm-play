@@ -1,7 +1,7 @@
 const {fileWithHash} = require('./file-util');
 const _ext = require('./ext');
 
-function filename(pathname, resp, nanoid) {
+function filename(pathname, resp) {
   const arr = pathname.split('/');
   
   let file = arr.pop();
@@ -24,7 +24,7 @@ function filename(pathname, resp, nanoid) {
 }
 
 module.exports = (match, resp, stamp) => {
-  const {home, session} = mitm;
+  const {home, session} = global.mitm;
   const {host,pathname} = match;
   return function(nanoid='') {
     const {fpath, ext} = filename(pathname, resp, nanoid);
