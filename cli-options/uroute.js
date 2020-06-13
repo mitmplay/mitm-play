@@ -1,3 +1,4 @@
+const c = require('ansi-colors');
 const fg = require('fast-glob');
 const chokidar = require('chokidar');
 
@@ -22,7 +23,7 @@ module.exports = () => {
   // Something to use when events are received.
   const log = console.log.bind(console);
   watcher // Add event listeners.
-  .on('add',    path => loadJS(path, `File ${path} has been added`))
-  .on('change', path => loadJS(path, `File ${path} has been changed`))
-  .on('unlink', path =>          log(`File ${path} has been removed`));  
+  .on('add',    path => loadJS(path, c.greenBright(`>> add route ${path}`)))
+  .on('change', path => loadJS(path,  c.cyanBright(`>> chg route ${path}`)))
+  .on('unlink', path =>          log(  c.redBright(`>> del route ${path}`)));  
 }

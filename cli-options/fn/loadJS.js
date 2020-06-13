@@ -1,5 +1,4 @@
 const load = function(path) {
-  console.log('>> userroute', path);
   const rpath = require.resolve(path);
   if (require.cache[rpath]) {
     delete require.cache[rpath];

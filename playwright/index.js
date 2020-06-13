@@ -29,7 +29,6 @@ module.exports = () => {
       fn: {home}
     } = global.mitm;
     for (let browserName in argv.browser) {
-      const execPath = argv.browser[browserName];
       const options = {headless: false};
       let page, browser, bcontext;
       
@@ -47,16 +46,17 @@ module.exports = () => {
         }
         options.args = args;
       }
+      let execPath = argv.browser[browserName];
       if (typeof(execPath)==='string') {
         options.executablePath = home(execPath);
-        console.log('>> executablePath', execPath);
         if (browserName!=='chromium') {
           console.log(c.redBright('executablePath is unsupported for non Chrome!'))
         }
       } else {
         const _browser = require('playwright')[browserName];
-        console.log('>> executablePath', _browser.executablePath());
+        execPath = _browser.executablePath();
       }
+      console.log(c.yellow(`>> executablePath ${execPath}\n`));
       const playBrowser = playwright[browserName];
       if (argv.pristine) {
         // buggy route will not work :(
