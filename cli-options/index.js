@@ -5,6 +5,7 @@ const cliChg = require('./cli-chg');
 const cliCmd = require('./cli-cmd');
 const routes = require('./routes');
 const uroute = require('./uroute');
+const helper = require('./helper');
 
 const {platform, env: {HOME, HOMEPATH}} = process;
 const home = (platform === 'win32' ? HOMEPATH : HOME).replace(/\\/g, '/');
@@ -17,48 +18,25 @@ global.mitm = {
   port: 3000,
 };
 
-initfn();
-cliChg();
-routes();
-cliCmd();
-
-if (global.mitm.argv.insecure) {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-}
-
 module.exports = () => {
   const {argv} = global.mitm;
   const _package = require('../package.json')
-  if (argv.help) {
-    console.log(c.greenBright(
-  `
-  Usage: mitm-play <profl> [options]
-  
-  Options:
-    -h --help     \t show this help
-    -u --url      \t go to specific url
-    -g --group    \t create cache group/rec
-    -d --delete   \t clear/delete logs or cache
-    -i --insecure \t set nodejs env to accept insecure cert
-    -p --pristine \t pristine browser, not recommended to use
-    -n --nosocket \t no websocket injection to html page
-    -z --lazylog  \t debounce save after millsec invoked
-    -b --browser  \t browser: chromium/firefox/webkit
-    -l --logurl   \t test route to log url & headers
-    -r --route    \t set userscript folder of routes
-    -s --save     \t save as default <profl>
-    --proxypac    \t set chromium proxypac 
-    --chromium    \t browser = chromium
-    --firefox     \t browser = firefox
-    --webkit      \t browser = webkit
-    --proxy       \t a proxy request
 
-  v${_package.version}
-`));
-    process.exit();
+  cliChg();
+  if (argv.help) {
+    helper(_package);
   }
+
+  initfn();
+  routes();
+  cliCmd();
+  
+  if (global.mitm.argv.insecure) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  }
+
   console.log(c.greenBright(JSON.stringify(argv, null, 2)));
   console.log(c.green(`v${_package.version}\n`));
   uroute();
 }
-//mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -cspr='.'
+//mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -dpsr='.'
