@@ -1,4 +1,4 @@
-const assert = require('assert');
+// const assert = require('assert');
 const {
   script_src,
   extract,
@@ -8,6 +8,12 @@ const {
   fetch,
 } = require('../fetch');
 
+const {
+  test, 
+  expect,
+  describe, 
+} = global;
+
 describe('fetch.js - extract', () => {
   test('return object keys without \'_\'', () => {
     const _request = {
@@ -16,8 +22,9 @@ describe('fetch.js - extract', () => {
       _headers: [{'content-type': 'text/css'}],
       _postData: ''
     }
-    const result = extract({_request, browserName: 'chromium'});
-    expect(Object.keys(result).join(',')).toBe('url,method,headers,body')
+    const route = {_request};
+    const result = extract({route, browserName: 'chromium'});
+    expect(Object.keys(result).join(',')).toBe('url,method,headers,body,browserName')
   })
 })
 
@@ -118,32 +125,41 @@ const nock = require('nock')
 
 describe('fetch.js - fetch', () => {
   test('call fetch api', done => {
-    const scope = nock('https://api.github.com').get('/')
+    nock('https://api.github.com').get('/')
     // .delay({head: 1, body: 3})
-    .reply(200, {license: {}});
+    .reply(200,{license: {}});
 
     const handler = resp => {
       done();
       return resp;
     }
 
-    const result = fetch(routeMock, routeRequestMock, handler)
+    const options = {
+      ...routeRequestMock,
+      proxy: true,
+    }
+    process.env.HTTP_PROXY = 'http://proxy.com/lah/';
+    const result = fetch(routeMock, options, handler)
     expect(result).toBe(undefined);
   })
 
   test('call fetch api with error', () => {
-    const scope = nock('http://www.google.com')
+    nock('http://www.google.com')
     .get('/cat-poems')
     .replyWithError({
       message: 'something awful happened',
       code: 'AWFUL_ERROR'
     })
 
-    const handler = resp => {
+    const handler = () => {
       throw 'err';
     }
 
-    const result = fetch(routeMock, routeRequestMock, handler)
+    const options = {
+      ...routeRequestMock,
+      proxy: 'http://proxy.com/lah/',
+    }
+    const result = fetch(routeMock, options, handler)
     expect(result).toBe(undefined);
   })
 })
