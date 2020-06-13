@@ -15,7 +15,7 @@ function isObjLiteral(_obj) {
   );
 }
 
-function stringify(obj, i=0, lf=`\n`) {
+function stringify(obj, i=0, lf='\n') {
   let tab = ' '.repeat(i);
   let out = '';
   for (let p in obj) {
@@ -38,7 +38,7 @@ function stringify(obj, i=0, lf=`\n`) {
         ins = `{},${lf}`;
       }
     } else if (typeof(nod)==='function') {
-      ins = (nod+'').replace(/\n/g,`\n${tab}`)+`,\n`;
+      ins = (nod+'').replace(/\n/g,`\n${tab}`)+',\n';
     } else if (typeof(nod)==='string') {
       ins = `'${nod.replace(/\n/g,`\n${tab}  `)}',${lf}`;
     } else {

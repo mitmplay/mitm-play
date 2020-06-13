@@ -78,7 +78,7 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
       opts.proxy = proxy;
     }
     console.log(c.grey(`>> proxy (${url.split(/([&?;,]|:\w|url)/)[0]})`));
-  };
+  }
 
   _fetch(url, {...reqs, ...opts}).then(resp => {
     const headers = resp.headers.raw();

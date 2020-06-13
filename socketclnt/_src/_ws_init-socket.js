@@ -14,7 +14,7 @@ module.exports = () => {
   };  
 
   ws.onclose = function() { 
-    console.log("ws: Connection is closed"); 
+    console.log('ws: Connection is closed'); 
   };
 
   window._ws = ws;

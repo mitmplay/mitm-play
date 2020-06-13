@@ -39,7 +39,7 @@ module.exports = () => {
   
   //ex: ws__help()
   window.ws__help = () => {
-    _ws.send(`_help{}`);
+    _ws.send('_help{}');
   }
 
   //ex: ws__open({url:'https://google.com'})

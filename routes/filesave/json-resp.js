@@ -17,7 +17,7 @@ module.exports = ({reqs, resp, match}) => {
           _resp.body && (respBody = `${_resp.body}`);
           _resp.headers && (respHeader = _resp.headers);
         }
-      };
+      }
       const urlParams = {};
       const urlSearch = new URLSearchParams(url);
       for (const [key, value] of urlSearch) {
@@ -40,7 +40,7 @@ module.exports = ({reqs, resp, match}) => {
       parse && (jsonResp = parse(jsonResp));
       respBody = JSON.stringify(jsonResp, null, 2);
     } catch (error) {
-      console.log(c.redBright(`>> Error JSON.stringify`));
+      console.log(c.redBright('>> Error JSON.stringify'));
       console.log(error);
     }
   }

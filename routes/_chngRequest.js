@@ -12,7 +12,7 @@ function chgRequest(reqs) {
     for (let key in _headers) {
       headers[key] = _headers[key];
     }
-  };
+  }
 }
 
 module.exports = chgRequest;

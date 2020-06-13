@@ -50,7 +50,7 @@ function routeSet(routes, namespace, print=false) {
   const msg = `>> ${namespace}\n${stringify(mitm.routes[namespace])}`;
   print && console.log(msg);
   return routes;
-};
+}
 
 const load = function(path) {
   console.log('>> userroute', path);

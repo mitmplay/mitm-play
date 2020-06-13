@@ -14,7 +14,7 @@ module.exports = () => {
   let prm0 = argv._[0] || 'default';
   prm0 = `${mitm.home}/argv/${prm0}.js`;
 
-  let saveArgs; ;
+  let saveArgs; 
   if (fs.existsSync(prm0)) {
     saveArgs = JSON.parse(fs.readFileSync(prm0));
     console.log(c.green('>> cmd: mitm-play', saveArgs._args));

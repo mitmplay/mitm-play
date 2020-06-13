@@ -14,12 +14,12 @@ const options = {
   headless: false,
 };
 const args = [
-  `--disable-features=IsolateOrigins,site-per-process`,
-  `--disable-site-isolation-trials=1`,
+  '--disable-features=IsolateOrigins,site-per-process',
+  '--disable-site-isolation-trials=1',
   '--disable-session-crashed-bubble',
   '--ignore-certificate-errors',
-  `--disable-site-isolation=1`,
-  `--disable-web-security=1`,
+  '--disable-site-isolation=1',
+  '--disable-web-security=1',
   '--disable-notifications',
   '--disable-infobars',
   '--force-dark-mode',
@@ -41,7 +41,7 @@ module.exports = () => {
         console.log('PATH EXT', path);
         args.push(`--disable-extensions-except=${path}`);
         args.push( `--load-extension=${path}`);
-      };
+      }
       if (argv.proxypac) {
         args.push(`--proxy-pac-url=${argv.proxypac}`);
       }

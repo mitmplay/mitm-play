@@ -4,7 +4,7 @@ module.exports = () => {
   const {hostname: host} = location;
   let namespace = _ws_namespace();
 
-  document.addEventListener("securitypolicyviolation", (e) => {
+  document.addEventListener('securitypolicyviolation', (e) => {
     const fname = location.pathname
     .replace(/^\//,'')
     .replace(/\//g,'-');

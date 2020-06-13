@@ -79,7 +79,7 @@ var _ws_initSocket = () => {
   };  
 
   ws.onclose = function() { 
-    console.log("ws: Connection is closed"); 
+    console.log('ws: Connection is closed'); 
   };
 
   window._ws = ws;
@@ -154,7 +154,7 @@ var _ws_observer = () => {
     }, 100);
   };
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener('DOMContentLoaded', () => {
     const observer = new MutationObserver(callback);
     observer.observe(document.body, {
       attributes: true,
@@ -205,7 +205,7 @@ var _ws_general = () => {
   
   //ex: ws__help()
   window.ws__help = () => {
-    _ws.send(`_help{}`);
+    _ws.send('_help{}');
   };
 
   //ex: ws__open({url:'https://google.com'})
@@ -246,7 +246,7 @@ var _ws_cspErr = () => {
   const {hostname: host} = location;
   let namespace = _ws_namespace();
 
-  document.addEventListener("securitypolicyviolation", (e) => {
+  document.addEventListener('securitypolicyviolation', (e) => {
     const fname = location.pathname
     .replace(/^\//,'')
     .replace(/\//g,'-');
@@ -294,7 +294,7 @@ var _ws_sshot = () => {
   const route = mitm.routes[namespace];
   if (route && route.screenshot) {
     const {selector} = route.screenshot;
-    document.querySelector('html').addEventListener("click", function(e) {
+    document.querySelector('html').addEventListener('click', function(e) {
       const arr = document.querySelectorAll(selector);
       const fname = location.pathname
       .replace(/^\//,'')

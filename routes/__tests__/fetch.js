@@ -9,7 +9,7 @@ const {
 } = require('../fetch');
 
 describe('fetch.js - extract', () => {
-  test(`return object keys without '_'`, () => {
+  test('return object keys without \'_\'', () => {
     const _request = {
       _url: 'http://google.com',
       _methods: 'GET',
@@ -24,24 +24,24 @@ describe('fetch.js - extract', () => {
 describe('fetch.js - script_src', () => {
   test('insert <script> inside <html>', () => {
     const result = script_src('<html><body></body>', ['test.js'])
-    expect(result).toBe(`<html>\n<script nonce src="/mitm-play/test.js"></script><body></body>`)
+    expect(result).toBe('<html>\n<script nonce src="/mitm-play/test.js"></script><body></body>')
   })
 
   test('insert <script> inside <head>', () => {
     const result = script_src('<html><head></head>', ['test.js'])
-    expect(result).toBe(`<html><head>\n<script nonce src="/mitm-play/test.js"></script></head>`)
+    expect(result).toBe('<html><head>\n<script nonce src="/mitm-play/test.js"></script></head>')
   })
 
   test('insert <script> in the begening of `text` string', () => {
     const result = script_src('text', ['test.js'])
-    expect(result).toBe(`<script nonce src="/mitm-play/test.js"></script>\ntext`)
+    expect(result).toBe('<script nonce src="/mitm-play/test.js"></script>\ntext')
   })
 })
 
 describe('fetch.js - source', () => {
   test('inject js at the end', () => {
     const result = source('alert(0);', ['test.js'])
-    expect(result).toBe(`alert(0);\n(test.js)();`)
+    expect(result).toBe('alert(0);\n(test.js)();')
   })
 })
 

@@ -18,7 +18,7 @@ function filename(pathname, reqs, hash='') {
     file2 = `${file2}${hash}`;
   }
   arr.push(file2);
-  return arr.join('/');;
+  return arr.join('/');
 }
 
 module.exports = (match, reqs) => {

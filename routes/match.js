@@ -73,7 +73,7 @@ const matched = (search, {url, headers}) => {
   } 
   if (!match) {
     match = search('default');
-  };
+  }
   // console.log('>> Match', tld, !!match)
   return match;
 }

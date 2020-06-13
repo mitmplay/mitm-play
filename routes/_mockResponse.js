@@ -29,7 +29,7 @@ function mockResponse(route, reqs) {
         if (match.route.resp) {
           const resp2 = match.route.resp(resp);
           resp2 && (resp = {...resp, ...resp2});
-        };
+        }
         if (match.route.js) {
           resp.body = source(resp.body, match.route.js);
           resp.headers['content-type'] = 'application/javascript';
