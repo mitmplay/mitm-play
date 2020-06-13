@@ -41,7 +41,7 @@ const googlJS = function() {
 const domain =  __dirname.split(/\\|\//).pop();
 const {hello} = global.mitm.fn;
 
-routes = {
+const routes = {
   title: 'Search - google',
   url: 'https://google.com/search?q=github+playwright',
   html: {
@@ -56,7 +56,8 @@ global.mitm.fn.routeSet(routes, domain, true)
 ```
 ```bash
 # run the demo:
-mitm-play --url='google.com/search?q=covid-19' --route='.' --save
+mitm-play --url='google.com/search?q=covid-19' --route='.' --save --delete
+mitm-play -u='google.com/search?q=covid-19' --dsr='.'
 
 # next run should be simple as:
 mitm-play
@@ -87,7 +88,7 @@ Usually html page load with several assets (image, js & css) that not belong to 
 
 In below example the route is having a `js` object and the process of checking narrated as: if there is a JS assets come from `gstatic.com`, then the response will get replace with an empty string.
 
-Illustration route namespaces: `default`, `google.com` on nodejs global scope:  
+Namespaces: `default`, `google.com` on nodejs global scope:  
 ```js
 global.mitm.route = {
   'default': {
@@ -115,7 +116,7 @@ on each route you can add section supported:
 routes = {
   url:     '',
   title:   '',
-  screenshot: {}, //user interaction rules & oberve DOM-Element
+  screenshot: {}, //user interaction rules & observe DOM-Element
   skip:    [], //start routing rules
   exclude: [],
   mock:    {},
@@ -137,7 +138,7 @@ routes = {
   title: 'Amazon - amazon',
   url:  'https://www.amazon.com/b?node=229189',
 };
-// mitm-play ama -cspr='.' -> search: 'ama' in url and go to the website
+// mitm-play ama -dpsr='.' -> search: 'ama' in url and go to the website
 ```
 ## Screenshot
 Capture/Screeshot when user *click* specific DOM-Element *match* with `selector` or state-change, like DOM-Element getting *insert* or *remove* and match **selector** inside `observer` key.
