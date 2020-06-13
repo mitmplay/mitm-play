@@ -20,7 +20,7 @@ const _resp = {
 
 module.exports =  (route, request) => {
   const reqs = extract(route, request);
-  const {nosocket, proxy} = mitm.argv;
+  const {nosocket, proxy} = global.mitm.argv;
   const respEvents = [];
 
   // catch unknown url scheme & respond it 

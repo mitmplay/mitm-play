@@ -89,14 +89,14 @@ var _ws_initSocket = () => {
 var _ws_observer = () => {
   const {hostname: host} = location;
   let namespace, sshot = {}, nodes = {};
-  for (let id in mitm.routes) {
+  for (let id in window.mitm.routes) {
     if (host.match(id)) {
       namespace = id;
       break;
     }
   }
 
-  const route = mitm.routes[namespace];
+  const route = window.mitm.routes[namespace];
   if (route && route.screenshot) {
     const {observer: ob} = route.screenshot;
     for (let id in ob) {
@@ -233,7 +233,7 @@ var _ws_general = () => {
 var _ws_namespace = () => {
   const {hostname: host} = location;
   let namespace;
-  for (let id in mitm.routes) {
+  for (let id in window.mitm.routes) {
     if (host.match(id)) {
       namespace = id;
       break;
@@ -291,7 +291,7 @@ var _ws_cspErr = () => {
 var _ws_sshot = () => {
   const {hostname: host} = location;
   let namespace = _ws_namespace();
-  const route = mitm.routes[namespace];
+  const route = window.mitm.routes[namespace];
   if (route && route.screenshot) {
     const {selector} = route.screenshot;
     document.querySelector('html').addEventListener('click', function(e) {

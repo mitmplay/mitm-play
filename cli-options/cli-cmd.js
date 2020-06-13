@@ -24,7 +24,7 @@ module.exports = () => {
     console.log(c.green('>> cmd2 mitm-play', process.argv.slice(2).join(' ')))
     const {_args, _argv} = saveArgs;
     global.mitm.argv = {..._argv, ...argv};
-    argv = mitm.argv;
+    argv = global.mitm.argv;
   }
   
   fs.ensureDir(mitm.home, err =>{});
@@ -44,7 +44,7 @@ module.exports = () => {
   route = route.replace(/\\/g, '/');
   argv.route = route;
 
-  mitm.data.userroute = `${route}/*/*.js`;
+  global.mitm.data.userroute = `${route}/*/*.js`;
   const files = fg.sync([mitm.data.userroute]);
   for (let file of files) {
     loadJS(file);
@@ -52,9 +52,9 @@ module.exports = () => {
 
   if (typeof(argv.url)!=='string') {
     if (argv._[0]) {
-      for (let namespace in mitm.routes) {
+      for (let namespace in global.mitm.routes) {
         if (namespace.match(argv._[0])) {
-          argv.url = mitm.routes[namespace].url;
+          argv.url = global.mitm.routes[namespace].url;
         }
       }  
     }

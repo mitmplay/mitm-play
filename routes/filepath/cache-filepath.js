@@ -43,7 +43,7 @@ module.exports = (match, reqs) => {
     stamp2 = `${host}${at}/$${fpath}`;
   }
 
-  const {group} = mitm.argv;
+  const {group} = global.mitm.argv;
   let root ;
   if (group) {
     root = `${mitm.home}/_group/${group}/cache`;

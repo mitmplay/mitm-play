@@ -8,7 +8,7 @@ const searchArr = ({typ, url}) => {
     }
 
     if (mitm.routes[namespace]) {
-      let arr = mitm.routes[namespace][typ];
+      let arr = global.mitm.routes[namespace][typ];
       if (arr) {
         let result;
         for (let val of arr) {
@@ -29,7 +29,7 @@ const searchFN = (typ, {url, headers}) => {
       return;
     }
 
-    const routes = mitm.routes[namespace][typ];
+    const routes = global.mitm.routes[namespace][typ];
   
     for (let key in routes) {
       const split = url.split(/([&?;,]|:\w|url)/);
@@ -62,7 +62,7 @@ const matched = (search, {url, headers}) => {
 
   if (!match && (origin || referer)) {
     let orref = tldomain(origin || referer);
-    const route = mitm.routes[orref]
+    const route = global.mitm.routes[orref]
     let exclude = false;
     if (route && route.exclude) {
       exclude = route.exclude.find(e => domain.match(e)); 

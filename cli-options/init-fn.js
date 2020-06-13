@@ -40,9 +40,9 @@ function unstrictCSP({headers}) {
 }
 
 function routeSet(routes, namespace, print=false) {
-  mitm.routes[namespace] = routes;
+  global.mitm.routes[namespace] = routes;
   if (namespace==='default') {
-    mitm.routes.default.mock = {
+    global.mitm.routes.default.mock = {
       ...mitm.routes.default.mock,
       ...global.mitm.__mock
     }

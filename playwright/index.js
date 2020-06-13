@@ -33,7 +33,7 @@ module.exports = () => {
       fn: {home}
     } = global.mitm;
     let page, browser, bcontext;
-    const br = mitm.argv.browser;
+    const br = global.mitm.argv.browser;
     if (argv.browser==='chromium') {
       if (argv.plugins) {
         let path = `${process.cwd()}/`;
