@@ -18,12 +18,12 @@ const css = `
   margin-top: 0 !important;
 }`;
 
-routes = {
+const routes = {
   title: 'Developer - zdnet',
   url: 'https://www.zdnet.com/topic/developer/',
   html: {
     // relax CSP rules
-    'zdnet.com': {resp: mitm.fn.unstrictCSP}
+    'zdnet.com': {resp: global.mitm.fn.unstrictCSP}
   },  
   skip: [
     // skip error `request back` to browser to handle it

@@ -1,14 +1,14 @@
 module.exports = () => {
   const {hostname: host} = location;
   let namespace, sshot = {}, nodes = {};
-  for (let id in mitm.routes) {
+  for (let id in window.mitm.routes) {
     if (host.match(id)) {
       namespace = id;
       break;
     }
   }
 
-  const route = mitm.routes[namespace];
+  const route = window.mitm.routes[namespace];
   if (route && route.screenshot) {
     const {observer: ob} = route.screenshot;
     for (let id in ob) {
@@ -31,7 +31,7 @@ module.exports = () => {
         insert: false,
         remove: true,
       };
-    };
+    }
   }
 
   let debunk, fname;
@@ -49,7 +49,7 @@ module.exports = () => {
             if (sshot[id].insert) {
               fname = location.pathname.replace(/^\//,'').replace(/\//g,'-');
               fname = `${fname}-${sshot[id].title}-insert`;
-              ws__send('screenshot', {namespace, host, fname});
+              window.ws__send('screenshot', {namespace, host, fname});
             }
           }
         } else {
@@ -59,7 +59,7 @@ module.exports = () => {
             if (sshot[id].remove) {
               fname = location.pathname.replace(/^\//,'').replace(/\//g,'-');
               fname = `${fname}-${sshot[id].title}-remove`;
-              ws__send('screenshot', {namespace, host, fname});
+              window.ws__send('screenshot', {namespace, host, fname});
             }
           }
         }
@@ -67,7 +67,7 @@ module.exports = () => {
     }, 100);
   };
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener('DOMContentLoaded', () => {
     const observer = new MutationObserver(callback);
     observer.observe(document.body, {
       attributes: true,

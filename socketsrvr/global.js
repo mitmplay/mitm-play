@@ -4,7 +4,7 @@ function broadcast({data,_all}) {
     const pages = [];
     const that = this;
     data = typeof(data)==='string' ? data : JSON.stringify(data);
-    wsserver.clients.forEach(function each(client) {
+    global.wsserver.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         if (_all || client !== that) {
           pages.push(client._page);
@@ -19,7 +19,7 @@ function broadcast({data,_all}) {
   function emitpage({data,regex}) {
     const pages = [];
     data = typeof(data)==='string' ? data : JSON.stringify(data);
-    wsserver.clients.forEach(function each(client) {
+    global.wsserver.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN && client._page.match(regex)) {
         pages.push(client._page);
         client.send(data);

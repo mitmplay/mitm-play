@@ -28,7 +28,7 @@ if (mitm.argv.insecure) {
 
 module.exports = () => {
   const {argv} = mitm;
-  const package = require('../package.json')
+  const _package = require('../package.json')
   if (argv.help) {
     console.log(c.greenBright(
   `
@@ -53,12 +53,12 @@ module.exports = () => {
     --webkit      \t browser = webkit
     --proxy       \t a proxy request
 
-  v${package.version}
+  v${_package.version}
 `));
     process.exit();
   }
   console.log(c.greenBright(JSON.stringify(argv, null, 2)));
-  console.log(c.green(`v${package.version}\n`));
+  console.log(c.green(`v${_package.version}\n`));
   uroute();
 }
 //mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -cspr='.'

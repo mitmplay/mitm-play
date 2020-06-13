@@ -1,6 +1,6 @@
 const domain =  __dirname.split(/\\|\//).pop();
 
-routes = {
+const routes = {
   title: 'My User Agent - whatsmyuseragent',
   url: 'http://whatsmyuseragent.org/',
   exclude: ['google'],

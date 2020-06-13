@@ -16,7 +16,8 @@ module.exports = () => {
         host = 'null';
       }
     } catch (error) {
-      debugger;
+      console.log('>> Init Socket', error)
+      // debugger;
     }
     const page = request.url.match(/page=(\w+)/)[1];
     wsclients[`${host}:${page}`] = {client, request};

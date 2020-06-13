@@ -53,24 +53,24 @@ On browser console type "ws"`;
     let {data,_all} = json;
     data = `_style${JSON.stringify({data})}`
     console.log('_style', data);
-    broadcast.call(this, {data,_all});
+    global.broadcast.call(this, {data,_all});
   }
 
   function $routes({data}) {
     
-    const {stringify} = mitm.fn;
+    const {stringify} = global.mitm.fn;
 
     if (data==='*') {
-      return Object.keys(mitm.routes).map(x => {
-        return `>> ${x}\n${stringify(mitm.routes[x])}`
+      return Object.keys(global.mitm.routes).map(x => {
+        return `>> ${x}\n${stringify(global.mitm.routes[x])}`
       }).join('\n');
     } else if (!data) {
-      return Object.keys(mitm.routes);
+      return Object.keys(global.mitm.routes);
     } else {
-      for (let id in mitm.routes) {
+      for (let id in global.mitm.routes) {
         if (id.match(data)) {
-          const r = mitm.routes[id];
-          return mitm.fn.stringify(r);
+          const r = global.mitm.routes[id];
+          return global.mitm.fn.stringify(r);
         }
       }
     }
@@ -85,20 +85,20 @@ On browser console type "ws"`;
   let _stamp = [];
   function $screenshot({data}) {
     const {namespace,host,fname} = data;
-    const {home, session, routes, argv: {group}} = mitm;
+    const {home, session, routes, argv: {group}} = global.mitm;
     _stamp.push((new Date).toISOString().replace(/[:-]/g, ''));
     debunk && clearTimeout(debunk);
     debunk = setTimeout(function() {
       const stamp = _stamp[0];
       clearTimeout(debunk);
-      let at = `sshot`;
+      let at = 'sshot';
       _stamp = [];
       if (namespace && routes[namespace]) {
         const {screenshot} = routes[namespace];
         if (screenshot && screenshot.at) {
           at = `${ screenshot.at}`;
         }
-      };
+      }
 
       let root;
       if (group) {
@@ -123,23 +123,23 @@ On browser console type "ws"`;
     const {namespace,host,fname,cspviolation} = data;
     const body = JSON.stringify(cspviolation, null, 2);
     const stamp = (new Date).toISOString().replace(/[:-]/g, '');
-    let at = `csp`;
-    if (namespace && mitm.routes[namespace]) {
-      const {csp_error} = mitm.routes[namespace];
+    let at = 'csp';
+    if (namespace && global.mitm.routes[namespace]) {
+      const {csp_error} = global.mitm.routes[namespace];
       if (csp_error && csp_error.at) {
         at = `${ csp_error.at}`;
       }
-    };
+    }
     let path;
     if (at.match(/^\^/)) {
       at = at.slice(1);
       path = `${home}/log/${session}/${at}/${stamp}-${host}--${fname}.json`;
     } else {
       path = `${home}/log/${session}/${stamp}--${at}@${host}--${fname}.json`;
-    };
-    fs.ensureFile(path, err => {
+    }
+    fs.ensureFile(path, () => {
       fs.writeFile(path, body, err => {
-        err && console.log(c.redBright(`>> Error write mcspviolationta`), err);
+        err && console.log(c.redBright('>> Error write'), err);
       });
     });  
   }
