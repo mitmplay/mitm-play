@@ -22,7 +22,7 @@ const searchArr = ({typ, url}) => {
   };
 };
 
-const searchFN = (typ, {url, headers}) => {
+const searchFN = (typ, {url}) => {
   return function search(nspace) {
     const namespace = nameSpace(nspace);
     if (!namespace) {

@@ -37,7 +37,7 @@ module.exports = () => {
     if (argv.browser==='chromium') {
       if (argv.plugins) {
         let path = `${process.cwd()}/`;
-        path += argv.plugins.replace(/\,/g, path);
+        path += argv.plugins.replace(/,/g, path);
         console.log('PATH EXT', path);
         args.push(`--disable-extensions-except=${path}`);
         args.push( `--load-extension=${path}`);

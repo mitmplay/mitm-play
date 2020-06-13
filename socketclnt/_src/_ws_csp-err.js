@@ -37,7 +37,7 @@ module.exports = () => {
       violatedDirective,
     };
     console.log('>>> CSP ERROR', e);
-    ws__send('csp_error', {
+    window.ws__send('csp_error', {
       namespace,
       host,
       fname,

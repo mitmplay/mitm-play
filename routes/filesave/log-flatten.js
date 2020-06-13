@@ -1,4 +1,4 @@
-const c = require('ansi-colors');
+// const c = require('ansi-colors');
 const filesave = require('./filesave');
 const metaResp = require('./meta-resp');
 const jsonResp = require('./json-resp');

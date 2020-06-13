@@ -1,7 +1,7 @@
 const c = require('ansi-colors');
 const _fetch = require('make-fetch-happen');
 
-function extract(route, request) {
+function extract(route) {
   const {
     _url: url, 
     _method: method, 
@@ -81,14 +81,15 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
   }
 
   _fetch(url, {...reqs, ...opts}).then(resp => {
-    const headers = resp.headers.raw();
+    const _headers = resp.headers.raw();
     const status = resp.status;
+    const headers = {};
     resp.buffer().then(body => {
-      for (let key in headers) {
+      for (let key in _headers) {
         if (key!=='set-cookie') {
-          headers[key] = headers[key].join(',');
+          headers[key] = _headers[key].join(',');
         } else {
-          headers[key] = headers[key];
+          headers[key] = _headers[key];
         }
       }
       const resp2 = handler({url, status, headers, body});

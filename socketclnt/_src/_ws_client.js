@@ -2,11 +2,11 @@ module.exports = () => {
   let windowRef;
   return {
     //ex: ws__help()
-    _help({data}) {
+    _help() { //{data}
       // console.log(data);
     },
     //ex: ws__ping("there") 
-    _ping({data}) {
+    _ping() { //{data}
       // console.log(data);
     },
     //ex: ws__open({url: "https://google.com"})

@@ -15,7 +15,7 @@ module.exports = () => {
   
   // Initialize watcher.
   const watcher = chokidar.watch(userroute, {
-    ignored: /(^|[\/\\])\../, // ignore dotfiles
+    ignored: /(^|[/\\])\../, // ignore dotfiles
     persistent: true
   });
   

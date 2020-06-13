@@ -2,7 +2,7 @@ const {fileWithHash} = require('./file-util');
 const _ext = require('./ext');
 
 function filename(pathname, resp) {
-  const arr = pathname.replace(/\-/g, '_').split('/');
+  const arr = pathname.replace(/-/g, '_').split('/');
   
   let file = arr.pop();
   if (file==='') {

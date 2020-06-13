@@ -1,4 +1,5 @@
 function isObjLiteral(_obj) {
+  /* eslint-disable no-constant-condition */
   var _test  = _obj;
   return (  typeof _obj !== 'object' || _obj === null ?
     false :  
@@ -16,6 +17,7 @@ function isObjLiteral(_obj) {
 }
 
 function stringify(obj, i=0, lf='\n') {
+  /* eslint-disable no-constant-condition */
   let tab = ' '.repeat(i);
   let out = '';
   for (let p in obj) {

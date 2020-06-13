@@ -18,7 +18,7 @@ module.exports = (event, msg) => {
       console.error(json,error);
     }        
     if (window._ws_queue[cmd]) {
-      handler = window._ws_queue[cmd];
+      const handler = window._ws_queue[cmd];
       delete window._ws_queue[cmd];
       handler(json.data);
     } else if (_ws_wccmd[cmd]) {
