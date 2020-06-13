@@ -76,15 +76,15 @@ On browser console type "ws"`;
     }
   }
 
-  async function _screenshot({path}) {
+  async function _screenshot({path, browser}) {
     await global.mitm.fn.fs.ensureFile(path);
-    await global.mitm.page.screenshot({path});
+    await global.mitm.pages[browser].screenshot({path});
   }
 
   let debunk;
   let _stamp = [];
   function $screenshot({data}) {
-    const {namespace,host,fname} = data;
+    const {namespace,host,fname, browser} = data;
     const {home, session, routes, argv: {group}} = global.mitm;
     _stamp.push((new Date).toISOString().replace(/[:-]/g, ''));
     debunk && clearTimeout(debunk);
@@ -102,9 +102,9 @@ On browser console type "ws"`;
 
       let root;
       if (group) {
-        root = `${home}/_group/${group}/log`;
+        root = `${home}/${browser}/_${group}/log`;
       } else {
-        root = `${home}/log`;
+        root = `${home}/${browser}/log`;
       }
 
       let path;
@@ -114,7 +114,7 @@ On browser console type "ws"`;
       } else {
         path = `${root}/${session}/${stamp}--${at}@${host}--${fname}.png`;
       }
-      _screenshot({path});
+      _screenshot({path, browser});
     }, 500);
   }
 

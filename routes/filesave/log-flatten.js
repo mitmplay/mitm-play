@@ -6,7 +6,7 @@ const flatFilepath = require('../filepath/flat-filepath');
 
 module.exports = (match, reqs, resp) => {
   const stamp = (new Date).toISOString().replace(/[:-]/g, '');
-  let {fpath1, fpath2, ext} = flatFilepath(match, resp, stamp);
+  let {fpath1, fpath2, ext} = flatFilepath({match, reqs, resp, stamp});
   const meta = metaResp({reqs, resp});
   const body = jsonResp({reqs, resp, match});
   if (match.route.log && ext!=='json') {

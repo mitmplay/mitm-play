@@ -6,11 +6,11 @@ const logFlatten = require('./filesave/log-flatten');
 
 const {matched,searchFN} = _match;
 
-function logResponse(arr, reqs) {
+function logResponse(reqs, responseHandler) {
   const search = searchFN('log', reqs);
   const match = matched(search, reqs);
   if (match) {
-    arr.push(resp => {
+    responseHandler.push(resp => {
       if (_ctype(match, resp)) {
         console.log(c.bold.blueBright(match.log));
         if (global.mitm.argv.lazylog) {

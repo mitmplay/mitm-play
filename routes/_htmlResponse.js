@@ -4,11 +4,11 @@ const _fetch = require('./fetch');
 const {matched,searchFN} = _match;
 const {script_src,e_end} = _fetch;
 
-function htmlResponse(arr, reqs) {
+function htmlResponse(reqs, responseHandler) {
   const search = searchFN('html', reqs);
   const match = matched(search, reqs);
   if (match) {
-    arr.push(resp => {   
+    responseHandler.push(resp => {   
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/html')) {
         const len = match.log.length;

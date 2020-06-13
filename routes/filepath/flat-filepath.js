@@ -23,7 +23,7 @@ function filename(pathname, resp) {
   return {fpath: arr.join('-'), ext};
 }
 
-module.exports = (match, resp, stamp) => {
+module.exports = ({match, reqs, resp, stamp}) => {
   let {host,pathname,route:{at,contentType}} = match;
   const {home, session, argv: {group}} = global.mitm;
   const {fpath, ext} = filename(pathname, resp);
@@ -33,11 +33,12 @@ module.exports = (match, resp, stamp) => {
     at = contentType.join('-');
   }
 
+  const {browserName} = reqs;
   let root;
   if (group) {
-    root = `${home}/_group/${group}/log`;
+    root = `${home}/${browserName}/_${group}/log`;
   } else {
-    root = `${home}/log`;
+    root = `${home}/${browserName}/log`;
   }
 
   let fpath1,fpath2;

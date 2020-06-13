@@ -28,7 +28,9 @@ module.exports = () => {
   }
   
   fs.ensureDir(global.mitm.home, () =>{});
-  fs.ensureDir(`${global.mitm.home}/.${argv.browser}`, () => {});
+  fs.ensureDir(`${global.mitm.home}/.chromium`, () => {});
+  fs.ensureDir(`${global.mitm.home}/.firefox`, () => {});
+  fs.ensureDir(`${global.mitm.home}/.webkit`, () => {});
   
   let {route} = argv;
   const cwd = process.cwd();

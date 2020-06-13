@@ -14,7 +14,7 @@ const mock = () => {
   }
 };
 
-function mockResponse(route, reqs) {
+function mockResponse({reqs, route}) {
   const search = searchFN('mock', reqs);
   const match = matched(search, reqs);
   if (match) {

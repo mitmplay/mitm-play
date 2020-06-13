@@ -3,11 +3,11 @@ const _match = require('./match');
 const addReplaceBody = require('./add-replace-body');
 const {matched,searchFN} = _match;
 
-function cssResponse(arr, reqs) {
+function cssResponse(reqs, responseHandler) {
   const search = searchFN('css', reqs);
   const match = matched(search, reqs);
   if (match) {
-    arr.push(resp => {
+    responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/css')) {
         console.log(c.greenBright(match.log));

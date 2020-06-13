@@ -1,14 +1,14 @@
 const c = require('ansi-colors');
 const _fetch = require('make-fetch-happen');
 
-function extract(route) {
+function extract({route, browserName}) {
   const {
     _url: url, 
     _method: method, 
     _headers: headers,
     _postData: body,
   } = route._request;
-  return {url, method, headers, body};
+  return {url, method, headers, body, browserName};
 }
 
 function script_src(body, src) {

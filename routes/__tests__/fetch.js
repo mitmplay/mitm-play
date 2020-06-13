@@ -16,7 +16,7 @@ describe('fetch.js - extract', () => {
       _headers: [{'content-type': 'text/css'}],
       _postData: ''
     }
-    const result = extract({_request});
+    const result = extract({_request, browserName: 'chromium'});
     expect(Object.keys(result).join(',')).toBe('url,method,headers,body')
   })
 })

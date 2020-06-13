@@ -21,9 +21,10 @@ function filename(pathname, reqs, hash='') {
   return arr.join('/');
 }
 
-module.exports = (match, reqs) => {
+module.exports = ({match, reqs}) => {
   let {host, pathname: f, url, route: {at}} = match;
   let hash = '';
+
   if (match.route.querystring) {
     let [,params] = url.split('?');
     hash = params ? hashCode(params) : '';  
@@ -44,12 +45,12 @@ module.exports = (match, reqs) => {
   }
 
   const {group} = global.mitm.argv;
+  const {browserName} = reqs;
   let root ;
   if (group) {
-    root = `${global.mitm.home}/_group/${group}/cache`;
+    root = `${global.mitm.home}/${browserName}/_${group}/cache`;
   } else {
-   
-    root = `${global.mitm.home}/cache`;
+    root = `${global.mitm.home}/${browserName}/cache`;
   }
   
   const fpath1 = `${root}/${stamp1}`;

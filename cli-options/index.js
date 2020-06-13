@@ -17,6 +17,7 @@ global.mitm = {
   home: `${home}/.mitm-play`,
   port: 3000,
 };
+global.mitm.argv.browser = {};
 
 module.exports = () => {
   const {argv} = global.mitm;

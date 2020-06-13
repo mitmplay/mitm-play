@@ -1,6 +1,7 @@
 const _ws_namespace = require('./_ws_namespace');
 
 module.exports = () => {
+  const {vendor} = navigator; 
   const {hostname: host} = location;
   let namespace = _ws_namespace();
   const route = window.mitm.routes[namespace];
@@ -17,7 +18,12 @@ module.exports = () => {
           node = node.parentNode;
         }
         if (node!==document.body) {
-          window.ws__send('screenshot', {namespace, host, fname});
+          const browser = {
+            '': 'firefox',
+            'Google Inc.': 'chromium',
+            'Apple Computer, Inc.': 'webkit',
+          }[vendor]
+          window.ws__send('screenshot', {namespace, host, fname, browser});
           return;
         }
       }

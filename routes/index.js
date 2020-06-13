@@ -18,10 +18,10 @@ const _resp = {
   body: ''
 };
 
-module.exports =  (route, request) => {
-  const reqs = extract(route, request);
+module.exports =  ({route, browserName}) => {
   const {nosocket, proxy} = global.mitm.argv;
-  const respEvents = [];
+  const reqs = extract({route, browserName});
+  const responseHandler = [];
 
   // catch unknown url scheme & respond it 
   if (reqs.url.match('(brave|edge)://')) {
@@ -36,7 +36,7 @@ module.exports =  (route, request) => {
     return;
   }
 
-  if (_mockResponse(route, reqs)) {
+  if (_mockResponse({reqs, route})) {
     return;
   }
 
@@ -45,36 +45,36 @@ module.exports =  (route, request) => {
   }
 
   //--resp can be undefined or local cached & can skip logs (.nolog)
-  let {match, resp} = _cacheResponse(respEvents, reqs);
+  let {match, resp} = _cacheResponse(reqs, responseHandler);
 
   //--order is important and log must not contain the body modification
   if (!match || !match.route.nolog) {
-    _logResponse(respEvents, reqs);
+    _logResponse(reqs, responseHandler);
   }
 
-  _htmlResponse(respEvents, reqs);
-  _jsonResponse(respEvents, reqs);
-  _cssResponse(respEvents, reqs);
-  _jsResponse(respEvents, reqs);
+  _htmlResponse(reqs, responseHandler);
+  _jsonResponse(reqs, responseHandler);
+  _cssResponse(reqs, responseHandler);
+  _jsResponse(reqs, responseHandler);
 
   if (!nosocket) {
     //--inject websocket client to html
-    _addWebSocket(respEvents, reqs);
+    _addWebSocket(reqs, responseHandler);
   }
 
   if (resp) {
-    route.fulfill(Events(respEvents, resp));
-  } else if (respEvents.length) { //call BE 
+    route.fulfill(Events(responseHandler, resp));
+  } else if (responseHandler.length) { //call BE 
     _chngRequest(reqs);
     fetch(route, reqs, function(resp) {
-      return Events(respEvents, resp)
+      return Events(responseHandler, resp)
     });
   } else {
     route.continue({});
   }
 }
 
-function Events(respEvents, resp) {
-  respEvents.forEach(fn => (resp = fn(resp)));
+function Events(responseHandler, resp) {
+  responseHandler.forEach(fn => (resp = fn(resp)));
   return resp;
 }

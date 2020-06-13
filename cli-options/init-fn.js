@@ -69,10 +69,15 @@ const loadJS = function(path, log) {
 }
 
 function clear() {
-  const {delete:d} = global.mitm.argv;
-  (d==='all') && fs.remove(`${global.mitm.home}/cache`);
-  (d==='all') && fs.remove(`${global.mitm.home}/log`);
-  (d===true ) && fs.remove(`${global.mitm.home}/log`);
+  const {browser,delete: d} = global.mitm.argv;
+  for (let browserName in browser) {
+    if (d===true) {
+      fs.remove(`${global.mitm.home}/${browserName}/cache`);
+      fs.remove(`${global.mitm.home}/${browserName}/log`);     
+    } else {
+      fs.remove(`${global.mitm.home}/${browserName}/${d}`);
+    }
+  }
 }
 
 function home(path) {

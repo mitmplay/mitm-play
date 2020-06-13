@@ -2,11 +2,11 @@ const c = require('ansi-colors');
 const _match = require('./match');
 const {matched,searchFN} = _match;
 
-function jsonResponse(arr, reqs) {
+function jsonResponse(reqs, responseHandler) {
   const search = searchFN('json', reqs);
   const match = matched(search, reqs);
   if (match) {
-    arr.push(resp => {
+    responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('application/json')) {
         console.log(c.yellowBright(match.log));

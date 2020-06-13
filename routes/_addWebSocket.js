@@ -19,9 +19,9 @@ const headerchg = headers => {
   }
 }
 
-function addWebSocket(arr, reqs) {
+function addWebSocket(reqs, responseHandler) {
   if ((reqs.headers.accept+'').indexOf('text/html') > -1) {
-    arr.push(resp => { 
+    responseHandler.push(resp => { 
       resp.body = script_src(resp.body, ['websocket.js']);
       headerchg(resp.headers);
       return resp;
