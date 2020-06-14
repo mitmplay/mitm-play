@@ -1,8 +1,8 @@
 const c = require('ansi-colors');
 const _match = require('./match');
-const _fetch = require('./fetch');
+const inject = require('./inject');
 const {matched,searchFN} = _match;
-const {script_src,e_end} = _fetch;
+const {script_src,e_end} = inject;
 
 function htmlResponse(reqs, responseHandler) {
   const search = searchFN('html', reqs);

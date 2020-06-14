@@ -1,4 +1,4 @@
-const { script_src } = require('./fetch');
+const { script_src } = require('./inject');
 
 function replaceCSP(csp) {
   csp = csp.replace(/default-src[^;]+;/g, '');

@@ -63,7 +63,10 @@ describe('match.js - matched', () => {
     const url = 'https://www.gtm.com/search?q=github+playwright';
     const fn = searchFN(typ, {url});
 
-    const found = matched(fn, {url, headers: {origin: 'https://google.com'}})
+    const found = matched(fn, {url, headers: {
+      'content-type': 'text/html',
+      origin: 'https://google.com'
+    }})
     expect(typeof found).toBe('object');
   })
 
@@ -72,9 +75,16 @@ describe('match.js - matched', () => {
     const url = 'https://www.exclude.com/search?q=github+playwright';
     const fn = searchArr(typ, {url});
 
-    let found = matched(fn, {url, headers: {origin: 'https://google.com'}})
+    let found = matched(fn, {url, headers: {
+      'content-type': 'text/html',
+      origin: 'https://google.com'
+    }})
     expect(typeof found).toBe('undefined');
-    found = matched(fn, {url, headers: {referer: 'https://google.com'}})
+
+    found = matched(fn, {url, headers: {
+      'content-type': 'text/html',
+      referer: 'https://google.com'
+    }})
     expect(typeof found).toBe('undefined');
   })
 

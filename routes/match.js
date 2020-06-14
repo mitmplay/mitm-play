@@ -1,4 +1,4 @@
-const nameSpace = require('./name-space');
+const nameSpace = require('./namespace');
 
 const searchArr = ({typ, url}) => {
   return function(nspace) {

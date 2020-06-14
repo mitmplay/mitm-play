@@ -2,7 +2,7 @@ global.mitm = {
   routes: require('../__fixture__/routes'),
 };
 
-const namespace = require('../name-space');
+const namespace = require('../namespace');
 
 const {
   test, 

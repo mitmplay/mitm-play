@@ -1,8 +1,8 @@
 const c = require('ansi-colors');
 const _match = require('./match');
-const _fetch = require('./fetch');
+const inject = require('./inject');
 const {matched,searchFN} = _match;
-const {source} = _fetch;
+const {source} = inject;
 
 const mock = () => {
   return {
