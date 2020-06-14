@@ -1,9 +1,10 @@
 module.exports = (match, resp) => {
-  const ctype = resp.headers['content-type'];
   const atype = match.route.contentType;
-  let search = false;
+  const ctype = resp.headers['content-type'];
+
   if (atype && ctype) {
-    search = atype.find(t => ctype.match(t));
+    return atype.find(t => ctype.match(t));
+  } else {
+    return false;
   }
-  return search;
 }
