@@ -5,7 +5,7 @@ const _ext = require('./filepath/ext');
 const _ctype = require('./content-type');
 const filesave = require('./filesave/filesave');
 const metaResp = require('./filesave/meta-resp');
-const cacheFilepath = require('./filepath/cache-filepath');
+const fpathcache = require('./filepath/fpath-cache');
 
 const {matched,searchFN} = _match;
 
@@ -17,7 +17,7 @@ function cacheResponse(reqs, responseHandler) {
 
   if (match) {
     const {url} = reqs;
-    let {fpath1, fpath2} = cacheFilepath({match, reqs});
+    let {fpath1, fpath2} = fpathcache({match, reqs});
 
     if (fs.existsSync(fpath2)) {
       // get from cache

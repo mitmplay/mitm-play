@@ -21,6 +21,18 @@ function fileWithHash(file) {
   }
 }
 
+function root(reqs, typ) {
+  const {home, argv: {group}} = global.mitm;
+  const {browserName} = reqs;
+  let root ;
+  if (group) {
+    root = `${home}/${browserName}/_${group}/${typ}`;
+  } else {
+    root = `${home}/${browserName}/${typ}`;
+  }
+  return root;
+}
+
 function filename(match, sep='/') {
   let {pathname, route: {querystring}} = match;
   const arr = pathname.replace(/-/g, '_').split('/');
@@ -45,4 +57,5 @@ module.exports = {
   fileWithHash,
   filename,
   hashCode,
+  root,  
 }

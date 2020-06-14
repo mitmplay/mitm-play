@@ -1,9 +1,9 @@
-const {filename} = require('./file-util');
+const {root, filename} = require('./file-util');
 
 module.exports = ({match, reqs}) => {
   let {host, route: {at}} = match;
-
   const fpath = filename(match);
+
   (at===undefined) && (at = '');
 
   let stamp1,stamp2;
@@ -17,16 +17,8 @@ module.exports = ({match, reqs}) => {
     stamp2 = `${host}${at}/$${fpath}`;
   }
 
-  const {group} = global.mitm.argv;
-  const {browserName} = reqs;
-  let root ;
-  if (group) {
-    root = `${global.mitm.home}/${browserName}/_${group}/cache`;
-  } else {
-    root = `${global.mitm.home}/${browserName}/cache`;
-  }
-  
-  const fpath1 = `${root}/${stamp1}`;
-  const fpath2 = `${root}/${stamp2}.json`;
+  const _root = root(reqs, 'cache');
+  const fpath1 = `${_root}/${stamp1}`;
+  const fpath2 = `${_root}/${stamp2}.json`;
   return {fpath1, fpath2};  
 }
