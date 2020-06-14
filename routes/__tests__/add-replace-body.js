@@ -7,7 +7,7 @@ const {
 } = global;
 
 describe('add-replace-body.js - function', () => {
-  test('return namespace exist or not', () => {
+  test('return replace or added content', () => {
     const resp1 = addReplaceBody('Original',  {route: ':Replaced'} );
     const resp2 = addReplaceBody('Original',  {route: '=>:Added'} );
 
