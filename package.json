@@ -8,9 +8,11 @@
   },
   "scripts": {
     "client": "rollup -c socketclnt/rollup.js",
+    "coverage": "jest --coverage",
     "eslint": "eslint --fix **/*.js",
     "start": "node --inspect ./mitm-play.js",
-    "test": "jest --coverage"
+    "test": "jest",
+    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand"
   },
   "author": "Widi Harsojo",
   "license": "AGPL-3.0",

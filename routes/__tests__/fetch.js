@@ -1,4 +1,11 @@
-// const assert = require('assert');
+global.mitm = {};
+
+const {
+  test, 
+  expect,
+  describe, 
+} = global;
+
 const {
   script_src,
   extract,
@@ -7,12 +14,6 @@ const {
   e_end,
   fetch,
 } = require('../fetch');
-
-const {
-  test, 
-  expect,
-  describe, 
-} = global;
 
 describe('fetch.js - extract', () => {
   test('return object keys without \'_\'', () => {
@@ -119,15 +120,17 @@ describe('fetch.js - e_end', () => {
 
 const {
   routeMock,
-  routeRequestMock,
+  requestMock,
 } = require('../__fixture__/fetch');
 const nock = require('nock')
 
 describe('fetch.js - fetch', () => {
-  test('call fetch api', done => {
-    nock('https://api.github.com').get('/')
-    // .delay({head: 1, body: 3})
-    .reply(200,{license: {}});
+  test('call fetch api w/ HTTP_PROXY', done => {
+    const url = 'https://api.github.com/one';
+    nock('https://api.github.com').get('/one').reply(
+      200,
+      {license: {}},
+      {'set-cookie': ['one', 'two']});
 
     const handler = resp => {
       done();
@@ -135,18 +138,44 @@ describe('fetch.js - fetch', () => {
     }
 
     const options = {
-      ...routeRequestMock,
+      ...requestMock,
       proxy: true,
+      url,
     }
+
     process.env.HTTP_PROXY = 'http://proxy.com/lah/';
     const result = fetch(routeMock, options, handler)
     expect(result).toBe(undefined);
   })
 
+  test('call fetch api w/ http_proxy', done => {
+    const url = 'https://api.github.com/one';
+    nock('https://api.github.com').get('/one').reply(
+      200,
+      {license: {}},
+      {'set-cookie': ['one', 'two']});
+
+    const handler = resp => {
+      done();
+      return resp;
+    }
+
+    const options = {
+      ...requestMock,
+      proxy: true,
+      url,
+    }
+
+    delete process.env.HTTP_PROXY;
+    process.env.http_proxy = 'http://proxy.com/lah/';
+    const result = fetch(routeMock, options, handler)
+    expect(result).toBe(undefined);
+  })
+
+
   test('call fetch api with error', () => {
-    nock('http://www.google.com')
-    .get('/cat-poems')
-    .replyWithError({
+    const url = 'http://www.google.com/two';
+    nock('http://www.google.com').get('/two').replyWithError({
       message: 'something awful happened',
       code: 'AWFUL_ERROR'
     })
@@ -156,8 +185,9 @@ describe('fetch.js - fetch', () => {
     }
 
     const options = {
-      ...routeRequestMock,
+      ...requestMock,
       proxy: 'http://proxy.com/lah/',
+      url,
     }
     const result = fetch(routeMock, options, handler)
     expect(result).toBe(undefined);

@@ -94,9 +94,10 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
       }
       const resp2 = handler({url, status, headers, body});
       route.fulfill(resp2);
-    })
-  // }).catch(err => {
-  //   console.log('fetch error:', err);
+    });
+    //.nextact.catch(err => {
+    //   console.log('fetch error:', err);
+    // });
   })
 }
 

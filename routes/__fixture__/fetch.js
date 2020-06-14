@@ -3,7 +3,7 @@ const routeMock = {
   }
 };
 
-const routeRequestMock = {
+const requestMock = {
   url: 'https://api.github.com',
   method: 'GET',
   body: null,
@@ -17,8 +17,7 @@ const routeRequestMock = {
   },
 }
 
-
 module.exports = {
   routeMock,
-  routeRequestMock,
+  requestMock,
 }
