@@ -1,4 +1,5 @@
 const {
+  root,
   hashCode,
   filename,
   fileWithHash,
@@ -78,5 +79,30 @@ describe('file-util.js - filename - function', () => {
     }
     const result = filename(match);
     expect(result).toBe('/one/two/three/l');
+  })
+})
+
+describe('file-util.js - root - function', () => {
+  test('return file root with group', () => {
+    global.mitm = {
+      argv: { group: 'one'},
+      home: '~',
+    };
+    const reqs = {
+      browserName: 'firefox',
+    }; 
+    const result = root(reqs, 'log');
+    expect(result).toBe(`~/firefox/_one/log`);
+  })
+  test('return file root without group', () => {
+    global.mitm = {
+      argv: {},
+      home: '~',
+    };
+    const reqs = {
+      browserName: 'firefox',
+    }; 
+    const result = root(reqs, 'log');
+    expect(result).toBe(`~/firefox/log`);
   })
 })
