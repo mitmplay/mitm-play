@@ -21,7 +21,28 @@ function fileWithHash(file) {
   }
 }
 
+function filename(match, sep='/') {
+  let {pathname, route: {querystring}} = match;
+  const arr = pathname.replace(/-/g, '_').split('/');
+  let file = arr.pop();
+  if (file==='') {
+    file = '_';
+  }
+  if (querystring) {
+    file = `hash-${hashCode(file)}`;  
+  } else {
+    let file2 = file;
+    if (file.match(/\.\w+$/)) {
+      file2 = file.replace(/\.\w+$/, '');
+    }
+    file = fileWithHash(file2);
+  }
+  arr.push(file);
+  return arr.join(sep);
+}
+
 module.exports = {
   fileWithHash,
+  filename,
   hashCode,
 }

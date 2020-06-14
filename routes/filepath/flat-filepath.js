@@ -1,33 +1,9 @@
-const {fileWithHash} = require('./file-util');
-const _ext = require('./ext');
-
-function filename(pathname, resp) {
-  const arr = pathname.replace(/-/g, '_').split('/');
-  
-  let file = arr.pop();
-  if (file==='') {
-    file = '_';
-  } else {
-    file = fileWithHash(file);
-  }
-
-  let file2 = file;
-  let ext = file.match(/\.\w+$/)
-  if (ext) {
-    ext = ext[0];
-  } else {
-    ext = _ext(resp);
-    file2 = `${file}.${ext}`;
-  }
-  arr.push(file2);
-  return {fpath: arr.join('-'), ext};
-}
+const {filename} = require('./file-util');
 
 module.exports = ({match, reqs, resp, stamp}) => {
   let {host,pathname,route:{at,contentType}} = match;
   const {home, session, argv: {group}} = global.mitm;
-  const {fpath, ext} = filename(pathname, resp);
-  const json = ext==='json' ? '' : '.json';
+  const fpath = filename(match, '-');
 
   if (at===undefined) {
     at = contentType.join('-');
@@ -45,10 +21,10 @@ module.exports = ({match, reqs, resp, stamp}) => {
   if (at.match(/^\^/)) {
     at = at.slice(1);
     fpath1 = `${root}/${session}/${at}/${stamp}-${host}-${fpath}`;
-    fpath2 = `${root}/${session}/${at}/$/${stamp}-${host}-${fpath}${json}`;
+    fpath2 = `${root}/${session}/${at}/$/${stamp}-${host}-${fpath}.json`;
   } else {
     fpath1 = `${root}/${session}/${stamp}--${at}@${host}-${fpath}`;
-    fpath2 = `${root}/${session}/$/${stamp}--${at}@${host}-${fpath}${json}`;
+    fpath2 = `${root}/${session}/$/${stamp}--${at}@${host}-${fpath}.json`;
   }
-  return {fpath1, fpath2, ext};
+  return {fpath1, fpath2};
 }

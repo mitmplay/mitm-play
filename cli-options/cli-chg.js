@@ -18,7 +18,6 @@ module.exports = () => {
   argsChg('p', 'pristine');
   argsChg('n', 'nosocket');
   argsChg('c', 'chromium');
-  argsChg('z', 'lazylog');
   argsChg('f', 'firefox');
   argsChg('w', 'webkit');
   argsChg('d', 'delete');

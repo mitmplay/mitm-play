@@ -1,5 +1,6 @@
 const {
   hashCode,
+  filename,
   fileWithHash,
 } = require('../file-util');
 
@@ -28,5 +29,28 @@ describe('file-util.js - fileWithHash - function', () => {
   test('return same text if no spliter identify', () => {
     const result = fileWithHash('Widi Harsojo');
     expect(result).toBe('Widi Harsojo');
+  })
+})
+
+describe('file-util.js - filename - function', () => {
+  test('return file with hash code', () => {
+    const match = {
+      pathname: '/one/two/three;Nicker-man;Lostworld',
+      route: {
+        querystring: true,
+      }
+    }
+    const result = filename(match);
+    expect(result).toBe('/one/two/hash--571922149');
+  })
+  test('return same text if no spliter identify', () => {
+    const match = {
+      pathname: '/one/two/three;Nicker-man;Lostworld',
+      route: {
+        querystring: true,
+      }
+    }
+    const result = filename(match);
+    expect(result).toBe('/one/two/hash--571922149');
   })
 })

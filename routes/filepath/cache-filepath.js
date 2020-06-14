@@ -1,36 +1,9 @@
-const {fileWithHash, hashCode} = require('./file-util');
-
-function filename(pathname, reqs, hash='') {
-  const arr = pathname.split('/');
-  let file = arr.pop();
-  if (file==='') {
-    file = '_';
-  } else {
-    file = fileWithHash(file);
-  }
-
-  let file2 = file;
-  let ext = file.match(/\.\w+$/)
-  if (ext) {
-    file2 = file.replace(/\.\w+$/, '');
-  }
-  if (hash) {
-    file2 = `${file2}${hash}`;
-  }
-  arr.push(file2);
-  return arr.join('/');
-}
+const {filename} = require('./file-util');
 
 module.exports = ({match, reqs}) => {
-  let {host, pathname: f, url, route: {at}} = match;
-  let hash = '';
+  let {host, route: {at}} = match;
 
-  if (match.route.querystring) {
-    let [,params] = url.split('?');
-    hash = params ? hashCode(params) : '';  
-  }
-
-  const fpath = filename(f, reqs, hash);
+  const fpath = filename(match);
   (at===undefined) && (at = '');
 
   let stamp1,stamp2;

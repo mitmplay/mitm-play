@@ -13,7 +13,6 @@ module.exports = (_package) => {
     -i --insecure \t set nodejs env to accept insecure cert
     -p --pristine \t pristine browser, not recommended to use
     -n --nosocket \t no websocket injection to html page
-    -z --lazylog  \t debounce save after millsec invoked
     -b --browser  \t browser: chromium/firefox/webkit
     -l --logurl   \t test route to log url & headers
     -r --route    \t set userscript folder of routes
