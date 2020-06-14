@@ -45,12 +45,38 @@ describe('file-util.js - filename - function', () => {
   })
   test('return same text if no spliter identify', () => {
     const match = {
-      pathname: '/one/two/three;Nicker-man;Lostworld',
+      pathname: '/one/two/three',
       route: {
         querystring: true,
       }
     }
     const result = filename(match);
-    expect(result).toBe('/one/two/hash--571922149');
+    expect(result).toBe('/one/two/hash-110339486');
+  })
+  test('return same text if no filename', () => {
+    const match = {
+      pathname: '/one/two/three/',
+      route: {
+        querystring: true,
+      }
+    }
+    const result = filename(match);
+    expect(result).toBe('/one/two/three/hash-95');
+  })
+  test('return same text if no filename', () => {
+    const match = {
+      pathname: '/one/two/three/',
+      route: {}
+    }
+    const result = filename(match);
+    expect(result).toBe('/one/two/three/_');
+  })
+  test('return same text if no filename', () => {
+    const match = {
+      pathname: '/one/two/three/l.json',
+      route: {}
+    }
+    const result = filename(match);
+    expect(result).toBe('/one/two/three/l');
   })
 })
