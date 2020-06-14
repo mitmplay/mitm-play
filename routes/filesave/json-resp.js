@@ -23,10 +23,35 @@ module.exports = ({reqs, resp, match}) => {
       for (const [key, value] of urlSearch) {
         urlParams[key] = value;
       }
-      const contentLength = resp.headers['content-length'];
-      if (_ext(resp)==='json' && contentLength && contentLength[0]!=='0') {
-        respBody = JSON.parse(`${respBody}`);
+      
+      try {
+        const xjson = /({").+(})/
+        // const contentLength = resp.headers['content-length'];
+        // if (_ext(resp)==='json' && contentLength && contentLength[0]!=='0') {
+        if (respBody && respBody.match(xjson)) {
+          respBody = JSON.parse(`${respBody}`);
+        }
+        if (reqsBody) { 
+          if (reqsBody.match(xjson)) {
+            reqsBody = JSON.parse(`${reqsBody}`);
+          } else if (reqsBody.match(/[\n ]*(\w+=).+(&)/)) {
+            const urlParams = {};
+            const urlSearch = new URLSearchParams(reqsBody);
+            for (const [key, value] of urlSearch) {
+              if (value.match(xjson)) {
+                urlParams[key] = JSON.parse(`${value}`);
+              } else {
+                urlParams[key] = value;
+              }
+            }
+            reqsBody = {'*form*':urlParams};      
+          }
+        }
+      } catch (error2) {
+        console.log(c.redBright('>> Error JSON.stringify'));
+        console.log(error2)          
       }
+      
       let jsonResp = {
         url,
         method,
