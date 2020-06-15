@@ -10,10 +10,10 @@ Man in the middle using playwright
    * [Route Sections](#route-sections)
       * [URL &amp; Title](#url--title)
       * [Screenshot](#screenshot)
-      * [Exclude <em>(experimental)</em>](#exclude-experimental)
       * [Skip](#skip)
+      * [Exclude](#exclude-experimental)
+      * [Request](#request)
       * [Mock](#mock)
-      * [Headers](#headers)
       * [Proxy](#proxy)
       * [Cache](#cache)
       * [Log](#log)
@@ -21,6 +21,7 @@ Man in the middle using playwright
       * [Json](#json)
       * [Css](#css)
       * [Js](#js)
+      * [Response](#response)
    * [HTTP_PROXY &amp; NO_PROXY](#http_proxy--no_proxy)
    * [User Route](#user-route)
    * [Early Stage](#early-stage)
@@ -119,14 +120,16 @@ routes = {
   screenshot: {}, //user interaction rules & observe DOM-Element
   skip:    [], //start routing rules
   exclude: [],
-  mock:    {},
-  headers: {},
+  request: {},
+  mock:    {}, 
+  proxy:   [], // request with proxy
   cache:   {},
   log:     {},
   html:    {},
   json:    {},
   css:     {},
-  js:      {}, //end routing rules
+  js:      {},
+  response:{}, //end routing rules
 }
 ```
 the execution order as documented start with `skip`, end with `js`, no need to implement all of routing rules. 
@@ -171,16 +174,28 @@ screenshot: {
 ```
 `at` is a partion of filename and having a simple rule attach on it. Guess what is it?.
 
+## Skip
+Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
+```js
+skip: ['wp-admin'],
+```
+
 ## Exclude *(experimental)*
 Exclude match **`url`** rule in which having same *Origin/Referer* to the route namespace, and *`skip` don't have any restriction, plain and simple match and forget*.
 ```js
 exclude: ['wp-admin'],
 ```
 
-## Skip
-Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
+## Request
+Manipulate Request with `request` function
 ```js
-skip: ['wp-admin'],
+request: {
+  'disqus.com/embed/comments/': {
+    request({url, method, headers, body, browserName}) {
+      return {}
+    }
+  }
+},
 ```
 
 ## Mock
@@ -191,11 +206,11 @@ Basic rule: replace **response body** with **the matcher** value
 mock: {'2mdn.net': ''},
 ```
 
-`resp` rule: manipulate **response** with return value of `resp` *function*
+`response` rule: manipulate **response** with return value of `response` *function*
 ```js
 mock: {
   'mitm-play/twitter.js': {
-    resp({status, headers, body}) {
+    response({status, headers, body}) {
       return {body} //can be {} or combination of {status, headers, body}
     },
   },
@@ -215,17 +230,8 @@ mock: {
   },
 },
 ```
-Please do not combine  `resp` with `js`, `js` will add/replace content-type to  *'application/javascript'*.
+Please do not combine  `response` with `js`, `js` will add/replace content-type to  *'application/javascript'*.
 
-## Headers
-Manipulate Request headers
-```js
-headers: {
-  'disqus.com/embed/comments/': {
-    'referrer-policy': 'no-referrer-when-downgrade'
-  }
-},
-```
 ## Proxy
 Certain domain will request thru proxy
 ```js
@@ -244,12 +250,12 @@ cache: {
   }
 },
 ```
-`cache` support `resp` function, it means the result can be manipulate first before send to the browser.
+`cache` support `response` function, it means the result can be manipulate first before send to the browser.
 ```js
 cache: {
   'amazon.com': {
     contentType: ['json'], //required! 
-    resp({status, headers, body}) {
+    response({status, headers, body}) {
       return {body} //can be {} or combination of {status, headers, body}
     },    
   }
@@ -271,12 +277,12 @@ log: {
   }
 },
 ```
-`log` support `resp` function, it means the result can be manipulate first before send to the browser.
+`log` support `response` function, it means the result can be manipulate first before send to the browser.
 ```js
 log: {
   'amazon.com': {
     contentType: ['json'], //required! 
-    resp({status, headers, body}) {
+    response({status, headers, body}) {
       return {body} //can be {} or combination of {status, headers, body}
     },    
   }
@@ -291,11 +297,11 @@ Basic rule: replace **response body** with **the matcher** value
 html: {'twitter.net': ''},
 ```
 
-`resp` rule: manipulate **response** with return value of `resp` *function*
+`response` rule: manipulate **response** with return value of `response` *function*
 ```js
 html: {
   'twitter.com/home': {
-    resp({status, headers, body}) {
+    response({status, headers, body}) {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
@@ -320,11 +326,11 @@ Basic rule: replace **response body** with **the matcher** value
 json: {'twitter.net': '{}'},
 ```
 
-`resp` rule: manipulate **response** with return value of `resp` *function*
+`response` rule: manipulate **response** with return value of `response` *function*
 ```js
 json: {
   'twitter.com/home': {
-    resp({status, headers, body}) {
+    response({status, headers, body}) {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
@@ -342,11 +348,11 @@ const style = 'body: {color: red}';
 css: {'twitter.net': style}, //or `=>${style}`
 ```
 
-`resp` rule: manipulate **response** with return value of `resp` *function*
+`response` rule: manipulate **response** with return value of `response` *function*
 ```js
 css: {
   'twitter.com/home': {
-    resp({status, headers, body}) {
+    response({status, headers, body}) {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
@@ -364,15 +370,28 @@ const code = 'alert(0);'
 js: {'twitter.net': code}, //or `=>${code}`
 ```
 
-`resp` rule: manipulate **response** with return value of `resp` *function*
+`response` rule: manipulate **response** with return value of `response` *function*
 ```js
 js: {
   'twitter.com/home': {
-    resp({status, headers, body}) {
+    response({status, headers, body}) {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
   },
+},
+```
+
+## Response
+Manipulate Response with `response` function
+```js
+response: {
+  '.+': {
+    request({status, headers, body}) {
+      headers['new-header'] = 'with some value';
+      return {headers};
+    }
+  }
 },
 ```
 

@@ -1,6 +1,7 @@
 const c = require('ansi-colors');
 const {extract, fetch} = require('./fetch');
 const _jsResponse    = require('./_jsResponse');
+const _allResponse   = require('./_allResponse');
 const _chngRequest   = require('./_chngRequest');
 const _cssResponse   = require('./_cssResponse');
 const _logResponse   = require('./_logResponse');
@@ -56,7 +57,7 @@ module.exports =  ({route, browserName}) => {
   _jsonResponse(reqs, responseHandler);
   _cssResponse(reqs, responseHandler);
   _jsResponse(reqs, responseHandler);
-
+  _allResponse(reqs, responseHandler);
   if (!nosocket) {
     //--inject websocket client to html
     _addWebSocket(reqs, responseHandler);
@@ -65,8 +66,7 @@ module.exports =  ({route, browserName}) => {
   if (resp) {
     route.fulfill(Events(responseHandler, resp));
   } else if (responseHandler.length) { //call BE 
-    _chngRequest(reqs);
-    fetch(route, reqs, function(resp) {
+    fetch(route, (_chngRequest(reqs) || reqs), function(resp) {
       return Events(responseHandler, resp)
     });
   } else {

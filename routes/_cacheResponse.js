@@ -29,8 +29,8 @@ function cacheResponse(reqs, responseHandler) {
       console.log(c.greenBright(`>> cache (${tilde(fpath1)})`));
       const body = fs.readFileSync(fpath1);
       resp = {url, status, headers, body};
-      if (match.route.resp) {
-        resp2 = match.route.resp(resp);
+      if (match.route.response) {
+        resp2 = match.route.response(resp);
         resp2 && (resp = {...resp, ...resp2})
       }
     } else {
@@ -42,8 +42,8 @@ function cacheResponse(reqs, responseHandler) {
           const meta = metaResp({reqs, resp});
           const body = resp.body;
           filesave({fpath1, body}, {fpath2, meta}, 'cache');
-          if (match.route.resp) {
-            resp2 = match.route.resp(resp);
+          if (match.route.response) {
+            resp2 = match.route.response(resp);
             resp2 && (resp = {...resp, ...resp2})
           }
         }

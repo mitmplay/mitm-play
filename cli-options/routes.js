@@ -15,7 +15,7 @@ module.exports = () => {
   
   const mock = {
     '/mitm-play/websocket.js': {
-      resp: _global_vars,
+      response: _global_vars,
     },
   }
   global.mitm.__mock = mock;

@@ -32,7 +32,7 @@ const domain =  __dirname.split(/\\|\//).pop();
 routes = {
   html: {
     // relax CSP rules
-    'zdnet.com': {resp: global.mitm.fn.unstrictCSP}
+    'zdnet.com': {response: global.mitm.fn.unstrictCSP}
   }, 
 }
 
@@ -114,7 +114,7 @@ routes = {
   url: 'https://www.zdnet.com/topic/developer/',
   html: {
     // relax CSP rules
-    'zdnet.com': {resp: global.mitm.fn.unstrictCSP}
+    'zdnet.com': {response: global.mitm.fn.unstrictCSP}
   },  
   skip: [
     // skip error `request back` to browser to handle it

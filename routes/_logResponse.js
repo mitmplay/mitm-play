@@ -22,8 +22,8 @@ function logResponse(reqs, responseHandler) {
         const meta = metaResp({reqs, resp});
         const body = jsonResp({reqs, resp, match});
         filesave({fpath1, body}, {fpath2, meta}, 'flatten log');
-        if (match.route.resp) {
-          const resp2 = match.route.resp(resp);
+        if (match.route.response) {
+          const resp2 = match.route.response(resp);
           resp2 && (resp = {...resp, ...resp2});
         }        
       }
