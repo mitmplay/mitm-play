@@ -267,7 +267,7 @@ log: {
   },
   'google-analytics.com/collect': {
     contentType: ['gif'],
-    log: '<remove>',
+    log: true, //'<remove>'
   }
 },
 ```
