@@ -132,7 +132,8 @@ routes = {
 the execution order as documented start with `skip`, end with `js`, no need to implement all of routing rules. 
 
 ## URL & Title
-`mitm-play` will pickup the **`url`** when supplied first params with non dashes and will try match partion of text in **`url`**, and for the `Title`, it just provide basic information about this route.
+Url will be use as part of the cli first params with non dashes and try to match partion of text in **`url`** and continue to open the browser with that **`url`**.
+For the `Title`, it just provide basic information about this route.
 ```js
 routes = {
   title: 'Amazon - amazon',
@@ -235,7 +236,7 @@ proxy: [
 ```
 
 ## Cache
-`Cache` the first request to your local disk so next request will serve from your local disk.
+Save the first request to your local disk so next request will serve from there.
 ```js
 cache: {
   'amazon.com': {
@@ -258,7 +259,7 @@ cache: {
 ## Log
 Save the response to your local disk. by default contentType `json` will log complete request / response, for different type default log should be response payload. 
 
-Special usacase like google-analytic will send contentType of `gif` with [GET] request, and response payload is not needed, there is an option `log` to force log with complete request / response.  
+Special usacase like google-analytic will send contentType of `gif` with [GET] request, and response payload is not needed, there is an option `log` to force log with json complete request / response.  
 ```js
 log: {
   'amazon.com': {
