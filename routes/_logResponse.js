@@ -18,7 +18,11 @@ function logResponse(reqs, responseHandler) {
     responseHandler.push(resp => {
       if (_ctype(match, resp)) {
         console.log(c.bold.blueBright(match.log));
-        fpath1 = `${fpath1}.${ext(resp)}`;
+        if (match.route.log) {
+          fpath1 = `${fpath1}.json`;
+        } else {
+          fpath1 = `${fpath1}.${ext(resp)}`;
+        }
         const meta = metaResp({reqs, resp});
         const body = jsonResp({reqs, resp, match});
         filesave({fpath1, body}, {fpath2, meta}, 'flatten log');
