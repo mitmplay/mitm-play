@@ -25,7 +25,7 @@ module.exports = ({reqs, resp, match}) => {
       }
       
       try {
-        const xjson = /({").+(})/
+        const xjson = /^[\n\t ]*({").+(})/
         // const contentLength = resp.headers['content-length'];
         // if (_ext(resp)==='json' && contentLength && contentLength[0]!=='0') {
         if (respBody && respBody.match(xjson)) {
