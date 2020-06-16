@@ -18,22 +18,30 @@ function cacheResponse(reqs, responseHandler) {
   if (match) {
     const {url} = reqs;
     let {fpath1, fpath2} = fpathcache({match, reqs});
-
+ 
+    let remote = true;
     if (fs.existsSync(fpath2)) {
       // get from cache
-      const {
-        status,
-        respHeader: headers
-      } = JSON.parse(fs.readFileSync(fpath2));
-      fpath1 = `${fpath1}.${_ext({headers})}`;
-      console.log(c.greenBright(`>> cache (${tilde(fpath1)})`));
-      const body = fs.readFileSync(fpath1);
-      resp = {url, status, headers, body};
-      if (match.route.response) {
-        resp2 = match.route.response(resp);
-        resp2 && (resp = {...resp, ...resp2})
+      try {
+        const {
+          status,
+          respHeader: headers
+        } = JSON.parse(fs.readFileSync(fpath2));
+        fpath1 = `${fpath1}.${_ext({headers})}`;
+        console.log(c.greenBright(`>> cache (${tilde(fpath1)})`));
+        const body = fs.readFileSync(fpath1);
+        resp = {url, status, headers, body};
+        if (match.route.response) {
+          resp2 = match.route.response(resp);
+          resp2 && (resp = {...resp, ...resp2})
+        }
+        remote = false;  
+      } catch (error) {
+        console.log(c.red(`>> cache (${tilde(fpath1)})`));
+        console.log(c.red('   Error in JSON.parse(...)'));
       }
-    } else {
+    }
+    if (remote) {
       // get from remote
       responseHandler.push(resp => {
         if (_ctype(match, resp)) {
@@ -47,7 +55,7 @@ function cacheResponse(reqs, responseHandler) {
             resp2 && (resp = {...resp, ...resp2})
           }
         }
-        return resp;
+        return resp; // back to events loop call in fetch
       });
     }
   }
