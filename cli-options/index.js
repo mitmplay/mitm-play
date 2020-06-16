@@ -18,13 +18,13 @@ global.mitm = {
   port: 3000,
 };
 global.mitm.argv.browser = {};
+global.mitm.argv.ommit = {};
 
 module.exports = () => {
-  const {argv} = global.mitm;
   const _package = require('../package.json')
 
   cliChg();
-  if (argv.help) {
+  if (global.mitm.argv.help) {
     helper(_package);
   }
 
@@ -36,8 +36,8 @@ module.exports = () => {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   }
 
-  console.log(c.greenBright(JSON.stringify(argv, null, 2)));
-  console.log(c.green(`v${_package.version}\n`));
+  console.log(c.greenBright(JSON.stringify(global.mitm.argv, null, 2)));
+  console.log(c.green(`\nv${_package.version}\n`));
   uroute();
 }
 //mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -dpsr='.'

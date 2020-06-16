@@ -7,7 +7,9 @@ function chgRequest(reqs) {
   const match = matched(search, reqs);
   if (match) {
     if (!match.url.match('/mitm-play/websocket')) {
-      console.log(c.cyanBright(match.log));
+      if (!global.mitm.argv.ommit.request) {
+        console.log(c.cyanBright(match.log));
+      }
     }
     if (match.route.request) {
       const reqs2 = match.route.request(reqs);

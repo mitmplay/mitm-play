@@ -9,8 +9,10 @@ function routeSet(routes, namespace, print=false) {
       ...global.mitm.__mock
     }
   }
-  const msg = `>> ${namespace}\n${stringify(global.mitm.routes[namespace])}`;
-  print && console.log(c.blueBright(msg));
+  if (!global.mitm.data.nolog && global.mitm.argv.verbose) {
+    const msg = `>> ${namespace}\n${stringify(global.mitm.routes[namespace])}`;
+    print && console.log(c.blueBright(msg));  
+  }
   return routes;
 }
 

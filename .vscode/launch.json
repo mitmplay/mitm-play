@@ -11,11 +11,12 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\mitm-play.js",
+            "program": "/home/wharsojo/Projects/mitm-play/mitm-play.js",
             // "args": [
             //     "vis",
-            //     "-dpsr='./userscript'",
-            //     "--chromium='D:/Apps/chrome-gog/chrome.exe'"
+            //     "-o='cache,skip'",
+            //     "-dpsr='/home/wharsojo/Projects/userscript'",
+            // //  "--chromium='D:/Apps/chrome-gog/chrome.exe'"
             // ]
         }
     ]

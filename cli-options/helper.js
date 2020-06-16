@@ -13,14 +13,12 @@ module.exports = (_package) => {
     -i --insecure \t set nodejs env to accept insecure cert
     -p --pristine \t pristine browser, not recommended to use
     -n --nosocket \t no websocket injection to html page
-    -b --browser  \t browser: chromium/firefox/webkit
+    -o --ommitlog \t ommitlog remove some console log
+    -v --verbose  \t show detail logs of console log
     -l --logurl   \t test route to log url & headers
     -r --route    \t set userscript folder of routes
     -s --save     \t save as default <profl>
     --proxypac    \t set chromium proxypac 
-    --chromium    \t browser = chromium
-    --firefox     \t browser = firefox
-    --webkit      \t browser = webkit
     --proxy       \t a proxy request
 
   v${_package.version}

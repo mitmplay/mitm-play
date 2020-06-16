@@ -11,7 +11,7 @@ const load = function(path) {
 let debunk;
 const loadJS = function(path, log) {
   const {clear} = global.mitm.fn;
-  console.log(log);
+  log && console.log(log);
   load(path);
   debunk && clearTimeout(debunk);
   debunk = setTimeout(() => {

@@ -10,8 +10,8 @@ const wscmd = {
 global.mitm.wscmd = wscmd;
 
 module.exports = (client, msg) => {
-  if (msg.match(/\?/)) {
-    console.log(c.blue('>> ws-message: `%s...`'), msg.split('?')[0]);
+  if (msg.match(/[?;]/)) {
+    console.log(c.blue('>> ws-message: `%s...`'), msg.split(/[?;]/)[0]);
   } else {
     console.log(c.blue('>> ws-message: `%s`'), msg);
   }

@@ -28,7 +28,9 @@ function cacheResponse(reqs, responseHandler) {
           respHeader: headers
         } = JSON.parse(fs.readFileSync(fpath2));
         fpath1 = `${fpath1}.${_ext({headers})}`;
-        console.log(c.greenBright(`>> cache (${tilde(fpath1)})`));
+        if (!global.mitm.argv.ommit.cache) {
+          console.log(c.greenBright(`>> cache (${tilde(fpath1)})`));
+        }
         const body = fs.readFileSync(fpath1);
         resp = {url, status, headers, body};
         if (match.route.response) {

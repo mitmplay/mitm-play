@@ -32,7 +32,9 @@ module.exports =  ({route, browserName}) => {
 
   let skip = _skipResponse(reqs);
   if (skip) {
-    console.log(c.grey(`>> skip (${skip})`));
+    if (global.mitm.argv.verbose) {
+      console.log(c.grey(`>> skip (${skip})`));
+    }
     route.continue({});
     return;
   }
