@@ -13,14 +13,16 @@ function logResponse(reqs, responseHandler) {
   const search = searchFN('log', reqs);
   const match = matched(search, reqs);
   if (match) {
+    const {hidden, log, response} = match.route;
     const stamp = (new Date).toISOString().replace(/[:-]/g, '');
-    let {fpath1, fpath2} = fpathflat({match, reqs, stamp});
     responseHandler.push(resp => {
       if (_ctype(match, resp)) {
-        if (!match.route.hidden) {
+        let {fpath1, fpath2} = fpathflat({match, reqs, stamp});
+        if (!hidden) {
           console.log(c.bold.blueBright(match.log));
         }
-        if (match.route.log) {
+        if (log) {
+          //complete r/resp json log
           fpath1 = `${fpath1}.json`;
         } else {
           fpath1 = `${fpath1}.${ext(resp)}`;
@@ -28,8 +30,8 @@ function logResponse(reqs, responseHandler) {
         const meta = metaResp({reqs, resp});
         const body = jsonResp({reqs, resp, match});
         filesave({fpath1, body}, {fpath2, meta}, 'flatten log');
-        if (match.route.response) {
-          const resp2 = match.route.response(resp);
+        if (response) {
+          const resp2 = response(resp);
           resp2 && (resp = {...resp, ...resp2});
         }        
       }

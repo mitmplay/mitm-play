@@ -92,7 +92,7 @@ describe('file-util.js - root - function', () => {
       browserName: 'firefox',
     }; 
     const result = root(reqs, 'log');
-    expect(result).toBe(`~/firefox/_one/log`);
+    expect(result).toBe('~/firefox/_one/log');
   })
   test('return file root without group', () => {
     global.mitm = {
@@ -103,6 +103,6 @@ describe('file-util.js - root - function', () => {
       browserName: 'firefox',
     }; 
     const result = root(reqs, 'log');
-    expect(result).toBe(`~/firefox/log`);
+    expect(result).toBe('~/firefox/log');
   })
 })

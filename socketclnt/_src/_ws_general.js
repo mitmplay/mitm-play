@@ -49,18 +49,21 @@ module.exports = () => {
   }
 
   window.ws__send = (cmd, data, handler) => {
-   const id = nanoid();
-   const key = `${cmd}:${id}`;
-   window._ws_queue[key] = handler || (w => console.log(w));
+    const id = nanoid();
+    const key = `${cmd}:${id}`;
+    window._ws_queue[key] = handler || (w => console.log(w));
 
-   setTimeout(function() {
-    if (window._ws_queue[key]) {
-      delete  window._ws_queue[key];
-      console.log('>> ws timeout!', key);
-    } 
-   }, 5000)
-
-   _ws.send(`${key}${JSON.stringify({data})}`);
+    setTimeout(function() {
+      if (window._ws_queue[key]) {
+        delete  window._ws_queue[key];
+        console.log('>> ws timeout!', key);
+      } 
+    }, 5000)
+    const params = `${key}${JSON.stringify({data})}`;
+    if (window.mitm.argv.debug) {
+      console.log('_ws.send', params); 
+    }
+    _ws.send(params);
   }
 }
 //ws__send('_ping', 'LOL', w=>console.log('>result',w));

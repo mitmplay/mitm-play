@@ -1,9 +1,10 @@
 const _ws_namespace = require('./_ws_namespace');
+const _ws_vendor = require('./_ws_vendor');
 
 module.exports = () => {
-  const {vendor} = navigator; 
   const {hostname: host} = location;
-  let namespace = _ws_namespace();
+  const namespace = _ws_namespace();
+  const browser = _ws_vendor();
   const route = window.mitm.routes[namespace];
   if (route && route.screenshot) {
     const {selector} = route.screenshot;
@@ -18,12 +19,8 @@ module.exports = () => {
           node = node.parentNode;
         }
         if (node!==document.body) {
-          const browser = {
-            '': 'firefox',
-            'Google Inc.': 'chromium',
-            'Apple Computer, Inc.': 'webkit',
-          }[vendor]
-          window.ws__send('screenshot', {namespace, host, fname, browser});
+          const params = {namespace, host, fname, browser};
+          window.ws__send('screenshot', params);
           return;
         }
       }

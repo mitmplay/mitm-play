@@ -8,6 +8,7 @@ function htmlResponse(reqs, responseHandler) {
   const search = searchFN('html', reqs);
   const match = matched(search, reqs);
   if (match) {
+    const {el, js, src, response} = match.route;
     responseHandler.push(resp => {   
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/html')) {
@@ -16,16 +17,16 @@ function htmlResponse(reqs, responseHandler) {
         if (typeof(match.route)==='string') {
           resp.body = match.route;
         } else {        
-          if (match.route.response) {
-            const resp2 = match.route.response(resp);
+          if (response) {
+            const resp2 = response(resp);
             resp2 && (resp = {...resp, ...resp2});
           }
-          if (match.route.js) {
-            const inject = _fetch[match.route.el] || e_end;
-            resp.body = inject(resp.body, match.route.js);
+          if (js) {
+            const inject = inject[el] || e_end;
+            resp.body = inject(resp.body, js);
           }
-          if (match.route.src) {     
-            resp.body = script_src(resp.body, match.route.src);
+          if (src) {     
+            resp.body = script_src(resp.body, src);
           }
         }
       }

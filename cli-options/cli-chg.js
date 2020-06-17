@@ -11,7 +11,6 @@ function argsChg(id, key) {
 
 function obj(key,id) {
   let {argv} = global.mitm;
-  // console.log('>> OBJ', key, id);
   if (argv[id]) {
     argv[key][id] = argv[id];
   }  

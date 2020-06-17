@@ -11,7 +11,7 @@ module.exports = () => {
 
   if (!files.length) {
     console.log('>> no watcher', userroute, files);
-    // return;
+    return;
   }
   
   // Initialize watcher.

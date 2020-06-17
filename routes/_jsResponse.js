@@ -7,6 +7,7 @@ function jsResponse(reqs, responseHandler) {
   const search = searchFN('js', reqs);
   const match = matched(search, reqs);
   if (match) {
+    const {response} = match.route;
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('javascript')) {
@@ -14,8 +15,8 @@ function jsResponse(reqs, responseHandler) {
         if (typeof(match.route)==='string') {
           resp.body = addReplaceBody(resp.body, match);
         } else {
-          if (match.route.response) {
-            const resp2 = match.route.response(resp);
+          if (response) {
+            const resp2 = response(resp);
             resp2 && (resp = {...resp, ...resp2});
           }
         }

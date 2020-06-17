@@ -48,7 +48,7 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
       route.fulfill(resp2);
     });
     //.nextact.catch(err => {
-    //   console.log('fetch error:', err);
+    //   console.log(c.redBright('>> fetch error:'), err);
     // });
   })
 }

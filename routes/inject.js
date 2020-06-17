@@ -1,5 +1,3 @@
-const c = require('ansi-colors');
-
 function script_src(body, src) {
   let el = src.map(el=>`<script nonce src="/mitm-play/${el}"></script>`).join('\n');
   let b = body+'';

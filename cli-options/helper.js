@@ -23,6 +23,7 @@ module.exports = (_package) => {
     -w --webkit   \t run webkit browser
     --proxypac    \t set chromium proxypac
     --plugins     \t add chrome plugins
+    --debug       \t show ws messages
     --proxy       \t a proxy request
 
   v${_package.version}

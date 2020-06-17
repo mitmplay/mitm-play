@@ -1,4 +1,6 @@
-global.mitm = {};
+global.mitm = {
+  argv: {verbose: true}
+};
 
 const {
   test, 

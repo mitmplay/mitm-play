@@ -1,8 +1,9 @@
 const fs = require('fs-extra');
+const c = require('ansi-colors');
 
 function ehandler(err) {
   if (err) {
-    console.log('Error remove files', err);
+    console.log(c.redBright('Error remove files'), err);
   }
 }
 

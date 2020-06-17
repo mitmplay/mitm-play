@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const fg = require('fast-glob');
+const c = require('ansi-colors');
 
 module.exports = () => {
   let {
@@ -11,12 +12,12 @@ module.exports = () => {
   } = global.mitm;
 
   const dirhandler = (err) => {
-    err && console.log('>> Error creating browser profile folder', err)
+    err && console.log(c.redBright('>> Error creating browser profile folder'), err)
   }
 
   fs.ensureDir(global.mitm.home, err => {
     if (err) {
-      console.log('>> Error creating home folder', err)
+      console.log(c.redBright('>> Error creating home folder'), err)
     } else {
       fs.ensureDir(`${global.mitm.home}/.chromium`, dirhandler);
       fs.ensureDir(`${global.mitm.home}/.firefox`, dirhandler);
@@ -71,10 +72,10 @@ module.exports = () => {
     const body = JSON.stringify({_args,_argv: rest}, null, 2);
     fs.ensureFile(fpath, err => {
       if (err) {
-        console.log('>> Error saving cli options', fpath)
+        console.log(c.redBright('>> Error saving cli options'), fpath)
       } else {
         fs.writeFile(fpath, body, err => {
-          err && console.log('>> Error saving cli options', err);
+          err && console.log(c.redBright('>> Error saving cli options'), err);
         });
       }
     });

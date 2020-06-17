@@ -57,9 +57,9 @@ module.exports =  ({route, browserName}) => {
 
   _htmlResponse(reqs, responseHandler);
   _jsonResponse(reqs, responseHandler);
-  _cssResponse(reqs, responseHandler);
-  _jsResponse(reqs, responseHandler);
-  _allResponse(reqs, responseHandler);
+  _cssResponse (reqs, responseHandler);
+  _jsResponse  (reqs, responseHandler);
+  _allResponse (reqs, responseHandler);
   if (!nosocket) {
     //--inject websocket client to html
     _addWebSocket(reqs, responseHandler);

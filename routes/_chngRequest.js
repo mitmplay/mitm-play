@@ -6,13 +6,14 @@ function chgRequest(reqs) {
   const search = searchFN('request', reqs);
   const match = matched(search, reqs);
   if (match) {
+    const {hidden, request} = match.route;
     if (!match.url.match('/mitm-play/websocket')) {
-      if (!global.mitm.argv.ommit.request && !match.route.hidden) {
+      if (!global.mitm.argv.ommit.request && !hidden) {
         console.log(c.cyanBright(match.log));
       }
     }
-    if (match.route.request) {
-      const reqs2 = match.route.request(reqs);
+    if (request) {
+      const reqs2 = request(reqs);
       if (reqs2) {
         return {
           ...reqs,

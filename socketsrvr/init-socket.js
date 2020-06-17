@@ -16,7 +16,7 @@ module.exports = () => {
         host = 'null';
       }
     } catch (error) {
-      console.log('>> Init Socket', error)
+      console.log(c.redBright('>> Error init Socket'), error)
       // debugger;
     }
     const page = request.url.match(/page=(\w+)/)[1];

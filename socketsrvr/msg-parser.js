@@ -30,7 +30,6 @@ module.exports = (client, msg) => {
     } else {
       const cmd2 = `$${cmd.split(':')[0]}`;
       if (wscmd[cmd2]) {
-        console.log('BE:',cmd);
         const data = wscmd[cmd2].call(client, json);
         client.send(`${cmd}${JSON.stringify({data})}`);
       }

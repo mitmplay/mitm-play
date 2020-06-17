@@ -43,11 +43,6 @@ describe('match.js - searchFN', () => {
   })
 })
 
-// const {
-//   routeMock,
-//   requestMock,
-// } = require('../__fixture__/fetch');
-
 describe('match.js - matched', () => {
   test('return matched name-space', () => {
     const typ = 'skip';

@@ -79,9 +79,14 @@ On browser console type "ws"`;
   async function _screenshot({path, browser}) {
     const err = await global.mitm.fn.fs.ensureFile(path);
     if (err) {
-      console.log('>> Error saving screenshot', path)
+      console.log(c.redBright('>> Error saving screenshot'), path)
     } else {
-      await global.mitm.pages[browser].screenshot({path});
+      try {
+        await global.mitm.pages[browser].screenshot({path});
+      } catch (error) {
+        console.log(c.redBright('>> Error screenshot'), error);
+        // debugger
+      }
     }
   }
 
@@ -143,7 +148,7 @@ On browser console type "ws"`;
     }
     fs.ensureFile(path, err => {
       if (err) {
-        console.log('>> Error saving csp', path)
+        console.log(c.redBright('>> Error saving csp'), path)
       } else {
         fs.writeFile(path, body, err => {
           err && console.log(c.redBright('>> Error write'), err);

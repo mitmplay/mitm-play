@@ -1,13 +1,12 @@
+const _ws_namespace = require('./_ws_namespace');
+const _ws_vendor = require('./_ws_vendor');
+
 module.exports = () => {
   const {hostname: host} = location;
-  let namespace, sshot = {}, nodes = {};
-  for (let id in window.mitm.routes) {
-    if (host.match(id)) {
-      namespace = id;
-      break;
-    }
-  }
-
+  const namespace = _ws_namespace();
+  const browser = _ws_vendor();
+  let sshot = {}, nodes = {};
+  
   const route = window.mitm.routes[namespace];
   if (route && route.screenshot) {
     const {observer: ob} = route.screenshot;
@@ -49,7 +48,7 @@ module.exports = () => {
             if (sshot[id].insert) {
               fname = location.pathname.replace(/^\//,'').replace(/\//g,'-');
               fname = `${fname}-${sshot[id].title}-insert`;
-              window.ws__send('screenshot', {namespace, host, fname});
+              window.ws__send('screenshot', {namespace, host, fname, browser});
             }
           }
         } else {
@@ -59,7 +58,7 @@ module.exports = () => {
             if (sshot[id].remove) {
               fname = location.pathname.replace(/^\//,'').replace(/\//g,'-');
               fname = `${fname}-${sshot[id].title}-remove`;
-              window.ws__send('screenshot', {namespace, host, fname});
+              window.ws__send('screenshot', {namespace, host, fname, browser});
             }
           }
         }

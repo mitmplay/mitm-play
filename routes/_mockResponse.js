@@ -18,6 +18,7 @@ function mockResponse({reqs, route}) {
   const search = searchFN('mock', reqs);
   const match = matched(search, reqs);
   if (match) {
+    const {js, response} = match.route;
     if (!match.url.match('/mitm-play/websocket')) {
       console.log(c.cyanBright(match.log));
     }
@@ -25,13 +26,13 @@ function mockResponse({reqs, route}) {
     if (typeof(match.route)==='string') {
       resp.body = match.route;
     } else {          
-      if (match.route.response || match.route.js) {
-        if (match.route.response) {
-          const resp2 = match.route.response(resp);
+      if (response || js) {
+        if (response) {
+          const resp2 = response(resp);
           resp2 && (resp = {...resp, ...resp2});
         }
-        if (match.route.js) {
-          resp.body = source(resp.body, match.route.js);
+        if (js) {
+          resp.body = source(resp.body, js);
           resp.headers['content-type'] = 'application/javascript';
         }
       } else {
