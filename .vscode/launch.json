@@ -11,7 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "/home/wharsojo/Projects/mitm-play/mitm-play.js",
+            ///home/wharsojo/Projects/
+            "program": "${workspaceFolder}/mitm-play.js",
             // "args": [
             //     "vis",
             //     "-o='cache,skip'",

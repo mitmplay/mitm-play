@@ -17,7 +17,9 @@ function logResponse(reqs, responseHandler) {
     let {fpath1, fpath2} = fpathflat({match, reqs, stamp});
     responseHandler.push(resp => {
       if (_ctype(match, resp)) {
-        console.log(c.bold.blueBright(match.log));
+        if (!match.route.hidden) {
+          console.log(c.bold.blueBright(match.log));
+        }
         if (match.route.log) {
           fpath1 = `${fpath1}.json`;
         } else {

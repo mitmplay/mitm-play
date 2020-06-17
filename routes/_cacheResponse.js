@@ -28,8 +28,8 @@ function cacheResponse(reqs, responseHandler) {
           respHeader: headers
         } = JSON.parse(fs.readFileSync(fpath2));
         fpath1 = `${fpath1}.${_ext({headers})}`;
-        if (!global.mitm.argv.ommit.cache) {
-          console.log(c.greenBright(`>> cache (${tilde(fpath1)})`));
+        if (!global.mitm.argv.ommit.cache && !match.route.hidden) {
+          console.log(c.greenBright(`>> cache (${tilde(fpath1)}).match(${match.key})`));
         }
         const body = fs.readFileSync(fpath1);
         resp = {url, status, headers, body};
@@ -48,7 +48,9 @@ function cacheResponse(reqs, responseHandler) {
       responseHandler.push(resp => {
         if (_ctype(match, resp)) {
           fpath1 = `${fpath1}.${_ext(resp)}`;
-          console.log(c.magentaBright(`>> cache (${tilde(fpath1, '~')})`));
+          if (match.route.hidden!==2) {
+            console.log(c.magentaBright(`>> cache (${tilde(fpath1, '~')}).match(${match.key})`));
+          }
           const meta = metaResp({reqs, resp});
           const body = resp.body;
           filesave({fpath1, body}, {fpath2, meta}, 'cache');
