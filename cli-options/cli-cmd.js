@@ -71,12 +71,10 @@ module.exports = () => {
     const body = JSON.stringify({_args,_argv: rest}, null, 2);
     fs.ensureFile(fpath, err => {
       if (err) {
-        console.log('>> Error in create folder', fpath)
+        console.log('>> Error saving cli options', fpath)
       } else {
         fs.writeFile(fpath, body, err => {
-          if (err) {
-            console.log('>> Error saving cli options', err);
-          }
+          err && console.log('>> Error saving cli options', err);
         });
       }
     });

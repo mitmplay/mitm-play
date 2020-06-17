@@ -77,8 +77,12 @@ On browser console type "ws"`;
   }
 
   async function _screenshot({path, browser}) {
-    await global.mitm.fn.fs.ensureFile(path);
-    await global.mitm.pages[browser].screenshot({path});
+    const err = await global.mitm.fn.fs.ensureFile(path);
+    if (err) {
+      console.log('>> Error saving screenshot', path)
+    } else {
+      await global.mitm.pages[browser].screenshot({path});
+    }
   }
 
   let debunk;
@@ -137,10 +141,14 @@ On browser console type "ws"`;
     } else {
       path = `${home}/log/${session}/${stamp}--${at}@${host}--${fname}.json`;
     }
-    fs.ensureFile(path, () => {
-      fs.writeFile(path, body, err => {
-        err && console.log(c.redBright('>> Error write'), err);
-      });
+    fs.ensureFile(path, err => {
+      if (err) {
+        console.log('>> Error saving csp', path)
+      } else {
+        fs.writeFile(path, body, err => {
+          err && console.log(c.redBright('>> Error write'), err);
+        })
+      }
     });  
   }
 
