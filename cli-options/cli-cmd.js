@@ -9,11 +9,20 @@ module.exports = () => {
       loadJS,
     }
   } = global.mitm;
-  
-  fs.ensureDir(global.mitm.home, () =>{});
-  fs.ensureDir(`${global.mitm.home}/.chromium`, () => {});
-  fs.ensureDir(`${global.mitm.home}/.firefox`, () => {});
-  fs.ensureDir(`${global.mitm.home}/.webkit`, () => {});
+
+  const dirhandler = (err) => {
+    err && console.log('>> Error creating browser profile folder', err)
+  }
+
+  fs.ensureDir(global.mitm.home, err => {
+    if (err) {
+      console.log('>> Error creating home folder', err)
+    } else {
+      fs.ensureDir(`${global.mitm.home}/.chromium`, dirhandler);
+      fs.ensureDir(`${global.mitm.home}/.firefox`, dirhandler);
+      fs.ensureDir(`${global.mitm.home}/.webkit`, dirhandler);    
+    }
+  });
   
   let {route} = argv;
   const cwd = process.cwd();
