@@ -18,7 +18,11 @@ module.exports = (_package) => {
     -l --logurl   \t test route to log url & headers
     -r --route    \t set userscript folder of routes
     -s --save     \t save as default <profl>
-    --proxypac    \t set chromium proxypac 
+    -c --chromium \t run chromium browser
+    -f --firefox  \t run firefox browser
+    -w --webkit   \t run webkit browser
+    --proxypac    \t set chromium proxypac
+    --plugins     \t add chrome plugins
     --proxy       \t a proxy request
 
   v${_package.version}
