@@ -1,10 +1,26 @@
+const express = require('express');
+const http = require('http');
+const fs = require('fs-extra');
 const WebSocket = require('ws');
 const c = require('ansi-colors');
 const msgParser = require('./msg-parser');
 const wsclients = {};
 
 module.exports = () => {
-  const wsserver = new WebSocket.Server({ port: 3000 });
+  const app = express();
+  const server = http.createServer(app);
+  const wsserver = new WebSocket.Server({ server, path: "/ws" });
+  server.listen(3000);
+
+  app.get('/mitm-play/websocket.js', (r, res) => {
+    const _body = global.mitm.fn.wsclient();
+    res.type('.js');
+    res.send(_body);
+  })
+
+  app.get('/', (r, res) => {
+    res.send('Hi Mitm-play!')
+  })
 
   let debunk;
   wsserver.on('connection', function connection(client, request) {

@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.5.10",
+  "version": "0.5.11",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -26,6 +26,7 @@
   "dependencies": {
     "ansi-colors": "^4.1.1",
     "chokidar": "^3.4.0",
+    "express": "^4.17.1",
     "fast-glob": "^3.2.2",
     "fs-extra": "^9.0.1",
     "make-fetch-happen": "^8.0.7",

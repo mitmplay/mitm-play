@@ -7,10 +7,10 @@ module.exports = () => ({
       setTimeout(() => {
         let body = fs.readFileSync(file)+'';
         body = body.replace('module.exports = _src;', '_src();');
-  
+
         fs.writeFile(file, body, err => {
           err && console.log(c.redBright('>> Error write bundle'), err);
-        })      
+        })
       }, 10);
     }
   }

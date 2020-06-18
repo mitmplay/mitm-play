@@ -10,6 +10,7 @@ const unstrictCSP = require('./fn/unstrictCSP');
 const stringify = require('./fn/stringify');
 const routeSet = require('./fn/route-set');
 const tldomain = require('./fn/tldomain');
+const wsclient = require('./fn/wsclient');
 const loadJS = require('./fn/loadJS');
 const clear = require('./fn/clear');
 
@@ -19,6 +20,7 @@ module.exports = () => {
     stringify,
     chokidar,
     tldomain,
+    wsclient,
     routeSet,
     execFile,
     loadJS,
