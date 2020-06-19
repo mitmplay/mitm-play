@@ -2,28 +2,42 @@ const c = require('ansi-colors');
 const fg = require('fast-glob');
 const chokidar = require('chokidar');
 
-module.exports = () => {
-  const {
-    fn: {loadJS},
-    data: {userroute},
-  } = global.mitm;
-  const files = fg.sync([userroute]);
-
-  if (!files.length) {
-    console.log('>> no watcher', userroute, files);
-    return;
+function addCache(path, log=true) {
+  if (global.mitm.win32) {
+    path = path.replace(/\\/g, '/');
   }
+  global.mitm.files.cache.push(path);
+  log && console.log(c.green(`>> add cache ${path}`));
+}
+
+function delCahe(path) {
+  if (global.mitm.win32) {
+    path = path.replace(/\\/g, '/');
+  }
+  const idx = global.mitm.files.cache.indexOf(path);
+  if (idx>-1) {
+    delete global.mitm.files.cache[idx];
+  }
+  console.log(c.red(`>> del cache ${path}`));
+}
+
+module.exports = () => {
+  const {home} = global.mitm;
+  const glob = home+'/**/cache/**';
+  const files = mitm.fn.fg.sync([glob]);
   
+  global.mitm.files.cache = [];
+  for (let path of files) {
+    addCache(path, false);
+  }
+
   // Initialize watcher.
-  const watcher = chokidar.watch(userroute, {
-    ignored: /(^|[/\\])\../, // ignore dotfiles
+  console.log(c.magentaBright(`cache watcher ${glob}`));
+  const watcher = chokidar.watch(glob, {
     persistent: true
   });
-  
-  // Something to use when events are received.
-  const log = console.log.bind(console);
+
   watcher // Add event listeners.
-  .on('add',    path => loadJS(path, c.greenBright(`>> add route ${path}`)))
-  .on('change', path => loadJS(path,  c.cyanBright(`>> chg route ${path}`)))
-  .on('unlink', path =>          log(  c.redBright(`>> del route ${path}`)));  
+  .on('add',    path => addCache(path))
+  .on('unlink', path => delCahe(path));  
 }
