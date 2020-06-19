@@ -9,4 +9,5 @@ function debounce(fn, delay=500) {
     }, delay)
   }
 }
+global._debounce = debounce;
 module.exports = debounce;

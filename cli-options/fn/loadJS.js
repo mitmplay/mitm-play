@@ -1,5 +1,4 @@
 const c = require('ansi-colors');
-const debounce = require('./debounce');
 
 const load = function(path) {
   const rpath = require.resolve(path);
@@ -9,7 +8,7 @@ const load = function(path) {
   return require(path);
 }
 
-const resort = debounce(function() {
+const resort = global._debounce(function() {
   let keys = Object.keys(global.mitm.routes);
   keys = keys.sort(function(a, b) {
     return b.length - a.length || // sort by length, if equal then

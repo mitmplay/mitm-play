@@ -1,6 +1,5 @@
 const fs = require('fs-extra');
 const c = require('ansi-colors');
-const debunce = require('../cli-options/fn/debounce');
 
 module.exports = () => {
   /**
@@ -92,7 +91,7 @@ On browser console type "ws"`;
   }
 
   let _stamp = [];
-  const delayCapture = debunce(function(data) {
+  const delayCapture = global._debounce(function(data) {
     const {namespace,host,fname, browser} = data;
     const {home, session, routes, argv: {group}} = global.mitm;
     const stamp = _stamp[0];

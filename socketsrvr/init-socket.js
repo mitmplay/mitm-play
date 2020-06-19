@@ -4,7 +4,6 @@ const fs = require('fs-extra');
 const WebSocket = require('ws');
 const c = require('ansi-colors');
 const msgParser = require('./msg-parser');
-const debunce = require('../cli-options/fn/debounce');
 const wsclients = {};
 
 module.exports = () => {
@@ -23,7 +22,7 @@ module.exports = () => {
     res.send('Hi Mitm-play!')
   })
 
-  const delayTerminate = debunce(function() {
+  const delayTerminate = global._debounce(function() {
     for (let host in wsclients) {
       const {client} = wsclients[host];
       if (client.readyState===3) {
