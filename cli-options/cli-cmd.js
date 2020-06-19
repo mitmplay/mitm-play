@@ -39,8 +39,8 @@ module.exports = () => {
   route = route.replace(/\\/g, '/');
   argv.route = route;
 
-  global.mitm.data.userroute = `${route}/**/*.js`;
-  const files = fg.sync([global.mitm.data.userroute]);
+  global.mitm.path.userroute = `${route}/**/*.js`;
+  const files = fg.sync([global.mitm.path.userroute]);
   global.mitm.data.nolog = true;
   for (let file of files) {
     loadJS(file);

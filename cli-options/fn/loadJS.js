@@ -1,4 +1,5 @@
 const c = require('ansi-colors');
+const debounce = require('./debounce');
 
 const load = function(path) {
   const rpath = require.resolve(path);
@@ -8,26 +9,25 @@ const load = function(path) {
   return require(path);
 }
 
-let debunk;
+const resort = debounce(function() {
+  let keys = Object.keys(global.mitm.routes);
+  keys = keys.sort(function(a, b) {
+    return b.length - a.length || // sort by length, if equal then
+           a.localeCompare(b);    // sort by dictionary order
+  });
+  const routes = {};
+  for (let key of keys) {
+    routes[key] = global.mitm.routes[key];
+  }
+  console.log(c.red('>> Reset routes'));
+  global.mitm.routes = routes;
+  global.mitm.fn.clear();
+});
+
 const loadJS = function(path, log) {
-  const {clear} = global.mitm.fn;
   log && console.log(log);
   load(path);
-  debunk && clearTimeout(debunk);
-  debunk = setTimeout(() => {
-    let keys = Object.keys(global.mitm.routes);
-    keys = keys.sort(function(a, b) {
-      return b.length - a.length || // sort by length, if equal then
-             a.localeCompare(b);    // sort by dictionary order
-    });
-    const routes = {};
-    for (let key of keys) {
-      routes[key] = global.mitm.routes[key];
-    }
-    console.log(c.red('>> Reset routes'));
-    global.mitm.routes = routes;
-    clear();
-  }, 500);
+  resort();
 }
 
 module.exports = loadJS;
