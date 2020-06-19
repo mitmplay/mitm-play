@@ -22,7 +22,6 @@ module.exports = (event, msg) => {
       delete window._ws_queue[cmd];
       handler(json.data);
     } else if (_ws_wccmd[cmd]) {
-      console.log(json.data);
       _ws_wccmd[cmd].call(event, json)
     }       
   }    

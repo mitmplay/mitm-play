@@ -1,17 +1,14 @@
 const c = require('ansi-colors');
 const chokidar = require('chokidar');
+const broadcast = require('./broadcast');
 
-const showAddedFiles = global._debounce(function(_log) {
-  let data = global.mitm.files.log;
-  data = `_fileLogs${JSON.stringify({data})}`
-  global.broadcast({data});
-}, 1000);
+const showFiles = broadcast('_fileLogs', 'log');
 
-function addLog(path, _log=true) {
+function addLog(path) {
   const {win32,files:{log}} = global.mitm;
   win32 && (path = path.replace(/\\/g, '/'));
   log.push(path);
-  showAddedFiles(_log);
+  showFiles();
 }
 
 function delLog(path) {
@@ -22,7 +19,7 @@ function delLog(path) {
   if (idx>-1) {
     delete global.mitm.files.log[idx];
   }
-  console.log(c.red(`>> del log ${path}`));
+  showFiles();
 }
 
 module.exports = () => {

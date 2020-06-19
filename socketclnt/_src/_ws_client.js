@@ -22,5 +22,15 @@ module.exports = () => {
         node => (node.style.cssText = css)
       );
     },
+    //ex: ws__
+    _fileCache({typ, data}) {
+      window.mitm.files[typ] = data;
+      console.log('cache');
+    },    
+    //ex: ws__
+    _fileLogs({typ, data}) {
+      window.mitm.files[typ] = data;
+      console.log('logs');
+    },    
   };
 }

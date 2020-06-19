@@ -1,17 +1,14 @@
 const c = require('ansi-colors');
 const chokidar = require('chokidar');
+const broadcast = require('./broadcast');
 
-const showAddedFiles = global._debounce(function(_log) {
-  let data = global.mitm.files.cache;
-  data = `_fileCache${JSON.stringify({data})}`
-  global.broadcast({data});
-}, 1000);
+const showFiles = broadcast('_fileCache', 'cache');
 
-function addCache(path, _log=true) {
+function addCache(path) {
   const {win32,files:{cache}} = global.mitm;
   win32 && (path = path.replace(/\\/g, '/'));
   cache.push(path);
-  showAddedFiles(_log);
+  showFiles();
 }
 
 function delCahe(path) {
@@ -22,7 +19,7 @@ function delCahe(path) {
   if (idx>-1) {
     delete global.mitm.files.cache[idx];
   }
-  console.log(c.red(`>> del cache ${path}`));
+  showFiles();
 }
 
 module.exports = () => {
