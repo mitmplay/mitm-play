@@ -1,12 +1,13 @@
 const c = require('ansi-colors');
 const yargs = require('yargs-parser');
-const logsWatch = require('../chokidar/logs');
-const urouteWatch = require('../chokidar/uroute');
-const initfn = require('./init-fn');
+const initfn = require('./init-fn'); // must be first, init _debounce
 const cliChg = require('./cli-chg');
 const cliCmd = require('./cli-cmd');
 const routes = require('./routes');
 const helper = require('./helper');
+const logsWatch = require('../chokidar/logs');
+const cacheWatch = require('../chokidar/cache');
+const urouteWatch = require('../chokidar/uroute');
 
 let home;
 const {platform, env: {HOME, HOMEPATH}} = process;
@@ -58,6 +59,7 @@ module.exports = () => {
   console.log(c.greenBright(JSON.stringify(global.mitm.argv, null, 2)));
   console.log(c.green(`\nv${_package.version}\n`));
   urouteWatch();
+  cacheWatch();
   logsWatch();
 }
 //mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -dpsr='.'

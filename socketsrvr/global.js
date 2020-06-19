@@ -1,3 +1,5 @@
+const WebSocket = require('ws');
+
 module.exports = () => {
 //ex: broadcast({data:"there"});
 function broadcast({data,_all}) {
