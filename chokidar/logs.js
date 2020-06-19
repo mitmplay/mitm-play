@@ -1,13 +1,8 @@
 const c = require('ansi-colors');
-const fg = require('fast-glob');
 const chokidar = require('chokidar');
 
-// files = [];
 const showAddedFiles = global._debounce(function(_log) {
   let data = global.mitm.files.log;
-  // _log && console.log(c.yellowBright(`>> logs:`), data);
-  files = [];
-
   data = `_fileLogs${JSON.stringify({data})}`
   global.broadcast({data});
 }, 1000);
@@ -16,7 +11,6 @@ function addLog(path, _log=true) {
   const {win32,files:{log}} = global.mitm;
   win32 && (path = path.replace(/\\/g, '/'));
   log.push(path);
-  // files.push(path);
   showAddedFiles(_log);
 }
 
@@ -33,7 +27,6 @@ function delLog(path) {
 
 module.exports = () => {
   const {home} = global.mitm;
-  // const glob = home+'/**/log/**';
   const glob = Object.keys(mitm.argv.browser).map(x=>`${home}/${x}/**/log/**`);
 
   // Initialize watcher.
