@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const c = require('ansi-colors');
+const debunce = require('../cli-options/fn/debounce');
 
 module.exports = () => {
   /**
@@ -90,41 +91,40 @@ On browser console type "ws"`;
     }
   }
 
-  let debunk;
   let _stamp = [];
-  function $screenshot({data}) {
+  const delayCapture = debunce(function(data) {
     const {namespace,host,fname, browser} = data;
     const {home, session, routes, argv: {group}} = global.mitm;
+    const stamp = _stamp[0];
+    let at = 'sshot';
+    _stamp = [];
+    if (namespace && routes[namespace]) {
+      const {screenshot} = routes[namespace];
+      if (screenshot && screenshot.at) {
+        at = `${ screenshot.at}`;
+      }
+    }
+
+    let root;
+    if (group) {
+      root = `${home}/${browser}/_${group}/log`;
+    } else {
+      root = `${home}/${browser}/log`;
+    }
+
+    let path;
+    if (at.match(/^\^/)) {
+      at = at.slice(1);
+      path = `${root}/${session}/${at}/${stamp}-${host}--${fname}.png`;
+    } else {
+      path = `${root}/${session}/${stamp}--${at}@${host}--${fname}.png`;
+    }
+    _screenshot({path, browser});
+  });
+
+  function $screenshot({data}) {
     _stamp.push((new Date).toISOString().replace(/[:-]/g, ''));
-    debunk && clearTimeout(debunk);
-    debunk = setTimeout(function() {
-      const stamp = _stamp[0];
-      clearTimeout(debunk);
-      let at = 'sshot';
-      _stamp = [];
-      if (namespace && routes[namespace]) {
-        const {screenshot} = routes[namespace];
-        if (screenshot && screenshot.at) {
-          at = `${ screenshot.at}`;
-        }
-      }
-
-      let root;
-      if (group) {
-        root = `${home}/${browser}/_${group}/log`;
-      } else {
-        root = `${home}/${browser}/log`;
-      }
-
-      let path;
-      if (at.match(/^\^/)) {
-        at = at.slice(1);
-        path = `${root}/${session}/${at}/${stamp}-${host}--${fname}.png`;
-      } else {
-        path = `${root}/${session}/${stamp}--${at}@${host}--${fname}.png`;
-      }
-      _screenshot({path, browser});
-    }, 500);
+    delayCapture(data);
   }
 
   function $csp_error({data}) {

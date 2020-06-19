@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 const WebSocket = require('ws');
 const c = require('ansi-colors');
 const msgParser = require('./msg-parser');
+const debunce = require('../cli-options/fn/debounce');
 const wsclients = {};
 
 module.exports = () => {
@@ -22,7 +23,23 @@ module.exports = () => {
     res.send('Hi Mitm-play!')
   })
 
-  let debunk;
+  const delayTerminate = debunce(function() {
+    for (let host in wsclients) {
+      const {client} = wsclients[host];
+      if (client.readyState===3) {
+        delete wsclients[host];
+      }
+    }
+    wsserver.clients.forEach(function each(client) {
+      if (client.readyState===3) {
+        console.log('>> terminate', client._page);
+        client.terminate();
+      }
+    });
+    const arr = Object.keys(wsclients);
+    console.log(c.redBright(`>> wsclients: ${JSON.stringify(arr, null, 2)}`));
+  }, 1000);
+
   wsserver.on('connection', function connection(client, request) {
     let host;
     try {
@@ -50,24 +67,7 @@ module.exports = () => {
 
     client.on('message', incoming);
     client.send('connected');
-
-    debunk && clearTimeout(debunk);
-    debunk = setTimeout(() => {
-      for (let host in wsclients) {
-        const {client} = wsclients[host];
-        if (client.readyState===3) {
-          delete wsclients[host];
-        }
-      }
-      wsserver.clients.forEach(function each(client) {
-        if (client.readyState===3) {
-          console.log('>> terminate', client._page);
-          client.terminate();
-        }
-      });
-      const arr = Object.keys(wsclients);
-      console.log(c.redBright(`>> wsclients: ${JSON.stringify(arr, null, 2)}`));
-    }, 1000);
+    delayTerminate();
   });  
 
   global.wsclients = wsclients;
