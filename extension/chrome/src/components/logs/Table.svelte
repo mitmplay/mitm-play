@@ -34,11 +34,18 @@ onMount(async () => {
 });
 
 window.mitm.files.log_events.LogsTable = function(obj) {
-  if (!window.mitm.files.log) {
+  ws__send('getLog', '', obj => {
+    console.log('ws__send(getLog)', obj);
+    const {log} = window.mitm.files;
+    if (log) {
+      obj = {
+        ...log,
+        ...obj,
+      } 
+    }
     window.mitm.files.log = obj
-  }
-  data = obj;
-  console.log('broadcast', obj);
+    data = obj;
+  })
 }
 
 </script>

@@ -2,7 +2,7 @@ const c = require('ansi-colors');
 const chokidar = require('chokidar');
 const broadcast = require('./broadcast');
 
-const showFiles = broadcast('_fileCache', 'cache');
+const showFiles = broadcast('cache');
 
 function addCache(path) {
   const {win32,files:{cache}} = global.mitm;

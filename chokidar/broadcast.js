@@ -1,14 +1,9 @@
-module.exports = function(msgId, typ) {
+module.exports = function(typ) {
   return global._debounce(function() {
-    let data = {};
-    global.mitm.files[typ].forEach(element => {
-      const [path, title] = element.split('@');
-      data[element] = {
-        title,
-        path,
-      }
-    })    
-    data = `${msgId}${JSON.stringify({typ, data})}`
-    global.broadcast({data});
-  }, 1000);    
+    const serial = JSON.stringify({
+      data:true,
+      typ, 
+    });
+    global.broadcast({data: `_files${serial}`});
+  }, 1000, typ);
 }

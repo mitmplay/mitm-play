@@ -2,7 +2,7 @@ const c = require('ansi-colors');
 const chokidar = require('chokidar');
 const broadcast = require('./broadcast');
 
-const showFiles = broadcast('_fileLogs', 'log');
+const showFiles = broadcast('log');
 
 function addLog(path) {
   const {win32,files:{log}} = global.mitm;
