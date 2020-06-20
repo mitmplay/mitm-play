@@ -32,7 +32,6 @@ module.exports = () => {
       }
     } catch (error) {
       console.log(c.redBright('>> Error init Socket'), error)
-      // debugger;
     }
     const page = request.url.match(/page=(\w+)/)[1];
     client._page = `${host}:${page}`;

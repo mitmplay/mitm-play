@@ -1,19 +1,19 @@
 const c = require('ansi-colors');
 const fg = require('fast-glob');
 const chokidar = require('chokidar');
-const broadcast = require('./broadcast');
+const _broadcast = require('./broadcast');
 
-const showFiles = global._debounce(broadcast('route'), 1000, 'route');
-
-function updateJS(path, msg) {
-  global.mitm.fn.loadJS(path, msg);
-  showFiles();
-}
+const broadcast = _broadcast('route');
 
 module.exports = () => {
   const {userroute} = global.mitm.path;
   const files = fg.sync([userroute]);
+  const {loadJS} = global.mitm.fn;
 
+  function updateJS(path, msg) {
+    loadJS(path, msg, broadcast);
+  }
+  
   if (!files.length) {
     console.log('>> no watcher', userroute, files);
     return;

@@ -8,7 +8,7 @@ const load = function(path) {
   return require(path);
 }
 
-const resort = global._debounce(function() {
+const resort = global._debounce(function(fn) {
   let keys = Object.keys(global.mitm.routes);
   keys = keys.sort(function(a, b) {
     return b.length - a.length || // sort by length, if equal then
@@ -21,12 +21,13 @@ const resort = global._debounce(function() {
   console.log(c.red('(*reset routes*)'));
   global.mitm.routes = routes;
   global.mitm.fn.clear();
+  fn && fn();
 }, 900, 'clear');
 
-const loadJS = function(path, log) {
+const loadJS = function(path, log, fn) {
   log && console.log(log);
   load(path);
-  resort();
+  resort(fn);
 }
 
 module.exports = loadJS;

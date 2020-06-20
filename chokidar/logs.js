@@ -12,13 +12,10 @@ function addLog(path) {
 }
 
 function delLog(path) {
-  if (global.mitm.win32) {
-    path = path.replace(/\\/g, '/');
-  }
-  const idx = global.mitm.files.log.indexOf(path);
-  if (idx>-1) {
-    delete global.mitm.files.log[idx];
-  }
+  const {win32,files:{log}} = global.mitm;
+  win32 && (path = path.replace(/\\/g, '/'));
+  const idx = log.indexOf(path);
+  idx>-1 && delete log[idx];
   showFiles();
 }
 
