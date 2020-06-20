@@ -22,16 +22,6 @@ module.exports = () => {
     res.send('Hi Mitm-play!')
   })
 
-  // const delayTerminate = global._debounce(function() {
-  //   console.log('(*wsterminate*)')
-  //   wsserver.clients.forEach(function each(client) {
-  //     if (client.readyState===3) {
-  //       console.log('>> terminate', client._page);
-  //       client.terminate();
-  //     }
-  //   });
-  // }, 1009, 'wsterminate');
-
   wsserver.on('connection', function connection(client, request) {
     let host;
     try {
@@ -58,7 +48,6 @@ module.exports = () => {
 
     client.on('message', incoming);
     client.send('connected');
-    // delayTerminate();
   });
   global.wsserver = wsserver;
 }
