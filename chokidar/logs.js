@@ -29,6 +29,7 @@ module.exports = () => {
   // Initialize watcher.
   console.log(c.magentaBright(`log watcher:`),glob);
   const watcher = chokidar.watch(glob, {
+    ignored: /\/\$\//, // ignore /$/
     persistent: true
   });
 

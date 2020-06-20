@@ -59,7 +59,7 @@ module.exports = () => {
   console.log(c.greenBright(JSON.stringify(global.mitm.argv, null, 2)));
   console.log(c.green(`\nv${_package.version}\n`));
   urouteWatch();
-  cacheWatch();
+  // cacheWatch();
   logsWatch();
 }
 //mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -dpsr='.'

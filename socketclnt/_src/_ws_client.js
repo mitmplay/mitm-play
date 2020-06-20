@@ -24,11 +24,31 @@ module.exports = () => {
     },
     //ex: ws__
     _fileCache({typ, data}) {
+      const {files} = window.mitm;
+      if (files[typ]) {
+        data = {
+          ...files[typ],
+          ...data,
+        }
+      }
+      for (let key in files[`${typ}_events`]) {
+        files[`${typ}_events`][key](data);
+      }
       window.mitm.files[typ] = data;
       console.log('cache');
     },    
     //ex: ws__
     _fileLogs({typ, data}) {
+      const {files} = window.mitm;
+      if (files[typ]) {
+        data = {
+          ...files[typ],
+          ...data,
+        }
+      }
+      for (let key in files[`${typ}_events`]) {
+        files[`${typ}_events`][key](data);
+      }
       window.mitm.files[typ] = data;
       console.log('logs');
     },    

@@ -1,11 +1,13 @@
 const c = require('ansi-colors');
 const _global = require('./global');
 const _client = require('./client');
+const $getLog = require('./_getLog');
 
 // accessible from client
 const wscmd = {
   ..._global(),
   ..._client(),
+  $getLog,
 }
 global.mitm.wscmd = wscmd;
 

@@ -11,7 +11,8 @@ module.exports = () => {
   const server = http.createServer(app);
   const wsserver = new WebSocket.Server({ server, path: "/ws" });
   server.listen(3000);
-
+  
+  app.use(express.static(global.mitm.home));
   app.get('/mitm-play/websocket.js', (r, res) => {
     const _body = global.mitm.fn.wsclient();
     res.type('.js');

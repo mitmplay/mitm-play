@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            ///home/wharsojo/Projects/
+            "cwd": "${workspaceFolder}/..",
             "program": "${workspaceFolder}/mitm-play.js",
             // "args": [
             //     "vis",
