@@ -2,7 +2,7 @@ const c = require('ansi-colors');
 const chokidar = require('chokidar');
 const broadcast = require('./broadcast');
 
-const showFiles = broadcast('log');
+const showFiles = global._debounce(broadcast('log'), 1001, 'log');
 
 function addLog(path) {
   const {win32,files:{log}} = global.mitm;
@@ -28,12 +28,13 @@ module.exports = () => {
 
   // Initialize watcher.
   console.log(c.magentaBright(`log watcher:`),glob);
-  const watcher = chokidar.watch(glob, {
+  const logWatcher = chokidar.watch(glob, {
     ignored: /\/\$\//, // ignore /$/
     persistent: true
   });
 
-  watcher // Add event listeners.
+  logWatcher // Add event listeners.
   .on('add',    path => addLog(path))
-  .on('unlink', path => delLog(path));  
+  .on('unlink', path => delLog(path));
+  global.mitm.watcher.logWatcher = logWatcher;
 }

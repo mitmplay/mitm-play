@@ -189,6 +189,7 @@ var _ws_observer = () => {
 
   let fname;
   const callback = _ws_debounce(function() {
+    console.log('(*terminate ws*)')
     for (let id in nodes) {
       const el = document.querySelectorAll(id);
       if (el.length) {

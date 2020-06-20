@@ -18,10 +18,10 @@ const resort = global._debounce(function() {
   for (let key of keys) {
     routes[key] = global.mitm.routes[key];
   }
-  console.log(c.red('>> Reset routes'));
+  console.log(c.red('(*reset routes*)'));
   global.mitm.routes = routes;
   global.mitm.fn.clear();
-});
+}, 900, 'clear');
 
 const loadJS = function(path, log) {
   log && console.log(log);

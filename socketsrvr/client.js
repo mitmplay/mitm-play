@@ -79,12 +79,13 @@ On browser console type "ws"`;
   async function _screenshot({path, browser}) {
     const err = await global.mitm.fn.fs.ensureFile(path);
     if (err) {
-      console.log(c.redBright('>> Error saving screenshot'), path)
+      console.log(c.redBright('(*rrror saving screenshot*)'), path)
     } else {
       try {
+        console.log(c.green('(*screenshot*)'));
         await global.mitm.pages[browser].screenshot({path});
       } catch (error) {
-        console.log(c.redBright('>> Error screenshot'), error);
+        console.log(c.redBright('(*rrror screenshot*)'), error);
         // debugger
       }
     }
@@ -119,7 +120,7 @@ On browser console type "ws"`;
       path = `${root}/${session}/${stamp}--${at}@${host}--${fname}.png`;
     }
     _screenshot({path, browser});
-  });
+  }, 500, 'screenshot');
 
   function $screenshot({data}) {
     _stamp.push((new Date).toISOString().replace(/[:-]/g, ''));

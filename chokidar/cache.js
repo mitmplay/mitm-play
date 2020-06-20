@@ -2,7 +2,7 @@ const c = require('ansi-colors');
 const chokidar = require('chokidar');
 const broadcast = require('./broadcast');
 
-const showFiles = broadcast('cache');
+const showFiles = global._debounce(broadcast('cache'), 1002, 'cache');
 
 function addCache(path) {
   const {win32,files:{cache}} = global.mitm;
@@ -28,12 +28,13 @@ module.exports = () => {
 
   // Initialize watcher.
   console.log(c.magentaBright(`cache watcher:`),glob);
-  const watcher = chokidar.watch(glob, {
+  const cacheWatcher = chokidar.watch(glob, {
     ignored: /\/\$\//, // ignore /$/
     persistent: true
   });
 
-  watcher // Add event listeners.
+  cacheWatcher // Add event listeners.
   .on('add',    path => addCache(path))
-  .on('unlink', path => delCahe(path));  
+  .on('unlink', path => delCahe(path));
+  global.mitm.watcher.cacheWatcher = cacheWatcher;
 }

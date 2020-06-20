@@ -11,6 +11,7 @@ module.exports = function () {
     files: {
       log_events: {},
       cache_events: {},
+      route_events: {},
     }
   };
   _g = JSON.stringify(_g, null, 2);

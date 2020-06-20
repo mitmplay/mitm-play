@@ -30,6 +30,7 @@ global.mitm = {
     app: global.__app,
   },
   home: `${home}/.mitm-play`,
+  watcher: {},
   port: 3000,
   files: {
     cache: [],
@@ -58,8 +59,11 @@ module.exports = () => {
 
   console.log(c.greenBright(JSON.stringify(global.mitm.argv, null, 2)));
   console.log(c.green(`\nv${_package.version}\n`));
-  urouteWatch();
-  // cacheWatch();
+
+  cacheWatch();
   logsWatch();
+
+  //must be last or other watcher wont work
+  urouteWatch(); 
 }
 //mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -dpsr='.'
