@@ -1,5 +1,4 @@
 log
-*.png
 *.tgz
 cache
 coverage

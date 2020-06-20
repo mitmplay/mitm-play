@@ -34,13 +34,16 @@ module.exports = () => {
       
       if (browserName==='chromium') {
         options.excludeSwitches = ['enable-automation'];
+        let path = `${process.cwd()}/`;
         if (argv.plugins) {
-          let path = `${process.cwd()}/`;
           path += argv.plugins.replace(/,/g, path);
+          path += `,${global.__app}/extension/chrome`;
           console.log('PATH EXT', path);
-          args.push(`--disable-extensions-except=${path}`);
-          args.push( `--load-extension=${path}`);
+        } else {
+          path = `${global.__app}/extension/chrome`;
         }
+        args.push(`--disable-extensions-except=${path}`);
+        args.push( `--load-extension=${path}`);
         if (argv.proxypac) {
           args.push(`--proxy-pac-url=${argv.proxypac}`);
         }

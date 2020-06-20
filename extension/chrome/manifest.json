@@ -1,0 +1,26 @@
+{
+	"manifest_version": 2,
+	"name": "mitm-play",
+	"author": "Widi Harsojo",
+	"version": "0.1.0",
+	"description": "Man in the middle using playwright",
+	"icons": {
+		"16": "images/icon-16.png",
+		"32": "images/icon-32.png",
+		"48": "images/icon-48.png"
+	},
+	"devtools_page": "devtools.html",
+	"background": {
+		"scripts": ["js/background.js"]
+	},
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
+	},
+	"content_security_policy": "script-src 'self' http://localhost:*; object-src 'self'",
+	"permissions": [
+    "storage",
+		"http://*/*",
+		"https://*/*"
+	]	
+}
