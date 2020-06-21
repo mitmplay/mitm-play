@@ -31,10 +31,6 @@ function clickHandler(e) {
     path: obj.path,
   });
 }
-
-function active() {
-  return $source.path===item.path ? 'active' : '';
-}
 </script>
 
 <tr class="tr">

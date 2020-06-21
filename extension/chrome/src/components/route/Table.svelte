@@ -36,13 +36,24 @@ onMount(async () => {
 window.mitm.files.route_events.routeTable = () => {
   ws__send('getRoute', '', routeHandler);
 }
+
+function btnSave(e) {
+  source.update(n => {
+    return {...n, content: window.editor.getValue()}
+  })
+  console.log($source);
+
+  ws__send('saveRoute', $source, data => {
+    console.log('Done Save!');
+  });
+}
 </script>
 
 <div class="file-path">
 {$source.path}
 {#if $source.path}
 	<div class="btn-container">
-  <button class="btn-save">Save</button>
+  <button class="btn-save"  on:click="{btnSave}">Save</button>
   </div>
 {/if}
 </div>
