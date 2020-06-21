@@ -4,9 +4,14 @@ import Item from './Item.svelte';
 import Show from './Show.svelte';
 import { source } from './stores.js';
 
-let rerender = 0;
 let data =  [];
 $: _data = data;
+
+onMount(async () => {
+  setTimeout(() => {
+    ws__send('getLog', '', logHandler)
+  }, 10);
+});
 
 const logHandler = obj => {
   console.log('ws__send(getLog)', obj);
@@ -24,17 +29,11 @@ const logHandler = obj => {
   }
   rerender++;
 }
-
-onMount(async () => {
-  setTimeout(() => {
-    ws__send('getLog', '', logHandler)
-  }, 10);
-});
-
 window.mitm.files.log_events.LogsTable = () => {
   ws__send('getLog', '', logHandler)
 }
 </script>
+
 <div class="vbox">
   <div class="vbox left">
     <table>
@@ -43,7 +42,7 @@ window.mitm.files.log_events.LogsTable = () => {
       </tr>
     </table>
     <div class="table-container">
-      <table id="uniq-{rerender}">
+      <table>
         {#each Object.keys(_data) as item}
         <Item item={{element: item, ..._data[item]}}/>
         {/each}
@@ -52,7 +51,7 @@ window.mitm.files.log_events.LogsTable = () => {
   </div>
   {#if $source.element}
     <div class="vbox right">
-      <Show item={$source.element}/>
+      <Show/>
     </div>
   {/if}
 </div>
