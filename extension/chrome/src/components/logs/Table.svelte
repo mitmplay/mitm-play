@@ -1,3 +1,46 @@
+<script>
+import { onMount } from 'svelte';
+import Item from './Item.svelte';
+let rerender = 0;
+let data =  [];
+$: _data = data;
+
+const logHandler = obj => {
+  console.log('ws__send(getLog)', obj);
+  const {log} = window.mitm.files;
+  const newLog = {};
+  for (let k in obj) {
+    newLog[k] = log[k] ? log[k] : obj[k]; 
+  }
+  window.mitm.files.log = newLog
+  data = newLog;
+  rerender++;
+}
+
+onMount(async () => {
+  setTimeout(() => {
+    ws__send('getLog', '', logHandler)
+  }, 10);
+});
+
+window.mitm.files.log_events.LogsTable = () => {
+  ws__send('getLog', '', logHandler)
+}
+</script>
+
+<table>
+  <tr>
+    <td>-Network-</td>
+  </tr>
+</table>
+<div class="table-container">
+<table id="uniq-{rerender}">
+  {#each Object.keys(_data) as item}
+  <Item item={{element: item, ..._data[item]}}/>
+  {/each}
+</table>
+</div>
+
 <style>
 .table-container {
   overflow: auto;
@@ -14,51 +57,3 @@ td {
   padding: 0.1rem;
 }
 </style>
-<script>
-import { onMount } from 'svelte';
-import Item from './Item.svelte';
-
-let data =  [];
-$: _data = data;
-
-onMount(async () => {
-  setTimeout(() => {
-    ws__send('getLog', '', obj => {
-      console.log('ws__send(getLog)', obj);
-      if (!window.mitm.files.log) {
-        window.mitm.files.log = obj
-      }
-      data = obj;
-    })
-  }, 10);
-});
-
-window.mitm.files.log_events.LogsTable = function(obj) {
-  ws__send('getLog', '', obj => {
-    console.log('ws__send(getLog)', obj);
-    const {log} = window.mitm.files;
-    if (log) {
-      obj = {
-        ...log,
-        ...obj,
-      } 
-    }
-    window.mitm.files.log = obj
-    data = obj;
-  })
-}
-
-</script>
-<table>
-  <tr>
-    <td>-Network-</td>
-  </tr>
-</table>
-<div class="table-container">
-<table>
-  {#each Object.keys(_data) as item}
-  <Item item={{element: item, ..._data[item]}}/>
-  {/each}
-
-</table>
-</div>

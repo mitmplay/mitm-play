@@ -4,7 +4,9 @@ module.exports = function(typ) {
       data:true,
       typ, 
     });
-    console.log(`(*boardcast ${typ}*)`)
+    if (global.mitm.argv.debug) {
+      console.log(`(*broadcast ${typ}*)`)
+    }
     global.broadcast({data: `_files${serial}`});
   }
 }

@@ -15,7 +15,7 @@ function delLog(path) {
   const {win32,files:{log}} = global.mitm;
   win32 && (path = path.replace(/\\/g, '/'));
   const idx = log.indexOf(path);
-  idx>-1 && delete log[idx];
+  (idx>-1) && log.splice(idx,1);
   showFiles();
 }
 

@@ -11,14 +11,11 @@ function addCache(path) {
   showFiles();
 }
 
-function delCahe(path) {
-  if (global.mitm.win32) {
-    path = path.replace(/\\/g, '/');
-  }
-  const idx = global.mitm.files.cache.indexOf(path);
-  if (idx>-1) {
-    delete global.mitm.files.cache[idx];
-  }
+function delCache(path) {
+  const {win32,files:{cache}} = global.mitm;
+  win32 && (path = path.replace(/\\/g, '/'));
+  const idx = cache.indexOf(path);
+  (idx>-1) && cache.splice(idx,1);
   showFiles();
 }
 
@@ -35,6 +32,6 @@ module.exports = () => {
 
   cacheWatcher // Add event listeners.
   .on('add',    path => addCache(path))
-  .on('unlink', path => delCahe(path));
+  .on('unlink', path => delCache(path));
   global.mitm.watcher.cacheWatcher = cacheWatcher;
 }
