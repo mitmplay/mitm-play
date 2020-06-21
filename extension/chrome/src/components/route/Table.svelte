@@ -1,8 +1,10 @@
 <script>
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
+
+let data = [];
 let rerender = 0;
-let data =  [];
+
 $: _data = data;
 
 const routeHandler = obj => {
@@ -14,7 +16,8 @@ const routeHandler = obj => {
     const {route} = window.mitm.files;
     const newRoute = {};
     for (let k in obj) {
-      newRoute[k] = route[k] ? route[k] : obj[k]; 
+      newRoute[k] = route[k] ? route[k] : obj[k];
+      newRoute[k].content = obj[k].content;
     }
     window.mitm.files.route = newRoute
     data = newRoute;

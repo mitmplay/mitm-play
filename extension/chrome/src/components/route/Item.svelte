@@ -11,15 +11,26 @@ function clickHandler(e) {
     obj.show = !obj.show;
     show = obj.show;
   }
+  if (show) {
+    setTimeout(() => {
+      const editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
+        lineNumbers: true,
+        mode: "javascript",
+        matchBrackets: true
+      });
+    }, 1)
+  }
 }
 </script>
 
 <tr class="tr">
   <td>
-    <div class="td-item {show}" data-item={item.element} on:click="{clickHandler}">{item.title}</div>
+    <div class="td-item {show}" data-item={item.element} on:click="{clickHandler}">
+    {item.title} - {item.path}</div>
     {#if show}
     <div>
-      <pre>{item.content}</pre>
+      <textarea id="demotext">{item.content}</textarea>
+      <!-- <pre>{item.content}</pre> -->
     </div>
     {/if}
   </td>

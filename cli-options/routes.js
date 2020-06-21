@@ -9,6 +9,7 @@ module.exports = () => {
     },
   }
   global.mitm.__mock = mock;
+  global.mitm.source = {};
   global.mitm.routes = {
     default: {mock}
   };

@@ -25,9 +25,24 @@ const resort = global._debounce(function(fn) {
 }, 900, 'clear');
 
 const loadJS = function(path, log, fn) {
+  const {fs,routeSet} = global.mitm.fn;
   log && console.log(log);
-  load(path);
-  resort(fn);
+  try {
+    const domain = path.match(/([\w.]+)[\\/]([\w.]+)$/)[1];
+    const route = {path, ...load(path)};
+    routeSet(route, domain, true);
+    fs.readFile(path, "utf8", function(err, data) {
+      if (err) {
+        console.log(c.redBright('Error read source file'), err);
+      } else {
+        global.mitm.source[domain] = data;
+      }
+    });
+    resort(fn);      
+  } catch (error) {
+    console.log(c.redBright('Failed load route'), error);
+    process.exit(1);
+  }
 }
-
+loadJS.load = load;
 module.exports = loadJS;
