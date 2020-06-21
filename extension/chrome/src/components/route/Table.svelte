@@ -1,4 +1,5 @@
 <script>
+import { source } from './stores.js';
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
 
@@ -29,27 +30,68 @@ onMount(async () => {
   setTimeout(() => {
     ws__send('getRoute', '', routeHandler)
   }, 10);
+
 });
 
 window.mitm.files.route_events.routeTable = () => {
-  ws__send('getRoute', '', routeHandler)
+  ws__send('getRoute', '', routeHandler);
 }
 </script>
 
-<table>
+<div class="file-path">
+{$source.path}
+{#if $source.path}
+	<div class="btn-container">
+  <button class="btn-save">Save</button>
+  </div>
+{/if}
+</div>
+<table class="main-table">
   <tr>
-    <td>-Code-</td>
+    <td class="main-td1">
+      <table class="table-title"><tr><td>-Route(s)-</td></tr></table>
+      <div class="table-container">
+      <table id="uniq-{rerender}">
+        {#each Object.keys(_data) as item}
+        <Item item={{element: item, ..._data[item]}}/>
+        {/each}
+      </table>
+      </div>
+    </td>
+    <td>
+    <div id="code-mirror">
+      <textarea id="demotext">{$source.content}</textarea>
+    </div>
+    </td>
   </tr>
 </table>
-<div class="table-container">
-<table id="uniq-{rerender}">
-  {#each Object.keys(_data) as item}
-  <Item item={{element: item, ..._data[item]}}/>
-  {/each}
-</table>
-</div>
 
 <style>
+.file-path {
+  font-family: auto;
+  font-size: 0.9em;
+  color: blue;
+}
+.btn-container {
+  float: right;
+  padding-right: 4px;
+}
+.main-table {
+  width: 100%
+}
+.main-td1 {
+  width: 145px;
+}
+#code-mirror {
+  height: calc(100vh - 61px);
+  width: calc(100vw - 163px);
+  overflow: auto;
+}
+.table-title {
+  width: 100%;
+  font-weight: bold;
+  background-color: bisque;
+}
 .table-container {
   overflow: auto;
   height: calc(100vh - 96px);
@@ -58,7 +100,7 @@ table {
   border-collapse: collapse;
   font-family:  Consolas, Lucida Console, Courier New, monospace;
   font-size: 12px;
-  width: 100%;
+  /* width: 100%; */
 }
 td {
   border: 1px solid #999;

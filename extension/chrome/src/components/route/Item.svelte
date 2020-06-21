@@ -1,38 +1,48 @@
 <script>
+import { source } from './stores.js';
+import { onMount } from 'svelte';
+
 export let item;
 
-let show = false;
+function setupCodeMiror() {
+  if (!window.editor) {
+    window.editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
+      lineNumbers: true,
+      mode: "javascript",
+      matchBrackets: true
+    });
+  }
+}
+
+onMount(async () => setupCodeMiror())
 
 function clickHandler(e) {
   let {item} = e.target.dataset;
   const obj = window.mitm.files.route[item];
   console.log(item, obj);
-  if (obj) {
-    obj.show = !obj.show;
-    show = obj.show;
+  if (window.editor) {
+    const nodes = document.querySelectorAll('.CodeMirror');
+    nodes.forEach(element => element.remove());
+    window.editor = undefined;
   }
-  if (show) {
-    setTimeout(() => {
-      const editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
-        lineNumbers: true,
-        mode: "javascript",
-        matchBrackets: true
-      });
-    }, 1)
-  }
+  setTimeout(() => setupCodeMiror(), 100)
+  source.set({
+    content: obj.content,
+    path: obj.path,
+  });
+}
+
+function active() {
+  return $source.path===item.path ? 'active' : '';
 }
 </script>
 
 <tr class="tr">
   <td>
-    <div class="td-item {show}" data-item={item.element} on:click="{clickHandler}">
-    {item.title} - {item.path}</div>
-    {#if show}
-    <div>
-      <textarea id="demotext">{item.content}</textarea>
-      <!-- <pre>{item.content}</pre> -->
-    </div>
-    {/if}
+    <div class="td-item {$source.path===item.path}"
+      data-item={item.element}
+      on:click="{clickHandler}"
+    >{item.title}</div>
   </td>
 </tr>
 
@@ -47,6 +57,11 @@ td {
 .td-show {
   cursor: pointer;
   padding: 0.1rem;
+}
+.td-item.true {
+  color: blue;
+  font-weight: bolder;
+  background: aliceblue;
 }
 iframe {
   width: 100%;
