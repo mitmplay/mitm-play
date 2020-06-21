@@ -1,3 +1,38 @@
+<script>
+import { source } from './stores.js';
+export let item;
+
+function clickHandler(e) {
+  const {item} = e.target.dataset;
+  const obj = window.mitm.files.log[item];
+  console.log(item, obj);
+  if (item===$source.element) {
+    source.set({
+      element: '',
+      title: '',
+      path: '',
+      url: '',
+    })
+  } else {
+    source.set({
+      element: item,
+      title: obj.title,
+      path: obj.path,
+      url: item.replace(/^.+\.mitm-play/,'http://localhost:3000'),
+    })
+  }
+}
+</script>
+
+<tr class="tr">
+  <td>
+    <div class="td-item {$source.element===item.element}"
+    data-item={item.element}
+    on:click="{clickHandler}"
+    >{item.title}</div>
+  </td>
+</tr>
+
 <style>
 .td-item:hover {
   background: greenyellow;
@@ -10,45 +45,13 @@ td {
   cursor: pointer;
   padding: 0.1rem;
 }
+.td-item.true {
+  color: blue;
+  font-weight: bolder;
+  background: aliceblue;
+}
 iframe {
   width: 100%;
   height: calc(100vh - 133px);
 }
 </style>
-
-<script>
-//import { show } from './stores.js';
-export let item;
-
-let show = false;
-
-function clickHandler(e) {
-  let {item} = e.target.dataset;
-  const obj = window.mitm.files.log[item];
-  console.log(item, obj);
-  if (obj) {
-    obj.show = !obj.show;
-    show = obj.show;
-  }
-}
-</script>
-
-<tr class="tr">
-  <td>
-    <div class="td-item {show}" data-item={item.element} on:click="{clickHandler}">{item.title}</div>
-    {#if show}
-    <div>
-    {#if item.title.match('.png')}
-      <img src="{item.element.replace(/^.+\.mitm-play/,'http://localhost:3000')}"
-       data-item={item.element} on:click="{clickHandler}"
-       class="td-show"
-       alt="image"/>
-    {:else if item.title.match('.json')}
-      <iframe title="json" src="{item.element.replace(/^.+\.mitm-play/,'http://localhost:3000')}" frameborder="0"></iframe>
-    {:else}
-      <button>X</button>
-    {/if}
-    </div>
-    {/if}
-  </td>
-</tr>

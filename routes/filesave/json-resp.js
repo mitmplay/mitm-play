@@ -18,6 +18,14 @@ module.exports = ({reqs, resp, match}) => {
           _resp.headers && (respHeader = _resp.headers);
         }
       }
+      if (reqsHeader.cookie) {
+        const cookieObj = {};
+        reqsHeader.cookie.split('; ').sort().forEach(element => {
+          const [k,v] = element.split('=');
+          cookieObj[k]= v;
+        });
+        reqsHeader.cookie = cookieObj;
+      }
       const urlParams = {};
       const urlSearch = new URLSearchParams(url);
       for (const [key, value] of urlSearch) {
@@ -32,6 +40,7 @@ module.exports = ({reqs, resp, match}) => {
           respBody = JSON.parse(`${respBody}`);
         }
         if (reqsBody) { 
+          const raw = reqsBody;
           if (reqsBody.match(xjson)) {
             reqsBody = JSON.parse(`${reqsBody}`);
           } else if (reqsBody.match(/[\n ]*(\w+=).+(&)/)) {
@@ -44,7 +53,7 @@ module.exports = ({reqs, resp, match}) => {
                 urlParams[key] = value;
               }
             }
-            reqsBody = {'*form*':urlParams};      
+            reqsBody = {'*form*':urlParams, raw};      
           }
         }
       } catch (error2) {

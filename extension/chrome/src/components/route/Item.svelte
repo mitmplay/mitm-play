@@ -21,7 +21,7 @@ function clickHandler(e) {
   const obj = window.mitm.files.route[item];
   console.log(item, obj);
   if (window.editor) {
-    const nodes = document.querySelectorAll('.CodeMirror');
+    const nodes = document.querySelectorAll('#code-mirror .CodeMirror');
     nodes.forEach(element => element.remove());
     window.editor = undefined;
   }
