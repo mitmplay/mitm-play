@@ -6,7 +6,7 @@ const cliCmd = require('./cli-cmd');
 const routes = require('./routes');
 const helper = require('./helper');
 const logsWatch = require('../chokidar/logs');
-const cacheWatch = require('../chokidar/cache');
+//const cacheWatch = require('../chokidar/cache');
 const urouteWatch = require('../chokidar/uroute');
 
 let home;
@@ -60,7 +60,7 @@ module.exports = () => {
   console.log(c.greenBright(JSON.stringify(global.mitm.argv, null, 2)));
   console.log(c.green(`\nv${_package.version}\n`));
 
-  cacheWatch();
+  // cacheWatch();
   logsWatch();
 
   //must be last or other watcher wont work

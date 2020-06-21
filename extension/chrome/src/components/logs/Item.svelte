@@ -35,7 +35,7 @@ function clickHandler(e) {
 
 <tr class="tr">
   <td>
-    <div class="td-item" data-item={item.element} on:click="{clickHandler}">{item.title}</div>
+    <div class="td-item {show}" data-item={item.element} on:click="{clickHandler}">{item.title}</div>
     {#if show}
     <div>
     {#if item.title.match('.png')}

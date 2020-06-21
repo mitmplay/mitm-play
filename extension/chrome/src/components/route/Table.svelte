@@ -5,37 +5,37 @@ let rerender = 0;
 let data =  [];
 $: _data = data;
 
-const logHandler = obj => {
-  console.log('ws__send(getLog)', obj);
-  if (window.mitm.files.log===undefined) {
-    window.mitm.files.log = obj;
+const routeHandler = obj => {
+  console.log('ws__send(getRoute)', obj);
+  if (window.mitm.files.route===undefined) {
+    window.mitm.files.route = obj;
     data = obj;
   } else {
-    const {log} = window.mitm.files;
-    const newLog = {};
+    const {route} = window.mitm.files;
+    const newRoute = {};
     for (let k in obj) {
-      newLog[k] = log[k] ? log[k] : obj[k]; 
+      newRoute[k] = route[k] ? route[k] : obj[k]; 
     }
-    window.mitm.files.log = newLog
-    data = newLog;
+    window.mitm.files.route = newRoute
+    data = newRoute;
   }
   rerender++;
 }
 
 onMount(async () => {
   setTimeout(() => {
-    ws__send('getLog', '', logHandler)
+    ws__send('getRoute', '', routeHandler)
   }, 10);
 });
 
-window.mitm.files.log_events.LogsTable = () => {
-  ws__send('getLog', '', logHandler)
+window.mitm.files.route_events.routeTable = () => {
+  ws__send('getRoute', '', routeHandler)
 }
 </script>
 
 <table>
   <tr>
-    <td>-Logs-</td>
+    <td>-Code-</td>
   </tr>
 </table>
 <div class="table-container">
