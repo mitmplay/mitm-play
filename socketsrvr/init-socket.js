@@ -1,6 +1,5 @@
 const express = require('express');
 const http = require('http');
-const fs = require('fs-extra');
 const WebSocket = require('ws');
 const c = require('ansi-colors');
 const msgParser = require('./msg-parser');

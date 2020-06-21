@@ -4,11 +4,13 @@ const _client = require('./client');
 const $getLog = require('./_getLog');
 const $getCache = require('./_getCache');
 const $getRoute = require('./_getRoute');
+const $saveRoute = require('./_saveRoute');
 
 // accessible from client
 const wscmd = {
   ..._global(),
   ..._client(),
+  $saveRoute,
   $getRoute,
   $getCache,
   $getLog,
