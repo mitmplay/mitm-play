@@ -52,7 +52,7 @@ window.mitm.files.log_events.LogsTable = () => {
   </div>
   {#if $source.element}
     <div class="vbox right">
-      <Show item={$source}/>
+      <Show item={$source.element}/>
     </div>
   {/if}
 </div>

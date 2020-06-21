@@ -1,5 +1,6 @@
 <script>
-export let item;
+export let element;
+import { source } from './stores.js';
 
 function setupCodeMiror() {
   if (!window.showcode) {
@@ -27,7 +28,7 @@ function codeMirror(code) {
 let promise = getSource();
 
 async function getSource() {
-  const res = await fetch(item.url);
+  const res = await fetch($source.url);
   const text = await res.text();
 
   if (res.ok) {
@@ -39,10 +40,10 @@ async function getSource() {
 </script>
 
 <div>
-  {#if item.title.match('.png')}
-    <img src="{item.url}" alt="image"/>
-  {:else if item.title.match('.json')}
-    <!-- <iframe title="json" src="{item.url}" frameborder="0"></iframe> -->
+  {#if $source.title.match('.png')}
+    <img src="{$source.url}" alt="image"/>
+  {:else if $source.title.match('.json')}
+    <!-- <iframe title="json" src="{$source.url}" frameborder="0"></iframe> -->
     {#await promise}
       <p>...waiting</p>
     {:then source}

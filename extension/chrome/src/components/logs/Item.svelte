@@ -2,24 +2,32 @@
 import { source } from './stores.js';
 export let item;
 
+function empty() {
+  source.set({
+    element: '',
+    title: '',
+    path: '',
+    url: '',
+  })
+}
+
 function clickHandler(e) {
   const {item} = e.target.dataset;
   const obj = window.mitm.files.log[item];
-  console.log(item, obj);
   if (item===$source.element) {
-    source.set({
-      element: '',
-      title: '',
-      path: '',
-      url: '',
-    })
+    empty();
   } else {
-    source.set({
-      element: item,
-      title: obj.title,
-      path: obj.path,
-      url: item.replace(/^.+\.mitm-play/,'http://localhost:3000'),
-    })
+    empty();
+    setTimeout(() => {
+      source.update(n => {
+        return {
+          element: item,
+          title: obj.title,
+          path: obj.path,
+          url: item.replace(/^.+\.mitm-play/,'http://localhost:3000'),
+        }
+      })
+    }, 1);
   }
 }
 </script>
