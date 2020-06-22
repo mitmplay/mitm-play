@@ -1,5 +1,3 @@
-const domain =  __dirname.split(/\\|\//).pop();
-
 const css = `
 .col-8.module.featuredStories,
 [data-component="medusaAsync"],
@@ -18,7 +16,7 @@ const css = `
   margin-top: 0 !important;
 }`;
 
-const routes = {
+const route = {
   title: 'Developer - zdnet',
   url: 'https://www.zdnet.com/topic/developer/',
   html: {
@@ -42,4 +40,4 @@ const routes = {
     'cbsistatic.com': `=>${css}`
   },
 }
-global.mitm.fn.routeSet(routes, domain, true)
+module.exports = route;

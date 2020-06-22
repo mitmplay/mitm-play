@@ -39,10 +39,9 @@ const googlJS = function() {
   document.querySelectorAll('.g-blk').forEach(n=>n.remove())
 };
 
-const domain =  __dirname.split(/\\|\//).pop();
 const {hello} = global.mitm.fn;
 
-const routes = {
+const route = {
   title: 'Search - google',
   url: 'https://google.com/search?q=github+playwright',
   html: {
@@ -53,7 +52,7 @@ const routes = {
   }, //all js request from gstatic.com 
   js: {'gstatic.com': ''} // will be empty response
 }
-global.mitm.fn.routeSet(routes, domain, true)
+module.exports = route;
 ```
 ```bash
 # run the demo:
