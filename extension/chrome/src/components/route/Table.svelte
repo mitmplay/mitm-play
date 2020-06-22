@@ -5,6 +5,7 @@ import Item from './Item.svelte';
 
 let data = [];
 let rerender = 0;
+let btnDisabled = true;
 
 $: _data = data;
 
@@ -47,13 +48,31 @@ function btnSave(e) {
     console.log('Done Save!');
   });
 }
+
+let editbuffer;
+let _timeout = null;
+function editorChanged(e) {
+  if (e===false) {
+    btnDisabled = true;
+    editbuffer = window.editor.getValue();
+  }
+  _timeout && clearTimeout(_timeout);
+  _timeout = setTimeout(() => {
+    if (window.editor){
+      btnDisabled = (window.editor.getValue()===editbuffer)
+      console.log(e);
+    }
+  }, 500)  
+}
 </script>
 
 <div class="file-path">
-{$source.path}
+Path:{$source.path}
 {#if $source.path}
 	<div class="btn-container">
-  <button class="btn-save"  on:click="{btnSave}">Save</button>
+  <button class="btn-save"
+  disabled={btnDisabled}
+  on:click="{btnSave}">Save</button>
   </div>
 {/if}
 </div>
@@ -64,7 +83,7 @@ function btnSave(e) {
       <div class="table-container">
       <table id="uniq-{rerender}">
         {#each Object.keys(_data) as item}
-        <Item item={{element: item, ..._data[item]}}/>
+        <Item item={{element: item, ..._data[item]}} onChanged={editorChanged}/>
         {/each}
       </table>
       </div>
@@ -86,6 +105,9 @@ function btnSave(e) {
 .btn-container {
   float: right;
   padding-right: 4px;
+}
+.btn-container button {
+  font-size: 10px;
 }
 .main-table {
   width: 100%

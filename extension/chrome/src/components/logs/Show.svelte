@@ -1,7 +1,7 @@
 <script>
 let sourceCode = '';
 
-import { source } from './storesp.js';
+import { source } from './stores.js';
 
 function setupCodeMiror() {
   if (!window.showcode) {
@@ -48,7 +48,7 @@ async function getSource() {
   {#if $source.title.match('.png')}
     <img src="{$source.url}" alt="image"/>
   {:else if $source.title.match('.json')}
-    <div id="show-code">
+    <div id="show-code" data-dummy={getSource()}>
       <textarea id="democode">{codeMirror(sourceCode)}</textarea>
     </div>
   {:else}

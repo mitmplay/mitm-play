@@ -27,7 +27,7 @@ function clickHandler(e) {
           url: item.replace(/^.+\.mitm-play/,'http://localhost:3000'),
         }
       })
-    }, 1);
+    }, 0);
   }
 }
 </script>
@@ -57,9 +57,5 @@ td {
   color: blue;
   font-weight: bolder;
   background: aliceblue;
-}
-iframe {
-  width: 100%;
-  height: calc(100vh - 133px);
 }
 </style>

@@ -3,6 +3,7 @@ import { source } from './stores.js';
 import { onMount } from 'svelte';
 
 export let item;
+export let onChanged;
 
 function setupCodeMiror() {
   if (!window.editor) {
@@ -11,6 +12,8 @@ function setupCodeMiror() {
       mode: "javascript",
       matchBrackets: true
     });
+    editor.on('changes', onChanged);
+    onChanged(false);
   }
 }
 
@@ -58,9 +61,5 @@ td {
   color: blue;
   font-weight: bolder;
   background: aliceblue;
-}
-iframe {
-  width: 100%;
-  height: calc(100vh - 133px);
 }
 </style>
