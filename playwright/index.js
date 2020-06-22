@@ -89,8 +89,15 @@ module.exports = () => {
           routes({route, request, bcontext, browserName});
         });
       }
-      await sleep(400);
-      await page.goto(argv.url)
+      if (browserName==='chromium' && argv.pristine===undefined) {
+        await page.goto('chrome://extensions/');
+        await page.click('#detailsButton');
+        await page.click('#crToggle');
+        await page.goto(argv.url);
+      } else {
+        await sleep(400);
+        await page.goto(argv.url); 
+      }
       page.on('close', () => {
         process.exit();
       });
