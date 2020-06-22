@@ -27,7 +27,6 @@ const logHandler = obj => {
     window.mitm.files.log = newLog
     data = newLog;
   }
-  rerender++;
 }
 window.mitm.files.log_events.LogsTable = () => {
   ws__send('getLog', '', logHandler)

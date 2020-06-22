@@ -9,12 +9,12 @@ module.exports = (_package) => {
     -h --help     \t show this help
     -u --url      \t go to specific url
     -g --group    \t create cache group/rec
-    -d --delete   \t clear/delete logs or cache
+    -d --delete   \t delete/clear cache & logs
+    -p --pristine \t pristine browser, default option
     -i --insecure \t set nodejs env to accept insecure cert
-    -p --pristine \t pristine browser, not recommended to use
     -n --nosocket \t no websocket injection to html page
-    -o --ommitlog \t ommitlog remove some console log
-    -v --verbose  \t show detail logs of console log
+    -o --ommitlog \t removed unnecessary console log
+    -v --verbose  \t show more detail of console log
     -l --logurl   \t test route to log url & headers
     -r --route    \t set userscript folder of routes
     -s --save     \t save as default <profl>
