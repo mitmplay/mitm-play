@@ -55,8 +55,9 @@ module.exports = () => {
   obj('browser','firefox');
   obj('browser','webkit');
 
-  if (Object.keys(global.mitm.argv.browser).length===0) {
-    global.mitm.argv.browser.chromium = true;
+  if (Object.keys(argv.browser).length===0) {
+    argv.browser.chromium = true;
+    argv.chromium = true;
   }
 
   let {ommitlog} = argv;
@@ -64,5 +65,13 @@ module.exports = () => {
     ommitlog.split(',').forEach(element => {
       argv.ommit[element] = true;
     });
+  }
+
+  if (argv.chromium) {
+    if (argv.incognito) {
+      argv.pristine && (delete argv.pristine)
+    } else if (argv.pristine===undefined) {
+      argv.pristine = true;
+    }
   }
 }
