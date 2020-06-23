@@ -29,13 +29,13 @@ const routeHandler = obj => {
 
 onMount(async () => {
   setTimeout(() => {
-    ws__send('getRoute', '', routeHandler)
+    window.ws__send('getRoute', '', routeHandler)
   }, 10);
 
 });
 
 window.mitm.files.route_events.routeTable = () => {
-  ws__send('getRoute', '', routeHandler);
+  window.ws__send('getRoute', '', routeHandler);
 }
 
 let editbuffer;

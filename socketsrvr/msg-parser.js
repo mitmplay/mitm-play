@@ -5,11 +5,13 @@ const $getLog = require('./_getLog');
 const $getCache = require('./_getCache');
 const $getRoute = require('./_getRoute');
 const $saveRoute = require('./_saveRoute');
+const $screencap = require('./_screencap');
 
 // accessible from client
 const wscmd = {
   ..._global(),
   ..._client(),
+  $screencap,
   $saveRoute,
   $getRoute,
   $getCache,

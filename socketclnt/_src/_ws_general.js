@@ -51,7 +51,7 @@ module.exports = () => {
   window.ws__send = (cmd, data, handler) => {
     const id = nanoid();
     const key = `${cmd}:${id}`;
-    window._ws_queue[key] = handler || (w => console.log(w));
+    window._ws_queue[key] = handler || (w => {});
 
     setTimeout(function() {
       if (window._ws_queue[key]) {

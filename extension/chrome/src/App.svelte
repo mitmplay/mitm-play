@@ -5,6 +5,8 @@
 import { Tabs, Tab, Button } from 'svelma';
 import LogsTable from './components/logs/Table.svelte';
 import RouteTable from './components/route/Table.svelte';
+import OtherTab from './components/other/Tab.svelte';
+
 // import CacheTable from './components/cache/Table.svelte';
 
 // let counter = 0;
@@ -14,6 +16,7 @@ import RouteTable from './components/route/Table.svelte';
 <Tabs style="is-boxed" size="is-small">
   <Tab label="Route"><RouteTable/></Tab>
   <Tab label="Logs"><LogsTable/></Tab>
+  <!-- <Tab label="Other"><OtherTab/></Tab> -->
 </Tabs>
 
 </main>

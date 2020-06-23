@@ -49,6 +49,7 @@ module.exports = () => {
   argsChg('r', 'route');
   argsChg('h', 'help');
   argsChg('s', 'save');
+  argsChg('z', 'lazy');
   argsChg('u', 'url');
 
   obj('browser','chromium');

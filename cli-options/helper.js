@@ -21,6 +21,7 @@ module.exports = (_package) => {
     -c --chromium \t run chromium browser
     -f --firefox  \t run firefox browser
     -w --webkit   \t run webkit browser
+    -z --lazy     \t delay ~400ms click action 
     --incognito   \t set chromium incognito
     --proxypac    \t set chromium proxypac
     --plugins     \t add chrome plugins

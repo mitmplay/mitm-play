@@ -25,7 +25,7 @@ module.exports = () => {
     //ex: ws__
     _files({typ, data}) {
       const {files} = window.mitm;
-      console.log(`receive brodcast ${typ}`);
+      // console.log(`receive brodcast ${typ}`);
       for (let key in files[`${typ}_events`]) {
         files[`${typ}_events`][key](data);
       }

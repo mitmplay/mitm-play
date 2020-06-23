@@ -76,7 +76,7 @@ On browser console type "ws"`;
     }
   }
 
-  async function _screenshot({path, browser}) {
+  async function _screenshot(data, {path, browser}) {
     const err = await global.mitm.fn.fs.ensureFile(path);
     if (err) {
       console.log(c.redBright('(*rrror saving screenshot*)'), path)
@@ -119,8 +119,8 @@ On browser console type "ws"`;
     } else {
       path = `${root}/${session}/${stamp}--${at}@${host}--${fname}.png`;
     }
-    _screenshot({path, browser});
-  }, 500, 'screenshot');
+    _screenshot(data, {path, browser});
+  }, 400, 'screenshot');
 
   function $screenshot({data}) {
     _stamp.push((new Date).toISOString().replace(/[:-]/g, ''));

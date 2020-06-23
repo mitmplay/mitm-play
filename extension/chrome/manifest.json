@@ -24,8 +24,9 @@
 	},
 	"content_security_policy": "script-src 'self' http://localhost:*; object-src 'self'",
 	"permissions": [
-    "storage",
-		"http://*/*",
-		"https://*/*"
+	"storage",
+	"<all_urls>",
+	"http://*/*",
+	"https://*/*"
 	]	
 }
