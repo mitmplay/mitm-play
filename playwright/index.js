@@ -34,13 +34,19 @@ module.exports = () => {
       
       if (browserName==='chromium') {
         options.excludeSwitches = ['enable-automation'];
+        const p = `${global.__app}/extension`;
         let path = `${process.cwd()}/`;
         if (argv.plugins) {
           path += argv.plugins.replace(/,/g, path);
-          path += `,${global.__app}/extension/chrome`;
-          console.log('PATH EXT', path);
+          path += `${p}/chrome`;
         } else {
-          path = `${global.__app}/extension/chrome`;
+          path = `${p}/chrome`;
+        }
+        if (argv.verbose) {
+          console.log('>> Plugins path', path.split(','));
+        }
+        if (argv.dummy) {
+          path += `,${p}/dummy`;
         }
         args.push(`--disable-extensions-except=${path}`);
         args.push( `--load-extension=${path}`);
