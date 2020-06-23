@@ -1,11 +1,11 @@
 <script>
 import { source } from './stores.js';
 import { onMount } from 'svelte';
+import Button from './Button.svelte';
 import Item from './Item.svelte';
 
 let data = [];
 let rerender = 0;
-let btnDisabled = true;
 
 $: _data = data;
 
@@ -38,44 +38,27 @@ window.mitm.files.route_events.routeTable = () => {
   ws__send('getRoute', '', routeHandler);
 }
 
-function btnSave(e) {
-  source.update(n => {
-    return {...n, content: window.editor.getValue()}
-  })
-  console.log($source);
-
-  ws__send('saveRoute', $source, data => {
-    console.log('Done Save!');
-  });
-}
-
 let editbuffer;
 let _timeout = null;
 function editorChanged(e) {
+  let saveDisabled;
   if (e===false) {
-    btnDisabled = true;
+    saveDisabled = true;
+    source.update(n => {return {...n, saveDisabled}})
     editbuffer = window.editor.getValue();
   }
   _timeout && clearTimeout(_timeout);
   _timeout = setTimeout(() => {
     if (window.editor){
-      btnDisabled = (window.editor.getValue()===editbuffer)
+      saveDisabled = (window.editor.getValue()===editbuffer)
+      source.update(n => {return {...n, saveDisabled}});
       console.log(e);
     }
   }, 500)  
 }
 </script>
 
-<div class="file-path">
-Path:{$source.path}
-{#if $source.path}
-	<div class="btn-container">
-  <button class="btn-save"
-  disabled={btnDisabled}
-  on:click="{btnSave}">Save</button>
-  </div>
-{/if}
-</div>
+<Button/>
 <table class="main-table">
   <tr>
     <td class="main-td1">
@@ -97,18 +80,6 @@ Path:{$source.path}
 </table>
 
 <style>
-.file-path {
-  font-family: auto;
-  font-size: 0.9em;
-  color: blue;
-}
-.btn-container {
-  float: right;
-  padding-right: 4px;
-}
-.btn-container button {
-  font-size: 10px;
-}
 .main-table {
   width: 100%
 }

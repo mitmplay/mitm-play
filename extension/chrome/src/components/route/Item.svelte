@@ -21,6 +21,7 @@ onMount(async () => setupCodeMiror())
 
 function clickHandler(e) {
   let {item} = e.target.dataset;
+  const url = mitm.routes[item].url;
   const obj = window.mitm.files.route[item];
   console.log(item, obj);
   if (window.editor) {
@@ -29,9 +30,14 @@ function clickHandler(e) {
     window.editor = undefined;
   }
   setTimeout(() => setupCodeMiror(), 100)
-  source.set({
-    content: obj.content,
-    path: obj.path,
+  source.update(n => {
+    return {
+      ...n,
+      goDisabled: (url===undefined),
+      content: obj.content,
+      path: obj.path,
+      item,
+    }
   });
 }
 </script>
