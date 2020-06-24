@@ -64,7 +64,7 @@ function editorChanged(e) {
     <td class="main-td1">
       <table class="table-title"><tr><td>-Route(s)-</td></tr></table>
       <div class="table-container">
-      <table id="uniq-{rerender}">
+      <table id="uniq-{rerender}" class="table-content">
         {#each Object.keys(_data) as item}
         <Item item={{element: item, ..._data[item]}} onChanged={editorChanged}/>
         {/each}
@@ -80,7 +80,8 @@ function editorChanged(e) {
 </table>
 
 <style>
-.main-table {
+.main-table,
+.table-content {
   width: 100%
 }
 .main-td1 {
