@@ -1,5 +1,6 @@
 const c = require('ansi-colors');
 const {extract, fetch} = require('./fetch');
+const _3rdparties    = require('./_3rdparties');
 const _jsResponse    = require('./_jsResponse');
 const _allResponse   = require('./_allResponse');
 const _chngRequest   = require('./_chngRequest');
@@ -29,6 +30,10 @@ module.exports =  ({route, browserName}) => {
     route.fulfill(_resp);
     return;
   }
+
+  if (_3rdparties(reqs)) {
+    return;
+  };
 
   let skip = _skipResponse(reqs);
   if (skip) {
