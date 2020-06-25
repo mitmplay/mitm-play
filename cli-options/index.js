@@ -21,6 +21,7 @@ if (platform==='win32') {
 }
 
 global.mitm = {
+  spliter: /([&?;,]|:\w|url)/,
   session: (new Date).toISOString().split('.')[0].replace(/[:-]/g,''),
   argv: yargs(process.argv.slice(2)),
   win32: platform==='win32',

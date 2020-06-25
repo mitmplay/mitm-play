@@ -32,6 +32,7 @@ module.exports =  ({route, browserName}) => {
   }
 
   if (_3rdparties(reqs)) {
+    route.continue({});
     return;
   };
 
