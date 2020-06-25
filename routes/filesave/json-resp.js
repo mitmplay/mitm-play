@@ -1,19 +1,7 @@
 const c = require('ansi-colors');
 const _ext = require('../filepath/ext');
-const xjson = /^[\n\t ]*({").+(})/;
-
-function searchParams(url) {
-  const urlParams = {};
-  const urlSearch = new URLSearchParams(url);
-  for (const [key, value] of urlSearch) {
-    if (value.match(xjson)) {
-      urlParams[key] = JSON.parse(`${value}`);
-    } else {
-      urlParams[key] = value;
-    }
-  }
-  return urlParams;
-}
+const searchParams = require('./search-params');
+const {xjson} = searchParams;
 
 module.exports = ({reqs, resp, match}) => {
   let _resp, respBody;
