@@ -11,7 +11,7 @@ Man in the middle using playwright
       * [URL &amp; Title](#url--title)
       * [Screenshot](#screenshot)
       * [Skip](#skip)
-      * [Exclude](#exclude-experimental)
+      * [Exclude](#exclude)
       * [Request](#request)
       * [Noproxy](#noproxy)
       * [Proxy](#proxy)
@@ -136,8 +136,9 @@ routes = {
 the execution order as documented start with `skip`, end with `js`, no need to implement all of routing rules. 
 
 ## URL & Title
-Url will be use as part of the cli first params with non dashes and try to match partion of text in **`url`** and continue to open the browser with that **`url`**.
-For the `Title`, it just provide basic information about this route.
+Url will be use as part of the CLI first params with non dashes. The logic is try to match partion of text in **`url`** and if it match, continue to open it in the browser.
+
+For `Title`, it just provide basic information about this route.
 ```js
 routes = {
   title: 'Amazon - amazon',
@@ -157,6 +158,7 @@ Caveat: `observer` is an *experimental feature*, take it as a grain salt, expect
 
 Caveat 2: this `Screenshot` rule(s), required successful injection of websocket client to html document, if it not success (error can be seen on chrome dev-tools),might be *content-security-policy* restriction. 
 
+Caveat 3: process screenshot sometime take times and for SPA, transition between page usually instantly and it lead to capturing next page, even if the trigger come from button in previouse page, there is a CLI option: -z/--lazy to delay click action for about ~400ms 
 ```js
 screenshot: {
   selector: '[type=button],[type=submit],button,a', //click event
@@ -181,8 +183,8 @@ Skipping back **`url`** to the browser if partion of **`url`** match text in arr
 skip: ['wp-admin'],
 ```
 
-## Exclude *(experimental)*
-Exclude match **`url`** rule in which having same *Origin/Referer* to the route namespace, and *`skip` don't have any restriction, plain and simple match and forget*.
+## Exclude
+Exclude match **`url`** rule in which having same *Origin/Referer* to the route namespace, `mitm-play` will not process further.
 ```js
 exclude: ['wp-admin'],
 ```
@@ -207,7 +209,7 @@ proxy:   ['.+'],
 ```
 
 ## Proxy
-Certain domain will request thru proxy
+Certain domain will go thru proxy
 ```js
 // HTTP_PROXY env need to be set, cli: --proxy ..
 proxy: [
@@ -412,9 +414,9 @@ mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system re
 If you think you have a nice routing want to share, you can create a PR to the [user-route](https://github.com/mitm-proxy/user-route) or add a `link` to your repo.  
 
 # Early Stage
-Expect to have some changes in code as feature/fix incrementally committed.
+Expect to have some `rule changed` as feature/fix code are incrementally committed.
 
 .
 
-Goodluck,
+Goodluck!,
 >*-wharsojo*.
