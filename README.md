@@ -13,8 +13,9 @@ Man in the middle using playwright
       * [Skip](#skip)
       * [Exclude](#exclude-experimental)
       * [Request](#request)
-      * [Mock](#mock)
+      * [Noproxy](#noproxy)
       * [Proxy](#proxy)
+      * [Mock](#mock)
       * [Cache](#cache)
       * [Log](#log)
       * [Html](#html)
@@ -120,8 +121,9 @@ routes = {
   skip:    [], //start routing rules
   exclude: [],
   request: {},
-  mock:    {}, 
+  noproxy: [], 
   proxy:   [], // request with proxy
+  mock:    {}, 
   cache:   {},
   log:     {},
   html:    {},
@@ -196,6 +198,22 @@ request: {
   }
 },
 ```
+## Noproxy
+if proxy config was set to all request/response, `noproxy` will exclude it from proxy. Example below will set domain nytimes.com with direct access and the rest will go thru proxy. 
+```js
+// HTTP_PROXY env need to be set, cli: --proxy .. --noproxy ..
+noproxy: ['nytimes.com'],
+proxy:   ['.+'],
+```
+
+## Proxy
+Certain domain will request thru proxy
+```js
+// HTTP_PROXY env need to be set, cli: --proxy ..
+proxy: [
+  'google-analytics.com',
+],
+```
 
 ## Mock
 Mocking the **response**.
@@ -230,15 +248,6 @@ mock: {
 },
 ```
 Please do not combine  `response` with `js`, `js` will add/replace content-type to  *'application/javascript'*.
-
-## Proxy
-Certain domain will request thru proxy
-```js
-// HTTP_PROXY env need to be set, cli: --proxy 
-proxy: [
-  'google-analytics.com',
-],
-```
 
 ## Cache
 Save the first request to your local disk so next request will serve from there.

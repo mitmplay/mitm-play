@@ -12,7 +12,7 @@ function hashCode(txt) {
 }
 
 function fileWithHash(file) {
-  const part1 = file.match(/[^;]+/)[0];
+  const part1 = file.match(/[^;]*/)[0];
   if (file!==part1) {
     const part2 = file.substr(part1.length);
     return `${part1}-${hashCode(part2)}`;

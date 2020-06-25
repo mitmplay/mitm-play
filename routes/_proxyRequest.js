@@ -1,9 +1,10 @@
 const {searchArr, matched} = require('./match');
-const typ = 'proxy';
 
 function proxyRequest(reqs) {
   const {url} = reqs;
-  return matched(searchArr({typ, url}), reqs);
+  const nopro = matched(searchArr({typ: 'noproxy', url}), reqs);
+  const proxy = matched(searchArr({typ: 'proxy', url}), reqs);
+  return nopro ? false : proxy;
 }
 
 module.exports = proxyRequest;
