@@ -34,8 +34,8 @@ function root(reqs, typ) {
 }
 
 function filename(match, sep='/') {
-  let {pathname, route: {querystring}} = match;
-  const arr = pathname.replace(/-/g, '_').split('/');
+  let {pathname: p, route: {querystring}} = match;
+  const arr = p.replace(/:[/]+/g,'-').replace(/-/g, '_').split('/');
   let file = arr.pop();
   if (file==='') {
     file = '_';

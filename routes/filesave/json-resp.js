@@ -1,5 +1,19 @@
 const c = require('ansi-colors');
 const _ext = require('../filepath/ext');
+const xjson = /^[\n\t ]*({").+(})/;
+
+function searchParams(url) {
+  const urlParams = {};
+  const urlSearch = new URLSearchParams(url);
+  for (const [key, value] of urlSearch) {
+    if (value.match(xjson)) {
+      urlParams[key] = JSON.parse(`${value}`);
+    } else {
+      urlParams[key] = value;
+    }
+  }
+  return urlParams;
+}
 
 module.exports = ({reqs, resp, match}) => {
   let _resp, respBody;
@@ -26,41 +40,19 @@ module.exports = ({reqs, resp, match}) => {
         });
         reqsHeader.cookie = cookieObj;
       }
-      const urlParams = {};
-      const urlSearch = new URLSearchParams(url);
-      for (const [key, value] of urlSearch) {
-        urlParams[key] = value;
+      const urlParams = searchParams(url);      
+      if (respBody && respBody.match(xjson)) {
+        respBody = JSON.parse(`${respBody}`);
       }
-      
-      try {
-        const xjson = /^[\n\t ]*({").+(})/
-        // const contentLength = resp.headers['content-length'];
-        // if (_ext(resp)==='json' && contentLength && contentLength[0]!=='0') {
-        if (respBody && respBody.match(xjson)) {
-          respBody = JSON.parse(`${respBody}`);
+      if (reqsBody) { 
+        const raw = reqsBody;
+        if (reqsBody.match(xjson)) {
+          reqsBody = JSON.parse(`${reqsBody}`);
+        } else if (reqsBody.match(/[\n ]*(\w+=).+(&)/)) {
+          const formField = searchParams(reqsBody);
+          reqsBody = {'*form*':formField, raw};      
         }
-        if (reqsBody) { 
-          const raw = reqsBody;
-          if (reqsBody.match(xjson)) {
-            reqsBody = JSON.parse(`${reqsBody}`);
-          } else if (reqsBody.match(/[\n ]*(\w+=).+(&)/)) {
-            const urlParams = {};
-            const urlSearch = new URLSearchParams(reqsBody);
-            for (const [key, value] of urlSearch) {
-              if (value.match(xjson)) {
-                urlParams[key] = JSON.parse(`${value}`);
-              } else {
-                urlParams[key] = value;
-              }
-            }
-            reqsBody = {'*form*':urlParams, raw};      
-          }
-        }
-      } catch (error2) {
-        console.log(c.redBright('>> Error JSON.stringify'));
-        console.log(error2)          
-      }
-      
+      }      
       let jsonResp = {
         url,
         method,
@@ -68,9 +60,11 @@ module.exports = ({reqs, resp, match}) => {
         respBody,
         respHeader,
         reqsHeader,
-        urlParams,
         reqsBody,
       };
+      if (Object.keys(urlParams).length>1) {
+        jsonResp.urlParams = urlParams;
+      }  
       parse && (jsonResp = parse(jsonResp));
       respBody = JSON.stringify(jsonResp, null, 2);
     } catch (error) {
