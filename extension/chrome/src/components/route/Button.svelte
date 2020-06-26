@@ -12,6 +12,12 @@ function btnSave(e) {
   });
 }
 
+function btnOpen() {
+  ws__send('openRoute', $source, data => {
+    console.log('Done Open!');
+  });
+}
+
 function btnGo(e) {
   const route = mitm.routes[$source.item];
   if (route && route.url) {
@@ -24,13 +30,9 @@ function btnGo(e) {
 Path:{$source.path}
 {#if $source.path}
 	<div class="btn-container">
-  <button class="btn-save"
-  disabled={$source.saveDisabled}
-  on:click="{btnSave}">Save</button> -
-  <button class="btn-go"
-  disabled={$source.goDisabled}
-  on:click="{btnGo}"
-  >Go</button>
+  <button class="btn-save" disabled={$source.saveDisabled} on:click="{btnSave}">Save</button> -
+  <button class="btn-open" disabled={$source.openDisabled} on:click="{btnOpen}">Open</button> -
+  <button class="btn-go"   disabled={$source.goDisabled}   on:click="{btnGo}"  >Go</button>
   </div>
 {/if}
 </div>
@@ -43,7 +45,9 @@ Path:{$source.path}
 }
 .btn-container {
   float: right;
+  margin-top: -1px;
   padding-right: 4px;
+  padding-bottom: 3px;  
 }
 .btn-container button {
   font-size: 10px;

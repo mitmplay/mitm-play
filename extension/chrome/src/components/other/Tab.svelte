@@ -23,9 +23,16 @@ function btnCapture(e) {
     // console.log(image);
   });
 };
+
+function btnOpen() {
+  ws__send('openHome', '', data => {
+    console.log('Done open home folder!');
+  });
+}
 </script>
 
-<button on:click={btnCapture}>Capture</button>
+<button on:click={btnOpen}>Open Home</button>
+<!-- <button on:click={btnCapture}>Capture</button> -->
 
 <style>
 </style>

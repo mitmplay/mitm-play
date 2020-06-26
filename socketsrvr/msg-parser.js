@@ -4,6 +4,8 @@ const _client = require('./client');
 const $getLog = require('./_getLog');
 const $getCache = require('./_getCache');
 const $getRoute = require('./_getRoute');
+const $openHome = require('./_openHome');
+const $openRoute = require('./_openRoute');
 const $saveRoute = require('./_saveRoute');
 const $screencap = require('./_screencap');
 
@@ -13,6 +15,8 @@ const wscmd = {
   ..._client(),
   $screencap,
   $saveRoute,
+  $openRoute,
+  $openHome,
   $getRoute,
   $getCache,
   $getLog,

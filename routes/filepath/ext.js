@@ -4,6 +4,7 @@ const types = {
   html: 'html',
   json: 'json',
   jpeg: 'jpeg',
+  webp: 'webp',
   gif: 'gif',
   png: 'png',
   svg: 'svg',

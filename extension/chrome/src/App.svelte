@@ -16,7 +16,7 @@ import OtherTab from './components/other/Tab.svelte';
 <Tabs style="is-boxed" size="is-small">
   <Tab label="Route"><RouteTable/></Tab>
   <Tab label="Logs"><LogsTable/></Tab>
-  <!-- <Tab label="Other"><OtherTab/></Tab> -->
+  <Tab label="Other"><OtherTab/></Tab>
 </Tabs>
 
 </main>
