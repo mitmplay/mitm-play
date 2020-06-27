@@ -9,6 +9,28 @@ const fpathcache = require('./filepath/fpath-cache');
 
 const {matched,searchFN} = _match;
 
+function resetCookies(setCookie) {
+  cookies = [];
+  for (let item of setCookie) {
+    const {_elapsed, ...rest} = item;
+    let cookie = [];
+    for (let key in rest) {
+      if (key==='expires') {
+        const now = new Date();
+        const time = now.getTime();
+        now.setTime(time + _elapsed);
+        cookie.push(`expires=${now.toGMTString()}`);
+      } else if (rest[key]===true) {
+        cookie.push(`${key}`);
+      } else {
+        cookie.push(`${key}=${rest[key]}`);
+      }
+    }
+    cookies.push(cookie.join('; '));
+  }
+  return cookies;
+}
+
 function cacheResponse(reqs, responseHandler) {
   const search = searchFN('cache', reqs);
   const match = matched(search, reqs);
@@ -26,8 +48,12 @@ function cacheResponse(reqs, responseHandler) {
       try {
         const {
           status,
+          setCookie,
           respHeader: headers
         } = JSON.parse(fs.readFileSync(fpath2));
+        if (setCookie && global.mitm.argv.cookie) {
+          headers['set-cookie'] = resetCookies(setCookie);
+        }
         fpath1 = `${fpath1}.${_ext({headers})}`;
         if (!global.mitm.argv.ommit.cache && !hidden) {
           console.log(c.greenBright(`>> cache (${tilde(fpath1)}).match(${match.key})`));

@@ -8,20 +8,21 @@ module.exports = (_package) => {
   Options:
     -h --help     \t show this help
     -u --url      \t go to specific url
-    -g --group    \t create cache group/rec
+    -s --save     \t save as default <profl>
+    -r --route    \t userscript folder routes
     -d --delete   \t delete/clear cache & logs
     -p --pristine \t pristine browser, default option
-    -i --insecure \t set nodejs env to accept insecure cert
+    -i --insecure \t accept insecure cert in nodejs env 
     -n --nosocket \t no websocket injection to html page
     -o --ommitlog \t removed unnecessary console log
     -v --verbose  \t show more detail of console log
     -l --logurl   \t test route to log url & headers
-    -r --route    \t set userscript folder of routes
-    -s --save     \t save as default <profl>
+    -g --group    \t create cache group/rec
     -c --chromium \t run chromium browser
     -f --firefox  \t run firefox browser
     -w --webkit   \t run webkit browser
-    -z --lazy     \t delay ~400ms click action 
+    -k --cookie   \t reset cookies expire date
+    -z --lazy     \t delay ~400ms click action
     --incognito   \t set chromium incognito
     --proxypac    \t set chromium proxypac
     --plugins     \t add chrome plugins
