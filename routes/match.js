@@ -10,16 +10,13 @@ const searchArr = ({typ, url}) => {
     }
 
     if (routes[namespace]) {
-      let arr = routes[namespace][typ];
-      if (arr) {
-        let result;
-        for (let val of arr) {
-          result = url.match(val);
-          if (result) {
-            return val;
-          }
-        }  
-      }
+      let obj = router[namespace][typ];
+      let arr = routes[namespace][typ] || [];
+      for (let str of arr) {
+        if (url.match(obj[str])) {
+          return str;
+        }
+      }  
     }
   };
 };
@@ -33,13 +30,14 @@ const searchFN = (typ, {url}) => {
       return;
     }
 
+    const obj = router[namespace][typ];
     const route = routes[namespace][typ];
     const spliter = global.mitm.spliter;
 
     for (let key in route) {
       const split = url.split(spliter);
       const path = `${split[0]}${split.length>1 ? '?' : ''}`;
-      const arr = path.match(key);
+      const arr = path.match(obj[key]);
 
       if (arr) {
         const {host, pathname} = new URL(url);

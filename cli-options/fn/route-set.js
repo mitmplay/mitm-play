@@ -14,9 +14,9 @@ function routeSet(r, namespace, print=false) {
   const router = {};
   for (let typ of typA) {
     if (r[typ]) {
-      router[typ] = [];
+      router[typ] = {};
       for (let str of r[typ]) {
-        router[typ].push(new RegExp(str));
+        router[typ][str] = new RegExp(str);
       }  
     }
   }
@@ -25,6 +25,14 @@ function routeSet(r, namespace, print=false) {
       router[typ] = {};
       for (let str in r[typ]) {
         router[typ][str] = new RegExp(str);
+        const site = r[typ][str];
+        if (site && site.contentType) {
+          const contentType = {};
+          for (let typ2 of site.contentType) {
+            contentType[typ2] = new RegExp(typ2);
+          }
+          router[typ][`${str}~contentType`] = contentType;
+        }
       }
     }
   }
