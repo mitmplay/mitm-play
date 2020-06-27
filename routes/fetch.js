@@ -45,6 +45,10 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
           headers[key] = _headers[key];
         }
       }
+      if (status>=400) {
+        console.log(c.redBright(`[${reqs.method}] ${url} => ${status}`));
+        console.log(c.red(`${body}`));
+      }
       const resp2 = handler({url, status, headers, body});
       route.fulfill(resp2);
     });
