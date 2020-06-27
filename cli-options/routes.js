@@ -12,8 +12,15 @@ module.exports = () => {
   global.mitm.source = {};
   global.mitm.routes = {
     'default': {
-      _regex_: /default/,
       mock,
+    }
+  };
+  global.mitm.router = {
+    'default': {
+      _namespace_: /default/,
+      mock: {
+        '/mitm-play/websocket.js': new RegExp('/mitm-play/websocket.js')
+      },
     }
   };
 };

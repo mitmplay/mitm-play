@@ -1,7 +1,7 @@
 module.exports = nspace => {
-  const {routes} = global.mitm;
+  const {router,routes} = global.mitm;
   for (let id in routes) {
-    if (nspace.match(routes[id]._regex_)) {
+    if (nspace.match(router[id]._namespace_)) {
       return id;
     }
   }

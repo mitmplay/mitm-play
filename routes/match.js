@@ -1,14 +1,16 @@
 const {fn: {nameSpace}} = global.mitm;
 
 const searchArr = ({typ, url}) => {
+  const {router,routes} = global.mitm;
+
   return function(nspace) {
     const namespace = nameSpace(nspace);
     if (!namespace) {
       return;
     }
 
-    if (global.mitm.routes[namespace]) {
-      let arr = global.mitm.routes[namespace][typ];
+    if (routes[namespace]) {
+      let arr = routes[namespace][typ];
       if (arr) {
         let result;
         for (let val of arr) {
@@ -23,16 +25,18 @@ const searchArr = ({typ, url}) => {
 };
 
 const searchFN = (typ, {url}) => {
+  const {router,routes} = global.mitm;
+
   return function search(nspace) {
     const namespace = nameSpace(nspace);
     if (!namespace) {
       return;
     }
 
-    const routes = global.mitm.routes[namespace][typ];
+    const route = routes[namespace][typ];
     const spliter = global.mitm.spliter;
 
-    for (let key in routes) {
+    for (let key in route) {
       const split = url.split(spliter);
       const path = `${split[0]}${split.length>1 ? '?' : ''}`;
       const arr = path.match(key);
@@ -41,7 +45,7 @@ const searchFN = (typ, {url}) => {
         const {host, pathname} = new URL(url);
         const log = `>> ${typ} (${path}).match(${key})`;
         return {
-          route: routes[key],
+          route: route[key],
           pathname,
           host,
           url,
