@@ -1,8 +1,9 @@
 const c = require('ansi-colors');
 const stringify = require('./stringify');
 
-function routeSet(routes, namespace, print=false) {
-  global.mitm.routes[namespace] = routes;
+function routeSet(r, namespace, print=false) {
+  r._regex_ = new RegExp(`(^${namespace}|.${namespace})`);
+  global.mitm.routes[namespace] = r;
   if (namespace==='default') {
     global.mitm.routes.default.mock = {
       ...global.mitm.routes.default.mock,
@@ -13,7 +14,7 @@ function routeSet(routes, namespace, print=false) {
     const msg = `>> ${namespace}\n${stringify(global.mitm.routes[namespace])}`;
     print && console.log(c.blueBright(msg));  
   }
-  return routes;
+  return r;
 }
 
 module.exports = routeSet;

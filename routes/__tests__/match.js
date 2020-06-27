@@ -1,7 +1,13 @@
 global.mitm = {
   routes: require('../__fixture__/routes'),
-  fn: {tldomain: require('../../cli-options/fn/tldomain')}
+  data: {},
+  argv: {},
+  fn: {
+    tldomain: require('../../cli-options/fn/tldomain'),
+    routeSet: require('../../cli-options/fn/route-set'),
+  }
 };
+global.mitm.fn.routeSet(global.mitm.routes['google.com'], 'google.com', true);
 
 const {
   searchArr,
@@ -54,14 +60,17 @@ describe('match.js - matched', () => {
   })
 
   test('return matched origin/referer', () => {
-    const typ = 'html';
-    const url = 'https://www.gtm.com/search?q=github+playwright';
-    const fn = searchFN(typ, {url});
+    const req = {
+      url: 'https://www.gtm.com/search?q=github+playwright',
+      headers: {
+        'content-type': 'text/html',
+        origin: 'https://google.com'
+      }
+    }
 
-    const found = matched(fn, {url, headers: {
-      'content-type': 'text/html',
-      origin: 'https://google.com'
-    }})
+    const fn = searchFN('html', req);
+    const found = matched(fn, req);
+
     expect(typeof found).toBe('object');
   })
 

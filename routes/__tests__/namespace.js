@@ -1,6 +1,13 @@
 global.mitm = {
   routes: require('../__fixture__/routes'),
+  data: {},
+  argv: {},
+  fn: {
+    routeSet: require('../../cli-options/fn/route-set'),
+  }
 };
+
+global.mitm.fn.routeSet(global.mitm.routes['google.com'], 'google.com', true);
 
 const namespace = require('../namespace');
 
