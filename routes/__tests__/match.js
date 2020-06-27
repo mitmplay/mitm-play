@@ -1,5 +1,6 @@
 global.mitm = {
   routes: require('../__fixture__/routes'),
+  router: {},
   data: {},
   argv: {},
   fn: {
@@ -8,6 +9,8 @@ global.mitm = {
     nameSpace: require('../../cli-options/fn/namespace'),
   }
 };
+
+global.mitm.fn.routeSet(global.mitm.routes['default'], 'default', true);
 global.mitm.fn.routeSet(global.mitm.routes['google.com'], 'google.com', true);
 
 const {
