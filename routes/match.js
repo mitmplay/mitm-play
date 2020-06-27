@@ -1,4 +1,4 @@
-const nameSpace = require('./namespace');
+const {fn: {nameSpace}} = global.mitm;
 
 const searchArr = ({typ, url}) => {
   return function(nspace) {

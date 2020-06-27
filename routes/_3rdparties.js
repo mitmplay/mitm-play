@@ -1,6 +1,5 @@
 const c = require('ansi-colors');
-const nameSpace = require('./namespace');
-const {spliter,fn: {tldomain}} = global.mitm;
+const {spliter,fn: {tldomain,nameSpace}} = global.mitm;
 
 function thirdparty({url, headers}) {
   const {origin, referer} = headers;

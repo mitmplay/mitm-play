@@ -7,6 +7,7 @@ const {hello, mock, resp} = require('./fn/hellomock');
 const {exec, execFile} = require('./fn/exec-file');
 const {tilde, home} = require('./fn/tildehome');
 const unstrictCSP = require('./fn/unstrictCSP');
+const nameSpace = require('./fn/namespace');
 const stringify = require('./fn/stringify');
 const routeSet = require('./fn/route-set');
 const tldomain = require('./fn/tldomain');
@@ -19,6 +20,7 @@ module.exports = () => {
   global.mitm.fn = {
     unstrictCSP,
     stringify,
+    nameSpace,
     chokidar,
     tldomain,
     wsclient,

@@ -5,6 +5,7 @@ global.mitm = {
   fn: {
     tldomain: require('../../cli-options/fn/tldomain'),
     routeSet: require('../../cli-options/fn/route-set'),
+    nameSpace: require('../../cli-options/fn/namespace'),
   }
 };
 global.mitm.fn.routeSet(global.mitm.routes['google.com'], 'google.com', true);

@@ -3,7 +3,7 @@ global.mitm = {
   data: {},
   argv: {},
   fn: {
-    routeSet: require('../../cli-options/fn/route-set'),
+    routeSet: require('../route-set'),
   }
 };
 
