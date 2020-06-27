@@ -3,7 +3,7 @@ module.exports = (match, resp) => {
   const ctype = resp.headers['content-type'];
 
   if (atype && ctype) {
-    return atype.find(t => ctype.match(t));
+    return atype.find(t => ctype.match(match.contentType[t]));
   } else {
     return false;
   }

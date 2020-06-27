@@ -29,6 +29,12 @@ function routeSet(r, namespace, print=false) {
         if (site && site.contentType) {
           const contentType = {};
           for (let typ2 of site.contentType) {
+            if (contentType[typ2]) {
+              const ct = site.contentType.join("', '");
+              throw [
+                `contentType should be unique:`,
+                `${namespace}.${typ}['${str}'].contentType => ['${ct}']`];
+            }
             contentType[typ2] = new RegExp(typ2);
           }
           router[typ][`${str}~contentType`] = contentType;

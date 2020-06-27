@@ -8,7 +8,11 @@ const {
 
 describe('name-space.js - function', () => {
   test('return namespace exist or not', () => {
-    const match = {route: {contentType: ['json']}}
+    const regex = /json/
+    const match = {
+      route: {contentType: ['json']},
+      contentType: [regex],
+    }
     const resp1 = {headers: {'content-type': 'application/json'}};
     const resp2 = {headers: {}};
 
