@@ -43,7 +43,7 @@ const searchFN = (typ, {url}) => {
         const {host, pathname} = new URL(url);
         const log = `>> ${typ} (${path}).match(${key})`;
         return {
-          contentType: router[key],
+          contentType: obj[`${key}~contentType`],
           route: route[key],
           pathname,
           host,
