@@ -146,7 +146,7 @@ the execution order as documented start with `skip`, end with `js`, no need to i
 <details><summary><b>URL & Title</b></summary>
 <p>
 
-Url will be use as part of the CLI first params with non dashes. The logic is try to match partion of text in **`url`** and if it match, continue to open it in the browser.
+Url will be use as part of `non dashes CLI first params`. The logic is try to match partion of text in **`url`** and if it match, continue to open in the browser.
 
 For `Title`, it just provide basic information about this route.
 ```js
