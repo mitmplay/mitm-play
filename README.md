@@ -42,8 +42,6 @@ const route = {
 }
 module.exports = route;
 ```
-</p>
-</details>
 
 ```bash
 # run the demo:
@@ -53,6 +51,8 @@ mitm-play -u='google.com/search?q=covid-19' --dsr='.'
 # next run should be simple as:
 mitm-play
 ```
+</p>
+</details>
 
 # Features
 
@@ -65,8 +65,8 @@ mitm-play
 | `noproxy`   | ----------   | array ..of `[domain]` - will serve directly    
 | `proxy`     | ----------   | array ..of `[domain]` - will serve using proxy    
 | `mock`      | __response__ | modify response object - no call to remote server  
-| `cache`     | __response__ | save first call to local - next call read from cache 
-| `log`       | __response__ | logs all call to Beckend - call to remote server   
+| `cache`     | __response__ | save first remote call to local - next, read from cache 
+| `log`       | __response__ | save reqs/resp call to local - call to remote server   
 |             | __response__ | modify response based on contentType - call remote server
 | =>>         | * `html`     | - response handler (replace / update + JS)
 | =>>         | * `json`     | - response handler (replace / update)
