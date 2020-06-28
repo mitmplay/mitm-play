@@ -17,17 +17,17 @@ module.exports = (_package) => {
     -o --ommitlog \t removed unnecessary console log
     -v --verbose  \t show more detail of console log
     -l --logurl   \t test route to log url & headers
+    -k --cookie   \t reset cookies expire date
     -g --group    \t create cache group/rec
     -c --chromium \t run chromium browser
     -f --firefox  \t run firefox browser
     -w --webkit   \t run webkit browser
-    -k --cookie   \t reset cookies expire date
+    -x --proxy    \t a proxy request
     -z --lazy     \t delay ~400ms click action
     --incognito   \t set chromium incognito
     --proxypac    \t set chromium proxypac
     --plugins     \t add chrome plugins
     --debug       \t show ws messages
-    --proxy       \t a proxy request
 
   v${_package.version}
 `));
