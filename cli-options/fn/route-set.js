@@ -5,9 +5,9 @@ const typO = ['request','response','mock','cache','log','html','json','css','js'
 
 function routeSet(r, namespace, print=false) {  
   global.mitm.routes[namespace] = r;
-  if (namespace==='default') {
-    global.mitm.routes.default.mock = {
-      ...global.mitm.routes.default.mock,
+  if (namespace==='_global_') {
+    global.mitm.routes._global_.mock = {
+      ...global.mitm.routes._global_.mock,
       ...global.mitm.__mock
     }
   }
@@ -22,7 +22,7 @@ function routeSet(r, namespace, print=false) {
       for (let str of r[typ]) {
         const regex =  new RegExp(str);
         router[typ][str] = regex;
-        if (namespace==='default') {
+        if (namespace==='_global_') {
           namespaces.push(str);
           namespacer[str] = regex;
         }
@@ -36,7 +36,7 @@ function routeSet(r, namespace, print=false) {
         const regex =  new RegExp(str);
         router[typ][str] = regex;
         const site = r[typ][str];
-        if (namespace==='default') {
+        if (namespace==='_global_') {
           namespaces.push(str);
           namespacer[str] = regex;
         }
@@ -57,7 +57,7 @@ function routeSet(r, namespace, print=false) {
     }
   }
   global.mitm.router[namespace] = router;
-  if (namespace==='default') {
+  if (namespace==='_global_') {
     global.mitm.routes[namespace]._domain_ = namespaces;
     global.mitm.router[namespace]._domain_ = namespacer;
   }

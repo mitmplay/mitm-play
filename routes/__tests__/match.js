@@ -10,7 +10,7 @@ global.mitm = {
   }
 };
 
-global.mitm.fn.routeSet(global.mitm.routes['default'], 'default', true);
+global.mitm.fn.routeSet(global.mitm.routes['_global_'], '_global_', true);
 global.mitm.fn.routeSet(global.mitm.routes['google.com'], 'google.com', true);
 
 const {

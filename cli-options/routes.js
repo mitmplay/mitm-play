@@ -11,13 +11,13 @@ module.exports = () => {
   global.mitm.__mock = mock;
   global.mitm.source = {};
   global.mitm.routes = {
-    'default': {
+    '_global_': {
       mock,
     }
   };
   global.mitm.router = {
-    'default': {
-      _namespace_: /default/,
+    '_global_': {
+      _namespace_: /_global_/,
       mock: {
         '/mitm-play/websocket.js': new RegExp('/mitm-play/websocket.js')
       },

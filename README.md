@@ -8,7 +8,7 @@ Man in the middle using playwright
    * [Concept](#concept)
    * [Profile: ~/.mitm-play](#profile-mitm-play)
    * [Route Sections](#route-sections)
-   * [HTTP_PROXY &amp; NO_PROXY](#http_proxy--no_proxy)
+   * [HTTP_PROXY](#http_proxy)
    * [User Route](#user-route)
    * [Early Stage](#early-stage)
 
@@ -77,7 +77,7 @@ mitm-play
 # Concept
 Mitm intercept is hierarchical checking routes. First check is try to `match` domain on the url, `if match` then next action is to `match` url regex expression on each **type/content-type** listed on the route and `if match` again, then it will execute the handler route event registered in the route.
 
-If the process of checking is not match, then it will fallback to `default` namespace to check, and the operation is the same as mention in first paragraph. 
+If the process of checking is not match, then it will fallback to `_global_` namespace to check, and the operation is the same as mention in first paragraph. 
 
 Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those type of assets, it use browser headers attributes: `origin` or `referer`, in which will scoping to the same namespace.
 
@@ -86,10 +86,10 @@ Usually html page load with several assets (image, js & css) that not belong to 
 
 In below example the route is having a `js` object and the process of checking narrated as: if there is a JS assets come from `gstatic.com`, then the response will get replace with an empty string.
 
-Namespaces: `default`, `google.com` on nodejs global scope:  
+Namespaces: `_global_`, `google.com` on nodejs global scope:  
 ```js
 global.mitm.route = {
-  'default': {
+  '_global_': {
     mock: {...}
   },
   'google.com': {
@@ -463,8 +463,284 @@ response: {
 </p>
 </details>
 
-# HTTP_PROXY & NO_PROXY
+# HTTP_PROXY
 mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system required proxy to access internet.
+
+# CLI Options
+<details><summary><b>-h --help</b></summary>
+<p>
+To show all the options Command Line Interface (CLI). this option can be arbitrary position on cli, the result should be always display this messages:
+
+```
+$ mitm-play -h  <OR>
+$ mitm-play --help
+
+  Usage: mitm-play <profl> [options]
+
+  Options:
+    -h --help            show this help
+    -u --url             go to specific url
+    -s --save            save as default <profl>
+    -r --route           userscript folder routes
+    -d --delete          delete/clear cache & logs
+    -p --pristine        pristine browser, default option
+    -i --insecure        accept insecure cert in nodejs env
+    -n --nosocket        no websocket injection to html page
+    -o --ommitlog        removed unnecessary console log
+    -v --verbose         show more detail of console log
+    -l --logurl          test route to log url & headers
+    -k --cookie          reset cookies expire date
+    -g --group           create cache group/rec
+    -c --chromium        run chromium browser
+    -f --firefox         run firefox browser
+    -w --webkit          run webkit browser
+    -x --proxy           a proxy request
+    -z --lazy            delay ~400ms click action
+    --incognito          set chromium incognito
+    --proxypac           set chromium proxypac
+    --plugins            add chrome plugins
+    --debug              show ws messages
+
+  v0.6.xx
+```
+</p>
+</details>
+<details><summary><b>-u --url</b></summary>
+<p>
+
+Open Browser to specific `URL`
+
+```
+$ mitm-play -u='https://google.com'  <OR>
+$ mitm-play --url='https://google.com'
+```
+</p>
+</details>
+<details><summary><b>-s --save</b></summary>
+<p>
+
+Save CLI options with `default`  or named so later time you don't need to type long CLI options
+
+```
+$ mitm-play -s  <OR>
+$ mitm-play --save
+  <OR>
+$ mitm-play -s='google'  <OR>
+$ mitm-play --save='google'
+```
+</p>
+</details>
+<details><summary><b>-r --route</b></summary>
+<p>
+
+Specify which folder contains routes config
+
+```
+$ mitm-play -r='../userroutes'  <OR>
+$ mitm-play --save='../userroutes'
+```
+</p>
+</details>
+<details><summary><b>-d --delete</b></summary>
+<p>
+
+Delete logs or cache, can be all or specific one
+
+```
+$ mitm-play -d  <OR>
+$ mitm-play --delete
+  <OR>
+$ mitm-play -d='log'  <OR>
+$ mitm-play --delete='log'
+  <OR>
+$ mitm-play -d='cache'  <OR>
+$ mitm-play --delete='cache'
+```
+</p>
+</details>
+<details><summary><b>-p --pristine</b></summary>
+<p>
+
+Launch browser with non Incognito 
+
+```
+$ mitm-play -p  <OR>
+$ mitm-play --pristine
+```
+</p>
+</details>
+<details><summary><b>-i --insecure</b></summary>
+<p>
+
+Set NodeJS to operate within insecure / no https checking 
+
+```
+$ mitm-play -i  <OR>
+$ mitm-play --insecure
+```
+</p>
+</details>
+<details><summary><b>-n --nosocket</b></summary>
+<p>
+
+No Injection of websocket to the browser
+
+```
+$ mitm-play -n  <OR>
+$ mitm-play --nosocket
+```
+</p>
+</details>
+<details><summary><b>-o --ommitlog</b></summary>
+<p>
+
+hide some console.log
+
+```
+$ mitm-play -o  <OR>
+$ mitm-play --ommitlog
+```
+</p>
+</details>
+<details><summary><b>-v --verbose</b></summary>
+<p>
+
+Add additional info in console.log
+
+```
+$ mitm-play -v  <OR>
+$ mitm-play --verbose
+```
+</p>
+</details>
+<details><summary><b>-l --logurl</b></summary>
+<p>
+
+Sample test of logging, no route will be enforce 
+
+```
+$ mitm-play -l  <OR>
+$ mitm-play --logurl
+```
+</p>
+</details>
+<details><summary><b>-k --cookie</b></summary>
+<p>
+
+Set proper cache retriver with an update expiry of the cookies
+
+```
+$ mitm-play -k  <OR>
+$ mitm-play --cookie
+```
+</p>
+</details>
+<details><summary><b>-g --group</b></summary>
+<p>
+
+.
+
+```
+$ mitm-play -  <OR>
+$ mitm-play --
+```
+</p>
+</details>
+<details><summary><b>-c --chromium</b></summary>
+<p>
+
+Launch Chromium browser
+
+```
+$ mitm-play -c  <OR>
+$ mitm-play --chromium
+```
+</p>
+</details>
+<details><summary><b>-f --firefox</b></summary>
+<p>
+
+Launch Firefox browser
+
+```
+$ mitm-play -f  <OR>
+$ mitm-play --firefox
+```
+</p>
+</details>
+<details><summary><b>-w --webkit</b></summary>
+<p>
+
+Launch Webkit browser
+
+```
+$ mitm-play -w  <OR>
+$ mitm-play --webkit
+```
+</p>
+</details>
+<details><summary><b>-x --proxy</b></summary>
+<p>
+
+will force some traffict that having proxy section defined, it will use proxy.
+
+```
+$ mitm-play -x  <OR>
+$ mitm-play --proxy
+```
+</p>
+</details>
+<details><summary><b>-z --lazy</b></summary>
+<p>
+
+Delay click action ~400ms, to provide enough time for screenshot to be taken
+
+```
+$ mitm-play -z  <OR>
+$ mitm-play --lazy
+```
+</p>
+</details>
+<details><summary><b>--incognito</b></summary>
+<p>
+
+By Default program will run in normal / pristine browser, adding this option will result when openting chrome browser, it will show in Incognito mode.
+
+```
+$ mitm-play --incognito
+```
+</p>
+</details>
+<details><summary><b>--proxypac</b></summary>
+<p>
+
+When network on your having a proxypac settings, might be usefull to use the same
+
+```
+$ mitm-play --proxypac
+```
+</p>
+</details>
+<details><summary><b>--plugins</b></summary>
+<p>
+
+Specific only on chromium / chrome browser
+
+```
+$ mitm-play --plugins
+```
+</p>
+</details>
+<details><summary><b>--debug</b></summary>
+<p>
+
+More information will be shown in console.log
+
+```
+$ mitm-play --debug
+```
+</p>
+</details>
 
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 

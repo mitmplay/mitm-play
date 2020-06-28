@@ -5,9 +5,9 @@ module.exports = nspace => {
       return id;
     }
   }
-  for (let id in router.default._domain_) {
-    if (nspace.match(router.default._domain_[id])) {
-      return 'default';
+  for (let id in router._global_._domain_) {
+    if (nspace.match(router._global_._domain_[id])) {
+      return '_global_';
     }
   }
 }

@@ -1,7 +1,7 @@
 const hello = () => {};
 
 const routes = {
-  'default': {
+  '_global_': {
     mock: {
       // '/mitm-play/websocket.js': {
       //   resp() {return {}},

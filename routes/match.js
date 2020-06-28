@@ -76,7 +76,7 @@ const matched = (search, {url, headers}) => {
     }        
   } 
   if (!match) {
-    match = search('default');
+    match = search('_global_');
   }
   // console.log('>> Match', tld, !!match)
   return match;
