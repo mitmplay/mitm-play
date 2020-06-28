@@ -16,6 +16,8 @@ Man in the middle using playwright
 ```bash
 npm install -g mitm-play
 ```
+<details><summary>Exmaple</summary>
+<p>
 
 ```js
 // create new folder/file: google.com/index.js and add this content:
@@ -40,6 +42,9 @@ const route = {
 }
 module.exports = route;
 ```
+</p>
+</details>
+
 ```bash
 # run the demo:
 mitm-play --url='google.com/search?q=covid-19' --route='.' --save --delete
@@ -76,6 +81,9 @@ If the process of checking is not match, then it will fallback to `default` name
 
 Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those type of assets, it use browser headers attributes: `origin` or `referer`, in which will scoping to the same namespace.
 
+<details><summary>Exmaple</summary>
+<p>
+
 In below example the route is having a `js` object and the process of checking narrated as: if there is a JS assets come from `gstatic.com`, then the response will get replace with an empty string.
 
 Namespaces: `default`, `google.com` on nodejs global scope:  
@@ -97,11 +105,18 @@ global.mitm.route = {
   },
 }
 ```
+</p>
+</details>
+
 # Profile: ~/.mitm-play
 By default all save file are on the `~/.mitm-play` profile folder.
 
 # Route Sections
 on each route you can add section supported:
+
+<details><summary>Skeleton</summary>
+<p>
+
 ```js
 routes = {
   url:     '',
@@ -122,7 +137,11 @@ routes = {
   response:{}, //end routing rules
 }
 ```
+</p>
+</details>
+<p>
 the execution order as documented start with `skip`, end with `js`, no need to implement all of routing rules. 
+</p>
 
 <details><summary><b>URL & Title</b></summary>
 <p>
