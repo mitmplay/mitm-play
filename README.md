@@ -16,7 +16,7 @@ Man in the middle using playwright
 ```bash
 npm install -g mitm-play
 ```
-<details><summary>Exmaple</summary>
+<details><summary>Example</summary>
 <p>
 
 ```js
