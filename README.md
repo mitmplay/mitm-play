@@ -122,6 +122,7 @@ the execution order as documented start with `skip`, end with `js`, no need to i
 
 <details><summary><b>URL & Title</b></summary>
 <p>
+
 Url will be use as part of the CLI first params with non dashes. The logic is try to match partion of text in **`url`** and if it match, continue to open it in the browser.
 
 For `Title`, it just provide basic information about this route.
@@ -136,6 +137,7 @@ routes = {
 </details>
 <details><summary><b>Screenshot</b></summary>
 <p>
+
 Capture/Screeshot when user *click* specific DOM-Element *match* with `selector` or state-change, like DOM-Element getting *insert* or *remove* and match **selector** inside `observer` key.
 
 Below example show three selector in `observer`:
@@ -169,6 +171,7 @@ screenshot: {
 </details>
 <details><summary><b>Skip</b></summary>
 <p>
+
 Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
 ```js
 skip: ['wp-admin'],
@@ -177,6 +180,7 @@ skip: ['wp-admin'],
 </details>
 <details><summary><b>Exclude</b></summary>
 <p>
+
 Exclude match **`url`** rule in which having same *Origin/Referer* to the route namespace, `mitm-play` will not process further.
 ```js
 exclude: ['wp-admin'],
@@ -185,6 +189,7 @@ exclude: ['wp-admin'],
 </details>
 <details><summary><b>Request</b></summary>
 <p>
+
 Manipulate Request with `request` function
 ```js
 request: {
@@ -199,6 +204,7 @@ request: {
 </details>
 <details><summary><b>Noproxy</b></summary>
 <p>
+
 if proxy config was set to all request/response, `noproxy` will exclude it from proxy. Example below will set domain nytimes.com with direct access and the rest will go thru proxy. 
 ```js
 // HTTP_PROXY env need to be set, cli: --proxy .. --noproxy ..
@@ -209,6 +215,7 @@ proxy:   ['.+'],
 </details>
 <details><summary><b>Proxy</b></summary>
 <p>
+
 Certain domain will go thru proxy
 ```js
 // HTTP_PROXY env need to be set, cli: --proxy ..
@@ -220,6 +227,7 @@ proxy: [
 </details>
 <details><summary><b>Mock</b></summary>
 <p>
+
 Mocking the **response**.
 
 Basic rule: replace **response body** with **the matcher** value 
@@ -256,6 +264,7 @@ Please do not combine  `response` with `js`, `js` will add/replace content-type 
 </details>
 <details><summary><b>Cache</b></summary>
 <p>
+
 Save the first request to your local disk so next request will serve from there.
 ```js
 cache: {
@@ -279,6 +288,7 @@ cache: {
 </details>
 <details><summary><b>Log</b></summary>
 <p>
+
 Save the response to your local disk. by default contentType `json` will log complete request / response, for different type default log should be response payload. 
 
 Special usacase like google-analytic will send contentType of `gif` with [GET] request, and response payload is not needed, there is an option `log` to force log with json complete request / response.  
@@ -308,6 +318,7 @@ log: {
 </details>
 <details><summary><b>Html</b></summary>
 <p>
+
 Manipulate the response.
 
 Basic rule: replace **response body** with **the matcher** value 
@@ -339,6 +350,7 @@ html: {
 </details>
 <details><summary><b>Json</b></summary>
 <p>
+
 Manipulate the response.
 
 Basic rule: replace **response body** with **the matcher** value 
@@ -361,6 +373,7 @@ json: {
 </details>
 <details><summary><b>Css</b></summary>
 <p>
+
 Manipulate the response.
 
 Basic rule: replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
@@ -385,6 +398,7 @@ css: {
 </details>
 <details><summary><b>Js</b></summary>
 <p>
+
 Manipulate the response.
 
 Basic rule: replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
@@ -409,6 +423,7 @@ js: {
 </details>
 <details><summary><b>Response</b></summary>
 <p>
+
 Manipulate Response with `response` function
 ```js
 response: {
