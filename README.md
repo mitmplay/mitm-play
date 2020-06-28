@@ -81,7 +81,7 @@ If the process of checking is not match, then it will fallback to `default` name
 
 Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those type of assets, it use browser headers attributes: `origin` or `referer`, in which will scoping to the same namespace.
 
-<details><summary>Exmaple</summary>
+<details><summary>Example</summary>
 <p>
 
 In below example the route is having a `js` object and the process of checking narrated as: if there is a JS assets come from `gstatic.com`, then the response will get replace with an empty string.
