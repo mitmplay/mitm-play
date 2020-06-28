@@ -292,7 +292,9 @@ Save the first request to your local disk so next request will serve from there.
 ```js
 cache: {
   'amazon.com': {
-    contentType: ['javascript', 'image']
+    contentType: ['javascript', 'image'],
+    hidden: true, // optional - no consolo.log
+    nolog: true, // optional - disable logging
   }
 },
 ```
