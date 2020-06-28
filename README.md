@@ -51,19 +51,23 @@ mitm-play
 
 # Features
 
-| Feature  | payload      | note                                       
-|----------|--------------|----------------------------------------
-| `skip`   | ----------   | array ..of `[url]` - browser will handle it    
-| `mock`   | __response__ | object of `{url}` - no call to remote server  
-| `headers`| __request__  | object of `{header}` - call to remote server
-| `cache`  | __response__ | object of `{url}` - next call read from cache 
-| `log`    | __response__ | object of `{url}` - call to remote server & logs    
-| Update   | __response__ | object of `{url}`+`(ContentType)` - call remote server
-| =>>      | * `html`     | - response handler (replace / update + JS)
-| =>>      | * `json`     | - response handler (replace / update)
-| =>>      | * `css`      | - response handler (replace / update)
-| =>>      | * `js`       | - response handler (replace / update)
-
+| Feature     | payload      | note                                       
+|-------------|--------------|----------------------------------------
+| `screenshot`| ----------   | DOM specific rules for taking screenshot
+| `skip`      | ----------   | array ..of `[domain]` - browser will handle it    
+| `exclude`   | ----------   | array ..of `[domain]` - browser will handle it    
+| `request`   | __request__  | modify request object - call to remote server
+| `noproxy`   | ----------   | array ..of `[domain]` - will serve directly    
+| `proxy`     | ----------   | array ..of `[domain]` - will serve using proxy    
+| `mock`      | __response__ | modify response object - no call to remote server  
+| `cache`     | __response__ | save first call to local - next call read from cache 
+| `log`       | __response__ | logs all call to Beckend - call to remote server   
+|             | __response__ | modify response based on contentType - call remote server
+| =>>         | * `html`     | - response handler (replace / update + JS)
+| =>>         | * `json`     | - response handler (replace / update)
+| =>>         | * `css`      | - response handler (replace / update)
+| =>>         | * `js`       | - response handler (replace / update)
+| `response`  | __response__ | modify response object - call to remote server
 
 # Concept
 Mitm intercept is hierarchical checking routes. First check is try to `match` domain on the url, `if match` then next action is to `match` url regex expression on each **type/content-type** listed on the route and `if match` again, then it will execute the handler route event registered in the route.
