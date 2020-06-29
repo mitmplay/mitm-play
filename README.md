@@ -488,7 +488,6 @@ $ mitm-play --help
     -n --nosocket        no websocket injection to html page
     -o --ommitlog        removed unnecessary console log
     -v --verbose         show more detail of console log
-    -l --logurl          test route to log url & headers
     -k --cookie          reset cookies expire date
     -g --group           create cache group/rec
     -c --chromium        run chromium browser
@@ -613,17 +612,6 @@ $ mitm-play --verbose
 ```
 </p>
 </details>
-<details><summary><b>-l --logurl</b></summary>
-<p>
-
-Sample test of logging, no route will be enforce 
-
-```
-$ mitm-play -l  <OR>
-$ mitm-play --logurl
-```
-</p>
-</details>
 <details><summary><b>-k --cookie</b></summary>
 <p>
 
@@ -734,7 +722,7 @@ $ mitm-play --plugins
 <details><summary><b>--debug</b></summary>
 <p>
 
-More information will be shown in console.log
+More information will be shown in console.log (ex: websocket)
 
 ```
 $ mitm-play --debug

@@ -80,21 +80,9 @@ module.exports = () => {
         page = await context.newPage();  
         bcontext = context;
       }
-      if (argv.logurl) {
-        bcontext.route('**/*', (route) => {
-          const {url, method, headers} = extract({route, browserName});
-          if (url.match('admin-ajax.php')) {
-            console.log('>>>> Headers1', {method});
-            const arr = route.request().url().split(/([&?;,]|:\w|url)/);
-            console.log(`${arr[0]}${arr.length>1 ? '?' : ''}`, JSON.stringify(headers, null, 2));
-          }
-          route.continue({});
-        });
-      } else {
-        bcontext.route(/.*/, (route, request) => {
-          routes({route, request, bcontext, browserName});
-        });
-      }
+      bcontext.route(/.*/, (route, request) => {
+        routes({route, request, bcontext, browserName});
+      });
       if (browserName==='chromium' && argv.pristine===undefined) {
         await page.goto('chrome://extensions/');
         await page.click('#detailsButton');
@@ -111,14 +99,8 @@ module.exports = () => {
       bcontexts[browserName] = bcontext;
       browsers[browserName] = browser;
       pages[browserName] = page;
-    }
-
-    // exitHook(async function() {
-    //   await browser.close();
-    // })
-    
+    }    
     global.mitm.browsers = browsers;
     global.mitm.pages = pages;
   })();  
 }
-//  mitm-play --logurl --url='twitter.com/search?q=covid&src=typed_query' --save=twl

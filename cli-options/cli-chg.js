@@ -44,7 +44,6 @@ module.exports = () => {
   argsChg('f', 'firefox');
   argsChg('w', 'webkit');
   argsChg('d', 'delete');
-  argsChg('l', 'logurl');
   argsChg('k', 'cookie');
   argsChg('x', 'proxy');
   argsChg('g', 'group');

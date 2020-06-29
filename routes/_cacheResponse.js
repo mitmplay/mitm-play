@@ -51,6 +51,9 @@ function cacheResponse(reqs, responseHandler) {
           setCookie,
           respHeader: headers
         } = JSON.parse(fs.readFileSync(fpath2));
+        if (!_ctype(match, {headers})) {
+          return {match: undefined, resp};
+        }
         if (setCookie && global.mitm.argv.cookie) {
           headers['set-cookie'] = resetCookies(setCookie);
         }
