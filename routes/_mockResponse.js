@@ -14,9 +14,9 @@ const mock = () => {
   }
 };
 
-function mockResponse({reqs, route}) {
+function mockResponse({reqs, route}, _3d) {
   const search = searchFN('mock', reqs);
-  const match = matched(search, reqs);
+  const match = _3d ? search('_global_') : matched(search, reqs);
   if (match) {
     const {js, response} = match.route;
     if (!match.url.match('/mitm-play/websocket')) {

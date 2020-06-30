@@ -3,9 +3,9 @@ const _ctype = require('./content-type');
 
 const {matched,searchFN} = _match;
 
-function allRequest(reqs, responseHandler) {
+function allRequest(reqs, responseHandler, _3d) {
   const search = searchFN('response', reqs);
-  const match = matched(search, reqs);
+  const match =  _3d ? search('_global_') : matched(search, reqs);
   if (match) {
     const {response, contentType} = match.route;
     responseHandler.push(resp => {

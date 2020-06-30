@@ -21,7 +21,7 @@ const _resp = {
 };
 
 module.exports =  ({route, browserName}) => {
-  const {nosocket, proxy} = global.mitm.argv;
+  const {spliter, argv: {nosocket, proxy}} = global.mitm;
   const reqs = extract({route, browserName});
   const responseHandler = [];
 
@@ -31,12 +31,8 @@ module.exports =  ({route, browserName}) => {
     return;
   }
 
-  if (_3rdparties(reqs)) {
-    route.continue({});
-    return;
-  };
-
-  let skip = _skipResponse(reqs);
+  const _3d = _3rdparties(reqs);
+  const skip = _skipResponse(reqs);
   if (skip) {
     if (global.mitm.argv.verbose) {
       console.log(c.grey(`>> skip (${skip})`));
@@ -45,27 +41,27 @@ module.exports =  ({route, browserName}) => {
     return;
   }
 
-  if (_mockResponse({reqs, route})) {
+  if (_mockResponse({reqs, route}, _3d)) {
     return;
   }
 
-  if (proxy && _proxyRequest(reqs)) {
+  if (proxy && _proxyRequest(reqs, _3d)) {
     reqs.proxy = proxy;
   }
 
   //--resp can be undefined or local cached & can skip logs (.nolog)
-  let {match, resp} = _cacheResponse(reqs, responseHandler);
+  let {match, resp} = _cacheResponse(reqs, responseHandler, _3d);
 
   //--order is important and log must not contain the body modification
   if (!match || !match.route.nolog) {
-    _logResponse(reqs, responseHandler);
+    _logResponse(reqs, responseHandler, _3d);
   }
 
-  _htmlResponse(reqs, responseHandler);
-  _jsonResponse(reqs, responseHandler);
-  _cssResponse (reqs, responseHandler);
-  _jsResponse  (reqs, responseHandler);
-  _allResponse (reqs, responseHandler);
+  _htmlResponse(reqs, responseHandler, _3d);
+  _jsonResponse(reqs, responseHandler, _3d);
+  _cssResponse (reqs, responseHandler, _3d);
+  _jsResponse  (reqs, responseHandler, _3d);
+  _allResponse (reqs, responseHandler, _3d);
   if (!nosocket) {
     //--inject websocket client to html
     _addWebSocket(reqs, responseHandler);
@@ -74,10 +70,11 @@ module.exports =  ({route, browserName}) => {
   if (resp) {
     route.fulfill(Events(responseHandler, resp));
   } else if (responseHandler.length) { //call BE 
-    fetch(route, (_chngRequest(reqs) || reqs), function(resp) {
+    fetch(route, (_chngRequest(reqs, _3d) || reqs), function(resp) {
       return Events(responseHandler, resp)
     });
   } else {
+    console.log(c.redBright(`>> no-namespace (${reqs.url.split(spliter)[0]})`));
     route.continue({});
   }
 }

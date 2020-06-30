@@ -31,9 +31,9 @@ function resetCookies(setCookie) {
   return cookies;
 }
 
-function cacheResponse(reqs, responseHandler) {
+function cacheResponse(reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs);
-  const match = matched(search, reqs);
+  const match = _3d ? search('_global_') : matched(search, reqs);
   const {fn: {tilde}} = global.mitm;
   let resp, resp2;
 

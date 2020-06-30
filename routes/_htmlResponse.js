@@ -4,9 +4,9 @@ const inject = require('./inject');
 const {matched,searchFN} = _match;
 const {script_src,e_end} = inject;
 
-function htmlResponse(reqs, responseHandler) {
+function htmlResponse(reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs);
-  const match = matched(search, reqs);
+  const match =  _3d ? search('_global_') : matched(search, reqs);
   if (match) {
     const {el, js, src, response} = match.route;
     responseHandler.push(resp => {   

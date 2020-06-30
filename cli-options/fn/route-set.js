@@ -13,8 +13,6 @@ function routeSet(r, namespace, print=false) {
   }
   // Compile regex into router
   const router = {};
-  const namespaces = [];
-  const namespacer = {};
   router._namespace_ = new RegExp(`(^${namespace}|.${namespace})`);
   for (let typ of typA) {
     if (r[typ]) {
@@ -22,10 +20,6 @@ function routeSet(r, namespace, print=false) {
       for (let str of r[typ]) {
         const regex =  new RegExp(str);
         router[typ][str] = regex;
-        if (namespace==='_global_') {
-          namespaces.push(str);
-          namespacer[str] = regex;
-        }
       }  
     }
   }
@@ -36,10 +30,6 @@ function routeSet(r, namespace, print=false) {
         const regex =  new RegExp(str);
         router[typ][str] = regex;
         const site = r[typ][str];
-        if (namespace==='_global_') {
-          namespaces.push(str);
-          namespacer[str] = regex;
-        }
         if (site && site.contentType) {
           const contentType = {};
           for (let typ2 of site.contentType) {
@@ -57,10 +47,6 @@ function routeSet(r, namespace, print=false) {
     }
   }
   global.mitm.router[namespace] = router;
-  if (namespace==='_global_') {
-    global.mitm.routes[namespace]._domain_ = namespaces;
-    global.mitm.router[namespace]._domain_ = namespacer;
-  }
   if (!global.mitm.data.nolog && global.mitm.argv.verbose) {
     const msg = `>> ${namespace}\n${stringify(global.mitm.routes[namespace])}`;
     print && console.log(c.blueBright(msg));  

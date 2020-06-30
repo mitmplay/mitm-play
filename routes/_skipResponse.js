@@ -1,9 +1,9 @@
 const {searchArr, matched} = require('./match');
-const typ = 'skip';
 
 function skipResponse(reqs) {
   const {url} = reqs;
-  return matched(searchArr({typ, url}), reqs);
+  const search = searchArr({typ: 'skip', url});
+  return matched(search, reqs);
 }
 
 module.exports = skipResponse;

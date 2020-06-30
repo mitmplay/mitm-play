@@ -1,9 +1,16 @@
 const {searchArr, matched} = require('./match');
 
-function proxyRequest(reqs) {
+function proxyRequest(reqs, _3d) {
   const {url} = reqs;
-  const nopro = matched(searchArr({typ: 'noproxy', url}), reqs);
-  const proxy = matched(searchArr({typ: 'proxy', url}), reqs);
+  const search1 = searchArr({typ: 'noproxy', url});
+  const search2 = searchArr({typ: 'proxy', url});
+  if (_3d) {
+    const nopro = search1('_global_');
+    const proxy = search2('_global_');
+  } else {
+    const nopro = matched(search1, reqs);
+    const proxy = matched(search2, reqs);  
+  }
   return nopro ? false : proxy;
 }
 
