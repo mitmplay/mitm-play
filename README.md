@@ -482,6 +482,7 @@ $ mitm-play --help
     -n --nosocket        no websocket injection to html page
     -o --ommitlog        removed unnecessary console log
     -v --verbose         show more detail of console log
+    -l --logs            show no-namespace/no-hadle log
     -k --cookie          reset cookies expire date
     -g --group           create cache group/rec
     -c --chromium        run chromium browser
@@ -603,6 +604,19 @@ Add additional info in console.log
 ```
 $ mitm-play -v  <OR>
 $ mitm-play --verbose
+```
+</p>
+</details>
+<details><summary><b>-l --logs</b></summary>
+<p>
+
+Show logs of no-namespace/no-handle, usually if those need to be add to route
+
+it can be no value or either `namespace` or `handle`.
+
+```
+$ mitm-play -l  <OR>
+$ mitm-play --logs='namespace'
 ```
 </p>
 </details>

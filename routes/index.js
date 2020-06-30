@@ -21,7 +21,7 @@ const _resp = {
 };
 
 module.exports =  ({route, browserName}) => {
-  const {spliter, argv: {nosocket, proxy}} = global.mitm;
+  const {spliter, argv: {nosocket, proxy, logs}} = global.mitm;
   const reqs = extract({route, browserName});
   const responseHandler = [];
 
@@ -74,8 +74,18 @@ module.exports =  ({route, browserName}) => {
       return Events(responseHandler, resp)
     });
   } else {
-    const msg = _3d ? `>> no-namespace` :  `>> not-handle`;
-    console.log(c.redBright(`${msg} (${reqs.url.split(spliter)[0]})`));
+    if (logs) {
+      const url = reqs.url.split(spliter)[0];
+      if (_3d) {
+        if (logs===true || logs==='namespace') {
+          console.log(c.redBright(`>> no-namespace (${url})`));
+        }
+      } else {
+        if (logs===true || logs==='handle') {
+          console.log(c.redBright(`>> not-handle (${url})`));
+        }
+      }  
+    }
     route.continue({});
   }
 }
