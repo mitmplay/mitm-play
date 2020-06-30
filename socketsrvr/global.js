@@ -3,7 +3,8 @@ const WebSocket = require('ws');
 module.exports = () => {
 //ex: broadcast({data:"there"});
 function broadcast({data,_all}) {
-    const pages = [];
+  const {logs} = global.mitm.routes._global_.config;
+  const pages = [];
     const that = this;
     data = typeof(data)==='string' ? data : JSON.stringify(data);
     global.wsserver.clients.forEach(function each(client) {
@@ -14,7 +15,9 @@ function broadcast({data,_all}) {
         }
       }
     });
-    console.log('broadcast', data, pages)
+    if (logs['ws-broadcast']) {
+      console.log('broadcast', data, pages)
+    }
   }
   
   //ex: emitpage({data:"there", regex: "window"});

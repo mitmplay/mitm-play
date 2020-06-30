@@ -16,7 +16,6 @@ module.exports = (_package) => {
     -n --nosocket \t no websocket injection to html page
     -o --ommitlog \t removed unnecessary console log
     -v --verbose  \t show more detail of console log
-    -l --logs     \t show no-namespace/no-hadle log
     -k --cookie   \t reset cookies expire date
     -g --group    \t create cache group/rec
     -c --chromium \t run chromium browser

@@ -24,10 +24,13 @@ const wscmd = {
 global.mitm.wscmd = wscmd;
 
 module.exports = (client, msg) => {
-  if (msg.match(/[?;]/)) {
-    console.log(c.blue('>> ws-message: `%s...`'), msg.split(/[?;]/)[0]);
-  } else {
-    console.log(c.blue('>> ws-message: `%s`'), msg);
+  const {logs} = global.mitm.routes._global_.config;
+  if (logs['ws-receive']) {
+    if (msg.match(/[?;]/)) {
+      console.log(c.blue('>> ws-message: `%s...`'), msg.split(/[?;]/)[0]);
+    } else {
+      console.log(c.blue('>> ws-message: `%s`'), msg);
+    }
   }
   const arr = msg.replace(/\s+$/, '').match(/^ *([\w:]+) *(\{.*)/);
   if (arr) {

@@ -49,7 +49,6 @@ module.exports = () => {
   argsChg('g', 'group');
   argsChg('r', 'route');
   argsChg('h', 'help');
-  argsChg('l', 'logs');
   argsChg('s', 'save');
   argsChg('z', 'lazy');
   argsChg('u', 'url');

@@ -3,9 +3,41 @@ const stringify = require('./stringify');
 const typA = ['skip','noproxy','proxy'];
 const typO = ['request','response','mock','cache','log','html','json','css','js'];
 
+const logs = {
+  'no-namespace': false,
+  'not-handle':   false,
+  'ws-receive':   false,
+  'ws-broadcast': false,
+  skip:    false,
+  request: true,
+  noproxy: true,
+  proxy:   true,
+  mock:    true,
+  cache:   true,
+  log:     true,
+  html:    true,
+  json:    true,
+  css:     true,
+  js:      true,
+  response:true,
+}
+
 function routeSet(r, namespace, print=false) {  
   global.mitm.routes[namespace] = r;
   if (namespace==='_global_') {
+    debugger;
+    if (r.config) {
+      if (r.config.logs) {
+          r.config.logs = {
+            ...logs,
+            ...r.config.logs,
+          }
+      } else {
+        r.config.logs = logs;
+      }
+    } else {
+      r.config = {logs};
+    }
     global.mitm.routes._global_.mock = {
       ...global.mitm.routes._global_.mock,
       ...global.mitm.__mock

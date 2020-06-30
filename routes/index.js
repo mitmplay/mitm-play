@@ -21,8 +21,9 @@ const _resp = {
 };
 
 module.exports =  ({route, browserName}) => {
-  const {spliter, argv: {nosocket, proxy, logs}} = global.mitm;
+  const {spliter, routes, argv: {nosocket, proxy}} = global.mitm;
   const reqs = extract({route, browserName});
+  const {logs} = routes._global_.config;
   const responseHandler = [];
 
   // catch unknown url scheme & respond it 
@@ -77,11 +78,11 @@ module.exports =  ({route, browserName}) => {
     if (logs) {
       const url = reqs.url.split(spliter)[0];
       if (_3d) {
-        if (logs===true || logs==='namespace') {
+        if (logs['no-namespace']) {
           console.log(c.redBright(`>> no-namespace (${url})`));
         }
       } else {
-        if (logs===true || logs==='handle') {
+        if (logs['not-handle']) {
           console.log(c.redBright(`>> not-handle (${url})`));
         }
       }  
