@@ -32,7 +32,7 @@ module.exports =  ({route, browserName}) => {
   }
 
   const _3d = _3rdparties(reqs);
-  const skip = _skipResponse(reqs);
+  const skip = _skipResponse(reqs, _3d);
   if (skip) {
     if (global.mitm.argv.verbose) {
       console.log(c.grey(`>> skip (${skip})`));
@@ -74,7 +74,8 @@ module.exports =  ({route, browserName}) => {
       return Events(responseHandler, resp)
     });
   } else {
-    console.log(c.redBright(`>> no-namespace (${reqs.url.split(spliter)[0]})`));
+    const msg = _3d ? `>> no-namespace` :  `>> not-handle`;
+    console.log(c.redBright(`${msg} (${reqs.url.split(spliter)[0]})`));
     route.continue({});
   }
 }

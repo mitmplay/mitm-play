@@ -61,17 +61,16 @@ mitm-play
 
 # Features
 
-| Feature     | payload      | note                                       
+| Feature     | payload      | note
 |-------------|--------------|----------------------------------------
 | `screenshot`| ----------   | DOM specific rules for taking screenshot
-| `skip`      | ----------   | array ..of `[domain]` - browser will handle it    
-| `exclude`   | ----------   | array ..of `[domain]` - browser will handle it    
+| `skip`      | ----------   | array ..of `[domain]` - browser will handle it
 | `request`   | __request__  | modify request object - call to remote server
-| `noproxy`   | ----------   | array ..of `[domain]` - will serve directly    
-| `proxy`     | ----------   | array ..of `[domain]` - will serve using proxy    
-| `mock`      | __response__ | modify response object - no call to remote server  
-| `cache`     | __response__ | save first remote call to local - next, read from cache 
-| `log`       | __response__ | save reqs/resp call to local - call to remote server   
+| `noproxy`   | ----------   | array ..of `[domain]` - will serve directly
+| `proxy`     | ----------   | array ..of `[domain]` - will serve using proxy
+| `mock`      | __response__ | modify response object - no call to remote server
+| `cache`     | __response__ | save first remote call to local - next, read from cache
+| `log`       | __response__ | save reqs/resp call to local - call to remote server
 |             | __response__ | modify response based on contentType - call remote server
 | =>>         | * `html`     | - response handler (replace / update + JS)
 | =>>         | * `json`     | - response handler (replace / update)
@@ -91,7 +90,7 @@ Usually html page load with several assets (image, js & css) that not belong to 
 
 In below example the route is having a `js` object and the process of checking narrated as: if there is a JS assets come from `gstatic.com`, then the response will get replace with an empty string.
 
-Namespaces: `_global_`, `google.com` on nodejs global scope:  
+Namespaces: `_global_`, `google.com` on nodejs global scope:
 ```js
 global.mitm.route = {
   '_global_': {
@@ -128,7 +127,6 @@ routes = {
   title:   '',
   screenshot: {}, //user interaction rules & observe DOM-Element
   skip:    [], //start routing rules
-  exclude: [],
   request: {},
   noproxy: [], 
   proxy:   [], // request with proxy
@@ -203,15 +201,6 @@ screenshot: {
 Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
 ```js
 skip: ['wp-admin'],
-```
-</p>
-</details>
-<details><summary><b>Exclude</b></summary>
-<p>
-
-Exclude match **`url`** rule in which having same *Origin/Referer* to the route namespace, `mitm-play` will not process further.
-```js
-exclude: ['wp-admin'],
 ```
 </p>
 </details>

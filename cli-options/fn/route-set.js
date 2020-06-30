@@ -1,6 +1,6 @@
 const c = require('ansi-colors');
 const stringify = require('./stringify');
-const typA = ['skip','exclude','noproxy','proxy'];
+const typA = ['skip','noproxy','proxy'];
 const typO = ['request','response','mock','cache','log','html','json','css','js'];
 
 function routeSet(r, namespace, print=false) {  

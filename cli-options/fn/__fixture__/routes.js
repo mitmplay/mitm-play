@@ -11,11 +11,11 @@ const routes = {
   'google.com': {
     title: 'Search - google',
     url: 'https://google.com/search?q=github+playwright',
-    exclude: [
-      'exclude.com'
+    skip: [
     ],
     skip: [
-      'search'
+      'search',
+      'exclude.com',
     ],
     html: {
       'www.gtm.com/search': {

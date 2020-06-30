@@ -5,7 +5,7 @@ const {matched,searchFN} = _match;
 
 function jsResponse(reqs, responseHandler, _3d) {
   const search = searchFN('js', reqs);
-  const match =  _3d ? search('_global_') : matched(search, reqs);
+  const match = _3d ? search('_global_') : matched(search, reqs);
   if (match) {
     const {response} = match.route;
     responseHandler.push(resp => {

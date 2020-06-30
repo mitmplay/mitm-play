@@ -66,14 +66,7 @@ const matched = (search, {url, headers}) => {
 
   if (!match && (origin || referer)) {
     let orref = tldomain(origin || referer);
-    const route = global.mitm.routes[orref]
-    let exclude = false;
-    if (route && route.exclude) {
-      exclude = route.exclude.find(e => domain.match(e)); 
-    }
-    if (!exclude) {
-      match = search(orref);
-    }        
+    match = search(orref);
   } 
   if (!match) {
     match = search('_global_');
