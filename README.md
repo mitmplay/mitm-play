@@ -1,5 +1,5 @@
 # mitm-play
-Man in the middle using playwright
+### Man in the middle using playwright
 
 <details><summary><b>mitm-play in action</b></summary>
 <p>
@@ -129,7 +129,7 @@ routes = {
   skip:    [], //start routing rules
   request: {},
   noproxy: [], 
-  proxy:   [], // request with proxy
+  proxy:   [], //request with proxy
   mock:    {}, 
   cache:   {},
   log:     {},
