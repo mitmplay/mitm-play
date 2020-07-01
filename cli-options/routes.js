@@ -1,3 +1,5 @@
+const logs = require('./fn/logs');
+
 module.exports = () => {  
   const _global_vars = () => {
     return {body: global.mitm.fn.wsclient()};
@@ -13,6 +15,9 @@ module.exports = () => {
   global.mitm.routes = {
     '_global_': {
       mock,
+      config: {
+        logs: logs()
+      }
     }
   };
   global.mitm.router = {
