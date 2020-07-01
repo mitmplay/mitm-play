@@ -40,7 +40,8 @@ function cacheResponse(reqs, responseHandler, _3d) {
 
   if (match) {
     const {url} = reqs;
-    const {hidden, response} = match.route;
+    const host = (new URL(url)).host;
+    const {response, session, hidden} = match.route;
     let {fpath1, fpath2} = fpathcache({match, reqs});
  
     let remote = true;
@@ -54,6 +55,11 @@ function cacheResponse(reqs, responseHandler, _3d) {
         } = JSON.parse(fs.readFileSync(fpath2));
         if (!_ctype(match, {headers})) {
           return {match: undefined, resp};
+        }
+        if (session) {
+          const path = session===true ? '' : session;
+          global.mitm.fn.session(host, path);
+          global.mitm._session_ = true;
         }
         if (setCookie && global.mitm.argv.cookie) {
           headers['set-cookie'] = resetCookies(setCookie);
@@ -80,6 +86,11 @@ function cacheResponse(reqs, responseHandler, _3d) {
       // get from remote
       responseHandler.push(resp => {
         if (_ctype(match, resp)) {
+          if (session) {
+            const path = session===true ? '' : session;
+            global.mitm.fn.session(host, path);
+            global.mitm._session_ = true;
+          }
           fpath1 = `${fpath1}.${_ext(resp)}`;
           if (logs.cache) {
             if (hidden!==2) {

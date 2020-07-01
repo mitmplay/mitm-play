@@ -9,12 +9,12 @@ function htmlResponse(reqs, responseHandler, _3d) {
   const match = _3d ? search('_global_') : matched(search, reqs);
   const {logs} = global.mitm.routes._global_.config;
   if (match) {
-    const {el, js, src, response} = match.route;
+    const {el, js, src, response, hidden} = match.route;
     responseHandler.push(resp => {   
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/html')) {
         const len = match.log.length;
-        if (logs.html) {
+        if (logs.html && !hidden) {
           console.log(`${'-'.repeat(len)}\n${c.yellowBright(match.log)}`);
         }
         if (typeof(match.route)==='string') {

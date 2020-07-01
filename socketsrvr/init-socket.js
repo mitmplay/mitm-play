@@ -34,10 +34,9 @@ module.exports = () => {
     }
     const page = request.url.match(/page=(\w+)/)[1];
     client._page = `${host}:${page}`;
-    if (page==='window') {
-      const session = (new Date).toISOString().split('.')[0].replace(/[:-]/g,'');
-      console.log(c.yellowBright(`${session}-${host}`));
-      global.mitm.session = `${session}-${host}`;
+  
+    if (page==='window' && !global.mitm._session_) {
+      global.mitm.fn.session(host);
     }
 
     function incoming(data) {

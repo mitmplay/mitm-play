@@ -13,6 +13,7 @@ const routeSet = require('./fn/route-set');
 const tldomain = require('./fn/tldomain');
 const wsclient = require('./fn/wsclient');
 const debounce = require('./fn/debounce');
+const session = require('./fn/session');
 const loadJS = require('./fn/loadJS');
 const clear = require('./fn/clear');
 
@@ -27,6 +28,7 @@ module.exports = () => {
     routeSet,
     execFile,
     debounce,
+    session,
     loadJS,
     clear,
     hello,

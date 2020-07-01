@@ -286,7 +286,8 @@ Save the first request to your local disk so next request will serve from there.
 ```js
 cache: {
   'amazon.com': {
-    contentType: ['javascript', 'image'],
+    contentType: ['javascript', 'image'], //required! 
+    session: true, // optional - set session id
     hidden: true, // optional - no consolo.log
     nolog: true, // optional - disable logging
   }
@@ -353,6 +354,7 @@ html: {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
+    hidden: true, // optional - no consolo.log
   },
 },
 ```

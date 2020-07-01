@@ -28,6 +28,8 @@ module.exports = () => {
       argv,
       fn: {home}
     } = global.mitm;
+    global.mitm.pages = pages;
+    global.mitm.browsers = browsers;
     for (let browserName in argv.browser) {
       const options = {headless: false};
       let page, browser, bcontext;
@@ -77,9 +79,12 @@ module.exports = () => {
       } else {
         browser = await playBrowser.launch(options);
         const context = await browser.newContext({viewport: { height: 734, width: 800 }});
-        page = await context.newPage();  
+        page = await context.newPage();
         bcontext = context;
       }
+      bcontexts[browserName] = bcontext;
+      browsers[browserName] = browser;
+      pages[browserName] = page;
       bcontext.route(/.*/, (route, request) => {
         routes({route, request, bcontext, browserName});
       });
@@ -95,12 +100,6 @@ module.exports = () => {
       page.on('close', () => {
         process.exit();
       });
-
-      bcontexts[browserName] = bcontext;
-      browsers[browserName] = browser;
-      pages[browserName] = page;
-    }    
-    global.mitm.browsers = browsers;
-    global.mitm.pages = pages;
-  })();  
+    }
+  })();
 }
