@@ -12,14 +12,17 @@ const {matched,searchFN} = _match;
 function logResponse(reqs, responseHandler, _3d) {
   const search = searchFN('log', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
+  const {logs} = global.mitm.routes._global_.config;
   if (match) {
     const {hidden, log, response} = match.route;
     const stamp = (new Date).toISOString().replace(/[:-]/g, '');
     responseHandler.push(resp => {
       if (_ctype(match, resp)) {
         let {fpath1, fpath2} = fpathflat({match, reqs, stamp});
-        if (!hidden) {
-          console.log(c.bold.blueBright(match.log));
+        if (logs.log) {
+          if (!hidden) {
+            console.log(c.bold.blueBright(match.log));
+          }
         }
         if (log) {
           //complete r/resp json log

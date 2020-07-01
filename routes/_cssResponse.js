@@ -6,12 +6,15 @@ const {matched,searchFN} = _match;
 function cssResponse(reqs, responseHandler, _3d) {
   const search = searchFN('css', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
+  const {logs} = global.mitm.routes._global_.config;
   if (match) {
     const {response} = match.route;
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/css')) {
-        console.log(c.greenBright(match.log));
+        if (logs.css) {
+          console.log(c.greenBright(match.log));
+        }
         if (typeof(match.route)==='string') {
           resp.body = addReplaceBody(resp.body, match);
         } else {        

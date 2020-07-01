@@ -17,10 +17,13 @@ const mock = () => {
 function mockResponse({reqs, route}, _3d) {
   const search = searchFN('mock', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
+  const {logs} = global.mitm.routes._global_.config;
   if (match) {
     const {js, response} = match.route;
-    if (!match.url.match('/mitm-play/websocket')) {
-      console.log(c.cyanBright(match.log));
+    if (logs.mock) {
+      if (!match.url.match('/mitm-play/websocket')) {
+        console.log(c.cyanBright(match.log));
+      }
     }
     let resp = mock();
     if (typeof(match.route)==='string') {

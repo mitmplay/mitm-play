@@ -35,7 +35,7 @@ module.exports =  ({route, browserName}) => {
   const _3d = _3rdparties(reqs);
   const skip = _skipResponse(reqs, _3d);
   if (skip) {
-    if (global.mitm.argv.verbose) {
+    if (logs.skip) {
       console.log(c.grey(`>> skip (${skip})`));
     }
     route.continue({});

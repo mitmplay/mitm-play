@@ -7,13 +7,16 @@ const {script_src,e_end} = inject;
 function htmlResponse(reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
+  const {logs} = global.mitm.routes._global_.config;
   if (match) {
     const {el, js, src, response} = match.route;
     responseHandler.push(resp => {   
       const contentType = `${resp.headers['content-type']}`;
       if (contentType.match('text/html')) {
         const len = match.log.length;
-        console.log(`${'-'.repeat(len)}\n${c.yellowBright(match.log)}`);
+        if (logs.html) {
+          console.log(`${'-'.repeat(len)}\n${c.yellowBright(match.log)}`);
+        }
         if (typeof(match.route)==='string') {
           resp.body = match.route;
         } else {        

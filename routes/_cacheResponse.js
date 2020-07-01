@@ -34,7 +34,8 @@ function resetCookies(setCookie) {
 function cacheResponse(reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {fn: {tilde}} = global.mitm;
+  const {routes,fn: {tilde}} = global.mitm;
+  const {logs} = routes._global_.config;
   let resp, resp2;
 
   if (match) {
@@ -58,8 +59,10 @@ function cacheResponse(reqs, responseHandler, _3d) {
           headers['set-cookie'] = resetCookies(setCookie);
         }
         fpath1 = `${fpath1}.${_ext({headers})}`;
-        if (!global.mitm.argv.ommit.cache && !hidden) {
-          console.log(c.greenBright(`>> cache (${url}).match(${match.key})`));
+        if (logs.cache) {
+          if (!global.mitm.argv.ommit.cache && !hidden) {
+            console.log(c.greenBright(`>> cache (${url}).match(${match.key})`));
+          }  
         }
         const body = fs.readFileSync(fpath1);
         resp = {url, status, headers, body};
@@ -78,8 +81,10 @@ function cacheResponse(reqs, responseHandler, _3d) {
       responseHandler.push(resp => {
         if (_ctype(match, resp)) {
           fpath1 = `${fpath1}.${_ext(resp)}`;
-          if (hidden!==2) {
-            console.log(c.magentaBright(`>> cache (${url}).match(${match.key})`));
+          if (logs.cache) {
+            if (hidden!==2) {
+              console.log(c.magentaBright(`>> cache (${url}).match(${match.key})`));
+            }
           }
           const meta = metaResp({reqs, resp});
           const body = resp.body;

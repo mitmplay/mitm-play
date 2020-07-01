@@ -3,23 +3,24 @@ const stringify = require('./stringify');
 const typA = ['skip','noproxy','proxy'];
 const typO = ['request','response','mock','cache','log','html','json','css','js'];
 
-const logs = {
-  'no-namespace': false,
-  'not-handle':   false,
-  'ws-receive':   false,
-  'ws-broadcast': false,
-  skip:    false,
-  request: true,
-  noproxy: true,
-  proxy:   true,
-  mock:    true,
-  cache:   true,
-  log:     true,
-  html:    true,
-  json:    true,
-  css:     true,
-  js:      true,
-  response:true,
+const logs = function(_silent=false) {
+  return {
+    'no-namespace':  _silent ? false : true,
+    'not-handle':    _silent ? false : true,
+    'ws-receive':    _silent ? false : true,
+    'ws-broadcast':  _silent ? false : true,
+    silent:  _silent ? false : false, //ok
+    skip:    _silent ? false : false, //ok
+    request: _silent ? false : true, //ok
+    mock:    _silent ? false : true, //ok
+    cache:   _silent ? false : true, //ok
+    log:     _silent ? false : true, //ok
+    html:    _silent ? false : true, //ok
+    json:    _silent ? false : true, //ok
+    css:     _silent ? false : true, //ok
+    js:      _silent ? false : true, //ok
+    response:_silent ? false : true, //ok
+  }
 }
 
 function routeSet(r, namespace, print=false) {  
@@ -29,14 +30,14 @@ function routeSet(r, namespace, print=false) {
     if (r.config) {
       if (r.config.logs) {
           r.config.logs = {
-            ...logs,
+            ...logs(r.config.logs.silent),
             ...r.config.logs,
           }
       } else {
-        r.config.logs = logs;
+        r.config.logs = logs();
       }
     } else {
-      r.config = {logs};
+      r.config = {logs: logs()};
     }
     global.mitm.routes._global_.mock = {
       ...global.mitm.routes._global_.mock,
