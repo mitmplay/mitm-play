@@ -486,22 +486,24 @@ _global_ = {
 
 ```js
 // toggle to show/hide from console.log()
-_global_.config.logs = {
-  'no-namespace':  true,
-  'not-handle':    true,
-  'ws-receive':    true,
-  'ws-broadcast':  true,
-  silent: false, //will hide all
-  skip:   false,
-  request: true,
-  mock:    true,
-  cache:   true,
-  log:     true,
-  html:    true,
-  json:    true,
-  css:     true,
-  js:      true,
-  response:true,
+_global_.config = {
+  logs: {
+    'no-namespace':  true,
+    'not-handle':    true,
+    'ws-receive':    true,
+    'ws-broadcast':  true,
+    silent: false, //true: hide all
+    skip:   false,
+    request: true,
+    mock:    true,
+    cache:   true,
+    log:     true,
+    html:    true,
+    json:    true,
+    css:     true,
+    js:      true,
+    response:true,
+  }
 }
 ```
 </p>
