@@ -21,7 +21,7 @@ const _resp = {
 };
 
 module.exports =  ({route, browserName}) => {
-  const {spliter, routes, argv: {nosocket, proxy}} = global.mitm;
+  const {splitter, routes, argv: {nosocket, proxy}} = global.mitm;
   const reqs = extract({route, browserName});
   const {logs} = routes._global_.config;
   const responseHandler = [];
@@ -76,7 +76,7 @@ module.exports =  ({route, browserName}) => {
     });
   } else {
     if (logs) {
-      const url = reqs.url.split(spliter)[0];
+      const url = reqs.url.split(splitter)[0];
       if (_3d) {
         if (logs['no-namespace']) {
           console.log(c.redBright(`>> no-namespace (${url})`));

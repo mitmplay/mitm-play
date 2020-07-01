@@ -30,9 +30,9 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
   }
 
   _fetch(url, {...reqs, ...opts}).then(resp => {
-    const {argv, spliter} = global.mitm;
+    const {argv, splitter} = global.mitm;
     if (proxy && argv.verbose) {
-      console.log(c.grey(`>> proxy (${url.split(spliter)[0]})`));
+      console.log(c.grey(`>> proxy (${url.split(splitter)[0]})`));
     }
     const _headers = resp.headers.raw();
     const status = resp.status;

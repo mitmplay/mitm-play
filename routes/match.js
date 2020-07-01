@@ -32,10 +32,10 @@ const searchFN = (typ, {url}) => {
 
     const obj = router[namespace][typ];
     const route = routes[namespace][typ];
-    const spliter = global.mitm.spliter;
+    const splitter = global.mitm.splitter;
 
     for (let key in route) {
-      const split = url.split(spliter);
+      const split = url.split(splitter);
       const path = `${split[0]}${split.length>1 ? '?' : ''}`;
       const arr = path.match(obj[key]);
 
