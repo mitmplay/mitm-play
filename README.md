@@ -457,6 +457,56 @@ response: {
 </p>
 </details>
 
+# _\_global\__ route
+A special route to handle in global scope (without namespace) and serving as a common config. some default setting in config can be override as needed
+<details><summary><b>Common route rules</b></summary>
+<p>
+
+```js
+_global_ = {
+  skip:    [], //start routing rules
+  request: {},
+  noproxy: [], 
+  proxy:   [], //request with proxy
+  mock:    {}, 
+  cache:   {},
+  log:     {},
+  html:    {},
+  json:    {},
+  css:     {},
+  js:      {},
+  response:{}, //end routing rules
+  config:  {}, //see Default config below
+}
+```
+</p>
+</details>
+<details><summary><b>Default config</b></summary>
+<p>
+
+```js
+// toggle to show/hide from console.log()
+_global_.config.logs = {
+  'no-namespace':  true,
+  'not-handle':    true,
+  'ws-receive':    true,
+  'ws-broadcast':  true,
+  silent: false, //will hide all
+  skip:   false,
+  request: true,
+  mock:    true,
+  cache:   true,
+  log:     true,
+  html:    true,
+  json:    true,
+  css:     true,
+  js:      true,
+  response:true,
+}
+```
+</p>
+</details>
+
 # HTTP_PROXY
 mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system required proxy to access internet.
 
