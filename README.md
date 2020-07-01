@@ -458,7 +458,9 @@ response: {
 </details>
 
 # _\_global\__ route
-A special route to handle in global scope (without namespace) and serving as a common config. some default setting in config can be override as needed
+A special route to handle global scope (without namespace) and serving as a common config. 
+
+The default `config.logs` setting can be override as needed.
 <details><summary><b>Common route rules</b></summary>
 <p>
 
