@@ -1,3 +1,5 @@
+
+const c = require('ansi-colors');
 const _match = require('./match');
 const _ctype = require('./content-type');
 
