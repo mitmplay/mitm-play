@@ -108,7 +108,9 @@ table {
   /* width: 100%; */
 }
 td {
-  border: 1px solid #999;
+  border-bottom: 3px solid #c0d8cca1;
+  /* background-color: aliceblue; */
+  font-weight: bold;
   padding: 0.1rem;
 }
 </style>

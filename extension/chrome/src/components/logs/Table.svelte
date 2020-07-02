@@ -37,7 +37,11 @@ window.mitm.files.log_events.LogsTable = () => {
   <div class="vbox left">
     <table>
       <tr>
-        <td>-Logs-</td>
+        <td>
+          <div class="td-header">
+            -Logs-
+          </div>
+        </td>
       </tr>
     </table>
     <div class="table-container">
@@ -73,6 +77,9 @@ window.mitm.files.log_events.LogsTable = () => {
   overflow: auto;
   height: calc(100vh - 45px);
 }
+.td-header {
+  padding-left: 5px;
+}
 table {
   border-collapse: collapse;
   font-family:  Consolas, Lucida Console, Courier New, monospace;
@@ -80,7 +87,10 @@ table {
   width: 100%;
 }
 td {
-  border: 1px solid #999;
+  /* border: 1px solid #999; */
+  border-bottom: 3px solid #c0d8cca1;
+  background-color: aliceblue;
+  font-weight: bold;
   padding: 0.1rem;
 }
 </style>

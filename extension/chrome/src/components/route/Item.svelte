@@ -56,12 +56,14 @@ function clickHandler(e) {
   background: greenyellow;
 }
 td {
-  border: 1px solid #999;
+  border-bottom: 3px solid #c0d8cca1;
 }
 .td-item,
 .td-show {
   cursor: pointer;
   padding: 0.1rem;
+  line-height: 15px;
+  padding-left: 5px;  
 }
 .td-item.true {
   color: blue;
