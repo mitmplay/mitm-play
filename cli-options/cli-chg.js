@@ -35,6 +35,7 @@ module.exports = () => {
     argv = global.mitm.argv;
   }
 
+  argsChg('t', 'incognito');
   argsChg('i', 'insecure');
   argsChg('p', 'pristine');
   argsChg('n', 'nosocket');

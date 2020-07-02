@@ -18,12 +18,12 @@ module.exports = (_package) => {
     -v --verbose  \t show more detail of console log
     -k --cookie   \t reset cookies expire date
     -g --group    \t create cache group/rec
+    -t --incognito\t set chromium incognito
     -c --chromium \t run chromium browser
     -f --firefox  \t run firefox browser
     -w --webkit   \t run webkit browser
     -x --proxy    \t a proxy request
     -z --lazy     \t delay ~400ms click action
-    --incognito   \t set chromium incognito
     --proxypac    \t set chromium proxypac
     --plugins     \t add chrome plugins
     --debug       \t show ws messages

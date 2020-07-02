@@ -1,24 +1,10 @@
 const c = require('ansi-colors');
 const playwright = require('playwright');
-const {extract} = require('../routes/fetch');
+const args = require('./chromium-args');
 const routes = require('../routes');
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-//https://stackoverflow.com/questions/21177387/caution-provisional-headers-are-shown-in-chrome-debugger/55865689#55865689
-//https://peter.sh/experiments/chromium-command-line-switches/#enable-automation
-//https://chromedriver.chromium.org/capabilities
-const args = [
-  '--disable-features=IsolateOrigins,site-per-process',
-  '--disable-site-isolation-trials=1',
-  '--disable-session-crashed-bubble',
-  '--ignore-certificate-errors',
-  '--disable-site-isolation=1',
-  '--disable-web-security=1',
-  '--disable-notifications',
-  '--disable-infobars',
-  '--force-dark-mode',
-  '--test-type',
-];
+
 const pages = {};
 const browsers = {};
 const bcontexts = {};
@@ -78,7 +64,8 @@ module.exports = () => {
         bcontext = browser;
       } else {
         browser = await playBrowser.launch(options);
-        const context = await browser.newContext({viewport: { height: 734, width: 800 }});
+        //const context = await browser.newContext({viewport: { height: 734, width: 800 }});
+        const context = await browser.newContext({ viewport: null });
         page = await context.newPage();
         bcontext = context;
       }

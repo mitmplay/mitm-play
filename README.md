@@ -540,12 +540,12 @@ $ mitm-play --help
     -v --verbose         show more detail of console log
     -k --cookie          reset cookies expire date
     -g --group           create cache group/rec
+    -t --incognito       set chromium incognito
     -c --chromium        run chromium browser
     -f --firefox         run firefox browser
     -w --webkit          run webkit browser
     -x --proxy           a proxy request
     -z --lazy            delay ~400ms click action
-    --incognito          set chromium incognito
     --proxypac           set chromium proxypac
     --plugins            add chrome plugins
     --debug              show ws messages
@@ -679,8 +679,19 @@ $ mitm-play --cookie
 .
 
 ```
-$ mitm-play -  <OR>
-$ mitm-play --
+$ mitm-play -g  <OR>
+$ mitm-play --group
+```
+</p>
+</details>
+<details><summary><b>-t --incognito</b></summary>
+<p>
+
+By Default program will run in normal / pristine browser, adding this option will result when openting chrome browser, it will show in Incognito mode.
+
+```
+$ mitm-play -t  <OR>
+$ mitm-play --incognito
 ```
 </p>
 </details>
@@ -736,16 +747,6 @@ Delay click action ~400ms, to provide enough time for screenshot to be taken
 ```
 $ mitm-play -z  <OR>
 $ mitm-play --lazy
-```
-</p>
-</details>
-<details><summary><b>--incognito</b></summary>
-<p>
-
-By Default program will run in normal / pristine browser, adding this option will result when openting chrome browser, it will show in Incognito mode.
-
-```
-$ mitm-play --incognito
 ```
 </p>
 </details>

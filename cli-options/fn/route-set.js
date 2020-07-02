@@ -8,7 +8,6 @@ const typO = ['request','response','mock','cache','log','html','json','css','js'
 function routeSet(r, namespace, print=false) {  
   global.mitm.routes[namespace] = r;
   if (namespace==='_global_') {
-    debugger;
     if (r.config) {
       if (r.config.logs) {
           r.config.logs = {
