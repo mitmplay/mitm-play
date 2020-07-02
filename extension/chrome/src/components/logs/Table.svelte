@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
 import Show from './Show.svelte';
+import Button from './Button.svelte';
 import { source } from './stores.js';
 
 let data =  [];
@@ -44,6 +45,7 @@ window.mitm.files.log_events.LogsTable = () => {
         </td>
       </tr>
     </table>
+    <Button/>
     <div class="table-container">
       <table>
         {#each Object.keys(_data) as item}
