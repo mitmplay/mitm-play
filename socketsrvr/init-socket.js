@@ -1,14 +1,23 @@
 const express = require('express');
 const http = require('http');
+const fs = require('fs-extra');
+const https = require('https');
 const WebSocket = require('ws');
 const c = require('ansi-colors');
 const msgParser = require('./msg-parser');
+const path = `${global.__app}/cert`;
 
 module.exports = () => {
   const app = express();
   const server = http.createServer(app);
-  const wsserver = new WebSocket.Server({ server, path: "/ws" });
+  const servers = https.createServer({
+    cert: fs.readFileSync(`${path}/selfsigned.crt`),
+    key: fs.readFileSync(`${path}/selfsigned.key`)
+  }, app);
+  const ws = new WebSocket.Server({ server, path: "/ws" });
+  const wss = new WebSocket.Server({ server: servers, path: "/ws" });
   server.listen(3000);
+  servers.listen(3001);
   
   app.use(express.static(global.mitm.home));
   app.get('/mitm-play/websocket.js', (r, res) => {
@@ -46,6 +55,8 @@ module.exports = () => {
     client.on('message', incoming);
     client.send('connected');
   }
-  wsserver.on('connection', connection);
-  global.wsserver = wsserver;
+  ws.on('connection', connection);
+  wss.on('connection', connection);
+  global.wsserver = ws;
+  global.wsservers = wss;
 }

@@ -15,6 +15,14 @@ function broadcast({data,_all}) {
         }
       }
     });
+    global.wsservers.clients.forEach(function each(client) {
+      if (client.readyState === WebSocket.OPEN) {
+        if (_all || client !== that) {
+          pages.push(client._page);
+          client.send(data);
+        }
+      }
+    });
     if (logs['ws-broadcast']) {
       console.log('broadcast', data, pages)
     }
@@ -25,6 +33,12 @@ function broadcast({data,_all}) {
     const pages = [];
     data = typeof(data)==='string' ? data : JSON.stringify(data);
     global.wsserver.clients.forEach(function each(client) {
+      if (client.readyState === WebSocket.OPEN && client._page.match(regex)) {
+        pages.push(client._page);
+        client.send(data);
+      }
+    });
+    global.wsservers.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN && client._page.match(regex)) {
         pages.push(client._page);
         client.send(data);
