@@ -7,15 +7,20 @@ function ehandler(err) {
   }
 }
 
-function clear() {
-  const {browser,delete: d} = global.mitm.argv;
-  for (let browserName in browser) {
-    if (d===true) {
-      fs.remove(`${global.mitm.home}/${browserName}/cache`, ehandler);
-      fs.remove(`${global.mitm.home}/${browserName}/log`,   ehandler);
-    } else {
-      fs.remove(`${global.mitm.home}/${browserName}/${d}`,  ehandler);
-    }
+function clear(o) {
+  if (o) {
+    const {browserName, delete: d} = o;
+    fs.remove(`${global.mitm.home}/${browserName}/${d}`,  ehandler);
+  } else {
+    const {browser, delete: d} = global.mitm.argv;
+    for (let browserName in browser) {
+      if (d===true) {
+        fs.remove(`${global.mitm.home}/${browserName}/cache`, ehandler);
+        fs.remove(`${global.mitm.home}/${browserName}/log`,   ehandler);
+      } else {
+        fs.remove(`${global.mitm.home}/${browserName}/${d}`,  ehandler);
+      }
+    }  
   }
 }
 
