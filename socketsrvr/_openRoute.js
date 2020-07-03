@@ -6,7 +6,7 @@ module.exports = ({data}) =>{
   if (platform==='win32') {  
     pc.exec(`start "" "${data.path}"`);
   } else {
-    pc.exec(`code "" "${data.path}"`);
+    pc.exec(`code "${data.path}"`);
   }
   return 'OK';
 };
