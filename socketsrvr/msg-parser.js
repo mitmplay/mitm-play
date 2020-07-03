@@ -8,11 +8,13 @@ const $openHome = require('./_openHome');
 const $openRoute = require('./_openRoute');
 const $saveRoute = require('./_saveRoute');
 const $screencap = require('./_screencap');
+const $clearLogs = require('./_clearLogs');
 
 // accessible from client
 const wscmd = {
   ..._global(),
   ..._client(),
+  $clearLogs,
   $screencap,
   $saveRoute,
   $openRoute,
