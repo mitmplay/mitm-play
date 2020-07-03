@@ -21,7 +21,7 @@ module.exports = () => {
     res.send('Hi Mitm-play!')
   })
 
-  wsserver.on('connection', function connection(client, request) {
+  function connection(client, request) {
     let host;
     try {
       if (request.headers.origin!=='null') {
@@ -45,6 +45,7 @@ module.exports = () => {
 
     client.on('message', incoming);
     client.send('connected');
-  });
+  }
+  wsserver.on('connection', connection);
   global.wsserver = wsserver;
 }
