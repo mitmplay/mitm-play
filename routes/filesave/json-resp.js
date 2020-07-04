@@ -48,9 +48,9 @@ module.exports = ({reqs, resp, match}) => {
           url,
         },
         respBody,
+        reqsBody,
         respHeader,
         reqsHeader,
-        reqsBody,
       };
       if (Object.keys(urlParams).length>1) {
         jsonResp.urlParams = urlParams;

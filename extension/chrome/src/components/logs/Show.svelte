@@ -26,7 +26,7 @@ function codeMirror(code) {
   }
   setTimeout(() => setupCodeMiror(), 1)
   return code.replace(/"(.+)"(:)/g, replacer).
-  replace(/ (resp|reqs|url)(\w+):/g, (m,p1,p2) => ` "${p1}${p2}":`);
+  replace(/ (resp|reqs|gene)(\w+):/g, (m,p1,p2) => ` "${p1}${p2}":`);
 }
 
 async function getSource() {
