@@ -22,7 +22,7 @@
 		"page": "options.html",
 		"chrome_style": true
 	},
-	"content_security_policy": "script-src 'self' http://localhost:* https://localhost:*; object-src 'self'",
+	"content_security_policy": "script-src 'self' https://localhost:*; object-src 'self'",
 	"permissions": [
 	"storage",
 	"<all_urls>",

@@ -2,12 +2,7 @@ const _ws_msgParser = require('./_ws_msg-parser');
 const _ws_inIframe = require('./_ws_in-iframe');
 
 module.exports = () => {
-  let ws;
-  if (location.protocol==='https:') {
-    ws = new WebSocket(`wss://localhost:3001/ws?page=${_ws_inIframe()}`);
-  } else {
-    ws = new WebSocket(`ws://localhost:3000/ws?page=${_ws_inIframe()}`);
-  }
+  const ws = new WebSocket(`wss://localhost:3001/ws?page=${_ws_inIframe()}`);
 
   ws.onmessage = function (event) { 
     _ws_msgParser(event, event.data);
