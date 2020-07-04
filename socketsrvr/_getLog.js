@@ -1,8 +1,10 @@
 module.exports = () =>{ 
+  const {files:{_log, log}} = global.mitm;
   let data = {};
-  global.mitm.files.log.forEach(element => {
+  log.forEach(element => {
     const [path, title] = element.split('@');
     data[element] = {
+      general: _log[element],
       title,
       path,
     }

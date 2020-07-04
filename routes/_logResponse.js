@@ -32,7 +32,7 @@ function logResponse(reqs, responseHandler, _3d) {
         }
         const meta = metaResp({reqs, resp});
         const body = jsonResp({reqs, resp, match});
-        filesave({fpath1, body}, {fpath2, meta}, 'flatten log');
+        filesave({fpath1, body}, {fpath2, meta}, 'log');
         if (response) {
           const resp2 = response(resp);
           resp2 && (resp = {...resp, ...resp2});

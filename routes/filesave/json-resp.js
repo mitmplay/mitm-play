@@ -42,9 +42,11 @@ module.exports = ({reqs, resp, match}) => {
         }
       }      
       let jsonResp = {
-        url,
-        method,
-        status,
+        general: {
+          status,  
+          method,
+          url,
+        },
         respBody,
         respHeader,
         reqsHeader,

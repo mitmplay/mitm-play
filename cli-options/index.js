@@ -34,7 +34,9 @@ global.mitm = {
   watcher: {},
   port: 3000,
   files: {
+    _cache: {},
     cache: [],
+    _log: {},
     log: []
   },
   data: {},

@@ -1,3 +1,4 @@
+const fs = require('fs-extra');
 const c = require('ansi-colors');
 const chokidar = require('chokidar');
 const broadcast = require('./broadcast');
@@ -5,15 +6,32 @@ const broadcast = require('./broadcast');
 const showFiles = global._debounce(broadcast('log'), 1001, 'log');
 
 function addLog(path) {
-  const {win32,files:{log}} = global.mitm;
+  const {win32,files:{_log, log}} = global.mitm;
   win32 && (path = path.replace(/\\/g, '/'));
   log.push(path);
+  if (path.match(/json$/)) {
+    fs.readFile(path, (err, data) => {
+      if (err) {
+        console.log(c.redBright('>> Error read log'), path, err);
+      } else {
+        const json = JSON.parse(`${data}`);
+        _log[path] = json.general;
+      }
+    })  
+  }  else {
+    _log[path] = {
+      status: '',
+      method: '',
+      url: path,
+    };
+  }
   showFiles();
 }
 
 function delLog(path) {
-  const {win32,files:{log}} = global.mitm;
+  const {win32,files:{_log, log}} = global.mitm;
   win32 && (path = path.replace(/\\/g, '/'));
+  _log[path] && delete _log[path];
   const idx = log.indexOf(path);
   (idx>-1) && log.splice(idx,1);
   showFiles();

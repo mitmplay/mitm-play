@@ -64,6 +64,7 @@ window.mitm.files.log_events.LogsTable = () => {
 <style>
 .vbox.right {
   right: 0;
+  left: 163px;
   position: absolute;
   background: #f1f7f7e3;
   width: calc(100vw - 163px);

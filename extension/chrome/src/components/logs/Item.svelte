@@ -12,23 +12,31 @@ function empty() {
 }
 
 function clickHandler(e) {
-  const {item} = e.target.dataset;
-  const obj = window.mitm.files.log[item];
+  let {item} = e.currentTarget.dataset;
   if (item===$source.element) {
     empty();
   } else {
     empty();
     setTimeout(() => {
+      const o = window.mitm.files.log[item];
       source.update(n => {
         return {
           element: item,
-          title: obj.title,
-          path: obj.path,
+          title: o.title,
+          path: o.path,
           url: item.replace(/^.+\.mitm-play/,'https://localhost:3001'),
         }
       })
     }, 0);
   }
+}
+
+function s({general:g}) {
+  return `_${Math.trunc(g.status/100)}`;
+}
+
+function m({general:g}) {
+  return `${g.method.toLowerCase()}`;
 }
 </script>
 
@@ -37,7 +45,11 @@ function clickHandler(e) {
     <div class="td-item {$source.element===item.element}"
     data-item={item.element}
     on:click="{clickHandler}"
-    >{item.title}</div>
+    >
+      <span class="status {s(item)}">{item.general.status}</span> 
+      <span class="method {m(item)}">{item.general.method}</span> 
+      <span class="url">{item.general.url}</span> 
+    </div>
   </td>
 </tr>
 
@@ -47,6 +59,7 @@ function clickHandler(e) {
 }
 td {
   border-bottom: 3px solid #c0d8cca1;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .td-item,
 .td-show {
@@ -59,5 +72,20 @@ td {
   color: blue;
   font-weight: bolder;
   background: aliceblue;
+}
+.status {
+  color: green;
+  font-weight: bold;
+}
+.status._4,
+.status._5 {
+  color: red;
+}
+.method {
+  color: green;
+  font-weight: bold;
+}
+.method.post {
+  color: #a7267f;
 }
 </style>

@@ -36,9 +36,11 @@ module.exports = ({reqs, resp}) => {
       }
     }
     meta = {
-      url,
-      method,
-      status,
+      general: {
+        status,  
+        method,
+        url,
+      },
       respHeader,
       reqsHeader,
       reqsBody,
