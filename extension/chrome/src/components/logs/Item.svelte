@@ -38,6 +38,13 @@ function s({general:g}) {
 function m({general:g}) {
   return `${g.method.toLowerCase()}`;
 }
+function u({general:g}) {
+  return `${g.url.split('?')[0]}`;
+}
+function p({general:g}) {
+  const parms = g.url.split('?')[1];
+  return parms ? `?${parms}` : '';
+}
 </script>
 
 <tr class="tr">
@@ -48,7 +55,8 @@ function m({general:g}) {
     >
       <span class="status {s(item)}">{item.general.status}</span> 
       <span class="method {m(item)}">{item.general.method}</span> 
-      <span class="url">{item.general.url}</span> 
+      <span class="url">{u(item)}</span> 
+      <span class="prm">{p(item)}</span> 
     </div>
   </td>
 </tr>
@@ -87,5 +95,8 @@ td {
 }
 .method.post {
   color: #a7267f;
+}
+.prm {
+  color: #ccb7b7;
 }
 </style>
