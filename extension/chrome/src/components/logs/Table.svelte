@@ -1,11 +1,12 @@
 <script>
 import { onMount } from 'svelte';
+import { source } from './stores.js';
 
+import BStatic from '../box/BStatic.svelte';
+import BResize from '../box/BResize.svelte';
+import Button from './Button.svelte';
 import Item from './Item.svelte';
 import Show from './Show.svelte';
-import Button from './Button.svelte';
-import Splitter from './Splitter.svelte';
-import { source } from './stores.js';
 
 let data =  [];
 $: _data = data;
@@ -36,19 +37,10 @@ const logHandler = obj => {
 window.mitm.files.log_events.LogsTable = () => {
   ws__send('getLog', '', logHandler)
 }
-
-function resize() {
-  const left = window._codeResize || 163;
-  return `left: ${left}px;`
-}
-
-function dragged(e) {
-  console.log(e.detail);
-}
 </script>
 
 <div class="vbox">
-  <div class="vbox left">
+  <BStatic>
     <table>
       <tr>
         <td>
@@ -59,40 +51,25 @@ function dragged(e) {
       </tr>
     </table>
     <Button/>
-    <div class="table-container">
-      <table>
-        {#each Object.keys(_data) as item}
-        <Item item={{element: item, ..._data[item]}}/>
-        {/each}
-      </table>
-    </div>
-  </div>
+    <table>
+      {#each Object.keys(_data) as item}
+      <Item item={{element: item, ..._data[item]}}/>
+      {/each}
+    </table>
+  </BStatic>
   {#if $source.element}
-    <div class="vbox right" style="{resize()}">
-      <Splitter on:drag={dragged}/>
+    <BResize>
       <Show/>
-    </div>
+    </BResize>
   {/if}
 </div>
 
 <style>
-.vbox.right {
-  right: 0;
-  left: 163px;
-  position: absolute;
-  background: #f1f7f7e3;
-  width: calc(100vw - 163px);
-  height: calc(100vh - 27px);
-}
 .vbox {
   flex: auto;
   display: flex;
   flex-direction: column;
   position: relative;
-}
-.table-container {
-  overflow: auto;
-  height: calc(100vh - 45px);
 }
 .td-header {
   padding-left: 5px;
