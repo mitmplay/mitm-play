@@ -1,17 +1,26 @@
 <script>
+export let left;
+
+import {createEventDispatcher} from 'svelte';
 import Splitter from './Splitter.svelte';
 
+const dispatch = createEventDispatcher();
+
 function resize() {
-  const left = window._codeResize || 163;
-  return `left: ${left}px;width: calc(100vw - ${left}px;`
+  return `left: ${left}px;width: calc(100vw - ${left}px);`
 }
+
 function dragged(e) {
-  console.log(e.detail);
+  dispatch('drag',  e.detail);
+}
+
+function dragend(e) {
+  dispatch('dragend',  e.detail);
 }
 </script>
 
 <div class="vbox right" style="{resize()}">
-  <Splitter on:drag={dragged}/>
+  <Splitter on:drag={dragged} on:dragend={dragend}/>
   <slot></slot>
 </div>
 

@@ -1,6 +1,6 @@
 <script>
-import { createEventDispatcher } from 'svelte';
 import {spring} from 'svelte/motion'
+import { createEventDispatcher } from 'svelte';
 
 const dispatch = createEventDispatcher();
   
@@ -43,7 +43,7 @@ function draggable(node, params) {
     offset.set({x: offsetX, y: 0});
     
 		lastX = e.clientX;
-    dispatch('drag', {target:node, lastX});
+    dispatch('drag', {target:node, left: node.parentNode.offsetLeft});
 	}
 
   function handleMouseup(event) {
@@ -54,8 +54,7 @@ function draggable(node, params) {
 
     node.classList.remove('dragged');
     offset.set({x: node.offsetLeft, y: 0});
-    window._codeResize = node.parentNode.offsetLeft;
-    dispatch('dragend', {target: node, lastX: node.offsetLeft});
+    dispatch('dragend', {target: node, left: node.parentNode.offsetLeft});
     
 		window.removeEventListener('mousemove', handleMousemove);
 		window.removeEventListener('mouseup', handleMouseup);

@@ -8,11 +8,13 @@ import Button from './Button.svelte';
 import Item from './Item.svelte';
 import Show from './Show.svelte';
 
+let left = 163;
 let data =  [];
+
+$: _left = left;
 $: _data = data;
 
 onMount(async () => {
-  window._codeResize = 163;
   setTimeout(() => {
     ws__send('getLog', '', logHandler)
   }, 10);
@@ -37,11 +39,15 @@ const logHandler = obj => {
 window.mitm.files.log_events.LogsTable = () => {
   ws__send('getLog', '', logHandler)
 }
+
+function dragend({detail}) {
+  left = detail.left;
+}
 </script>
 
 <div class="vbox">
   <BStatic>
-    <table>
+    <table class="table-header">
       <tr>
         <td>
           <div class="td-header">
@@ -51,14 +57,14 @@ window.mitm.files.log_events.LogsTable = () => {
       </tr>
     </table>
     <Button/>
-    <table>
+    <table class="table-content">
       {#each Object.keys(_data) as item}
       <Item item={{element: item, ..._data[item]}}/>
       {/each}
     </table>
   </BStatic>
   {#if $source.element}
-    <BResize>
+    <BResize left={_left} on:dragend={dragend}>
       <Show/>
     </BResize>
   {/if}
@@ -70,6 +76,12 @@ window.mitm.files.log_events.LogsTable = () => {
   display: flex;
   flex-direction: column;
   position: relative;
+}
+.table-header {
+  position: fixed;
+}
+.table-content {
+  margin-top: 19px
 }
 .td-header {
   padding-left: 5px;
