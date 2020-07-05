@@ -12,9 +12,6 @@ function setupCodeMiror() {
     });
   }
 }
-function replacer(match, p1, p2) {
-  return [p1, p2].join('');
-}
 function codeMirror(code) {
   if (!code) {
     return '';
@@ -24,9 +21,9 @@ function codeMirror(code) {
     nodes.forEach(element => element.remove());
     window.showcode = undefined;
   }
-  setTimeout(() => setupCodeMiror(), 1)
-  return code.replace(/"(.+)"(:)/g, replacer).
-  replace(/ (resp|reqs|gene)(\w+):/g, (m,p1,p2) => ` "${p1}${p2}":`);
+  setTimeout(() => setupCodeMiror(), 1);
+  return code.replace(/   "(.+)"(:)/g, (m,p1,p2) =>  `   '${p1}':`).
+              replace(  / "(.+)"(:)/g, (m,p1,p2) =>  ` \`${p1}\`:`);
 }
 
 async function getSource() {

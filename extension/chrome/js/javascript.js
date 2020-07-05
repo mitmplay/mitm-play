@@ -144,7 +144,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
         escaped = !escaped && next == "\\";
       }
       if (!escaped) state.tokenize = tokenBase;
-      return ret("string", "string");
+      return quote==='"' ? ret("string", "string") : ret("string", "variable-2");
     };
   }
 
