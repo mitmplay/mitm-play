@@ -4,6 +4,8 @@ import { source } from './stores.js';
 
 import BStatic from '../box/BStatic.svelte';
 import BResize from '../box/BResize.svelte';
+import BHeader from '../box/BHeader.svelte';
+import BTable from '../box/BTable.svelte';
 import Button from './Button.svelte';
 import Item from './Item.svelte';
 import Show from './Show.svelte';
@@ -47,21 +49,13 @@ function dragend({detail}) {
 
 <div class="vbox">
   <BStatic>
-    <table class="table-header">
-      <tr>
-        <td>
-          <div class="td-header">
-            -Logs-
-          </div>
-        </td>
-      </tr>
-    </table>
+    <BHeader>-Logs-</BHeader>
     <Button/>
-    <table class="table-content">
+    <BTable>
       {#each Object.keys(_data) as item}
       <Item item={{element: item, ..._data[item]}}/>
       {/each}
-    </table>
+    </BTable>
   </BStatic>
   {#if $source.element}
     <BResize left={_left} on:dragend={dragend}>
@@ -76,27 +70,5 @@ function dragend({detail}) {
   display: flex;
   flex-direction: column;
   position: relative;
-}
-.table-header {
-  position: fixed;
-}
-.table-content {
-  margin-top: 19px
-}
-.td-header {
-  padding-left: 5px;
-}
-table {
-  border-collapse: collapse;
-  font-family:  Consolas, Lucida Console, Courier New, monospace;
-  font-size: 12px;
-  width: 100%;
-}
-td {
-  /* border: 1px solid #999; */
-  border-bottom: 3px solid #c0d8cca1;
-  background-color: aliceblue;
-  font-weight: bold;
-  padding: 0.1rem;
 }
 </style>
