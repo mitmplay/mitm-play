@@ -22,8 +22,7 @@ onMount(async () => {
   }, 10);
   chrome.storage.local.get('json', function(data) {
     data.json && (json = data.json);
-  });  
-
+  });
 });
 
 const logHandler = obj => {

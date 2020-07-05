@@ -39,15 +39,19 @@ Path:{$source.path}
 
 <style>
 .file-path {
+  position: relative;
   font-family: auto;
   font-size: 0.9em;
   color: blue;
 }
 .btn-container {
-  float: right;
+  position: absolute;
   margin-top: -1px;
   padding-right: 4px;
-  padding-bottom: 3px;  
+  padding-bottom: 3px;
+  right: 0;
+  z-index: 5;
+  top: 0;
 }
 .btn-container button {
   font-size: 10px;

@@ -1,5 +1,6 @@
 <script>
 export let left;
+export let height;
 
 import {createEventDispatcher} from 'svelte';
 import Splitter from './Splitter.svelte';
@@ -7,7 +8,11 @@ import Splitter from './Splitter.svelte';
 const dispatch = createEventDispatcher();
 
 function resize() {
-  return `left: ${left}px;width: calc(100vw - ${left}px);`
+  let css = `left: ${left}px;width: calc(100vw - ${left}px);`
+  if (height) {
+    css += `height: calc(100vh - ${height}px);`;
+  }
+  return css;
 }
 
 function dragged(e) {
@@ -20,7 +25,7 @@ function dragend(e) {
 </script>
 
 <div class="vbox right" style="{resize()}">
-  <Splitter on:drag={dragged} on:dragend={dragend}/>
+  <Splitter on:drag={dragged} on:dragend={dragend} height="{height}"/>
   <slot></slot>
 </div>
 

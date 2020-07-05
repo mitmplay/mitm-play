@@ -10,7 +10,8 @@ function setupCodeMiror() {
     window.editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
       lineNumbers: true,
       mode: "javascript",
-      matchBrackets: true
+      matchBrackets: true,
+      scrollbarStyle: 'native',
     });
     editor.on('changes', onChanged);
     onChanged(false);

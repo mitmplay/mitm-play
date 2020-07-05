@@ -1,12 +1,20 @@
 <script>
-import { source } from './stores.js';
 import { onMount } from 'svelte';
+import { source } from './stores.js';
+
+import BStatic from '../box/BStatic.svelte';
+import BResize from '../box/BResize.svelte';
+import BHeader from '../box/BHeader.svelte';
+import BTable from '../box/BTable.svelte';
 import Button from './Button.svelte';
 import Item from './Item.svelte';
 
+let route = 163;
 let data = [];
+
 let rerender = 0;
 
+$: _route = route;
 $: _data = data;
 
 const routeHandler = obj => {
@@ -31,7 +39,9 @@ onMount(async () => {
   setTimeout(() => {
     window.ws__send('getRoute', '', routeHandler)
   }, 10);
-
+  chrome.storage.local.get('route', function(data) {
+    data.route && (route = data.route);
+  });
 });
 
 window.mitm.files.route_events.routeTable = () => {
@@ -56,61 +66,41 @@ function editorChanged(e) {
     }
   }, 500)  
 }
+
+function dragend({detail}) {
+  route = detail.left;
+  chrome.storage.local.set({route})
+}
 </script>
 
 <Button/>
-<table class="main-table">
-  <tr>
-    <td class="main-td1">
-      <table class="table-title"><tr><td>-Route(s)-</td></tr></table>
-      <div class="table-container">
-      <table id="uniq-{rerender}" class="table-content">
-        {#each Object.keys(_data) as item}
-        <Item item={{element: item, ..._data[item]}} onChanged={editorChanged}/>
-        {/each}
-      </table>
-      </div>
-    </td>
-    <td>
+<div class="vbox">
+  <BStatic height="47">
+    <BHeader>-Route(s)-</BHeader>
+    <BTable>
+      {#each Object.keys(_data) as item}
+      <Item item={{element: item, ..._data[item]}} onChanged={editorChanged}/>
+      {/each}
+    </BTable>
+  </BStatic>
+  <BResize left={_route} on:dragend={dragend} height="47">
     <div id="code-mirror">
       <textarea id="demotext">{$source.content}</textarea>
     </div>
-    </td>
-  </tr>
-</table>
+  </BResize>
+</div>
+
 
 <style>
-.main-table,
-.table-content {
-  width: 100%
-}
-.main-td1 {
-  width: 145px;
+.vbox {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 #code-mirror {
-  height: calc(100vh - 61px);
-  width: calc(100vw - 163px);
-  overflow: auto;
-}
-.table-title {
-  width: 100%;
-  font-weight: bold;
-  background-color: bisque;
-}
-.table-container {
-  overflow: auto;
-  height: calc(100vh - 96px);
-}
-table {
-  border-collapse: collapse;
-  font-family:  Consolas, Lucida Console, Courier New, monospace;
   font-size: 12px;
-  /* width: 100%; */
-}
-td {
-  border-bottom: 3px solid #c0d8cca1;
-  /* background-color: aliceblue; */
-  font-weight: bold;
-  padding: 0.1rem;
+  height: calc(100vh - 41px);
+  overflow: auto;
 }
 </style>
