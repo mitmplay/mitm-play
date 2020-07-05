@@ -10,16 +10,20 @@ import Button from './Button.svelte';
 import Item from './Item.svelte';
 import Show from './Show.svelte';
 
-let left = 163;
+let json = 163;
 let data =  [];
 
-$: _left = left;
+$: _json = json;
 $: _data = data;
 
 onMount(async () => {
   setTimeout(() => {
     ws__send('getLog', '', logHandler)
   }, 10);
+  chrome.storage.local.get('json', function(data) {
+    data.json && (json = data.json);
+  });  
+
 });
 
 const logHandler = obj => {
@@ -43,7 +47,8 @@ window.mitm.files.log_events.LogsTable = () => {
 }
 
 function dragend({detail}) {
-  left = detail.left;
+  json = detail.left;
+  chrome.storage.local.set({json})
 }
 </script>
 
@@ -58,7 +63,7 @@ function dragend({detail}) {
     </BTable>
   </BStatic>
   {#if $source.element}
-    <BResize left={_left} on:dragend={dragend}>
+    <BResize left={_json} on:dragend={dragend}>
       <Show/>
     </BResize>
   {/if}
