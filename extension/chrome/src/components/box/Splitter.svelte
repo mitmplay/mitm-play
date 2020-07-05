@@ -18,8 +18,9 @@ function draggable(node, params) {
   offset.subscribe(offset => {
     const parent = node.parentNode;
     if (parent) {
-      // console.log(parent.offsetLeft, offset.x)
-      parent.style.left = (parentX + offset.x) + 'px';
+      const left = parentX + offset.x
+      parent.style.left = `${left}px`;
+      parent.style.width = `calc(100vw - ${left}px`;
     }
   })
 

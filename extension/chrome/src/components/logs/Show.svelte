@@ -63,7 +63,7 @@ async function getSource() {
 #show-code {
   font-size: 12px;
   height: calc(100vh - 31px);
-  width: calc(100vw - 163px);
+  /* width: calc(100vw - 163px); */
   overflow: auto;
 }
 #democode {

@@ -3,7 +3,7 @@ import Splitter from './Splitter.svelte';
 
 function resize() {
   const left = window._codeResize || 163;
-  return `left: ${left}px;`
+  return `left: ${left}px;width: calc(100vw - ${left}px;`
 }
 function dragged(e) {
   console.log(e.detail);
