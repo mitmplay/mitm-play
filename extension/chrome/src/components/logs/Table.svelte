@@ -4,7 +4,7 @@ import { onMount } from 'svelte';
 import Item from './Item.svelte';
 import Show from './Show.svelte';
 import Button from './Button.svelte';
-import Resize from './Resize.svelte';
+import Splitter from './Splitter.svelte';
 import { source } from './stores.js';
 
 let data =  [];
@@ -32,12 +32,18 @@ const logHandler = obj => {
     data = newLog;
   }
 }
+
 window.mitm.files.log_events.LogsTable = () => {
   ws__send('getLog', '', logHandler)
 }
+
 function resize() {
   const left = window._codeResize || 163;
   return `left: ${left}px;`
+}
+
+function dragged(e) {
+  console.log(e.detail);
 }
 </script>
 
@@ -63,7 +69,7 @@ function resize() {
   </div>
   {#if $source.element}
     <div class="vbox right" style="{resize()}">
-      <Resize/>
+      <Splitter on:drag={dragged}/>
       <Show/>
     </div>
   {/if}
