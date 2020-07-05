@@ -1,14 +1,17 @@
 <script>
 import { onMount } from 'svelte';
+
 import Item from './Item.svelte';
 import Show from './Show.svelte';
 import Button from './Button.svelte';
+import Resize from './Resize.svelte';
 import { source } from './stores.js';
 
 let data =  [];
 $: _data = data;
 
 onMount(async () => {
+  window._codeResize = 163;
   setTimeout(() => {
     ws__send('getLog', '', logHandler)
   }, 10);
@@ -31,6 +34,10 @@ const logHandler = obj => {
 }
 window.mitm.files.log_events.LogsTable = () => {
   ws__send('getLog', '', logHandler)
+}
+function resize() {
+  const left = window._codeResize || 163;
+  return `left: ${left}px;`
 }
 </script>
 
@@ -55,7 +62,8 @@ window.mitm.files.log_events.LogsTable = () => {
     </div>
   </div>
   {#if $source.element}
-    <div class="vbox right">
+    <div class="vbox right" style="{resize()}">
+      <Resize/>
       <Show/>
     </div>
   {/if}

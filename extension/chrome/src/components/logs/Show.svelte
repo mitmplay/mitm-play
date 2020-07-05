@@ -44,7 +44,7 @@ async function getSource() {
 
 </script>
 
-<div>
+<div class="item-show">
   {#if $source.title.match('.png')}
     <img src="{$source.url}" alt="image"/>
   {:else if $source.title.match('.json')}
@@ -57,6 +57,9 @@ async function getSource() {
 </div>
 
 <style>
+.item-show {
+  margin-left: 2px;
+}
 #show-code {
   font-size: 12px;
   height: calc(100vh - 31px);
