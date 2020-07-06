@@ -792,7 +792,7 @@ If you think you have a nice routing want to share, you can create a PR to the [
 
 There are several strategy to reduce internet usage, user commonly use different tools to achieve, either install new browser (ie: Brave) or install Add Blocker (ie: uBlock). Using mitm-play, developer can controll which need to be pass, blocked or cached. 
 
-__Cache any reguest with content type: font, image, javascript, css__, if url contains cached busting, it may miss the cached, you can experiment by turning of `querystring` to `false`.
+__Cache any reguest with content type: font, image, javascript, css__, if url contains cached busting, it may miss the cached, you can experiment by turning off `querystring` to `false`.
 ```js
 cache: {
   '.+': {
