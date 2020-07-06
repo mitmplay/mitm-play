@@ -290,6 +290,7 @@ cache: {
     session: true, // optional - set session id
     hidden: true, // optional - no consolo.log
     nolog: true, // optional - disable logging
+    at: 'mycache', // 'mycache' part of cache filename
   }
 },
 ```
@@ -315,7 +316,8 @@ Special usacase like google-analytic will send contentType of `gif` with [GET] r
 ```js
 log: {
   'amazon.com': {
-    contentType: ['json']
+    contentType: ['json'],
+    at: 'myjson', // 'myjson' part of log filename
   },
   'google-analytics.com/collect': {
     contentType: ['gif'],
@@ -676,7 +678,9 @@ $ mitm-play --cookie
 <details><summary><b>-g --group</b></summary>
 <p>
 
-Add group name to file cache/logs, if necessary if large capturing is done and difficult to check the files.
+Add group name to file cache/logs, if necessary when large capturing is done and difficult to check the files. 
+
+There is an option `at` on the rules of `cache`/`log` for additional filename grouping path.
 
 ```
 $ mitm-play -g='mygroup'  <OR>
@@ -687,7 +691,7 @@ $ mitm-play --group='mygroup'
 <details><summary><b>-t --incognito</b></summary>
 <p>
 
-By Default program will run in normal/--pristine browser, adding this option will result when opening chrome browser, it will show in Incognito mode.
+By Default program will run in normal/--pristine browser, adding this option will result in Incognito mode.
 
 ```
 $ mitm-play -t  <OR>
