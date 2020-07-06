@@ -786,6 +786,37 @@ $ mitm-play --debug
 
 If you think you have a nice routing want to share, you can create a PR to the [user-route](https://github.com/mitm-proxy/user-route) or add a `link` to your repo.  
 
+# Use Cases
+<details><summary><b>Reduce Internet usage</b></summary>
+<p>
+
+There are several strategy to reduce internet usage, user commonly use different tools to achieve, either install new browser (ie: Brave) or install Add Blocker (ie: uBlock). Using mitm-play, developer can controll which need to be pass/block or need to be cached. 
+
+__Cache any reguest with content type: font, image, javascript, css__
+```js
+cache: {
+  '.+': {
+    contentType: ['font','image','javascript','css'],
+    querystring: true,
+    nolog: true,
+  }
+},
+```
+
+__Block/Mock unecessary javascript with an empty result__, be careful to not block UX or content navigation.
+```js
+mock: {
+  'some/url/with/adv.js': {
+    response({body}) {
+      return {body: '/* content is blocked! */'}
+    },
+  },
+},
+```
+</p>
+</details>
+
+
 # Early Stage
 Expect to have some `rule changed` as feature/fix code are incrementally committed.
 
