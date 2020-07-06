@@ -803,7 +803,7 @@ cache: {
 },
 ```
 
-__Block/Mock unecessary javascript with an empty result__, be careful to not block UX or content navigation.
+__Block/Mock unnecessary javascript with an empty result__, be careful to not block UX or content navigation.
 ```js
 mock: {
   'some/url/with/adv.js': {
