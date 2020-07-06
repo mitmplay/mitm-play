@@ -607,10 +607,10 @@ $ mitm-play --delete='cache'
 ```
 </p>
 </details>
-<details><summary><b>-p --pristine</b></summary>
+<details><summary><b>-p --pristine [default]</b></summary>
 <p>
 
-Launch browser with non Incognito 
+Launch browser with non Incognito, this is the default configuration, the opposite is to use --incognito. 
 
 ```
 $ mitm-play -p  <OR>
@@ -676,18 +676,18 @@ $ mitm-play --cookie
 <details><summary><b>-g --group</b></summary>
 <p>
 
-.
+Add group name to file cache/logs, if necessary if large capturing is done and difficult to check the files.
 
 ```
-$ mitm-play -g  <OR>
-$ mitm-play --group
+$ mitm-play -g='mygroup'  <OR>
+$ mitm-play --group='mygroup'
 ```
 </p>
 </details>
 <details><summary><b>-t --incognito</b></summary>
 <p>
 
-By Default program will run in normal / pristine browser, adding this option will result when openting chrome browser, it will show in Incognito mode.
+By Default program will run in normal/--pristine browser, adding this option will result when opening chrome browser, it will show in Incognito mode.
 
 ```
 $ mitm-play -t  <OR>
