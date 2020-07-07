@@ -36,7 +36,8 @@ module.exports =  ({route, browserName}) => {
   const skip = _skipResponse(reqs, _3d);
   if (skip) {
     if (logs.skip) {
-      console.log(c.grey(`>> skip (${skip})`));
+      const url = reqs.url.split(splitter)[0];
+      console.log(c.grey(`>> skip (${url})`));
     }
     route.continue({});
     return;
