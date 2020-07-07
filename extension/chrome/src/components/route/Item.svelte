@@ -54,7 +54,8 @@ function clickHandler(e) {
 
 <style>
 .td-item:hover {
-  background: greenyellow;
+  color: blue;
+  font-weight: bolder;
 }
 td {
   border-bottom: 3px solid #c0d8cca1;
@@ -69,6 +70,6 @@ td {
 .td-item.true {
   color: blue;
   font-weight: bolder;
-  background: aliceblue;
+  background: greenyellow;
 }
 </style>

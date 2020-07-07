@@ -39,16 +39,24 @@ function m({general:g}) {
   return `${g.method.toLowerCase()}`;
 }
 function u({general:g}) {
-  return `${g.url.split('?')[0]}`;
+  if (g.url.match('/log/')) {
+    return g.url.split('@')[1];
+  } else {
+    return `${g.url.split('?')[0]}`;
+  }
 }
 function p({general:g}) {
-  const parms = g.url.split('?')[1];
-  return parms ? `?${parms}` : '';
+  if (g.url.match('/log/')) {
+    return '';
+  } else {
+    const parms = g.url.split('?')[1];
+    return parms ? `?${parms}` : '';
+  }
 }
 </script>
 
 <tr class="tr">
-  <td>
+  <td class="{item.element ? 'selected' : ''}">
     <div class="td-item {$source.element===item.element}"
     data-item={item.element}
     on:click="{clickHandler}"
@@ -63,7 +71,8 @@ function p({general:g}) {
 
 <style>
 .td-item:hover {
-  background: greenyellow;
+  color: blue;
+  font-weight: bolder;
 }
 td {
   border-bottom: 3px solid #c0d8cca1;
@@ -79,7 +88,7 @@ td {
 .td-item.true {
   color: blue;
   font-weight: bolder;
-  background: aliceblue;
+  background: greenyellow;
 }
 .status {
   color: green;
