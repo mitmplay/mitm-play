@@ -1,8 +1,10 @@
 module.exports = () => {
-  // function receiveMessage(event) {
-  //   console.log(`>> Msg: ${event.origin} => https://${location.host}`);
-  // }
-  // window.addEventListener("message", receiveMessage, false);
+  function receiveMessage(event) {
+    if (window.mitm.client.postmessage) {
+      console.log(`>> Postmessage: ${event.origin} => https://${location.host}`, event.data);
+    }
+  }
+  window.addEventListener("message", receiveMessage, false);
 
   // if (!chrome.windows) {
   //   function reportWindowSize() {

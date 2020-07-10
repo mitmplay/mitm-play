@@ -29,6 +29,10 @@ module.exports = () => {
       for (let key in files[`${typ}_events`]) {
         files[`${typ}_events`][key](data);
       }
-    },    
+    },
+    _setClient({data}) {
+      console.log('_setClient', data);
+      window.mitm.client = data;
+    }
   };
 }
