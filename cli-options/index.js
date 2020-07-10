@@ -40,6 +40,10 @@ global.mitm = {
     log: []
   },
   data: {},
+  client: {
+    csp: false,
+    postmessage: false,
+  }
 };
 global.mitm.argv.browser = {};
 global.mitm.argv.ommit = {};

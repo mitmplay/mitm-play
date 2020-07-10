@@ -4,11 +4,11 @@ module.exports = () => {
   // }
   // window.addEventListener("message", receiveMessage, false);
 
-  if (!chrome.windows) {
-    function reportWindowSize() {
-      const {innerWidth, innerHeight} = window;
-      console.log({innerWidth, innerHeight});
-    }
-    window.addEventListener("resize", reportWindowSize);  
-  }
+  // if (!chrome.windows) {
+  //   function reportWindowSize() {
+  //     const {innerWidth, innerHeight} = window;
+  //     console.log({innerWidth, innerHeight});
+  //   }
+  //   window.addEventListener("resize", reportWindowSize);  
+  // }
 }

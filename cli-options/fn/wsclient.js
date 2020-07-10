@@ -4,9 +4,10 @@ const rpath = require.resolve('../../socketclnt');
 const _body = fs.readFileSync(rpath)+'';
 
 module.exports = function () {
-  const {argv,routes} = global.mitm;
+  const {argv,routes, client} = global.mitm;
   let _g = {
     argv,
+    client,
     routes,
     files: {
       log_events: {},
