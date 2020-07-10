@@ -4,7 +4,7 @@ module.exports = () => {
   const {hostname: host} = location;
   let namespace = _ws_namespace();
 
-  document.addEventListener('securitypolicyviolation', (e) => {
+  function cspError(e) {
     const fname = location.pathname
     .replace(/^\//,'')
     .replace(/\//g,'-');
@@ -36,13 +36,19 @@ module.exports = () => {
       type,
       violatedDirective,
     };
-    console.log('>>> CSP ERROR', e);
-    window.ws__send('csp_error', {
-      namespace,
-      host,
-      fname,
-      cspviolation,
-    });
-  });
+
+    if (window.mitm.client.csp) {
+      console.log('>> CSP:', cspviolation);
+    }
+
+    // window.ws__send('csp_error', {
+    //   namespace,
+    //   host,
+    //   fname,
+    //   cspviolation,
+    // });
+  };
+
+  document.addEventListener('securitypolicyviolation', cspError);
 }
   
