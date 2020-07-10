@@ -42,6 +42,7 @@ module.exports = () => {
         if (argv.proxypac) {
           args.push(`--proxy-pac-url=${argv.proxypac}`);
         }
+        options.viewport = null,
         options.args = args;
       }
       let execPath = argv.browser[browserName];
@@ -69,6 +70,10 @@ module.exports = () => {
         const context = await browser.newContext({ viewport: null });
         page = await context.newPage();
         bcontext = context;
+      }
+      if (browserName==='chromium') {
+        const cdp = await page.context().newCDPSession(page);
+        global.mitm.cdp = cdp;
       }
       bcontexts[browserName] = bcontext;
       browsers[browserName] = browser;
