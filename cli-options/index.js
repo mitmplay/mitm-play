@@ -59,6 +59,7 @@ module.exports = () => {
   if (global.mitm.argv.insecure) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   }
+  process.env.PWDEBUG = '1';
 
   console.log(c.greenBright(JSON.stringify(global.mitm.argv, null, 2)));
   console.log(c.green(`\nv${_package.version}\n`));

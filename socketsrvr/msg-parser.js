@@ -9,11 +9,13 @@ const $openRoute = require('./_openRoute');
 const $saveRoute = require('./_saveRoute');
 const $screencap = require('./_screencap');
 const $clearLogs = require('./_clearLogs');
+const $setViewport = require('./_setViewport');
 
 // accessible from client
 const wscmd = {
   ..._global(),
   ..._client(),
+  $setViewport,
   $clearLogs,
   $screencap,
   $saveRoute,
