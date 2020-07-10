@@ -1,6 +1,7 @@
 const c = require('ansi-colors');
 const playwright = require('playwright');
 const args = require('./chromium-args');
+const _options = require('./options');
 const routes = require('../routes');
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -17,7 +18,7 @@ module.exports = () => {
     global.mitm.pages = pages;
     global.mitm.browsers = browsers;
     for (let browserName in argv.browser) {
-      const options = {headless: false};
+      const options = _options();
       let page, browser, bcontext;
       
       if (browserName==='chromium') {
