@@ -26,14 +26,11 @@ module.exports = () => {
         path,
       };
     }
-    if (!_csp[documentURI]) {
-      _csp[documentURI] = {};
+    const typ = `[${disposition}] ${documentURI}`
+    if (!_csp[typ]) {
+      _csp[typ] = {};
     }
-    const _typ = _csp[documentURI];
-    if (!_typ[disposition]) {
-      _typ[disposition] = {};
-    }
-    const _doc = _typ[disposition];
+    const _doc = _csp[typ];
     if (!_doc[violatedDirective]) {
       _doc[violatedDirective] = {};
     }
