@@ -4,6 +4,7 @@ export let item;
 
 function empty() {
   source.set({
+    content: '',
     element: '',
     title: '',
     path: '',
@@ -21,6 +22,7 @@ function clickHandler(e) {
       const o = window.mitm.files.log[item];
       source.update(n => {
         return {
+          content: '<empty>',
           element: item,
           title: o.title,
           path: o.path,

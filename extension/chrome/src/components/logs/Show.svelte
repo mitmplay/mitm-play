@@ -1,14 +1,12 @@
 <script>
-let sourceCode = '';
-
 import { source } from './stores.js';
 
 function setupCodeMiror() {
   if (!window.showcode) {
     window.showcode = CodeMirror.fromTextArea(document.getElementById("democode"), {
+      mode: $source.title.match('.html') ? 'html' : 'javascript',
+      matchBrackets: true,
       lineNumbers: true,
-      mode: "javascript",
-      matchBrackets: true
     });
   }
 }
@@ -28,10 +26,13 @@ function codeMirror(code) {
 
 async function getSource() {
   const resp = await fetch($source.url);
-  const text = await resp.text();
+  const content = await resp.text();
 
   if (resp.ok) {
-    sourceCode = text;
+    source.set({
+      ...$source,
+      content,
+    });
     console.log('Fetch success')
   } else {
     console.log('Fetch Errir', resp.status)
@@ -46,10 +47,14 @@ async function getSource() {
     <img src="{$source.url}" alt="image"/>
   {:else if $source.title.match('.json')}
     <div id="show-code" data-dummy={getSource()}>
-      <textarea id="democode">{codeMirror(sourceCode)}</textarea>
+      <textarea id="democode">{codeMirror($source.content)}</textarea>
+    </div>
+  {:else if $source.title.match('.html')}
+    <div id="show-code" data-dummy={getSource()}>
+      <textarea id="democode">{codeMirror($source.content)}</textarea>
     </div>
   {:else}
-    <button>X</button>
+    <pre>{$source.content}</pre>
   {/if}
 </div>
 
