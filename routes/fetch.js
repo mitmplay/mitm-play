@@ -35,7 +35,7 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
       console.log(c.grey(`>> proxy (${url.split(splitter)[0]})`));
     }
     const _headers = resp.headers.raw();
-    const status = resp.status;
+    let status = resp.status;
     const headers = {};
     resp.buffer().then(body => {
       for (let key in _headers) {
@@ -44,6 +44,9 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
         } else {
           headers[key] = _headers[key];
         }
+      }
+      if (status===undefined) {
+        status = headers['x-app-status'];
       }
       if (status>=400) {
         console.log(c.redBright(`[${reqs.method}] ${url} => ${status}`));

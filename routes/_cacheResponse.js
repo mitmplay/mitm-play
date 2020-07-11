@@ -49,9 +49,9 @@ function cacheResponse(reqs, responseHandler, _3d) {
       // get from cache
       try {
         const {
-          status,
           setCookie,
-          respHeader: headers
+          general: {status},
+          respHeader: headers,
         } = JSON.parse(fs.readFileSync(fpath2));
         if (!_ctype(match, {headers})) {
           return {match: undefined, resp};
