@@ -25,7 +25,7 @@ function addWebSocket(reqs, responseHandler) {
       const {headers: h} = resp;
       if (h['content-security-policy'] || h['content-security-policy-report-only']) {
         resp.body = script_src(resp.body, ['websocket.js']);
-        headerchg(h);
+        // headerchg(h);
       } else {
         let el = global.mitm.fn.wsclient();
         const script = `\n<script>${el}</script>\n`;
