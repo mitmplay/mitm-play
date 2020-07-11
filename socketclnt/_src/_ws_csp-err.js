@@ -19,16 +19,17 @@ module.exports = () => {
       type,
       violatedDirective,
     } = e;
-    if (!_csp.general) {
-      _csp.general = {
+    const typ = `[${disposition}] ${documentURI}`
+    if (!_csp[typ]) {
+      _csp[typ] = {};
+    }
+    if (!_csp[typ]._general_) {
+      _csp[typ]._general_ = {
+        policy: originalPolicy,
         namespace,
         host,
         path,
       };
-    }
-    const typ = `[${disposition}] ${documentURI}`
-    if (!_csp[typ]) {
-      _csp[typ] = {};
     }
     const _doc = _csp[typ];
     if (!_doc[violatedDirective]) {
