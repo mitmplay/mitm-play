@@ -1,58 +1,16 @@
 <script>
 import { source } from './stores.js';
-
-function setupCodeMiror() {
-  if (!window.showcode) {
-    window.showcode = CodeMirror.fromTextArea(document.getElementById("democode"), {
-      mode: $source.title.match('.html') ? 'html' : 'javascript',
-      matchBrackets: true,
-      lineNumbers: true,
-    });
-  }
-}
-function codeMirror(code) {
-  if (!code) {
-    return '';
-  }
-  if (window.showcode) {
-    const nodes = document.querySelectorAll('#show-code .CodeMirror');
-    nodes.forEach(element => element.remove());
-    window.showcode = undefined;
-  }
-  setTimeout(() => setupCodeMiror(), 1);
-  return code.replace(/   "(.+)"(:)/g, (m,p1,p2) =>  `   '${p1}':`).
-              replace(  / "(.+)"(:)/g, (m,p1,p2) =>  ` \`${p1}\`:`);
-}
-
-async function getSource() {
-  const resp = await fetch($source.url);
-  const content = await resp.text();
-
-  if (resp.ok) {
-    source.set({
-      ...$source,
-      content,
-    });
-    console.log('Fetch success')
-  } else {
-    console.log('Fetch Errir', resp.status)
-  }
-  return Math.random()+'';
-}
-
+import Json from './Json.svelte';
+import Html from './Html.svelte';
 </script>
 
 <div class="item-show">
   {#if $source.title.match('.png')}
     <img src="{$source.url}" alt="image"/>
   {:else if $source.title.match('.json')}
-    <div id="show-code" data-dummy={getSource()}>
-      <textarea id="democode">{codeMirror($source.content)}</textarea>
-    </div>
+    <Json/>
   {:else if $source.title.match('.html')}
-    <div id="show-code" data-dummy={getSource()}>
-      <textarea id="democode">{codeMirror($source.content)}</textarea>
-    </div>
+    <Html/>
   {:else}
     <pre>{$source.content}</pre>
   {/if}
@@ -61,13 +19,5 @@ async function getSource() {
 <style>
 .item-show {
   margin-left: 2px;
-}
-#show-code {
-  font-size: 12px;
-  height: calc(100vh - 31px);
-  overflow: auto;
-}
-#democode {
-  display: none;
 }
 </style>
