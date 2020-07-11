@@ -1,5 +1,6 @@
 <script>
 import { source } from './stores.js';
+import { Tabs, Tab, Button } from 'svelma';
 
 function setupCodeMiror() {
   if (!window.showcode) {
@@ -42,14 +43,19 @@ async function getSource() {
 
 </script>
 
-<div id="show-code" data-dummy={getSource()}>
-  <textarea id="democode">{codeMirror($source.content)}</textarea>
-</div>
+<Tabs style="is-boxed" size="is-small">
+  <Tab label="Html">
+    <div id="show-html" data-dummy={getSource()}>
+      <textarea id="democode">{codeMirror($source.content)}</textarea>
+    </div>  
+  </Tab>
+  <Tab label="Meta">Meta...</Tab>
+</Tabs>
 
 <style>
-#show-code {
+#show-html {
   font-size: 12px;
-  height: calc(100vh - 31px);
+  height: calc(100vh - 55px);
   overflow: auto;
 }
 #democode {

@@ -42,12 +42,12 @@ async function getSource() {
 
 </script>
 
-<div id="show-code" data-dummy={getSource()}>
+<div id="show-json" data-dummy={getSource()}>
   <textarea id="democode">{codeMirror($source.content)}</textarea>
 </div>
 
 <style>
-#show-code {
+#show-json {
   font-size: 12px;
   height: calc(100vh - 31px);
   overflow: auto;
