@@ -12,7 +12,7 @@ function extract({route, browserName}) {
 }
 
 function fetch(route, {url, proxy, ...reqs}, handler) {
-  const opts = {redirect: 'manual'};
+  const opts = {redirect: true};
 
   if (proxy) {
     if (proxy===true) {
@@ -31,20 +31,24 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
 
   _fetch(url, {...reqs, ...opts}).then(resp => {
     const {argv, splitter} = global.mitm;
+    const _headers = resp.headers.raw();
+    let status = resp.status;
     if (proxy && argv.verbose) {
       console.log(c.grey(`>> proxy (${url.split(splitter)[0]})`));
     }
-    const _headers = resp.headers.raw();
-    let status = resp.status;
     const headers = {};
-    resp.buffer().then(body => {
-      for (let key in _headers) {
-        if (key!=='set-cookie') {
-          headers[key] = _headers[key].join(',');
-        } else {
-          headers[key] = _headers[key];
-        }
+    for (let key in _headers) {
+      if (key!=='set-cookie') {
+        headers[key] = _headers[key].join(',');
+      } else {
+        headers[key] = _headers[key];
       }
+    }
+    // if (status===301 || status===302) {
+    //   route.fulfill({url, status, headers});
+    //   return;
+    // }
+    resp.buffer().then(body => {
       if (status===undefined) {
         status = headers['x-app-status'];
       }

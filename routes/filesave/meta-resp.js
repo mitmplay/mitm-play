@@ -25,6 +25,14 @@ module.exports = ({reqs, resp}) => {
     }
   }
   try {
+    if (respHeader['report-to']) {
+      console.log(respHeader['report-to'])
+      respHeader['report-to'] = JSON.parse(respHeader['report-to']);
+    }
+  } catch (error) {
+    respHeader['report-to'] = 'JSON Error!';
+  }
+  try {
     const urlParams = searchParams(url);
     if (reqsBody) {
       const raw = reqsBody;
@@ -34,6 +42,8 @@ module.exports = ({reqs, resp}) => {
         const formField = searchParams(reqsBody);
         reqsBody = {'*form*':formField, raw};      
       }
+    } else {
+      reqsBody = ''
     }
     meta = {
       general: {

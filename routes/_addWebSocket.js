@@ -21,24 +21,27 @@ const headerchg = headers => {
 
 function addWebSocket(reqs, responseHandler) {
   if ((reqs.headers.accept+'').indexOf('text/html') > -1) {
-    responseHandler.push(resp => { 
+    responseHandler.push(resp => {
       const {headers: h} = resp;
-      if (h['content-security-policy'] || h['content-security-policy-report-only']) {
-        resp.body = script_src(resp.body, ['websocket.js']);
-        // headerchg(h);
-      } else {
-        let el = global.mitm.fn.wsclient();
-        const script = `\n<script>${el}</script>\n`;
-        let b = resp.body+'';
-        let h = b.match(/<head[^>]*>/i);
-        !h && (h = b.match(/<html[^>]*>/i));
-      
-        if (h) {
-          b = b.replace(h[0], `${h[0]}${script}`);
+      const contentType = h['content-type'];
+      if (contentType.match('text/html')) {
+        if (h['content-security-policy'] || h['content-security-policy-report-only']) {
+          resp.body = script_src(resp.body, ['websocket.js']);
+          // headerchg(h);
         } else {
-          b = `${script}${b}`;
+          let el = global.mitm.fn.wsclient();
+          const script = `\n<script>${el}</script>\n`;
+          let b = resp.body+'';
+          let h = b.match(/<head[^>]*>/i);
+          !h && (h = b.match(/<html[^>]*>/i));
+        
+          if (h) {
+            b = b.replace(h[0], `${h[0]}${script}`);
+          } else {
+            b = `${script}${b}`;
+          }
+          resp.body = b;
         }
-        resp.body = b;
       }
       return resp;
     });

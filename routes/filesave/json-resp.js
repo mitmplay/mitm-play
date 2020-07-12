@@ -40,7 +40,9 @@ module.exports = ({reqs, resp, match}) => {
           const formField = searchParams(reqsBody);
           reqsBody = {'*form*':formField, raw};      
         }
-      }      
+      } else {
+        reqsBody = ''
+      }
       let jsonResp = {
         general: {
           status,  

@@ -18,10 +18,11 @@
 }table.svelte-11lz7tf{border-collapse:collapse;font-family:Consolas, Lucida Console, Courier New, monospace;font-size:12px;width:100%}
 .resize.svelte-1507c6x{width:2px;position:absolute;height:calc(100vh - 27px);background-color:#f3c49d;cursor:col-resize;z-index:5}
 .btn-container.svelte-1jw2ksx{position:absolute;margin-top:-1px;left:70px;top:1px}button.svelte-1jw2ksx{border:0;width:26px;cursor:pointer;background:transparent}
-#show-html.svelte-6v3h2h.svelte-6v3h2h{font-size:12px;height:calc(100vh - 55px);overflow:auto}#show-html.svelte-6v3h2h pre.svelte-6v3h2h{padding:0 0 0 5px}
+.show-css.svelte-124jn6p.svelte-124jn6p{font-size:12px;height:calc(100vh - 55px);overflow:auto}.show-css.svelte-124jn6p pre.svelte-124jn6p{padding:0 0 0 5px}
+.show-html.svelte-1132mgb.svelte-1132mgb{font-size:12px;height:calc(100vh - 55px);overflow:auto}.show-html.svelte-1132mgb pre.svelte-1132mgb{padding:0 0 0 5px}
 .td-item.svelte-1610rot:hover{color:blue;font-weight:bolder}td.svelte-1610rot{border-bottom:3px solid #c0d8cca1;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif}.td-item.svelte-1610rot,.td-show.svelte-1610rot{cursor:pointer;padding:0.1rem;line-height:15px;padding-left:5px}.td-item.true.svelte-1610rot{color:blue;font-weight:bolder;background:greenyellow}.status.svelte-1610rot{color:green;font-weight:bold}.status._4.svelte-1610rot,.status._5.svelte-1610rot{color:red}.method.svelte-1610rot{color:green;font-weight:bold}.method.post.svelte-1610rot{color:#a7267f}.prm.svelte-1610rot{color:#ccb7b7}
-#show-json.svelte-17ganfh.svelte-17ganfh{font-size:12px;height:calc(100vh - 31px);overflow:auto}#show-json.svelte-17ganfh pre.svelte-17ganfh{padding:0 0 0 5px}
-.item-show.svelte-1c1efn7{margin-left:2px}
+.show-json.svelte-1onac7p.svelte-1onac7p{font-size:12px;height:calc(100vh - 55px);overflow:auto}.show-json.svelte-1onac7p pre.svelte-1onac7p{padding:0 0 0 5px}
+.item-show.svelte-1stfez.svelte-1stfez{margin-left:2px}.item-show.svelte-1stfez pre.svelte-1stfez{padding:0 0 0 5px}
 .vbox.svelte-1lkoif2{flex:auto;display:flex;flex-direction:column;position:relative}
 .file-path.svelte-y30ofq.svelte-y30ofq{position:relative;font-family:auto;font-size:0.9em;color:blue}.btn-container.svelte-y30ofq.svelte-y30ofq{position:absolute;margin-top:-1px;padding-right:4px;padding-bottom:3px;right:0;z-index:5;top:0}.btn-container.svelte-y30ofq button.svelte-y30ofq{font-size:10px}
 .td-item.svelte-pb7eo7:hover{color:blue;font-weight:bolder}td.svelte-pb7eo7{border-bottom:3px solid #c0d8cca1}.td-item.svelte-pb7eo7,.td-show.svelte-pb7eo7{cursor:pointer;padding:0.1rem;line-height:15px;padding-left:5px}.td-item.true.svelte-pb7eo7{color:blue;font-weight:bolder;background:greenyellow}

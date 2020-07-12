@@ -4,8 +4,8 @@ export let item;
 
 function empty() {
   source.set({
+    headers: '',
     content: '',
-    meta: '',
     element: '',
     title: '',
     path: '',
@@ -21,8 +21,8 @@ function clickHandler(e) {
     empty();
     const o = window.mitm.files.log[item];
     const src = {
+      headers: '<empty>',
       content: '<empty>',
-      meta: '<empty>',
       element: item,
       title: o.title,
       path: o.path,
@@ -33,10 +33,11 @@ function clickHandler(e) {
         source.update(n => src)
       }, 0);
     } else {
-      ws__send('getContent', {fpath: item}, content => {
+      ws__send('getContent', {fpath: item}, ({headers, content}) => {
         source.update(n => {
           return {
             ...src,
+            headers,
             content,
           }
         })
