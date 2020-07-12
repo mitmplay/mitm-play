@@ -56,12 +56,12 @@ function dragend({detail}) {
     <BHeader>-Logs-</BHeader>
     <Button/>
     <BTable>
-      {#each Object.keys(_data) as item}
-      <Item item={{element: item, ..._data[item]}}/>
+      {#each Object.keys(_data) as logid}
+      <Item item={{logid, ..._data[logid]}}/>
       {/each}
     </BTable>
   </BStatic>
-  {#if $source.element}
+  {#if $source.logid}
     <BResize left={_json} on:dragend={dragend}>
       <Show/>
     </BResize>

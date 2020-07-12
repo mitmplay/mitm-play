@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 export const source = writable({
   headers: '',
   content: '',
-  element: '',
+  logid: '',
   title: '',
   path: '',
   url: '',

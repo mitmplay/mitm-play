@@ -13,14 +13,16 @@ function addLog(path) {
   fs.readFile(meta.replace(/.\w+$/, '.json'), (err, data) => {
     if (err) {
       _log[path] = {
-        ext: '',
-        status: '',
-        method: '',
-        url: path,
+        general: {
+          ext: '',
+          status: '',
+          method: '',
+          url: path,  
+        }
       };
     } else {
       const json = JSON.parse(`${data}`);
-      _log[path] = json.general;
+      _log[path] = json;
     }
   });
   showFiles();

@@ -4,7 +4,7 @@ module.exports = () =>{
   log.forEach(element => {
     const [path, title] = element.split('@');
     data[element] = {
-      general: _log[element],
+      ..._log[element],
       title,
       path,
     }

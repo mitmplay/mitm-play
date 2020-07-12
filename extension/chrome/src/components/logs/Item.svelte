@@ -6,7 +6,7 @@ function empty() {
   source.set({
     headers: '',
     content: '',
-    element: '',
+    logid: '',
     title: '',
     path: '',
     url: '',
@@ -14,26 +14,26 @@ function empty() {
 }
 
 function clickHandler(e) {
-  let {item} = e.currentTarget.dataset;
-  if (item===$source.element) {
+  let {logid} = e.currentTarget.dataset;
+  if (logid===$source.logid) {
     empty();
   } else {
     empty();
-    const o = window.mitm.files.log[item];
+    const o = window.mitm.files.log[logid];
     const src = {
       headers: '<empty>',
       content: '<empty>',
-      element: item,
+      logid: logid,
       title: o.title,
       path: o.path,
-      url: item.replace(/^.+\.mitm-play/,'https://localhost:3001'),
+      url: logid.replace(/^.+\.mitm-play/,'https://localhost:3001'),
     }
     if (o.title.match('.png')) {
       setTimeout(() => {
         source.update(n => src)
       }, 0);
     } else {
-      ws__send('getContent', {fpath: item}, ({headers, content}) => {
+      ws__send('getContent', {fpath: logid}, ({headers, content}) => {
         source.update(n => {
           return {
             ...src,
@@ -74,9 +74,9 @@ function p({general:g}) {
 </script>
 
 <tr class="tr">
-  <td class="{item.element ? 'selected' : ''}">
-    <div class="td-item {$source.element===item.element}"
-    data-item={item.element}
+  <td class="{item.logid ? 'selected' : ''}">
+    <div class="td-item {$source.logid===item.logid}"
+    data-logid={item.logid}
     on:click="{clickHandler}"
     >
       <span class="status {s(item)}">{item.general.status}</span> 
