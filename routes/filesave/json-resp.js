@@ -45,6 +45,7 @@ module.exports = ({reqs, resp, match}) => {
       }
       let jsonResp = {
         general: {
+          ext: _ext(resp),
           status,  
           method,
           url,

@@ -13,6 +13,7 @@ function addLog(path) {
   fs.readFile(meta.replace(/.\w+$/, '.json'), (err, data) => {
     if (err) {
       _log[path] = {
+        ext: '',
         status: '',
         method: '',
         url: path,

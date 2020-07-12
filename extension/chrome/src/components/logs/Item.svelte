@@ -53,6 +53,9 @@ function s({general:g}) {
 function m({general:g}) {
   return `${g.method.toLowerCase()}`;
 }
+function m2({general:g}) {
+  return g.method + (g.ext ? ` <${g.ext.toUpperCase()}> ` : '');
+}
 function u({general:g}) {
   if (g.url.match('/log/')) {
     return g.url.split('@')[1];
@@ -77,7 +80,7 @@ function p({general:g}) {
     on:click="{clickHandler}"
     >
       <span class="status {s(item)}">{item.general.status}</span> 
-      <span class="method {m(item)}">{item.general.method}</span> 
+      <span class="method {m(item)}">{m2(item)}</span> 
       <span class="url">{u(item)}</span> 
       <span class="prm">{p(item)}</span> 
     </div>

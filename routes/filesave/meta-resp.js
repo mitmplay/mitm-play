@@ -1,4 +1,5 @@
 const c = require('ansi-colors');
+const _ext = require('../filepath/ext');
 const searchParams = require('./search-params');
 const {xjson} = searchParams;
 
@@ -47,6 +48,7 @@ module.exports = ({reqs, resp}) => {
     }
     meta = {
       general: {
+        ext: _ext(resp),
         status,  
         method,
         url,
