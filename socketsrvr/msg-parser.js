@@ -10,11 +10,13 @@ const $saveRoute = require('./_saveRoute');
 const $screencap = require('./_screencap');
 const $clearLogs = require('./_clearLogs');
 const $setClient = require('./_setClient');
+const $getContent = require('./_getContent');
 
 // accessible from client
 const wscmd = {
   ..._global(),
   ..._client(),
+  $getContent,
   $setClient,
   $clearLogs,
   $screencap,

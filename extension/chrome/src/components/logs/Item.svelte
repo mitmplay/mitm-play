@@ -5,6 +5,7 @@ export let item;
 function empty() {
   source.set({
     content: '',
+    meta: '',
     element: '',
     title: '',
     path: '',
@@ -18,18 +19,29 @@ function clickHandler(e) {
     empty();
   } else {
     empty();
-    setTimeout(() => {
-      const o = window.mitm.files.log[item];
-      source.update(n => {
-        return {
-          content: '<empty>',
-          element: item,
-          title: o.title,
-          path: o.path,
-          url: item.replace(/^.+\.mitm-play/,'https://localhost:3001'),
-        }
+    const o = window.mitm.files.log[item];
+    const src = {
+      content: '<empty>',
+      meta: '<empty>',
+      element: item,
+      title: o.title,
+      path: o.path,
+      url: item.replace(/^.+\.mitm-play/,'https://localhost:3001'),
+    }
+    if (o.title.match('.png')) {
+      setTimeout(() => {
+        source.update(n => src)
+      }, 0);
+    } else {
+      ws__send('getContent', {fpath: item}, content => {
+        source.update(n => {
+          return {
+            ...src,
+            content,
+          }
+        })
       })
-    }, 0);
+    }
   }
 }
 
