@@ -4,6 +4,7 @@ export let item;
 
 function empty() {
   source.set({
+    respHeader: {},
     headers: '',
     content: '',
     logid: '',
@@ -21,6 +22,7 @@ function clickHandler(e) {
     empty();
     const o = window.mitm.files.log[logid];
     const src = {
+      respHeader: o.respHeader,
       headers: '<empty>',
       content: '<empty>',
       logid: logid,
