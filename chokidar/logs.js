@@ -9,22 +9,19 @@ function addLog(path) {
   const {win32,files:{_log, log}} = global.mitm;
   win32 && (path = path.replace(/\\/g, '/'));
   log.push(path);
-  if (path.match(/json$/)) {
-    fs.readFile(path, (err, data) => {
-      if (err) {
-        console.log(c.redBright('>> Error read log'), path, err);
-      } else {
-        const json = JSON.parse(`${data}`);
-        _log[path] = json.general;
-      }
-    })  
-  }  else {
-    _log[path] = {
-      status: '',
-      method: '',
-      url: path,
-    };
-  }
+  let meta = path.replace(/\/log\/\w+/,m => `${m}/$`);
+  fs.readFile(meta.replace(/.\w+$/, '.json'), (err, data) => {
+    if (err) {
+      _log[path] = {
+        status: '',
+        method: '',
+        url: path,
+      };
+    } else {
+      const json = JSON.parse(`${data}`);
+      _log[path] = json.general;
+    }
+  });
   showFiles();
 }
 
