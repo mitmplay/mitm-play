@@ -3,6 +3,7 @@ import { source } from './stores.js';
 import Json from './Json.svelte';
 import Html from './Html.svelte';
 import Css from './Css.svelte';
+import Js from './Js.svelte';
 </script>
 
 <div class="item-show">
@@ -14,6 +15,8 @@ import Css from './Css.svelte';
     <Html/>
   {:else if $source.title.match('.css')}
     <Css/>
+  {:else if $source.title.match('.js')}
+    <Js/>
   {:else}
     <pre>{$source.content}</pre>
   {/if}

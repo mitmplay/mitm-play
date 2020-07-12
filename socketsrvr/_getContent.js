@@ -31,18 +31,16 @@ module.exports = ({data}) =>{
   const fmeta = fpath.replace(/\/log\/\w+/,m => `${m}/$`);
   let headers = `${fs.readFileSync(fmeta.replace(/.\w+$/, '.json'))}`;
   let content = `${fs.readFileSync(fpath)}`;
-  // console.log('content', content);
-  if (fpath.match('.html')) {
+
+  if (fpath.match(/\.html$/)) {
     content = hjs.highlight('html', content).value;
-  } else if (fpath.match('.css')) {
+  } else if (fpath.match(/\.css$/)) {
     content = cssbeauty(content, {
-      // openbrace: 'in-line',
       autosemicolon: true,
-      // indent: '  ',
     });
     content = hjs.highlight('css', content).value;
   } else {
-    if (fpath.match('.json')) {
+    if (fpath.match(/\.json/)) {
       const obj = JSON.parse(content);
       content = JSON.stringify(obj.respBody, null, 2);
     }

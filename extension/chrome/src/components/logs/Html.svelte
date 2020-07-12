@@ -1,29 +1,10 @@
 <script>
 import { source } from './stores.js';
 import { Tabs, Tab } from 'svelma';
-
+import BaseTab from './BaseTab.svelte';
 </script>
 
 <Tabs style="is-boxed" size="is-small">
-  <Tab label="Headers">
-    <div class="show-html">
-      <pre>{@html $source.headers}</pre>
-    </div>  
-  </Tab>
-  <Tab label="Response">
-    <div class="show-html">
-      <pre>{@html $source.content}</pre>
-    </div>  
-  </Tab>
+  <BaseTab/>
 </Tabs>
 
-<style>
-.show-html {
-  font-size: 12px;
-  height: calc(100vh - 55px);
-  overflow: auto;
-}
-.show-html pre{
-  padding: 0 0 0 5px;
-}
-</style>
