@@ -35,11 +35,11 @@ const searchFN = (typ, {url}) => {
     const splitter = global.mitm.splitter;
 
     for (let key in route) {
-      const split = url.split(splitter);
-      const path = `${split[0]}${split.length>1 ? '?' : ''}`;
-      const arr = path.match(obj[key]);
+      const arr = url.match(obj[key]);
 
       if (arr) {
+        const split = url.split(splitter);
+        const path = `${split[0]}${split.length>1 ? '?' : ''}`;
         const {host, pathname} = new URL(url);
         const log = `>> ${typ} (${path}).match(${key})`;
         return {

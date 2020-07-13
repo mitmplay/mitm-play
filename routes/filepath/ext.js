@@ -9,6 +9,7 @@ const types = {
   png: 'png',
   svg: 'svg',
   mp4: 'mp4',
+  xml: 'xml',
   css: 'css',
   plain: 'txt',
   mpegURL: 'm3u8'
