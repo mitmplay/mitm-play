@@ -40,12 +40,13 @@ const searchFN = (typ, {url}) => {
       if (arr) {
         const split = url.split(splitter);
         const path = `${split[0]}${split.length>1 ? '?' : ''}`;
-        const {host, pathname} = new URL(url);
+        const {host, pathname, search} = new URL(url);
         const log = `>> ${typ} (${path}).match(${key})`;
         return {
           contentType: obj[`${key}~contentType`],
           route: route[key],
           pathname,
+          search,
           host,
           url,
           key,

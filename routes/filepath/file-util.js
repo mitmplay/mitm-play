@@ -33,15 +33,15 @@ function root(reqs, typ) {
   return root;
 }
 
-function filename(match, sep='/') {
-  let {pathname: p, route: {querystring}} = match;
-  const arr = p.replace(/:[/]+/g,'-').replace(/-/g, '_').split('/');
+function filename(match, separator='/') {
+  let {pathname, search, route: {querystring}} = match;
+  const arr = pathname.replace(/:[/]+/g,'-').replace(/-/g, '_').split('/');
   let file = arr.pop();
   if (file==='') {
     file = '_';
   }
   if (querystring) {
-    file = `hash-${hashCode(file)}`;  
+    file = `hash-${hashCode(`${file}${search}`)}`;  
   } else {
     let file2 = file;
     if (file.match(/\.\w+$/)) {
@@ -50,7 +50,7 @@ function filename(match, sep='/') {
     file = fileWithHash(file2);
   }
   arr.push(file);
-  return arr.join(sep);
+  return arr.join(separator);
 }
 
 module.exports = {
