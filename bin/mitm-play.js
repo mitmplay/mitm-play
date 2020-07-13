@@ -1,3 +1,3 @@
-#!/usr/bin/env node  --trace-warnings
+#!/usr/bin/env node 
 
 require('../mitm-play');
