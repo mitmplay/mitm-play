@@ -33,6 +33,7 @@ const searchFN = (typ, {url}) => {
     const obj = router[namespace][typ];
     const route = routes[namespace][typ];
     const splitter = global.mitm.splitter;
+    const workspace = router[namespace].workspace;
 
     for (let key in route) {
       const arr = url.match(obj[key]);
@@ -45,6 +46,7 @@ const searchFN = (typ, {url}) => {
         return {
           contentType: obj[`${key}~contentType`],
           route: route[key],
+          workspace,
           pathname,
           search,
           host,

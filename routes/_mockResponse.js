@@ -39,7 +39,8 @@ function mockResponse({reqs, route}, _3d) {
         } else if (file) {
           const ext = file.match(/\.(\w+)$/);
           if (ext) {
-            resp.body = `${fs.readFileSync(file)}`;
+            const fpath = (match.workspace || '') + file;
+            resp.body = `${fs.readFileSync(fpath)}`;
             resp.headers['content-type'] = xtype[ext[1]];
           } else {
             console.log(c.redBright('>> ERROR: Need a proper file extension'));
