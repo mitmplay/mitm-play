@@ -39,18 +39,18 @@ const route = {
   url: 'https://google.com/search?q=github+playwright',
   html: {
     'www.google.com/search': {
-      el: 'e_end', //JS at end of 
-      js: [googlJS, hello], //html body
+      el: 'e_end', 
+      js: [googlJS, hello], //JS will be placed at end of html body
     },
-  }, //all js request from gstatic.com 
-  js: {'gstatic.com': ''} // will be empty response
+  }, //all js from gstatic.com will be replace with an empty response
+  js: {'gstatic.com': ''} 
 }
 module.exports = route;
 ```
 
 ```bash
 # run the demo:
-mitm-play --url='google.com/search?q=covid-19' --route='.' --save --delete
+mitm-play --url='google.com/search?q=covid-19' --delete --save --route='.'
 mitm-play -u='google.com/search?q=covid-19' --dsr='.'
 
 # next run should be simple as:
@@ -88,7 +88,9 @@ Usually html page load with several assets (image, js & css) that not belong to 
 <details><summary>Example</summary>
 <p>
 
-In below example the route is having a `js` object and the process of checking narrated as: if there is a JS assets come from `gstatic.com`, then the response will get replace with an empty string.
+In below example the route is having a `js` object and the process of checking narrated as: 
+
+>  when user access url that having `google.com` and having subsequent request from `gstatic.com`, if there is a JS assets, then the response will get replace with an empty string.
 
 Namespaces: `_global_`, `google.com` on nodejs global scope:
 ```js
