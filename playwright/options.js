@@ -7,16 +7,9 @@ module.exports =  () => {
   const {argv: {proxy}} = global.mitm;
   const options = {headless: false};
 
-  if (proxy) {
+  if (typeof(proxy)==='string') {
     let opts = {bypass: ''};
-    if (proxy===true) {
-      if (HTTP_PROXY || http_proxy) {
-        opts.server = HTTP_PROXY || http_proxy;
-        opts.bypass = NO_PROXY || no_proxy || '';
-      }
-    } else {
-      opts.server = proxy;
-    }
+    opts.server = proxy;
     const match = opts.server.match(/(\w+):(\w+)@/);
     if (match) {
       const [,username,password] = match;
