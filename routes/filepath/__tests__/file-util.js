@@ -42,7 +42,7 @@ describe('file-util.js - filename - function', () => {
       }
     }
     const result = filename(match);
-    expect(result).toBe('/one/two/hash--571922149');
+    expect(result).toBe('/one/two/hash-20137621');
   })
   test('return same text if no splitter identify', () => {
     const match = {
@@ -52,7 +52,7 @@ describe('file-util.js - filename - function', () => {
       }
     }
     const result = filename(match);
-    expect(result).toBe('/one/two/hash-110339486');
+    expect(result).toBe('/one/two/hash--1943458446');
   })
   test('return same text if no filename', () => {
     const match = {
@@ -62,7 +62,7 @@ describe('file-util.js - filename - function', () => {
       }
     }
     const result = filename(match);
-    expect(result).toBe('/one/two/three/hash-95');
+    expect(result).toBe('/one/two/three/hash-1767922641');
   })
   test('return same text if no filename', () => {
     const match = {

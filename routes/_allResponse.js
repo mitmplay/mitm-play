@@ -1,7 +1,7 @@
 
 const c = require('ansi-colors');
 const _match = require('./match');
-const _ctype = require('./content-type');
+const {ctype} = require('./content-type');
 
 const {matched,searchFN} = _match;
 
@@ -16,7 +16,7 @@ function allRequest(reqs, responseHandler, _3d) {
     }
     responseHandler.push(resp => {
       if (response) {
-        if (contentType===undefined || _ctype(match, resp)) {
+        if (contentType===undefined || ctype(match, resp)) {
           const resp2 = response(resp);
           resp2 && (resp = {
             ...resp,

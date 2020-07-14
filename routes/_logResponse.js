@@ -1,7 +1,7 @@
 const c = require('ansi-colors');
 const _match = require('./match');
 const ext = require('./filepath/ext');
-const _ctype = require('./content-type');
+const {ctype} = require('./content-type');
 const filesave = require('./filesave/filesave');
 const metaResp = require('./filesave/meta-resp');
 const jsonResp = require('./filesave/json-resp');
@@ -17,7 +17,7 @@ function logResponse(reqs, responseHandler, _3d) {
     const {hidden, log, response} = match.route;
     const stamp = (new Date).toISOString().replace(/[:-]/g, '');
     responseHandler.push(resp => {
-      if (_ctype(match, resp)) {
+      if (ctype(match, resp)) {
         let {fpath1, fpath2} = fpathflat({match, reqs, stamp});
         if (logs.log) {
           if (!hidden) {

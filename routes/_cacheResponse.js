@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const c = require('ansi-colors');
 const _match = require('./match');
 const _ext = require('./filepath/ext');
-const _ctype = require('./content-type');
+const {ctype} = require('./content-type');
 const filesave = require('./filesave/filesave');
 const metaResp = require('./filesave/meta-resp');
 const fpathcache = require('./filepath/fpath-cache');
@@ -53,7 +53,7 @@ function cacheResponse(reqs, responseHandler, _3d) {
           general: {status},
           respHeader: headers,
         } = JSON.parse(fs.readFileSync(fpath2));
-        if (!_ctype(match, {headers})) {
+        if (!ctype(match, {headers})) {
           return {match: undefined, resp};
         }
         if (session) {
@@ -85,7 +85,7 @@ function cacheResponse(reqs, responseHandler, _3d) {
     if (remote) {
       // get from remote
       responseHandler.push(resp => {
-        if (_ctype(match, resp)) {
+        if (ctype(match, resp)) {
           if (session) {
             const path = session===true ? '' : session;
             global.mitm.fn.session(host, path);

@@ -1,4 +1,4 @@
-const contentType = require('../content-type');
+const {ctype} = require('../content-type');
 
 const {
   test, 
@@ -16,7 +16,7 @@ describe('name-space.js - function', () => {
     const resp1 = {headers: {'content-type': 'application/json'}};
     const resp2 = {headers: {}};
 
-    expect(contentType(match, resp1)).toBe('json');
-    expect(contentType(match, resp2)).toBe(false);
+    expect(ctype(match, resp1)).toBe('json');
+    expect(ctype(match, resp2)).toBe(false);
   })
 })

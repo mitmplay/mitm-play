@@ -2,6 +2,8 @@ const fs = require('fs-extra');
 const c = require('ansi-colors');
 const _match = require('./match');
 const inject = require('./inject');
+const {xtype} = require('./content-type');
+
 const {matched,searchFN} = _match;
 const {source} = inject;
 
@@ -13,21 +15,6 @@ const mock = () => {
     },
     body: ''
   }
-};
-
-const _ext = {
-  js: 'application/javascript',
-  json: 'application/json',
-  xml: 'application/xml',
-  svg: 'image/svg+xml',
-  webp: 'image/webp',
-  jpeg: 'image/jpeg',
-  html: 'text/html',
-  ico: 'image/x-icon',
-  png: 'image/png',
-  gif: 'image/gif',
-  png: 'image/png',
-  css: 'text/css',
 };
 
 function mockResponse({reqs, route}, _3d) {
@@ -52,8 +39,8 @@ function mockResponse({reqs, route}, _3d) {
         } else if (file) {
           const ext = file.match(/\.(\w+)$/);
           if (ext) {
-            resp.body = `${fs.readFileSync(file)}`
-            resp.headers['content-type'] = _ext[ext[1]];
+            resp.body = `${fs.readFileSync(file)}`;
+            resp.headers['content-type'] = xtype[ext[1]];
           } else {
             console.log(c.redBright('>> ERROR: Need a proper file extension'));
           }

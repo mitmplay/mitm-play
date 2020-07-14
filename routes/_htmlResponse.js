@@ -1,6 +1,7 @@
 const c = require('ansi-colors');
 const _match = require('./match');
 const inject = require('./inject');
+
 const {matched,searchFN} = _match;
 const {script_src,e_end} = inject;
 
@@ -23,8 +24,7 @@ function htmlResponse(reqs, responseHandler, _3d) {
           if (response) {
             const resp2 = response(resp);
             resp2 && (resp = {...resp, ...resp2});
-          }
-          if (js) {
+          } else if (js) {
             const inject = inject[el] || e_end;
             resp.body = inject(resp.body, js);
           }
