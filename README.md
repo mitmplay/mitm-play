@@ -146,16 +146,20 @@ routes = {
 the execution order as documented start with `skip`, end with `js`, no need to implement all of routing rules. 
 </p>
 
-<details><summary><b>URL & Title</b></summary>
+<details><summary><b>Title, url & workspace</b></summary>
 <p>
 
-Url will be use as part of `non dashes CLI first params`. The logic is try to match partion of text in **`url`** and if it match, continue to open in the browser.
+`Title`: provide basic information about this route.
 
-For `Title`, it just provide basic information about this route.
+`Url`: when user enter cli with first param as `non dashes`, it will try to find it in **`url`**, if match it will open the browser with that **`url`**.
+
+`workspace`: will be use as the base folder for `file` option in `Mock`.
+
 ```js
 routes = {
   title: 'Amazon - amazon',
   url:  'https://www.amazon.com/b?node=229189',
+  workspace: '~/Projects',
 };
 // mitm-play ama -dpsr='.' -> search: 'ama' in url and go to the website
 ```
@@ -252,7 +256,7 @@ Basic rule: replace **response body** with **the matcher** value
 mock: {'2mdn.net': ''},
 ```
 
-`response` rule: manipulate **response** with return value of `response` *function*
+`response` manipulate **response** with return value of `response` *function*
 ```js
 mock: {
   'mitm-play/twitter.js': {
@@ -262,7 +266,7 @@ mock: {
   },
 },
 ```
-`file` rule:  **the mock body** come from file
+`file` getting **mock body** from `file`, if `workspace` exists, it will be use as base path (ie: `${workspace}/${file}`)
 ```js
 mock: {
   'mitm-play/twitter.js': {
