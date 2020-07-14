@@ -274,7 +274,7 @@ mock: {
   },
 },
 ```
-`js` rule: **the mock body** will be a concatenation of JS code
+`js` **the mock body** will be a concatenation of JS code
 ```js
 const unregisterJS = () => {
   ...
@@ -287,7 +287,7 @@ mock: {
   },
 },
 ```
-Please do not combine  `response` with `js`, `js` will add/replace content-type to  *'application/javascript'*.
+If both options are created `response`, `js`, `response` will be used and `js` will be ignored.
 </p>
 </details>
 <details><summary><b>Cache</b></summary>
