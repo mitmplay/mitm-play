@@ -262,7 +262,14 @@ mock: {
   },
 },
 ```
-
+`file` rule:  **the mock body** come from file
+```js
+mock: {
+  'mitm-play/twitter.js': {
+    file: 'path/to/my/file.html',
+  },
+},
+```
 `js` rule: **the mock body** will be a concatenation of JS code
 ```js
 const unregisterJS = () => {
@@ -516,7 +523,7 @@ _global_.config = {
 </details>
 
 # HTTP_PROXY
-mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system required proxy to access internet.
+mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system required proxy to access internet. Please check on `CLI Options > -x --proxy` section for detail explanation. 
 
 # CLI Options
 <details><summary><b>-h --help</b></summary>
@@ -737,6 +744,10 @@ $ mitm-play --webkit
 
 will force some traffict that having proxy section defined, it will use proxy.
 
+this option serving two kind of needs:
+1. if the option put just plain --proxy, certain traffict that was handle by mitm-play will get thru proxy, certain traffict that was handle by browser will not effected. and the configuration will come from the enviroment variable.
+2. if the option come with string configuration, all traffict will get thru proxy. and the configuration come from --proxy (ie: --proxy='http://username:pass@my.proxy.com')  
+
 ```
 $ mitm-play -x  <OR>
 $ mitm-play --proxy
@@ -757,7 +768,7 @@ $ mitm-play --lazy
 <details><summary><b>--proxypac</b></summary>
 <p>
 
-When network on your having a proxypac settings, might be usefull to use the same
+When network on your having a proxypac settings, might be usefull to use the same. This option only in Chromium
 
 ```
 $ mitm-play --proxypac
