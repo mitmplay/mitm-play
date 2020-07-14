@@ -1,3 +1,4 @@
+const fs = require('fs-extra');
 const c = require('ansi-colors');
 const _match = require('./match');
 const inject = require('./inject');
@@ -14,12 +15,27 @@ const mock = () => {
   }
 };
 
+const _ext = {
+  js: 'application/javascript',
+  json: 'application/json',
+  xml: 'application/xml',
+  svg: 'image/svg+xml',
+  webp: 'image/webp',
+  jpeg: 'image/jpeg',
+  html: 'text/html',
+  ico: 'image/x-icon',
+  png: 'image/png',
+  gif: 'image/gif',
+  png: 'image/png',
+  css: 'text/css',
+};
+
 function mockResponse({reqs, route}, _3d) {
   const search = searchFN('mock', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
   const {logs} = global.mitm.routes._global_.config;
   if (match) {
-    const {js, response} = match.route;
+    const {response, file, js} = match.route;
     if (logs.mock) {
       if (!match.url.match('/mitm-play/websocket')) {
         console.log(c.cyanBright(match.log));
@@ -29,12 +45,19 @@ function mockResponse({reqs, route}, _3d) {
     if (typeof(match.route)==='string') {
       resp.body = match.route;
     } else {          
-      if (response || js) {
+      if (response || file || js) {
         if (response) {
           const resp2 = response(resp);
           resp2 && (resp = {...resp, ...resp2});
-        }
-        if (js) {
+        } else if (file) {
+          const ext = file.match(/\.(\w+)$/);
+          if (ext) {
+            resp.body = `${fs.readFileSync(file)}`
+            resp.headers['content-type'] = _ext[ext[1]];
+          } else {
+            console.log(c.redBright('>> ERROR: Need a proper file extension'));
+          }
+        } else if (js) {
           resp.body = source(resp.body, js);
           resp.headers['content-type'] = 'application/javascript';
         }
