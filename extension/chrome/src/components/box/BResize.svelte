@@ -8,7 +8,7 @@ import Splitter from './Splitter.svelte';
 const dispatch = createEventDispatcher();
 
 function resize() {
-  let css = `left: ${left}px;width: calc(100vw - ${left}px);`
+  let css = `left: ${left}px;width: calc(100vw - ${+left+17}px);`
   if (height) {
     css += `height: calc(100vh - ${height}px);`;
   }

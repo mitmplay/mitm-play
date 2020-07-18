@@ -42,6 +42,18 @@ onMount(async () => {
   chrome.storage.local.get('route', function(data) {
     data.route && (route = data.route);
   });
+  setTimeout(() => {
+    const el = window.document.getElementById('monaco');
+    window.monacoEl = el;
+    window.monacoEditor = monaco.editor.create(el, {
+      language: 'javascript',
+      // theme: "vs-dark",
+      minimap: {
+        enabled: false,
+      },
+      value: '',
+    });
+  }, 500);
 });
 
 window.mitm.files.route_events.routeTable = () => {
@@ -84,8 +96,9 @@ function dragend({detail}) {
     </BTable>
   </BStatic>
   <BResize left={_route} on:dragend={dragend} height="47">
-    <div id="code-mirror">
-      <textarea id="demotext">{$source.content}</textarea>
+    <div class="edit-container">
+      <div id="monaco">
+      </div>
     </div>
   </BResize>
 </div>
@@ -98,9 +111,17 @@ function dragend({detail}) {
   flex-direction: column;
   position: relative;
 }
-#code-mirror {
-  font-size: 12px;
-  height: calc(100vh - 41px);
-  overflow: auto;
+
+.edit-container {
+  position: relative;
+  height: calc(100vh - 71px);
+  /* width: calc(100% - 55px); */
+}
+#monaco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 </style>
