@@ -1,18 +1,25 @@
 <html>
   <head>
+    <meta charset="utf-8">
     <title>MITM-PLAY</title>
     <link rel='stylesheet' href='css/bulma.css'>
     <link rel='stylesheet' href='css/bundle.css'>
     <link rel="stylesheet" href="css/highlight.css">
     <link rel="stylesheet" href="css/codemirror.css">
     <link rel="stylesheet" href="css/overwrites.css">
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="vs/editor/editor.main.css">
     <script src="https://localhost:3001/mitm-play/websocket.js"></script>
     <script src="js/codemirror.js"></script>
     <script src="js/javascript.js"></script>
+    <script src="vs/loader.js"></script>
     <style>
     </style>
   </head>
   <body>
     <script src='js/bundle.js'></script>
+    <div style="position: fixed;width: 1px;height: 1px;">
+      <div id="container" style="position: fixed; top: 22px; left: 0; right: 0; bottom: 0"></div>
+    </div>
+    <script src="vs/init.js"></script>
   </body>
 </html>

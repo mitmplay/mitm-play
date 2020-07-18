@@ -4,7 +4,7 @@
 	"license": "AGPL-3.0",
 	"author": "Widi Harsojo",
 	"scripts": {
-		"start": "rollup -c -w",
+		"start": "rollup -wc",
 		"eslint": "eslint --ext .js,.svelte ."
 	},
 	"devDependencies": {
@@ -31,7 +31,8 @@
 		"svelte-preprocess": "^3.9.8"
 	},
 	"dependencies": {
-		"lockr": "^0.8.4"
+		"lockr": "^0.8.4",
+		"monaco-editor": "^0.20.0"
 	},
 	"engines": {
 		"node": ">=10.15.0"
