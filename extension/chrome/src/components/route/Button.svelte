@@ -3,7 +3,7 @@ import { source } from './stores.js';
 
 function btnSave(e) {
   source.update(n => {
-    return {...n, content: window.editor.getValue()}
+    return {...n, content: window.monacoEditor.getValue()}
   })
   console.log($source);
 

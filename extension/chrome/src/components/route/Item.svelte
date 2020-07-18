@@ -3,6 +3,7 @@ import { source } from './stores.js';
 import { onMount } from 'svelte';
 
 export let item;
+export let onChange;
 
 onMount(async () => setupCodeMiror())
 
@@ -14,6 +15,8 @@ function clickHandler(e) {
 
   window.monacoEditor.setValue(obj.content);
   window.monacoEditor.revealLine(1);
+  onChange(false);
+
   source.update(n => {
     return {
       ...n,

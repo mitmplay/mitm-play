@@ -79,12 +79,12 @@ function editorChanged(e) {
   if (e===false) {
     saveDisabled = true;
     source.update(n => {return {...n, saveDisabled}})
-    editbuffer = window.editor.getValue();
+    editbuffer = window.monacoEditor.getValue();
   }
   _timeout && clearTimeout(_timeout);
   _timeout = setTimeout(() => {
-    if (window.editor){
-      saveDisabled = (window.editor.getValue()===editbuffer)
+    if (window.monacoEditor){
+      saveDisabled = (window.monacoEditor.getValue()===editbuffer)
       source.update(n => {return {...n, saveDisabled}});
       console.log(e);
     }
@@ -103,7 +103,7 @@ function dragend({detail}) {
     <BHeader>-Route(s)-</BHeader>
     <BTable>
       {#each Object.keys(_data) as item}
-      <Item item={{element: item, ..._data[item]}}/>
+      <Item item={{element: item, ..._data[item]}} onChange={editorChanged}/>
       {/each}
     </BTable>
   </BStatic>
