@@ -53,6 +53,16 @@ onMount(async () => {
       },
       value: '',
     });
+
+    var ro = new ResizeObserver(entries => {
+      const {width: w, height: h} = entries[0].contentRect;
+      // console.log({width: w-18, height: h-30});
+      window.monacoEditor.layout({width: w-18, height: h})
+    });
+
+    // Observe one or multiple elements
+    ro.observe(el);
+
   }, 500);
 });
 
