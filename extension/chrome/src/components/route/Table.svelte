@@ -57,7 +57,7 @@ onMount(async () => {
     var ro = new ResizeObserver(entries => {
       const {width: w, height: h} = entries[0].contentRect;
       // console.log({width: w-18, height: h-30});
-      window.monacoEditor.layout({width: w-18, height: h})
+      window.monacoEditor.layout({width: w, height: h})
     });
 
     // Observe one or multiple elements
@@ -124,7 +124,7 @@ function dragend({detail}) {
 
 .edit-container {
   position: relative;
-  height: calc(100vh - 71px);
+  height: calc(100vh - 50px);
   /* width: calc(100% - 55px); */
 }
 #monaco {

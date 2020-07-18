@@ -8,7 +8,7 @@ import Splitter from './Splitter.svelte';
 const dispatch = createEventDispatcher();
 
 function resize() {
-  let css = `left: ${left}px;width: calc(100vw - ${+left+17}px);`
+  let css = `left: ${left}px;width: calc(100vw - ${left}px);`
   if (height) {
     css += `height: calc(100vh - ${height}px);`;
   }
@@ -43,6 +43,7 @@ function dragend(e) {
   background: #f1f7f7e3;
   width: calc(100vw - 163px);
   height: calc(100vh - 27px);
+  overflow: hidden;
 }
 
 
