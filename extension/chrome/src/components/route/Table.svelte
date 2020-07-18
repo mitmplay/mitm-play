@@ -43,9 +43,8 @@ onMount(async () => {
     data.route && (route = data.route);
   });
   setTimeout(() => {
-    const el = window.document.getElementById('monaco');
-    window.monacoEl = el;
-    window.monacoEditor = monaco.editor.create(el, {
+    const element = window.document.getElementById('monaco');
+    const editor = monaco.editor.create(element, {
       language: 'javascript',
       // theme: "vs-dark",
       minimap: {
@@ -54,14 +53,17 @@ onMount(async () => {
       value: '',
     });
 
+    window.monacoEl = element;
+    window.monacoEditor = editor;
+    editor.onDidChangeModelContent(editorChanged);
+
     var ro = new ResizeObserver(entries => {
       const {width: w, height: h} = entries[0].contentRect;
-      // console.log({width: w-18, height: h-30});
-      window.monacoEditor.layout({width: w, height: h})
+      editor.layout({width: w, height: h})
     });
 
     // Observe one or multiple elements
-    ro.observe(el);
+    ro.observe(element);
 
   }, 500);
 });
@@ -101,7 +103,7 @@ function dragend({detail}) {
     <BHeader>-Route(s)-</BHeader>
     <BTable>
       {#each Object.keys(_data) as item}
-      <Item item={{element: item, ..._data[item]}} onChanged={editorChanged}/>
+      <Item item={{element: item, ..._data[item]}}/>
       {/each}
     </BTable>
   </BStatic>
@@ -125,7 +127,6 @@ function dragend({detail}) {
 .edit-container {
   position: relative;
   height: calc(100vh - 50px);
-  /* width: calc(100% - 55px); */
 }
 #monaco {
   position: absolute;
