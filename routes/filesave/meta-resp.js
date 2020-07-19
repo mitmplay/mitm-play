@@ -46,6 +46,14 @@ module.exports = ({reqs, resp}) => {
     } else {
       reqsBody = ''
     }
+    if (reqsHeader.cookie) {
+      const cookieObj = {};
+      reqsHeader.cookie.split('; ').sort().forEach(element => {
+        const [k,v] = element.split('=');
+        cookieObj[k]= v;
+      });
+      reqsHeader.cookie = cookieObj;
+    }    
     meta = {
       general: {
         ext: _ext(resp),
