@@ -43,6 +43,7 @@ function dragend(e) {
   background: #f1f7f7e3;
   width: calc(100vw - 163px);
   height: calc(100vh - 27px);
+  overflow: hidden;
 }
 
 

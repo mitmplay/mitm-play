@@ -6,7 +6,7 @@ import { Tabs, Tab, Button } from 'svelma';
 import LogsTable from './components/logs/Table.svelte';
 import RouteTable from './components/route/Table.svelte';
 import OtherTab from './components/other/Tab.svelte';
-
+import Editor from './components/monaco/Editor.svelte';
 // import CacheTable from './components/cache/Table.svelte';
 
 // let counter = 0;
@@ -17,6 +17,7 @@ import OtherTab from './components/other/Tab.svelte';
   <Tab label="Route"><RouteTable/></Tab>
   <Tab label="Logs"><LogsTable/></Tab>
   <Tab label="Other"><OtherTab/></Tab>
+  <!-- <Tab label="Monaco"><Editor/></Tab> -->
 </Tabs>
 
 </main>

@@ -1,13 +1,13 @@
 {
   "name": "mitm-play",
-  "version": "0.6.38",
+  "version": "0.6.39",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
     "mitm-play": "bin/mitm-play.js"
   },
   "scripts": {
-    "client": "rollup -c socketclnt/rollup.js",
+    "client": "rollup -wc socketclnt/rollup.js",
     "coverage": "jest --coverage",
     "eslint": "eslint --fix **/*.js",
     "start": "node --inspect ./mitm-play.js",

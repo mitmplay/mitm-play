@@ -1,9 +1,17 @@
 <script>
 import { source } from './stores.js';
 
+function btnMin() {
+  window.monacoEditor.trigger('fold', 'editor.foldAll');
+}
+
+function btnPlus() {
+  window.monacoEditor.trigger('unfold', 'editor.unfoldAll');
+}
+
 function btnSave(e) {
   source.update(n => {
-    return {...n, content: window.editor.getValue()}
+    return {...n, content: window.monacoEditor.getValue()}
   })
   console.log($source);
 
@@ -30,9 +38,11 @@ function btnGo(e) {
 Path:{$source.path}
 {#if $source.path}
 	<div class="btn-container">
-  <button class="btn-save" disabled={$source.saveDisabled} on:click="{btnSave}">Save</button> -
-  <button class="btn-open" disabled={$source.openDisabled} on:click="{btnOpen}">Open</button> -
-  <button class="btn-go"   disabled={$source.goDisabled}   on:click="{btnGo}"  >Go</button>
+  <button class="tlb btn-min"  on:click="{btnMin}" >[--]</button> -
+  <button class="tlb btn-plus" on:click="{btnPlus}">[++]</button> -
+  <button class="tlb btn-save" disabled={$source.saveDisabled} on:click="{btnSave}">Save</button> -
+  <button class="tlb btn-open" disabled={$source.openDisabled} on:click="{btnOpen}">Open</button> -
+  <button class="tlb btn-go"   disabled={$source.goDisabled}   on:click="{btnGo}"  >Go</button>
   </div>
 {/if}
 </div>
@@ -55,5 +65,8 @@ Path:{$source.path}
 }
 .btn-container button {
   font-size: 10px;
+}
+.tlb {
+  border: none;
 }
 </style>

@@ -1,8 +1,3 @@
-div.CodeMirror {
-  height: auto !important;
-  background-color: transparent;
-}
-
 nav.tabs.is-small.is-boxed {
   height: 22;
   margin-bottom: 4px;

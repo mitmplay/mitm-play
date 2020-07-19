@@ -3,34 +3,20 @@ import { source } from './stores.js';
 import { onMount } from 'svelte';
 
 export let item;
-export let onChanged;
+export let onChange;
 
-function setupCodeMiror() {
-  if (!window.editor) {
-    window.editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
-      lineNumbers: true,
-      mode: "javascript",
-      matchBrackets: true,
-      scrollbarStyle: 'native',
-    });
-    editor.on('changes', onChanged);
-    onChanged(false);
-  }
-}
-
-onMount(async () => setupCodeMiror())
+onMount(async () => {});
 
 function clickHandler(e) {
   let {item} = e.target.dataset;
   const url = mitm.routes[item].url;
   const obj = window.mitm.files.route[item];
   console.log(item, obj);
-  if (window.editor) {
-    const nodes = document.querySelectorAll('#code-mirror .CodeMirror');
-    nodes.forEach(element => element.remove());
-    window.editor = undefined;
-  }
-  setTimeout(() => setupCodeMiror(), 100)
+
+  window.monacoEditor.setValue(obj.content);
+  window.monacoEditor.revealLine(1);
+  onChange(false);
+
   source.update(n => {
     return {
       ...n,

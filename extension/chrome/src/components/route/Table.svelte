@@ -42,6 +42,30 @@ onMount(async () => {
   chrome.storage.local.get('route', function(data) {
     data.route && (route = data.route);
   });
+  setTimeout(() => {
+    const element = window.document.getElementById('monaco');
+    const editor = monaco.editor.create(element, {
+      language: 'javascript',
+      // theme: "vs-dark",
+      minimap: {
+        enabled: false,
+      },
+      value: '',
+    });
+
+    window.monacoEl = element;
+    window.monacoEditor = editor;
+    editor.onDidChangeModelContent(editorChanged);
+
+    var ro = new ResizeObserver(entries => {
+      const {width: w, height: h} = entries[0].contentRect;
+      editor.layout({width: w, height: h})
+    });
+
+    // Observe one or multiple elements
+    ro.observe(element);
+
+  }, 500);
 });
 
 window.mitm.files.route_events.routeTable = () => {
@@ -55,12 +79,12 @@ function editorChanged(e) {
   if (e===false) {
     saveDisabled = true;
     source.update(n => {return {...n, saveDisabled}})
-    editbuffer = window.editor.getValue();
+    editbuffer = window.monacoEditor.getValue();
   }
   _timeout && clearTimeout(_timeout);
   _timeout = setTimeout(() => {
-    if (window.editor){
-      saveDisabled = (window.editor.getValue()===editbuffer)
+    if (window.monacoEditor){
+      saveDisabled = (window.monacoEditor.getValue()===editbuffer)
       source.update(n => {return {...n, saveDisabled}});
       console.log(e);
     }
@@ -79,13 +103,14 @@ function dragend({detail}) {
     <BHeader>-Route(s)-</BHeader>
     <BTable>
       {#each Object.keys(_data) as item}
-      <Item item={{element: item, ..._data[item]}} onChanged={editorChanged}/>
+      <Item item={{element: item, ..._data[item]}} onChange={editorChanged}/>
       {/each}
     </BTable>
   </BStatic>
   <BResize left={_route} on:dragend={dragend} height="47">
-    <div id="code-mirror">
-      <textarea id="demotext">{$source.content}</textarea>
+    <div class="edit-container">
+      <div id="monaco">
+      </div>
     </div>
   </BResize>
 </div>
@@ -98,9 +123,16 @@ function dragend({detail}) {
   flex-direction: column;
   position: relative;
 }
-#code-mirror {
-  font-size: 12px;
-  height: calc(100vh - 41px);
-  overflow: auto;
+
+.edit-container {
+  position: relative;
+  height: calc(100vh - 50px);
+}
+#monaco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 </style>
