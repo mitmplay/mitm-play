@@ -1,5 +1,5 @@
 <script>
-import { source } from './stores.js';
+import { logstore } from './stores.js';
 
 function btnClear(e) {
   ws__send('clearLogs', {browserName: 'chromium'}, data => {

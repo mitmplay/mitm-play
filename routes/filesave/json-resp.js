@@ -1,6 +1,7 @@
 const c = require('ansi-colors');
 const _ext = require('../filepath/ext');
 const searchParams = require('./search-params');
+const cookieRequest = require('./cookier');
 const {xjson} = searchParams;
 
 module.exports = ({reqs, resp, match}) => {
@@ -20,14 +21,7 @@ module.exports = ({reqs, resp, match}) => {
           _resp.headers && (respHeader = _resp.headers);
         }
       }
-      if (reqsHeader.cookie) {
-        const cookieObj = {};
-        reqsHeader.cookie.split('; ').sort().forEach(element => {
-          const [k,v] = element.split('=');
-          cookieObj[k]= v;
-        });
-        reqsHeader.cookie = cookieObj;
-      }
+      cookieRequest(reqsHeader);
       const urlParams = searchParams(url);      
       if (respBody && respBody.match(xjson)) {
         respBody = JSON.parse(`${respBody}`);

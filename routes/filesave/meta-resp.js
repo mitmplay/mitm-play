@@ -1,29 +1,23 @@
 const c = require('ansi-colors');
 const _ext = require('../filepath/ext');
 const searchParams = require('./search-params');
+const cookieRequest = require('./cookier');
+const _setCookie = require('./set-cookie');
 const {xjson} = searchParams;
 
 module.exports = ({reqs, resp}) => {
   let {method, body: reqsBody, headers: reqsHeader} = reqs;
   let meta, {url, status, headers: respHeader} = resp;
-  let setCookie;
-  if (respHeader['set-cookie']) {
-    setCookie = [];
-    for (let cookie of respHeader['set-cookie']) {
-      const id = cookie.split('=')[0];
-      const arr = cookie.split(/; */);
-      const items = {};
-      for (let itm of arr) {
-        const [k,v] = itm.split('=');
-        items[k] = v || true;
-      }
-      const expire = cookie.match(/expires=([^;]+)/);
-      if (expire) {
-        const elapsed = Date.parse(expire[1]) - Date.now();
-        items._elapsed = elapsed;  
-      }
-      setCookie.push(items);
-    }
+  let setCookie = _setCookie(respHeader);
+  let CSP =  respHeader['content-security-policy'] || 
+             respHeader['content-security-policy-report-only'];
+  if (CSP) {
+    const obj = {};
+    CSP.split(/ *; */).forEach(element => {
+      const [id,...arr] = element.split(/ +/);
+      id && (obj[id] = arr.sort().join(' '));
+    });
+    CSP = obj;
   }
   try {
     if (respHeader['report-to']) {
@@ -46,6 +40,7 @@ module.exports = ({reqs, resp}) => {
     } else {
       reqsBody = ''
     }
+    cookieRequest(reqsHeader);  
     meta = {
       general: {
         ext: _ext(resp),
@@ -62,6 +57,9 @@ module.exports = ({reqs, resp}) => {
     }
     if (setCookie) {
       meta.setCookie = setCookie;
+    }
+    if (CSP) {
+      meta.CSP = CSP;
     }
   } catch (error) {
     console.log(c.redBright('>> Error JSON.stringify'));
