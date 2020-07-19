@@ -3,57 +3,57 @@ import { onMount } from 'svelte';
 import { logstore } from './stores.js';
 import { Tab } from 'svelma';
 
+const minimap = {enabled: false};
+
 onMount(async () => {
-  const element = window.document.getElementById('monaco2');
-  const editor =  window.monaco.editor.create(element, {
-    language: $logstore.ext,
-    minimap: {
-      enabled: false,
-    },
-    value: $logstore.source,
+  console.log($logstore)
+  const element1 = window.document.getElementById('monaco1');
+  const editor1 =  window.monaco.editor.create(element1, {
+    value: $logstore.headers,
+    language: 'json',
+    minimap
   });
 
-  var ro = new ResizeObserver(entries => {
-    const {width: w, height: h} = entries[0].contentRect;
-    editor.layout({width: w, height: h})
+  var ro1 = new ResizeObserver(entries => {
+    const {width, height} = entries[0].contentRect
+    editor1.layout({width, height})
   });
-  ro.observe(element);
+  ro1.observe(element1);
+
+  const element2 = window.document.getElementById('monaco2');
+  const editor2 =  window.monaco.editor.create(element2, {
+    language: $logstore.ext,
+    value: $logstore.source,
+    minimap
+  });
+
+  var ro2 = new ResizeObserver(entries => {
+    const {width, height} = entries[0].contentRect
+    editor2.layout({width, height})
+  });
+  ro2.observe(element2);
 });
 </script>
 
 <Tab label="Headers">
-  <div class="show">
-    <pre>{@html $logstore.headers}</pre>
-  </div>  
-</Tab>
-<Tab label="Response">
-  <div class="show">
-    <pre>{@html $logstore.content}</pre>
+  <div class="view-container">
+    <div id="monaco1">
+    </div>
   </div>
 </Tab>
-<Tab label="Monaco">
+<Tab label="Response">
   <div class="view-container">
     <div id="monaco2">
     </div>
   </div>
-  <!-- <div class="show">
-    <pre>{@html $logstore.source}</pre>
-  </div> -->
 </Tab>
 
 <style>
-.show {
-  font-size: 12px;
-  height: calc(100vh - 55px);
-  overflow: auto;
-}
-.show pre{
-  padding: 0 0 0 5px;
-}
 .view-container {
   position: relative;
   height: calc(100vh - 50px);
 }
+#monaco1,
 #monaco2 {
   position: absolute;
   top: 0;
