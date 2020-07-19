@@ -1,30 +1,14 @@
 const c = require('ansi-colors');
 const _ext = require('../filepath/ext');
 const searchParams = require('./search-params');
+const cookieRequest = require('./cookier');
+const _setCookie = require('./set-cookie');
 const {xjson} = searchParams;
 
 module.exports = ({reqs, resp}) => {
   let {method, body: reqsBody, headers: reqsHeader} = reqs;
   let meta, {url, status, headers: respHeader} = resp;
-  let setCookie;
-  if (respHeader['set-cookie']) {
-    setCookie = [];
-    for (let cookie of respHeader['set-cookie']) {
-      const id = cookie.split('=')[0];
-      const arr = cookie.split(/; */);
-      const items = {};
-      for (let itm of arr) {
-        const [k,v] = itm.split('=');
-        items[k] = v || true;
-      }
-      const expire = cookie.match(/expires=([^;]+)/);
-      if (expire) {
-        const elapsed = Date.parse(expire[1]) - Date.now();
-        items._elapsed = elapsed;  
-      }
-      setCookie.push(items);
-    }
-  }
+  let setCookie = _setCookie(respHeader);
   try {
     if (respHeader['report-to']) {
       console.log(respHeader['report-to'])
@@ -46,14 +30,7 @@ module.exports = ({reqs, resp}) => {
     } else {
       reqsBody = ''
     }
-    if (reqsHeader.cookie) {
-      const cookieObj = {};
-      reqsHeader.cookie.split('; ').sort().forEach(element => {
-        const [k,v] = element.split('=');
-        cookieObj[k]= v;
-      });
-      reqsHeader.cookie = cookieObj;
-    }    
+    cookieRequest(reqsHeader);  
     meta = {
       general: {
         ext: _ext(resp),
