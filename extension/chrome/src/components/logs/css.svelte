@@ -1,5 +1,5 @@
 <script>
-import { source } from './stores.js';
+import { logstore } from './stores.js';
 import { Tabs, Tab } from 'svelma';
 import BaseTab from './BaseTab.svelte';
 </script>

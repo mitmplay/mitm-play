@@ -31,24 +31,36 @@ module.exports = ({data}) =>{
   const fmeta = fpath.replace(/\/log\/\w+/,m => `${m}/$`);
   let headers = `${fs.readFileSync(fmeta.replace(/.\w+$/, '.json'))}`;
   let content = `${fs.readFileSync(fpath)}`;
+  let source = content;
+  let ext = fpath.match(/\.(\w+)$/);
 
-  if (fpath.match(/\.html$/)) {
-    content = hjs.highlight('html', content).value;
-  } else if (fpath.match(/\.css$/)) {
-    content = cssbeauty(content, {
-      autosemicolon: true,
-    });
-    content = hjs.highlight('css', content).value;
-  } else {
-    if (fpath.match(/\.json/)) {
-      const obj = JSON.parse(content);
-      content = JSON.stringify(obj.respBody, null, 2);
+  if (ext) {
+    ext = ext[1];
+    if (ext === 'html') {
+      content = hjs.highlight('html', content).value;
+    } else if (ext === 'js') {
+      ext = 'javaacript';
+      content = hjs.highlight('js', content).value;
+    } else if (ext === 'css') {
+      content = cssbeauty(content, {
+        autosemicolon: true,
+      });
+      content = hjs.highlight('css', content).value;
+    } else {
+      if (ext === 'json') {
+        const obj = JSON.parse(content);
+        content = JSON.stringify(obj.respBody, null, 2);
+      }
+      content = json(content);
     }
-    content = json(content);
+  } else {
+    ext = '';
   }
   headers = json(headers);
   return {
     headers: gutter(headers),
     content: gutter(content),
+    source,
+    ext,
   };
 };

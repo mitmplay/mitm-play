@@ -1,16 +1,16 @@
 <script>
-import { source } from './stores.js';
+import { logstore } from './stores.js';
 import { Tabs, Tab } from 'svelma';
 import BaseTab from './BaseTab.svelte';
 
 function isCSP() {
-  const h = $source.respHeader;
+  const h = $logstore.respHeader;
   const csp = h['content-security-policy'] || h['content-security-policy-report-only'];
   return csp;
 }
 
 function parseCSP() {
-  const h = $source.respHeader;
+  const h = $logstore.respHeader;
   const csp = h['content-security-policy'] || h['content-security-policy-report-only'];
   return JSON.stringify(csp.split(/; */), null, 2);
 }

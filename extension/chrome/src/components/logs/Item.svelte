@@ -1,22 +1,24 @@
 <script>
-import { source } from './stores.js';
+import { logstore } from './stores.js';
 export let item;
 
 function empty() {
-  source.set({
+  logstore.set({
     respHeader: {},
     headers: '',
     content: '',
+    source: '',
     logid: '',
     title: '',
     path: '',
     url: '',
+    ext: '',
   })
 }
 
 function clickHandler(e) {
   let {logid} = e.currentTarget.dataset;
-  if (logid===$source.logid) {
+  if (logid===$logstore.logid) {
     empty();
   } else {
     empty();
@@ -25,22 +27,26 @@ function clickHandler(e) {
       respHeader: o.respHeader,
       headers: '<empty>',
       content: '<empty>',
+      source: '<empty>',
       logid: logid,
       title: o.title,
       path: o.path,
       url: logid.replace(/^.+\.mitm-play/,'https://localhost:3001'),
+      ext: o.ext,
     }
     if (o.title.match('.png')) {
       setTimeout(() => {
-        source.update(n => src)
+        logstore.update(n => src)
       }, 0);
     } else {
-      ws__send('getContent', {fpath: logid}, ({headers, content}) => {
-        source.update(n => {
+      ws__send('getContent', {fpath: logid}, ({headers, content, source, ext}) => {
+        logstore.update(n => {
           return {
             ...src,
             headers,
             content,
+            source,
+            ext,
           }
         })
       })
@@ -77,7 +83,7 @@ function p({general:g}) {
 
 <tr class="tr">
   <td class="{item.logid ? 'selected' : ''}">
-    <div class="td-item {$source.logid===item.logid}"
+    <div class="td-item {$logstore.logid===item.logid}"
     data-logid={item.logid}
     on:click="{clickHandler}"
     >

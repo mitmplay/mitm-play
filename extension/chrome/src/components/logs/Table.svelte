@@ -1,6 +1,6 @@
 <script>
 import { onMount } from 'svelte';
-import { source } from './stores.js';
+import { logstore } from './stores.js';
 
 import BStatic from '../box/BStatic.svelte';
 import BResize from '../box/BResize.svelte';
@@ -61,7 +61,7 @@ function dragend({detail}) {
       {/each}
     </BTable>
   </BStatic>
-  {#if $source.logid}
+  {#if $logstore.logid}
     <BResize left={_json} on:dragend={dragend}>
       <Show/>
     </BResize>

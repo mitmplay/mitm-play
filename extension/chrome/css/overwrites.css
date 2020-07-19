@@ -3,3 +3,7 @@ nav.tabs.is-small.is-boxed {
   margin-bottom: 4px;
   background-color: #e6e4e4;
 }
+
+.tab-content {
+  overflow: hidden;
+}

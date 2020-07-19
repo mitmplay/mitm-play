@@ -1,5 +1,5 @@
 <script>
-import { source } from './stores.js';
+import { logstore } from './stores.js';
 import Json from './Json.svelte';
 import Html from './Html.svelte';
 import Css from './Css.svelte';
@@ -7,18 +7,18 @@ import Js from './Js.svelte';
 </script>
 
 <div class="item-show">
-  {#if $source.title.match('.png')}
-    <img src="{$source.url}" alt="image"/>
-  {:else if $source.title.match('.json')}
+  {#if $logstore.title.match('.png')}
+    <img src="{$logstore.url}" alt="image"/>
+  {:else if $logstore.title.match('.json')}
     <Json/>
-  {:else if $source.title.match('.html')}
+  {:else if $logstore.title.match('.html')}
     <Html/>
-  {:else if $source.title.match('.css')}
+  {:else if $logstore.title.match('.css')}
     <Css/>
-  {:else if $source.title.match('.js')}
+  {:else if $logstore.title.match('.js')}
     <Js/>
   {:else}
-    <pre>{$source.content}</pre>
+    <pre>{$logstore.content}</pre>
   {/if}
 </div>
 
