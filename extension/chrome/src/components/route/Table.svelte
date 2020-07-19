@@ -42,9 +42,10 @@ onMount(async () => {
   chrome.storage.local.get('route', function(data) {
     data.route && (route = data.route);
   });
-  setTimeout(() => {
+
+  function initCodeEditor() {
     const element = window.document.getElementById('monaco');
-    const editor = monaco.editor.create(element, {
+    const editor =  window.monaco.editor.create(element, {
       language: 'javascript',
       // theme: "vs-dark",
       minimap: {
@@ -61,11 +62,21 @@ onMount(async () => {
       const {width: w, height: h} = entries[0].contentRect;
       editor.layout({width: w, height: h})
     });
-
-    // Observe one or multiple elements
     ro.observe(element);
-
-  }, 500);
+  }
+  let intervalTic = 0;
+  const intervalID = window.setInterval(() => {
+    if (window.monaco.editor) {
+      console.log('Run', {intervalTic});
+      clearInterval(intervalID);
+      initCodeEditor();
+    } else if (intervalTic > 5) {
+      console.log('Out', {intervalTic});
+      clearInterval(intervalID);
+      initCodeEditor();
+    }
+    intervalTic += 1;
+  }, 100);
 });
 
 window.mitm.files.route_events.routeTable = () => {
