@@ -5,7 +5,7 @@ import { onMount } from 'svelte';
 export let item;
 export let onChange;
 
-onMount(async () => setupCodeMiror())
+onMount(async () => {});
 
 function clickHandler(e) {
   let {item} = e.target.dataset;

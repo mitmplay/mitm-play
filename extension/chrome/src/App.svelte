@@ -17,7 +17,7 @@ import Editor from './components/monaco/Editor.svelte';
   <Tab label="Route"><RouteTable/></Tab>
   <Tab label="Logs"><LogsTable/></Tab>
   <Tab label="Other"><OtherTab/></Tab>
-  <Tab label="Monaco"><Editor/></Tab>
+  <!-- <Tab label="Monaco"><Editor/></Tab> -->
 </Tabs>
 
 </main>
