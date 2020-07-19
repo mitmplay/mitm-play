@@ -2,9 +2,8 @@ import { writable } from 'svelte/store';
 
 export const logstore = writable({
   respHeader: {},
+  response: '',
   headers: '',
-  content: '',
-  source: '',
   logid: '',
   title: '',
   path: '',

@@ -18,7 +18,7 @@ import Js from './Js.svelte';
   {:else if $logstore.title.match('.js')}
     <Js/>
   {:else}
-    <pre>{$logstore.content}</pre>
+    <pre>{$logstore.response}</pre>
   {/if}
 </div>
 

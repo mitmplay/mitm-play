@@ -5,9 +5,8 @@ export let item;
 function empty() {
   logstore.set({
     respHeader: {},
+    response: '',
     headers: '',
-    content: '',
-    source: '',
     logid: '',
     title: '',
     path: '',
@@ -25,9 +24,8 @@ function clickHandler(e) {
     const o = window.mitm.files.log[logid];
     const src = {
       respHeader: o.respHeader,
+      response: '<empty>',
       headers: '<empty>',
-      content: '<empty>',
-      source: '<empty>',
       logid: logid,
       title: o.title,
       path: o.path,
@@ -39,13 +37,12 @@ function clickHandler(e) {
         logstore.update(n => src)
       }, 0);
     } else {
-      ws__send('getContent', {fpath: logid}, ({headers, content, source, ext}) => {
+      ws__send('getContent', {fpath: logid}, ({headers, response, ext}) => {
         logstore.update(n => {
           return {
             ...src,
+            response,
             headers,
-            content,
-            source,
             ext,
           }
         })

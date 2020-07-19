@@ -23,7 +23,7 @@ onMount(async () => {
   const element2 = window.document.getElementById('monaco2');
   const editor2 =  window.monaco.editor.create(element2, {
     language: $logstore.ext,
-    value: $logstore.source,
+    value: $logstore.response,
     minimap
   });
 
