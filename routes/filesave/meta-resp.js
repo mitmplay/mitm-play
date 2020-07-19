@@ -9,6 +9,16 @@ module.exports = ({reqs, resp}) => {
   let {method, body: reqsBody, headers: reqsHeader} = reqs;
   let meta, {url, status, headers: respHeader} = resp;
   let setCookie = _setCookie(respHeader);
+  let CSP =  respHeader['content-security-policy'] || 
+             respHeader['content-security-policy-report-only'];
+  if (CSP) {
+    const obj = {};
+    CSP.split(/ *; */).forEach(element => {
+      const [id,...arr] = element.split(/ +/);
+      id && (obj[id] = arr.sort().join(' '));
+    });
+    CSP = obj;
+  }
   try {
     if (respHeader['report-to']) {
       console.log(respHeader['report-to'])
@@ -47,6 +57,9 @@ module.exports = ({reqs, resp}) => {
     }
     if (setCookie) {
       meta.setCookie = setCookie;
+    }
+    if (CSP) {
+      meta.CSP = CSP;
     }
   } catch (error) {
     console.log(c.redBright('>> Error JSON.stringify'));
