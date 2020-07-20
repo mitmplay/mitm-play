@@ -3,7 +3,6 @@ const c = require('ansi-colors');
 const _match = require('./match');
 const inject = require('./inject');
 const {xtype} = require('./content-type');
-const { workspace } = require('../../userscript/_global_');
 
 const {matched,searchFN} = _match;
 const {source} = inject;
