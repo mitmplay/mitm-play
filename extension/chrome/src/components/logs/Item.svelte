@@ -51,24 +51,26 @@ function clickHandler(e) {
   }
 }
 
-function s({general:g}) {
+function status({general:g}) {
   return `_${Math.trunc(g.status/100)}`;
 }
 
-function m({general:g}) {
+function method({general:g}) {
   return `${g.method.toLowerCase()}`;
 }
-function m2({general:g}) {
+function method2({general:g}) {
   return g.method + (g.ext ? ` <${g.ext.toUpperCase()}> ` : '');
 }
-function u({general:g}) {
+function url({general:g}) {
   if (g.url.match('/log/')) {
     return g.url.split('@')[1];
+  } else if (window.mitm.client.nohostlogs) {
+    return g.path;
   } else {
     return `${g.url.split('?')[0]}`;
   }
 }
-function p({general:g}) {
+function pth({general:g}) {
   if (g.url.match('/log/')) {
     return '';
   } else {
@@ -84,10 +86,10 @@ function p({general:g}) {
     data-logid={item.logid}
     on:click="{clickHandler}"
     >
-      <span class="status {s(item)}">{item.general.status}</span> 
-      <span class="method {m(item)}">{m2(item)}</span> 
-      <span class="url">{u(item)}</span> 
-      <span class="prm">{p(item)}</span> 
+      <span class="status {status(item)}">{item.general.status}</span> 
+      <span class="method {method(item)}">{method2(item)}</span> 
+      <span class="url">{url(item)}</span> 
+      <span class="prm">{pth(item)}</span> 
     </div>
   </td>
 </tr>

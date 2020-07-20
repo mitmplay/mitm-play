@@ -42,6 +42,7 @@ global.mitm = {
   data: {},
   client: {
     csp: false,
+    nohostlogs:false,
     postmessage: false,
   }
 };

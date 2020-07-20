@@ -22,6 +22,8 @@ function addLog(path) {
       };
     } else {
       const json = JSON.parse(`${data}`);
+      const g = json.general;
+      g.path = (new URL(g.url)).pathname;
       _log[path] = json;
     }
   });
