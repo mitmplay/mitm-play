@@ -28,7 +28,7 @@ const loadJS = function(path, log, fn) {
   const {fs,routeSet} = global.mitm.fn;
   log && console.log(log);
   try {
-    const domain = path.match(/([\w.]+)[\\/]([\w.]+)$/)[1];
+    const domain = path.match(/([\w.-]+)[\\/]([\w.-]+)$/)[1];
     const route = {path, ...load(path)};
     routeSet(route, domain, true);
     fs.readFile(path, "utf8", function(err, data) {
