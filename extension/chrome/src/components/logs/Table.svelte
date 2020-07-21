@@ -1,6 +1,7 @@
 <script>
 import { onMount } from 'svelte';
 import { logstore } from './stores.js';
+import { client } from '../other/stores.js';
 
 import BStatic from '../box/BStatic.svelte';
 import BResize from '../box/BResize.svelte';
@@ -49,15 +50,22 @@ function dragend({detail}) {
   json = detail.left;
   chrome.storage.local.set({json})
 }
+function nohostlogs(flag) {
+  console.log('nohostlogs', flag);
+}
 </script>
 
 <div class="vbox">
   <BStatic>
     <BHeader>-Logs-</BHeader>
     <Button/>
-    <BTable>
+    <BTable update={nohostlogs($client.nohostlogs)}>
       {#each Object.keys(_data) as logid}
-      <Item item={{logid, ..._data[logid]}}/>
+      <Item item={{
+        logid,
+        ..._data[logid],
+        nohostlogs: $client.nohostlogs,
+        }}/>
       {/each}
     </BTable>
   </BStatic>

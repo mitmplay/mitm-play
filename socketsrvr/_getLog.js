@@ -1,7 +1,8 @@
 module.exports = () =>{ 
   const {files:{_log, log}} = global.mitm;
+  const logSorted = log.sort();
   let data = {};
-  log.forEach(element => {
+  logSorted.forEach(element => {
     const [path, title] = element.split('@');
     data[element] = {
       ..._log[element],

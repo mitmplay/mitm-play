@@ -1,6 +1,8 @@
 <script>
-import { logstore } from './stores.js';
 export let item;
+
+import { logstore } from './stores.js';
+import { client } from '../other/stores.js';
 
 function empty() {
   logstore.set({
@@ -64,7 +66,7 @@ function method2({general:g}) {
 function url({general:g}) {
   if (g.url.match('/log/')) {
     return g.url.split('@')[1];
-  } else if (window.mitm.client.nohostlogs) {
+  } else if ($client.nohostlogs) {
     return g.path;
   } else {
     return `${g.url.split('?')[0]}`;
