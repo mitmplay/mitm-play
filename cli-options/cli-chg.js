@@ -35,24 +35,24 @@ module.exports = () => {
     argv = global.mitm.argv;
   }
 
-  argsChg('t', 'incognito');
+  argsChg('c', 'chromium');
+  argsChg('d', 'delete');
+  argsChg('f', 'firefox');
+  argsChg('g', 'group');
+  argsChg('h', 'help');
   argsChg('i', 'insecure');
-  argsChg('p', 'pristine');
+  argsChg('k', 'cookie');
   argsChg('n', 'nosocket');
   argsChg('o', 'ommitlog');
-  argsChg('c', 'chromium');
-  argsChg('v', 'verbose');
-  argsChg('f', 'firefox');
-  argsChg('w', 'webkit');
-  argsChg('d', 'delete');
-  argsChg('k', 'cookie');
-  argsChg('x', 'proxy');
-  argsChg('g', 'group');
+  argsChg('p', 'pristine');
   argsChg('r', 'route');
-  argsChg('h', 'help');
   argsChg('s', 'save');
-  argsChg('z', 'lazy');
+  argsChg('t', 'incognito');
   argsChg('u', 'url');
+  argsChg('v', 'verbose');
+  argsChg('w', 'webkit');
+  argsChg('x', 'proxy');
+  argsChg('z', 'lazy');
 
   obj('browser','chromium');
   obj('browser','firefox');
