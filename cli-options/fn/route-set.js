@@ -5,6 +5,10 @@ const logs = require('./logs');
 const typA = ['skip','noproxy','proxy'];
 const typO = ['request','response','mock','cache','log','html','json','css','js'];
 
+function toRegex(str) {
+  return new RegExp(str.replace(/\./g, '\\.').replace(/\//g, '\\/'));
+}
+
 function routeSet(r, namespace, print=false) {  
   global.mitm.routes[namespace] = r;
   if (namespace==='_global_') {
@@ -27,12 +31,12 @@ function routeSet(r, namespace, print=false) {
   }
   // Compile regex into router
   const router = {};
-  router._namespace_ = new RegExp(`(^${namespace}|.${namespace})`);
+  router._namespace_ = toRegex(`(^${namespace}|.${namespace})`);
   for (let typ of typA) {
     if (r[typ]) {
       router[typ] = {};
       for (let str of r[typ]) {
-        const regex =  new RegExp(str);
+        const regex = toRegex(str);
         router[typ][str] = regex;
       }  
     }
@@ -41,7 +45,7 @@ function routeSet(r, namespace, print=false) {
     if (r[typ]) {
       router[typ] = {};
       for (let str in r[typ]) {
-        const regex =  new RegExp(str);
+        const regex =  toRegex(str);
         router[typ][str] = regex;
         const site = r[typ][str];
         if (site && site.contentType) {
@@ -53,7 +57,7 @@ function routeSet(r, namespace, print=false) {
                 `contentType should be unique:`,
                 `${namespace}.${typ}['${str}'].contentType => ['${ct}']`];
             }
-            contentType[typ2] = new RegExp(typ2);
+            contentType[typ2] = toRegex(typ2);
           }
           router[typ][`${str}~contentType`] = contentType;
         }
