@@ -7,8 +7,9 @@ const {xtype} = require('./content-type');
 const {matched,searchFN} = _match;
 const {source} = inject;
 
-const mock = () => {
+const mock = ({url}) => {
   return {
+    url,
     status: 200,
     headers: {
       'content-type': 'text/plain',
@@ -28,7 +29,7 @@ function mockResponse({reqs, route}, _3d) {
         console.log(c.cyanBright(match.log));
       }
     }
-    let resp = mock();
+    let resp = mock(reqs);
     if (typeof(match.route)==='string') {
       resp.body = match.route;
     } else {          
