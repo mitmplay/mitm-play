@@ -24,4 +24,22 @@ const app = new App({
 // }
 // window.addEventListener("resize", reportWindowSize);
 
+window.mitm.macro = {page:{}} 
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  const {macro: m} = window.mitm;
+  m.page = {
+    ...m.page,
+    ...changeInfo,
+  }
+  if (changeInfo.status === 'loading') {
+    m.page.title = '';
+  } else if (m.page.status === 'complete' && m.page.title) {
+    console.log(m.page);
+  }
+});
+
+window.addEventListener('message', event => {
+  console.log({event});
+})
+
 export default app;
