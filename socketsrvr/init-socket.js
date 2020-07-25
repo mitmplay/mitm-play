@@ -17,7 +17,7 @@ module.exports = () => {
   
   app.use(express.static(global.mitm.home));
   app.get('/mitm-play/websocket.js', (r, res) => {
-    const _body = global.mitm.fn.wsclient();
+    const _body = global.mitm.fn.wsclient(r);
     res.type('.js');
     res.send(_body);
   })

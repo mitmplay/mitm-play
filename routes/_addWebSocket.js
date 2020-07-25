@@ -29,7 +29,7 @@ function addWebSocket(reqs, responseHandler) {
           resp.body = script_src(resp.body, ['websocket.js']);
           // headerchg(h);
         } else {
-          let el = global.mitm.fn.wsclient();
+          let el = global.mitm.fn.wsclient(reqs);
           const script = `\n<script>${el}</script>\n`;
           let b = resp.body+'';
           let h = b.match(/<head[^>]*>/i);
