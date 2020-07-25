@@ -12,7 +12,7 @@ module.exports = () => {
     if (namespace) {
       const {pathname} = location;
       const {macros} = window.mitm;
-      console.log(namespace, location);
+      // console.log(namespace, location);
       for (let key in macros) {
         if (pathname.match(toRegex(key))) {
           macros[key]();

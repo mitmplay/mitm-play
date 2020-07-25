@@ -1,9 +1,14 @@
 module.exports = () => {
   const {hostname: host} = location;
   let namespace;
-  for (let id in window.mitm.routes) {
-    if (host.match(id)) {
-      namespace = id;
+
+  function toRegex(str) {
+    return str.replace(/\./g, '\\.').replace(/\//g, '\\/');
+  }
+
+  for (let key in window.mitm.routes) {
+    if (host.match(toRegex(key))) {
+      namespace = key;
       break;
     }
   }
