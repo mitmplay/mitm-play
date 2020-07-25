@@ -1,4 +1,5 @@
 const { script_src, e_head } = require('./inject');
+const {fn: {tldomain,nameSpace}} = global.mitm;
 
 function replaceCSP(csp) {
   csp = csp.replace(/default-src[^;]+;/g, '');
@@ -25,23 +26,12 @@ function addWebSocket(reqs, responseHandler) {
       const {headers: h} = resp;
       const contentType = h['content-type'];
       if (contentType.match('text/html')) {
-        if (h['content-security-policy'] || h['content-security-policy-report-only']) {
-          resp.body = script_src(resp.body, ['websocket.js']);
-          // headerchg(h);
-        } else {
-          let el = global.mitm.fn.wsclient(reqs);
-          const script = `\n<script>${el}</script>\n`;
-          let b = resp.body+'';
-          let h = b.match(/<head[^>]*>/i);
-          !h && (h = b.match(/<html[^>]*>/i));
-        
-          if (h) {
-            b = b.replace(h[0], `${h[0]}${script}`);
-          } else {
-            b = `${script}${b}`;
-          }
-          resp.body = b;
+        const js = ['websocket.js'];
+        if (nameSpace(reqs.url)) {
+          js.push('macros.js');
         }
+        resp.body = script_src(resp.body, js);
+        // headerchg(h);
       }
       return resp;
     });

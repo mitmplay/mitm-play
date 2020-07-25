@@ -7,7 +7,7 @@ module.exports = () => {
     return str.replace(/\./g, '\\.').replace(/\//g, '\\/');
   }
 
-  function funcRef(event) {
+  function urlChange(event) {
     const namespace = _ws_namespace();
     if (namespace) {
       const {pathname} = location;
@@ -21,11 +21,13 @@ module.exports = () => {
     }
   }
 
-  window.addEventListener('urlchanged', funcRef);
+  window.addEventListener('urlchanged', urlChange);
   const fn = history.pushState;
   history.pushState = function () {
     fn.apply(history, arguments);
     window.dispatchEvent(event);
   };
-  funcRef();
+  window.addEventListener('load', () => {
+    urlChange(event);
+  });  
 }
