@@ -2,6 +2,7 @@ const c = require('ansi-colors');
 const _global = require('./global');
 const _client = require('./client');
 const $getLog = require('./_getLog');
+const $autofill = require('./_autofill');
 const $getCache = require('./_getCache');
 const $getRoute = require('./_getRoute');
 const $openHome = require('./_openHome');
@@ -25,6 +26,7 @@ const wscmd = {
   $openHome,
   $getRoute,
   $getCache,
+  $autofill,
   $getLog,
 }
 global.mitm.wscmd = wscmd;

@@ -31,6 +31,7 @@ function addWebSocket(reqs, responseHandler) {
           js.push('macros.js');
         }
         js.push('websocket.js');
+        js.push('chance.js');
         resp.body = script_src(resp.body, js);
         // headerchg(h);
       }

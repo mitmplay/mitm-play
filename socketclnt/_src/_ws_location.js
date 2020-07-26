@@ -1,4 +1,5 @@
 const _ws_namespace = require('./_ws_namespace');
+const _ws_vendor = require('./_ws_vendor');
 
 module.exports = () => {
   const style = 'position: absolute;z-index: 9999;top: 8px;left: 5px;';
@@ -38,8 +39,10 @@ module.exports = () => {
 
   function btnclick(e) {
     const {autofill} = window.mitm;
+    const browser = _ws_vendor();
     if (autofill) {
       console.log(JSON.stringify(autofill, null, 2));
+      window.ws__send('autofill', {autofill, browser});
     }
   }
 
