@@ -14,6 +14,7 @@ const tldomain = require('./fn/tldomain');
 const wsclient = require('./fn/wsclient');
 const debounce = require('./fn/debounce');
 const session = require('./fn/session');
+const wsmitm = require('./fn/wsmitm');
 const loadJS = require('./fn/loadJS');
 const clear = require('./fn/clear');
 
@@ -29,6 +30,7 @@ module.exports = () => {
     execFile,
     debounce,
     session,
+    wsmitm,
     loadJS,
     clear,
     hello,

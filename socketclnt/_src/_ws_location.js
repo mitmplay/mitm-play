@@ -21,19 +21,22 @@ module.exports = () => {
     }
   }
 
-  window.addEventListener('urlchanged', urlChange);
-  const fn = history.pushState;
-  history.pushState = function () {
-    fn.apply(history, arguments);
-    window.dispatchEvent(event);
-  };
-
-  window.addEventListener('DOMContentLoaded', () => {
-    const noderef = document.body.firstElementChild;
-    const newNode = document.createElement("div");
-    newNode.style = 'background: red;position: absolute;z-index: 9999;top: 8px;left: 5px;';
-    newNode.innerHTML = '<button>Autofil</button>';
-    document.body.insertBefore(newNode, noderef);
-    urlChange(event);
-  });  
+  if (!chrome.tabs) {
+    window.addEventListener('urlchanged', urlChange);
+    const fn = history.pushState;
+    history.pushState = function () {
+      fn.apply(history, arguments);
+      window.dispatchEvent(event);
+    };
+  
+    window.addEventListener('DOMContentLoaded', () => {
+      const node = document.querySelector('html');
+      const noderef = node.firstElementChild;
+      const newNode = document.createElement("div");
+      newNode.style = 'background: red;position: absolute;z-index: 9999;top: 8px;left: 5px;';
+      newNode.innerHTML = '<button>Autofil</button>';
+      node.insertBefore(newNode, noderef);
+      urlChange(event);
+    });  
+  }
 }

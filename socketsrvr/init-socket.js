@@ -16,13 +16,19 @@ module.exports = () => {
   servers.listen(3001);
   
   app.use(express.static(global.mitm.home));
-  app.get('/mitm-play/websocket.js', (r, res) => {
-    const _body = global.mitm.fn.wsclient(r);
+  app.get('/mitm-play/mitm.js', (req, res) => {
+    const _body = global.mitm.fn.wsmitm(req);
+    res.type('.js');
+    res.send(_body);
+  })
+  
+  app.get('/mitm-play/websocket.js', (req, res) => {
+    const _body = global.mitm.fn.wsclient(req);
     res.type('.js');
     res.send(_body);
   })
 
-  app.get('/', (r, res) => {
+  app.get('/', (req, res) => {
     res.send('Hi Mitm-play!')
   })
 

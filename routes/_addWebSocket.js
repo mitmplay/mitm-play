@@ -26,10 +26,11 @@ function addWebSocket(reqs, responseHandler) {
       const {headers: h} = resp;
       const contentType = h['content-type'];
       if (contentType.match('text/html')) {
-        const js = ['websocket.js'];
+        const js = ['mitm.js'];
         if (nameSpace(reqs.url)) {
           js.push('macros.js');
         }
+        js.push('websocket.js');
         resp.body = script_src(resp.body, js);
         // headerchg(h);
       }
