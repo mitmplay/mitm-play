@@ -37,7 +37,7 @@ module.exports = () => {
   let fname;
   const callback = _ws_debounce(function() {
     for (let id in nodes) {
-      const el = document.querySelectorAll(id);
+      const el = document.body.querySelectorAll(id);
       if (el.length) {
         if (!nodes[id].insert) {
           nodes[id].insert = true;

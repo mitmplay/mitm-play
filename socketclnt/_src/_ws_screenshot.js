@@ -20,7 +20,7 @@ function screenshot(e) {
   const route = window.mitm.routes[namespace];
   const {selector} = route.screenshot;
 
-  const arr = document.querySelectorAll(selector);
+  const arr = document.body.querySelectorAll(selector);
   const fname = location.pathname.replace(/^\//,'').replace(/\//g,'-');
   for (let el of arr) {
     let node = e.target;
