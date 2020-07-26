@@ -22,7 +22,7 @@ if (platform==='win32') {
 
 global.mitm = {
   splitter: /([&?;,]|:\w|url|\/\w+=)/,
-  session: (new Date).toISOString().split('.')[0].replace(/[:-]/g,''),
+  session: (new Date).toISOString().slice(0,18).replace(/[T:-]/g,''),
   argv: yargs(process.argv.slice(2)),
   win32: platform==='win32',
   path: {
