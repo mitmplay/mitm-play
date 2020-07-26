@@ -23,9 +23,10 @@ const headerchg = headers => {
 function addWebSocket(reqs, responseHandler) {
   if ((reqs.headers.accept+'').indexOf('text/html') > -1) {
     responseHandler.push(resp => {
-      const {headers: h} = resp;
+      const {headers: h, status} = resp;
       const contentType = h['content-type'];
-      if (contentType.match('text/html')) {
+      const redirect = (status+'').match(/^30\d/);
+      if (!redirect && contentType.match('text/html')) {
         const js = ['mitm.js'];
         if (nameSpace(reqs.url)) {
           js.push('macros.js');

@@ -12,7 +12,7 @@ function extract({route, browserName}) {
 }
 
 function fetch(route, {url, proxy, ...reqs}, handler) {
-  const opts = {redirect: true};
+  const opts = {redirect: 'manual'};
 
   if (proxy) {
     if (proxy===true) {
