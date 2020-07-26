@@ -52,6 +52,8 @@ function screenshot(e) {
 module.exports = () => {
   const route = window.mitm.routes[_ws_namespace()];
   if (route && route.screenshot) {
-    document.querySelector('html').addEventListener('click', screenshot);
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('body').addEventListener('click', screenshot);
+    });
   }
 };
