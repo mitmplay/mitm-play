@@ -4,6 +4,7 @@ const _ws_vendor = require('./_ws_vendor');
 module.exports = () => {
   const style = 'position: absolute;z-index: 9999;top: 8px;right: 5px;';
   const event = new Event('urlchanged');
+  let ctrl = false;
   let container;
   let intervId;
   let button;
@@ -35,6 +36,7 @@ module.exports = () => {
     if (typeof(window.mitm.autointerval)==='function') {
       intervId = setInterval(window.mitm.autointerval, 500);
     }
+    ctrl = false;
   }
 
   function btnclick(e) {
@@ -46,7 +48,15 @@ module.exports = () => {
     }
   }
 
+  function keybCtrl(e) { 
+    if (e.code==='ControlLeft') {
+      ctrl = !ctrl;
+      container.style = style + (!ctrl ? '' : 'display: none;');      
+    }
+  }
+
   if (!chrome.tabs) {
+    document.querySelector('html').addEventListener('keydown', keybCtrl);
     window.addEventListener('urlchanged', urlChange);
     const fn = history.pushState;
     history.pushState = function () {
@@ -71,6 +81,6 @@ module.exports = () => {
         button.style = 'border: none;border-radius: 15px;font-size: 10px;background-color: azure;'
         urlChange(event);
       },1)
-    });  
+    });
   }
 }
