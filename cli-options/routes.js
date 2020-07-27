@@ -25,7 +25,7 @@ module.exports = () => {
     },
     '/mitm-play/websocket.js': {
       response: resp => {
-        return {body: global.mitm.fn.wsclient(resp)};
+        return {body: global.mitm.fn.wsclient()};
       },
     },
     '/mitm-play/chance.js': {

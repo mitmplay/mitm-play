@@ -66,6 +66,7 @@ module.exports = () => {
         container = newNode;
         button = newNode.children[0];
         button.onclick = btnclick;
+        button.style = 'border: none;font-size: 10px;'
         urlChange(event);
       },1)
     });  
