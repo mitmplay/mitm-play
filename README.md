@@ -802,6 +802,34 @@ $ mitm-play --debug
 </p>
 </details>
 
+# Macros
+When creating rule for specific website site (ie: **autologin to gmail**), inside folder you can add `macros.js` to contains what automation need to be run 
+```bash
+# folder
+./accounts.google.com/index.js
+./accounts.google.com/macros.js
+```
+```js
+// macros.js
+window.mitm.macros = {
+  '^/signin/v2/identifier?'() {
+    console.log('login to google account...!');
+    window.mitm.autofill = [
+      '#identifierId => myemailname',
+      '#identifierId -> press ~> Enter',
+    ];
+    //document.querySelector('.btn-autofill').click() // executed when loaded
+  },
+  '^/signin/v2/challenge/pwd?'() {
+    window.mitm.autofill = [
+      'input[type="password"] => password',
+      'input[type="password"] -> press ~> Enter',
+    ];
+    //document.querySelector('.btn-autofill').click() // executed when loaded
+  },
+}
+```
+
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
 
@@ -836,7 +864,14 @@ mock: {
 ```
 </p>
 </details>
+<details><summary><b>Simplify Developer workflow</b></summary>
+<p>
 
+as developer sometime we need to get access to lots website in which some of the page need to be automated fill in and submit to the next page. 
+
+With `Macros` it can be done!
+</p>
+</details>
 
 # Early Stage
 Expect to have some `rule changed` as feature/fix code are incrementally committed.

@@ -59,7 +59,8 @@ module.exports = () => {
       const noderef = node.firstElementChild;
       const newNode = document.createElement("div");
       newNode.style = 'position: absolute;z-index: 9999;top: 8px;left: 5px;';
-      newNode.innerHTML = '<button>Autofill</button>';
+      newNode.innerHTML = '<button class="btn-autofill">Autofill</button>';
+      newNode.className = 'mitm autofill-container';
       node.insertBefore(newNode, noderef);
       setTimeout(()=> {
         container = newNode;
