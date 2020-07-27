@@ -2,7 +2,7 @@ const _ws_namespace = require('./_ws_namespace');
 const _ws_vendor = require('./_ws_vendor');
 
 module.exports = () => {
-  const style = 'position: absolute;z-index: 9999;top: 8px;left: 5px;';
+  const style = 'position: absolute;z-index: 9999;top: 8px;right: 5px;';
   const event = new Event('urlchanged');
   let container;
   let intervId;
@@ -58,15 +58,17 @@ module.exports = () => {
       const node = document.querySelector('html');
       const noderef = node.firstElementChild;
       const newNode = document.createElement("div");
-      newNode.style = 'position: absolute;z-index: 9999;top: 8px;left: 5px;';
+
       newNode.innerHTML = '<button class="btn-autofill">Autofill</button>';
       newNode.className = 'mitm autofill-container';
+      newNode.style = style;
+
       node.insertBefore(newNode, noderef);
       setTimeout(()=> {
         container = newNode;
         button = newNode.children[0];
         button.onclick = btnclick;
-        button.style = 'border: none;font-size: 10px;'
+        button.style = 'border: none;border-radius: 15px;font-size: 10px;background-color: azure;'
         urlChange(event);
       },1)
     });  
