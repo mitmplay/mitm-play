@@ -601,7 +601,7 @@ Specify which folder contains routes config
 
 ```
 $ mitm-play -r='../userroutes'  <OR>
-$ mitm-play --save='../userroutes'
+$ mitm-play --route='../userroutes'
 ```
 </p>
 </details>
