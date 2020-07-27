@@ -9,7 +9,7 @@ module.exports = () => {
   let button;
 
   function toRegex(str) {
-    return str.replace(/\./g, '\\.').replace(/\//g, '\\/');
+    return str.replace(/\./g, '\\.').replace(/\?/g, '\\?');
   }
 
   function urlChange(event) {

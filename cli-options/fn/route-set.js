@@ -6,7 +6,7 @@ const typA = ['skip','noproxy','proxy'];
 const typO = ['request','response','mock','cache','log','html','json','css','js'];
 
 function toRegex(str) {
-  return new RegExp(str.replace(/\./g, '\\.').replace(/\//g, '\\/'));
+  return new RegExp(str.replace(/\./g, '\\.').replace(/\?/g, '\\?'));
 }
 
 function routeSet(r, namespace, print=false) {  

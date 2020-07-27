@@ -3,7 +3,7 @@ module.exports = () => {
   let namespace;
 
   function toRegex(str) {
-    return str.replace(/\./g, '\\.').replace(/\//g, '\\/');
+    return str.replace(/\./g, '\\.').replace(/\?/g, '\\?');
   }
 
   for (let key in window.mitm.routes) {
