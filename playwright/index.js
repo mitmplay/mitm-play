@@ -23,7 +23,7 @@ module.exports = () => {
       
       if (browserName==='chromium') {
         options.excludeSwitches = ['enable-automation'];
-        const p = `${global.__app}/extension`;
+        const p = `${global.__app}/plugins`;
         let path = `${process.cwd()}/`;
         if (argv.plugins) {
           path += argv.plugins.replace(/,/g, path);

@@ -4,9 +4,9 @@ global.mitm = {
   data: {},
   argv: {},
   fn: {
-    tldomain: require('../../cli-options/fn/tldomain'),
-    routeSet: require('../../cli-options/fn/route-set'),
-    nameSpace: require('../../cli-options/fn/namespace'),
+    tldomain: require('../../init/fn/tldomain'),
+    routeSet: require('../../init/fn/route-set'),
+    nameSpace: require('../../init/fn/namespace'),
   }
 };
 

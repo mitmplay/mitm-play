@@ -5,9 +5,9 @@ const cliChg = require('./cli-chg');
 const cliCmd = require('./cli-cmd');
 const routes = require('./routes');
 const helper = require('./helper');
-const logsWatch = require('../chokidar/logs');
-//const cacheWatch = require('../chokidar/cache');
-const urouteWatch = require('../chokidar/uroute');
+const logsWatch = require('./chokidar/logs');
+//const cacheWatch = require('./chokidar/cache');
+const urouteWatch = require('./chokidar/uroute');
 
 let home;
 const {platform, env: {HOME, HOMEPATH}} = process;

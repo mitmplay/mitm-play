@@ -30,7 +30,7 @@ module.exports = () => {
     },
     '/mitm-play/chance.js': {
       response: resp => {
-        path = `${global.__app}/lib/chance.js`;
+        path = `${global.__app}/plugins/js-lib/chance.js`;
         if (fs.existsSync(path)) {
           const body = fs.readFileSync(path);
           return {body};  

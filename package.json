@@ -1,18 +1,18 @@
 {
   "name": "mitm-play",
-  "version": "0.6.48",
+  "version": "0.7.0",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
     "mitm-play": "bin/mitm-play.js"
   },
   "scripts": {
-    "client": "rollup -wc socketclnt/rollup.js",
     "coverage": "jest --coverage",
     "eslint": "eslint --fix **/*.js",
     "start": "node --inspect ./mitm-play.js",
-    "test": "jest",
-    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand"
+    "client": "rollup -wc ws-client/rollup.js",
+    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand",
+    "test": "jest"
   },
   "author": "Widi Harsojo",
   "license": "AGPL-3.0",

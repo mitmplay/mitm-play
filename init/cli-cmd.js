@@ -28,7 +28,7 @@ module.exports = () => {
   let {route} = argv;
   const cwd = process.cwd();
   if (!route) {
-    route = `${cwd}/userroute`;
+    route = `${cwd}/user-route`;
   } else if (route.match(/^\.$/)) {
     route = route.replace(/^\.$/, `${cwd}`);
   } else if (route.match(/^\.\//)) {

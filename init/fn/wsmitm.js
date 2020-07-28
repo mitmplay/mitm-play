@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 
-const rpath = require.resolve('../../socketclnt');
+const rpath = require.resolve('../../ws-client');
 
 module.exports = function ({url}) {
   const {argv, client, fn: {nameSpace}} = global.mitm;
