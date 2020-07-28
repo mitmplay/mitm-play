@@ -13,8 +13,12 @@
    * [Concept](#concept)
    * [Profile: ~/.mitm-play](#profile-mitm-play)
    * [Route Sections](#route-sections)
+   * [\_global\_ Route](#_global_-route)
    * [HTTP_PROXY](#http_proxy)
+   * [CLI Options](#cli-options)
+   * [Macros](#macros)
    * [User Route](#user-route)
+   * [Use Cases](#use-cases)
    * [Early Stage](#early-stage)
 
 # Installation
@@ -475,7 +479,7 @@ response: {
 </p>
 </details>
 
-# _\_global\__ route
+# \_global\_ Route
 A special route to handle global scope (without namespace) and serving as a common config. 
 
 The default `config.logs` setting can be override as needed.
@@ -566,7 +570,7 @@ $ mitm-play --help
     --plugins            add chrome plugins
     --debug              show ws messages
 
-  v0.6.xx
+  v0.7.xx
 ```
 </p>
 </details>
@@ -894,4 +898,4 @@ Expect to have some `rule changed` as feature/fix code are incrementally committ
 .
 
 Goodluck!,
->*-wharsojo*.
+>*-wh*.
