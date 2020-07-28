@@ -127,6 +127,7 @@ on each route you can add section supported:
 routes = {
   url:     '',
   title:   '',
+  workspace: '',
   screenshot: {}, //user interaction rules & observe DOM-Element
   skip:    [], //start routing rules
   request: {},
