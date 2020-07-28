@@ -829,6 +829,20 @@ window.mitm.macros = {
   },
 }
 ```
+```js
+// will be send to playwright to execute when user click button "Autofill"
+window.mitm.autofill = [...]
+
+// it will run on interval 500ms
+window.mitm.autointerval = () => {...};
+
+// additinal buttons to be visible on the page top-right
+// buttons can be toggle show / hide by clicking [LCtrl]
+window.mitm.autobuttons = {
+  'one|blue'() {console.log('one')},
+  'two|green'() {console.log('two')}
+}
+```
 
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
