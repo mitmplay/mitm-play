@@ -2,15 +2,36 @@ const _ws_namespace = require('./_ws_namespace');
 const _ws_vendor = require('./_ws_vendor');
 
 module.exports = () => {
-  const style = 'position: absolute;z-index: 9999;top: 8px;right: 5px;';
+  const containerStyle = 'position: absolute;z-index: 9999;top: 8px;right: 5px;';
+  const buttonStyle = 'border: none;border-radius: 15px;font-size: 10px;'
   const event = new Event('urlchanged');
   let ctrl = false;
   let container;
   let intervId;
+  let buttons;
   let button;
 
   function toRegex(str) {
     return str.replace(/\./g, '\\.').replace(/\?/g, '\\?');
+  }
+
+  function setButtons() {
+    if (window.mitm.autobuttons) {
+      const {autobuttons} = window.mitm;
+      setTimeout(() => {
+        for (let key in autobuttons) {
+          const btn = document.createElement("button");
+          const br = document.createElement("span");
+          const [caption, color] = key.split('|');
+          btn.onclick = autobuttons[key];
+          btn.innerText = caption;
+          buttons.appendChild(btn);
+          buttons.appendChild(br);
+          br.innerHTML = '&nbsp;';
+          btn.style = buttonStyle + (color ? `background: ${color};` : '');
+        }
+      },0)  
+    }
   }
 
   function urlChange(event) {
@@ -22,6 +43,10 @@ module.exports = () => {
       clearInterval(intervId);
       delete window.mitm.autointerval;
     }
+    if (window.mitm.autobuttons) {
+      delete window.mitm.autobuttons;
+      buttons.innerHTML = '';
+    }
     if (namespace) {
       const {pathname} = location;
       const {macros} = window.mitm;
@@ -29,10 +54,13 @@ module.exports = () => {
       for (let key in macros) {
         if (pathname.match(toRegex(key))) {
           macros[key]();
+          setButtons();
         } 
       }
     }
-    container.style = style + (window.mitm.autofill ? '' : 'display: none;');
+    container.style = containerStyle;
+    const visible = (window.mitm.autofill);
+    button.style = buttonStyle + (visible ? 'background-color: azure;' : 'display: none;');
     if (typeof(window.mitm.autointerval)==='function') {
       intervId = setInterval(window.mitm.autointerval, 500);
     }
@@ -51,7 +79,7 @@ module.exports = () => {
   function keybCtrl(e) { 
     if (e.code==='ControlLeft') {
       ctrl = !ctrl;
-      container.style = style + (!ctrl ? '' : 'display: none;');      
+      container.style = containerStyle + (!ctrl ? '' : 'display: none;');      
     }
   }
 
@@ -68,17 +96,19 @@ module.exports = () => {
       const node = document.querySelector('html');
       const noderef = node.firstElementChild;
       const newNode = document.createElement("div");
-
-      newNode.innerHTML = '<button class="btn-autofill">Autofill</button>';
+      let html = '<button class="btn-autofill">Autofill</button>';
+     
+      newNode.innerHTML = `<span class="autofill-buttons"></span>${html}`;
       newNode.className = 'mitm autofill-container';
-      newNode.style = style;
+      newNode.style = containerStyle;
 
       node.insertBefore(newNode, noderef);
       setTimeout(()=> {
         container = newNode;
-        button = newNode.children[0];
+        buttons = newNode.children[0];
+        button = newNode.children[1];
         button.onclick = btnclick;
-        button.style = 'border: none;border-radius: 15px;font-size: 10px;background-color: azure;'
+        button.style = `${buttonStyle}background-color: azure;`
         urlChange(event);
       },1)
     });
