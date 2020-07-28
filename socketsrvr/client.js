@@ -78,12 +78,13 @@ On browser console type "ws"`;
 
   async function _screenshot(data, {path, browser}) {
     const err = await global.mitm.fn.fs.ensureFile(path);
+    const page = await global.mitm.browsers[browser].currentTab();
     if (err) {
       console.log(c.redBright('(*rrror saving screenshot*)'), path)
     } else {
       try {
         console.log(c.green('(*screenshot*)'));
-        await global.mitm.pages[browser].screenshot({path});
+        await page.screenshot({path});
       } catch (error) {
         console.log(c.redBright('(*rrror screenshot*)'), error);
         // debugger

@@ -81,6 +81,17 @@ module.exports = () => {
       bcontext.route(/.*/, (route, request) => {
         routes({route, request, bcontext, browserName});
       });
+      browser.currentTab = async function() {
+        const pages = await browser.pages();
+        let active;
+        for (let page of pages) {
+          const hidden = await page.evaluate('document.hidden');
+          if (!hidden) {
+            active = page;
+          }
+        }
+        return active;
+      }
       if (browserName==='chromium' && argv.pristine===undefined) {
         await page.goto('chrome://extensions/');
         await page.click('#detailsButton');

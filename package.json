@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.6.47",
+  "version": "0.6.48",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -31,7 +31,7 @@
     "fast-glob": "^3.2.2",
     "fs-extra": "^9.0.1",
     "make-fetch-happen": "^8.0.7",
-    "playwright": "^1.2.0",
+    "playwright": "^1.2.1",
     "ws": "^7.3.0",
     "yargs-parser": "^18.1.3"
   },
