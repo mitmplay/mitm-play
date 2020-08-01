@@ -101,7 +101,7 @@ function cacheResponse(reqs, responseHandler, _3d) {
           const body = resp.body;
           filesave({fpath1, body}, {fpath2, meta}, 'cache');
           if (response) {
-            resp2 = response(resp);
+            resp2 = response(resp, match);
             resp2 && (resp = {...resp, ...resp2})
           }
         }

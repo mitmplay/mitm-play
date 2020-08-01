@@ -153,7 +153,7 @@ routes = {
 the execution order as documented start with `skip`, end with `js`, no need to implement all of routing rules. 
 </p>
 
-<details><summary><b>Title, url & workspace</b></summary>
+<details><summary><b>Title, url, workspace & jsLib</b></summary>
 <p>
 
 `Title`: provide basic information about this route.
@@ -162,11 +162,14 @@ the execution order as documented start with `skip`, end with `js`, no need to i
 
 `workspace`: will be use as the base folder for `file` option in `Mock`.
 
+`lib`: add js library to all html on the namespace, options can be ['**jquery.js**', '**faker.js**', '**chance.js**']
+
 ```js
 routes = {
   title: 'Amazon - amazon',
   url:  'https://www.amazon.com/b?node=229189',
   workspace: '~/Projects',
+  jsLib: ['chance.js'],
 };
 // mitm-play ama -dpsr='.' -> search: 'ama' in url and go to the website
 ```
@@ -488,6 +491,7 @@ The default `config.logs` setting can be override as needed.
 
 ```js
 _global_ = {
+  jsLib:   [],
   skip:    [], //start routing rules
   request: {},
   noproxy: [], 

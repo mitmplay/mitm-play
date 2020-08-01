@@ -7,7 +7,8 @@ module.exports = () => {
   const mock = {
     '/mitm-play/mitm.js': {
       response: resp => {
-        return {body: global.mitm.fn.wsmitm(resp)};
+        resp.body = global.mitm.fn.wsmitm(resp);
+        resp.headers['content-type'] = 'application/javascript';
       },
     },
     '/mitm-play/macros.js': {
@@ -17,23 +18,24 @@ module.exports = () => {
         if (namespace) {
           path = `${argv.route}/${namespace}/macros.js`;
           if (fs.existsSync(path)) {
-            const body = fs.readFileSync(path);
-            return {body};  
+            resp.body = fs.readFileSync(path);
+            resp.headers['content-type'] = 'application/javascript';
           }
         }
       },
     },
     '/mitm-play/websocket.js': {
       response: resp => {
-        return {body: global.mitm.fn.wsclient()};
+        resp.body = global.mitm.fn.wsclient();
+        resp.headers['content-type'] = 'application/javascript';
       },
     },
-    '/mitm-play/chance.js': {
-      response: resp => {
-        path = `${global.__app}/plugins/js-lib/chance.js`;
+    '/mitm-play/jslib/(\\w+).js': {
+      response: (resp, match) => {
+        path = `${global.__app}/plugins/js-lib/${match.arr[1]}.js`;
         if (fs.existsSync(path)) {
-          const body = fs.readFileSync(path);
-          return {body};  
+          resp.body = fs.readFileSync(path);
+          resp.headers['content-type'] = 'application/javascript';
         }
       }
     },

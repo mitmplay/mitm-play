@@ -18,7 +18,7 @@ function jsonResponse(reqs, responseHandler, _3d) {
           resp.body = match.route;
         } else {        
           if (response) {
-            const resp2 = response(resp);
+            const resp2 = response(resp, match);
             resp2 && (resp = {...resp, ...resp2});
           }
         }

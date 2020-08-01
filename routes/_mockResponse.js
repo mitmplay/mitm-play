@@ -35,7 +35,7 @@ function mockResponse({reqs, route}, _3d) {
     } else {          
       if (response || file || js) {
         if (response) {
-          const resp2 = response(resp);
+          const resp2 = response(resp, match);
           resp2 && (resp = {...resp, ...resp2});
         } else if (file) {
           const ext = file.match(/\.(\w+)$/);

@@ -17,7 +17,7 @@ function allRequest(reqs, responseHandler, _3d) {
     responseHandler.push(resp => {
       if (response) {
         if (contentType===undefined || ctype(match, resp)) {
-          const resp2 = response(resp);
+          const resp2 = response(resp, match);
           resp2 && (resp = {
             ...resp,
             ...resp2

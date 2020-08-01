@@ -37,7 +37,7 @@ function addWebSocket(reqs, responseHandler) {
         }
         js.push('websocket.js');
         if (jsLib) {
-          js.push.apply(js, jsLib);
+          js.push.apply(js, jsLib.map(x => `jslib/${x}`));
         }
         resp.body = script_src(resp.body, js);
         // headerchg(h);

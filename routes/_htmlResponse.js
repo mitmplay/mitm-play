@@ -22,7 +22,7 @@ function htmlResponse(reqs, responseHandler, _3d) {
           resp.body = match.route;
         } else {        
           if (response) {
-            const resp2 = response(resp);
+            const resp2 = response(resp, match);
             resp2 && (resp = {...resp, ...resp2});
           } else if (js) {
             const inject = inject[el] || e_end;

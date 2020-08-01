@@ -19,7 +19,7 @@ function cssResponse(reqs, responseHandler, _3d) {
           resp.body = addReplaceBody(resp.body, match);
         } else {        
           if (response) {
-            const resp2 = response(resp);
+            const resp2 = response(resp, match);
             resp2 && (resp = {...resp, ...resp2});
           }
         }
