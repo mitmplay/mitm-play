@@ -60,6 +60,19 @@ const searchFN = (typ, {url}) => {
   };
 };
 
+const searchKey = key => {
+  const {router,routes} = global.mitm;
+
+  return function search(nspace) {
+    const namespace = nameSpace(nspace);
+    if (!namespace) {
+      return;
+    }
+
+    return routes[namespace][key];
+  };
+};
+
 const matched = (search, {url, headers}) => {
   const {tldomain} = global.mitm.fn;
   const {origin, referer} = headers;
@@ -80,6 +93,7 @@ const matched = (search, {url, headers}) => {
 
 module.exports = {
   searchArr,
+  searchKey,
   searchFN,
   matched,
 }

@@ -1,5 +1,8 @@
-const { script_src, e_head } = require('./inject');
+const _match = require('./match');
+const { script_src } = require('./inject');
 const {fn: {tldomain,nameSpace}} = global.mitm;
+
+const {matched,searchKey} = _match;
 
 function replaceCSP(csp) {
   csp = csp.replace(/default-src[^;]+;/g, '');
@@ -27,12 +30,15 @@ function addWebSocket(reqs, responseHandler) {
       const contentType = h['content-type'];
       const redirect = (status+'').match(/^30\d/);
       if (!redirect && contentType.match('text/html')) {
+        const jsLib = matched(searchKey('jsLib'), reqs);
         const js = ['mitm.js'];
         if (nameSpace(reqs.url)) {
           js.push('macros.js');
         }
         js.push('websocket.js');
-        js.push('chance.js');
+        if (jsLib) {
+          js.push.apply(js, jsLib);
+        }
         resp.body = script_src(resp.body, js);
         // headerchg(h);
       }
