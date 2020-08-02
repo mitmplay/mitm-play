@@ -846,11 +846,37 @@ window.mitm.autofill = [...]
 window.mitm.autointerval = () => {...};
 
 // additinal buttons to be visible on the page top-right
-// buttons can be toggle show / hide by clicking [LCtrl]
+// buttons can be toggle show / hide by clicking [Ctrl] + [SHIFT]
 window.mitm.autobuttons = {
   'one|blue'() {console.log('one')},
   'two|green'() {console.log('two')}
 }
+
+// A macro keys can be set as a hotkey!
+window.mitm.macrokeys = {...}
+```
+# Macro Keys
+A hot keys that can be press on specific page and it will do similar thing with _a macro from mechanical keyboard_, except its generated from injected mitm-play `macros.js`, 
+
+As you can compare with autofill `macros` above, the commands don't include selector, means it will run from current input focused.
+
+Example below show a defined macro keys: `p` & To activate, it need to press combination buttons of `Ctrl` **+** `Alt` **+** `p`
+```js
+// macros.js
+window.mitm.macros = {
+  '^/signin/v2/identifier?'() {
+    window.mitm.macrokeys = {
+      'p'() {
+        // chance is a javascript faker defined in jsLib
+        const name = chance.email().split('@')[0];
+        return [
+          `=> ${name}@mailinator.com`,
+          '-> press ~> Enter',
+        ]  
+      }
+    }
+  }
+}    
 ```
 
 # User Route
