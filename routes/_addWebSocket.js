@@ -36,6 +36,7 @@ function addWebSocket(reqs, responseHandler) {
           js.push('macros.js');
         }
         js.push('websocket.js');
+        js.push('jslib/finder.js');
         if (jsLib) {
           js.push.apply(js, jsLib.map(x => `jslib/${x}`));
         }

@@ -31,6 +31,8 @@ module.exports = async ({data}) =>{
         await page.press(obj.selector, options);
       } else if (obj.action==='click') {
         await page.click(obj.selector, options);
+      } else if (obj.action==='focus') {
+        await page.focus(obj.selector);
       } else if (obj.action==='check') {
         await page.check(obj.selector);
       } else if (obj.action==='uncheck') {

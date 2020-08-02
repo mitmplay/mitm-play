@@ -49,6 +49,9 @@ module.exports = () => {
       delete window.mitm.autobuttons;
       buttons.innerHTML = '';
     }
+    if (window.mitm.macrokeys) {
+      delete window.mitm.macrokeys;
+    }
     if (namespace) {
       const {pathname} = location;
       const {macros} = window.mitm;
@@ -71,22 +74,46 @@ module.exports = () => {
     ctrl = false;
   }
 
-  function btnclick(e) {
-    let {autofill} = window.mitm;
-    const browser = _ws_vendor();
+  function play(autofill) {
     if (autofill) {
       if (typeof(autofill)==='function') {
         autofill = autofill();
       }
-      console.log(JSON.stringify(autofill, null, 2));
+      const browser = _ws_vendor();
+      const lenth = autofill.length;
+      console.log(lenth===1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2));
       window.ws__send('autofill', {autofill, browser});
     }
   }
 
+  function btnclick(e) {
+    let {autofill} = window.mitm;
+    play(autofill);
+  }
+
   function keybCtrl(e) { 
-    if (e.code==='ControlLeft') {
+    if (e.ctrlKey && e.key==='Shift') {
       ctrl = !ctrl;
       container.style = containerStyle + (!ctrl ? '' : 'display: none;');      
+    } else if (e.ctrlKey && e.altKey && window.mitm.macrokeys) {
+      let macro = window.mitm.macrokeys[e.key];
+      if (macro) {
+        macro = macro();
+        let macroIndex = 0;
+        console.log({macro: `ctrl + alt + ${e.key}`});
+        let interval = setInterval(() => {
+          let selector = macro[macroIndex];
+          if (selector.match(/^ *[=-]>/)) {
+            selector = `${nodeFinder(document.activeElement)} ${selector}`;
+          }
+          play([selector]);
+
+          macroIndex += 1;
+          if (macroIndex>=macro.length) {
+            clearInterval(interval)
+          }
+        }, 100);
+      }
     }
   }
 
