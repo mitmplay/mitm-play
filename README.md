@@ -17,6 +17,7 @@
    * [HTTP_PROXY](#http_proxy)
    * [CLI Options](#cli-options)
    * [Macros](#macros)
+   * [Macro Keys](#macro-keys)
    * [User Route](#user-route)
    * [Use Cases](#use-cases)
    * [Early Stage](#early-stage)
