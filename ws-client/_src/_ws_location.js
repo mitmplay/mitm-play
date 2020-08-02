@@ -11,8 +11,10 @@ module.exports = () => {
   let buttons;
   let button;
 
-  function toRegex(str) {
-    return str.replace(/\./g, '\\.').replace(/\?/g, '\\?');
+  function toRegex(pathMsg) {
+    let [path, msg] = pathMsg.split('=>').map(item=>item.trim());
+    path = path.replace(/\./g, '\\.').replace(/\?/g, '\\?');
+    return {path, msg};
   }
 
   function setButtons() {
@@ -52,7 +54,9 @@ module.exports = () => {
       const {macros} = window.mitm;
       // console.log(namespace, location);
       for (let key in macros) {
-        if (pathname.match(toRegex(key))) {
+        const {path, msg} = toRegex(key);
+        if (pathname.match(path)) {
+          button.innerHTML = msg || 'Autofill';
           macros[key]();
           setButtons();
         } 
@@ -68,9 +72,12 @@ module.exports = () => {
   }
 
   function btnclick(e) {
-    const {autofill} = window.mitm;
+    let {autofill} = window.mitm;
     const browser = _ws_vendor();
     if (autofill) {
+      if (typeof(autofill)==='function') {
+        autofill = autofill();
+      }
       console.log(JSON.stringify(autofill, null, 2));
       window.ws__send('autofill', {autofill, browser});
     }

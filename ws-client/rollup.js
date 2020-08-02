@@ -4,9 +4,9 @@ import commonjs from 'rollup-plugin-commonjs'
 const rewrite = require('./rewrite');
 
 export default {
-  input: 'socketclnt/_src/index.js',
+  input: 'ws-client/_src/index.js',
   output: {
-      file: 'socketclnt/index.js',
+      file: 'ws-client/index.js',
       sourcemap: 'inline',
       format: 'cjs'
   },
