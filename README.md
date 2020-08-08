@@ -70,9 +70,9 @@ mitm-play
 |-------------|--------------|----------------------------------------
 | `screenshot`| ----------   | DOM specific rules for taking screenshot
 | `skip`      | ----------   | array ..of `[domain]` - browser will handle it
-| `request`   | __request__  | modify request object - call to remote server
-| `noproxy`   | ----------   | array ..of `[domain]` - will serve directly
 | `proxy`     | ----------   | array ..of `[domain]` - will serve using proxy
+| `noproxy`   | ----------   | array ..of `[domain]` - will serve directly
+| `request`   | __request__  | modify request object - call to remote server
 | `mock`      | __response__ | modify response object - no call to remote server
 | `cache`     | __response__ | save first remote call to local - next, read from cache
 | `log`       | __response__ | save reqs/resp call to local - call to remote server
@@ -135,9 +135,9 @@ routes = {
   workspace: '',
   screenshot: {}, //user interaction rules & observe DOM-Element
   skip:    [], //start routing rules
-  request: {},
-  noproxy: [], 
   proxy:   [], //request with proxy
+  noproxy: [], 
+  request: {},
   mock:    {}, 
   cache:   {},
   log:     {},
@@ -219,18 +219,15 @@ skip: ['wp-admin'],
 ```
 </p>
 </details>
-<details><summary><b>Request</b></summary>
+<details><summary><b>Proxy</b></summary>
 <p>
 
-Manipulate Request with `request` function
+Certain domain will go thru proxy
 ```js
-request: {
-  'disqus.com/embed/comments/': {
-    request({url, method, headers, body, browserName}) {
-      return {}
-    }
-  }
-},
+// HTTP_PROXY env need to be set, cli: --proxy ..
+proxy: [
+  'google-analytics.com',
+],
 ```
 </p>
 </details>
@@ -245,15 +242,18 @@ proxy:   ['.+'],
 ```
 </p>
 </details>
-<details><summary><b>Proxy</b></summary>
+<details><summary><b>Request</b></summary>
 <p>
 
-Certain domain will go thru proxy
+Manipulate Request with `request` function
 ```js
-// HTTP_PROXY env need to be set, cli: --proxy ..
-proxy: [
-  'google-analytics.com',
-],
+request: {
+  'disqus.com/embed/comments/': {
+    request({url, method, headers, body, browserName}) {
+      return {}
+    }
+  }
+},
 ```
 </p>
 </details>
@@ -814,6 +814,10 @@ $ mitm-play --debug
 
 # Macros
 When creating rule for specific website site (ie: **autologin to gmail**), inside folder you can add `macros.js` to contains what automation need to be run 
+
+<details><summary><b>Example</b></summary>
+<p>
+
 ```bash
 # folder
 ./accounts.google.com/index.js
@@ -856,12 +860,19 @@ window.mitm.autobuttons = {
 // A macro keys can be set as a hotkey!
 window.mitm.macrokeys = {...}
 ```
+</details>
+</p>
+
 # Macro Keys
 A hot keys that can be press on specific page and it will do similar thing with _a macro from mechanical keyboard_, except its generated from injected mitm-play `macros.js`, 
 
 As you can compare with autofill `macros` above, the commands don't include selector, means it will run from current input focused.
 
 Example below show a defined macro keys: `p` & To activate, it need to press combination buttons of `Ctrl` **+** `Alt` **+** `p`
+
+<details><summary><b>Example</b></summary>
+<p>
+
 ```js
 // macros.js
 window.mitm.macros = {
@@ -879,6 +890,8 @@ window.mitm.macros = {
   }
 }    
 ```
+</details>
+</p>
 
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
