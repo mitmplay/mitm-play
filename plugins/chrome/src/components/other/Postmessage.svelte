@@ -15,4 +15,4 @@ function flag() {
 <label class="checkbox">
   <input type="checkbox" on:click={btnPostmessage} checked={flag()}>
   Post Messages
-</label><br/>
+</label>

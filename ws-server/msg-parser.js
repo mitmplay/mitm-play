@@ -6,6 +6,7 @@ const $autofill = require('./_autofill');
 const $getCache = require('./_getCache');
 const $getRoute = require('./_getRoute');
 const $openHome = require('./_openHome');
+const $codeHome = require('./_codeHome');
 const $openRoute = require('./_openRoute');
 const $saveRoute = require('./_saveRoute');
 const $screencap = require('./_screencap');
@@ -24,6 +25,7 @@ const wscmd = {
   $saveRoute,
   $openRoute,
   $openHome,
+  $codeHome,
   $getRoute,
   $getCache,
   $autofill,

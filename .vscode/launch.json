@@ -13,12 +13,12 @@
             ],
             "cwd": "${workspaceFolder}/..",
             "program": "${workspaceFolder}/mitm-play.js",
-            // "args": [
-            //     "vis",
+            "args": [
+                "dev"
             //     "-o='cache,skip'",
             //     "-dpsr='/home/wharsojo/Projects/userscript'",
             // //  "--chromium='D:/Apps/chrome-gog/chrome.exe'"
-            // ]
+            ]
         }
     ]
 }

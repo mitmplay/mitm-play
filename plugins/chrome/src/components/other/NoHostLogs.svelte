@@ -24,4 +24,4 @@ function flag() {
 <label class="checkbox">
   <input type="checkbox" on:click={btnNoHostLogs} checked={flag()}>
   No Host Logs
-</label><br/>
+</label>

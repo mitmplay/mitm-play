@@ -6,4 +6,4 @@ function btnOpen() {
 }
 </script>
 
-<button on:click={btnOpen}>Open Home</button><br/>
+<button on:click={btnOpen}>Open Home</button>

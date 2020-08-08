@@ -15,4 +15,4 @@ function flag() {
 <label class="checkbox">
   <input type="checkbox" on:click={btnCsp} checked={flag()}>
   Content Sec. Policy
-</label><br/>
+</label>
