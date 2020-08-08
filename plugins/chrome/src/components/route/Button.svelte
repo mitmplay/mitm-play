@@ -16,6 +16,7 @@ function btnSave(e) {
   console.log($source);
 
   ws__send('saveRoute', $source, data => {
+    source.update(n => {return {...n, saveDisabled: true}});
     console.log('Done Save!');
   });
 }
@@ -65,6 +66,10 @@ Path:{$source.path}
 }
 .btn-container button {
   font-size: 10px;
+  cursor: pointer;
+}
+.btn-container button:disabled {
+  cursor: auto;
 }
 .tlb {
   border: none;
