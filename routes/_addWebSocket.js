@@ -24,7 +24,9 @@ const headerchg = headers => {
 }
 
 function addWebSocket(reqs, responseHandler) {
-  if ((reqs.headers.accept+'').indexOf('text/html') > -1) {
+  const {url, headers} = reqs;
+  const accpt = headers.accept+'';
+  if (accpt==='*/*' || accpt.indexOf('text/html') > -1) {
     responseHandler.push(resp => {
       const {headers: h, status} = resp;
       const contentType = h['content-type'];
@@ -32,7 +34,7 @@ function addWebSocket(reqs, responseHandler) {
       if (!redirect && contentType.match('text/html')) {
         const jsLib = matched(searchKey('jsLib'), reqs);
         const js = ['mitm.js'];
-        if (nameSpace(reqs.url)) {
+        if (nameSpace(tldomain(url))) {
           js.push('macros.js');
         }
         js.push('websocket.js');

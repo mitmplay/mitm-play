@@ -2,7 +2,7 @@ const _ws_namespace = require('./_ws_namespace');
 const _ws_vendor = require('./_ws_vendor');
 
 module.exports = () => {
-  const containerStyle = 'position: absolute;z-index: 9999;top: 8px;right: 5px;';
+  const containerStyle = 'position: fixed;z-index: 9999;top: 8px;right: 5px;';
   const buttonStyle = 'border: none;border-radius: 15px;font-size: 10px;'
   const event = new Event('urlchanged');
   let ctrl = false;

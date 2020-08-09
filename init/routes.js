@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const logs = require('./fn/logs');
 
 module.exports = () => {    
-  const {argv, fn: {nameSpace}} = global.mitm;
+  const {argv, fn: {tldomain,nameSpace}} = global.mitm;
 
   const mock = {
     '/mitm-play/mitm.js': {
@@ -13,10 +13,9 @@ module.exports = () => {
     },
     '/mitm-play/macros.js': {
       response: resp => {
-        let path;
-        const namespace = nameSpace(resp.url);
+        const namespace = nameSpace(tldomain(resp.url));
         if (namespace) {
-          path = `${argv.route}/${namespace}/macros.js`;
+          const path = `${argv.route}/${namespace}/macros.js`;
           if (fs.existsSync(path)) {
             resp.body = fs.readFileSync(path);
             resp.headers['content-type'] = 'application/javascript';
