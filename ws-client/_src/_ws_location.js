@@ -96,23 +96,25 @@ module.exports = () => {
       ctrl = !ctrl;
       container.style = containerStyle + (!ctrl ? '' : 'display: none;');      
     } else if (e.ctrlKey && e.altKey && window.mitm.macrokeys) {
-      let macro = window.mitm.macrokeys[e.key];
+      let macro = window.mitm.macrokeys[e.code];
       if (macro) {
         macro = macro();
-        let macroIndex = 0;
-        console.log({macro: `ctrl + alt + ${e.key}`});
-        let interval = setInterval(() => {
-          let selector = macro[macroIndex];
-          if (selector.match(/^ *[=-]>/)) {
-            selector = `${nodeFinder(document.activeElement)} ${selector}`;
-          }
-          play([selector]);
-
-          macroIndex += 1;
-          if (macroIndex>=macro.length) {
-            clearInterval(interval)
-          }
-        }, 100);
+        console.log({macro: `ctrl + alt + ${e.code}`});
+        if (Array.isArray(macro)) {
+          let macroIndex = 0;
+          let interval = setInterval(() => {
+            let selector = macro[macroIndex];
+            if (selector.match(/^ *[=-]>/)) {
+              selector = `${nodeFinder(document.activeElement)} ${selector}`;
+            }
+            play([selector]);
+  
+            macroIndex += 1;
+            if (macroIndex>=macro.length) {
+              clearInterval(interval)
+            }
+          }, 100);  
+        }
       }
     }
   }

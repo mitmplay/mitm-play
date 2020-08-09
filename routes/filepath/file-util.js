@@ -43,11 +43,7 @@ function filename(match, separator='/') {
   if (querystring) {
     file = `hash-${hashCode(`${file}${search}`)}`;  
   } else {
-    let file2 = file;
-    if (file.match(/\.\w+$/)) {
-      file2 = file.replace(/\.\w+$/, '');
-    }
-    file = fileWithHash(file2);
+    file = fileWithHash(file);
   }
   arr.push(file);
   return arr.join(separator);

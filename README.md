@@ -868,7 +868,9 @@ A hot keys that can be press on specific page and it will do similar thing with 
 
 As you can compare with autofill `macros` above, the commands don't include selector, means it will run from current input focused.
 
-Example below show a defined macro keys: `p` & To activate, it need to press combination buttons of `Ctrl` **+** `Alt` **+** `p`
+Example below show a defined macro keys: `KeyP` & To activate, it need to press combination buttons of `Ctrl` **+** `Alt` **+** `KeyP`. 
+
+list of `key.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
 
 <details><summary><b>Example</b></summary>
 <p>
@@ -878,7 +880,7 @@ Example below show a defined macro keys: `p` & To activate, it need to press com
 window.mitm.macros = {
   '^/signin/v2/identifier?'() {
     window.mitm.macrokeys = {
-      'p'() {
+      'KeyP'() {
         // chance is a javascript faker defined in jsLib
         const name = chance.email().split('@')[0];
         return [
