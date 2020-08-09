@@ -943,3 +943,6 @@ Expect to have some `rule changed` as feature/fix code are incrementally committ
 
 Goodluck!,
 >*-wh*.
+
+# Known Limitation
+Fetch from service workers will not be capture, noted here:  https://github.com/microsoft/playwright/issues/1090
