@@ -12,8 +12,11 @@ function extract({route, browserName}) {
 }
 
 function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
-  const opts = {redirect: 'manual'};
-
+  const {argv, splitter} = global.mitm;
+  const opts = {redirect: true};
+  if (argv.redirect && argv.redirect!==true) {
+    opts.redirect = 'manual';
+  }
   if (proxy) {
     if (proxy===true) {
       const { 
@@ -30,7 +33,6 @@ function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
   }
 
   _fetch(url, {...reqs, ...opts}).then(resp => {
-    const {argv, splitter} = global.mitm;
     const _headers = resp.headers.raw();
     let status = resp.status;
     if (proxy && argv.verbose) {
@@ -45,17 +47,21 @@ function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
       }
     }
     if (status===301 || status===302) {
-      const url = headers.location;
-      if (url) {
-        delete headers.location;
-        delete headers['content-security-policy'];
-        headers['content-type'] = 'text/html';
-        route.fulfill({headers, body: `
+      if (argv.redirect==='browser') {
+        route.continue({headers, status});
+      } else if (argv.redirect==='manual') {
+        const url = headers.location;
+        if (url) {
+          delete headers.location;
+          delete headers['content-security-policy'];
+          headers['content-type'] = 'text/html';
+          route.fulfill({headers, body: `
 Redirect...
 <script>window.location = '${url}';</script>
-        `});
+          `});
+        }
+        return;
       }
-      return;
     }
     resp.buffer().then(body => {
       if (status===undefined) {

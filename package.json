@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.7.8",
+  "version": "0.7.9",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -37,9 +37,12 @@
   },
   "devDependencies": {
     "chance": "^1.1.6",
+    "css-selector-generator": "^2.1.2",
     "eslint": "^7.6.0",
+    "install": "^0.13.0",
     "jest": "^26.2.2",
     "nock": "^13.0.3",
+    "npm": "^6.14.7",
     "rollup": "^2.23.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",

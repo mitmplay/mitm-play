@@ -108,7 +108,7 @@ module.exports = () => {
             let interval = setInterval(() => {
               let selector = macro[macroIndex];
               if (selector.match(/^ *[=-]>/)) {
-                selector = `${nodeFinder(document.activeElement)} ${selector}`;
+                selector = `${CssSelectorGenerator.getCssSelector(document.activeElement)} ${selector}`;
               }
               play([selector]);
     
