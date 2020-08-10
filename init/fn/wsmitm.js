@@ -23,6 +23,7 @@ module.exports = function ({url}) {
       cache_events: {},
       route_events: {},
     },
+    fn: {},
   };
   json = JSON.stringify(json, null, 2);
   json = json.replace(/\n}$/g, macros);

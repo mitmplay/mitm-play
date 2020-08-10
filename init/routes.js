@@ -13,14 +13,31 @@ module.exports = () => {
     },
     '/mitm-play/macros.js': {
       response: resp => {
+        let global = '', body = '';
         const namespace = nameSpace(tldomain(resp.url));
         if (namespace) {
           const path = `${argv.route}/${namespace}/macros.js`;
           if (fs.existsSync(path)) {
-            resp.body = fs.readFileSync(path);
-            resp.headers['content-type'] = 'application/javascript';
+            body = fs.readFileSync(path);
           }
         }
+        const path = `${argv.route}/_global_/macros.js`;
+        if (fs.existsSync(path)) {
+          global = (fs.readFileSync(path)+'').replace(/\n/,'\n  ');
+        }
+        resp.body = `
+window.mitm.fn.hotKeys = obj => {
+  window.mitm.macrokeys = {
+    ...window.mitm.macrokeys,
+    ...obj,
+  };
+};
+window.mitm._macros_ = () => {
+  window.mitm.macrokeys = {};
+  ${global}
+};
+${body}`;
+        resp.headers['content-type'] = 'application/javascript';    
       },
     },
     '/mitm-play/websocket.js': {

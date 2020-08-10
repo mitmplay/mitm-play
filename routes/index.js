@@ -70,10 +70,10 @@ module.exports =  ({route, browserName}) => {
   }
 
   if (resp) {
-    route.fulfill(Events(responseHandler, resp));
+    Events(responseHandler, resp, route);
   } else if (responseHandler.length) { //call BE 
-    fetch(route, (_chngRequest(reqs, _3d) || reqs), function(resp) {
-      return Events(responseHandler, resp)
+    fetch(route, browserName, (_chngRequest(reqs, _3d) || reqs), function(resp) {
+      Events(responseHandler, resp, route);
     });
   } else {
     if (logs) {
@@ -92,7 +92,12 @@ module.exports =  ({route, browserName}) => {
   }
 }
 
-function Events(responseHandler, resp) {
-  responseHandler.forEach(fn => (resp = fn(resp)));
-  return resp;
+function Events(responseHandler, resp, route) {
+  for (let fn of responseHandler) {
+    resp = fn(resp);
+    if (resp===undefined) {
+      break;
+    }
+  }
+  resp && route.fulfill(resp);
 }

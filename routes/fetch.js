@@ -11,7 +11,7 @@ function extract({route, browserName}) {
   return {url, method, headers, body, browserName};
 }
 
-function fetch(route, {url, proxy, ...reqs}, handler) {
+function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
   const opts = {redirect: 'manual'};
 
   if (proxy) {
@@ -44,10 +44,23 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
         headers[key] = _headers[key];
       }
     }
-    // if (status===301 || status===302) {
-    //   route.fulfill({url, status, headers});
-    //   return;
-    // }
+    if (status===301 || status===302) {
+      const url = headers.location;
+      if (url) {
+        delete headers.location;
+        delete headers['content-security-policy'];
+        headers['content-type'] = 'text/html';
+        route.fulfill({headers, body: `
+Redirect...
+<script>window.location = '${url}';</script>
+        `});
+        // setTimeout(async () => {
+        //   const page = await global.mitm.browsers[browserName].currentTab();
+        //   await page.goto(url);
+        // }, 500)
+      }
+      return;
+    }
     resp.buffer().then(body => {
       if (status===undefined) {
         status = headers['x-app-status'];
@@ -56,12 +69,8 @@ function fetch(route, {url, proxy, ...reqs}, handler) {
         console.log(c.redBright(`[${reqs.method}] ${url} => ${status}`));
         console.log(c.red(`${body}`));
       }
-      const resp2 = handler({url, status, headers, body});
-      route.fulfill(resp2);
+      handler({url, status, headers, body});
     });
-    //.nextact.catch(err => {
-    //   console.log(c.redBright('>> fetch error:'), err);
-    // });
   })
 }
 

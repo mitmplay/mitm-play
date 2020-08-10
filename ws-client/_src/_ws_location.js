@@ -54,12 +54,13 @@ module.exports = () => {
     }
     if (namespace) {
       const {pathname} = location;
-      const {macros} = window.mitm;
+      const {_macros_, macros} = window.mitm;
       // console.log(namespace, location);
       for (let key in macros) {
         const {path, msg} = toRegex(key);
         if (pathname.match(path)) {
           button.innerHTML = msg || 'Autofill';
+          _macros_ && _macros_();
           macros[key]();
           setButtons();
         } 
@@ -92,29 +93,32 @@ module.exports = () => {
   }
 
   function keybCtrl(e) { 
+    const {macrokeys} = window.mitm;
     if (e.ctrlKey && e.key==='Shift') {
       ctrl = !ctrl;
       container.style = containerStyle + (!ctrl ? '' : 'display: none;');      
-    } else if (e.ctrlKey && e.altKey && window.mitm.macrokeys) {
-      let macro = window.mitm.macrokeys[e.code];
-      if (macro) {
-        macro = macro();
-        console.log({macro: `ctrl + alt + ${e.code}`});
-        if (Array.isArray(macro)) {
-          let macroIndex = 0;
-          let interval = setInterval(() => {
-            let selector = macro[macroIndex];
-            if (selector.match(/^ *[=-]>/)) {
-              selector = `${nodeFinder(document.activeElement)} ${selector}`;
-            }
-            play([selector]);
-  
-            macroIndex += 1;
-            if (macroIndex>=macro.length) {
-              clearInterval(interval)
-            }
-          }, 100);  
-        }
+    } else if (e.ctrlKey && e.altKey) {
+      console.log({macro: `ctrl + alt + ${e.code}`});
+      if (macrokeys) {
+        let macro = macrokeys[e.code];
+        if (macro) {
+          macro = macro();
+          if (Array.isArray(macro)) {
+            let macroIndex = 0;
+            let interval = setInterval(() => {
+              let selector = macro[macroIndex];
+              if (selector.match(/^ *[=-]>/)) {
+                selector = `${nodeFinder(document.activeElement)} ${selector}`;
+              }
+              play([selector]);
+    
+              macroIndex += 1;
+              if (macroIndex>=macro.length) {
+                clearInterval(interval)
+              }
+            }, 100);  
+          }
+        }  
       }
     }
   }
