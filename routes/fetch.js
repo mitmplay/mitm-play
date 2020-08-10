@@ -54,10 +54,6 @@ function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
 Redirect...
 <script>window.location = '${url}';</script>
         `});
-        // setTimeout(async () => {
-        //   const page = await global.mitm.browsers[browserName].currentTab();
-        //   await page.goto(url);
-        // }, 500)
       }
       return;
     }

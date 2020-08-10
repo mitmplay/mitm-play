@@ -879,7 +879,7 @@ list of `key.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEv
 // macros.js
 window.mitm.macros = {
   '^/signin/v2/identifier?'() {
-    window.mitm.macrokeys = {
+    window.mitm.fn.hotKeys({
       'KeyP'() {
         // chance is a javascript faker defined in jsLib
         const name = chance.email().split('@')[0];
@@ -888,7 +888,7 @@ window.mitm.macros = {
           '-> press ~> Enter',
         ]  
       }
-    }
+    });
   }
 }    
 ```
