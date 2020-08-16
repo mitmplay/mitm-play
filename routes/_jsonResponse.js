@@ -10,7 +10,7 @@ function jsonResponse(reqs, responseHandler, _3d) {
     const {response} = match.route;
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
-      if (contentType.match('application/json')) {
+      if (contentType && contentType.match('application/json')) {
         if (logs.json) {
           console.log(c.yellowBright(match.log));
         }

@@ -6,6 +6,7 @@ module.exports = () => {
   let {
     argv,
     fn: {
+      home,
       clear,
       loadJS,
     }
@@ -29,12 +30,15 @@ module.exports = () => {
   const cwd = process.cwd();
   if (!route) {
     route = `${cwd}/user-route`;
-  } else if (route.match(/^\.$/)) {
-    route = route.replace(/^\.$/, `${cwd}`);
-  } else if (route.match(/^\.\//)) {
-    route = route.replace(/^\.\//, `${cwd}/`);
-  } else if (route.match(/^\..\//)) {
-    route = route.replace(/^\..\//, `${cwd}/../`);
+  } else {
+    route = home(route);
+    if (route.match(/^\.$/)) {
+      route = route.replace(/^\.$/, `${cwd}`);
+    } else if (route.match(/^\.\//)) {
+      route = route.replace(/^\.\//, `${cwd}/`);
+    } else if (route.match(/^\..\//)) {
+      route = route.replace(/^\..\//, `${cwd}/../`);
+    }
   }
   route = route.replace(/\\/g, '/');
   argv.route = route;

@@ -31,7 +31,7 @@ function addWebSocket(reqs, responseHandler) {
       const {headers: h, status} = resp;
       const contentType = h['content-type'];
       const redirect = (status+'').match(/^30\d/);
-      if (!redirect && contentType.match('text/html')) {
+      if (!redirect && contentType && contentType.match('text/html')) {
         const jsLib = matched(searchKey('jsLib'), reqs);
         const js = ['mitm.js'];
         if (nameSpace(tldomain(url))) {

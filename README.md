@@ -947,4 +947,6 @@ Goodluck!,
 >*-wh*.
 
 # Known Limitation
-Fetch from service workers will not be capture, noted here:  https://github.com/microsoft/playwright/issues/1090
+Open Issue -  request interception for service workers - https://github.com/microsoft/playwright/issues/1090
+
+Redirect will not be intercept - https://github.com/microsoft/playwright/pull/2617

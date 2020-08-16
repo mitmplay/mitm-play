@@ -11,7 +11,7 @@ function jsResponse(reqs, responseHandler, _3d) {
     const {response} = match.route;
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
-      if (contentType.match('javascript')) {
+      if (contentType && contentType.match('javascript')) {
         if (logs.js) {
           console.log(c.cyanBright(match.log));
         }

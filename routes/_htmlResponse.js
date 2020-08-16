@@ -13,7 +13,7 @@ function htmlResponse(reqs, responseHandler, _3d) {
     const {el, js, src, response, hidden} = match.route;
     responseHandler.push(resp => {   
       const contentType = `${resp.headers['content-type']}`;
-      if (contentType.match('text/html')) {
+      if (contentType && contentType.match('text/html')) {
         const len = match.log.length;
         if (logs.html && !hidden) {
           console.log(`${'-'.repeat(len)}\n${c.yellowBright(match.log)}`);

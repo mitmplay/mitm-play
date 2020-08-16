@@ -11,7 +11,7 @@ function cssResponse(reqs, responseHandler, _3d) {
     const {response} = match.route;
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`;
-      if (contentType.match('text/css')) {
+      if (contentType && contentType.match('text/css')) {
         if (logs.css) {
           console.log(c.greenBright(match.log));
         }
