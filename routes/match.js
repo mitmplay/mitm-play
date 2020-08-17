@@ -1,4 +1,4 @@
-const {fn: {nameSpace}} = global.mitm;
+const {fn: {home, nameSpace}} = global.mitm;
 
 const searchArr = ({typ, url}) => {
   const {router,routes} = global.mitm;
@@ -33,7 +33,10 @@ const searchFN = (typ, {url}) => {
     const obj = router[namespace][typ];
     const route = routes[namespace][typ];
     const splitter = global.mitm.splitter;
-    const workspace = routes[namespace].workspace;
+    let workspace = routes[namespace].workspace;
+    if (workspace) {
+      workspace = home(workspace);
+    }
 
     for (let key in route) {
       const arr = url.match(obj[key]);
