@@ -23,7 +23,11 @@ if (platform==='win32') {
 global.mitm = {
   splitter: /([&?;,]|:\w|url|\/\w+=)/,
   session: (new Date).toISOString().slice(0,18).replace(/[T:-]/g,''), // cli-options\fn\session.js
-  argv: yargs(process.argv.slice(2)),
+  argv: {
+    ommit: {},
+    browser: {},
+    ...yargs(process.argv.slice(2))
+  },
   win32: platform==='win32',
   path: {
     userroute: './**/*.js',
@@ -46,8 +50,6 @@ global.mitm = {
     postmessage: false,
   }
 };
-global.mitm.argv.browser = {};
-global.mitm.argv.ommit = {};
 
 module.exports = () => {
   const _package = require('../package.json')

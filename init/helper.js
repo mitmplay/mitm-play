@@ -14,19 +14,22 @@ module.exports = (_package) => {
     -p --pristine \t pristine browser, default option
     -i --insecure \t accept insecure cert in nodejs env 
     -n --nosocket \t no websocket injection to html page
-    -o --ommitlog \t removed unnecessary console log
-    -v --verbose  \t show more detail of console log
     -k --cookie   \t reset cookies expire date
     -g --group    \t create cache group/rec
     -t --incognito\t set chromium incognito
-    -c --chromium \t run chromium browser
-    -f --firefox  \t run firefox browser
-    -w --webkit   \t run webkit browser
     -x --proxy    \t a proxy request
     -z --lazy     \t delay ~400ms click action
-    --proxypac    \t set chromium proxypac
-    --plugins     \t add chrome plugins
-    --debug       \t show ws messages
+
+    -D --debug    \t show ws messages
+    -O --ommitlog \t removed unnecessary console log
+    -P --plugins  \t add chrome plugins
+    -R --rediret  \t set redirection: true/false/manual
+    -V --verbose  \t show more detail of console log
+    -X --proxypac \t set chromium proxypac
+
+    -C --chromium \t run chromium browser
+    -F --firefox  \t run firefox browser
+    -W --webkit   \t run webkit browser
 
   v${_package.version}
 `));

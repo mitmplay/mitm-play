@@ -561,19 +561,22 @@ $ mitm-play --help
     -p --pristine        pristine browser, default option
     -i --insecure        accept insecure cert in nodejs env
     -n --nosocket        no websocket injection to html page
-    -o --ommitlog        removed unnecessary console log
-    -v --verbose         show more detail of console log
     -k --cookie          reset cookies expire date
     -g --group           create cache group/rec
     -t --incognito       set chromium incognito
-    -c --chromium        run chromium browser
-    -f --firefox         run firefox browser
-    -w --webkit          run webkit browser
     -x --proxy           a proxy request
     -z --lazy            delay ~400ms click action
-    --proxypac           set chromium proxypac
-    --plugins            add chrome plugins
-    --debug              show ws messages
+
+    -D --debug           show ws messages
+    -O --ommitlog        removed unnecessary console log
+    -P --plugins         add chrome plugins
+    -R --rediret         set redirection: true/false/manual
+    -V --verbose         show more detail of console log
+    -X --proxypac        set chromium proxypac
+
+    -C --chromium        run chromium browser
+    -F --firefox         run firefox browser
+    -W --webkit          run webkit browser
 
   v0.7.xx
 ```
@@ -665,28 +668,6 @@ $ mitm-play --nosocket
 ```
 </p>
 </details>
-<details><summary><b>-o --ommitlog</b></summary>
-<p>
-
-hide some console.log
-
-```
-$ mitm-play -o  <OR>
-$ mitm-play --ommitlog
-```
-</p>
-</details>
-<details><summary><b>-v --verbose</b></summary>
-<p>
-
-Add additional info in console.log
-
-```
-$ mitm-play -v  <OR>
-$ mitm-play --verbose
-```
-</p>
-</details>
 <details><summary><b>-k --cookie</b></summary>
 <p>
 
@@ -722,39 +703,6 @@ $ mitm-play --incognito
 ```
 </p>
 </details>
-<details><summary><b>-c --chromium</b></summary>
-<p>
-
-Launch Chromium browser
-
-```
-$ mitm-play -c  <OR>
-$ mitm-play --chromium
-```
-</p>
-</details>
-<details><summary><b>-f --firefox</b></summary>
-<p>
-
-Launch Firefox browser
-
-```
-$ mitm-play -f  <OR>
-$ mitm-play --firefox
-```
-</p>
-</details>
-<details><summary><b>-w --webkit</b></summary>
-<p>
-
-Launch Webkit browser
-
-```
-$ mitm-play -w  <OR>
-$ mitm-play --webkit
-```
-</p>
-</details>
 <details><summary><b>-x --proxy</b></summary>
 <p>
 
@@ -780,34 +728,103 @@ $ mitm-play -z  <OR>
 $ mitm-play --lazy
 ```
 </p>
-</details>
-<details><summary><b>--proxypac</b></summary>
-<p>
-
-When network on your having a proxypac settings, might be usefull to use the same. This option only in Chromium
-
-```
-$ mitm-play --proxypac
-```
-</p>
-</details>
-<details><summary><b>--plugins</b></summary>
-<p>
-
-Specific only on chromium / chrome browser
-
-```
-$ mitm-play --plugins
-```
-</p>
-</details>
-<details><summary><b>--debug</b></summary>
+</details><br/>
+<details><summary><b>-D --debug</b></summary>
 <p>
 
 More information will be shown in console.log (ex: websocket)
 
 ```
+$ mitm-play -D  <OR>
 $ mitm-play --debug
+```
+</p>
+</details>
+<details><summary><b>-O --ommitlog</b></summary>
+<p>
+
+hide some console.log
+
+```
+$ mitm-play -O  <OR>
+$ mitm-play --ommitlog
+```
+</p>
+</details>
+<details><summary><b>-P --plugins</b></summary>
+<p>
+
+Specific only on chromium / chrome browser
+
+```
+$ mitm-play -P  <OR>
+$ mitm-play --plugins
+```
+</p>
+</details>
+<details><summary><b>-R --redirect</b></summary>
+<p>
+
+Change mechanism of redirection
+
+```
+$ mitm-play -R  <OR>
+$ mitm-play --redirect
+```
+</p>
+</details>
+<details><summary><b>-V --verbose</b></summary>
+<p>
+
+Add additional info in console.log
+
+```
+$ mitm-play -V  <OR>
+$ mitm-play --verbose
+```
+</p>
+</details>
+<details><summary><b>-X --proxypac</b></summary>
+<p>
+
+When network on your having a proxypac settings, might be usefull to use the same. This option only in Chromium
+
+```
+$ mitm-play -X  <OR>
+$ mitm-play --proxypac
+```
+</p>
+</details><br/>
+<details><summary><b>-C --chromium</b></summary>
+<p>
+
+Launch Chromium browser
+
+```
+$ mitm-play -C  <OR>
+$ mitm-play --chromium
+```
+</p>
+</details>
+<details><summary><b>-F --firefox</b></summary>
+<p>
+
+Launch Firefox browser
+
+```
+$ mitm-play -F  <OR>
+$ mitm-play --firefox
+```
+</p>
+</details>
+<details><summary><b>-W --webkit</b></summary>
+<p>
+
+Launch Webkit browser
+
+```
+$ mitm-play -W  <OR>
+$ mitm-play --webkit
 ```
 </p>
 </details>
