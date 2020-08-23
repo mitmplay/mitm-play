@@ -35,7 +35,7 @@ function root(reqs, typ) {
 
 function filename(match, separator='/') {
   let {pathname, search, route: {querystring}} = match;
-  const arr = pathname.replace(/:[/]+/g,'-').replace(/-/g, '_').split('/');
+  let arr = pathname.replace(/:[/]+/g,'-').replace(/-/g, '_').split('/');
   let file = arr.pop();
   if (file==='') {
     file = '_';
@@ -45,6 +45,8 @@ function filename(match, separator='/') {
   } else {
     file = fileWithHash(file);
   }
+  // path length > 30 convert to hashCode(path) 
+  arr = arr.map(path => (path.length <31 ? path : `@-${hashCode(path)}`));
   arr.push(file);
   return arr.join(separator);
 }

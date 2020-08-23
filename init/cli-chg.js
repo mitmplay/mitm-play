@@ -22,22 +22,26 @@ function obj(key,id) {
 
 module.exports = () => {
   let {argv} = global.mitm;
-
-  let path, prm0 = argv._[0];
-  if (!prm0 && !argv.save) {
-    prm0 = 'default';
-  }
-
-  if (prm0) {
-    path = `${global.mitm.home}/argv/${prm0}.js`;
-  }
+  let prm0 = argv._[0];
 
   argv.profile = false;
   let browser, saveArgs; 
-  if (path && fs.existsSync(path)) {
+
+  function loadProfile(profile) {
+    const path = `${global.mitm.home}/argv/${profile}.js`;
+    const exist = fs.existsSync(path);
+    if (!exist) {
+      return false;
+    }
     saveArgs = JSON.parse(fs.readFileSync(path));
-    console.log(c.green(`>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${prm0})`);
+    console.log(c.green(`>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
+    return true;
+  }
+
+  if (prm0 && loadProfile(prm0)) {
     argv.profile = true;
+  } else if (prm0!=='default') {
+    loadProfile('default');
   }
 
   if (saveArgs && !argv.save) {
@@ -94,7 +98,6 @@ module.exports = () => {
 
   if (Object.keys(argv.browser).length===0) {
     argv.browser.chromium = true;
-    argv.chromium = true;
   }
 
   let {ommitlog} = argv;
@@ -104,7 +107,7 @@ module.exports = () => {
     });
   }
 
-  if (argv.chromium) {
+  if (argv.browser.chromium) {
     if (argv.incognito) {
       argv.pristine && (delete argv.pristine)
     } else if (argv.pristine===undefined) {
