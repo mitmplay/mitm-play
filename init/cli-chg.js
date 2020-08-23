@@ -31,10 +31,12 @@ module.exports = () => {
     path = `${global.mitm.home}/argv/${prm0}.js`;
   }
 
+  argv.profile = false;
   let browser, saveArgs; 
   if (path && fs.existsSync(path)) {
     saveArgs = JSON.parse(fs.readFileSync(path));
     console.log(c.green(`>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${prm0})`);
+    argv.profile = true;
   }
 
   if (saveArgs && !argv.save) {

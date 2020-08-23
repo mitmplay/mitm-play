@@ -45,6 +45,11 @@ module.exports = () => {
 
   global.mitm.path.userroute = `${route}/**/index.js`;
   const files = fg.sync([global.mitm.path.userroute]);
+  if (!files.length) {
+    console.log(c.red('Routes path is incorrect'), argv.route);
+    console.log(c.yellow(`Please pass option: -r='...' / --route='your routing path'`))
+    process.exit();
+  }
   global.mitm.data.nolog = true;
   for (let file of files) {
     loadJS(file);
