@@ -43,7 +43,9 @@ function addWebSocket(reqs, responseHandler) {
           js.push.apply(js, jsLib.map(x => `jslib/${x}`));
         }
         resp.body = script_src(resp.body, js);
-        // headerchg(h);
+        if (global.mitm.argv.relaxcsp) {
+          headerchg(h);
+        }
       }
       return resp;
     });

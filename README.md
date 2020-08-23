@@ -618,6 +618,17 @@ $ mitm-play --route='../userroutes'
 ```
 </p>
 </details>
+<details><summary><b>-c --relaxcsp</b></summary>
+<p>
+
+Update CSP header on Html Page injected with websocket.js to unblock Websocket communication
+
+```
+$ mitm-play -c  <OR>
+$ mitm-play --relaxcsp
+```
+</p>
+</details>
 <details><summary><b>-d --delete</b></summary>
 <p>
 

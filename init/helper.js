@@ -10,6 +10,7 @@ module.exports = (_package) => {
     -u --url      \t go to specific url
     -s --save     \t save as default <profl>
     -r --route    \t userscript folder routes
+    -c --relaxcsp \t relax CSP unblock websocket
     -d --delete   \t delete/clear cache & logs
     -p --pristine \t pristine browser, default option
     -i --insecure \t accept insecure cert in nodejs env 

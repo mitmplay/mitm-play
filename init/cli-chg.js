@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const c = require('ansi-colors');
+const args = require('../playwright/chromium-args');
 
 function argsChg(id, key) {
   let {argv} = global.mitm;
@@ -54,6 +55,7 @@ module.exports = () => {
     argv = global.mitm.argv;
   }
 
+  argsChg('c', 'relaxcsp');
   argsChg('d', 'delete');
   argsChg('g', 'group');
   argsChg('h', 'help');
