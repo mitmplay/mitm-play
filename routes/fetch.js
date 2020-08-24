@@ -32,7 +32,7 @@ function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
     }
   }
 
-  _fetch(url, {...reqs, ...opts}).then(resp => {
+  const okCallback = resp => {
     const _headers = resp.headers.raw();
     let status = resp.status;
     if (proxy && argv.verbose) {
@@ -73,7 +73,29 @@ Redirect...
       }
       handler({url, status, headers, body});
     });
-  })
+  }
+
+  function delay(t) {
+    return new Promise(resolve => setTimeout(resolve, t));
+  }
+
+  const fetchRetry = async (url, opt, n) => {
+    for (let i=1; i <= n; i++) {
+      try {
+        const resp = await _fetch(url, opt);
+        okCallback(resp);
+        break;
+      } catch (err) {
+        if (err.code==='ECONNRESET' && i <= n) {
+          console.log(c.yellowBright(`RETRY:${i}`), url);
+          await delay(2500);
+        } else {
+          throw err;
+        }
+      }
+    }
+  }
+  fetchRetry(url, {...reqs, ...opts}, 2);
 }
 
 module.exports = {
