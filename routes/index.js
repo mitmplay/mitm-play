@@ -21,8 +21,9 @@ const _resp = {
 };
 
 module.exports =  ({route, browserName}) => {
-  const {splitter, routes, argv: {nosocket, proxy}} = global.mitm;
+  const {routes, argv: {nosocket, proxy}} = global.mitm;
   const reqs = extract({route, browserName});
+  const {origin, pathname} = new URL(reqs.url);
   const {logs} = routes._global_.config;
   const responseHandler = [];
 
@@ -36,8 +37,7 @@ module.exports =  ({route, browserName}) => {
   const skip = _skipResponse(reqs, _3d);
   if (skip) {
     if (logs.skip) {
-      const url = reqs.url.split(splitter)[0];
-      console.log(c.grey(`>> skip (${url}).match(${skip})`));
+      console.log(c.grey(`>> skip (${origin}${pathname}).match(${skip})`));
     }
     route.continue({});
     return;
@@ -77,14 +77,13 @@ module.exports =  ({route, browserName}) => {
     });
   } else {
     if (logs) {
-      const url = reqs.url.split(splitter)[0];
       if (_3d) {
         if (logs['no-namespace']) {
-          console.log(c.redBright(`>> no-namespace (${url})`));
+          console.log(c.redBright(`>> no-namespace (${origin}${pathname})`));
         }
       } else {
         if (logs['not-handle']) {
-          console.log(c.redBright(`>> not-handle (${url})`));
+          console.log(c.redBright(`>> not-handle (${origin}${pathname})`));
         }
       }  
     }

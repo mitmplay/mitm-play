@@ -6,8 +6,8 @@ module.exports = async ({data}) =>{
 
   console.log(c.greenBright('>> autofill'));
   for (let obj of autofill) {
-    console.log(c.greenBright(`   ${obj}`));
     if (typeof(obj)==='string') {
+      console.log(c.greenBright(`   ${obj}`));
       const [selector, typ, value] = obj.match(/^(.+)([=-]>)(.+)$/).slice(1).map(x => x.trim());
       if (typ==='=>') {
         obj = {selector, value}
@@ -22,6 +22,8 @@ module.exports = async ({data}) =>{
       } else {
         continue;
       }
+    } else {
+      console.log(c.greenBright(`${JSON.stringify(obj, null, 2)}`));
     }
     if (obj.action) {
       const options = obj.options || {};

@@ -12,7 +12,7 @@ function extract({route, browserName}) {
 }
 
 function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
-  const {argv, splitter} = global.mitm;
+  const {argv} = global.mitm;
   const opts = {redirect: true};
   if (argv.redirect && argv.redirect!==true) {
     opts.redirect = 'manual';
@@ -36,7 +36,8 @@ function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
     const _headers = resp.headers.raw();
     let status = resp.status;
     if (proxy && argv.verbose) {
-      console.log(c.grey(`>> proxy (${url.split(splitter)[0]})`));
+      const {origin, pathname} = new URL(url);
+      console.log(c.grey(`>> proxy (${origin}${pathname})`));
     }
     const headers = {};
     for (let key in _headers) {

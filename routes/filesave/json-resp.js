@@ -26,13 +26,13 @@ module.exports = ({reqs, resp, match}) => {
       if (respBody && respBody.match(xjson)) {
         respBody = JSON.parse(`${respBody}`);
       }
-      if (reqsBody) { 
-        const raw = reqsBody;
+      if (reqsBody) {
+        reqsBody = `{reqsBody}`;
         if (reqsBody.match(xjson)) {
-          reqsBody = JSON.parse(`${reqsBody}`);
+          reqsBody = JSON.parse(reqsBody);
         } else if (reqsBody.match(/[\n ]*(\w+=).+(&)/)) {
           const formField = searchParams(reqsBody);
-          reqsBody = {'*form*':formField, raw};      
+          reqsBody = {'*form*':formField, raw: reqsBody};      
         }
       } else {
         reqsBody = ''

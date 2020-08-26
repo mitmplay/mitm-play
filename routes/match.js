@@ -32,7 +32,6 @@ const searchFN = (typ, {url}) => {
 
     const obj = router[namespace][typ];
     const route = routes[namespace][typ];
-    const splitter = global.mitm.splitter;
     let workspace = routes[namespace].workspace;
     if (workspace) {
       workspace = home(workspace);
@@ -42,10 +41,8 @@ const searchFN = (typ, {url}) => {
       const arr = url.match(obj[key]);
 
       if (arr) {
-        const split = url.split(splitter);
-        const path = `${split[0]}${split.length>1 ? '?' : ''}`;
-        const {host, pathname, search} = new URL(url);
-        const log = `>> ${typ} (${path}).match(${key})`;
+        const {host, origin, pathname, search} = new URL(url);
+        const log = `>> ${typ} (${origin}${pathname}).match(${key})`;
         return {
           contentType: obj[`${key}~contentType`],
           route: route[key],
