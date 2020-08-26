@@ -6,8 +6,8 @@ function thirdparty({url, headers}) {
   const domain = tldomain(url);
 
   if (!nameSpace(domain)) {
-    if (origin && nameSpace(origin)) return;
-    if (referer && nameSpace(referer)) return;
+    if (origin  && nameSpace((new URL(origin).host))) return;
+    if (referer && nameSpace((new URL(referer).host))) return;
     return true;
   }
 }

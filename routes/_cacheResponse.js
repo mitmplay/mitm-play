@@ -67,7 +67,8 @@ function cacheResponse(reqs, responseHandler, _3d) {
         fpath1 = `${fpath1}.${_ext({headers})}`;
         if (logs.cache) {
           if (!global.mitm.argv.ommit.cache && !hidden) {
-            console.log(c.greenBright(`>> cache (`)+`${origin}${pathname}`+c.greenBright(`).match(${match.key})`));
+            const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
+            console.log(c.greenBright(`>> cache (${origin}${msg}).match(${match.key})`));
           }  
         }
         const body = fs.readFileSync(fpath1);
@@ -94,7 +95,8 @@ function cacheResponse(reqs, responseHandler, _3d) {
           fpath1 = `${fpath1}.${_ext(resp)}`;
           if (logs.cache) {
             if (hidden!==2) {
-              console.log(c.magentaBright(`>> cache (`)+`${origin}${pathname}`+c.magentaBright(`).match(${match.key})`));
+              const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
+              console.log(c.magentaBright(`>> cache (${origin}${msg}).match(${match.key})`));
             }
           }
           const meta = metaResp({reqs, resp});

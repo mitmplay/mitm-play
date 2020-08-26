@@ -42,7 +42,8 @@ const searchFN = (typ, {url}) => {
 
       if (arr) {
         const {host, origin, pathname, search} = new URL(url);
-        const log = `>> ${typ} (${origin}${pathname}).match(${key})`;
+        const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
+        const log = `>> ${typ} (${origin}${msg}).match(${key})`;
         return {
           contentType: obj[`${key}~contentType`],
           route: route[key],

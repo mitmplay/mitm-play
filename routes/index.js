@@ -23,12 +23,13 @@ const _resp = {
 module.exports =  ({route, browserName}) => {
   const {routes, argv: {nosocket, proxy}} = global.mitm;
   const reqs = extract({route, browserName});
-  const {origin, pathname} = new URL(reqs.url);
+  const {url} = reqs;
+  const {origin, pathname} = new URL(url);
   const {logs} = routes._global_.config;
   const responseHandler = [];
 
   // catch unknown url scheme & respond it 
-  if (reqs.url.match('(brave|edge)://')) {
+  if (url.match('(brave|edge)://')) {
     route.fulfill(_resp);
     return;
   }
