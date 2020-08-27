@@ -56,10 +56,7 @@ module.exports =  ({route, browserName}) => {
   let {match, resp} = _cacheResponse(reqs, responseHandler, _3d);
 
   //--order is important and log must not contain the body modification
-  if (!match || !match.route.nolog) {
-    _logResponse(reqs, responseHandler, _3d);
-  }
-
+  _logResponse (reqs, responseHandler, _3d, match);
   _htmlResponse(reqs, responseHandler, _3d);
   _jsonResponse(reqs, responseHandler, _3d);
   _cssResponse (reqs, responseHandler, _3d);

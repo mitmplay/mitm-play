@@ -9,7 +9,7 @@ const fpathflat = require('./filepath/fpath-flat');
 
 const {matched,searchFN} = _match;
 
-function logResponse(reqs, responseHandler, _3d) {
+function logResponse(reqs, responseHandler, _3d, cache) {
   const search = searchFN('log', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
   const {logs} = global.mitm.routes._global_.config;
@@ -18,6 +18,9 @@ function logResponse(reqs, responseHandler, _3d) {
     const stamp = (new Date).toISOString().replace(/[:-]/g, '');
     responseHandler.push(resp => {
       if (ctype(match, resp)) {
+        if (cache && ctype(cache, resp) && cache.route.nolog) {
+          return resp; 
+        }
         let {fpath1, fpath2} = fpathflat({match, reqs, stamp});
         if (logs.log) {
           if (!hidden) {
