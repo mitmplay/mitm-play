@@ -9,6 +9,7 @@ module.exports = () => {
       home,
       clear,
       loadJS,
+      toRegex,
     }
   } = global.mitm;
 
@@ -57,10 +58,13 @@ module.exports = () => {
   delete global.mitm.data.nolog;
 
   if (typeof(argv.url)!=='string') {
-    if (argv._[0]) {
-      for (let namespace in global.mitm.routes) {
-        if (namespace.match(argv._[0])) {
-          argv.url = global.mitm.routes[namespace].url;
+    const argv0 = argv._[0];
+    if (argv0) {
+      const {routes} = global.mitm;
+      for (let namespace in routes) {
+        const {url} = routes[namespace];
+        if (url && url.match(toRegex(argv0))) {
+          argv.url = url;
         }
       }  
     }

@@ -72,4 +72,7 @@ function routeSet(r, namespace, print=false) {
   return r;
 }
 
-module.exports = routeSet;
+module.exports = {
+  routeSet,
+  toRegex,
+};

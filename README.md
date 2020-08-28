@@ -986,7 +986,7 @@ tested on "playwright": "1.3.0", two places on playwright `code need to be comme
 ```js
 // playwright/lib/chromium/crNetworkManager.js - ln:197
 if (redirectedFrom) {
-  // allowInterception = false; // ln:197
+  allowInterception = true; // ln:197
   // We do not support intercepting redirects.
   if (requestPausedEvent)
       ...
