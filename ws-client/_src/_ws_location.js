@@ -7,9 +7,9 @@ module.exports = () => {
   const event = new Event('urlchanged');
   let container = {};
   let ctrl = false;
-  let intervId;
+  let button = {};
   let buttons;
-  let button;
+  let intervId;
 
   function toRegex(pathMsg) {
     let [path, msg] = pathMsg.split('=>').map(item=>item.trim());
