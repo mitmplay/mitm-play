@@ -5,8 +5,8 @@ module.exports = () => {
   const containerStyle = 'position: fixed;z-index: 9999;top: 8px;right: 5px;';
   const buttonStyle = 'border: none;border-radius: 15px;font-size: 10px;'
   const event = new Event('urlchanged');
+  let container = {};
   let ctrl = false;
-  let container;
   let intervId;
   let buttons;
   let button;

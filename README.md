@@ -308,7 +308,8 @@ Save the first request to your local disk so next request will serve from there.
 ```js
 cache: {
   'amazon.com': {
-    contentType: ['javascript', 'image'], //required! 
+    contentType: ['javascript', 'image'], //required!
+    querystring: true, // hash of unique file-cache
     session: true, // optional - set session id
     hidden: true, // optional - no consolo.log
     nolog: true, // optional - disable logging

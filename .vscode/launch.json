@@ -14,7 +14,8 @@
             "cwd": "${workspaceFolder}/..",
             "program": "${workspaceFolder}/mitm-play.js",
             "args": [
-                "ny"
+                "ny",
+                "-R=false"
             //     "-o='cache,skip'",
             //     "-dpsr='/home/wharsojo/Projects/userscript'",
             // //  "--chromium='D:/Apps/chrome-gog/chrome.exe'"
