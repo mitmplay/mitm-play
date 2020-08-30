@@ -2,7 +2,7 @@ const c = require('ansi-colors');
 const stringify = require('./stringify');
 const logs = require('./logs');
 
-const typA = ['skip','noproxy','proxy'];
+const typA = ['nosocket','skip','noproxy','proxy'];
 const typO = ['request','response','mock','cache','log','html','json','css','js'];
 
 function toRegex(str) {

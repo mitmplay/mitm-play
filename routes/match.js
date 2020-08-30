@@ -13,7 +13,7 @@ const searchArr = ({typ, url}) => {
       let obj = router[namespace][typ];
       let arr = routes[namespace][typ] || [];
       for (let str of arr) {
-        if (url.match(obj[str])) {
+        if (obj && url.match(obj[str])) {
           return str;
         }
       }  

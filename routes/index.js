@@ -64,7 +64,7 @@ module.exports =  ({route, browserName}) => {
   _allResponse (reqs, responseHandler, _3d);
   if (!nosocket) {
     //--inject websocket client to html
-    _addWebSocket(reqs, responseHandler);
+    _addWebSocket(reqs, responseHandler, _3d);
   }
 
   if (resp) {

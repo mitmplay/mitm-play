@@ -137,6 +137,7 @@ routes = {
   skip:    [], //start routing rules
   proxy:   [], //request with proxy
   noproxy: [], 
+  nosocket:[],
   request: {},
   mock:    {}, 
   cache:   {},
@@ -239,6 +240,15 @@ if proxy config was set to all request/response, `noproxy` will exclude it from 
 // HTTP_PROXY env need to be set, cli: --proxy .. --noproxy ..
 noproxy: ['nytimes.com'],
 proxy:   ['.+'],
+```
+</p>
+</details>
+<details><summary><b>Nosocket</b></summary>
+<p>
+
+No `WebSocket` Injection to **`html`**, `mitm-play` will process further.
+```js
+nosocket: ['sso'],
 ```
 </p>
 </details>
@@ -495,9 +505,10 @@ The default `config.logs` setting can be override as needed.
 _global_ = {
   jsLib:   [],
   skip:    [], //start routing rules
-  request: {},
-  noproxy: [], 
   proxy:   [], //request with proxy
+  noproxy: [], 
+  nosocket:[],
+  request: {},
   mock:    {}, 
   cache:   {},
   log:     {},
@@ -524,6 +535,7 @@ _global_.config = {
     'ws-broadcast':  true,
     silent: false, //true: hide all
     skip:   false,
+    nosocket:true,
     request: true,
     mock:    true,
     cache:   true,
