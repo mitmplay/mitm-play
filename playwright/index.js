@@ -96,10 +96,20 @@ module.exports = () => {
         await page.goto('chrome://extensions/');
         await page.click('#detailsButton');
         await page.click('#crToggle');
-        await page.goto(argv.url);
       } else {
         await sleep(400);
-        await page.goto(argv.url); 
+      }
+      if (Array.isArray(argv.url)) {
+        let count = 0;
+        for (let key of argv.url) {
+          if (count>0) {
+            page = await browser.newPage();
+          }
+          await page.goto(key);
+          count += 1;
+        }
+      } else {
+        await page.goto(argv.url);
       }
       page.on('close', () => {
         process.exit();

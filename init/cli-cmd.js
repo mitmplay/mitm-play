@@ -57,23 +57,30 @@ module.exports = () => {
   }
   delete global.mitm.data.nolog;
 
-  if (typeof(argv.url)!=='string') {
-    const argv0 = argv._[0];
+  if (typeof(argv.url)==='string') {
+    if (!argv.url.match('http')) {
+      argv.url = [`https://${argv.url}`];
+    } else {
+      argv.url = [argv.url];
+    }
+  } else {
+    let argv0 = argv._[0];
+    argv.url = [];
     if (argv0) {
+      argv0 = argv0.trim().split(/ +/);
       const {routes} = global.mitm;
       for (let namespace in routes) {
         const {url} = routes[namespace];
-        if (url && url.match(toRegex(argv0))) {
-          argv.url = url;
+        for (key of argv0) {
+          if (url && url.match(toRegex(key))) {
+            argv.url.push(url);
+          }  
         }
       }  
     }
-    if (typeof(argv.url)!=='string') {
-      argv.url = 'http://whatsmyuseragent.org/';
+    if (argv.url.length===0) {
+      argv.url = ['http://whatsmyuseragent.org/'];
     }
-  }
-  if (!argv.url.match('http')) {
-    argv.url = `https://${argv.url}`;
   }
 
   clear();
