@@ -14,7 +14,7 @@
             "cwd": "${workspaceFolder}/..",
             "program": "${workspaceFolder}/mitm-play.js",
             "args": [
-                "cold ny",
+                "cold,ny",
                 "-R=false"
             //     "-o='cache,skip'",
             //     "-dpsr='/home/wharsojo/Projects/userscript'",

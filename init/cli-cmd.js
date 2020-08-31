@@ -67,7 +67,7 @@ module.exports = () => {
     let argv0 = argv._[0];
     argv.url = [];
     if (argv0) {
-      argv0 = argv0.trim().split(/ +/);
+      argv0 = argv0.trim().split(/[, ]+/);
       const {routes} = global.mitm;
       for (let namespace in routes) {
         const {url} = routes[namespace];
