@@ -67,12 +67,27 @@ module.exports = () => {
     let argv0 = argv._[0];
     argv.url = [];
     if (argv0) {
+      // on window comma change to space
       argv0 = argv0.trim().split(/[, ]+/);
       const {routes} = global.mitm;
       for (let namespace in routes) {
-        const {url} = routes[namespace];
+        const {url, urls} = routes[namespace];
         for (key of argv0) {
-          if (url && url.match(toRegex(key))) {
+          const rgx = toRegex(key);
+          let urlsSet = false;
+          // find on urls
+          if (urls) {
+            for (let loc in urls) {
+              if (loc.match(rgx)) {
+                argv.url.push(urls[loc]);
+                urlsSet = true; // found
+              }
+            }
+          }
+          /**
+           * find on url if urls cannot be found
+           */
+          if (!urlsSet && url && url.match(rgx)) {
             argv.url.push(url);
           }  
         }
