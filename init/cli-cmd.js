@@ -59,13 +59,13 @@ module.exports = () => {
 
   if (typeof(argv.url)==='string') {
     if (!argv.url.match('http')) {
-      argv.url = [`https://${argv.url}`];
+      argv.urls = [`https://${argv.url}`];
     } else {
-      argv.url = [argv.url];
+      argv.urls = [argv.url];
     }
   } else {
     let argv0 = argv._[0];
-    argv.url = [];
+    argv.urls = [];
     if (argv0) {
       // on window comma change to space
       argv0 = argv0.trim().split(/[, ]+/);
@@ -79,7 +79,7 @@ module.exports = () => {
           if (urls) {
             for (let loc in urls) {
               if (loc.match(rgx)) {
-                argv.url.push(urls[loc]);
+                argv.urls.push(urls[loc]);
                 urlsSet = true; // found
               }
             }
@@ -88,15 +88,16 @@ module.exports = () => {
            * find on url if urls cannot be found
            */
           if (!urlsSet && url && url.match(rgx)) {
-            argv.url.push(url);
+            argv.urls.push(url);
           }  
         }
       }  
     }
-    if (argv.url.length===0) {
-      argv.url = ['http://whatsmyuseragent.org/'];
+    if (argv.urls.length===0) {
+      argv.urls = ['http://whatsmyuseragent.org/'];
     }
   }
+  delete argv.url;
 
   clear();
 

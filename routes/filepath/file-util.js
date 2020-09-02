@@ -39,6 +39,8 @@ function filename(match, separator='/') {
   let file = arr.pop();
   if (file==='') {
     file = '_';
+  } else if (file.length > 30) {
+    file = `@-${hashCode(file)}`;
   }
   if (querystring) {
     file = `hash-${hashCode(`${file}${search}`)}`;  

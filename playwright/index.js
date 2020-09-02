@@ -99,17 +99,13 @@ module.exports = () => {
       } else {
         await sleep(400);
       }
-      if (Array.isArray(argv.url)) {
-        let count = 0;
-        for (let key of argv.url) {
-          if (count>0) {
-            page = await browser.newPage();
-          }
-          await page.goto(key);
-          count += 1;
+      let count = 0;
+      for (let url of argv.urls) {
+        if (count>0) {
+          page = await browser.newPage();
         }
-      } else {
-        await page.goto(argv.url);
+        await page.goto(url);
+        count += 1;
       }
       page.on('close', () => {
         process.exit();
