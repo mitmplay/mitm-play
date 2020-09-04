@@ -41,30 +41,61 @@ function routeSet(r, namespace, print=false) {
       }  
     }
   }
+  const tags = {};
+  const urls = {};
   for (let typ of typO) {
     if (r[typ]) {
       router[typ] = {};
       for (let str in r[typ]) {
-        const regex =  toRegex(str);
+        const regex = toRegex(str);
         router[typ][str] = regex;
         const site = r[typ][str];
-        if (site && site.contentType) {
-          const contentType = {};
-          for (let typ2 of site.contentType) {
-            if (contentType[typ2]) {
-              const ct = site.contentType.join("', '");
-              throw [
-                `contentType should be unique:`,
-                `${namespace}.${typ}['${str}'].contentType => ['${ct}']`];
+        if (site) {
+          if (site.tags) {
+            if (urls[str]===undefined) {
+              urls[str] = {};
             }
-            contentType[typ2] = toRegex(typ2);
+            const nss = urls[str];
+            if (nss[typ]===undefined) {
+              nss[typ] = {};
+            }
+            const nsstag = nss[typ];
+            // urls[str]._namespace_ = regex;
+            const arr = site.tags.split(/ +/);
+            for (let key of arr) {
+              nsstag[key] = true;
+              tags[key] = true;
+            }
           }
-          router[typ][`${str}~contentType`] = contentType;
-        }
+          if (site.contentType) {
+            const contentType = {};
+            for (let typ2 of site.contentType) {
+              if (contentType[typ2]) {
+                const ct = site.contentType.join("', '");
+                throw [
+                  `contentType should be unique:`,
+                  `${namespace}.${typ}['${str}'].contentType => ['${ct}']`];
+              }
+              contentType[typ2] = toRegex(typ2);
+            }
+            router[typ][`${str}~contentType`] = contentType;
+          }
+        } 
       }
     }
   }
   global.mitm.router[namespace] = router;
+  if (Object.keys(tags).length) {
+    global.mitm.__tag2[namespace] = tags;
+    global.mitm.__tag3[namespace] = urls;  
+  } else {
+    if (global.mitm.__tag2[namespace]) {
+      delete global.mitm.__tag2[namespace];
+    }
+    if (global.mitm.__tag3[namespace]) {
+      delete global.mitm.__tag3[namespace];
+    }
+  }
   if (!global.mitm.data.nolog && global.mitm.argv.verbose) {
     const msg = `>> ${namespace}\n${stringify(global.mitm.routes[namespace])}`;
     print && console.log(c.blueBright(msg));  

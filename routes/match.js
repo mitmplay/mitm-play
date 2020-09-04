@@ -48,6 +48,7 @@ const searchFN = (typ, {url}) => {
           contentType: obj[`${key}~contentType`],
           route: route[key],
           workspace,
+          namespace,
           pathname,
           search,
           host,

@@ -20,6 +20,14 @@ const resort = global._debounce(function(fn) {
   }
   console.log(c.red('(*reset routes*)'));
   global.mitm.routes = routes;
+  let tag1 = {};
+  for (let ns in global.mitm.__tag2) {
+    tag1 = {
+      ...tag1,
+      ...global.mitm.__tag2[ns]
+    }
+  }
+  global.mitm.__tag1 = tag1;
   global.mitm.fn.clear();
   fn && fn();
 }, 900, 'clear');
