@@ -4,7 +4,7 @@ function skipByTag(match, typ) {
     let tags;
     const {namespace, key, url} = match;
     const {__tag1, __tag3} = global.mitm;
-    if (__tag3._global_[key]) {
+    if (__tag3._global_ && __tag3._global_[key]) {
       tags = __tag3._global_[key][typ];
     } else if (__tag3[namespace] && __tag3[namespace][key]) {
       tags = __tag3[namespace][key][typ];      
