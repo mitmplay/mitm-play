@@ -34,16 +34,17 @@ function resetCookies(setCookie) {
 function cacheResponse(reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {routes,fn: {tilde}} = global.mitm;
+  const {routes, fn: {skipByTag, tilde}} = global.mitm;
   const {logs} = routes._global_.config;
   let resp, resp2;
 
-  if (match) {
+  if (match && !skipByTag(match, 'cache')) {
     const {url} = reqs;
+    const {route} = match;
+    const {response, session, hidden} = route;
     const {host, origin, pathname} = new URL(url);
-    const {response, session, hidden} = match.route;
-    let {fpath1, fpath2} = fpathcache({match, reqs});
- 
+
+    let {fpath1, fpath2} = fpathcache({match, reqs}); 
     let remote = true;
     if (fs.existsSync(fpath2)) {
       // get from cache

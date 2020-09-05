@@ -8,6 +8,7 @@ const {routeSet, toRegex} = require('./fn/route-set');
 const {exec, execFile} = require('./fn/exec-file');
 const {tilde, home} = require('./fn/tildehome');
 const unstrictCSP = require('./fn/unstrictCSP');
+const skipByTag = require('./fn/skipbytag');
 const nameSpace = require('./fn/namespace');
 const stringify = require('./fn/stringify');
 const tldomain = require('./fn/tldomain');
@@ -22,6 +23,7 @@ module.exports = () => {
   global.mitm.fn = {
     unstrictCSP,
     stringify,
+    skipByTag,
     nameSpace,
     chokidar,
     tldomain,

@@ -5,8 +5,10 @@ const {matched,searchFN} = _match;
 function chgRequest(reqs, _3d) {
   const search = searchFN('request', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {logs} = global.mitm.routes._global_.config;
-  if (match) {
+  const {routes, fn: {skipByTag}} = global.mitm;
+  const {logs} = routes._global_.config;
+
+  if (match && !skipByTag(match, 'request')) {
     const {hidden, request} = match.route;
     if (logs.request) {
       if (!match.url.match('/mitm-play/websocket')) {

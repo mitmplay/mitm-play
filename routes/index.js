@@ -2,12 +2,12 @@ const c = require('ansi-colors');
 const {extract, fetch} = require('./fetch');
 const _3rdparties    = require('./_3rdparties');
 const _jsResponse    = require('./_jsResponse');
-const _allResponse   = require('./_allResponse');
 const _chngRequest   = require('./_chngRequest');
 const _cssResponse   = require('./_cssResponse');
 const _logResponse   = require('./_logResponse');
 const _jsonResponse  = require('./_jsonResponse');
 const _htmlResponse  = require('./_htmlResponse');
+const _chgResponse   = require('./_chgResponse');
 const _proxyRequest  = require('./_proxyRequest');
 const _skipResponse  = require('./_skipResponse');
 const _mockResponse  = require('./_mockResponse');
@@ -61,7 +61,7 @@ module.exports =  ({route, browserName}) => {
   _jsonResponse(reqs, responseHandler, _3d);
   _cssResponse (reqs, responseHandler, _3d);
   _jsResponse  (reqs, responseHandler, _3d);
-  _allResponse (reqs, responseHandler, _3d);
+  _chgResponse (reqs, responseHandler, _3d);
   if (!nosocket) {
     //--inject websocket client to html
     _addWebSocket(reqs, responseHandler, _3d);

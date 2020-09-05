@@ -21,8 +21,9 @@ const mock = ({url}) => {
 function mockResponse({reqs, route}, _3d) {
   const search = searchFN('mock', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {fn: {home}, routes: {_global_}} = global.mitm;
-  if (match) {
+  const {fn: {skipByTag, home}, routes: {_global_}} = global.mitm;
+
+  if (match && !skipByTag(match, 'mock')) {
     const {response, file, js} = match.route;
     if (_global_.config.logs.mock) {
       if (!match.url.match('/mitm-play/websocket')) {
