@@ -9,7 +9,7 @@ function toRegex(str) {
   return new RegExp(str.replace(/\./g, '\\.').replace(/\?/g, '\\?'));
 }
 
-function routeSet(r, namespace, print=false) {  
+function routeSet(r, namespace, print=false) {
   global.mitm.routes[namespace] = r;
   if (namespace==='_global_') {
     if (r.config) {
@@ -31,14 +31,14 @@ function routeSet(r, namespace, print=false) {
   }
   // Compile regex into router
   const router = {};
-  router._namespace_ = toRegex(`(^${namespace}|.${namespace})`);
+  router._namespace_ = toRegex(namespace);
   for (let typ of typA) {
     if (r[typ]) {
       router[typ] = {};
       for (let str of r[typ]) {
         const regex = toRegex(str);
         router[typ][str] = regex;
-      }  
+      }
     }
   }
   const tags = {};
@@ -87,7 +87,7 @@ function routeSet(r, namespace, print=false) {
   global.mitm.router[namespace] = router;
   if (Object.keys(tags).length) {
     global.mitm.__tag2[namespace] = tags;
-    global.mitm.__tag3[namespace] = urls;  
+    global.mitm.__tag3[namespace] = urls;
   } else {
     if (global.mitm.__tag2[namespace]) {
       delete global.mitm.__tag2[namespace];

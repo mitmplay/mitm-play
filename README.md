@@ -155,12 +155,14 @@ routes = {
 the execution order as documented start with `skip`, end with `js`, no need to implement all of routing rules. 
 </p>
 
-<details><summary><b>Title, url, workspace & jsLib</b></summary>
+<details><summary><b>Title, url, urls, workspace & jsLib</b></summary>
 <p>
 
 `Title`: provide basic information about this route.
 
 `Url`: when user enter cli with first param as `non dashes`, it will try to find it in **`url`**, if match it will open the browser with that **`url`**.
+
+`Urls`: additional search for object key inside urls, this open up to much more option to open more than one tabs.
 
 `workspace`: will be use as the base folder for `file` option in `Mock`.
 
@@ -170,6 +172,10 @@ the execution order as documented start with `skip`, end with `js`, no need to i
 routes = {
   title: 'Amazon - amazon',
   url:  'https://www.amazon.com/b?node=229189',
+  urls: {
+    ama1: 'https://www.amazon.com/b?node=229100',
+    ama2: 'https://www.amazon.com/b?node=229111',
+  },
   workspace: '~/Projects',
   jsLib: ['chance.js'],
 };
