@@ -131,6 +131,7 @@ on each route you can add section supported:
 ```js
 routes = {
   url:     '',
+  urls:    {},
   title:   '',
   workspace: '',
   screenshot: {}, //user interaction rules & observe DOM-Element

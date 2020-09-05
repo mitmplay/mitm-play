@@ -27,6 +27,28 @@ function btnOpen() {
   });
 }
 
+function btns(id) {
+  const route = mitm.routes[id];
+  if (route && route.urls) {
+    return Object.keys(route.urls);
+  } else {
+    return [];
+  }
+}
+
+function btnUrl(id) {
+  const route = mitm.routes[$source.item];
+  if (route && route.urls) {
+    return route.urls[id];
+  } else {
+    return '';
+  }
+}
+
+function btnTag(e) {
+  chrome.tabs.update({url: e.target.dataset.url});
+}
+
 function btnGo(e) {
   const route = mitm.routes[$source.item];
   if (route && route.url) {
@@ -35,6 +57,15 @@ function btnGo(e) {
 }
 </script>
 
+{#if $source.path}
+	<div class="btn-container">
+  {#each btns($source.item) as item}
+  <button class="tlb btn-go" on:click="{btnTag}"
+  data-url="{btnUrl(item)}">{item}</button> - 
+  {/each}
+  <button class="tlb btn-go" disabled={$source.goDisabled} on:click="{btnGo}">Go</button>.
+  </div>
+{/if}
 <div class="file-path">
 Path:{$source.path}
 {#if $source.path}
@@ -42,8 +73,7 @@ Path:{$source.path}
   <button class="tlb btn-min"  on:click="{btnMin}" >[--]</button> -
   <button class="tlb btn-plus" on:click="{btnPlus}">[++]</button> -
   <button class="tlb btn-save" disabled={$source.saveDisabled} on:click="{btnSave}">Save</button> -
-  <button class="tlb btn-open" disabled={$source.openDisabled} on:click="{btnOpen}">Open</button> -
-  <button class="tlb btn-go"   disabled={$source.goDisabled}   on:click="{btnGo}"  >Go</button>
+  <button class="tlb btn-open" disabled={$source.openDisabled} on:click="{btnOpen}">Open</button>
   </div>
 {/if}
 </div>
@@ -62,7 +92,7 @@ Path:{$source.path}
   padding-bottom: 3px;
   right: 0;
   z-index: 5;
-  top: 0;
+  top: -2px;
 }
 .btn-container button {
   font-size: 10px;
