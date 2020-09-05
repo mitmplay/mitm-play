@@ -28,7 +28,7 @@
 		"rollup-plugin-terser": "^5.1.3",
 		"stylelint": "^13.6.1",
 		"stylelint-config-standard": "^18.3.0",
-		"svelma": "^0.3.2",
+		"svelma": "^0.4.0",
 		"svelte": "~3.16.4",
 		"svelte-preprocess": "^3.9.8"
 	},
