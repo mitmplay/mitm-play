@@ -69,24 +69,33 @@ module.exports =  ({route, browserName}) => {
 
   if (resp) {
     Events(responseHandler, resp, route);
-  } else if (responseHandler.length) { //call BE 
-    fetch(route, browserName, (_chngRequest(reqs, _3d) || reqs), function(resp) {
-      Events(responseHandler, resp, route);
-    });
   } else {
-    if (logs) {
-      if (_3d) {
-        if (logs['no-namespace']) {
-          console.log(c.redBright(`>> no-namespace (${origin}${pathname})`));
-        }
-      } else {
-        if (logs['not-handle']) {
-          console.log(c.redBright(`>> not-handle (${origin}${pathname})`));
-        }
-      }  
-    }
-    route.continue({});
-  }
+    const rqs2 = _chngRequest(reqs, _3d);
+    if (responseHandler.length) { //call BE 
+      fetch(route, browserName, (rqs2 || reqs), function(resp) {
+        Events(responseHandler, resp, route);
+      });
+    } else {
+      let rqs;
+      if (rqs2) {
+        const {headers, method, body: postData} = rqs2;
+        rqs = {headers, method, postData};
+        const msg = JSON.stringify({headers, method});
+        console.log(c.redBright(`>> request (${msg})`));
+      } else if (logs) {
+        if (_3d) {
+          if (logs['no-namespace']) {
+            console.log(c.redBright(`>> no-namespace (${origin}${pathname})`));
+          }
+        } else {
+          if (logs['not-handle']) {
+            console.log(c.redBright(`>> not-handle (${origin}${pathname})`));
+          }
+        }  
+      }
+      route.continue(rqs);
+    }  
+  } 
 }
 
 function Events(responseHandler, resp, route) {
