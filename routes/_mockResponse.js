@@ -41,9 +41,12 @@ function mockResponse({reqs, route}, _3d) {
         } else if (file) {
           const ext = file.match(/\.(\w+)$/);
           if (ext) {
-            let fpath;
-            const fmatch = file.match(/^[\t ]*\.\/(.+)/)
-            if (fmatch) {
+            let fmatch, fpath; 
+            if (fmatch = file.match(/^[\t ]*~\/(.+)/)) {
+              fpath = home(`~/${fmatch[1]}`);
+            } else if (fmatch= file.match(/^[\t ]*\.\.\/(.+)/)) {
+              fpath = `${argv.route}/${fmatch[1]}`;
+            } else if (fmatch = file.match(/^[\t ]*\.\/(.+)/)) {
               fpath = `${argv.route}/${match.namespace}/${fmatch[1]}`;
             } else {
               const workspace = match.workspace || _global_.workspace;
