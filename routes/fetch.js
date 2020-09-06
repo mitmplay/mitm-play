@@ -68,11 +68,12 @@ Redirect...
       if (status===undefined) {
         status = headers['x-app-status'];
       }
+      const resp = {url, status, headers, body};
+      handler(resp);
       if (status>=400) {
-        console.log(c.redBright(`[${reqs.method}] ${url} => ${status}`));
-        console.log(c.red(`${body}`));
+        console.log(c.redBright(`[${reqs.method}] ${resp.url} => ${resp.status}`));
+        console.log(c.red(`${resp.body}`));
       }
-      handler({url, status, headers, body});
     });
   }
 

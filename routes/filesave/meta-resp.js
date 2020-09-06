@@ -30,7 +30,7 @@ module.exports = ({reqs, resp}) => {
   try {
     const urlParams = searchParams(url);
     if (reqsBody) {
-      reqsBody = `{reqsBody}`;
+      reqsBody = `${reqsBody}`;
       const raw = reqsBody;
       if (reqsBody.match(xjson)) {
         reqsBody = JSON.parse(reqsBody);

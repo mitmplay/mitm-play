@@ -1008,8 +1008,8 @@ tested on "playwright": "1.3.0", two places on playwright `code need to be comme
 if (redirectedFrom) {
   allowInterception = true; // ln:197
   // We do not support intercepting redirects.
-  if (requestPausedEvent)
-      ...
+  // if (requestPausedEvent)
+  //     this._client._sendMayFail('Fetch.continueRequest', { requestId: requestPausedEvent.requestId });
 }
 
 // playwright/lib/network.js - ln:75

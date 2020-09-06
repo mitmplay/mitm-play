@@ -27,7 +27,7 @@ module.exports = ({reqs, resp, match}) => {
         respBody = JSON.parse(`${respBody}`);
       }
       if (reqsBody) {
-        reqsBody = `{reqsBody}`;
+        reqsBody = `${reqsBody}`;
         if (reqsBody.match(xjson)) {
           reqsBody = JSON.parse(reqsBody);
         } else if (reqsBody.match(/[\n ]*(\w+=).+(&)/)) {
