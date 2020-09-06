@@ -1,3 +1,4 @@
+const _path = require('path');
 const c = require('ansi-colors');
 
 const load = function(path) {
@@ -36,7 +37,9 @@ const loadJS = function(path, log, fn) {
   const {fs,routeSet} = global.mitm.fn;
   log && console.log(log);
   try {
-    const domain = path.match(/([\\+\w.-]+)[\\/]([\w.-]+)$/)[1];
+    path = _path.normalize(path);
+    let domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1];
+    domain = domain.replace(/~/,'[^.]*');
     const route = {path, ...load(path)};
     routeSet(route, domain, true);
     fs.readFile(path, "utf8", function(err, data) {
