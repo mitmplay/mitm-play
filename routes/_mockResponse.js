@@ -21,7 +21,7 @@ const mock = ({url}) => {
 function mockResponse({reqs, route}, _3d) {
   const search = searchFN('mock', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {fn: {skipByTag, home}, routes: {_global_}} = global.mitm;
+  const {fn: {skipByTag, home}, argv, routes: {_global_}} = global.mitm;
 
   if (match && !skipByTag(match, 'mock')) {
     const {response, file, js} = match.route;
@@ -41,8 +41,14 @@ function mockResponse({reqs, route}, _3d) {
         } else if (file) {
           const ext = file.match(/\.(\w+)$/);
           if (ext) {
-            const workspace = match.workspace || _global_.workspace;
-            let fpath = workspace ? `${workspace}/${file}` : file;
+            let fpath;
+            const fmatch = file.match(/^[\t ]*\.\/(.+)/)
+            if (fmatch) {
+              fpath = `${argv.route}/${match.namespace}/${fmatch[1]}`;
+            } else {
+              const workspace = match.workspace || _global_.workspace;
+              fpath = workspace ? `${workspace}/${file}` : file;  
+            }
             resp.body = `${fs.readFileSync(home(fpath))}`;
             resp.headers['content-type'] = xtype[ext[1]];
           } else {
