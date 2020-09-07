@@ -31,7 +31,7 @@ function routeSet(r, namespace, print=false) {
   }
   // Compile regex into router
   const router = {};
-  router._namespace_ = toRegex(namespace);
+  router._namespace_ = toRegex(namespace.replace(/~/,'[^.]*'));
   for (let typ of typA) {
     if (r[typ]) {
       router[typ] = {};

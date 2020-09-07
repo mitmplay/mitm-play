@@ -14,7 +14,7 @@ function tilde(path) {
 }
 
 function home(path) {
-  return path.replace('~', _home);
+  return path.replace(/^[ \t]*~/, _home);
 }
 
 module.exports = {

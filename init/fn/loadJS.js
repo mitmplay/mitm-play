@@ -39,7 +39,7 @@ const loadJS = function(path, log, fn) {
   try {
     path = _path.normalize(path);
     let domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1];
-    domain = domain.replace(/~/,'[^.]*');
+    // domain = domain.replace(/~/,'[^.]*');
     const route = {path, ...load(path)};
     routeSet(route, domain, true);
     fs.readFile(path, "utf8", function(err, data) {
