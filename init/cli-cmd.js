@@ -65,7 +65,7 @@ module.exports = () => {
     }
   } else {
     let argv0 = argv._[0];
-    argv.urls = [];
+    const _urls = [];
     if (argv0) {
       // on window comma change to space
       argv0 = argv0.trim().split(/[, ]+/);
@@ -79,7 +79,7 @@ module.exports = () => {
           if (urls) {
             for (let loc in urls) {
               if (loc.match(rgx)) {
-                argv.urls.push(urls[loc]);
+                _urls.push(urls[loc]);
                 urlsSet = true; // found
               }
             }
@@ -88,13 +88,15 @@ module.exports = () => {
            * find on url if urls cannot be found
            */
           if (!urlsSet && url && url.match(rgx)) {
-            argv.urls.push(url);
+            _urls.push(url);
           }  
         }
       }  
-    }
-    if (argv.urls.length===0) {
-      argv.urls = ['http://whatsmyuseragent.org/'];
+      if (argv.urls.length===0) {
+        argv.urls = ['http://whatsmyuseragent.org/'];
+      } else {
+        argv.urls = _urls;
+      }
     }
   }
   delete argv.url;
@@ -102,8 +104,9 @@ module.exports = () => {
   clear();
 
   if (argv.save) {
-    const { save, ...rest } = argv;
-    const _args = process.argv.slice(2).join(' ');
+    const { save,...rest } = argv;
+    let _args = (process.argv.slice(2).join(' ')+' ');
+    _args = _args.replace(/\=([^ ]+)/g, (x, x1)=> `='${x1}'`);
     const fpath = `${global.mitm.home}/argv/${save===true ? 'default' : save}.js`;
     const body = JSON.stringify({_args,_argv: rest}, null, 2);
     fs.ensureFile(fpath, err => {

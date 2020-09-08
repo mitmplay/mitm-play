@@ -22,7 +22,7 @@ function obj(key,id) {
 
 module.exports = () => {
   let {argv} = global.mitm;
-  let prm0 = argv._[0];
+  let [prm0, prm1] = argv._;
 
   argv.profile = false;
   let browser, saveArgs; 
@@ -34,13 +34,14 @@ module.exports = () => {
       return false;
     }
     saveArgs = JSON.parse(fs.readFileSync(path));
-    console.log(c.green(`>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
+    console.log(c.green(`>> cmd: mitm-play ${saveArgs._args}`),`(${profile})`);
+    // console.log(c.green(`>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
     return true;
   }
 
-  if (prm0 && loadProfile(prm0)) {
+  if (prm1 && loadProfile(prm1)) {
     argv.profile = true;
-  } else if (prm0!=='default') {
+  } else if (prm1!=='default') {
     loadProfile('default');
   }
 
@@ -55,6 +56,9 @@ module.exports = () => {
       ...rest
     }} = saveArgs;
     browser = b;
+    if (argv._.length===0) {
+      delete argv._;
+    }
     global.mitm.argv = {...rest, ...argv};
     argv = global.mitm.argv;
   }

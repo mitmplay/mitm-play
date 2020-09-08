@@ -15,10 +15,10 @@
             "program": "${workspaceFolder}/mitm-play.js",
             "args": [
                 "cold",
-                "-R=false"
-            //     "-o='cache,skip'",
-            //     "-dpsr='/home/wharsojo/Projects/userscript'",
-            // //  "--chromium='D:/Apps/chrome-gog/chrome.exe'"
+                // "-R=false"
+                // "-o='cache,skip'",
+                // "-dpsr='/home/wharsojo/Projects/userscript'",
+                // "--chromium='D:/Apps/chrome-gog/chrome.exe'"
             ]
         }
     ]

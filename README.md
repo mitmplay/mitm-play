@@ -298,7 +298,10 @@ mock: {
 ```js
 mock: {
   'mitm-play/twitter.js': {
-    file: 'path/to/my/file.html',
+    file: 'relative/to/workspace/file.html', // --OR--
+    // file: './relative/to/routes/folder/file.html',
+    // file: '../relative/to/routes/folder/file.html',
+    // file: '~/relative/to/home/folder/file.html',
   },
 },
 ```
@@ -562,6 +565,31 @@ _global_.config = {
 mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system required proxy to access internet. Please check on `CLI Options > -x --proxy` section for detail explanation. 
 
 # CLI Options
+when entering CLI commands, `mitm-play`  support two kind of arguments: 
+
+<details><summary><b>Expand...</b></summary>
+<p>
+
+* `args`: is a word without `-` 
+  * first args for searching to url or urls key
+  * second args for loading saved profile
+* `options`: can be -`<char>` or --`<word>`
+```bash
+# syntax
+mitm-play [args] [-options]
+
+# create profile of 'secure' using -s
+mitm-play yahoo --lazy --incognito -s='secure'
+
+# retrive profile 'secure' and search for yahoo and add additional options: -k 
+mitm-play yahoo secure -k
+
+```
+
+</p>
+</details>
+
+.
 <details><summary><b>-h --help</b></summary>
 <p>
 To show all the options Command Line Interface (CLI). this option can be arbitrary position on cli, the result should be always display this messages:
