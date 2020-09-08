@@ -262,7 +262,7 @@ nosocket: ['sso'],
 <details><summary><b>Request</b></summary>
 <p>
 
-Manipulate Request with `request` function
+Manipulate **request** with `request` function
 ```js
 request: {
   'disqus.com/embed/comments/': {
@@ -279,12 +279,14 @@ request: {
 
 Mocking the **response**.
 
-Basic rule: replace **response body** with **the matcher** value 
+Basic rule:
+
+Replace **response body** with **the matcher** value 
 ```js
 mock: {'2mdn.net': ''},
 ```
 
-`response` manipulate **response** with return value of `response` *function*
+Manipulate **response** with `response` *function*
 ```js
 mock: {
   'mitm-play/twitter.js': {
@@ -294,18 +296,18 @@ mock: {
   },
 },
 ```
-`file` getting **mock body** from `file`, if `workspace` exists, it will be use as base path (ie: `${workspace}/${file}`)
+Replace **response body** from `file`, if `workspace` exists, it will be use as base path (ie: `${workspace}/${file}`)
 ```js
 mock: {
   'mitm-play/twitter.js': {
     file: 'relative/to/workspace/file.html', // --OR--
-    // file: './relative/to/routes/folder/file.html',
-    // file: '../relative/to/routes/folder/file.html',
+    // file: '../relative/to/route/folder/file.html',
+    // file: './relative/to/route/folder/file.html',
     // file: '~/relative/to/home/folder/file.html',
   },
 },
 ```
-`js` **the mock body** will be a concatenation of JS code
+Concatenation of JS code `js` at the end of **the mock body**
 ```js
 const unregisterJS = () => {
   ...
@@ -318,7 +320,7 @@ mock: {
   },
 },
 ```
-If both options are created `response`, `js`, `response` will be used and `js` will be ignored.
+If both options are defined: `response`, `js`, `js` will be ignored.
 </p>
 </details>
 <details><summary><b>Cache</b></summary>
