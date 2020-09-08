@@ -388,12 +388,14 @@ log: {
 
 Manipulate the response.
 
-Basic rule: replace **response body** with **the matcher** value 
+Basic rule: 
+
+Replace **response body** with **the matcher** value 
 ```js
 html: {'twitter.net': ''},
 ```
 
-`response` rule: manipulate **response** with return value of `response` *function*
+Manipulate **response** with `response` *function*
 ```js
 html: {
   'twitter.com/home': {
@@ -405,7 +407,7 @@ html: {
   },
 },
 ```
-`js` rule: insert js script element into specific area in html document
+Insert `js` script element into specific area in html document
 ```js
 html: {
   'www.google.com/search': {
@@ -421,12 +423,14 @@ html: {
 
 Manipulate the response.
 
-Basic rule: replace **response body** with **the matcher** value 
+Basic rule: 
+
+Replace **response body** with **the matcher** value 
 ```js
 json: {'twitter.net': '{}'},
 ```
 
-`response` rule: manipulate **response** with return value of `response` *function*
+Manipulate **response** with `response` *function*
 ```js
 json: {
   'twitter.com/home': {
@@ -444,14 +448,16 @@ json: {
 
 Manipulate the response.
 
-Basic rule: replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
+Basic rule: 
+
+Replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
 ```js
 const style = 'body: {color: red}';
 ...
 css: {'twitter.net': style}, //or `=>${style}`
 ```
 
-`response` rule: manipulate **response** with return value of `response` *function*
+Manipulate **response** with `response` *function*
 ```js
 css: {
   'twitter.com/home': {
@@ -469,14 +475,16 @@ css: {
 
 Manipulate the response.
 
-Basic rule: replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
+Basic rule: 
+
+Replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
 ```js
 const code = 'alert(0);'
 ...
 js: {'twitter.net': code}, //or `=>${code}`
 ```
 
-`response` rule: manipulate **response** with return value of `response` *function*
+Manipulate **response** with ~~`response`~~ *function*
 ```js
 js: {
   'twitter.com/home': {
@@ -492,7 +500,7 @@ js: {
 <details><summary><b>Response</b></summary>
 <p>
 
-Manipulate Response with `response` function
+Manipulate **response** with `response` function
 ```js
 response: {
   '.+': {
@@ -572,18 +580,18 @@ when entering CLI commands, `mitm-play`  support two kind of arguments:
 <details><summary><b>Expand...</b></summary>
 <p>
 
-* `args`: is a word without `-` 
-  * first args for searching to url or urls key
-  * second args for loading saved profile
+* `args`: is a word argument without `-` 
+  * first word: searching in url/urls key
+  * second word: loading a saved profile
 * `options`: can be -`<char>` or --`<word>`
 ```bash
 # syntax
 mitm-play [args] [-options]
 
-# create profile of 'secure' using -s
+# create 'secure' profile using -s option
 mitm-play yahoo --lazy --incognito -s='secure'
 
-# retrive profile 'secure' and search for yahoo and add additional options: -k 
+# retrive 'secure' profile, search yahoo & add -k option 
 mitm-play yahoo secure -k
 
 ```
@@ -591,7 +599,6 @@ mitm-play yahoo secure -k
 </p>
 </details>
 
-.
 <details><summary><b>-h --help</b></summary>
 <p>
 To show all the options Command Line Interface (CLI). this option can be arbitrary position on cli, the result should be always display this messages:
