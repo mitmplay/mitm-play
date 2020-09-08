@@ -580,19 +580,19 @@ when entering CLI commands, `mitm-play`  support two kind of arguments:
 <details><summary><b>Expand...</b></summary>
 <p>
 
-* `args`: is a word argument without `-` 
-  * first word: searching in url/urls key
-  * second word: loading a saved profile
+* `args`: is a **word** without `-` 
+  * **1st** for searching url/urls
+  * **2nd** for loading profile
 * `options`: can be -`<char>` or --`<word>`
 ```bash
 # syntax
-mitm-play [args] [-options]
+$ mitm-play [args] [-options]
 
-# create 'secure' profile using -s option
-mitm-play yahoo --lazy --incognito -s='secure'
+# create 'secure' profile w/ -s option
+$ mitm-play yahoo --lazy --incognito -s='secure'
 
 # retrive 'secure' profile, search yahoo & add -k option 
-mitm-play yahoo secure -k
+$ mitm-play yahoo secure -k
 
 ```
 
