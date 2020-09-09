@@ -92,10 +92,10 @@ module.exports = () => {
           }  
         }
       }  
-      if (argv.urls.length===0) {
-        argv.urls = ['http://whatsmyuseragent.org/'];
-      } else {
+      if (_urls.length) {
         argv.urls = _urls;
+      } else {
+        argv.urls = ['http://whatsmyuseragent.org/'];
       }
     }
   }
