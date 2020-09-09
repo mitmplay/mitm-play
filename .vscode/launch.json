@@ -15,7 +15,8 @@
             "program": "${workspaceFolder}/mitm-play.js",
             "args": [
                 "cold",
-                // "-R=false"
+                // "-z=400"
+                // "-R=false",
                 // "-o='cache,skip'",
                 // "-dpsr='/home/wharsojo/Projects/userscript'",
                 // "--chromium='D:/Apps/chrome-gog/chrome.exe'"

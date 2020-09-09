@@ -30,7 +30,7 @@ npm install -g mitm-play
 <p>
 
 ```js
-// create new folder/file: google.com/index.js and add this content:
+// create new folder/file: google.com/index.js & add this content:
 const googlJS = function() {
   document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
   document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
@@ -45,16 +45,16 @@ const route = {
   html: {
     'www.google.com/search': {
       el: 'e_end', 
-      js: [googlJS, hello], //JS will be placed at end of html body
+      js: [googlJS, hello], //js will be placed at end of html body
     },
-  }, //all js from gstatic.com will be replace with an empty response
-  js: {'gstatic.com': ''} 
+  }, 
+  js: {'gstatic.com': ''} //js from gstatic.com will be an empty response
 }
 module.exports = route;
 ```
 
 ```bash
-# run the demo:
+# 1st run will be to save all cli option to 'default'
 mitm-play --url='google.com/search?q=covid-19' --delete --save --route='.'
 mitm-play -u='google.com/search?q=covid-19' --dsr='.'
 
@@ -74,17 +74,17 @@ mitm-play
 | `noproxy`   | ----------   | array ..of `[domain]` - will serve directly
 | `request`   | __request__  | modify request object - call to remote server
 | `mock`      | __response__ | modify response object - no call to remote server
-| `cache`     | __response__ | save first remote call to local - next, read from cache
-| `log`       | __response__ | save reqs/resp call to local - call to remote server
-|             | __response__ | modify response based on contentType - call remote server
+| `cache`     | __response__ | 1st call will save to local - next call, read from cache
+| `log`       | __response__ | save/log reqs/resp to local - call to remote server
+|             | __response__ | modify resp based on contentType - call remote server
 | =>>         | * `html`     | - response handler (replace / update + JS)
 | =>>         | * `json`     | - response handler (replace / update)
 | =>>         | * `css`      | - response handler (replace / update)
 | =>>         | * `js`       | - response handler (replace / update)
-| `response`  | __response__ | modify response object - call to remote server
+| `response`  | __response__ | modify resp object - call to remote server
 
 # Concept
-Mitm intercept is hierarchical checking routes. First check is try to `match` domain on the url, `if match` then next action is to `match` url regex expression on each **type/content-type** listed on the route and `if match` again, then it will execute the handler route event registered in the route.
+Mitm intercept is hierarchical checking routes. First check is try to `match` domain on the url as a namespace, `if match` then next action is to `match` url regex expression on each **type/content-type** listed on the route and `if match` again, then it will execute the handler event registered in the route.
 
 If the process of checking is not match, then it will fallback to `_global_` namespace to check, and the operation is the same as mention in first paragraph. 
 
@@ -614,6 +614,7 @@ $ mitm-play --help
     -u --url             go to specific url
     -s --save            save as default <profl>
     -r --route           userscript folder routes
+    -c --relaxcsp        relax CSP unblock websocket
     -d --delete          delete/clear cache & logs
     -p --pristine        pristine browser, default option
     -i --insecure        accept insecure cert in nodejs env
@@ -634,7 +635,7 @@ $ mitm-play --help
     -C --chromium        run chromium browser
     -F --firefox         run firefox browser
     -W --webkit          run webkit browser
-
+    
   v0.7.xx
 ```
 </p>
@@ -789,11 +790,14 @@ $ mitm-play --proxy
 <details><summary><b>-z --lazy</b></summary>
 <p>
 
-Delay click action ~400ms, to provide enough time for screenshot to be taken
+Delay click action ~700ms or you can provide value in milisecond, to provide enough time for screenshot to be taken
 
 ```
 $ mitm-play -z  <OR>
 $ mitm-play --lazy
+  <OR>
+$ mitm-play -z=400  <OR>
+$ mitm-play --lazy=400
 ```
 </p>
 </details><br/>
@@ -858,8 +862,8 @@ $ mitm-play --verbose
 When network on your having a proxypac settings, might be usefull to use the same. This option only in Chromium
 
 ```
-$ mitm-play -X  <OR>
-$ mitm-play --proxypac
+$ mitm-play -X='w3proxy.netscape.com:8080'  <OR>
+$ mitm-play --proxypac='w3proxy.netscape.com:8080'
 ```
 </p>
 </details><br/>

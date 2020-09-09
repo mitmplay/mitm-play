@@ -22,6 +22,7 @@ function screenshot(e) {
 
   const arr = document.body.querySelectorAll(selector);
   const fname = location.pathname.replace(/^\//,'').replace(/\//g,'-');
+  const delay = mitm.argv.lazy===true ? 700 : mitm.argv.lazy;
   for (let el of arr) {
     let node = e.target;
     while (el!==node && node!==document.body) {
@@ -42,7 +43,7 @@ function screenshot(e) {
           window.mitm.screenshot.node = undefined;
           act.click();
           act = undefined;
-        }, 700);
+        }, delay);
       }
       return;
     }
