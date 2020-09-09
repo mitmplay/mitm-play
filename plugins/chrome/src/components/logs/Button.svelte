@@ -3,6 +3,9 @@ import { logstore } from './stores.js';
 
 function btnClear(e) {
   ws__send('clearLogs', {browserName: 'chromium'}, data => {
+    // logs view will be close when .log_events.LogsTable
+    // logstore.set() to empty on Table.svelte 
+    window.mitm.client.clear = true;
     console.log('Done Clear!');
   });
 }

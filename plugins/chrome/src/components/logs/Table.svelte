@@ -28,6 +28,19 @@ onMount(async () => {
 
 const logHandler = obj => {
   console.log('ws__send(getLog)', obj);
+  if ( window.mitm.client.clear) {
+    delete window.mitm.client.clear;
+    logstore.set({
+      respHeader: {},
+      response: '',
+      headers: '',
+      logid: '',
+      title: '',
+      path: '',
+      url: '',
+      ext: '',
+    })
+  }
   if (window.mitm.files.log===undefined) {
     window.mitm.files.log = obj;
     data = obj;
