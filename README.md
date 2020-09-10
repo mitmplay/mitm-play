@@ -1036,10 +1036,13 @@ Goodluck!,
 >*-wh*.
 
 # Known Limitation
-Open Issue -  request interception for service workers - https://github.com/microsoft/playwright/issues/1090
+Open Issue:
+  
+* Support service workers [#1090](https://github.com/microsoft/playwright/issues/1090)
 
-Redirect will not be intercept - https://github.com/microsoft/playwright/pull/2617
-<details><summary><b>Turn on intercept redirection on Chromium</b></summary>
+* Redirect will not be intercept [#2617](https://github.com/microsoft/playwright/pull/2617)
+
+<details><summary><b>Enable intercept redirection on Chromium</b></summary>
 <p>
 
 tested on "playwright": "1.3.0", two places on playwright `code need to be commented`:
