@@ -73,7 +73,7 @@ module.exports = () => {
       for (let namespace in routes) {
         const {url, urls} = routes[namespace];
         for (key of argv0) {
-          const rgx = toRegex(key);
+          const rgx = toRegex(key, 'i');
           let urlsSet = false;
           // find on urls
           if (urls) {

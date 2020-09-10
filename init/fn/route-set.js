@@ -5,8 +5,8 @@ const logs = require('./logs');
 const typA = ['nosocket','skip','noproxy','proxy'];
 const typO = ['request','response','mock','cache','log','html','json','css','js'];
 
-function toRegex(str) {
-  return new RegExp(str.replace(/\./g, '\\.').replace(/\?/g, '\\?'));
+function toRegex(str, flags='') {
+  return new RegExp(str.replace(/\./g, '\\.').replace(/\?/g, '\\?'), flags);
 }
 
 function routeSet(r, namespace, print=false) {

@@ -14,7 +14,7 @@
             "cwd": "${workspaceFolder}/..",
             "program": "${workspaceFolder}/mitm-play.js",
             "args": [
-                "cold",
+                "meadow",
                 // "-z=400"
                 // "-R=false",
                 // "-o='cache,skip'",
