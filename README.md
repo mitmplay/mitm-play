@@ -1039,27 +1039,3 @@ Goodluck!,
 Open Issue:
   
 * Support service workers [#1090](https://github.com/microsoft/playwright/issues/1090)
-
-* Redirect will not be intercept [#2617](https://github.com/microsoft/playwright/pull/2617)
-
-<details><summary><b>Enable intercept redirection on Chromium</b></summary>
-<p>
-
-tested on "playwright": "1.3.0", two places on playwright `code need to be commented`:
-
-```js
-// playwright/lib/chromium/crNetworkManager.js - ln:197
-if (redirectedFrom) {
-  allowInterception = true; // ln:197
-  // We do not support intercepting redirects.
-  // if (requestPausedEvent)
-  //     this._client._sendMayFail('Fetch.continueRequest', { requestId: requestPausedEvent.requestId });
-}
-
-// playwright/lib/network.js - ln:75
-helper_1.assert(!url.startsWith('data:'), 'Data urls should not fire requests');
-// helper_1.assert(!(routeDelegate && redirectedFrom), 'Should not be able to intercept redirects'); // ln:197
-this._routeDelegate = routeDelegate;
-```
-</p>
-</details>

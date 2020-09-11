@@ -15,14 +15,14 @@ const {
 
 describe('fetch.js - extract', () => {
   test('return object keys without \'_\'', () => {
-    const _request = {
-      _url: 'http://google.com',
-      _methods: 'GET',
-      _headers: [{'content-type': 'text/css'}],
-      _postData: ''
+    const request = {
+      url:      () => 'http://google.com',
+      methods:  () => 'GET',
+      headers:  () => [{'content-type': 'text/css'}],
+      postData: () => null
     }
-    const route = {_request};
-    const result = extract({route, browserName: 'chromium'});
+    const route = {};
+    const result = extract({route, request, browserName: 'chromium'});
     expect(Object.keys(result).join(',')).toBe('url,method,headers,body,browserName')
   })
 })

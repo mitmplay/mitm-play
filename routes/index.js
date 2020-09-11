@@ -20,9 +20,9 @@ const _resp = {
   body: ''
 };
 
-module.exports =  ({route, browserName}) => {
+module.exports =  ({route, request, browserName}) => {
   const {routes, argv: {nosocket, proxy}} = global.mitm;
-  const reqs = extract({route, browserName});
+  const reqs = extract({route, request, browserName});
   const {url} = reqs;
   const {origin, pathname} = new URL(url);
   const {logs} = routes._global_.config;
