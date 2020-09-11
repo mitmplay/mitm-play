@@ -38,7 +38,8 @@ module.exports =  ({route, browserName}) => {
   const skip = _skipResponse(reqs, _3d);
   if (skip) {
     if (logs.skip) {
-      console.log(c.grey(`>> skip (${origin}${pathname}).match(${skip})`));
+      const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
+      console.log(c.grey(`>> skip (${origin}${msg}).match(${skip})`));
     }
     route.continue({});
     return;
@@ -83,13 +84,14 @@ module.exports =  ({route, browserName}) => {
         const msg = JSON.stringify({headers, method});
         console.log(c.redBright(`>> request (${msg})`));
       } else if (logs) {
+        const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
         if (_3d) {
           if (logs['no-namespace']) {
-            console.log(c.redBright(`>> no-namespace (${origin}${pathname})`));
+            console.log(c.redBright(`>> no-namespace (${origin}${msg})`));
           }
         } else {
-          if (logs['not-handle']) {
-            console.log(c.redBright(`>> not-handle (${origin}${pathname})`));
+          if (logs['browser-reqs']) {
+            console.log(c.redBright.italic(`>> browser-reqs (${origin}${msg})`));
           }
         }  
       }

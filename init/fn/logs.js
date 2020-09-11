@@ -1,9 +1,9 @@
 const logs = function(_silent=false) {
   return {
-    'no-namespace':  _silent ? false : true,
-    'ws-broadcast':  _silent ? false : true,
     'ws-receive':    _silent ? false : true,
-    'not-handle':    _silent ? false : true,
+    'ws-broadcast':  _silent ? false : true,
+    'no-namespace':  _silent ? false : true,
+    'browser-reqs':  _silent ? false : true,
     silent:  _silent ? false : false, //ok
     skip:    _silent ? false : false, //ok
     nosocket:_silent ? false : true, //ok

@@ -549,10 +549,10 @@ _global_ = {
 // toggle to show/hide from console.log()
 _global_.config = {
   logs: {
-    'no-namespace':  true,
-    'not-handle':    true,
-    'ws-receive':    true,
-    'ws-broadcast':  true,
+    'ws-receive':   true,
+    'no-namespace': true,
+    'ws-broadcast': true,
+    'browser-reqs': true,
     silent: false, //true: hide all
     skip:   false,
     nosocket:true,
