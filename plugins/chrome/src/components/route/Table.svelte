@@ -29,8 +29,13 @@ const routeHandler = obj => {
       newRoute[k] = route[k] ? route[k] : obj[k];
       newRoute[k].content = obj[k].content;
     }
-    window.mitm.files.route = newRoute
     data = newRoute;
+    window.mitm.files.route = newRoute
+  }
+  if (obj._tags_) {
+    window.mitm.__tag1 = obj._tags_.__tag1;
+    window.mitm.__tag2 = obj._tags_.__tag2;
+    window.mitm.__tag3 = obj._tags_.__tag3;
   }
   rerender++;
 }
