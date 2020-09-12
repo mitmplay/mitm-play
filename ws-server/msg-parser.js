@@ -7,8 +7,9 @@ const $getCache = require('./_getCache');
 const $getRoute = require('./_getRoute');
 const $openHome = require('./_openHome');
 const $codeHome = require('./_codeHome');
-const $openRoute = require('./_openRoute');
+const $saveTags = require('./_saveTags');
 const $saveRoute = require('./_saveRoute');
+const $openRoute = require('./_openRoute');
 const $screencap = require('./_screencap');
 const $clearLogs = require('./_clearLogs');
 const $setClient = require('./_setClient');
@@ -24,6 +25,7 @@ const wscmd = {
   $screencap,
   $saveRoute,
   $openRoute,
+  $saveTags,
   $openHome,
   $codeHome,
   $getRoute,
