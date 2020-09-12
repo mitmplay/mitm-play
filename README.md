@@ -335,6 +335,7 @@ cache: {
     session: true, // optional - set session id
     hidden: true, // optional - no consolo.log
     nolog: true, // optional - disable logging
+    tags: 'js-img' // enable/disable route by tags
     at: 'mycache', // 'mycache' part of cache filename
   }
 },
@@ -362,6 +363,7 @@ Special usacase like google-analytic will send contentType of `gif` with [GET] r
 log: {
   'amazon.com': {
     contentType: ['json'],
+    tags: 'json-bo' // enable/disable route by tags
     at: 'myjson', // 'myjson' part of log filename
   },
   'google-analytics.com/collect': {
@@ -390,7 +392,7 @@ Manipulate the response.
 
 Basic rule: 
 
-Replace **response body** with **the matcher** value 
+Replace **response body** with **some** value 
 ```js
 html: {'twitter.net': ''},
 ```
@@ -403,6 +405,7 @@ html: {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
+    tags: 'response' // enable/disable route by tags
     hidden: true, // optional - no consolo.log
   },
 },
@@ -425,7 +428,7 @@ Manipulate the response.
 
 Basic rule: 
 
-Replace **response body** with **the matcher** value 
+Replace **response body** with **some** value 
 ```js
 json: {'twitter.net': '{}'},
 ```
@@ -438,6 +441,7 @@ json: {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
+    tags: 'json-manipulate',
   },
 },
 ```
@@ -450,7 +454,7 @@ Manipulate the response.
 
 Basic rule: 
 
-Replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
+Replace **response body** with **some** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
 ```js
 const style = 'body: {color: red}';
 ...
@@ -465,6 +469,7 @@ css: {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
+    tags: 'css-manipulate',
   },
 },
 ```
@@ -477,7 +482,7 @@ Manipulate the response.
 
 Basic rule: 
 
-Replace **response body** with **the matcher** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
+Replace **response body** with **some** value -or- add to the end of response body by adding FAT arrow syntax `=>${style}`
 ```js
 const code = 'alert(0);'
 ...
@@ -492,6 +497,7 @@ js: {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
+    tags: 'js-manipulate',
   },
 },
 ```
@@ -507,7 +513,8 @@ response: {
     request({status, headers, body}) {
       headers['new-header'] = 'with some value';
       return {headers};
-    }
+    },
+    tags: 'all-response',
   }
 },
 ```
