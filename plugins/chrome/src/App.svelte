@@ -3,6 +3,7 @@
 <script>
 //https://c0bra.github.io/svelma/install
 import { Tabs, Tab, Button } from 'svelma';
+import TagsTable from './components/tags/Table.svelte';
 import LogsTable from './components/logs/Table.svelte';
 import RouteTable from './components/route/Table.svelte';
 import OtherTab from './components/other/Tab.svelte';
@@ -16,6 +17,7 @@ import Editor from './components/monaco/Editor.svelte';
 <Tabs style="is-boxed" size="is-small">
   <Tab label="Route"><RouteTable/></Tab>
   <Tab label="Logs"><LogsTable/></Tab>
+  <Tab label="Tags"><TagsTable/></Tab>
   <Tab label="Other"><OtherTab/></Tab>
   <!-- <Tab label="Monaco"><Editor/></Tab> -->
 </Tabs>

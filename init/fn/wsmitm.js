@@ -22,6 +22,7 @@ module.exports = function ({url}) {
       log_events: {},
       cache_events: {},
       route_events: {},
+      getRoute_events: {},
     },
     fn: {},
   };

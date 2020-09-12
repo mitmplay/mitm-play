@@ -37,6 +37,14 @@ const routeHandler = obj => {
     window.mitm.__tag2 = obj._tags_.__tag2;
     window.mitm.__tag3 = obj._tags_.__tag3;
   }
+  /**
+   * event handler after receiving ws packet
+   * ie: window.mitm.files.getRoute_events = {eventObject...}
+   */
+  const {getRoute_events} = window.mitm.files;
+  for (let key in getRoute_events) {
+    getRoute_events[key](data);
+  }
   rerender++;
 }
 
@@ -85,6 +93,7 @@ onMount(async () => {
 });
 
 window.mitm.files.route_events.routeTable = () => {
+  console.log('routeTable getting called!!!');
   window.ws__send('getRoute', '', routeHandler);
 }
 
