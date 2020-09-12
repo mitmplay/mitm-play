@@ -14,6 +14,7 @@ const _mockResponse  = require('./_mockResponse');
 const _addWebSocket  = require('./_addWebSocket');
 const _cacheResponse = require('./_cacheResponse');
 
+const noURL = /(brave|edge|chrome-extension):\/\//;
 const _resp = {
   status: 200,
   headers: {},
@@ -23,19 +24,17 @@ const _resp = {
 module.exports =  ({route, request, browserName}) => {
   const {routes, argv: {nosocket, proxy}} = global.mitm;
   const reqs = extract({route, request, browserName});
-  const {url} = reqs;
-  const {origin, pathname} = new URL(url);
   const {logs} = routes._global_.config;
-  const responseHandler = [];
 
   // catch unknown url scheme & respond it 
-  if (url.match('(brave|edge)://')) {
+  if (reqs.url.match(noURL)) {
     route.fulfill(_resp);
     return;
   }
 
   const _3d = _3rdparties(reqs);
   const skip = _skipResponse(reqs, _3d);
+  const {origin, pathname} = new URL(reqs.url);
   if (skip) {
     if (logs.skip) {
       const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
@@ -53,6 +52,7 @@ module.exports =  ({route, request, browserName}) => {
     reqs.proxy = proxy;
   }
 
+  const responseHandler = [];
   //--resp can be undefined or local cached & can skip logs (.nolog)
   let {match, resp} = _cacheResponse(reqs, responseHandler, _3d);
 
