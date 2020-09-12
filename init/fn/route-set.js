@@ -8,6 +8,7 @@ const typO = ['request','response','mock','cache','log','html','json','css','js'
 function toRegex(str, flags='') {
   return new RegExp(str.replace(/\./g, '\\.').replace(/\?/g, '\\?'), flags);
 }
+const fkeys = x=>x!=='tags' && x!=='contentType';
 
 function routeSet(r, namespace, print=false) {
   global.mitm.routes[namespace] = r;
@@ -60,6 +61,10 @@ function routeSet(r, namespace, print=false) {
               nss[typ] = {};
             }
             const nsstag = nss[typ];
+            const ctype = site.contentType ? `[${site.contentType.join(',')}]` : '';
+            const keys = Object.keys(site).filter(fkeys).join(',');
+            nss[`:${typ}`] = `${ctype}<${keys}>`;
+
             // urls[str]._namespace_ = regex;
             const arr = site.tags.split(/ +/);
             for (let key of arr) {

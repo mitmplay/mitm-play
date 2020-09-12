@@ -8,7 +8,7 @@ export let key;
 </script>
 
 <div class="border">
-  <div>ns:{key}</div>
+  <div class="space0">ns:{key}</div>
   {#each Object.keys(items) as item}
     <div class="space1">{item}</div>
     <Tags32 items={items[item]} key={item}/>
@@ -19,7 +19,13 @@ export let key;
 .border {
   border-style: dotted;
 }
+.space0 {
+  font-weight: bolder;
+  color: darkblue;
+}
 .space1 {
   padding-left: 10px;
+  font-weight: bolder;
+  color: blueviolet
 }
 </style>

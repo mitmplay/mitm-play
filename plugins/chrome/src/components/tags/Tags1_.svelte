@@ -43,13 +43,15 @@ function clicked(e) {
 <td>
   <div class="border">
     {#each Object.keys($tags.__tag1) as item}
-    <label>
-      <input type="checkbox"
-      data-item={item}
-      on:click={clicked} 
-      bind:checked={$tags.__tag1[item]}/>
-      {item}
-    </label>
+    <div>
+      <label>
+        <input type="checkbox"
+        data-item={item}
+        on:click={clicked} 
+        bind:checked={$tags.__tag1[item]}/>
+        {item}
+      </label>
+    </div>
     {/each}
   </div>
 </td>

@@ -33,9 +33,9 @@ function clicked(e) {
 </script>
 
 <div class="border">
-  <div>ns:{ns}</div>
+  <div class="space0">ns:{ns}</div>
   {#each Object.keys(items) as item}
-    <div class="space2">
+    <div class="space1">
       <label>
         <input type="checkbox"
         data-item={item}
@@ -51,7 +51,11 @@ function clicked(e) {
 .border {
   border-style: dotted;
 }
-.space2 {
+.space0 {
+  font-weight: bolder;
+  color: darkblue;
+}
+.space1 {
   padding-left: 10px;
 }
 </style>
