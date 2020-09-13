@@ -1,6 +1,19 @@
 const fs = require('fs-extra');
 const logs = require('./fn/logs');
 
+const hotKeys = obj => {
+  window.mitm.macrokeys = {
+    ...window.mitm.macrokeys,
+    ...obj,
+  };
+};
+
+const autoclick = () => {
+  setTimeout(() => {
+    document.querySelector('.btn-autofill').click();
+  }, 1000)
+};
+
 module.exports = () => {    
   const {argv, fn: {tldomain,nameSpace}} = global.mitm;
 
@@ -26,12 +39,8 @@ module.exports = () => {
           global = (fs.readFileSync(path)+'').replace(/\n/,'\n  ');
         }
         resp.body = `
-window.mitm.fn.hotKeys = obj => {
-  window.mitm.macrokeys = {
-    ...window.mitm.macrokeys,
-    ...obj,
-  };
-};
+window.mitm.fn.autoclick = ${autoclick+''};\n
+window.mitm.fn.hotKeys = ${hotKeys+''};\n
 window.mitm._macros_ = () => {
   window.mitm.macrokeys = {};
   ${global}
