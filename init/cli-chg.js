@@ -21,19 +21,19 @@ function obj(key,id) {
 }
 
 module.exports = () => {
-  let {argv} = global.mitm;
+  let {argv, path} = global.mitm;
   let [prm0, prm1] = argv._;
 
   argv.profile = false;
   let browser, saveArgs; 
 
   function loadProfile(profile) {
-    const path = `${global.mitm.home}/argv/${profile}.js`;
-    const exist = fs.existsSync(path);
+    const _prfl = `${path.home}/argv/${profile}.js`;
+    const exist = fs.existsSync(_prfl);
     if (!exist) {
       return false;
     }
-    saveArgs = JSON.parse(fs.readFileSync(path));
+    saveArgs = JSON.parse(fs.readFileSync(_prfl));
     console.log(c.green(`>> cmd: mitm-play ${saveArgs._args}`),`(${profile})`);
     // console.log(c.green(`>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
     return true;

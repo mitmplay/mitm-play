@@ -2,6 +2,7 @@ log
 *.tgz
 cache
 coverage
+.cjsescache
 chrome-profile
 
 # Dependency directories

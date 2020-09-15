@@ -22,7 +22,7 @@ function fileWithHash(file) {
 }
 
 function root(reqs, typ) {
-  const {home, argv: {group}} = global.mitm;
+  const {path: {home}, argv: {group}} = global.mitm;
   const {browserName} = reqs;
   let root ;
   if (group) {

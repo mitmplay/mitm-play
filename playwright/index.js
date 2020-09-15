@@ -1,3 +1,4 @@
+const _path = require('path');
 const c = require('ansi-colors');
 const playwright = require('playwright');
 const args = require('./chromium-args');
@@ -59,7 +60,7 @@ module.exports = () => {
       const playBrowser = playwright[browserName];
       if (argv.pristine) {
         // buggy route will not work :(
-        const bprofile = `${global.mitm.home}/.${browserName}`;
+        const bprofile = _path.join(global.mitm.path.home, `.${browserName}`);
         console.log('>> Browser profile', bprofile);
         browser = await playBrowser.launchPersistentContext(bprofile, options);
         page = await  browser.pages()[0];

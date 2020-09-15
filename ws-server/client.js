@@ -95,7 +95,7 @@ On browser console type "ws"`;
   let _stamp = [];
   const delayCapture = global._debounce(function(data) {
     const {namespace,host,fname, browser} = data;
-    const {home, session, routes, argv: {group}} = global.mitm;
+    const {session, routes, path: {home}, argv: {group}} = global.mitm;
     const stamp = _stamp[0];
     let at = 'sshot';
     _stamp = [];
@@ -129,7 +129,7 @@ On browser console type "ws"`;
   }
 
   function $csp_error({data}) {
-    const {home, session} = global.mitm;
+    const {path: {home}, session} = global.mitm;
     const {namespace,host,fname,cspviolation} = data;
     const body = JSON.stringify(cspviolation, null, 2);
     const stamp = (new Date).toISOString().replace(/[:-]/g, '');

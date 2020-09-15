@@ -40,7 +40,7 @@ function delLog(path) {
 }
 
 module.exports = () => {
-  const {home} = global.mitm;
+  const {home} = global.mitm.path;
   const glob = Object.keys(mitm.argv.browser).map(x=>`${home}/${x}/**/log/**`);
 
   // Initialize watcher.

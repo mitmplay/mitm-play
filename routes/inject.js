@@ -1,5 +1,12 @@
 function script_src(body, src) {
-  let el = src.map(el=>`<script nonce src="/mitm-play/${el}"></script>`).join('\n');
+  let el = src.map(el=>{
+    const arr = el.split(':');
+    if (arr.length>1 && arr[1]==='m') {
+      return `<script nonce src="/mitm-play/${arr[0]}" type="module"></script>`;
+    } else {
+      return `<script nonce src="/mitm-play/${arr[0]}"></script>`;
+    }
+  }).join('\n');
   let b = body+'';
   if (b.match(/<head>/i)) {
     b = b.replace(/<head>/i, `<head>\n${el}`);

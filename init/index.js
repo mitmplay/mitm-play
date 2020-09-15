@@ -1,3 +1,4 @@
+const _path = require('path');
 const c = require('ansi-colors');
 const yargs = require('yargs-parser');
 const initfn = require('./init-fn'); // must be first, init _debounce
@@ -12,7 +13,7 @@ const urouteWatch = require('./chokidar/uroute');
 let home;
 const {platform, env: {HOME, HOMEPATH}} = process;
 if (platform==='win32') {
-  home = HOMEPATH.replace(/\\/g, '/');
+  home = HOMEPATH;
   if (!home.match(/^[^:]:/)) {
     home = `${process.cwd().match(/^[^:]/)[0].toUpperCase()}:${home}`;
   }
@@ -30,13 +31,12 @@ global.mitm = {
   },
   win32: platform==='win32',
   path: {
-    userroute: './**/*.js',
     cwd: process.cwd(),
     app: global.__app,
+    home: _path.join(home, '.mitm-play'),
+    userroute: './**/*.js',
   },
-  home: `${home}/.mitm-play`,
   watcher: {},
-  port: 3000,
   files: {
     _cache: {},
     cache: [],

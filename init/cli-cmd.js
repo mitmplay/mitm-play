@@ -13,22 +13,23 @@ module.exports = () => {
     }
   } = global.mitm;
 
+  const {path} = global.mitm; 
   const dirhandler = (err) => {
     err && console.log(c.redBright('>> Error creating browser profile folder'), err)
   }
 
-  fs.ensureDir(global.mitm.home, err => {
+  fs.ensureDir(path.home, err => {
     if (err) {
       console.log(c.redBright('>> Error creating home folder'), err)
     } else {
-      fs.ensureDir(`${global.mitm.home}/.chromium`, dirhandler);
-      fs.ensureDir(`${global.mitm.home}/.firefox`, dirhandler);
-      fs.ensureDir(`${global.mitm.home}/.webkit`, dirhandler);    
+      fs.ensureDir(`${path.home}/.chromium`, dirhandler);
+      fs.ensureDir(`${path.home}/.firefox`, dirhandler);
+      fs.ensureDir(`${path.home}/.webkit`, dirhandler);    
     }
   });
   
   let {route} = argv;
-  const cwd = process.cwd();
+  const {cwd} = path;
   if (!route) {
     route = `${cwd}/user-route`;
   } else {
@@ -44,8 +45,8 @@ module.exports = () => {
   route = route.replace(/\\/g, '/');
   argv.route = route;
 
-  global.mitm.path.userroute = `${route}/**/index.js`;
-  const files = fg.sync([global.mitm.path.userroute]);
+  path.userroute = `${route}/**/index.js`;
+  const files = fg.sync([path.userroute]);
   if (!files.length) {
     console.log(c.red('Routes path is incorrect'), argv.route);
     console.log(c.yellow(`Please pass option: -r='...' / --route='your routing path'`))
@@ -107,7 +108,7 @@ module.exports = () => {
     const { save,...rest } = argv;
     let _args = (process.argv.slice(2).join(' ')+' ');
     _args = _args.replace(/\=([^ ]+)/g, (x, x1)=> `='${x1}'`);
-    const fpath = `${global.mitm.home}/argv/${save===true ? 'default' : save}.js`;
+    const fpath = `${path.home}/argv/${save===true ? 'default' : save}.js`;
     const body = JSON.stringify({_args,_argv: rest}, null, 2);
     fs.ensureFile(fpath, err => {
       if (err) {

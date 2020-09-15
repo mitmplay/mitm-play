@@ -1,6 +1,6 @@
-import nodeResolve from 'rollup-plugin-node-resolve'
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import commonjs from 'rollup-plugin-commonjs'
+import cjs from "rollup-plugin-cjs-es";
 const rewrite = require('./rewrite');
 
 export default {
@@ -13,7 +13,7 @@ export default {
   plugins: [
     nodeResolve(), 
     sourcemaps(),
-    commonjs(),
+    cjs({nested: true}),
     rewrite(),
   ]
 };

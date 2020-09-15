@@ -8,17 +8,18 @@ function ehandler(err) {
 }
 
 function clear(o) {
+  const {path} = global.mitm; 
   if (o) {
     const {browserName, delete: d} = o;
-    fs.remove(`${global.mitm.home}/${browserName}/${d}`,  ehandler);
+    fs.remove(`${path.home}/${browserName}/${d}`,  ehandler);
   } else {
     const {browser, delete: d} = global.mitm.argv;
     for (let browserName in browser) {
       if (d===true) {
-        fs.remove(`${global.mitm.home}/${browserName}/cache`, ehandler);
-        fs.remove(`${global.mitm.home}/${browserName}/log`,   ehandler);
+        fs.remove(`${path.home}/${browserName}/cache`, ehandler);
+        fs.remove(`${path.home}/${browserName}/log`,   ehandler);
       } else {
-        fs.remove(`${global.mitm.home}/${browserName}/${d}`,  ehandler);
+        fs.remove(`${path.home}/${browserName}/${d}`,  ehandler);
       }
     }  
   }
