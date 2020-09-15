@@ -23,9 +23,13 @@ const resort = global._debounce(function(fn) {
   global.mitm.routes = routes;
   let tag1 = {};
   for (let ns in global.mitm.__tag2) {
+    let tag2 = {};
+    for (let id in global.mitm.__tag2[ns]) {
+      tag2[id.split(':')[1] || id] = true;
+    }
     tag1 = {
       ...tag1,
-      ...global.mitm.__tag2[ns]
+      ...tag2,
     }
   }
   global.mitm.__tag1 = tag1;

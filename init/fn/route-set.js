@@ -8,6 +8,10 @@ const typO = ['request','response','mock','cache','log','html','json','css','js'
 function toRegex(str, flags='') {
   return new RegExp(str.replace(/\./g, '\\.').replace(/\?/g, '\\?'), flags);
 }
+function typX(r, typ) {
+  const result = Object.keys(r).filter(x=>x.startsWith(`${typ}:`));
+  return result.length ? result[0] : typ;
+}
 const fkeys = x=>x!=='tags' && x!=='contentType';
 
 function routeSet(r, namespace, print=false) {
@@ -45,6 +49,11 @@ function routeSet(r, namespace, print=false) {
   const tags = {};
   const urls = {};
   for (let typ of typO) {
+    const typ2 = typX(r, typ);
+    if (typ2!==typ) {
+      tags[typ2] = true;
+      typ = typ2;
+    }
     if (r[typ]) {
       router[typ] = {};
       for (let str in r[typ]) {
@@ -65,7 +74,9 @@ function routeSet(r, namespace, print=false) {
             const keys = Object.keys(site).filter(fkeys).join(',');
             nss[`:${typ}`] = `${ctype}<${keys}>`;
 
-            // urls[str]._namespace_ = regex;
+            if (site.tags.match(':')) {
+              throw 'char ":" cannot be included in tags!';
+            }
             const arr = site.tags.split(/ +/);
             for (let key of arr) {
               nsstag[key] = true;

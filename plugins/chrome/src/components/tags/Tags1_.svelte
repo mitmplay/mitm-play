@@ -11,7 +11,8 @@ function clicked(e) {
     for (let ns in __tag2) {
       const namespace = __tag2[ns];
       for (let itm in namespace) {
-        if (item===itm) {
+        const typ2 = itm.split(':')[1] || itm;
+        if (item===typ2) {
           namespace[itm] = flag;
         }
       }
