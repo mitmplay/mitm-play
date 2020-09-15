@@ -30,12 +30,20 @@ function clicked(e) {
     })
   }, 10);
 }
+
+function routetag(item) {
+  if (item.match(':')) {
+    return 'rtag';
+  } else {
+    return '';
+  }
+}
 </script>
 
 <div class="border">
   <div class="space0">ns:{ns}</div>
   {#each Object.keys(items) as item}
-    <div class="space1">
+    <div class="space1 {routetag(item)}">
       <label>
         <input type="checkbox"
         data-item={item}
@@ -57,5 +65,10 @@ function clicked(e) {
 }
 .space1 {
   padding-left: 10px;
+}
+.rtag {
+  color: cadetblue;
+  font-style: italic;
+  background-color: beige;
 }
 </style>
