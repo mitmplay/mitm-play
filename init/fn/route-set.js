@@ -8,10 +8,6 @@ const typO = ['request','response','mock','cache','log','html','json','css','js'
 function toRegex(str, flags='') {
   return new RegExp(str.replace(/\./g, '\\.').replace(/\?/g, '\\?'), flags);
 }
-function typX(r, typ) {
-  const result = Object.keys(r).filter(x=>x.startsWith(`${typ}:`));
-  return result.length ? result[0] : typ;
-}
 const fkeys = x=>x!=='tags' && x!=='contentType';
 
 function routeSet(r, namespace, print=false) {
@@ -48,56 +44,65 @@ function routeSet(r, namespace, print=false) {
   }
   const tags = {};
   const urls = {};
-  for (let typ of typO) {
-    const typ2 = typX(r, typ);
-    if (typ2!==typ) {
-      tags[typ2] = true;
-      typ = typ2;
-    }
-    if (r[typ]) {
-      router[typ] = {};
-      for (let str in r[typ]) {
-        const regex = toRegex(str);
-        router[typ][str] = regex;
-        const site = r[typ][str];
-        if (site) {
-          if (site.tags) {
-            if (urls[str]===undefined) {
-              urls[str] = {};
-            }
-            const nss = urls[str];
-            if (nss[typ]===undefined) {
-              nss[typ] = {};
-            }
-            const nsstag = nss[typ];
-            const ctype = site.contentType ? `[${site.contentType.join(',')}]` : '';
-            const keys = Object.keys(site).filter(fkeys).join(',');
-            nss[`:${typ}`] = `${ctype}<${keys}>`;
 
-            if (site.tags.match(':')) {
-              throw 'char ":" cannot be included in tags!';
-            }
-            const arr = site.tags.split(/ +/);
-            for (let key of arr) {
-              nsstag[key] = true;
-              tags[key] = true;
-            }
+  function addType(typ) {
+    router[typ] = {};
+    for (let str in r[typ]) {
+      const regex = toRegex(str);
+      router[typ][str] = regex;
+      const site = r[typ][str];
+      if (site) {
+        if (site.tags) {
+          if (urls[str]===undefined) {
+            urls[str] = {};
           }
-          if (site.contentType) {
-            const contentType = {};
-            for (let typ2 of site.contentType) {
-              if (contentType[typ2]) {
-                const ct = site.contentType.join("', '");
-                throw [
-                  `contentType should be unique:`,
-                  `${namespace}.${typ}['${str}'].contentType => ['${ct}']`];
-              }
-              contentType[typ2] = toRegex(typ2);
-            }
-            router[typ][`${str}~contentType`] = contentType;
+          const nss = urls[str];
+          if (nss[typ]===undefined) {
+            nss[typ] = {};
           }
-        } 
+          const nsstag = nss[typ];
+          const ctype = site.contentType ? `[${site.contentType.join(',')}]` : '';
+          const keys = Object.keys(site).filter(fkeys).join(',');
+          nss[`:${typ}`] = `${ctype}<${keys}>`;
+
+          if (site.tags.match(':')) {
+            throw 'char ":" cannot be included in tags!';
+          }
+          const arr = site.tags.split(/ +/);
+          for (let key of arr) {
+            nsstag[key] = true;
+            tags[key] = true;
+          }
+        }
+        if (site.contentType) {
+          const contentType = {};
+          for (let typ2 of site.contentType) {
+            if (contentType[typ2]) {
+              const ct = site.contentType.join("', '");
+              throw [
+                `contentType should be unique:`,
+                `${namespace}.${typ}['${str}'].contentType => ['${ct}']`];
+            }
+            contentType[typ2] = toRegex(typ2);
+          }
+          router[typ][`${str}~contentType`] = contentType;
+        }
+      } 
+    }  
+  }
+
+  for (let typs of typO) {
+    // if (namespace==='oldstorage.com.sg' && typs==='css') 
+    //   debugger;
+    const typlist = Object.keys(r).filter(x=>{
+      if (x.startsWith(`${typs}:`)) {
+        tags[x] = true;
+        return true;
       }
+    });
+    r[typs] && typlist.unshift(typs);
+    for (let typ of typlist) {
+      addType(typ);
     }
   }
   global.mitm.router[namespace] = router;

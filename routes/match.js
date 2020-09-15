@@ -21,7 +21,7 @@ const searchArr = ({typ, url}) => {
   };
 };
 
-const searchFN = (typ, {url}) => {
+const searchFN = (typs, {url}) => {
   const {router,routes} = global.mitm;
 
   return function search(nspace) {
@@ -30,34 +30,50 @@ const searchFN = (typ, {url}) => {
       return;
     }
 
-    const obj = router[namespace][typ];
-    const route = routes[namespace][typ];
     let workspace = routes[namespace].workspace;
     if (workspace) {
       workspace = home(workspace);
     }
 
-    for (let key in route) {
-      const arr = url.match(obj[key]);
+    // if (typs==='css')
+    //   debugger;
 
-      if (arr) {
-        const {host, origin, pathname, search} = new URL(url);
-        const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
-        const log = `>> ${typ} (${origin}${msg}).match(${key})`;
-        return {
-          contentType: obj[`${key}~contentType`],
-          route: route[key],
-          workspace,
-          namespace,
-          pathname,
-          search,
-          host,
-          url,
-          key,
-          arr,
-          log,
+    const list = [typs];
+    if (mitm.__tag2[namespace]) {
+      const arr = Object.keys(mitm.__tag2[namespace]);
+      for (let id of arr) {
+        if (id.startsWith(`${typs}:`)) {
+          list.push(id);
         }
-      }
+      }  
+    }
+
+    for (let typ of list) {
+      const obj = router[namespace][typ];
+      const route = routes[namespace][typ];
+  
+      for (let key in route) {
+        const arr = url.match(obj[key]);
+  
+        if (arr) {
+          const {host, origin, pathname, search} = new URL(url);
+          const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
+          const log = `>> ${typ} (${origin}${msg}).match(${key})`;
+          return {
+            contentType: obj[`${key}~contentType`],
+            route: route[key],
+            workspace,
+            namespace,
+            pathname,
+            search,
+            host,
+            url,
+            key,
+            arr,
+            log,
+          }
+        }
+      }  
     }
   };
 };
