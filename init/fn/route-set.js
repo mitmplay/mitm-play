@@ -31,10 +31,21 @@ function routeSet(r, namespace, print=false) {
     }
   }
   // Compile regex into router
+  const tags = {};
+  const urls = {};
   const router = {};
   router._namespace_ = toRegex(namespace.replace(/~/,'[^.]*'));
-  for (let typ of typA) {
-    if (r[typ]) {
+  for (let typs of typA) {
+    // if (namespace==='oldstorage.com.sg' && typs==='skip') 
+    //   debugger;
+    const typlist = Object.keys(r).filter(x=>{
+      if (x.startsWith(`${typs}:`)) {
+        tags[x] = true;
+        return true;
+      }
+    });
+    r[typs] && typlist.unshift(typs);
+    for (let typ of typlist) {
       router[typ] = {};
       for (let str of r[typ]) {
         const regex = toRegex(str);
@@ -42,8 +53,6 @@ function routeSet(r, namespace, print=false) {
       }
     }
   }
-  const tags = {};
-  const urls = {};
 
   function addType(typ) {
     router[typ] = {};

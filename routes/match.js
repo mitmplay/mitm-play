@@ -1,6 +1,24 @@
 const {fn: {home, nameSpace}} = global.mitm;
 
-const searchArr = ({typ, url}) => {
+function typTags(typs, namespace) {
+  // if (typs==='skip')
+  //   debugger;
+
+  const list = [typs];
+  if (mitm.__tag2[namespace]) {
+    const arr = Object.keys(mitm.__tag2[namespace]);
+    for (let id of arr) {
+      if (id.startsWith(`${typs}:`)) {
+        if (mitm.__tag2[namespace][id]) {
+          list.push(id);
+        }
+      }
+    }  
+  }
+  return list;
+}
+
+const searchArr = ({typ: typs, url}) => {
   const {router,routes} = global.mitm;
 
   return function(nspace) {
@@ -10,13 +28,16 @@ const searchArr = ({typ, url}) => {
     }
 
     if (routes[namespace]) {
-      let obj = router[namespace][typ];
-      let arr = routes[namespace][typ] || [];
-      for (let str of arr) {
-        if (obj && url.match(obj[str])) {
-          return str;
+      const list = typTags(typs, namespace);
+      for (let typ of list) {
+        let obj = router[namespace][typ];
+        let arr = routes[namespace][typ] || [];
+        for (let str of arr) {
+          if (obj && url.match(obj[str])) {
+            return str;
+          }
         }
-      }  
+      }
     }
   };
 };
@@ -35,20 +56,7 @@ const searchFN = (typs, {url}) => {
       workspace = home(workspace);
     }
 
-    // if (typs==='css')
-    //   debugger;
-
-    const list = [typs];
-    if (mitm.__tag2[namespace]) {
-      const arr = Object.keys(mitm.__tag2[namespace]);
-      for (let id of arr) {
-        if (id.startsWith(`${typs}:`)) {
-          if (mitm.__tag2[namespace][id]) {
-            list.push(id);
-          }
-        }
-      }  
-    }
+    const list = typTags(typs, namespace);
 
     for (let typ of list) {
       const obj = router[namespace][typ];
