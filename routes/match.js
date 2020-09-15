@@ -43,7 +43,9 @@ const searchFN = (typs, {url}) => {
       const arr = Object.keys(mitm.__tag2[namespace]);
       for (let id of arr) {
         if (id.startsWith(`${typs}:`)) {
-          list.push(id);
+          if (mitm.__tag2[namespace][id]) {
+            list.push(id);
+          }
         }
       }  
     }

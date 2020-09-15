@@ -23,13 +23,28 @@ const resort = global._debounce(function(fn) {
   global.mitm.routes = routes;
   let tag1 = {};
   for (let ns in global.mitm.__tag2) {
-    let tag2 = {};
-    for (let id in global.mitm.__tag2[ns]) {
-      tag2[id.split(':')[1] || id] = true;
+    // if (ns==='oldstorage.com.sg') 
+    //   debugger;
+    let tagX = {};
+    const flag = !mitm.routes[ns].tags;
+    const tag2 = global.mitm.__tag2[ns];
+    for (let id in tag2) {
+      const mainTag = id.split(':');
+      tagX[mainTag[1] || id] = flag;
+      tag2[id] = flag;
+      if (!flag) {
+        // can be improve!!!
+        for (let d of mitm.routes[ns].tags) {
+          if (id===d || mainTag[1]===d) {
+            tag2[id] = true;
+            tagX[d] = true;
+          }
+        }
+      }
     }
     tag1 = {
       ...tag1,
-      ...tag2,
+      ...tagX,
     }
   }
   global.mitm.__tag1 = tag1;
