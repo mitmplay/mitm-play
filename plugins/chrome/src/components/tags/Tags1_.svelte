@@ -39,12 +39,16 @@ function clicked(e) {
     })
   }, 10);
 }
+
+function routetag(item) {
+  return $tags.__tag1[item] ? 'rtag slc' : 'rtag';
+}
 </script>
 
 <td>
   <div class="border">
     {#each Object.keys($tags.__tag1) as item}
-    <div>
+    <div class="space0 {routetag(item)}">
       <label>
         <input type="checkbox"
         data-item={item}
@@ -60,5 +64,20 @@ function clicked(e) {
 <style>
 .border {
   border-style: dotted;
+}
+.space0 {
+  font-size: medium;
+  font-weight: bolder;
+  color: darkblue;
+  /* background: deepskyblue; */
+}
+.rtag {
+  color: grey;
+  font-style: italic;
+  /* background-color: beige; */
+}
+.rtag.slc {
+  color: green;
+  font-weight: bolder;
 }
 </style>

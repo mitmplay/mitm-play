@@ -16,7 +16,7 @@ export let key;
 
 <style>
 .border {
-  border-style: dotted;
+  border-style: solid;
 }
 .space0 {
   font-size: medium;

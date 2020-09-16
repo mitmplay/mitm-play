@@ -35,7 +35,7 @@ function routetag(item) {
   if (item.match(':')) {
     return items[item] ? 'rtag slc' : 'rtag';
   } else {
-    return '';
+    return items[item] ? 'stag slc' : '';
   }
 }
 </script>
@@ -57,7 +57,7 @@ function routetag(item) {
 
 <style>
 .border {
-  border-style: dotted;
+  border-style: solid;
 }
 .space0 {
   font-size: medium;
@@ -66,15 +66,21 @@ function routetag(item) {
   background: deepskyblue;
 }
 .space1 {
+  color: grey;
   padding-left: 10px;
 }
 .rtag {
   color: cadetblue;
+  font-size: medium;
   font-style: italic;
   background-color: beige;
 }
 .rtag.slc {
   color: red;
+  font-weight: bolder;
+}
+.stag.slc {
+  color: green;
   font-weight: bolder;
 }
 </style>

@@ -34,6 +34,7 @@ function routetag(item) {
 
 .rtag {
   color: cadetblue;
+  font-size: medium;
   font-style: italic;
   background-color: beige;
 }
