@@ -90,4 +90,5 @@ ${body}`;
   };
   global.mitm.__tag2 = {};
   global.mitm.__tag3 = {};
+  global.mitm.__tag4 = {};
 };

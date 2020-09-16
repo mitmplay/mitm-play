@@ -1,21 +1,8 @@
 const {fn: {home, nameSpace}} = global.mitm;
 
 function typTags(typs, namespace) {
-  // if (typs==='skip')
-  //   debugger;
-
-  const list = [typs];
-  if (mitm.__tag2[namespace]) {
-    const arr = Object.keys(mitm.__tag2[namespace]);
-    for (let id of arr) {
-      if (id.startsWith(`${typs}:`)) {
-        if (mitm.__tag2[namespace][id]) {
-          list.push(id);
-        }
-      }
-    }  
-  }
-  return list;
+  const tags = mitm.__tag4[namespace][typs] || [];
+  return [].concat(typs, tags);
 }
 
 const searchArr = ({typ: typs, url}) => {
