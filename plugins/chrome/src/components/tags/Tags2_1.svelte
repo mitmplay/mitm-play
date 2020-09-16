@@ -33,7 +33,7 @@ function clicked(e) {
 
 function routetag(item) {
   if (item.match(':')) {
-    return 'rtag';
+    return items[item] ? 'rtag slc' : 'rtag';
   } else {
     return '';
   }
@@ -41,7 +41,7 @@ function routetag(item) {
 </script>
 
 <div class="border">
-  <div class="space0">ns:{ns}</div>
+  <div class="space0">[{ns}]</div>
   {#each Object.keys(items) as item}
     <div class="space1 {routetag(item)}">
       <label>
@@ -60,8 +60,10 @@ function routetag(item) {
   border-style: dotted;
 }
 .space0 {
+  font-size: medium;
   font-weight: bolder;
   color: darkblue;
+  background: deepskyblue;
 }
 .space1 {
   padding-left: 10px;
@@ -70,5 +72,9 @@ function routetag(item) {
   color: cadetblue;
   font-style: italic;
   background-color: beige;
+}
+.rtag.slc {
+  color: red;
+  font-weight: bolder;
 }
 </style>

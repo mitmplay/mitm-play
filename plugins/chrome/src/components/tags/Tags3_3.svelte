@@ -9,10 +9,14 @@ function clicked(e) {
     console.log('e', items[item]);
   }, 50);
 }
+
+function routetag(item) {
+  return items[item] ? 'rtag slc' : 'rtag';
+}
 </script>
 
 {#each Object.keys(items) as item}
-  <div class="space3">
+  <div class="space3 {routetag(item)}">
     <label>
       <input type="checkbox"
       data-item={item}
@@ -26,5 +30,15 @@ function clicked(e) {
 <style>
 .space3 {
   padding-left: 30px;
+}
+
+.rtag {
+  color: cadetblue;
+  font-style: italic;
+  background-color: beige;
+}
+.rtag.slc {
+  color: red;
+  font-weight: bolder;
 }
 </style>
