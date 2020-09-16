@@ -31,7 +31,7 @@ window.mitm.files.getRoute_events.tagsTable = () => {
   <BStatic>
     <BHeader>-Tags-</BHeader>
     <BTable>
-      <tr>
+      <tr class="set-tags">
         <Tags1/>
         <Tags2/>
         <Tags3/>
