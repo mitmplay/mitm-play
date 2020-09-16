@@ -4,7 +4,6 @@ import Tags32 from './Tags3_2.svelte';
 
 export let items;
 export let key;
-
 </script>
 
 <div class="border">
