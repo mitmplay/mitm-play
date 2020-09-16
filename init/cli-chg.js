@@ -93,15 +93,12 @@ module.exports = () => {
   obj('browser','firefox');
   obj('browser','webkit');
 
-  if (argv.browser===undefined) {
-    argv = {
-      ...argv,
-      browser,
-    }
+  if (Object.keys(browser).length===0) {
+    browser.chromium = true;
   }
 
-  if (Object.keys(argv.browser).length===0) {
-    argv.browser.chromium = true;
+  if (argv.browser===undefined || Object.keys(argv.browser).length===0) {
+    argv.browser = {...browser};
   }
 
   let {ommitlog} = argv;
