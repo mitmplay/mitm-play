@@ -1,8 +1,15 @@
 const {fn: {home, nameSpace}} = global.mitm;
 
 function typTags(typs, namespace) {
-  const tags = mitm.__tag4[namespace][typs] || [];
-  return [].concat(typs, tags);
+  const tag2 = mitm.__tag2[namespace];
+  const tag4 = mitm.__tag4[namespace];
+  const tags = [typs];
+  if (tag4 && tag4[typs]) {
+    for (let id of tag4[typs]) {
+      tag2[id] && tags.push(id);
+    }
+  }
+  return tags;
 }
 
 const searchArr = ({typ: typs, url}) => {
