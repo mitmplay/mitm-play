@@ -13,9 +13,10 @@ function chgUrl(url) {
     return;
   }
   console.log('Chg url:', url);
-  window.mitm.browser.activeUrl = url;
-  for (let event in window.mitm.chgUrl_events) {
-    event();
+  const {browser} = window.mitm;
+  browser.activeUrl = url;
+  for (let e in browser.chgUrl_events) {
+    browser.chgUrl_events[e]();
   }
 }
 

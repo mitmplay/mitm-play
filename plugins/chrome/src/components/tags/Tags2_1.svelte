@@ -23,7 +23,9 @@ function clicked(e) {
         }
       }
     }
+    const {filterUrl} = $tags;
     tags.set({
+      filterUrl,
       __tag1,
       __tag2,
       __tag3,

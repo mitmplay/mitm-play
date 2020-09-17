@@ -32,7 +32,9 @@ function clicked(e) {
         }
       }
     }
+    const {filterUrl} = $tags;
     tags.set({
+      filterUrl,
       __tag1,
       __tag2,
       __tag3,
@@ -43,11 +45,29 @@ function clicked(e) {
 function routetag(item) {
   return $tags.__tag1[item] ? 'rtag slc' : 'rtag';
 }
+
+function listTags(tags) {
+  if (tags.filterUrl) {
+    const list = [];
+    for (let ns in tags.__tag2) {
+      if (mitm.browser.activeUrl.match(ns)) {
+        for (let id in tags.__tag2[ns]) {
+          const [k,v] = id.split(':');
+          list.push(v||k);
+        }
+        return list;
+      }
+    }
+    return list;
+  } else {
+    return Object.keys(tags.__tag1);
+  }
+}
 </script>
 
 <td>
   <div class="border">
-    {#each Object.keys($tags.__tag1) as item}
+    {#each listTags($tags) as item}
     <div class="space0 {routetag(item)}">
       <label>
         <input type="checkbox"

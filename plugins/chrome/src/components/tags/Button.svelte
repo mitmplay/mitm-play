@@ -1,7 +1,7 @@
 <script>
 import { onMount } from 'svelte';
 import { tags } from './stores.js';
-let autoclick = true;
+let autoSave = true;
 
 function btnReset(e) {
   window.mitm.files.route_events.routeTable();
@@ -21,7 +21,7 @@ onMount(() => {
   let debounce = false;
   document.querySelector('.set-tags').onclick = function(e) {
     const {value} = e.target.attributes.type;
-    if (autoclick && value==='checkbox') {
+    if (autoSave && value==='checkbox') {
       if (debounce) {
         clearTimeout(debounce);
       }
@@ -31,16 +31,26 @@ onMount(() => {
       },50)
     }
     console.log('clicked', e.target);
+  };
+
+  window.mitm.browser.chgUrl_events.tagsEvent = function() {
+    console.log('Update tags!');
+    tags.set({...$tags});
   }
 });
 </script>
 
 <div class="btn-container">
-  <button class="tlb btn-go" on:click="{btnReset}" disabled={autoclick}>Reset</button>
-  <button class="tlb btn-go" on:click="{btnSave}"  disabled={autoclick}>Save</button>
   <label class="checker">
     <input type="checkbox"
-    bind:checked={autoclick}/>
+    bind:checked={$tags.filterUrl}/>
+    Activeurl
+  </label>
+  <button class="tlb btn-go" on:click="{btnReset}" disabled={autoSave}>Reset</button>
+  <button class="tlb btn-go" on:click="{btnSave}"  disabled={autoSave}>Save</button>
+  <label class="checker">
+    <input type="checkbox"
+    bind:checked={autoSave}/>
     Autosave
   </label>
   .
