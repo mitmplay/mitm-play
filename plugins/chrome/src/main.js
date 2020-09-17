@@ -1,8 +1,72 @@
 import App from './App.svelte';
 
-const app = new App({
-	target: document.body,
+console.log('Load MITM plugin');
+
+window.mitm.browser = { 
+  chgUrl_events: {},
+  activeUrl: '',
+  page: {},
+}
+
+function chgUrl(url) {
+  if (!url) {
+    return;
+  }
+  console.log('Chg url:', url);
+  window.mitm.browser.activeUrl = url;
+  for (let event in window.mitm.chgUrl_events) {
+    event();
+  }
+}
+
+function getUrl() {
+  chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT},
+    function(tabs){
+      const url = tabs[0].url;
+      chgUrl(url);
+    }
+  );
+};
+
+console.log('Init event tabs');
+let debounce;
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  if (!tab.active) {
+    return;
+  }
+
+  const {browser} = window.mitm;
+  browser.page = {
+    ...browser.page,
+    ...changeInfo,
+    ...tab,
+  }
+
+  if (changeInfo.status === 'loading') {
+    browser.page.title = '';
+  } else if (browser.page.status === 'complete' && browser.page.title) {
+    if (debounce) {
+      clearTimeout(debounce);
+      debounce = undefined;
+    }
+    debounce = setTimeout(() => {
+      // console.log('Tab Update!!!', tab.url);
+      debounce = undefined;
+      chgUrl(tab.url);  
+    }, 1000);
+  }
 });
+
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+  // console.log('Tab Change!!!', activeInfo);
+  getUrl();
+});
+
+const app = new App({target: document.body});
+console.log('Start plugin');
+getUrl();
+
+export default app;
 
 // let inprocess = false;
 // const replay = ()=>{
@@ -23,23 +87,8 @@ const app = new App({
 //   }
 // }
 // window.addEventListener("resize", reportWindowSize);
+// window.addEventListener('message', event => {
+//   console.log({event});
+// });
 
-window.mitm.macro = {page:{}} 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  const {macro: m} = window.mitm;
-  m.page = {
-    ...m.page,
-    ...changeInfo,
-  }
-  if (changeInfo.status === 'loading') {
-    m.page.title = '';
-  } else if (m.page.status === 'complete' && m.page.title) {
-    console.log(m.page);
-  }
-});
 
-window.addEventListener('message', event => {
-  console.log({event});
-})
-
-export default app;
