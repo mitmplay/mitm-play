@@ -19,6 +19,13 @@ $: _data = data;
 
 const routeHandler = obj => {
   console.log('ws__send(getRoute)', obj);
+  if (obj._tags_) {
+    window.mitm.__tag1 = obj._tags_.__tag1;
+    window.mitm.__tag2 = obj._tags_.__tag2;
+    window.mitm.__tag3 = obj._tags_.__tag3;
+    window.mitm.__tag4 = obj._tags_.__tag4;
+    delete obj._tags_;
+  }
   if (window.mitm.files.route===undefined) {
     window.mitm.files.route = obj;
     data = obj;
@@ -31,11 +38,6 @@ const routeHandler = obj => {
     }
     data = newRoute;
     window.mitm.files.route = newRoute
-  }
-  if (obj._tags_) {
-    window.mitm.__tag1 = obj._tags_.__tag1;
-    window.mitm.__tag2 = obj._tags_.__tag2;
-    window.mitm.__tag3 = obj._tags_.__tag3;
   }
   /**
    * event handler after receiving ws packet

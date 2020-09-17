@@ -3,11 +3,13 @@ module.exports = () =>{
     __tag1,
     __tag2,
     __tag3,
+    __tag4,
   } = global.mitm; 
   let data = {_tags_: {
     __tag1,
     __tag2,
     __tag3,
+    __tag4,
   }};
   for (let domain in global.mitm.routes) {
     const title = domain;
