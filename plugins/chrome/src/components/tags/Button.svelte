@@ -41,7 +41,7 @@ onMount(() => {
   <label class="checker">
     <input type="checkbox"
     bind:checked={autoclick}/>
-    Autoclick
+    Autosave
   </label>
   .
 </div>
@@ -65,5 +65,9 @@ onMount(() => {
 }
 .tlb {
   border: none;
+}
+.checker {
+  color: chocolate;
+  font-weight: 600;
 }
 </style>
