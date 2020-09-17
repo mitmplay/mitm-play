@@ -4,7 +4,7 @@ import Tags21 from './Tags2_1.svelte';
 
 function oneSite(ns) {
   if ($tags.filterUrl) {
-    return mitm.browser.activeUrl.match(ns);
+    return mitm.browser.activeUrl.match(ns) || ns==='_global_';
   } else {
     return true;
   }

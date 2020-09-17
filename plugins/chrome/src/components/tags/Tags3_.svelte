@@ -6,7 +6,7 @@ function istag(ns) {
   const arr = Object.keys($tags.__tag2[ns]);
   const ok = arr.filter(x=>!x.match(':')).length;
   if ($tags.filterUrl) {
-    return mitm.browser.activeUrl.match(ns) && ok;
+    return ok && mitm.browser.activeUrl.match(ns) || ns==='_global_';
   } else {
     return ok;
   }

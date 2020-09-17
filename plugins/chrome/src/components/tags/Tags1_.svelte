@@ -47,20 +47,24 @@ function routetag(item) {
 }
 
 function listTags(tags) {
+  const list = [];
+  function add(ns) {
+    for (let id in tags.__tag2[ns]) {
+      const [k,v] = id.split(':');
+      list.push(v||k);
+    }
+  }
   if (tags.filterUrl) {
-    const list = [];
     for (let ns in tags.__tag2) {
       if (mitm.browser.activeUrl.match(ns)) {
-        for (let id in tags.__tag2[ns]) {
-          const [k,v] = id.split(':');
-          list.push(v||k);
-        }
-        return list;
+        add(ns);
+        add('_global_');
+        return list.sort();
       }
     }
     return list;
   } else {
-    return Object.keys(tags.__tag1);
+    return Object.keys(tags.__tag1).sort();
   }
 }
 </script>
