@@ -33,7 +33,6 @@ function routeSet(r, namespace, print=false) {
   // Compile regex into router
   const tags = {};
   const urls = {};
-  const typx = {};
   const router = {};
   router._namespace_ = toRegex(namespace.replace(/~/,'[^.]*'));
   for (let typs of typA) {
@@ -41,11 +40,6 @@ function routeSet(r, namespace, print=false) {
     //   debugger;
     const typlist = Object.keys(r).filter(x=>{
       if (x.startsWith(`${typs}:`)) {
-        let [k, v] = x.split(':');
-        if (!typx[k]) {
-          typx[k] = [];
-        }
-        typx[k].push(x);
         tags[x] = true;
         return true;
       }
@@ -111,11 +105,6 @@ function routeSet(r, namespace, print=false) {
     //   debugger;
     const typlist = Object.keys(r).filter(x=>{
       if (x.startsWith(`${typs}:`)) {
-        let [k, v] = x.split(':');
-        if (!typx[k]) {
-          typx[k] = [];
-        }
-        typx[k].push(x);
         tags[x] = true;
         return true;
       }
@@ -129,16 +118,12 @@ function routeSet(r, namespace, print=false) {
   if (Object.keys(tags).length) {
     global.mitm.__tag2[namespace] = tags;
     global.mitm.__tag3[namespace] = urls;
-    global.mitm.__tag4[namespace] = typx;
   } else {
     if (global.mitm.__tag2[namespace]) {
       delete global.mitm.__tag2[namespace];
     }
     if (global.mitm.__tag3[namespace]) {
       delete global.mitm.__tag3[namespace];
-    }
-    if (global.mitm.__tag4[namespace]) {
-      delete global.mitm.__tag4[namespace];
     }
   }
   if (!global.mitm.data.nolog && global.mitm.argv.verbose) {

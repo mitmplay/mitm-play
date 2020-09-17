@@ -18,6 +18,7 @@ const session = require('./fn/session');
 const wsmitm = require('./fn/wsmitm');
 const loadJS = require('./fn/loadJS');
 const clear = require('./fn/clear');
+const tag4 = require('./fn/tag4');
 
 module.exports = () => {
   global.mitm.fn = {
@@ -38,6 +39,7 @@ module.exports = () => {
     clear,
     hello,
     tilde,
+    tag4,
     home,
     mock,
     resp,

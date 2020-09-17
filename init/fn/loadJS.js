@@ -49,6 +49,7 @@ const resort = global._debounce(function(fn) {
   }
   global.mitm.__tag1 = tag1;
   global.mitm.fn.clear();
+  global.mitm.fn.tag4();
   fn && fn();
 }, 900, 'clear');
 

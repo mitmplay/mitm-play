@@ -42,7 +42,6 @@ function cacheResponse(reqs, responseHandler, _3d) {
     const {url} = reqs;
     const {route} = match;
     const {response, session, hidden} = route;
-    const {host, origin, pathname} = new URL(url);
 
     let {fpath1, fpath2} = fpathcache({match, reqs}); 
     let remote = true;
@@ -59,7 +58,7 @@ function cacheResponse(reqs, responseHandler, _3d) {
         }
         if (session) {
           const path = session===true ? '' : session;
-          global.mitm.fn.session(host, path);
+          global.mitm.fn.session(match.host, path);
           global.mitm._session_ = true;
         }
         if (setCookie && global.mitm.argv.cookie) {
@@ -68,8 +67,7 @@ function cacheResponse(reqs, responseHandler, _3d) {
         fpath1 = `${fpath1}.${_ext({headers})}`;
         if (logs.cache) {
           if (!global.mitm.argv.ommit.cache && !hidden) {
-            const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
-            console.log(c.greenBright(`>> cache (${origin}${msg}).match(${match.key})`));
+            console.log(c.greenBright(match.log));
           }  
         }
         const body = fs.readFileSync(fpath1);
@@ -90,14 +88,13 @@ function cacheResponse(reqs, responseHandler, _3d) {
         if (ctype(match, resp)) {
           if (session) {
             const path = session===true ? '' : session;
-            global.mitm.fn.session(host, path);
+            global.mitm.fn.session(match.host, path);
             global.mitm._session_ = true;
           }
           fpath1 = `${fpath1}.${_ext(resp)}`;
           if (logs.cache) {
             if (hidden!==2) {
-              const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
-              console.log(c.magentaBright(`>> cache (${origin}${msg}).match(${match.key})`));
+              console.log(c.magentaBright(match.log));
             }
           }
           const meta = metaResp({reqs, resp});
