@@ -9,7 +9,10 @@ onMount(() => {
     const nodes = document.querySelectorAll('.tab-view a');
     for (let [i,node] of nodes.entries()) {
       node.onclick = function(e) {
-        tabstore.set({tab: i});
+        tabstore.set({
+          ...$tabstore,
+          tab: i,
+        });
       }
     }
   }, 500);

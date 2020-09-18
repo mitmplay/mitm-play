@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import { Tabs, Tab } from 'svelma';
 import { tabstore } from './tab.js';
+import Button2 from './Button2.svelte';
 import BaseTab from './BaseTab.svelte';
 
 onMount(() => {
@@ -9,13 +10,17 @@ onMount(() => {
     const nodes = document.querySelectorAll('.tab-html a');
     for (let [i,node] of nodes.entries()) {
       node.onclick = function(e) {
-        tabstore.set({tab: i});
+        tabstore.set({
+          ...$tabstore,
+          tab: i,
+        });
       }
     }
   }, 500);
 });
 </script>
 
+<Button2/>
 <Tabs value={$tabstore.tab} style="is-boxed tab-html" size="is-small">
   <BaseTab/>
 </Tabs>

@@ -1,6 +1,7 @@
 <script>
 import { onMount } from 'svelte';
 import { logstore } from './stores.js';
+import { tabstore } from './tab.js';
 import { Tab } from 'svelma';
 
 const minimap = {enabled: false};
@@ -11,10 +12,18 @@ const option = {
   minimap,
 }
 
+let element1;
+let element2;
+let element3;
+
+let editor1;
+let editor2;
+let editor3;
+
 onMount(async () => {
   console.log($logstore)
-  const element1 = window.document.getElementById('monaco1');
-  const editor1 =  window.monaco.editor.create(element1, {
+  element1 = window.document.getElementById('monaco1');
+  editor1 =  window.monaco.editor.create(element1, {
     value: $logstore.headers,
     language: 'json',
     ...option,
@@ -26,8 +35,8 @@ onMount(async () => {
   });
   ro1.observe(element1);
 
-  const element2 = window.document.getElementById('monaco2');
-  const editor2 =  window.monaco.editor.create(element2, {
+  element2 = window.document.getElementById('monaco2');
+  editor2 =  window.monaco.editor.create(element2, {
     value: $logstore.response,
     language: $logstore.ext,
     ...option,
@@ -41,8 +50,8 @@ onMount(async () => {
 
   const obj = JSON.parse($logstore.headers);
   if (obj.CSP) {
-    const element3 = window.document.getElementById('monaco3');
-    const editor3 =  window.monaco.editor.create(element3, {
+    element3 = window.document.getElementById('monaco3');
+    editor3 =  window.monaco.editor.create(element3, {
       value: JSON.stringify(obj.CSP, null, 2),
       language: 'json',
       ...option,
@@ -54,6 +63,15 @@ onMount(async () => {
     });
     ro3.observe(element3);
   }
+  const editor = {
+    editor1: editor1,
+    editor2: editor2,
+    editor3: editor3,
+  }
+  tabstore.set({
+    ...$tabstore,
+    editor,
+  })
 });
 function isCSP() {
   const h = $logstore.respHeader;
