@@ -47,12 +47,12 @@ function routetag(item) {
 }
 
 function listTags(tags) {
-  const {toRegex} = window.mitm.fn; 
-  const list = [];
+  const {toRegex} = window.mitm.fn;
+  const list = {};
   function add(ns) {
     for (let id in tags.__tag2[ns]) {
       const [k,v] = id.split(':');
-      list.push(v||k);
+      list[v||k] = true;
     }
   }
   if (tags.filterUrl) {
@@ -61,10 +61,10 @@ function listTags(tags) {
       if (mitm.browser.activeUrl.match(rgx)) {
         add(ns);
         add('_global_');
-        return list.sort();
+        return Object.keys(list).sort();
       }
     }
-    return list;
+    return [];
   } else {
     return Object.keys(tags.__tag1);
   }
