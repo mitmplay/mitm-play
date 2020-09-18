@@ -9,6 +9,18 @@ const load = function(path) {
   return require(path);
 }
 
+function sort(obj) {
+  const _g = obj._global_;
+  delete obj._global_;
+  const newobj = {};
+  const keys = Object.keys(obj).sort();
+  for (let id of keys) {
+    newobj[id] = obj[id];
+  }
+  _g && (newobj._global_ = _g);
+  return newobj;
+}
+
 const resort = global._debounce(function(fn) {
   let keys = Object.keys(global.mitm.routes);
   keys = keys.sort(function(a, b) {
@@ -21,6 +33,8 @@ const resort = global._debounce(function(fn) {
   }
   console.log(c.red('(*reset routes*)'));
   global.mitm.routes = routes;
+  global.mitm.__tag2 = sort(global.mitm.__tag2);
+  global.mitm.__tag3 = sort(global.mitm.__tag3);
   let tag1 = {};
   for (let ns in global.mitm.__tag2) {
     // if (ns==='oldstorage.com.sg') 
@@ -47,7 +61,7 @@ const resort = global._debounce(function(fn) {
       ...tagX,
     }
   }
-  global.mitm.__tag1 = tag1;
+  global.mitm.__tag1 = sort(tag1);
   global.mitm.fn.clear();
   global.mitm.fn.tag4();
   fn && fn();

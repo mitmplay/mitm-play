@@ -24,17 +24,17 @@ const routeHandler = obj => {
     window.mitm.__tag2 = obj._tags_.__tag2;
     window.mitm.__tag3 = obj._tags_.__tag3;
     window.mitm.__tag4 = obj._tags_.__tag4;
-    delete obj._tags_;
   }
   if (window.mitm.files.route===undefined) {
-    window.mitm.files.route = obj;
-    data = obj;
+    window.mitm.files.route = obj.routes;
+    data = obj.routes;
   } else {
     const {route} = window.mitm.files;
     const newRoute = {};
-    for (let k in obj) {
-      newRoute[k] = route[k] ? route[k] : obj[k];
-      newRoute[k].content = obj[k].content;
+    const {routes} = obj;
+    for (let k in routes) {
+      newRoute[k] = route[k] ? route[k] : routes[k];
+      newRoute[k].content = routes[k].content;
     }
     data = newRoute;
     window.mitm.files.route = newRoute

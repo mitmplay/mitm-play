@@ -59,12 +59,12 @@ function listTags(tags) {
       if (mitm.browser.activeUrl.match(ns)) {
         add(ns);
         add('_global_');
-        return list.sort();
+        return list;
       }
     }
     return list;
   } else {
-    return Object.keys(tags.__tag1).sort();
+    return Object.keys(tags.__tag1);
   }
 }
 </script>

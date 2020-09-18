@@ -15,7 +15,7 @@ function routetag(item) {
 }
 </script>
 
-{#each Object.keys(items) as item}
+{#each Object.keys(items).sort() as item}
   <div class="space3 {routetag(item)}">
     <label>
       <input type="checkbox"
