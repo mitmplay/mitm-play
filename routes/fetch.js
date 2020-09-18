@@ -39,13 +39,18 @@ function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
       const {origin, pathname} = new URL(url);
       console.log(c.grey(`>> proxy (${origin}${pathname})`));
     }
+    let headerSize =42;
     const headers = {};
     for (let key in _headers) {
-      if (key!=='set-cookie') {
-        headers[key] = _headers[key].join(',');
+      const arr = _headers[key];
+      const len = arr.length;
+      if (key==='set-cookie') {
+        headers[key] = arr;
       } else {
-        headers[key] = _headers[key];
+        headers[key] = arr.join(',');
       }
+      headerSize += (len * (key.length+4));
+      headerSize += (len * 4 + arr.join('').length);
     }
     if (status===301 || status===302) {
       if (argv.redirect==='browser') {
@@ -68,6 +73,7 @@ Redirect...
       if (status===undefined) {
         status = headers['x-app-status'];
       }
+      headers['header-size'] = `${headerSize} ~est`;
       const resp = {url, status, headers, body};
       handler(resp);
       if (status>=400) {
