@@ -43,7 +43,7 @@ function routetag(item) {
 </script>
 
 <div class="border">
-  <div class="space0">[{ns}]</div>
+  <div class="space0">[{ns==='_global_' ? ' * ' : ns}]</div>
   {#each Object.keys(items).sort() as item}
     <div class="space1 {routetag(item)}">
       <label>
@@ -59,13 +59,14 @@ function routetag(item) {
 
 <style>
 .border {
-  border-style: solid;
+  border: 1px grey solid;
 }
 .space0 {
+  line-height: 1.5;
   font-size: medium;
   font-weight: bolder;
   color: darkblue;
-  background: deepskyblue;
+  background: lightgrey;
 }
 .space1 {
   color: grey;

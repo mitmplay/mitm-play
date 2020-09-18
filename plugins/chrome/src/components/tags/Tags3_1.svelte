@@ -7,7 +7,7 @@ export let key;
 </script>
 
 <div class="border">
-  <div class="space0">[{key}]</div>
+  <div class="space0">[{key==='_global_' ? ' * ' : key}]</div>
   {#each Object.keys(items) as item}
     <div class="space1">{item}</div>
     <Tags32 items={items[item]} key={item}/>
@@ -16,13 +16,14 @@ export let key;
 
 <style>
 .border {
-  border-style: solid;
+  border: 1px solid;
 }
 .space0 {
+  line-height: 1.5;
   font-size: medium;
   font-weight: bolder;
   color: darkblue;
-  background: deepskyblue;
+  background: lightgrey;
 }
 .space1 {
   padding-left: 10px;

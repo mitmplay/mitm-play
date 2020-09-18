@@ -72,7 +72,7 @@ function routeSet(r, namespace, print=false) {
           const nsstag = nss[typ];
           const ctype = site.contentType ? `[${site.contentType.join(',')}]` : '';
           const keys = Object.keys(site).filter(fkeys).join(',');
-          nss[`:${typ}`] = `${ctype}<${keys}>`;
+          nss[`:${typ}`] = `${ctype}<${keys}>`.replace('<>', '');
 
           if (site.tags.match(':')) {
             throw 'char ":" cannot be included in tags!';

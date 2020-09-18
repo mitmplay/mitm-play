@@ -89,7 +89,7 @@ function listTags(tags) {
 
 <style>
 .border {
-  border-style: dotted;
+  border: 1px dotted;
 }
 .space0 {
   font-size: medium;
