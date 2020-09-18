@@ -47,6 +47,7 @@ function routetag(item) {
 }
 
 function listTags(tags) {
+  const {toRegex} = window.mitm.fn; 
   const list = [];
   function add(ns) {
     for (let id in tags.__tag2[ns]) {
@@ -56,10 +57,11 @@ function listTags(tags) {
   }
   if (tags.filterUrl) {
     for (let ns in tags.__tag2) {
-      if (mitm.browser.activeUrl.match(ns)) {
+      const rgx = toRegex(ns.replace(/~/,'[^.]*'));
+      if (mitm.browser.activeUrl.match(rgx)) {
         add(ns);
         add('_global_');
-        return list;
+        return list.sort();
       }
     }
     return list;

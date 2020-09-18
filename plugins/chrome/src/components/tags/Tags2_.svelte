@@ -3,8 +3,10 @@ import { tags } from './stores.js';
 import Tags21 from './Tags2_1.svelte';
 
 function oneSite(ns) {
+  const {toRegex} = window.mitm.fn; 
   if ($tags.filterUrl) {
-    return mitm.browser.activeUrl.match(ns) || ns==='_global_';
+    const rgx = toRegex(ns.replace(/~/,'[^.]*'));
+    return mitm.browser.activeUrl.match(rgx) || ns==='_global_';
   } else {
     return true;
   }
