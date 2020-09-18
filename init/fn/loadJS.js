@@ -40,13 +40,29 @@ const resort = global._debounce(function(fn) {
     // if (ns==='oldstorage.com.sg') 
     //   debugger;
     let tagX = {};
-    const flag = !mitm.routes[ns].tags;
+    const flag = mitm.routes[ns].tags;
     const tag2 = global.mitm.__tag2[ns];
+    const tag3 = global.mitm.__tag3[ns];
+    for (let id in tag3) {
+      for (let url in tag3[id]) {
+        const typs = tag3[id][url];
+        for (let key in typs) {
+          if (typs[key]===true) {
+            typs[key] = false;
+          }
+        }
+        if (flag) {
+          for (let d of mitm.routes[ns].tags) {
+            typs[d]!==undefined && (typs[d] = true)
+          }
+        }
+      }
+    }
     for (let id in tag2) {
       const mainTag = id.split(':');
-      tagX[mainTag[1] || id] = flag;
-      tag2[id] = flag;
-      if (!flag) {
+      tagX[mainTag[1] || id] = !flag;
+      tag2[id] = !flag;
+      if (flag) {
         // can be improve!!!
         for (let d of mitm.routes[ns].tags) {
           if (id===d || mainTag[1]===d) {
