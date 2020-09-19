@@ -1,8 +1,9 @@
 const {root, filename} = require('./file-util');
 
 module.exports = ({match, reqs}) => {
-  let {host, route: {at}} = match;
+  let {host, namespace, route: {at, path}} = match;
   const fpath = filename(match);
+  const {argv} = global.mitm;
 
   (at===undefined) && (at = '');
 
@@ -16,8 +17,12 @@ module.exports = ({match, reqs}) => {
     stamp1 = `${host}${at}${fpath}`;
     stamp2 = `${host}${at}/$${fpath}`;
   }
-
-  const _root = root(reqs, 'cache');
+  let _root, fmatch;
+  if (path && (fmatch = path.match(/^[\t ]*\.\/(.+)/))) {
+    _root = `${argv.route}/${namespace}/${fmatch[1]}`;
+  } else {
+    _root = root(reqs, 'cache');
+  }
   const fpath1 = `${_root}/${stamp1}`;
   const fpath2 = `${_root}/${stamp2}.json`;
   return {fpath1, fpath2};  

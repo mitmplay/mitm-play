@@ -67,7 +67,11 @@ function cacheResponse(reqs, responseHandler, _3d) {
         fpath1 = `${fpath1}.${_ext({headers})}`;
         if (logs.cache) {
           if (!global.mitm.argv.ommit.cache && !hidden) {
-            console.log(c.greenBright(match.log));
+            if (match.route.path) {
+              console.log(c.redBright(match.log));
+            } else {
+              console.log(c.greenBright(match.log));
+            }
           }  
         }
         const body = fs.readFileSync(fpath1);

@@ -1,3 +1,4 @@
+const _path = require('path');
 const fs = require('fs-extra');
 const fg = require('fast-glob');
 const c = require('ansi-colors');
@@ -33,7 +34,8 @@ module.exports = () => {
   if (!route) {
     route = `${cwd}/user-route`;
   } else {
-    route = home(route);
+    route = _path.normalize(route);
+    route = home(route.replace(/\\/g,'/'));
     if (route.match(/^\.$/)) {
       route = route.replace(/^\.$/, `${cwd}`);
     } else if (route.match(/^\.\//)) {

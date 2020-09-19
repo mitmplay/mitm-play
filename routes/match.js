@@ -37,6 +37,7 @@ const searchArr = ({typ: typs, url}) => {
 };
 
 const searchFN = (typs, {url}) => {
+//const {router,routes, data} = global.mitm;
   const {router,routes} = global.mitm;
 
   return function search(nspace) {
@@ -65,7 +66,7 @@ const searchFN = (typs, {url}) => {
           const {host, origin, pathname, search} = new URL(url);
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
           const log = `>> ${typ} (${origin}${msg}).match(${key})`;
-          return {
+          const matched = {
             contentType: obj[`${key}~contentType`],
             route: route[key],
             workspace,
@@ -79,6 +80,13 @@ const searchFN = (typs, {url}) => {
             log,
             typ,
           }
+          // if (data.maches===undefined) {
+          //   data.maches = [];
+          // } else if (data.maches.length>20) {
+          //   data.maches.shift();
+          // }
+          // data.maches.push(matched);
+          return matched;
         }
       }  
     }
