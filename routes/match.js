@@ -38,7 +38,7 @@ const searchArr = ({typ: typs, url}) => {
 
 const searchFN = (typs, {url}) => {
 //const {router,routes, data} = global.mitm;
-  const {router,routes} = global.mitm;
+  const {router,routes, __tag3} = global.mitm;
 
   return function search(nspace) {
     const namespace = nameSpace(nspace);
@@ -54,13 +54,24 @@ const searchFN = (typs, {url}) => {
     const list = typTags(typs, namespace);
 
     for (let typ of list) {
-      // if (namespace==='oldstorage.com.sg' && typs==='cache')
+      // if (namespace==='oldstorage.com.sg' && typs==='cache' && url.match('meta'))
       //   debugger;
-      const obj = router[namespace][typ];
       const route = routes[namespace][typ];
-  
+      const obj = router[namespace][typ];
+      const tg3 = __tag3[namespace]
+
       for (let key in route) {
-        const arr = url.match(obj[key]);
+        let isTagsOk = true;
+        if (tg3[key] && tg3[key][typ]) {
+          const nodes = tg3[key][typ];
+          for (let tag in nodes) {
+            if (nodes[tag]===false) {
+              isTagsOk = false;
+              break;
+            }
+          }
+        }
+        const arr = isTagsOk && url.match(obj[key]);
   
         if (arr) {
           const {host, origin, pathname, search} = new URL(url);

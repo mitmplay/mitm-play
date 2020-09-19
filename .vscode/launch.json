@@ -13,14 +13,7 @@
             ],
             "cwd": "${workspaceFolder}/..",
             "program": "${workspaceFolder}/mitm-play.js",
-            "args": [
-                "meadow",
-                "-CW"
-                // "-R=false",
-                // "-o='cache,skip'",
-                // "-dpsr='/home/wharsojo/Projects/userscript'",
-                // "--chromium='D:/Apps/chrome-gog/chrome.exe'"
-            ]
+            "args": ["cert"]
         }
     ]
 }
