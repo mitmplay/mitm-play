@@ -21,11 +21,11 @@ const mock = ({url}) => {
 function mockResponse({reqs, route}, _3d) {
   const search = searchFN('mock', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {fn: {skipByTag, home}, argv, routes: {_global_}} = global.mitm;
+  const {fn: {skipByTag, home}, argv, routes, router} = global.mitm;
 
   if (match && !skipByTag(match, 'mock')) {
     const {response, file, js} = match.route;
-    if (_global_.config.logs.mock) {
+    if (router._global_.config.logs.mock) {
       if (!match.url.match('/mitm-play/websocket')) {
         console.log(c.cyanBright(match.log));
       }
@@ -49,7 +49,8 @@ function mockResponse({reqs, route}, _3d) {
             } else if (fmatch = file.match(/^[\t ]*\.\/(.+)/)) {
               fpath = `${argv.route}/${match.namespace}/${fmatch[1]}`;
             } else {
-              const workspace = match.workspace || _global_.workspace;
+              const {workspace: ws} = routes._global_;
+              const workspace = match.workspace || ws;
               fpath = workspace ? `${workspace}/${file}` : file;  
             }
             resp.body = `${fs.readFileSync(home(fpath))}`;

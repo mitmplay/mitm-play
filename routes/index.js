@@ -22,9 +22,9 @@ const _resp = {
 };
 
 module.exports =  ({route, request, browserName}) => {
-  const {routes, argv: {nosocket, proxy}} = global.mitm;
+  const {router, argv: {nosocket, proxy}} = global.mitm;
   const reqs = extract({route, request, browserName});
-  const {logs} = routes._global_.config;
+  const {logs} = router._global_.config;
 
   // catch unknown url scheme & respond it 
   if (reqs.url.match(noURL)) {

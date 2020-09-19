@@ -8,8 +8,8 @@ const {script_src,e_end} = inject;
 function htmlResponse(reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {routes, fn: {skipByTag}} = global.mitm;
-  const {logs} = routes._global_.config;
+  const {router, fn: {skipByTag}} = global.mitm;
+  const {logs} = router._global_.config;
 
   if (match && !skipByTag(match, 'html')) {
     const {el, js, src, response, hidden} = match.route;

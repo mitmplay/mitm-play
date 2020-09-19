@@ -1,5 +1,6 @@
 const _path = require('path');
 const c = require('ansi-colors');
+const setlogs = require('./setlogs');
 
 const load = function(path) {
   const rpath = require.resolve(path);
@@ -77,6 +78,7 @@ const resort = global._debounce(function(fn) {
       ...tagX,
     }
   }
+  setlogs();
   global.mitm.__tag1 = sort(tag1);
   global.mitm.fn.clear();
   global.mitm.fn.tag4();

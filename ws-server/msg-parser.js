@@ -36,7 +36,7 @@ const wscmd = {
 global.mitm.wscmd = wscmd;
 
 module.exports = (client, msg) => {
-  const {logs} = global.mitm.routes._global_.config;
+  const {logs} = global.mitm.router._global_.config;
   if (logs['ws-receive']) {
     if (msg.length > 97) {
       console.log(c.blue('>> ws-message: `%s...`'), msg.slice(0,97));

@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const logs = require('./fn/logs');
+// const logs = require('./fn/logs');
 
 const hotKeys = obj => {
   window.mitm.macrokeys = {
@@ -72,7 +72,7 @@ ${body}`;
     '_global_': {
       mock,
       config: {
-        logs: logs()
+        logs: {},
       }
     }
   };

@@ -34,8 +34,8 @@ function resetCookies(setCookie) {
 function cacheResponse(reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {routes, fn: {skipByTag, tilde}} = global.mitm;
-  const {logs} = routes._global_.config;
+  const {router, fn: {skipByTag, tilde}} = global.mitm;
+  const {logs} = router._global_.config;
   let resp, resp2;
 
   if (match && !skipByTag(match, 'cache')) {

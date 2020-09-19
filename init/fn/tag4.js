@@ -1,3 +1,4 @@
+const setlogs = require('./setlogs');
 /**
  * update global.mitm.__tag4 to contain all namespaces which having tags
  * if namespace contain only typTags, it will having empty object 
@@ -35,6 +36,7 @@ const tags = function(_ns) {
   } else {
     global.mitm.__tag4 = tag4;
   }
+  setlogs();
 }
 
 module.exports = tags;

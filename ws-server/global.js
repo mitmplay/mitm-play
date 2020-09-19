@@ -3,7 +3,7 @@ const WebSocket = require('ws');
 module.exports = () => {
 //ex: broadcast({data:"there"});
 function broadcast({data,_all}) {
-  const {logs} = global.mitm.routes._global_.config;
+  const {logs} = global.mitm.router._global_.config;
   const pages = [];
     const that = this;
     data = typeof(data)==='string' ? data : JSON.stringify(data);
