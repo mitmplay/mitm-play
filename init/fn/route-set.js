@@ -12,24 +12,13 @@ function toRegex(str, flags='') {
 const fkeys = x=>x!=='tags' && x!=='contentType';
 
 function routeSet(r, namespace, print=false) {
-  global.mitm.routes[namespace] = r;
+  const {routes, __mock} = global.mitm;
+  routes[namespace] = r;
   if (namespace==='_global_') {
-    // if (r.config) {
-    //   if (r.config.logs) {
-    //       r.config.logs = {
-    //         ...logs(r.config.logs.silent),
-    //         ...r.config.logs,
-    //       }
-    //   } else {
-    //     r.config.logs = logs();
-    //   }
-    // } else {
-    //   r.config = {logs: logs()};
-    // }
-    global.mitm.routes._global_.mock = {
-      ...global.mitm.routes._global_.mock,
-      ...global.mitm.__mock
-    }
+    routes._global_.mock = {
+      ...routes._global_.mock,
+      ...__mock,
+    };
   }
   // Compile regex into router
   const tags = {};
@@ -136,7 +125,7 @@ function routeSet(r, namespace, print=false) {
     }
   }
   if (!global.mitm.data.nolog && global.mitm.argv.verbose) {
-    const msg = `>> ${namespace}\n${stringify(global.mitm.routes[namespace])}`;
+    const msg = `>> ${namespace}\n${stringify(routes[namespace])}`;
     print && console.log(c.blueBright(msg));  
   }
   return r;

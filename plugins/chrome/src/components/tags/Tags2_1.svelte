@@ -40,18 +40,37 @@ function routetag(item) {
     return items[item] ? 'stag slc' : '';
   }
 }
+
+function itemlist(items) {
+  const arr = Object.keys(items).sort((a,b) => {
+    const [k1,v1] = a.split(':');
+    const [k2,v2] = b.split(':');
+    a = v1 || k1;
+    b = v2 || k2;
+    if (a<b) return -1;
+    if (a>b) return 1;
+    return 0;
+  });
+  return arr;
+}
+
+function show(item) {
+  const [k,v] = item.split(':');
+  if (v===undefined) return k;
+  return `${v}{${k}}`;
+}
 </script>
 
 <div class="border">
   <div class="space0">[{ns==='_global_' ? ' * ' : ns}]</div>
-  {#each Object.keys(items).sort() as item}
+  {#each itemlist(items) as item}
     <div class="space1 {routetag(item)}">
       <label>
         <input type="checkbox"
         data-item={item}
         on:click={clicked} 
         bind:checked={items[item]}/>
-        {item}
+        <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
       </label>
     </div>
   {/each}
@@ -71,6 +90,9 @@ function routetag(item) {
 .space1 {
   color: grey;
   padding-left: 10px;
+}
+.space1 .big {
+  margin-left: -4px;
 }
 .rtag {
   color: cadetblue;

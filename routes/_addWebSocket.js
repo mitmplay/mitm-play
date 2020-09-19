@@ -2,7 +2,7 @@ const c = require('ansi-colors');
 const _match = require('./match');
 const {script_src} = require('./inject');
 const {matched,searchKey, searchArr} = _match;
-const {fn: {tldomain,nameSpace}} = global.mitm;
+const {fn: {tldomain,nameSpace}, router} = global.mitm;
 
 function replaceCSP(csp) {
   csp = csp.replace(/default-src[^;]+;/g, '');
@@ -30,8 +30,11 @@ function addWebSocket(reqs, responseHandler, _3d) {
     const search = searchArr({typ: 'nosocket', url});
     let match = _3d ? search('_global_') : matched(search, reqs);
     if (match) {
-      const {origin, pathname} = new URL(url);
-      console.log(c.redBright(`>> nosocket (${origin}${pathname})`));
+      const {logs} = router._global_.config;
+      if (logs.nosocket) {
+        const {origin, pathname} = new URL(url);
+        console.log(c.redBright(`>> nosocket (${origin}${pathname})`));  
+      }
     } else {
       responseHandler.push(resp => {
         const {headers: h, status} = resp;
