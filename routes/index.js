@@ -27,7 +27,7 @@ module.exports =  ({route, request, browserName}) => {
   const {logs} = router._global_.config;
 
   // catch unknown url scheme & respond it 
-  if (reqs.url.match(noURL)) {
+  if (reqs.url.match(noURL) || reqs.url.match(/\/null$/)) {
     route.fulfill(_resp);
     return;
   }
