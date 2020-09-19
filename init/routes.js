@@ -86,6 +86,9 @@ ${body}`;
         '/mitm-play/macros.js': new RegExp('\\/mitm-play\\/macros\\.js'),
         '/mitm-play/websocket.js': new RegExp('\\/mitm-play\\/websocket\\.js'),
       },
+      config: {
+        logs: {},
+      }
     }
   };
   global.mitm.__tag2 = {};

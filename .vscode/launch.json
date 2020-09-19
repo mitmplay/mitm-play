@@ -15,7 +15,7 @@
             "program": "${workspaceFolder}/mitm-play.js",
             "args": [
                 "meadow",
-                // "-z=400"
+                "-W"
                 // "-R=false",
                 // "-o='cache,skip'",
                 // "-dpsr='/home/wharsojo/Projects/userscript'",

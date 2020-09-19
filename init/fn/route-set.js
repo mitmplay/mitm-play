@@ -112,6 +112,10 @@ function routeSet(r, namespace, print=false) {
       addType(typ);
     }
   }
+  if (namespace==='_global_') {
+    const {config} = global.mitm.router[namespace];
+    router.config = config;
+  }
   global.mitm.router[namespace] = router;
   if (Object.keys(tags).length) {
     global.mitm.__tag2[namespace] = tags;
