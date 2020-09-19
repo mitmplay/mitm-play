@@ -8,7 +8,7 @@ export let key;
 </script>
 
 {#each Object.keys(items).filter(x=>x[0]!==':') as item}
-  <div class="space2">{item.split(':')[0]}:{items[`:${item}`]}</div>
+  <div class="space2">{item}:{items[`:${item}`]}</div>
   <Tags33 items={items[item]}/>
 {/each}
 
