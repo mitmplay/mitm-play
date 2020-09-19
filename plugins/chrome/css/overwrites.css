@@ -7,3 +7,17 @@ nav.tabs.is-small.is-boxed {
 .tab-content {
   overflow: hidden;
 }
+
+input[type="checkbox"],
+input[type="radio"],
+label {
+  cursor: pointer;
+}
+
+.set-tags label {
+  display: block;
+}
+
+.set-tags label:hover {
+  background-color: greenyellow;
+}
