@@ -80,7 +80,7 @@ function listTags(tags) {
         data-item={item}
         on:click={clicked} 
         bind:checked={$tags.__tag1[item]}/>
-        {item}
+        <span class="big">{item}</span>
       </label>
     </div>
     {/each}
@@ -96,6 +96,9 @@ function listTags(tags) {
   font-weight: bolder;
   color: darkblue;
   /* background: deepskyblue; */
+}
+.space0 .big {
+  margin-left: -4px;
 }
 .rtag {
   color: grey;
