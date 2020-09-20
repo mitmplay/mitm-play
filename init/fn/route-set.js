@@ -1,10 +1,9 @@
 const c = require('ansi-colors');
 const stringify = require('./stringify');
 const logs = require('./setlogs');
+const typs = require('./typs');
 
-const typC = ['config'];
-const typA = ['nosocket','skip','noproxy','proxy'];
-const typO = ['request','response','mock','cache','log','html','json','css','js'];
+const {typC, typA, typO} = typs;
 
 function toRegex(str, flags='') {
   return new RegExp(str.replace(/\./g, '\\.').replace(/\?/g, '\\?'), flags);

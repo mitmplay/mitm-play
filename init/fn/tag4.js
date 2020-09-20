@@ -1,4 +1,5 @@
 const setlogs = require('./setlogs');
+const typs = require('./typs');
 /**
  * update global.mitm.__tag4 to contain all namespaces which having tags
  * if namespace contain only typTags, it will having empty object 
@@ -7,18 +8,38 @@ const setlogs = require('./setlogs');
  * 
  * @param {namespace} _ns 
  */
+const {typC, typA, typO} = typs;
+const typlist = Object.keys({
+  ...typC,
+  ...typA,
+  ...typO,
+});
 const tags = function(_ns) {
+  const {router, __tag2} = global.mitm;
   const tag4 = {};
+  let routr = {};
   let tag2 = {};
   if (_ns) {
-    tag2[_ns] = global.mitm.__tag2[_ns];
+    routr[_ns] = router[_ns];
+    tag2[_ns] = __tag2[_ns];
   } else {
-    tag2 = {...global.mitm.__tag2};
+    routr = {...router};
+    tag2 = {...__tag2};
+  }
+  for (let namespace in routr) {
+    tag4[namespace] = {};
+    const node = tag4[namespace];
+    const ns = routr[namespace];
+    for (let id in ns) {
+      if (node[id]===undefined) {
+        node[id] = [];
+      }
+      node[id].push(id);
+    }
   }
   for (let namespace in tag2) {
     const ns = tag2[namespace];
-    const node = {};
-    tag4[namespace] = node;
+    const node = tag4[namespace];
     for (let id in ns) {
       const [typ, tag] = id.split(':');
       if (tag && ns[id]) {

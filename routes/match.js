@@ -6,7 +6,7 @@ function typTags(typ, namespace) {
   // if (typ==='proxy')
   //   debugger;
   if (ns) {
-    return ns[typ] || [typ];
+    return ns[typ] || [];
   } else {
     return [];
   }
