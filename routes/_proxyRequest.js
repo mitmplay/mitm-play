@@ -8,7 +8,7 @@ function proxyRequest(reqs, _3d) {
   if (_3d) {
     nopro = search1('_global_');
     proxy = search2('_global_');
-  } else {
+  } else { //match to domain|origin|referer|_global_
     nopro = matched(search1, reqs);
     proxy = matched(search2, reqs);  
   }

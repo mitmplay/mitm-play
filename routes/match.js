@@ -118,6 +118,7 @@ const searchKey = key => {
 };
 
 const matched = (search, {url, headers}) => {
+  //match to domain|origin|referer|_global_
   const {tldomain} = global.mitm.fn;
   const {origin, referer} = headers;
 
