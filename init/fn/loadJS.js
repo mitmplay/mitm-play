@@ -1,6 +1,7 @@
 const _path = require('path');
 const c = require('ansi-colors');
 const setlogs = require('./setlogs');
+const namespaces = {};
 
 const load = function(path) {
   const rpath = require.resolve(path);
@@ -23,6 +24,10 @@ function sort(obj) {
 }
 
 const resort = global._debounce(function(fn) {
+  const {routes: {_global_}, fn: {routeSet}} = global.mitm;
+  if (namespaces._global_===undefined) {
+    routeSet(_global_, '_global_');
+  }
   let keys = Object.keys(global.mitm.routes);
   keys = keys.sort(function(a, b) {
     return b.length - a.length || // sort by length, if equal then
@@ -85,14 +90,15 @@ const resort = global._debounce(function(fn) {
   fn && fn();
 }, 900, 'clear');
 
-const loadJS = function(path, log, fn) {
+const loadJS = function(path, msg, fn) {
   const {fs,routeSet} = global.mitm.fn;
-  log && console.log(log);
+  msg && console.log(msg);
   try {
     path = _path.normalize(path);
     let domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1];
     // domain = domain.replace(/~/,'[^.]*');
     const route = {path, ...load(path)};
+    namespaces[domain] = true;
     routeSet(route, domain, true);
     fs.readFile(path, "utf8", function(err, data) {
       if (err) {
