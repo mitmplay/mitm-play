@@ -20,14 +20,12 @@ function routeSet(r, namespace, print=false) {
       ...__mock,
     };
   }
-  // Compile regex into router
   const tags = {};
   const urls = {};
   const router = {};
   router._namespace_ = toRegex(namespace.replace(/~/,'[^.]*'));
-  for (let typs of typC) {
-    // if (namespace==='oldstorage.com.sg' && typs==='skip') 
-    //   debugger;
+
+  const _typlist = function(typs) {
     const typlist = Object.keys(r).filter(x=>{
       if (x.startsWith(`${typs}:`)) {
         tags[x] = true;
@@ -35,16 +33,17 @@ function routeSet(r, namespace, print=false) {
       }
     });
     r[typs] && typlist.unshift(typs);
+    return typlist;
+  }
+
+  for (let typs of typC) {
+    _typlist(typs);
   }
   
   for (let typs of typA) {
-    const typlist = Object.keys(r).filter(x=>{
-      if (x.startsWith(`${typs}:`)) {
-        tags[x] = true;
-        return true;
-      }
-    });
-    r[typs] && typlist.unshift(typs);
+    // if (namespace==='_global_' && typs==='proxy') 
+    //   debugger;
+    const typlist = _typlist(typs);
     for (let typ of typlist) {
       router[typ] = {};
       for (let str of r[typ]) {
@@ -101,17 +100,12 @@ function routeSet(r, namespace, print=false) {
   }
 
   for (let typs of typO) {
-    const typlist = Object.keys(r).filter(x=>{
-      if (x.startsWith(`${typs}:`)) {
-        tags[x] = true;
-        return true;
-      }
-    });
-    r[typs] && typlist.unshift(typs);
+    const typlist = _typlist(typs);
     for (let typ of typlist) {
       addType(typ);
     }
   }
+
   if (namespace==='_global_') {
     const {config} = global.mitm.router[namespace];
     router.config = config;

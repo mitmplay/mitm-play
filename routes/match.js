@@ -3,7 +3,7 @@ const {fn: {home, nameSpace}} = global.mitm;
 function typTags(typ, namespace) {
   const {routes, __tag4} = global.mitm;
   const ns = __tag4[namespace];
-  // if (namespace==='oldstorage.com.sg' && typ==='cache')
+  // if (typ==='proxy')
   //   debugger;
   if (ns) {
     return ns[typ] || [typ];
@@ -20,7 +20,6 @@ const searchArr = ({typ: typs, url}) => {
     if (!namespace) {
       return;
     }
-
     if (routes[namespace]) {
       const list = typTags(typs, namespace);
       for (let typ of list) {
