@@ -15,6 +15,7 @@ const _addWebSocket  = require('./_addWebSocket');
 const _cacheResponse = require('./_cacheResponse');
 
 const noURL = /(brave|edge|chrome-extension):\/\//;
+const wNull = /\/null$/;
 const _resp = {
   status: 200,
   headers: {},
@@ -26,14 +27,14 @@ module.exports =  ({route, request, browserName}) => {
   const reqs = extract({route, request, browserName});
   const {logs} = router._global_.config;
 
-  // catch unknown url scheme & respond it 
-  if (reqs.url.match(noURL) || reqs.url.match(/\/null$/)) {
+  // catch unknown url scheme & handle by browser 
+  if (reqs.url.match(noURL) || reqs.url.match(wNull)) {
     route.fulfill(_resp);
     return;
   }
 
-  const _3d = _3rdparties(reqs);
-  const skip = _skipResponse(reqs, _3d);
+  const _3ds = _3rdparties(reqs);
+  const skip = _skipResponse(reqs, _3ds);
   const {origin, pathname} = new URL(reqs.url);
   if (skip) {
     if (logs.skip) {
@@ -44,48 +45,48 @@ module.exports =  ({route, request, browserName}) => {
     return;
   }
 
-  if (_mockResponse({reqs, route}, _3d)) {
+  if (_mockResponse({reqs, route}, _3ds)) {
     return;
   }
 
-  if (proxy && _proxyRequest(reqs, _3d)) {
+  if (proxy && _proxyRequest(reqs, _3ds)) {
     reqs.proxy = proxy;
   }
 
   const responseHandler = [];
   //--resp can be undefined or local cached & can skip logs (.nolog)
-  let {match, resp} = _cacheResponse(reqs, responseHandler, _3d);
+  let {match, resp} = _cacheResponse(reqs, responseHandler, _3ds);
 
   //--order is important and log must not contain the body modification
-  _logResponse (reqs, responseHandler, _3d, match);
-  _htmlResponse(reqs, responseHandler, _3d);
-  _jsonResponse(reqs, responseHandler, _3d);
-  _cssResponse (reqs, responseHandler, _3d);
-  _jsResponse  (reqs, responseHandler, _3d);
-  _chgResponse (reqs, responseHandler, _3d);
+  _logResponse (reqs, responseHandler, _3ds, match);
+  _htmlResponse(reqs, responseHandler, _3ds);
+  _jsonResponse(reqs, responseHandler, _3ds);
+  _cssResponse (reqs, responseHandler, _3ds);
+  _jsResponse  (reqs, responseHandler, _3ds);
+  _chgResponse (reqs, responseHandler, _3ds);
+
   if (!nosocket) {
     //--inject websocket client to html
-    _addWebSocket(reqs, responseHandler, _3d);
+    _addWebSocket(reqs, responseHandler, _3ds);
   }
 
   if (resp) {
     Events(responseHandler, resp, route);
   } else {
-    const rqs2 = _chngRequest(reqs, _3d);
-    if (responseHandler.length) { //call BE 
+    const rqs2 = _chngRequest(reqs, _3ds);
+    if (rqs2) {
+      const {headers, method} = rqs2;
+      const msg = JSON.stringify({headers, method});
+      console.log(c.redBright(`>> request (${msg})`));
+    }
+    if (responseHandler.length) { //fetch from remote server
       fetch(route, browserName, (rqs2 || reqs), function(resp) {
         Events(responseHandler, resp, route);
       });
-    } else {
-      let rqs;
-      if (rqs2) {
-        const {headers, method, body: postData} = rqs2;
-        rqs = {headers, method, postData};
-        const msg = JSON.stringify({headers, method});
-        console.log(c.redBright(`>> request (${msg})`));
-      } else if (logs) {
+    } else { //not handle 
+      if (!rqs2 && logs) {
         const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
-        if (_3d) {
+        if (_3ds) {
           if (logs['no-namespace']) {
             console.log(c.redBright(`>> no-namespace (${origin}${msg})`));
           }
@@ -95,17 +96,23 @@ module.exports =  ({route, request, browserName}) => {
           }
         }  
       }
-      route.continue(rqs);
+      if (rqs2) { //browser will continue the request
+        const {headers, method, body: postData} = rqs2;
+        route.continue({headers, method, postData});   
+      } else {
+        route.continue({});
+      }
     }  
   } 
 }
 
 function Events(responseHandler, resp, route) {
   for (let fn of responseHandler) {
-    resp = fn(resp);
-    if (resp===undefined) {
+    const resp2 = fn(resp);
+    if (resp2===undefined) {
       break;
     }
+    resp =resp2;
   }
-  resp && route.fulfill(resp);
+  route.fulfill(resp);
 }

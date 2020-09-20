@@ -8,7 +8,8 @@ function chgRequest(reqs, _3d) {
   const {router, fn: {skipByTag}} = global.mitm;
   const {logs} = router._global_.config;
 
-  if (match && !skipByTag(match, 'request')) {
+  let result = match && !skipByTag(match, 'request');
+  if (result) {
     const {hidden, request} = match.route;
     if (logs.request) {
       if (!match.url.match('/mitm-play/websocket')) {
@@ -20,13 +21,16 @@ function chgRequest(reqs, _3d) {
     if (request) {
       const reqs2 = request(reqs);
       if (reqs2) {
-        return {
+        result = {
           ...reqs,
           ...reqs2
         };
       }
+    } else {
+      result = reqs;
     }
   }
+  return result; //false or request object
 }
 
 module.exports = chgRequest;

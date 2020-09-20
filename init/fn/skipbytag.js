@@ -19,6 +19,7 @@ function skipByTag(match, typ) {
         }
       }
     }
+    return false;
   }
   
 module.exports = skipByTag;
