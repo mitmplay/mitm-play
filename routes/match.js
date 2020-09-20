@@ -57,7 +57,7 @@ const searchFN = (typs, {url}) => {
       //   debugger;
       const route = routes[namespace][typ];
       const obj = router[namespace][typ];
-      const tg3 = __tag3[namespace]
+      const tg3 = __tag3[namespace]||{};
 
       for (let key in route) {
         let isTagsOk = true;

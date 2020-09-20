@@ -13,7 +13,7 @@
             ],
             "cwd": "${workspaceFolder}/..",
             "program": "${workspaceFolder}/mitm-play.js",
-            "args": ["cert"
+            "args": ["keybr"
                 // , "-x=http://myproxy.com"
             ]
         }
