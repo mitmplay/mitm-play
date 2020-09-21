@@ -16,6 +16,11 @@ const _cacheResponse = require('./_cacheResponse');
 
 const noURL = /(brave|edge|chrome-extension):\/\//;
 const wNull = /\/null$/;
+const _resp = {
+  status: 200,
+  headers: {},
+  body: ''
+};
 
 module.exports =  ({route, request, browserName}) => {
   const {router, argv: {nosocket, proxy}} = global.mitm;
@@ -24,7 +29,7 @@ module.exports =  ({route, request, browserName}) => {
 
   // catch unknown url scheme & handle by browser 
   if (reqs.url.match(noURL) || reqs.url.match(wNull)) {
-    route.continue();
+    route.fulfill(_resp);
     return;
   }
 
@@ -92,13 +97,7 @@ module.exports =  ({route, request, browserName}) => {
         }  
       }
       const {headers, method, body: postData} = rqs2 || reqs;
-      route.continue({headers, method, postData});   
-      // if (rqs2) { //browser will continue the request
-      //   const {headers, method, body: postData} = rqs2;
-      //   route.continue({headers, method, postData});   
-      // } else {
-      //   route.continue();
-      // }
+      route.continue({headers, method, postData});
     }  
   } 
 }
