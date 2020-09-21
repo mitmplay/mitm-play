@@ -334,9 +334,9 @@ cache: {
     querystring: true, // hash of unique file-cache
     session: true, // optional - set session id
     hidden: true, // optional - no consolo.log
-    nolog: true, // optional - disable logging
-    tags: 'js-img' // enable/disable route by tags
-    at: 'mycache', // 'mycache' part of cache filename
+    log: false, // optional - disable logging
+    at: 'mycache', // 'mycache' part of filename
+    tags: 'js-img', // enable/disable route by tags
   }
 },
 ```
@@ -1008,7 +1008,6 @@ cache: {
   '.+': {
     contentType: ['font','image','javascript','css'],
     querystring: true,
-    nolog: true,
   }
 },
 ```
