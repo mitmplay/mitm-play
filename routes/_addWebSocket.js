@@ -26,6 +26,10 @@ const headerchg = headers => {
 function addWebSocket(reqs, responseHandler, _3d) {
   const {url, headers} = reqs;
   const accpt = headers.accept+'';
+  const {origin, referer} = headers;
+  if (origin || referer) {
+    return;
+  }
   if (accpt==='*/*' || accpt.indexOf('text/html') > -1) {
     const search = searchArr({typ: 'nosocket', url});
     let match = _3d ? search('_global_') : matched(search, reqs);
@@ -37,6 +41,9 @@ function addWebSocket(reqs, responseHandler, _3d) {
       }
     } else {
       responseHandler.push(resp => {
+        if (!nameSpace(url)) {
+          return;
+        }
         const {headers: h, status} = resp;
         const contentType = h['content-type'];
         const redirect = (status+'').match(/^30\d/);
