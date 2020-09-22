@@ -3,7 +3,10 @@ import App from './App.svelte';
 console.log('Load MITM plugin');
 
 function toRegex(str, flags='') {
-  return new RegExp(str.replace(/\./g, '\\.').replace(/\?/g, '\\?'), flags);
+  return new RegExp(str.
+    replace(/\//g, '\\/').
+    replace(/\./g, '\\.').
+    replace(/\?/g, '\\?'), flags);
 }
 
 window.mitm.fn.toRegex = toRegex;
