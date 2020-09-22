@@ -49,8 +49,8 @@ module.exports = ({reqs, resp}) => {
         method,
         url,
       },
-      reqsBody,
       respHeader,
+      reqsBody,
       reqsHeader,
     };
     if (Object.keys(urlParams).length>1) {

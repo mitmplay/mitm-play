@@ -18,7 +18,7 @@ function logResponse(reqs, responseHandler, _3d, cache) {
   if (match && !skipByTag(match, 'log')) {
     const {hidden, log, response} = match.route;
     const stamp = (new Date).toISOString().replace(/[:-]/g, '');
-    responseHandler.push(resp => {
+    responseHandler.push((resp, reqs) => {
       if (ctype(match, resp)) {
         if (cache && ctype(cache, resp) && !cache.route.log) {
           return resp; 

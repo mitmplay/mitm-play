@@ -71,17 +71,18 @@ module.exports =  ({route, request, browserName}) => {
   }
 
   if (resp) {
-    Events(responseHandler, resp, route);
+    Events(responseHandler, resp, reqs, route);
   } else {
     const rqs2 = _chngRequest(reqs, _3ds);
     if (rqs2) {
-      const {headers, method} = rqs2;
-      const msg = JSON.stringify({headers, method});
-      console.log(c.redBright(`>> request (${msg})`));
+      const {headers} = rqs2;
+      const msg = JSON.stringify({headers});
+      const log = msg.length <= 100 ? msg : msg.slice(0,100)+'...';
+      console.log(c.redBright(`>> request (${log})`));
     }
     if (responseHandler.length) { //fetch from remote server
       fetch(route, browserName, (rqs2 || reqs), function(resp) {
-        Events(responseHandler, resp, route);
+        Events(responseHandler, resp, (rqs2 || reqs), route);
       });
     } else { //not handle 
       if (!rqs2 && logs) {
@@ -102,9 +103,9 @@ module.exports =  ({route, request, browserName}) => {
   } 
 }
 
-function Events(responseHandler, resp, route) {
+function Events(responseHandler, resp, reqs, route) {
   for (let fn of responseHandler) {
-    const resp2 = fn(resp);
+    const resp2 = fn(resp, reqs);
     if (resp2===undefined) {
       break;
     }
