@@ -1,4 +1,4 @@
-function formToObj(search, docode=false) {
+function formToObj(search, decode=false) {
   const hashes = search.split('&');
   const params = {};
   hashes.map(hash => {
