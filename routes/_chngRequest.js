@@ -20,12 +20,10 @@ function chgRequest(reqs, _3d) {
     }
     if (request) {
       const reqs2 = request(reqs);
-      if (reqs2) {
-        result = {
-          ...reqs,
-          ...reqs2
-        };
-      }
+      result = {
+        ...reqs,
+        ...reqs2
+      };
     } else {
       result = reqs;
     }
