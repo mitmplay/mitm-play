@@ -32,7 +32,7 @@ module.exports = () => {
   let {route} = argv;
   const {cwd} = path;
   if (!route) {
-    route = `${cwd}/user-route`;
+    route = home(`~/user-route`);
   } else {
     route = _path.normalize(route);
     route = home(route.replace(/\\/g,'/'));
@@ -98,7 +98,24 @@ module.exports = () => {
       if (_urls.length) {
         argv.urls = _urls;
       } else {
-        argv.urls = ['http://whatsmyuseragent.org/'];
+        argv.urls = ['http://google.com/'];
+      }
+    } else {
+      const {routes} = global.mitm;
+      for (let key in routes) {
+        if (key==='_global_') {
+          continue;
+        }
+        const {url, urls} = routes[key];
+        if (url || urls) {
+          if (url) {
+            argv.urls = [url]
+          } else if (urls) {
+            const id = Object.keys(urls)[0];
+            argv.urls = [urls[id]];
+          }
+          break;  
+        }
       }
     }
   }

@@ -92,8 +92,8 @@ module.exports = () => {
   obj('browser','firefox');
   obj('browser','webkit');
 
-  if (Object.keys(browser).length===0) {
-    browser.chromium = true;
+  if (browser===undefined || Object.keys(browser).length===0) {
+    browser = {chromium: true};
   }
 
   if (argv.browser===undefined || Object.keys(argv.browser).length===0) {
