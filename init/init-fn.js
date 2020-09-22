@@ -5,6 +5,7 @@ const chokidar = require('chokidar');
 
 const {hello, mock, resp} = require('./fn/hellomock');
 const {routeSet, toRegex} = require('./fn/route-set');
+const {formToObj, objToForm} = require('./fn/form');
 const {exec, execFile} = require('./fn/exec-file');
 const {tilde, home} = require('./fn/tildehome');
 const unstrictCSP = require('./fn/unstrictCSP');
@@ -23,6 +24,8 @@ const tag4 = require('./fn/tag4');
 module.exports = () => {
   global.mitm.fn = {
     unstrictCSP,
+    formToObj,
+    objToForm,
     stringify,
     skipByTag,
     nameSpace,
