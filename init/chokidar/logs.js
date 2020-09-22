@@ -44,7 +44,7 @@ module.exports = () => {
   const glob = Object.keys(mitm.argv.browser).map(x=>`${home}/${x}/**/log/**`);
 
   // Initialize watcher.
-  console.log(c.magentaBright(`log watcher:`),glob);
+  console.log(c.magentaBright(`watcher(log): ${JSON.stringify(glob)}`));
   const logWatcher = chokidar.watch(glob, {
     ignored: /\/\$\//, // ignore /$/
     persistent: true

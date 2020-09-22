@@ -1,67 +1,70 @@
 const _path = require('path');
 const c = require('ansi-colors');
 const yargs = require('yargs-parser');
-const initfn = require('./init-fn'); // must be first, init _debounce
-const cliChg = require('./cli-chg');
-const cliCmd = require('./cli-cmd');
-const routes = require('./routes');
-const helper = require('./helper');
-const logsWatch = require('./chokidar/logs');
-//const cacheWatch = require('./chokidar/cache');
-const urouteWatch = require('./chokidar/uroute');
 
-let home;
+let _home;
 const {platform, env: {HOME, HOMEPATH}} = process;
 if (platform==='win32') {
-  home = HOMEPATH;
-  if (!home.match(/^[^:]:/)) {
-    home = `${process.cwd().match(/^[^:]/)[0].toUpperCase()}:${home}`;
+  _home = HOMEPATH;
+  if (!_home.match(/^[^:]:/)) {
+    _home = `${process.cwd().match(/^[^:]/)[0].toUpperCase()}:${_home}`;
   }
 } else {
-  home = HOME;
+  _home = HOME;
 }
 
+const app = global.__app;
+const cwd = process.cwd();
+const home = _path.join(_home, '.mitm-play');
+const userroute = './**/*.js';
+
+const splitter = /([&?;,]|:\w|url|\/\w+=)/;
+const session = (new Date).toISOString().slice(0,18).replace(/[T:-]/g,''); // cli-options\fn\session.js
+const win32 = platform==='win32';
+const argv = {ommit: {},browser: {},...yargs(process.argv.slice(2))};
+const path = {app, cwd, home, userroute};
+const files = {_cache: {}, cache: [], _log: {}, log: []};
+const client = {csp: false, nohostlogs:false, postmessage: false};
+
+/**
+ * Common Global vars
+ */
 global.mitm = {
-  splitter: /([&?;,]|:\w|url|\/\w+=)/,
-  session: (new Date).toISOString().slice(0,18).replace(/[T:-]/g,''), // cli-options\fn\session.js
-  argv: {
-    ommit: {},
-    browser: {},
-    ...yargs(process.argv.slice(2))
-  },
-  win32: platform==='win32',
-  path: {
-    cwd: process.cwd(),
-    app: global.__app,
-    home: _path.join(home, '.mitm-play'),
-    userroute: './**/*.js',
-  },
-  watcher: {},
-  files: {
-    _cache: {},
-    cache: [],
-    _log: {},
-    log: []
-  },
+  splitter,
+  session,
+  client,
+  files,
+  win32,
+  path,
+  argv,
+  fn: {},
   data: {},
-  client: {
-    csp: false,
-    nohostlogs:false,
-    postmessage: false,
-  }
+  pages: {},
+  browsers: {},
+  watcher: {},
+  routes: {},
+  router: {},
+  source: {},
+  __mock: {},
+  __tag1: {},
+  __tag2: {},
+  __tag3: {},
+  __tag4: {},
+  wscmd: {},
+  cdp: {},
 };
 
 module.exports = () => {
-  const _package = require('../package.json')
+  const package = require('../package.json')
 
-  cliChg();
+  require('./cli-arg')(); // deal with cli args
   if (global.mitm.argv.help) {
-    helper(_package);
+    require('./helper')(package);
   }
 
-  initfn();
-  routes();
-  cliCmd();
+  require('./init-fn')(); // must be first, init _debounce
+  require('./routing')(); // populate mitm.fn object
+  require('./cli-cmd')(); // setup folders & clean up
   
   if (global.mitm.argv.insecure) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -69,12 +72,11 @@ module.exports = () => {
   process.env.PWDEBUG = '1';
 
   console.log(c.greenBright(JSON.stringify(global.mitm.argv, null, 2)));
-  console.log(c.green(`\nv${_package.version}\n`));
-
-  // cacheWatch();
-  logsWatch();
-
+  console.log(c.green(`\nv${package.version}\n`));
+  console.log(c.whiteBright('FILE WATCHER!'));
   //must be last or other watcher wont work
-  urouteWatch(); 
+  require('./chokidar/route')(); // file watcher for routes
+  require('./chokidar/logs')(); // file watcher for logs
+  //require('./chokidar/cache')(); // file watcher for cache
 }
 //mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -dpsr='.'

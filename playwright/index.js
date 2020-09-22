@@ -11,6 +11,7 @@ const pages = {};
 const browsers = {};
 const bcontexts = {};
 module.exports = () => {
+  console.log(c.whiteBright('RUN PLAYWRIGHT!'));
   (async () => {
     const {
       argv,
@@ -56,7 +57,7 @@ module.exports = () => {
         const _browser = require('playwright')[browserName];
         execPath = _browser.executablePath();
       }
-      console.log(c.yellow(`>> executablePath ${execPath}\n`));
+      console.log(c.yellow(`>> executablePath ${execPath}`));
       const playBrowser = playwright[browserName];
       if (argv.pristine) {
         // buggy route will not work :(
@@ -79,6 +80,7 @@ module.exports = () => {
       bcontexts[browserName] = bcontext;
       browsers[browserName] = browser;
       pages[browserName] = page;
+      console.log(c.whiteBright('RUN MITM!!!'));
       bcontext.route(/.*/, (route, request) => {
         routes({route, request, bcontext, browserName});
       });

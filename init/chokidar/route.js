@@ -20,7 +20,7 @@ module.exports = () => {
   }
   
   // Initialize watcher.
-  console.log(c.magentaBright(`userroute watcher ${userroute}`))
+  console.log(c.magentaBright(`watcher(route): ${userroute}`))
   const urouteWatcher = chokidar.watch(userroute, {
     ignored: /(^|[/\\])\../, // ignore dotfiles
     persistent: true

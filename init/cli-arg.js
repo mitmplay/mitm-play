@@ -23,10 +23,9 @@ function obj(key,id) {
 module.exports = () => {
   let {argv, path} = global.mitm;
   let [prm0, prm1] = argv._;
-
   argv.profile = false;
-  let browser, saveArgs; 
 
+  let browser, saveArgs; 
   function loadProfile(profile) {
     const _prfl = `${path.home}/argv/${profile}.js`;
     const exist = fs.existsSync(_prfl);
