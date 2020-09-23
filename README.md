@@ -635,7 +635,7 @@ $ mitm-play --help
     -D --debug           show ws messages
     -O --ommitlog        removed unnecessary console log
     -P --plugins         add chrome plugins
-    -R --rediret         set redirection: true/false/manual
+    -R --redirect        set redirection: true/false/manual
     -V --verbose         show more detail of console log
     -X --proxypac        set chromium proxypac
 
