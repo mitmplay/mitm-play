@@ -61,7 +61,7 @@ function method({general:g}) {
   return `${g.method.toLowerCase()}`;
 }
 function method2({general:g}) {
-  return g.method + (g.ext ? ` <${g.ext.toUpperCase()}> ` : '');
+  return g.method.toLowerCase() + (g.ext ? `<${g.ext}> ` : '');
 }
 function url({general:g}) {
   if (g.url.match('/log/')) {
@@ -99,7 +99,8 @@ function pth({general:g}) {
 <style>
 .td-item:hover {
   color: blue;
-  font-weight: bolder;
+  background: yellow
+  /* font-weight: bolder; */
 }
 td {
   border-bottom: 3px solid #c0d8cca1;
