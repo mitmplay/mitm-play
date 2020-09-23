@@ -3,7 +3,7 @@ const _logs = function(_silent=false) {
     'ws-receive':    _silent ? false : true,
     'ws-broadcast':  _silent ? false : true,
     'no-namespace':  _silent ? false : true,
-    'browser-reqs':  _silent ? false : true,
+    'referer-reqs':  _silent ? false : true,
     silent:  _silent ? false : false, //ok
     skip:    _silent ? false : true,
     nosocket:_silent ? false : true,

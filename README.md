@@ -559,7 +559,7 @@ _global_.config = {
     'ws-receive':   true,
     'no-namespace': true,
     'ws-broadcast': true,
-    'browser-reqs': true,
+    'referer-reqs': true,
     silent: false, //true: hide all
     skip:   false,
     nosocket:true,

@@ -92,8 +92,8 @@ module.exports =  ({route, request, browserName}) => {
             console.log(c.redBright(`>> no-namespace (${origin}${msg})`));
           }
         } else {
-          if (logs['browser-reqs']) {
-            console.log(c.redBright.italic(`>> browser-reqs (${origin}${msg})`));
+          if (logs['referer-reqs']) {
+            console.log(c.redBright.italic(`>> referer-reqs (${origin}${msg})`));
           }
         }  
       }
