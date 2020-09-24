@@ -12,65 +12,74 @@ const option = {
   minimap,
 }
 
-let element1;
-let element2;
-let element3;
+let node1;
+let node2;
+let node3;
 
-let editor1;
-let editor2;
-let editor3;
+let edit1;
+let edit2;
+let edit3;
+
+function resize(editor) {
+  return entries => {
+    const {width, height} = entries[0].contentRect
+    editor.layout({width, height})
+  }
+}
 
 onMount(async () => {
   console.log($logstore)
-  element1 = window.document.getElementById('monaco1');
-  editor1 =  window.monaco.editor.create(element1, {
+  const hdrs = JSON.parse($logstore.headers);
+  const csp3 = hdrs.CSP || {};
+  const val1 = {
     value: $logstore.headers,
     language: 'json',
     ...option,
-  });
-
-  var ro1 = new ResizeObserver(entries => {
-    const {width, height} = entries[0].contentRect
-    editor1.layout({width, height})
-  });
-  ro1.observe(element1);
-
-  element2 = window.document.getElementById('monaco2');
-  editor2 =  window.monaco.editor.create(element2, {
+  };
+  const val2 = {
     value: $logstore.response,
     language: $logstore.ext,
     ...option,
-  });
-
-  var ro2 = new ResizeObserver(entries => {
-    const {width, height} = entries[0].contentRect
-    editor2.layout({width, height})
-  });
-  ro2.observe(element2);
-
-  const obj = JSON.parse($logstore.headers);
-  if (obj.CSP) {
-    element3 = window.document.getElementById('monaco3');
-    editor3 =  window.monaco.editor.create(element3, {
-      value: JSON.stringify(obj.CSP, null, 2),
-      language: 'json',
-      ...option,
-    });
-
-    var ro3 = new ResizeObserver(entries => {
-      const {width, height} = entries[0].contentRect
-      editor3.layout({width, height})
-    });
-    ro3.observe(element3);
+  };
+  const val3 = {
+    value: JSON.stringify(csp3, null, 2),
+    language: 'json',
+    ...option,
+  };
+  if ($logstore.respHeader["content-type"].match('html')) {
+    val2.value = val2.value.
+    replace(/\\n\\n/g, '').
+    replace(/\\n/g, '\n').
+    replace(/\\t/g, '\t').
+    replace(/\\"/g, '"').
+    replace(/^"/, '').
+    replace(/"$/, '');
+    val2.language = 'html';
   }
-  const editor = {
-    editor1: editor1,
-    editor2: editor2,
-    editor3: editor3,
-  }
+
+  node1 = window.document.getElementById('monaco1');
+  node2 = window.document.getElementById('monaco2');
+  node3 = window.document.getElementById('monaco3');
+
+  edit1 =  window.monaco.editor.create(node1, val1);
+  edit2 =  window.monaco.editor.create(node2, val2);
+  edit3 =  window.monaco.editor.create(node3, val3);
+  
+  const ro1 = new ResizeObserver(resize(edit1));
+  const ro2 = new ResizeObserver(resize(edit2));
+  const ro3 = new ResizeObserver(resize(edit3));
+
+  ro1.observe(node1);
+  ro2.observe(node2);
+  ro3.observe(node3);
+
   tabstore.set({
     ...$tabstore,
-    editor,
+      editor: {
+        edit1,
+        edit2,
+        edit3,
+      },
   })
 });
 function isCSP() {
@@ -92,13 +101,11 @@ function isCSP() {
     </div>
   </div>
 </Tab>
-{#if isCSP()}
-  <Tab label="CSP">
-    <div class="view-container">
-      <div id="monaco3">
-    </div>
-  </Tab>
-{/if} 
+<Tab label="CSP">
+  <div class="view-container">
+    <div id="monaco3">
+  </div>
+</Tab>
 
 <style>
 .view-container {

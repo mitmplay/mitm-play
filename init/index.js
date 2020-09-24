@@ -24,7 +24,12 @@ const win32 = platform==='win32';
 const argv = {ommit: {},browser: {},...yargs(process.argv.slice(2))};
 const path = {app, cwd, home, userroute};
 const files = {_cache: {}, cache: [], _log: {}, log: []};
-const client = {csp: false, nohostlogs:false, postmessage: false};
+const client = {
+  csp: false,
+  noarglogs: false,
+  nohostlogs: false,
+  postmessage: false,
+};
 
 /**
  * Common Global vars

@@ -73,7 +73,7 @@ function url({general:g}) {
   }
 }
 function pth({general:g}) {
-  if (g.url.match('/log/')) {
+  if ($client.noarglogs || g.url.match('/log/')) {
     return '';
   } else {
     const parms = g.url.split('?')[1];
