@@ -2,6 +2,7 @@ const _path = require('path');
 const fs = require('fs-extra');
 const fg = require('fast-glob');
 const c = require('ansi-colors');
+const prompt = require('prompt-sync')();
 
 module.exports = () => {
   let {
@@ -44,6 +45,23 @@ module.exports = () => {
       route = route.replace(/^\..\//, `${cwd}/../`);
     }
   }
+
+  if (!fs.pathExistsSync(route)) {
+    const pth = `${home(`~/user-route`)}/google.com`;
+    const src = `${path.app}/user-route/google.com/index.js`;
+    const n = prompt('\nCreate ~/user-route/google.com route (Y/n)? ');
+    
+    if (n!=='' && n.toLowerCase()!=='y') {
+      console.log('Please provide correct "route" folder using -r option');
+      process.exit()  
+    } else {
+      route = home(`~/user-route`);
+      console.log('PATH', {src, pth})
+      fs.ensureDirSync(pth);
+      fs.copyFileSync(src, `${pth}/index.js`);
+    }
+  }
+
   route = route.replace(/\\/g, '/');
   argv.route = route;
 
