@@ -1,6 +1,6 @@
 const _path = require('path');
 const c = require('ansi-colors');
-const setlogs = require('./setlogs');
+const setlogs = require('../fn/setlogs');
 const namespaces = {};
 
 const load = function(path) {

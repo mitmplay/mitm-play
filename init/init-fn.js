@@ -17,7 +17,6 @@ const wsclient = require('./fn/wsclient');
 const debounce = require('./fn/debounce');
 const session = require('./fn/session');
 const wsmitm = require('./fn/wsmitm');
-const loadJS = require('./fn/loadJS');
 const clear = require('./fn/clear');
 const tag4 = require('./fn/tag4');
 
@@ -38,7 +37,6 @@ module.exports = () => {
     toRegex,
     session,
     wsmitm,
-    loadJS,
     clear,
     hello,
     tilde,

@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const fg = require('fast-glob');
 const c = require('ansi-colors');
 const prompt = require('prompt-sync')();
+const loadJS = require('./chokidar/loadJS');
 
 module.exports = () => {
   let {
@@ -10,7 +11,6 @@ module.exports = () => {
     fn: {
       home,
       clear,
-      loadJS,
       toRegex,
     }
   } = global.mitm;

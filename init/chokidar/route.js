@@ -2,13 +2,13 @@ const c = require('ansi-colors');
 const fg = require('fast-glob');
 const chokidar = require('chokidar');
 const _broadcast = require('./broadcast');
+const loadJS = require('./loadJS');
 
 const broadcast = _broadcast('route');
 
 module.exports = () => {
   const {userroute} = global.mitm.path;
   const files = fg.sync([userroute]);
-  const {loadJS} = global.mitm.fn;
 
   function updateJS(path, msg) {
     loadJS(path, msg, broadcast);
