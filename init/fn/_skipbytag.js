@@ -1,6 +1,6 @@
 const c = require('ansi-colors');
 
-function skipByTag(match, typ) {
+function _skipByTag(match, typ) {
     let tags;
     const {namespace, key, url} = match;
     const {__tag1, __tag3} = global.mitm;
@@ -22,4 +22,4 @@ function skipByTag(match, typ) {
     return false;
   }
   
-module.exports = skipByTag;
+module.exports = _skipByTag;

@@ -5,10 +5,10 @@ const {matched,searchFN} = _match;
 function chgRequest(reqs, _3d) {
   const search = searchFN('request', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {router, fn: {skipByTag}} = global.mitm;
+  const {router, fn: {_skipByTag}} = global.mitm;
   const {logs} = router._global_.config;
 
-  let result = match && !skipByTag(match, 'request');
+  let result = match && !_skipByTag(match, 'request');
   if (result) {
     const {hidden, request} = match.route;
     if (logs.request) {

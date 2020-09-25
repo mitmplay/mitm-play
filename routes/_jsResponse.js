@@ -6,10 +6,10 @@ const {matched,searchFN} = _match;
 function jsResponse(reqs, responseHandler, _3d) {
   const search = searchFN('js', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {router, fn: {skipByTag}} = global.mitm;
+  const {router, fn: {_skipByTag}} = global.mitm;
   const {logs} = router._global_.config;
 
-  if (match && !skipByTag(match, 'js')) {
+  if (match && !_skipByTag(match, 'js')) {
     const {response} = match.route;
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`;

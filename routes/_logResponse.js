@@ -12,10 +12,10 @@ const {matched,searchFN} = _match;
 function logResponse(reqs, responseHandler, _3d, cache) {
   const search = searchFN('log', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
-  const {router, fn: {skipByTag}} = global.mitm;
+  const {router, fn: {_skipByTag}} = global.mitm;
   const {logs} = router._global_.config;
 
-  if (match && !skipByTag(match, 'log')) {
+  if (match && !_skipByTag(match, 'log')) {
     const {hidden, log, response} = match.route;
     const stamp = (new Date).toISOString().replace(/[:-]/g, '');
     responseHandler.push((resp, reqs) => {
