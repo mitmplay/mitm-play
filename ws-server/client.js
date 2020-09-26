@@ -76,9 +76,8 @@ On browser console type "ws"`;
     }
   }
 
-  async function _screenshot(data, {path, browsername}) {
-    const browser = global.mitm.browsers[browsername];
-    const page = await browser.currentTab();
+  async function _screenshot(data, {path, browser}) {
+    const page = await global.mitm.browsers[browser].currentTab();
     const err = await fs.ensureFile(path);
     if (err) {
       console.log(c.redBright('(*rrror saving screenshot*)'), path)
@@ -88,7 +87,6 @@ On browser console type "ws"`;
         await page.screenshot({path});
       } catch (error) {
         console.log(c.redBright('(*rrror screenshot*)'), error);
-        // debugger
       }
     }
   }
