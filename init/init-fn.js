@@ -3,46 +3,50 @@ const fg = require('fast-glob');
 const c = require('ansi-colors');
 const chokidar = require('chokidar');
 
-const {routeSet, toRegex} = require('./fn/route-set');
+const {routeSort} = require('./chokidar/loadJS');
+const {_routeSet, toRegex} = require('./fn/_route-set');
 const {formToObj, objToForm} = require('./fn/form');
-const {exec, execFile} = require('./fn/exec-file');
+const {exec, execFile} = require('./fn/_exec-file');
 const {tilde, home} = require('./fn/tildehome');
-const unstrictCSP = require('./fn/unstrictCSP');
 const _skipByTag = require('./fn/_skipbytag');
-const nameSpace = require('./fn/namespace');
-const stringify = require('./fn/stringify');
-const tldomain = require('./fn/tldomain');
-const wsclient = require('./fn/wsclient');
-const debounce = require('./fn/debounce');
-const session = require('./fn/session');
-const wsmitm = require('./fn/wsmitm');
-const clear = require('./fn/clear');
+const _nameSpace = require('./fn/_namespace');
+const _stringify = require('./fn/_stringify');
+const _tldomain = require('./fn/_tldomain');
+const _wsclient = require('./fn/_wsclient');
+const _debounce = require('./fn/_debounce');
+const relaxCSP = require('./fn/relaxCSP');
+const _session = require('./fn/_session');
+const _wsmitm = require('./fn/_wsmitm');
+const _clear = require('./fn/_clear');
 const _tag4 = require('./fn/_tag4');
 
 module.exports = () => {
-  global.mitm.fn = {
-    _skipByTag,
-    _tag4,
-    unstrictCSP,
-    formToObj,
-    objToForm,
-    stringify,
-    nameSpace,
+  global.mitm.lib = {
+    routeSort,
     chokidar,
-    tldomain,
-    wsclient,
-    routeSet,
     execFile,
-    debounce,
-    toRegex,
-    session,
-    wsmitm,
-    clear,
-    tilde,
-    home,
     exec,
     fg,
     fs,
     c,
+  };
+  global.mitm.fn = {
+    _nameSpace,
+    _stringify,
+    _skipByTag,
+    _debounce,
+    _routeSet,
+    _tldomain,
+    _wsclient,
+    _session,
+    _wsmitm,
+    _clear,
+    _tag4,
+    formToObj,
+    objToForm,
+    relaxCSP,
+    toRegex,
+    tilde,
+    home,
   }
 }

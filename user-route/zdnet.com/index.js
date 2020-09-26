@@ -21,7 +21,7 @@ const route = {
   url: 'https://www.zdnet.com/topic/developer/',
   html: {
     // relax CSP rules
-    'zdnet.com': {response: global.mitm.fn.unstrictCSP}
+    'zdnet.com': {response: global.mitm.fn.relaxCSP}
   },  
   skip: [
     // skip error `request back` to browser to handle it

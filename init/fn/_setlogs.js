@@ -19,7 +19,7 @@ const _logs = function(_silent=false) {
   }
 }
 
-function setlogs() {
+function _setlogs() {
   const {_global_: _g1} = global.mitm.__tag2;
   const {_global_: _g2} = global.mitm.routes;
   const {_global_: _g3} = global.mitm.router;
@@ -49,4 +49,4 @@ function setlogs() {
   }  
 }
 
-module.exports = setlogs;
+module.exports = _setlogs;

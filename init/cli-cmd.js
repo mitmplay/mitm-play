@@ -10,7 +10,7 @@ module.exports = () => {
     argv,
     fn: {
       home,
-      clear,
+      _clear,
       toRegex,
     }
   } = global.mitm;
@@ -139,7 +139,7 @@ module.exports = () => {
   }
   delete argv.url;
 
-  clear();
+  _clear();
 
   if (argv.save) {
     const { save,...rest } = argv;

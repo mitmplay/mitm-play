@@ -17,7 +17,7 @@ describe('fetch.js - extract', () => {
   test('return object keys without \'_\'', () => {
     const request = {
       url:      () => 'http://google.com',
-      methods:  () => 'GET',
+      method:   () => 'GET',
       headers:  () => [{'content-type': 'text/css'}],
       postData: () => null
     }
@@ -53,7 +53,7 @@ describe('fetch.js - fetch', () => {
     }
 
     process.env.HTTP_PROXY = 'http://proxy.com/lah/';
-    const result = fetch(routeMock, options, handler)
+    const result = fetch(routeMock, 'chromium', options, handler)
     expect(result).toBe(undefined);
   })
 
@@ -77,7 +77,7 @@ describe('fetch.js - fetch', () => {
 
     delete process.env.HTTP_PROXY;
     process.env.http_proxy = 'http://proxy.com/lah/';
-    const result = fetch(routeMock, options, handler)
+    const result = fetch(routeMock, 'chromium', options, handler)
     expect(result).toBe(undefined);
   })
 
@@ -98,7 +98,7 @@ describe('fetch.js - fetch', () => {
       proxy: 'http://proxy.com/lah/',
       url,
     }
-    const result = fetch(routeMock, options, handler)
+    const result = fetch(routeMock, 'chromium', options, handler)
     expect(result).toBe(undefined);
   })
 })

@@ -1,17 +1,22 @@
+require('../../init/init-ap');
+const {routeSort} = require('../../init/chokidar/loadJS');
+const {_routeSet} = require('../../init/fn/_route-set');
+
 global.mitm = {
+  ...global.mitm,
   routes: require('../__fixture__/routes'),
-  router: {},
-  data: {},
-  argv: {},
   fn: {
-    tldomain: require('../../init/fn/tldomain'),
-    routeSet: require('../../init/fn/route-set'),
-    nameSpace: require('../../init/fn/namespace'),
+    _routeSet,
+    _clear: () =>{},
+    _nameSpace: require('../../init/fn/_namespace'),
+    _tldomain : require('../../init/fn/_tldomain'),
+    _tag4     : require('../../init/fn/_tag4'),
   }
 };
-
-global.mitm.fn.routeSet(global.mitm.routes['_global_'], '_global_', true);
-global.mitm.fn.routeSet(global.mitm.routes['google.com'], 'google.com', true);
+const {routes} = global.mitm;
+_routeSet(routes['_global_'], '_global_', true);
+_routeSet(routes['google.com'], 'google.com', true);
+routeSort();
 
 const {
   searchArr,

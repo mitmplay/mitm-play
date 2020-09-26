@@ -1,7 +1,7 @@
 const c = require('ansi-colors');
 const rgxDomain = /^\w+:\/\/([\w-.]+)/;
 
-function tldomain(fullpath) {
+function _tldomain(fullpath) {
   if (typeof(fullpath)!=='string' || fullpath.match(/^chrome/)) {
     return fullpath;
   }
@@ -9,9 +9,9 @@ function tldomain(fullpath) {
   if (match) {
     return match[1];
   } else {
-    console.log(c.redBright(`>> Error tldomain ${fullpath}`));
+    console.log(c.redBright(`>> Error _tldomain ${fullpath}`));
     return '**tld-error**';
   }
 }
 
-module.exports = tldomain;
+module.exports = _tldomain;

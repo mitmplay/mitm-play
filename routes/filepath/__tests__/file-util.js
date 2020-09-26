@@ -78,7 +78,7 @@ describe('file-util.js - filename - function', () => {
       route: {}
     }
     const result = filename(match);
-    expect(result).toBe('/one/two/three/l');
+    expect(result).toBe('/one/two/three/l.json');
   })
 })
 
@@ -86,7 +86,9 @@ describe('file-util.js - root - function', () => {
   test('return file root with group', () => {
     global.mitm = {
       argv: { group: 'one'},
-      home: '~',
+      path: {
+        home: '~',
+      }
     };
     const reqs = {
       browserName: 'firefox',
@@ -97,7 +99,9 @@ describe('file-util.js - root - function', () => {
   test('return file root without group', () => {
     global.mitm = {
       argv: {},
-      home: '~',
+      path: {
+        home: '~',
+      }
     };
     const reqs = {
       browserName: 'firefox',

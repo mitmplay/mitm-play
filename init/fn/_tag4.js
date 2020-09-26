@@ -1,5 +1,5 @@
-const setlogs = require('./setlogs');
-const typs = require('./typs');
+const _setlogs = require('./_setlogs');
+const _typs = require('./_typs');
 /**
  * update global.mitm.__tag4 to contain all namespaces which having tags
  * if namespace contain only typTags, it will having empty object 
@@ -8,7 +8,7 @@ const typs = require('./typs');
  * 
  * @param {namespace} _ns 
  */
-const {typC, typA, typO} = typs;
+const {typC, typA, typO} = _typs;
 const typlist = Object.keys({
   ...typC,
   ...typA,
@@ -57,7 +57,7 @@ const tags = function(_ns) {
   } else {
     global.mitm.__tag4 = tag4;
   }
-  setlogs();
+  _setlogs();
 }
 
 module.exports = tags;

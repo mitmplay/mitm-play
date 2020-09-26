@@ -1,13 +1,13 @@
 const c = require('ansi-colors');
-const {fn: {tldomain,nameSpace}} = global.mitm;
+const {fn: {_tldomain,_nameSpace}} = global.mitm;
 
 function thirdparty({url, headers}) {
   const {origin, referer} = headers;
-  const domain = tldomain(url);
+  const domain = _tldomain(url);
 
-  if (!nameSpace(domain)) {
-    if (origin  && nameSpace((new URL(origin).host))) return;
-    if (referer && nameSpace((new URL(referer).host))) return;
+  if (!_nameSpace(domain)) {
+    if (origin  && _nameSpace((new URL(origin).host))) return;
+    if (referer && _nameSpace((new URL(referer).host))) return;
     return true;
   }
 }

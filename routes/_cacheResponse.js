@@ -58,7 +58,7 @@ function cacheResponse(reqs, responseHandler, _3d) {
         }
         if (session) {
           const path = session===true ? '' : session;
-          global.mitm.fn.session(match.host, path);
+          global.mitm.fn._session(match.host, path);
           global.mitm._session_ = true;
         }
         if (setCookie && global.mitm.argv.cookie) {
@@ -92,7 +92,7 @@ function cacheResponse(reqs, responseHandler, _3d) {
         if (ctype(match, resp)) {
           if (session) {
             const path = session===true ? '' : session;
-            global.mitm.fn.session(match.host, path);
+            global.mitm.fn._session(match.host, path);
             global.mitm._session_ = true;
           }
           fpath1 = `${fpath1}.${_ext(resp)}`;

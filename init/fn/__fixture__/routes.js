@@ -1,12 +1,13 @@
 const hello = () => {};
 
 const routes = {
-  '_global_': {
+  _global_: {
     mock: {
       // '/mitm-play/websocket.js': {
       //   resp() {return {}},
       // },
-    }
+    },
+    config: {},
   },
   'google.com': {
     title: 'Search - google',

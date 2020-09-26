@@ -1,5 +1,7 @@
 const _path = require('path');
+const fs = require('fs-extra');
 const c = require('ansi-colors');
+const _debounce = require('../fn/_debounce');
 const namespaces = {};
 
 const load = function(path) {
@@ -22,10 +24,10 @@ function sort(obj) {
   return newobj;
 }
 
-const resort = global._debounce(function(fn) {
-  const {routes: {_global_}, fn: {routeSet}} = global.mitm;
+const routeSort = function(fn) {
+  const {routes: {_global_}, fn: {_routeSet}} = global.mitm;
   if (namespaces._global_===undefined) {
-    routeSet(_global_, '_global_');
+    _routeSet(_global_, '_global_');
   }
   let keys = Object.keys(global.mitm.routes);
   keys = keys.sort(function(a, b) {
@@ -83,13 +85,15 @@ const resort = global._debounce(function(fn) {
     }
   }
   global.mitm.__tag1 = sort(tag1);
-  global.mitm.fn.clear();
+  global.mitm.fn._clear();
   global.mitm.fn._tag4();
   fn && fn();
-}, 900, 'clear');
+}
+
+const resort = _debounce(routeSort, 900, 'clear');
 
 const loadJS = function(path, msg, fn) {
-  const {fs,routeSet} = global.mitm.fn;
+  const {_routeSet} = global.mitm.fn;
   msg && console.log(msg);
   try {
     path = _path.normalize(path);
@@ -97,7 +101,7 @@ const loadJS = function(path, msg, fn) {
     // domain = domain.replace(/~/,'[^.]*');
     const route = {path, ...load(path)};
     namespaces[domain] = true;
-    routeSet(route, domain, true);
+    _routeSet(route, domain, true);
     fs.readFile(path, "utf8", function(err, data) {
       if (err) {
         console.log(c.redBright('Error read source file'), err);
@@ -111,5 +115,8 @@ const loadJS = function(path, msg, fn) {
     process.exit(1);
   }
 }
+
 loadJS.load = load;
+loadJS.routeSort = routeSort;
+
 module.exports = loadJS;

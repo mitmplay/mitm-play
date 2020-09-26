@@ -1,7 +1,6 @@
 const c = require('ansi-colors');
-const stringify = require('./stringify');
-const logs = require('./setlogs');
-const typs = require('./typs');
+const _stringify = require('./_stringify');
+const typs = require('./_typs');
 
 const {typC, typA, typO} = typs;
 
@@ -13,7 +12,7 @@ function toRegex(str, flags='') {
 }
 const fkeys = x=>x!=='tags' && x!=='contentType';
 
-function routeSet(r, namespace, print=false) {
+function _routeSet(r, namespace, print=false) {
   const {routes, __mock} = global.mitm;
   routes[namespace] = r;
   if (namespace==='_global_') {
@@ -125,13 +124,13 @@ function routeSet(r, namespace, print=false) {
     }
   }
   if (!global.mitm.data.nolog && global.mitm.argv.verbose) {
-    const msg = `>> ${namespace}\n${stringify(routes[namespace])}`;
+    const msg = `>> ${namespace}\n${_stringify(routes[namespace])}`;
     print && console.log(c.blueBright(msg));  
   }
   return r;
 }
 
 module.exports = {
-  routeSet,
+  _routeSet,
   toRegex,
 };

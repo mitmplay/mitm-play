@@ -2,7 +2,7 @@ const c = require('ansi-colors');
 const _match = require('./match');
 const {script_src} = require('./inject');
 const {matched,searchKey, searchArr} = _match;
-const {fn: {tldomain,nameSpace}, router} = global.mitm;
+const {fn: {_tldomain,_nameSpace}, router} = global.mitm;
 
 function replaceCSP(csp) {
   csp = csp.replace(/default-src[^;]+;/g, '');
@@ -41,7 +41,7 @@ function addWebSocket(reqs, responseHandler, _3d) {
       }
     } else {
       responseHandler.push(resp => {
-        if (!nameSpace(url)) {
+        if (!_nameSpace(url)) {
           return;
         }
         const {headers: h, status} = resp;
@@ -50,7 +50,7 @@ function addWebSocket(reqs, responseHandler, _3d) {
         if (!redirect && contentType && contentType.match('text/html')) {
           const jsLib = matched(searchKey('jsLib'), reqs);
           const js = ['mitm.js'];
-          if (nameSpace(tldomain(url))) {
+          if (_nameSpace(_tldomain(url))) {
             js.push('macros.js');
           }
           js.push('websocket.js');

@@ -3,8 +3,8 @@ const fs = require('fs-extra');
 const rpath = require.resolve('../../ws-client');
 
 module.exports = function ({url}) {
-  const {argv, client, fn: {nameSpace}} = global.mitm;
-  const namespace = nameSpace(url);
+  const {argv, client, fn: {_nameSpace}} = global.mitm;
+  const namespace = _nameSpace(url);
   const {routes} = global.mitm;
   let macros = [];
   if (namespace && routes[namespace].macros) {

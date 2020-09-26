@@ -32,11 +32,11 @@ const domain =  __dirname.split(/\\|\//).pop();
 routes = {
   html: {
     // relax CSP rules
-    'zdnet.com': {response: global.mitm.fn.unstrictCSP}
+    'zdnet.com': {response: global.mitm.fn.relaxCSP}
   }, 
 }
 
-global.mitm.fn.routeSet(routes, domain, true)
+global.mitm.fn._routeSet(routes, domain, true)
 ```
 run `mitm-play`:
 ```js
@@ -45,7 +45,7 @@ mitm-play --su='www.zdnet.com/topic/developer/'
 ```
 Need to Identify the created `iframe` and try to empty the JS request and check request which having `error request` then skip it.
 <pre>
->> wsclients: [
+>> _wsclients: [
   'www.zdnet.com:window',
   'www.lightboxcdn.com:iframe',
   'securepubads.g.doubleclick.net:iframe',
@@ -114,7 +114,7 @@ routes = {
   url: 'https://www.zdnet.com/topic/developer/',
   html: {
     // relax CSP rules
-    'zdnet.com': {response: global.mitm.fn.unstrictCSP}
+    'zdnet.com': {response: global.mitm.fn.relaxCSP}
   },  
   skip: [
     // skip error `request back` to browser to handle it
@@ -133,5 +133,5 @@ routes = {
     'zdnet4.cbsistatic.com': `=>${css}`
   },
 }
-global.mitm.fn.routeSet(routes, domain, true)
+global.mitm.fn._routeSet(routes, domain, true)
 ```

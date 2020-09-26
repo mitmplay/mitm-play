@@ -17,13 +17,13 @@ module.exports = () => {
   
   app.use(express.static(global.mitm.path.home));
   app.get('/mitm-play/mitm.js', (req, res) => {
-    const _body = global.mitm.fn.wsmitm(req);
+    const _body = global.mitm.fn._wsmitm(req);
     res.type('.js');
     res.send(_body);
   })
   
   app.get('/mitm-play/websocket.js', (req, res) => {
-    const _body = global.mitm.fn.wsclient();
+    const _body = global.mitm.fn._wsclient();
     res.type('.js');
     res.send(_body);
   })
@@ -47,7 +47,7 @@ module.exports = () => {
     client._page = `${host}:${page}`;
   
     if (page==='window' && !global.mitm._session_) {
-      global.mitm.fn.session(host);
+      global.mitm.fn._session(host);
     }
 
     function incoming(data) {

@@ -1,4 +1,4 @@
-const {fn: {home, nameSpace}} = global.mitm;
+const {fn: {home, _nameSpace}} = global.mitm;
 
 function typTags(typ, namespace) {
   const {routes, __tag4} = global.mitm;
@@ -16,7 +16,7 @@ const searchArr = ({typ: typs, url}) => {
   const {router,routes} = global.mitm;
 
   return function(nspace) {
-    const namespace = nameSpace(nspace);
+    const namespace = _nameSpace(nspace);
     if (!namespace) {
       return;
     }
@@ -40,7 +40,7 @@ const searchFN = (typs, {url}) => {
   const {router,routes, __tag3} = global.mitm;
 
   return function search(nspace) {
-    const namespace = nameSpace(nspace);
+    const namespace = _nameSpace(nspace);
     if (!namespace) {
       return;
     }
@@ -107,7 +107,7 @@ const searchKey = key => {
   const {router,routes} = global.mitm;
 
   return function search(nspace) {
-    const namespace = nameSpace(nspace);
+    const namespace = _nameSpace(nspace);
     if (!namespace) {
       return;
     }
@@ -118,14 +118,14 @@ const searchKey = key => {
 
 const matched = (search, {url, headers}) => {
   //match to domain|origin|referer|_global_
-  const {tldomain} = global.mitm.fn;
+  const {_tldomain} = global.mitm.fn;
   const {origin, referer} = headers;
 
-  let domain = tldomain(url);
+  let domain = _tldomain(url);
   let match = search(domain);
 
   if (!match && (origin || referer)) {
-    let orref = tldomain(origin || referer);
+    let orref = _tldomain(origin || referer);
     match = search(orref);
   } 
   if (!match) {

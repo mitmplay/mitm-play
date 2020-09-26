@@ -15,19 +15,19 @@ const autoclick = () => {
 };
 
 module.exports = () => {    
-  const {argv, fn: {tldomain,nameSpace}} = global.mitm;
+  const {argv, fn: {_tldomain,_nameSpace}} = global.mitm;
 
   const mock = {
     '/mitm-play/mitm.js': {
       response: resp => {
-        resp.body = global.mitm.fn.wsmitm(resp);
+        resp.body = global.mitm.fn._wsmitm(resp);
         resp.headers['content-type'] = 'application/javascript';
       },
     },
     '/mitm-play/macros.js': {
       response: resp => {
         let global = '', body = '';
-        const namespace = nameSpace(tldomain(resp.url));
+        const namespace = _nameSpace(_tldomain(resp.url));
         if (namespace) {
           const path = `${argv.route}/${namespace}/macros.js`;
           if (fs.existsSync(path)) {
@@ -51,7 +51,7 @@ ${body}`;
     },
     '/mitm-play/websocket.js': {
       response: resp => {
-        resp.body = global.mitm.fn.wsclient();
+        resp.body = global.mitm.fn._wsclient();
         resp.headers['content-type'] = 'application/javascript';
       },
     },
