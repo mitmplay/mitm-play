@@ -76,8 +76,8 @@ On browser console type "ws"`;
     }
   }
 
-  async function _screenshot(data, {path, browser}) {
-    const browser = global.mitm.browsers[browser];
+  async function _screenshot(data, {path, browsername}) {
+    const browser = global.mitm.browsers[browsername];
     const page = await browser.currentTab();
     const err = await fs.ensureFile(path);
     if (err) {
