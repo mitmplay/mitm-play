@@ -31,7 +31,7 @@ function resetCookies(setCookie) {
   return cookies;
 }
 
-function cacheResponse(reqs, responseHandler, _3d) {
+const cacheResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
   const {router, fn: {_skipByTag, tilde}} = global.mitm;
@@ -48,11 +48,8 @@ function cacheResponse(reqs, responseHandler, _3d) {
     if (fs.existsSync(fpath2)) {
       // get from cache
       try {
-        const {
-          setCookie,
-          general: {status},
-          respHeader: headers,
-        } = JSON.parse(fs.readFileSync(fpath2));
+        const json = JSON.parse(await fs.readFile(fpath2));
+        const {setCookie,general:{status},respHeader:headers} = json;
         if (!ctype(match, {headers})) {
           return {match: undefined, resp};
         }
@@ -72,9 +69,9 @@ function cacheResponse(reqs, responseHandler, _3d) {
             } else {
               console.log(c.greenBright(match.log));
             }
-          }  
-        }
-        const body = fs.readFileSync(fpath1);
+          }
+        }  
+        const body = await fs.readFile(fpath1);
         resp = {url, status, headers, body};
         if (response) {
           resp2 = response(resp);
@@ -83,7 +80,7 @@ function cacheResponse(reqs, responseHandler, _3d) {
         remote = false;  
       } catch (error) {
         console.log(c.red(`>> cache (${tilde(fpath1)})`));
-        console.log(c.red('   Error in JSON.parse(...)'));
+        console.log(c.red(`   Error in ${error}`));
       }
     }
     if (remote) {

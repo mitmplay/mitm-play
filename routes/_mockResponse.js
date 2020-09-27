@@ -18,7 +18,7 @@ const mock = ({url}) => {
   }
 };
 
-function mockResponse({reqs, route}, _3d) {
+const mockResponse = async function ({reqs, route}, _3d) {
   const search = searchFN('mock', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
   const {fn: {_skipByTag, home}, argv, routes, router} = global.mitm;
@@ -53,7 +53,7 @@ function mockResponse({reqs, route}, _3d) {
               const workspace = match.workspace || ws;
               fpath = workspace ? `${workspace}/${file}` : file;  
             }
-            resp.body = `${fs.readFileSync(home(fpath))}`;
+            resp.body = `${await fs.readFile(home(fpath))}`;
             resp.headers['content-type'] = xtype[ext[1]];
           } else {
             console.log(c.redBright('>> ERROR: Need a proper file extension'));

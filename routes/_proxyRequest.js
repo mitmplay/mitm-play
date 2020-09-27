@@ -1,6 +1,6 @@
 const {searchArr, matched} = require('./match');
 
-function proxyRequest(reqs, _3d) {
+const proxyRequest = async function (reqs, _3d) {
   const {url} = reqs;
   const search1 = searchArr({typ: 'noproxy', url});
   const search2 = searchArr({typ: 'proxy', url});

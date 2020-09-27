@@ -22,7 +22,7 @@ const _resp = {
   body: ''
 };
 
-module.exports =  ({route, request, browserName}) => {
+module.exports = async ({route, request, browserName}) => {
   const {router, argv: {nosocket, proxy}} = global.mitm;
   const reqs = extract({route, request, browserName});
   const {logs} = router._global_.config;
@@ -34,7 +34,7 @@ module.exports =  ({route, request, browserName}) => {
   }
 
   const _3ds = _3rdparties(reqs);
-  const skip = _skipResponse(reqs, _3ds);
+  const skip = await _skipResponse(reqs, _3ds);
   const {origin, pathname} = new URL(reqs.url);
   if (skip) {
     if (logs.skip) {
@@ -45,35 +45,35 @@ module.exports =  ({route, request, browserName}) => {
     return;
   }
 
-  if (_mockResponse({reqs, route}, _3ds)) {
+  if (await _mockResponse({reqs, route}, _3ds)) {
     return;
   }
 
-  if (proxy && _proxyRequest(reqs, _3ds)) {
+  if (proxy && await _proxyRequest(reqs, _3ds)) {
     reqs.proxy = proxy;
   }
 
   const responseHandler = [];
   //--resp can be undefined or local cached & can skip logs (.nolog)
-  let {match, resp} = _cacheResponse(reqs, responseHandler, _3ds);
+  let {match, resp} = await _cacheResponse(reqs, responseHandler, _3ds);
 
   //--order is important and log must not contain the body modification
-  _logResponse (reqs, responseHandler, _3ds, match);
-  _htmlResponse(reqs, responseHandler, _3ds);
-  _jsonResponse(reqs, responseHandler, _3ds);
-  _cssResponse (reqs, responseHandler, _3ds);
-  _jsResponse  (reqs, responseHandler, _3ds);
-  _chgResponse (reqs, responseHandler, _3ds);
+  await _logResponse (reqs, responseHandler, _3ds, match);
+  await _htmlResponse(reqs, responseHandler, _3ds);
+  await _jsonResponse(reqs, responseHandler, _3ds);
+  await _cssResponse (reqs, responseHandler, _3ds);
+  await _jsResponse  (reqs, responseHandler, _3ds);
+  await _chgResponse (reqs, responseHandler, _3ds);
 
   if (!nosocket) {
     //--inject websocket client to html
-    _addWebSocket(reqs, responseHandler, _3ds);
+    await _addWebSocket(reqs, responseHandler, _3ds);
   }
 
   if (resp) {
     Events(responseHandler, resp, reqs, route);
   } else {
-    const rqs2 = _chngRequest(reqs, _3ds);
+    const rqs2 = await _chngRequest(reqs, _3ds);
     if (rqs2) {
       const {headers} = rqs2;
       const msg = JSON.stringify({headers});

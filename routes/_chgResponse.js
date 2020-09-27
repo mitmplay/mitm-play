@@ -5,7 +5,7 @@ const {ctype} = require('./content-type');
 
 const {matched,searchFN} = _match;
 
-function allRequest(reqs, responseHandler, _3d) {
+const allRequest = async function (reqs, responseHandler, _3d) {
   const search = searchFN('response', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
   const {router, fn: {_skipByTag}} = global.mitm;

@@ -23,7 +23,7 @@ const headerchg = headers => {
   }
 }
 
-function addWebSocket(reqs, responseHandler, _3d) {
+const addWebSocket = async function (reqs, responseHandler, _3d) {
   const {url, headers} = reqs;
   const accpt = headers.accept+'';
   const {origin, referer} = headers;

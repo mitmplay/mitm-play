@@ -9,7 +9,7 @@ const fpathflat = require('./filepath/fpath-flat');
 
 const {matched,searchFN} = _match;
 
-function logResponse(reqs, responseHandler, _3d, cache) {
+const logResponse = async function (reqs, responseHandler, _3d, cache) {
   const search = searchFN('log', reqs);
   const match = _3d ? search('_global_') : matched(search, reqs);
   const {router, fn: {_skipByTag}} = global.mitm;
