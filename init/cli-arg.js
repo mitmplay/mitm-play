@@ -79,7 +79,6 @@ module.exports = () => {
 
   argsChg('D', 'debug');
   argsChg('O', 'ommitlog');
-  argsChg('P', 'plugins');
   argsChg('R', 'redirect');
   argsChg('V', 'verbose');
   argsChg('X', 'proxypac');

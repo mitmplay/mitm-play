@@ -24,21 +24,20 @@ module.exports = () => {
       let page, browser, bcontext;
       
       if (browserName==='chromium') {
+        const {fn: {flist}, path: {userroute}} = global.mitm;
+        const ppath = userroute.split('**')[0]+'_plugins_';
         options.excludeSwitches = ['enable-automation'];
+        const plugins = flist(ppath);
         const p = `${global.__app}/plugins`;
         let path = `${process.cwd()}/`;
-        if (argv.plugins) {
-          path += argv.plugins.replace(/,/g, path);
-          path += `${p}/chrome`;
+        if (plugins.length) {
+          path = `${ppath}/`;
+          path += plugins.join(`,${path}`);
+          path += `,${p}/chrome`;
         } else {
           path = `${p}/chrome`;
         }
-        if (argv.verbose) {
-          console.log('>> Plugins path', path.split(','));
-        }
-        if (argv.dummy) {
-          path += `,${p}/dummy`;
-        }
+        console.log('>> Plugins:', path.split(','));
         args.push(`--disable-extensions-except=${path}`);
         args.push( `--load-extension=${path}`);
         if (argv.proxypac) {

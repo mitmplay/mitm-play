@@ -23,7 +23,6 @@ module.exports = (_package) => {
 
     -D --debug    \t show ws messages
     -O --ommitlog \t removed unnecessary console log
-    -P --plugins  \t add chrome plugins
     -R --redirect \t set redirection: true/false/manual
     -V --verbose  \t show more detail of console log
     -X --proxypac \t set chromium proxypac
