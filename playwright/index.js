@@ -25,7 +25,7 @@ module.exports = () => {
       
       if (browserName==='chromium') {
         const {fn: {flist}, path: {userroute}} = global.mitm;
-        const ppath = userroute.split('**')[0]+'_plugins_';
+        const ppath = userroute.split('*')[0]+'_plugins_';
         options.excludeSwitches = ['enable-automation'];
         const plugins = flist(ppath);
         const p = `${global.__app}/plugins`;

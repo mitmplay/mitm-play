@@ -65,7 +65,7 @@ module.exports = () => {
   route = route.replace(/\\/g, '/');
   argv.route = route;
 
-  path.userroute = `${route}/**/index.js`;
+  path.userroute = `${route}/*/index.js`;
   const files = fg.sync([path.userroute]);
   if (!files.length) {
     console.log(c.red('Routes path is incorrect'), argv.route);

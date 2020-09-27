@@ -51,9 +51,12 @@ const routeHandler = obj => {
 }
 
 onMount(async () => {
-  setTimeout(() => {
-    window.ws__send('getRoute', '', routeHandler)
-  }, 10);
+  // setTimeout(() => {
+  //   window.ws__send('getRoute', '', routeHandler)
+  // }, 10);
+  window._ws_connect.routeOnMount = () => {
+    window.ws__send('getRoute', '', routeHandler);
+  }
   chrome.storage.local.get('route', function(data) {
     data.route && (route = data.route);
   });

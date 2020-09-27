@@ -18,9 +18,12 @@ $: _json = json;
 $: _data = data;
 
 onMount(async () => {
-  setTimeout(() => {
+  // setTimeout(() => {
+  //   ws__send('getLog', '', logHandler)
+  // }, 10);
+  window._ws_connect.logOnMount = () => {
     ws__send('getLog', '', logHandler)
-  }, 10);
+  }
   chrome.storage.local.get('json', function(data) {
     data.json && (json = data.json);
   });

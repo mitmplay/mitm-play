@@ -8,7 +8,8 @@ function flist(path, file=false) {
     const fl = ls.isFile();
     return file ? fl : !fl;
   }
-  return fs.readdirSync(path).filter(filter);
+  const exist = fs.existsSync(path);
+  return exist ? fs.readdirSync(path).filter(filter) : [];
 }
 
 module.exports = flist;

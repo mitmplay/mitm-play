@@ -19,4 +19,12 @@ module.exports = () => {
 
   window._ws = ws;
   window._ws_queue = {};
+  window._ws_connect = {};
+  window._ws_connected = false;
+  ws.onopen = (data) => {
+    window._ws_connected = true;
+    for (let key in window._ws_connect) {
+      window._ws_connect[key](data);
+    }    
+  }
 }
