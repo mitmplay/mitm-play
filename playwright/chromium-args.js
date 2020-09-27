@@ -3,7 +3,7 @@
 //https://chromedriver.chromium.org/capabilities
 //page.setViewportSize({width:0, height:0});
 const args = [
-  '--disable-features=IsolateOrigins,site-per-process',
+  '--disable-features=site-per-process', // exclude:IsolateOrigins or plugins will failed! 
   '--disable-site-isolation-trials=1',
   '--disable-session-crashed-bubble',
   '--ignore-certificate-errors',
