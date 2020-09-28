@@ -5,6 +5,7 @@ module.exports = () => {
 
   require('./init-ap');
   require('./cli-arg')(); // deal with cli args
+  require('./console')(); // init console.log
   if (global.mitm.argv.help) {
     require('./helper')(package);
   }
