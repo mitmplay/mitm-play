@@ -130,8 +130,14 @@ td {
   color: green;
   font-weight: bold;
 }
+.method.put {
+  color: #7e26a7;
+}
 .method.post {
   color: #a7267f;
+}
+.method.delete {
+  color: red;
 }
 .prm {
   color: #ccb7b7;
