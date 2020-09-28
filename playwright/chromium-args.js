@@ -8,7 +8,7 @@ const args = [
   '--disable-session-crashed-bubble',
   '--ignore-certificate-errors',
   '--disable-site-isolation=1',
-  '--disable-web-security=1',
+  // '--disable-web-security=1', // some plugins still failed!
   '--disable-notifications',
   '--disable-infobars',
   '--force-dark-mode',
