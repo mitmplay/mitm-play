@@ -90,6 +90,9 @@ Redirect...
   const fetchRetry = async (url, opt, n) => {
     for (let i=1; i <= n; i++) {
       try {
+        if (global.mitm.argv.debug) {
+          console.log(c.yellowBright(`URL:${url}`));
+        }
         const resp = await _fetch(url, opt);
         okCallback(resp);
         break;

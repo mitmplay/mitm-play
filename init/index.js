@@ -5,11 +5,10 @@ module.exports = () => {
 
   require('./init-ap');
   require('./cli-arg')(); // deal with cli args
-  require('./console')(); // init console.log
   if (global.mitm.argv.help) {
     require('./helper')(package);
   }
-
+  require('./console')(); // init console.log
   require('./init-fn')(); // must be first, init _debounce
   require('./routing')(); // populate mitm.fn object
   require('./cli-cmd')(); // setup folders & clean up

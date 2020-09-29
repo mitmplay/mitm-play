@@ -31,6 +31,9 @@ module.exports = async ({route, request, browserName}) => {
   if (reqs.url.match(noURL) || reqs.url.match(wNull)) {
     route.fulfill(_resp);
     return;
+  } else if (reqs.url.match(/blob:http/)) {
+    route.continue();
+    return;
   }
 
   const _3ds = _3rdparties(reqs);

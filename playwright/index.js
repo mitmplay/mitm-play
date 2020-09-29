@@ -103,10 +103,7 @@ module.exports = () => {
       }
       let count = 0;
       for (let url of argv.urls) {
-        if (count>0) {
-          page = await browser.newPage();
-        }
-        await page.goto(url);
+        newPage(browser, page, url, count);
         count += 1;
       }
       page.on('close', () => {
@@ -114,4 +111,13 @@ module.exports = () => {
       });
     }
   })();
+}
+
+const newPage = async (browser, page, url, count) => {
+  if (count>0) {
+    const page = await browser.newPage();
+    await page.goto(url);
+  } else {
+    await page.goto(url);
+  }
 }
