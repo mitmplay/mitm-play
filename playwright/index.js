@@ -5,20 +5,35 @@ const args = require('./chromium-args');
 const _options = require('./options');
 const routes = require('../routes');
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
 const pages = {};
 const browsers = {};
 const bcontexts = {};
+const sleep = require('util').promisify(setTimeout)
+
+function currentTab(browser) {
+  browser.currentTab = async function() {
+    const pages = await browser.pages();
+    let active;
+    for (let page of pages) {
+      const hidden = await page.evaluate('document.hidden');
+      if (!hidden) {
+        active = page;
+      }
+    }
+    return active;
+  }  
+}
+
 module.exports = () => {
+  const {
+    argv,
+    fn: {home}
+  } = global.mitm;
   console.log(c.whiteBright('RUN PLAYWRIGHT!'));
+  process.env.DEBUG = argv.debug ? 'pw:api' : '';
   (async () => {
-    const {
-      argv,
-      fn: {home}
-    } = global.mitm;
     global.mitm.pages = pages;
-    global.mitm.browsers = browsers;
+    global.mitm.browsers = browsers;  
     for (let browserName in argv.browser) {
       const options = _options();
       let page, browser, bcontext;
@@ -66,41 +81,32 @@ module.exports = () => {
         page = await  browser.pages()[0];
         bcontext = browser;
       } else {
+        console.log('>> Browser option', options);
         browser = await playBrowser.launch(options);
         //const context = await browser.newContext({viewport: { height: 734, width: 800 }});
         const context = await browser.newContext({ viewport: null });
         page = await context.newPage();
         bcontext = context;
       }
+      currentTab(browser);
       if (browserName==='chromium') {
         const cdp = await page.context().newCDPSession(page);
         global.mitm.cdp = cdp;
+      } else {
+        await sleep(300);
       }
       bcontexts[browserName] = bcontext;
       browsers[browserName] = browser;
       pages[browserName] = page;
-      console.log(c.whiteBright('RUN MITM!!!'));
-      bcontext.route(/.*/, (route, request) => {
-        routes({route, request, bcontext, browserName});
-      });
-      browser.currentTab = async function() {
-        const pages = await browser.pages();
-        let active;
-        for (let page of pages) {
-          const hidden = await page.evaluate('document.hidden');
-          if (!hidden) {
-            active = page;
-          }
-        }
-        return active;
-      }
       if (browserName==='chromium' && argv.pristine===undefined) {
         await page.goto('chrome://extensions/');
         await page.click('#detailsButton');
         await page.click('#crToggle');
-      } else {
-        await sleep(400);
       }
+      console.log(c.whiteBright('RUN MITM!!!'));
+      bcontext.route(/.*/, (route, request) => {
+        routes({route, request, bcontext, browserName});
+      });
       let count = 0;
       for (let url of argv.urls) {
         newPage(browser, page, url, count);
