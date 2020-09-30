@@ -30,37 +30,66 @@ npm install -g mitm-play
 <p>
 
 ```js
-// create new folder/file: google.com/index.js & add this content:
-const googlJS = function() {
-  document.querySelectorAll('g-section-with-header').forEach(n=>n.remove())
-  document.querySelectorAll('.obcontainer').forEach(n=>n.remove())
-  document.querySelectorAll('.g-blk').forEach(n=>n.remove())
-};
-
-const {hello} = global.mitm.fn;
+// create new folder/file: ~/user-route/keybr.com/index.js & add this content:
+const css = `
+.Body-header,
+.Body-aside {
+  display: none !important;
+}`;
 
 const route = {
-  title: 'Search - google',
-  url: 'https://google.com/search?q=github+playwright',
-  html: {
-    'www.google.com/search': {
-      el: 'e_end', 
-      js: [googlJS, hello], //js will be placed at end of html body
-    },
-  }, 
-  js: {'gstatic.com': ''} //js from gstatic.com will be an empty response
+  title: 'keybr.com',
+  url: 'https://keybr.com',
+  skip: [], 
+  nosocket: [
+    'a.pub.network',
+  ],
+  'mock:remove-ads': {
+    'googletagservices.com': '',
+    'google-analytics.com': '',
+    'doubleclick.net': '',
+    'a.pub.network': '',
+  },
+  request: {
+    '/_/telemetry': {
+      request: function(reqs) {
+        reqs.body = '[ads_allow]';
+        reqs.headers['my-name'] = 'barnie';
+      }
+    }
+  },
+  cache: {
+    '/assets/': {
+      contentType: ['javascript'],
+    }
+  },
+  log: {
+    '/_/telemetry': {
+      contentType: ['json', 'text'],
+    }    
+  },
+  'css:remove-ads': {
+    '/assets/css-': `=>${css}`
+  },
 }
 module.exports = route;
 ```
 
 ```bash
 # 1st run will be to save all cli option to 'default'
-mitm-play --url='google.com/search?q=covid-19' --delete --save --route='.'
-mitm-play -u='google.com/search?q=covid-19' --dsr='.'
+mitm-play keyb --delete --save
+mitm-play -ds
 
 # next run should be simple as:
 mitm-play
 ```
+</p>
+</details>
+
+<details><summary>keybr.com</summary>
+<p>
+
+![keybr.com](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com.png)
 </p>
 </details>
 
@@ -89,35 +118,6 @@ Mitm intercept is hierarchical checking routes. First check is try to `match` do
 If the process of checking is not match, then it will fallback to `_global_` namespace to check, and the operation is the same as mention in first paragraph. 
 
 Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those type of assets, it use browser headers attributes: `origin` or `referer`, in which will scoping to the same namespace.
-
-<details><summary>Example</summary>
-<p>
-
-In below example the route is having a `js` object and the process of checking narrated as: 
-
->  when user access url that having `google.com` and having subsequent request from `gstatic.com`, if there is a JS assets, then the response will get replace with an empty string.
-
-Namespaces: `_global_`, `google.com` on nodejs global scope:
-```js
-global.mitm.route = {
-  '_global_': {
-    mock: {...}
-  },
-  'google.com': {
-    html: {
-      'www.google.com/search': {
-        el: 'e_end', // JS at end of 
-        js: [googlJS, hello], // html body
-      },
-    },
-    js: {
-      'gstatic.com': ''
-    }
-  },
-}
-```
-</p>
-</details>
 
 # Profile: ~/.mitm-play
 By default all save file are on the `~/.mitm-play` profile folder.
