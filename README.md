@@ -83,6 +83,8 @@ mitm-play -ds
 # next run should be simple as:
 mitm-play
 ```
+routing definition also create a tags: `remove-ads` and it will be listed as an option on chrome Dev-tools tab "mitm-play"/"tags" that can be enabled/disabled
+![tags](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-tags.png)
 </p>
 </details>
 
