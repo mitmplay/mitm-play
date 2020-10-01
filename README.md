@@ -84,7 +84,7 @@ mitm-play -ds
 # next run should be simple as:
 mitm-play
 ```
-routing definition also create a tags: `remove-ads` and it will be listed as an option on chrome Dev-tools tab "mitm-play"/"tags" that can be enabled/disabled.
+Routing definition above have a `remove-ads` tag, it will be shown on chrome dev-tools tab "mitm-play" child-tab "tags" as an option to enabled/disabled rules.
 
 ![tags](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-tags.png)
 </p>
@@ -93,6 +93,7 @@ routing definition also create a tags: `remove-ads` and it will be listed as an 
 <details><summary>keybr.com</summary>
 <p>
 
+on the foreground screenshot show the website without an ads, you can see the togling process on [this video.](https://youtu.be/alWyvEkzsu4)
 ![keybr.com](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com.png)
 </p>
 </details>
@@ -117,7 +118,7 @@ routing definition also create a tags: `remove-ads` and it will be listed as an 
 | `response`  | __response__ | modify resp object - call to remote server
 
 # Concept
-Mitm intercept is hierarchical checking routes. First check is try to `match` domain on the url as a namespace, `if match` then next action is to `match` url regex expression on each **type/content-type** listed on the route and `if match` again, then it will execute the handler event registered in the route.
+Mitm intercept is hierarchical checking routes. First check is try to `match` domain on the url as a namespace, `if match` then next action is to `match` url regex expression on each **type/content-type** listed on the route and `if match` again, it will execute event handler registered in the route.
 
 If the process of checking is not match, then it will fallback to `_global_` namespace to check, and the operation is the same as mention in first paragraph. 
 
