@@ -4,7 +4,8 @@
 <details><summary><b>mitm-play in action</b></summary>
 <p>
 
-![mitm-play](https://raw.githubusercontent.com/mitm-proxy/user-route/master/docs/mitm-proxy.gif)
+[![mitm-play](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-ytube.png)](https://youtu.be/alWyvEkzsu4)
+
 </p>
 </details>
 
