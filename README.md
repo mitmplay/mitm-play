@@ -875,6 +875,11 @@ Launch Chromium browser
 ```
 $ mitm-play -C  <OR>
 $ mitm-play --chromium
+
+# can be a path to Chrome installation ie on MAC
+
+$ mitm-play -C="/Applications/Google\ Chrome.app"  <OR> 
+$ mitm-play --chromium="/Applications/Google\ Chrome.app"
 ```
 </p>
 </details>

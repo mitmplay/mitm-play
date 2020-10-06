@@ -63,10 +63,12 @@ module.exports = () => {
       }
       let execPath = argv.browser[browserName];
       if (typeof(execPath)==='string') {
-        options.executablePath = home(execPath);
         if (browserName!=='chromium') {
           console.log(c.redBright('executablePath is unsupported for non Chrome!'))
+        } else if (process.platform==='darwin') {
+          execPath += '/Contents/MacOS/Google Chrome';
         }
+        options.executablePath = home(execPath);
       } else {
         const _browser = require('playwright')[browserName];
         execPath = _browser.executablePath();
