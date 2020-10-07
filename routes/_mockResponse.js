@@ -23,8 +23,12 @@ const mockResponse = async function ({reqs, route}, _3d) {
   const match = _3d ? search('_global_') : matched(search, reqs);
   const {fn: {_skipByTag, home}, argv, routes, router} = global.mitm;
 
+  const _home = /^[\t ]*~\/(.+)/;
+  const _route = /^[\t ]*\.\.\/(.+)/;
+  const _nmspace = /^[\t ]*\.\/(.+)/;
+
   if (match && !_skipByTag(match, 'mock')) {
-    const {response, file, js} = match.route;
+    let {response, file, js} = match.route;
     if (router._global_.config.logs.mock) {
       if (!match.url.match('/mitm-play/websocket')) {
         console.log(c.cyanBright(match.log));
@@ -39,14 +43,19 @@ const mockResponse = async function ({reqs, route}, _3d) {
           const resp2 = response(resp, match);
           resp2 && (resp = {...resp, ...resp2});
         } else if (file) {
+          let id = 1;
+          for (let key of match.arr.slice(1)) {
+            file = file.replace(`:${id}`, key);
+            id++;
+          }
           const ext = file.match(/\.(\w+)$/);
           if (ext) {
             let fmatch, fpath; 
-            if (fmatch = file.match(/^[\t ]*~\/(.+)/)) {
+            if (fmatch = file.match(_home)) {
               fpath = home(`~/${fmatch[1]}`);
-            } else if (fmatch= file.match(/^[\t ]*\.\.\/(.+)/)) {
+            } else if (fmatch= file.match(_route)) {
               fpath = `${argv.route}/${fmatch[1]}`;
-            } else if (fmatch = file.match(/^[\t ]*\.\/(.+)/)) {
+            } else if (fmatch = file.match(_nmspace)) {
               fpath = `${argv.route}/${match.namespace}/${fmatch[1]}`;
             } else {
               const {workspace: ws} = routes._global_;

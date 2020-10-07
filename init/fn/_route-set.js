@@ -7,7 +7,7 @@ const {typC, typA, typO} = typs;
 function toRegex(str, flags='') {
   return new RegExp(str.
     replace(/\//g, '\\/').
-    replace(/\./g, '\\.').
+    replace(/\.([^*+]|$)/g, (m,p1)=>`\\.${p1}`).
     replace(/\?/g, '\\?'), flags);
 }
 const fkeys = x=>x!=='tags' && x!=='contentType';
