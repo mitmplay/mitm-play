@@ -12,6 +12,7 @@ function ctype(match, resp) {
 const xtype = {
   js: 'application/javascript',
   json: 'application/json',
+  map: 'application/json',
   xml: 'application/xml',
   svg: 'image/svg+xml',
   webp: 'image/webp',
