@@ -31,7 +31,7 @@
     "fast-glob": "^3.2.4",
     "fs-extra": "^9.0.1",
     "make-fetch-happen": "^8.0.9",
-    "playwright": "^1.4.1",
+    "playwright": "^1.4.2",
     "prompt-sync": "^4.2.0",
     "ws": "^7.3.1",
     "yargs-parser": "^20.0.0"
