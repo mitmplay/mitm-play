@@ -1,9 +1,9 @@
 const c = require('ansi-colors');
 const _match = require('./match');
-const inject = require('./inject');
+const _inject = require('./inject');
 
 const {matched,searchFN} = _match;
-const {script_src,e_end} = inject;
+const {script_src, e_head} = _inject;
 
 const htmlResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs);
@@ -23,15 +23,16 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
         if (typeof(match.route)==='string') {
           resp.body = match.route;
         } else {        
-          if (response) {
-            const resp2 = response(resp, match);
-            resp2 && (resp = {...resp, ...resp2});
-          } else if (js) {
-            const inject = inject[el] || e_end;
+          if (js) {
+            const inject = _inject[el] || e_head;
             resp.body = inject(resp.body, js);
           }
           if (src) {     
             resp.body = script_src(resp.body, src);
+          }
+          if (response) {
+            const resp2 = response(resp, match);
+            resp2 && (resp = {...resp, ...resp2});
           }
         }
       }

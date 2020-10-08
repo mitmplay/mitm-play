@@ -415,7 +415,9 @@ html: {
   },
 },
 ```
-Insert `js` script element into specific area in html document
+Insert `js` script element into specific area in html document:
+* el: 'e_head' &nbsp; // default, no need to add `el` key
+* el: 'e_end'
 ```js
 html: {
   'www.google.com/search': {
