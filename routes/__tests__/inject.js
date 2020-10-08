@@ -15,17 +15,17 @@ const {
 
 describe('fetch.js - script_src', () => {
   test('insert <script> inside <html>', () => {
-    const result = script_src('<html><body></body>', ['test.js'])
+    const result = script_src('<html><body></body>', ['/mitm-play/test.js'])
     expect(result).toBe('<html>\n<script nonce src="/mitm-play/test.js"></script><body></body>')
   })
 
   test('insert <script> inside <head>', () => {
-    const result = script_src('<html><head></head>', ['test.js'])
+    const result = script_src('<html><head></head>', ['/mitm-play/test.js'])
     expect(result).toBe('<html><head>\n<script nonce src="/mitm-play/test.js"></script></head>')
   })
 
   test('insert <script> in the begening of `text` string', () => {
-    const result = script_src('text', ['test.js'])
+    const result = script_src('text', ['/mitm-play/test.js'])
     expect(result).toBe('<script nonce src="/mitm-play/test.js"></script>\ntext')
   })
 })
