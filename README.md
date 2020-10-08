@@ -421,8 +421,8 @@ Insert `js` script element into specific area in html document:
 ```js
 html: {
   'www.google.com/search': {
-    el: 'e_end', // JS at end of 
-    js: [googlJS, hello], // html body
+    // el: 'e_head', // JS at <head> 
+    js: [()=>console.log('Injected on Head')],
   },
 },
 ```
