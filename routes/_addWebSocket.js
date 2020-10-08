@@ -49,14 +49,14 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
         const redirect = (status+'').match(/^30\d/);
         if (!redirect && contentType && contentType.match('text/html')) {
           const jsLib = matched(searchKey('jsLib'), reqs);
-          const js = ['mitm.js'];
+          const js = ['/mitm-play/mitm.js'];
           if (_nameSpace(_tldomain(url))) {
-            js.push('macros.js');
+            js.push('/mitm-play/macros.js');
           }
-          js.push('websocket.js');
-          js.push('jslib/selector.js');
+          js.push('/mitm-play/websocket.js');
+          js.push('/mitm-play/jslib/selector.js');
           if (jsLib) {
-            js.push.apply(js, jsLib.map(x => `jslib/${x}`));
+            js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`));
           }
           resp.body = script_src(resp.body, js);
           if (global.mitm.argv.relaxcsp) {

@@ -1,7 +1,7 @@
 function script_src(body, src) {
   let el = src.map(el=>{
-    let path = el.match(/htt(p|ps):\/\//) ? '' : '/mitm-play/';
     const arr = el.match(/\.m:js/);
+    let path = '';
     if (arr) {
       path += el.replace(arr[0], '.js');
       return `<script nonce src="${path}" type="module"></script>`;
