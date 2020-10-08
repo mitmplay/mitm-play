@@ -98,6 +98,12 @@ module.exports = () => {
   if (argv.browser===undefined || Object.keys(argv.browser).length===0) {
     argv.browser = {...browser};
   }
+  for (let id in argv.browser) {
+    const browser = argv.browser[id];
+    if (typeof(browser)==='string') {
+      argv.browser[id] =browser.replace(/\\/g, '/');
+    }
+  }
 
   let {ommitlog} = argv;
   if (ommitlog) {

@@ -1,4 +1,3 @@
-const _path = require('path');
 const yargs = require('yargs-parser');
 
 let _home;
@@ -14,7 +13,7 @@ if (platform==='win32') {
 
 const app = global.__app;
 const cwd = process.cwd();
-const home = _path.join(_home, '.mitm-play');
+const home = `${_home.replace(/\\/g, '/')}/.mitm-play`;
 const userroute = './**/*.js';
 
 const splitter = /([&?;,]|:\w|url|\/\w+=)/;

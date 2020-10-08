@@ -1,4 +1,3 @@
-const _path = require('path');
 const c = require('ansi-colors');
 const playwright = require('playwright');
 const args = require('./chromium-args');
@@ -52,6 +51,7 @@ module.exports = () => {
         } else {
           path = `${p}/chrome`;
         }
+        path = path.replace(/\\/g, '/');
         console.log('>> Plugins:', path.split(','));
         args.push(`--disable-extensions-except=${path}`);
         args.push( `--load-extension=${path}`);
@@ -63,6 +63,7 @@ module.exports = () => {
       }
       let execPath = argv.browser[browserName];
       if (typeof(execPath)==='string') {
+        execPath = execPath.replace(/\\/g, '/');
         if (browserName!=='chromium') {
           console.log(c.redBright('executablePath is unsupported for non Chrome!'))
         } else if (process.platform==='darwin') {
@@ -71,13 +72,15 @@ module.exports = () => {
         options.executablePath = home(execPath);
       } else {
         const _browser = require('playwright')[browserName];
-        execPath = _browser.executablePath();
+        execPath = _browser.executablePath().replace(/\\/g, '/');
       }
-      console.log(c.yellow(`>> executablePath ${execPath}`));
+      if (browserName!=='chromium') {
+        console.log(c.yellow(`>> executablePath: ${execPath}`));
+      }
       const playBrowser = playwright[browserName];
       if (argv.pristine) {
         // buggy route will not work :(
-        const bprofile = _path.join(global.mitm.path.home, `.${browserName}`);
+        const bprofile = `${global.mitm.path.home}/.${browserName}`;
         console.log('>> Browser profile', bprofile);
         browser = await playBrowser.launchPersistentContext(bprofile, options);
         page = await  browser.pages()[0];

@@ -4,10 +4,10 @@ const chokidar = require('chokidar');
 const broadcast = require('./broadcast');
 
 const showFiles = global._debounce(broadcast('log'), 1001, 'log');
+const slash = p => p.replace(/\\/g, '/');
 
 function addLog(path) {
-  const {win32,files:{_log, log}} = global.mitm;
-  win32 && (path = path.replace(/\\/g, '/'));
+  const {files:{_log, log}} = global.mitm;
   log.push(path);
   let meta = path.replace(/\/log\/\w+/,m => `${m}/$`);
   fs.readFile(meta.replace(/.\w+$/, '.json'), (err, data) => {
@@ -31,8 +31,7 @@ function addLog(path) {
 }
 
 function delLog(path) {
-  const {win32,files:{_log, log}} = global.mitm;
-  win32 && (path = path.replace(/\\/g, '/'));
+  const {files:{_log, log}} = global.mitm;
   _log[path] && delete _log[path];
   const idx = log.indexOf(path);
   (idx>-1) && log.splice(idx,1);
@@ -40,7 +39,7 @@ function delLog(path) {
 }
 
 module.exports = () => {
-  const {home} = global.mitm.path;
+  const home = global.mitm.path.home;
   const glob = Object.keys(mitm.argv.browser).map(x=>`${home}/${x}/**/log/**`);
 
   // Initialize watcher.
@@ -51,7 +50,7 @@ module.exports = () => {
   });
 
   logWatcher // Add event listeners.
-  .on('add',    path => addLog(path))
-  .on('unlink', path => delLog(path));
+  .on('add',    p => {p = slash(p); addLog(path)})
+  .on('unlink', p => {p = slash(p); delLog(path)});
   global.mitm.watcher.logWatcher = logWatcher;
 }

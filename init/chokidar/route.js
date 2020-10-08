@@ -5,6 +5,7 @@ const _broadcast = require('./broadcast');
 const loadJS = require('./loadJS');
 
 const broadcast = _broadcast('route');
+const slash = p => p.replace(/\\/g, '/');
 
 module.exports = () => {
   const {userroute} = global.mitm.path;
@@ -29,8 +30,8 @@ module.exports = () => {
   // Something to use when events are received.
   const log = console.log.bind(console);
   urouteWatcher // Add event listeners.
-  .on('add',    path => updateJS(path, c.greenBright(`>> add route ${path}`)))
-  .on('change', path => updateJS(path,  c.cyanBright(`>> chg route ${path}`)))
-  .on('unlink', path => log(             c.redBright(`>> del route ${path}`)));
+  .on('add',    p => {p = slash(p); updateJS(p, c.greenBright(`>> add route ${p}`))})
+  .on('change', p => {p = slash(p); updateJS(p,  c.cyanBright(`>> chg route ${p}`))})
+  .on('unlink', p => {p = slash(p); log(          c.redBright(`>> del route ${p}`))});
   global.mitm.watcher.urouteWatcher = urouteWatcher;
 }
