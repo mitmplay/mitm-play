@@ -402,27 +402,35 @@ Replace **response body** with **some** value
 html: {'twitter.net': ''},
 ```
 
+Insert `js` script element into specific area in html document:
+* el: 'e_head' &nbsp; // default, no need to add `el` key
+* el: 'e_end'
+```js
+html: {
+  'https://keybr.com/': {
+    // el: 'e_head', // JS at <head> 
+    js: [()=>console.log('Injected on Head')],
+  },
+},
+```
+Insert `<script src="..."></script>` into `<head>` section
+```js
+html: {
+  'https://keybr.com/': {
+    src: ['http://localhost:/myscript.js'],
+  },
+},
+```
 Manipulate **response** with `response` *function*
 ```js
 html: {
-  'twitter.com/home': {
+  'https://keybr.com/': {
     response({status, headers, body}) {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
     tags: 'response' // enable/disable route by tags
     hidden: true, // optional - no consolo.log
-  },
-},
-```
-Insert `js` script element into specific area in html document:
-* el: 'e_head' &nbsp; // default, no need to add `el` key
-* el: 'e_end'
-```js
-html: {
-  'www.google.com/search': {
-    // el: 'e_head', // JS at <head> 
-    js: [()=>console.log('Injected on Head')],
   },
 },
 ```

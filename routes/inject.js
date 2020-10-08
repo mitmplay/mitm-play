@@ -1,10 +1,13 @@
 function script_src(body, src) {
   let el = src.map(el=>{
-    const arr = el.split(':');
-    if (arr.length>1 && arr[1]==='m') {
-      return `<script nonce src="/mitm-play/${arr[0]}" type="module"></script>`;
+    let path = el.match(/htt(p|ps):\/\//) ? '' : '/mitm-play/';
+    const arr = el.match(/\.m:js/);
+    if (arr) {
+      path += el.replace(arr[0], '.js');
+      return `<script nonce src="${path}" type="module"></script>`;
     } else {
-      return `<script nonce src="/mitm-play/${arr[0]}"></script>`;
+      path += el;
+      return `<script nonce src="${path}"></script>`;
     }
   }).join('\n');
   let b = body+'';
