@@ -22,7 +22,6 @@ module.exports = ({reqs, resp}) => {
   try {
     if (respHeader['report-to']) {
       respHeader['report-to'] = JSON.parse(respHeader['report-to']);
-      console.log(respHeader['report-to']);
     }
   } catch (error) {
     respHeader['report-to'] = 'JSON Error!';
