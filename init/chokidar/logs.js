@@ -50,7 +50,7 @@ module.exports = () => {
   });
 
   logWatcher // Add event listeners.
-  .on('add',    p => {p = slash(p); addLog(path)})
-  .on('unlink', p => {p = slash(p); delLog(path)});
+  .on('add',    p => {p = slash(p); addLog(p)})
+  .on('unlink', p => {p = slash(p); delLog(p)});
   global.mitm.watcher.logWatcher = logWatcher;
 }
