@@ -594,7 +594,7 @@ mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system re
 # CLI Options
 when entering CLI commands, `mitm-play`  support two kind of arguments: 
 
-<details><summary><b>Expand...</b></summary>
+<details><summary><b>mitm-play [args] [-options]</b></summary>
 <p>
 
 * `args`:
