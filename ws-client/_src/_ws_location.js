@@ -122,7 +122,9 @@ module.exports = () => {
       }
     }
   }
-
+  if (!window.chrome) {
+    return;
+  }
   if (!chrome.tabs) {
     document.querySelector('html').addEventListener('keydown', keybCtrl);
     window.addEventListener('urlchanged', urlChange);

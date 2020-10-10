@@ -84,17 +84,11 @@ mitm-play -ds
 # next run should be simple as:
 mitm-play
 ```
-Routing definition above have a `remove-ads` tag, it will be shown on chrome dev-tools tab "mitm-play" child-tab "tags" as an option to enabled/disabled rules.
+Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools "mitm-play" "tags" as an option to enabled / disabled rules. You can see the togling process on [this video.](https://youtu.be/alWyvEkzsu4)
 
 ![tags](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-tags.png)
-</p>
-</details>
 
-<details><summary>keybr.com</summary>
-<p>
 
-on the foreground screenshot show the website without an ads, you can see the togling process on [this video.](https://youtu.be/alWyvEkzsu4)
-![keybr.com](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com.png)
 </p>
 </details>
 
@@ -138,6 +132,7 @@ routes = {
   url:     '',
   urls:    {},
   title:   '',
+  jsLib:   [],
   workspace: '',
   screenshot: {}, //user interaction rules & observe DOM-Element
   skip:    [], //start routing rules
@@ -602,20 +597,23 @@ when entering CLI commands, `mitm-play`  support two kind of arguments:
 <details><summary><b>Expand...</b></summary>
 <p>
 
-* `args`: is a **word** without `-` 
+* `args`:
   * **1st** for searching url/urls
   * **2nd** for loading profile
-* `options`: can be -`<char>` or --`<word>`
+* `options`.
 ```bash
 # syntax
 $ mitm-play [args] [-options]
 
-# create 'secure' profile w/ -s option
+# create 'secure' profile with -s/--save option # OR
 $ mitm-play yahoo --lazyclick --incognito -s='secure'
+$ mitm-play yahoo -zts='secure'
 
-# retrive 'secure' profile, search yahoo & add -k option 
+# search yahoo route and use 'secure' profile & add -k/--cookie option 
 $ mitm-play yahoo secure -k
 
+# if no profile, fallback to 'default'
+$ mitm-play yahoo --cookie
 ```
 
 </p>
