@@ -611,7 +611,7 @@ when entering CLI commands, `mitm-play`  support two kind of arguments:
 $ mitm-play [args] [-options]
 
 # create 'secure' profile w/ -s option
-$ mitm-play yahoo --lazy --incognito -s='secure'
+$ mitm-play yahoo --lazyclick --incognito -s='secure'
 
 # retrive 'secure' profile, search yahoo & add -k option 
 $ mitm-play yahoo secure -k
@@ -642,10 +642,11 @@ $ mitm-play --help
     -i --insecure        accept insecure cert in nodejs env
     -n --nosocket        no websocket injection to html page
     -k --cookie          reset cookies expire date
+    -l --lazylog         delay ~500ms print console.log
     -g --group           create cache group/rec
     -t --incognito       set chromium incognito
     -x --proxy           a proxy request
-    -z --lazy            delay ~400ms click action
+    -z --lazyclick       delay ~700ms click action
 
     -D --debug           show ws messages
     -O --ommitlog        removed unnecessary console log
@@ -769,6 +770,20 @@ $ mitm-play --cookie
 ```
 </p>
 </details>
+<details><summary><b>-l --lazylog</b></summary>
+<p>
+
+Delay console log ~500ms or you can provide value in milisecond.
+
+```
+$ mitm-play -l  <OR>
+$ mitm-play --lazylog
+  <OR>
+$ mitm-play -l=400  <OR>
+$ mitm-play --lazylog=400
+```
+</p>
+</details>
 <details><summary><b>-g --group</b></summary>
 <p>
 
@@ -808,17 +823,17 @@ $ mitm-play --proxy
 ```
 </p>
 </details>
-<details><summary><b>-z --lazy</b></summary>
+<details><summary><b>-z --lazyclick</b></summary>
 <p>
 
 Delay click action ~700ms or you can provide value in milisecond, to provide enough time for screenshot to be taken
 
 ```
 $ mitm-play -z  <OR>
-$ mitm-play --lazy
+$ mitm-play --lazyclick
   <OR>
 $ mitm-play -z=400  <OR>
-$ mitm-play --lazy=400
+$ mitm-play --lazyclick=400
 ```
 </p>
 </details><br/>

@@ -1,7 +1,7 @@
 const c = require('ansi-colors');
 const _match = require('./match');
-const {script_src} = require('./inject');
 const {matched,searchKey, searchArr} = _match;
+const {script_src, e_head} = require('./inject');
 const {fn: {_tldomain,_nameSpace}, router} = global.mitm;
 
 function replaceCSP(csp) {
@@ -55,6 +55,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
           }
           js.push('/mitm-play/websocket.js');
           js.push('/mitm-play/jslib/selector.js');
+          js.push('/mitm-play/jslib/log-patch.js');
           if (jsLib) {
             js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`));
           }

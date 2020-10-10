@@ -16,10 +16,11 @@ module.exports = (_package) => {
     -i --insecure \t accept insecure cert in nodejs env 
     -n --nosocket \t no websocket injection to html page
     -k --cookie   \t reset cookies expire date
+    -l --lazylog  \t delay ~500ms print console.log
     -g --group    \t create cache group/rec
     -t --incognito\t set chromium incognito
     -x --proxy    \t a proxy request
-    -z --lazy     \t delay ~400ms click action
+    -z --lazy     \t delay ~700ms click action
 
     -D --debug    \t show ws messages
     -O --ommitlog \t removed unnecessary console log

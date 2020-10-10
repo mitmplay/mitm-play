@@ -3,7 +3,7 @@ const _ws_vendor = require('./_ws_vendor');
 
 let act;
 function screenshot(e) {
-  if (mitm.argv.lazy) {
+  if (mitm.argv.lazyclick) {
     if (mitm.screenshot) {
       window.mitm.screenshot = undefined;
       console.log('>> delay action');
@@ -22,7 +22,7 @@ function screenshot(e) {
 
   const arr = document.body.querySelectorAll(selector);
   const fname = location.pathname.replace(/^\//,'').replace(/\//g,'-');
-  const delay = mitm.argv.lazy===true ? 700 : mitm.argv.lazy;
+  const delay = mitm.argv.lazyclick===true ? 700 : mitm.argv.lazyclick;
   for (let el of arr) {
     let node = e.target;
     while (el!==node && node!==document.body) {
@@ -31,7 +31,7 @@ function screenshot(e) {
     if (node!==document.body) {
       const params = {namespace, host, fname, browser};
       window.ws__send('screenshot', params);
-      if (mitm.argv.lazy) {
+      if (mitm.argv.lazyclick) {
         // delay action to finish screenshot
         window.mitm.screenshot = e.target;
         e.stopImmediatePropagation();

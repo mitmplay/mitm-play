@@ -68,6 +68,7 @@ module.exports = () => {
   argsChg('h', 'help');
   argsChg('i', 'insecure');
   argsChg('k', 'cookie');
+  argsChg('l', 'lazylog');
   argsChg('n', 'nosocket');
   argsChg('p', 'pristine');
   argsChg('r', 'route');
@@ -75,7 +76,7 @@ module.exports = () => {
   argsChg('t', 'incognito');
   argsChg('u', 'url');
   argsChg('x', 'proxy');
-  argsChg('z', 'lazy');
+  argsChg('z', 'lazyclick');
 
   argsChg('D', 'debug');
   argsChg('O', 'ommitlog');
@@ -87,7 +88,7 @@ module.exports = () => {
   argsChg('F', 'firefox');
   argsChg('W', 'webkit');
 
-  obj('browser','chromium');
+  obj('browser','chromium'); // on Window: Chrome POST payload is missing!
   obj('browser','firefox');
   obj('browser','webkit');
 

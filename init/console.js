@@ -1,12 +1,12 @@
 const c = require('ansi-colors');
 
 let delayFN;
-if (global.mitm.argv.debug) {
-  delayFN = () => {};
-} else {
+if (global.mitm.argv.lazylog) {
   console.log(c.redBright('>> delay console.log'));
 
-  delayFN = function(delay=500) {
+  delayFN = function() {
+    const {lazylog} = mitm.argv;
+    const delay = lazylog===true ? 500 : lazylog;
     let msg = [''];
     let _timeout = null;
     const {log} = console;
@@ -21,6 +21,8 @@ if (global.mitm.argv.debug) {
       }, delay)
     }; 
   }  
+} else {
+  delayFN = () => {};
 }
 
 module.exports = delayFN;

@@ -55,9 +55,9 @@ ${body}`;
         resp.headers['content-type'] = 'application/javascript';
       },
     },
-    '/mitm-play/jslib/(\\w+).js': {
+    '/mitm-play/jslib/([\\w-]+.js)': {
       response: (resp, match) => {
-        path = `${global.__app}/plugins/js-lib/${match.arr[1]}.js`;
+        path = `${global.__app}/plugins/js-lib/${match.arr[1]}`;
         if (fs.existsSync(path)) {
           resp.body = fs.readFileSync(path);
           resp.headers['content-type'] = 'application/javascript';

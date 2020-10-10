@@ -73,13 +73,12 @@ Redirect...
       if (status===undefined) {
         status = headers['x-app-status'];
       }
-      headers['header-size'] = `${headerSize} ~est`;
-      const resp = {url, status, headers, body};
-      handler(resp);
       if (status>=400) {
-        console.log(c.redBright(`[${reqs.method}] ${resp.url} => ${resp.status}`));
-        console.log(c.red(`${resp.body}`));
+        console.log(c.redBright(`[${reqs.method}] ${url} => ${status}`));
+        console.log(c.red(`${body}`));
       }
+      headers['header-size'] = `${headerSize} ~est`;
+      handler({url, status, headers, body});
     });
   }
 
@@ -105,6 +104,9 @@ Redirect...
         }
       }
     }
+  }
+  if (argv.debug && reqs.method!=='GET') {
+    console.log(reqs, opts);
   }
   fetchRetry(url, {...reqs, ...opts}, 2);
 }
