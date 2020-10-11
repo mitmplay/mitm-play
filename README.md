@@ -656,7 +656,7 @@ $ mitm-play --help
     -F --firefox         run firefox browser
     -W --webkit          run webkit browser
     
-  v0.7.xx
+  v0.8.xx
 ```
 </p>
 </details>
