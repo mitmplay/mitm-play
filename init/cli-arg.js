@@ -113,11 +113,9 @@ module.exports = () => {
     });
   }
 
-  if (argv.browser.chromium) {
-    if (argv.incognito) {
-      argv.pristine && (delete argv.pristine)
-    } else if (argv.pristine===undefined) {
-      argv.pristine = true;
-    }
+  if (argv.incognito) {
+    argv.pristine && (delete argv.pristine)
+  } else if (argv.pristine===undefined) {
+    argv.pristine = true;
   }
 }

@@ -7,7 +7,10 @@ const routes = require('../routes');
 const pages = {};
 const browsers = {};
 const bcontexts = {};
-const sleep = require('util').promisify(setTimeout)
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function currentTab(browser) {
   browser.currentTab = async function() {

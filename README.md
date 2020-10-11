@@ -1064,5 +1064,4 @@ Goodluck!,
 
 # Known Limitation
 Open Issue:
-* Buggy on Firefox browser
 * Support service workers [#1090](https://github.com/microsoft/playwright/issues/1090)
