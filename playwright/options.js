@@ -4,23 +4,32 @@ const {
 } = process.env;
 
 module.exports =  () => {
-  const {argv: {proxy}} = global.mitm;
   const options = {headless: false};
+  let {argv: {proxy}} = global.mitm;
 
+  let bypass = NO_PROXY || no_proxy || '';
+  const _proxy = HTTP_PROXY || http_proxy;
+
+  if (proxy===true && _proxy) {
+    proxy = _proxy;
+  }
   if (typeof(proxy)==='string') {
-    let opts = {bypass: ''};
-    opts.server = proxy;
-    const match = opts.server.match(/(\w+):(\w+)@/);
+    const match = proxy.match(/:\/\/([^:]+):([^@]+)@/);
     if (match) {
       const [,username,password] = match;
-      opts.server = opts.server.replace(`${username}:${password}@`, '');
+      const server = proxy.replace(`${username}:${password}@`, '');
       options.proxy = {
-        ...opts,
+        bypass,
+        server,
         username,
         password,
       }
     } else {
-      options.proxy = {...opts}
+      const server = proxy;
+      options.proxy = {
+        bypass,
+        server,
+      }
     }
   }
   console.log('options', options);
