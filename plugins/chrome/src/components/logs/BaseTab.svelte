@@ -46,7 +46,8 @@ onMount(async () => {
     language: 'json',
     ...option,
   };
-  if ($logstore.respHeader["content-type"].match('html')) {
+  const ctype = $logstore.respHeader["content-type"] || 'text/plain';
+  if (ctype.match('html')) {
     val2.value = val2.value.
     replace(/\\n\\n/g, '').
     replace(/\\n/g, '\n').

@@ -6,6 +6,7 @@ const chokidar = require('chokidar');
 const {routeSort} = require('./chokidar/loadJS');
 const {_routeSet, toRegex} = require('./fn/_route-set');
 const {formToObj, objToForm} = require('./fn/form');
+const {_proxy, _noproxy} = require('./fn/_proxies');
 const {exec, execFile} = require('./fn/_exec-file');
 const {tilde, home} = require('./fn/tildehome');
 const _skipByTag = require('./fn/_skipbytag');
@@ -40,7 +41,9 @@ module.exports = () => {
     _tldomain,
     _wsclient,
     _session,
+    _noproxy,
     _wsmitm,
+    _proxy,
     _clear,
     _tag4,
     formToObj,

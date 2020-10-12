@@ -17,7 +17,7 @@ const types = {
 
 module.exports = (resp) => {
   let ext = '';
-  let ctype = resp.headers['content-type'];
+  let ctype = resp.headers['content-type'] || 'plain';
   if (ctype) {
     if (Array.isArray(ctype)) {
       ctype = ctype[0];

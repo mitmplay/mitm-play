@@ -1,6 +1,6 @@
 function ctype(match, resp) {
   const atype = match.route.contentType;
-  const ctype = resp.headers['content-type'];
+  const ctype = resp.headers['content-type'] || 'text';
 
   if (atype && ctype) {
     return atype.find(t => ctype.match(match.contentType[t]));
@@ -18,6 +18,7 @@ const xtype = {
   webp: 'image/webp',
   jpeg: 'image/jpeg',
   html: 'text/html',
+  text: 'text/plain',
   ico: 'image/x-icon',
   png: 'image/png',
   gif: 'image/gif',

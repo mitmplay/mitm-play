@@ -12,24 +12,19 @@ function extract({route, request: r, browserName}) {
 }
 
 function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
-  const {argv} = global.mitm;
+  const {fn, argv} = global.mitm;
   const opts = {redirect: true};
   if (argv.redirect && argv.redirect!==true) {
     opts.redirect = 'manual';
   }
   if (proxy) {
     if (proxy===true) {
-      const { 
-        HTTP_PROXY, NO_PROXY,
-        http_proxy, no_proxy,
-      } = process.env;
-      if (HTTP_PROXY || http_proxy) {
-        opts.proxy = HTTP_PROXY || http_proxy;
-        opts.noProxy = NO_PROXY || no_proxy || '';
-      } 
+      const _proxy = fn._proxy();
+      _proxy && (opts.proxy = _proxy)
     } else {
       opts.proxy = proxy;
     }
+    opts.proxy && (opts.noProxy = fn._noproxy());
   }
 
   const okCallback = resp => {

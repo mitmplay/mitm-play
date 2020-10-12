@@ -1,14 +1,10 @@
-const { 
-  HTTP_PROXY, NO_PROXY,
-  http_proxy, no_proxy,
-} = process.env;
-
 module.exports =  () => {
+  let {fn, argv: {proxy}} = global.mitm;
   const options = {headless: false};
-  let {argv: {proxy}} = global.mitm;
 
-  let bypass = NO_PROXY || no_proxy || '';
-  const _proxy = HTTP_PROXY || http_proxy;
+  const _proxy = fn._proxy();
+  const bypass = fn._noproxy();
+  global.mitm._noproxy = bypass;
 
   if (proxy===true && _proxy) {
     proxy = _proxy;
