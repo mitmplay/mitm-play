@@ -4,7 +4,7 @@
 <details><summary><b>mitm-play in action</b></summary>
 <p>
 
-[![mitm-play](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-ytube.png)](https://youtu.be/alWyvEkzsu4)
+[![mitm-play](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-ytube.png)](https://www.youtube.com/watch?v=sXTsy_XxILg)
 
 </p>
 </details>
@@ -41,36 +41,14 @@ const css = `
 const route = {
   title: 'keybr.com',
   url: 'https://keybr.com',
-  skip: [], 
-  nosocket: [
-    'a.pub.network',
-  ],
   'mock:remove-ads': {
     'googletagservices.com': '',
     'google-analytics.com': '',
     'doubleclick.net': '',
     'a.pub.network': '',
   },
-  request: {
-    '/_/telemetry': {
-      request: function(reqs) {
-        reqs.body = '[ads_allow]';
-        reqs.headers['my-name'] = 'barnie';
-      }
-    }
-  },
-  cache: {
-    '/assets/': {
-      contentType: ['javascript'],
-    }
-  },
-  log: {
-    '/_/telemetry': {
-      contentType: ['json', 'text'],
-    }    
-  },
   'css:remove-ads': {
-    '/assets/css-': `=>${css}`
+    '/assets/[a-z]+': `=>${css}`
   },
 }
 module.exports = route;
@@ -84,7 +62,7 @@ mitm-play -ds
 # next run should be simple as:
 mitm-play
 ```
-Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools "mitm-play" "tags" as an option to enabled / disabled rules. You can see the togling process on [this video.](https://youtu.be/alWyvEkzsu4)
+Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools "mitm-play" "tags" as an option to enabled / disabled rules. You can see the togling process on [this video.](https://www.youtube.com/watch?v=sXTsy_XxILg)
 
 ![tags](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-tags.png)
 
@@ -100,9 +78,9 @@ Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools
 | `skip`      | ----------   | array ..of `[domain]` - browser will handle it
 | `proxy`     | ----------   | array ..of `[domain]` - will serve using proxy
 | `noproxy`   | ----------   | array ..of `[domain]` - will serve directly
-| `request`   | __request__  | modify request object - call to remote server
-| `mock`      | __response__ | modify response object - no call to remote server
-| `cache`     | __response__ | 1st call will save to local - next call, read from cache
+| `request`   | __request__  | modify reqs object - call to remote server
+| `mock`      | __response__ | mock resp object - no call to remote server
+| `cache`     | __response__ | 1st call save to local - next call, read from cache
 | `log`       | __response__ | save/log reqs/resp to local - call to remote server
 |             | __response__ | modify resp based on contentType - call remote server
 | =>>         | * `html`     | - response handler (replace / update + JS)
@@ -1065,3 +1043,4 @@ Goodluck!,
 # Known Limitation
 Open Issue:
 * Support service workers [#1090](https://github.com/microsoft/playwright/issues/1090)
+* BUG Proxy issue o Firefox [#4082](https://github.com/microsoft/playwright/issues/4082)
