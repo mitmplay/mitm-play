@@ -58,12 +58,18 @@ module.exports = () => {
         console.log('>> Plugins:', path.split(','));
         args.push(`--disable-extensions-except=${path}`);
         args.push( `--load-extension=${path}`);
-        if (argv.proxypac) {
+        if (typeof(argv.proxy)==='string') {
+          console.log(c.red.bgYellowBright(`>> --proxy ${argv.proxy} will take presedence over --proxypac ${argv.proxypac}`))
+        } else if (argv.proxypac) {
+          console.log(c.red.bgYellowBright(`>> Chromium browser will use --proxypac ${argv.proxypac}`))
           args.push(`--proxy-pac-url=${argv.proxypac}`);
         }
         options.viewport = null,
         options.args = args;
       }
+      if (argv.proxy===true) {
+        console.log(c.red.bgYellowBright(`>> mitm-play will use --proxy but browser will not!`))
+      }      
       let execPath = argv.browser[browserName];
       if (typeof(execPath)==='string') {
         execPath = execPath.replace(/\\/g, '/');
