@@ -2,14 +2,14 @@ module.exports =  () => {
   let {fn, argv: {proxy}} = global.mitm;
   const options = {headless: false};
 
-  const _proxy = fn._proxy();
-  const bypass = fn._noproxy();
-  global.mitm._noproxy = bypass;
-
-  if (proxy===true && _proxy) {
-    proxy = _proxy;
-  }
+  // Browser only support cli --proxy='httpp://proxy-with-value'
+  // const _proxy = fn._proxy();
+  // if (proxy===true && _proxy) {
+  //   proxy = _proxy;
+  // }
   if (typeof(proxy)==='string') {
+    const bypass = fn._noproxy();
+    global.mitm._noproxy = bypass;
     const match = proxy.match(/:\/\/([^:]+):([^@]+)@/);
     if (match) {
       const [,username,password] = match;

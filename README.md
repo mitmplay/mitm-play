@@ -208,7 +208,7 @@ skip: ['wp-admin'],
 <details><summary><b>Proxy</b></summary>
 <p>
 
-Certain domain will go thru proxy
+Certain domain will go thru proxy, `proxy` & `noproxy` will make sanse if command line contains -x/--proxy
 ```js
 // HTTP_PROXY env need to be set, cli: --proxy ..
 proxy: [
@@ -787,15 +787,18 @@ $ mitm-play --incognito
 <details><summary><b>-x --proxy</b></summary>
 <p>
 
-will force some traffict that having proxy section defined, it will use proxy.
+Some traffict with domain match to proxy section will use proxy.
 
 this option serving two kind of needs:
-1. if the option put just plain --proxy, certain traffict that was handle by mitm-play will get thru proxy, certain traffict that was handle by browser will not effected. and the configuration will come from the enviroment variable.
-2. if the option come with string configuration, all traffict will get thru proxy. and the configuration come from --proxy (ie: --proxy='http://username:pass@my.proxy.com')  
+1. if --proxy without value, mitm-play traffict will get thru proxy. Proxy configuration will get from ENV variable.
+2. if --proxy with string domain, all (mitm-play or browser) traffict will get thru proxy. (ie: `--proxy`='http://username:pass@my.proxy.com')  
 
 ```
 $ mitm-play -x  <OR>
 $ mitm-play --proxy
+  <OR>
+$ mitm-play -x='http://username:pass@my.proxy.com'  <OR>
+$ mitm-play --proxy='http://username:pass@my.proxy.com'
 ```
 </p>
 </details>
