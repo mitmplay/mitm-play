@@ -819,7 +819,7 @@ $ mitm-play --lazyclick=400
 <details><summary><b>-D --debug</b></summary>
 <p>
 
-More information will be shown in console.log (ex: websocket)
+More information will be shown in console.log (ex: websocket), including info from `DEBUG=pw:api`
 
 ```
 $ mitm-play -D  <OR>
@@ -1046,4 +1046,3 @@ Goodluck!,
 # Known Limitation
 Open Issue:
 * Support service workers [#1090](https://github.com/microsoft/playwright/issues/1090)
-* BUG Proxy issue o Firefox [#4082](https://github.com/microsoft/playwright/issues/4082)

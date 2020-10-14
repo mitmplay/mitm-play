@@ -92,6 +92,10 @@ module.exports = () => {
   obj('browser','firefox');
   obj('browser','webkit');
 
+  if ( argv.debug) {
+    process.env.DEBUG = 'pw:api';
+  }
+
   if (browser===undefined || Object.keys(browser).length===0) {
     browser = {chromium: true};
   }

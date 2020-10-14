@@ -32,7 +32,6 @@ module.exports = () => {
     fn: {home}
   } = global.mitm;
   console.log(c.whiteBright('RUN PLAYWRIGHT!'));
-  process.env.DEBUG = argv.debug ? 'pw:api' : '';
   (async () => {
     global.mitm.pages = pages;
     global.mitm.browsers = browsers;  
