@@ -8,15 +8,14 @@ const {
 
 describe('name-space.js - function', () => {
   test('return namespace exist or not', () => {
-    const regex = /json/
     const match = {
       route: {contentType: ['json']},
-      contentType: [regex],
+      contentType: {json: /json/},
     }
     const resp1 = {headers: {'content-type': 'application/json'}};
     const resp2 = {headers: {}};
 
     expect(ctype(match, resp1)).toBe('json');
-    expect(ctype(match, resp2)).toBe(false);
+    expect(ctype(match, resp2)).toBe(undefined);
   })
 })

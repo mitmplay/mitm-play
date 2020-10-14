@@ -1,5 +1,13 @@
+const {_proxy, _noproxy} = require('../../init/fn/_proxies');
 global.mitm = {
-  argv: {verbose: true}
+  fn: {
+    _proxy, 
+    _noproxy
+  },
+  argv: {
+    verbose: true,
+    browser: {chromium: true}
+  },
 };
 
 const {

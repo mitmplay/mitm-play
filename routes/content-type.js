@@ -2,8 +2,12 @@ function ctype(match, resp) {
   const atype = match.route.contentType;
   const ctype = resp.headers['content-type'] || 'text';
 
-  if (atype && ctype) {
-    return atype.find(t => ctype.match(match.contentType[t]));
+  if (atype.length && ctype) {
+    return atype.find(t => {
+      const rgx = match.contentType[t]
+      const rtn = ctype.match(rgx);
+      return rtn;
+    });
   } else {
     return false;
   }
