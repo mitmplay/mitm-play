@@ -124,7 +124,7 @@ function _routeSet(r, namespace, print=false) {
     }
   }
   if (!global.mitm.data.nolog && global.mitm.argv.verbose) {
-    const msg = `>> ${namespace}\n${_stringify(routes[namespace])}`;
+    const msg = `>>> ${namespace}\n${_stringify(routes[namespace])}`;
     print && console.log(c.blueBright(msg));  
   }
   return r;

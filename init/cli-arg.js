@@ -33,8 +33,8 @@ module.exports = () => {
       return false;
     }
     saveArgs = JSON.parse(fs.readFileSync(_prfl));
-    console.log(c.green(`>> cmd: mitm-play ${saveArgs._args}`),`(${profile})`);
-    // console.log(c.green(`>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
+    console.log(c.green(`>>> cmd: mitm-play ${saveArgs._args}`),`(${profile})`);
+    // console.log(c.green(`>>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
     return true;
   }
 
@@ -46,7 +46,7 @@ module.exports = () => {
 
   if (saveArgs && !argv.save) {
     const msg2 = process.argv.slice(2).join(' ');
-    console.log(c.green(`>> cmd2 mitm-play ${msg2}`));
+    console.log(c.green(`>>> cmd2 mitm-play ${msg2}`));
     const {_argv: {
       browser: b,
       chromium,

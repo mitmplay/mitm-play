@@ -32,7 +32,7 @@ function fetch(route, browserName, {url, proxy, ...reqs}, handler) {
     let status = resp.status;
     if (proxy && argv.verbose) {
       const {origin, pathname} = new URL(url);
-      console.log(c.grey(`>> proxy (${origin}${pathname})`));
+      console.log(c.grey(`>>> proxy (${origin}${pathname})`));
     }
     let headerSize =42;
     const headers = {};
@@ -105,7 +105,7 @@ Redirect...
   // delete reqs.headers['accept-language'];
   // delete reqs.headers['accept-encoding'];
   if (typeof(mitm.argv.browser[browserName])==='string' && reqs.body===null && (reqs.method==='POST' || reqs.method==='PUT')) {
-    console.log(c.red.bgYellowBright(`>> WARNING!!! ${reqs.method} having request payload NULL!, might be a bug from browser? Please use --${browserName} without browser path.`))
+    console.log(c.red.bgYellowBright(`>>> WARNING!!! ${reqs.method} having request payload NULL!, might be a bug from browser? Please use --${browserName} without browser path.`))
     console.log(reqs, opts);
   } else if (argv.debug) {
     console.log(reqs, opts);

@@ -3,7 +3,7 @@
 var _ws_postmessage = () => {
   function receiveMessage(event) {
     if (window.mitm.client.postmessage) {
-      console.log(`>> Postmessage: ${event.origin} => https://${location.host}`, event.data);
+      console.log(`>>> Postmessage: ${event.origin} => https://${location.host}`, event.data);
     }
   }
   window.addEventListener("message", receiveMessage, false);
@@ -65,9 +65,9 @@ const _ws_wccmd = _ws_client();
 var _ws_msgParser = (event, msg) => {
   if (window.mitm.argv.debug) {
     if (msg.length>40) {
-      console.log('>> ws-message: `%s...`', msg.slice(0,40));
+      console.log('>>> ws-message: `%s...`', msg.slice(0,40));
     } else {
-      console.log('>> ws-message: `%s`', msg);
+      console.log('>>> ws-message: `%s`', msg);
     }  
   }
   const arr = msg.replace(/\s+$/, '').match(/^ *([\w:]+) *(\{.*)/);
@@ -160,7 +160,7 @@ function screenshot(e) {
   if (mitm.argv.lazyclick) {
     if (mitm.screenshot) {
       window.mitm.screenshot = undefined;
-      console.log('>> delay action');
+      console.log('>>> delay action');
       return;
     }
     if (act) {
@@ -192,7 +192,7 @@ function screenshot(e) {
         e.stopPropagation();
         e.preventDefault();
         setTimeout(() => {
-          // console.log('>> clicked');
+          // console.log('>>> clicked');
           act = window.mitm.screenshot;
           window.mitm.screenshot.node = undefined;
           act.click();
@@ -511,7 +511,7 @@ var _ws_general = () => {
     setTimeout(function() {
       if (window._ws_queue[key]) {
         delete  window._ws_queue[key];
-        console.log('>> ws timeout!', key);
+        console.log('>>> ws timeout!', key);
       } 
     }, 5000);
     const params = `${key}${JSON.stringify({data})}`;
@@ -572,7 +572,7 @@ var _ws_cspErr = () => {
     };
     _timeout && clearTimeout(_timeout);
     _timeout = setTimeout(() => {
-      console.log('>> CSP:', _csp);  
+      console.log('>>> CSP:', _csp);  
       // window.ws__send('csp_error', {
       //   namespace,
       //   host,

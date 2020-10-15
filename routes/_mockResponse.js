@@ -65,7 +65,7 @@ const mockResponse = async function ({reqs, route}, _3d) {
             resp.body = `${await fs.readFile(home(fpath))}`;
             resp.headers['content-type'] = xtype[ext[1]];
           } else {
-            console.log(c.redBright('>> ERROR: Need a proper file extension'));
+            console.log(c.redBright('>>> ERROR: Need a proper file extension'));
           }
         } else if (js) {
           resp.body = source(resp.body, js);

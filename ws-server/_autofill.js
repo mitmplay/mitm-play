@@ -4,7 +4,7 @@ module.exports = async ({data}) =>{
   // const page = global.mitm.pages[browser];
   const page = await global.mitm.browsers[browser].currentTab();
 
-  console.log(c.greenBright('>> autofill'));
+  console.log(c.greenBright('>>> autofill'));
   for (let obj of autofill) {
     if (typeof(obj)==='string') {
       console.log(c.greenBright(`   ${obj}`));

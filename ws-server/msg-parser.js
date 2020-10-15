@@ -39,9 +39,9 @@ module.exports = (client, msg) => {
   const {logs} = global.mitm.router._global_.config;
   if (logs['ws-receive']) {
     if (msg.length > 97) {
-      console.log(c.blue('>> ws-message: `%s...`'), msg.slice(0,97));
+      console.log(c.blue('>>> ws-message: `%s...`'), msg.slice(0,97));
     } else {
-      console.log(c.blue('>> ws-message: `%s`'), msg);
+      console.log(c.blue('>>> ws-message: `%s`'), msg);
     }
   }
   const arr = msg.replace(/\s+$/, '').match(/^ *([\w:]+) *(\{.*)/);

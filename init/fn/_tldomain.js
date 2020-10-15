@@ -9,7 +9,7 @@ function _tldomain(fullpath) {
   if (match) {
     return match[1];
   } else {
-    console.log(c.redBright(`>> Error _tldomain ${fullpath}`));
+    console.log(c.redBright(`>>> Error _tldomain ${fullpath}`));
     return '**tld-error**';
   }
 }

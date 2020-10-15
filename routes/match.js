@@ -1,4 +1,5 @@
 const {fn: {home, _nameSpace}} = global.mitm;
+const browser = {chromium: '[C]', firefox: '[F]', webkit: '[W]'};
 
 function typTags(typ, namespace) {
   const {routes, __tag4} = global.mitm;
@@ -35,7 +36,7 @@ const searchArr = ({typ: typs, url}) => {
   };
 };
 
-const searchFN = (typs, {url}) => {
+const searchFN = (typs, {url, browserName}) => {
 //const {router,routes, data} = global.mitm;
   const {router,routes, __tag3} = global.mitm;
 
@@ -75,7 +76,7 @@ const searchFN = (typs, {url}) => {
         if (arr) {
           const {host, origin, pathname, search} = new URL(url);
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
-          const log = `>> ${typ} (${origin}${msg}).match(${key})`;
+          const log = `${browser[browserName]} ${typ} (${origin}${msg}).match(${key})`;
           const matched = {
             contentType: obj[`${key}~contentType`],
             route: route[key],
@@ -131,7 +132,7 @@ const matched = (search, {url, headers}) => {
   if (!match) {
     match = search('_global_');
   }
-  // console.log('>> Match', tld, !!match)
+  // console.log('>>> Match', tld, !!match)
   return match;
 }
 

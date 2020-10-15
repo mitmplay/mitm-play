@@ -62,7 +62,7 @@ On browser console type "ws"`;
 
     if (data==='*') {
       return Object.keys(global.mitm.routes).map(x => {
-        return `>> ${x}\n${stringify(global.mitm.routes[x])}`
+        return `>>> ${x}\n${stringify(global.mitm.routes[x])}`
       }).join('\n');
     } else if (!data) {
       return Object.keys(global.mitm.routes);
@@ -148,10 +148,10 @@ On browser console type "ws"`;
     }
     fs.ensureFile(path, err => {
       if (err) {
-        console.log(c.redBright('>> Error saving csp'), path)
+        console.log(c.redBright('>>> Error saving csp'), path)
       } else {
         fs.writeFile(path, body, err => {
-          err && console.log(c.redBright('>> Error write'), err);
+          err && console.log(c.redBright('>>> Error write'), err);
         })
       }
     });  

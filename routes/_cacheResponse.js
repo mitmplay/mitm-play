@@ -79,7 +79,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         }
         remote = false;  
       } catch (error) {
-        console.log(c.red(`>> cache (${tilde(fpath1)})`));
+        console.log(c.red(`>>> cache (${tilde(fpath1)})`));
         console.log(c.red(`   Error in ${error}`));
       }
     }

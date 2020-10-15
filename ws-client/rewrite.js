@@ -9,7 +9,7 @@ module.exports = () => ({
         body = body.replace('module.exports = index;', 'index();');
 
         fs.writeFile(file, body, err => {
-          err && console.log(c.redBright('>> Error write bundle'), err);
+          err && console.log(c.redBright('>>> Error write bundle'), err);
         })
       }, 10);
     }

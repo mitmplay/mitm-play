@@ -6,7 +6,7 @@ function screenshot(e) {
   if (mitm.argv.lazyclick) {
     if (mitm.screenshot) {
       window.mitm.screenshot = undefined;
-      console.log('>> delay action');
+      console.log('>>> delay action');
       return;
     }
     if (act) {
@@ -38,7 +38,7 @@ function screenshot(e) {
         e.stopPropagation();
         e.preventDefault();
         setTimeout(() => {
-          // console.log('>> clicked');
+          // console.log('>>> clicked');
           act = window.mitm.screenshot;
           window.mitm.screenshot.node = undefined;
           act.click();

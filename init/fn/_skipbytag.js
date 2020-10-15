@@ -14,7 +14,7 @@ function _skipByTag(match, typ) {
         if (tags[tag]===false) {
           const {origin, pathname} = new URL(url);
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
-          console.log(c.magentaBright(`>> tags (${tag}).match(${match.key}) ${origin}${msg}`));
+          console.log(c.magentaBright(`>>> tags (${tag}).match(${match.key}) ${origin}${msg}`));
           return true;
         }
       }

@@ -49,7 +49,7 @@ module.exports = () => {
     };
     _timeout && clearTimeout(_timeout);
     _timeout = setTimeout(() => {
-      console.log('>> CSP:', _csp);  
+      console.log('>>> CSP:', _csp);  
       // window.ws__send('csp_error', {
       //   namespace,
       //   host,

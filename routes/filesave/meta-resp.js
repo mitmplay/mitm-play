@@ -62,7 +62,7 @@ module.exports = ({reqs, resp}) => {
       meta.CSP = CSP;
     }
   } catch (error) {
-    console.log(c.redBright('>> Error JSON.stringify'));
+    console.log(c.redBright('>>> Error JSON.stringify'));
     console.log(error);
   }
   return meta

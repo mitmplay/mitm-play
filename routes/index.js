@@ -14,6 +14,7 @@ const _mockResponse  = require('./_mockResponse');
 const _addWebSocket  = require('./_addWebSocket');
 const _cacheResponse = require('./_cacheResponse');
 
+const browser = {chromium: '[C]', firefox: '[F]', webkit: '[W]'};
 const noURL = /(brave|edge|chrome-extension):\/\//;
 const wNull = /\/null$/;
 const _resp = {
@@ -42,7 +43,7 @@ module.exports = async ({route, request, browserName}) => {
   if (skip) {
     if (logs.skip) {
       const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
-      console.log(c.grey(`>> skip (${origin}${msg}).match(${skip})`));
+      console.log(c.grey(`>>> skip (${origin}${msg}).match(${skip})`));
     }
     route.continue();
     return;
@@ -81,7 +82,7 @@ module.exports = async ({route, request, browserName}) => {
       const {headers} = rqs2;
       const msg = JSON.stringify({headers});
       const log = msg.length <= 100 ? msg : msg.slice(0,100)+'...';
-      console.log(c.redBright(`>> request (${log})`));
+      console.log(c.redBright(`>>> request (${log})`));
     }
     if (responseHandler.length) { //fetch from remote server
       fetch(route, browserName, (rqs2 || reqs), function(resp) {
@@ -92,11 +93,11 @@ module.exports = async ({route, request, browserName}) => {
         const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
         if (_3ds) {
           if (logs['no-namespace']) {
-            console.log(c.redBright(`>> no-namespace (${origin}${msg})`));
+            console.log(c.redBright(`${browser[browserName]} no-namespace (${origin}${msg})`));
           }
         } else {
           if (logs['referer-reqs']) {
-            console.log(c.redBright.italic(`>> referer-reqs (${origin}${msg})`));
+            console.log(c.redBright.italic(`${browser[browserName]} referer-reqs (${origin}${msg})`));
           }
         }  
       }

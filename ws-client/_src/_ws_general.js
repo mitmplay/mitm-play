@@ -56,7 +56,7 @@ module.exports = () => {
     setTimeout(function() {
       if (window._ws_queue[key]) {
         delete  window._ws_queue[key];
-        console.log('>> ws timeout!', key);
+        console.log('>>> ws timeout!', key);
       } 
     }, 5000)
     const params = `${key}${JSON.stringify({data})}`;
