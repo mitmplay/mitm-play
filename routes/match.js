@@ -36,7 +36,7 @@ const searchArr = ({typ: typs, url}) => {
   };
 };
 
-const searchFN = (typs, {url, browserName}) => {
+const searchFN = (typs, {url, method, browserName}) => {
 //const {router,routes, data} = global.mitm;
   const {router,routes, __tag3} = global.mitm;
 
@@ -72,8 +72,9 @@ const searchFN = (typs, {url, browserName}) => {
           }
         }
         const arr = isTagsOk && url.match(obj[key]);
+        const _method = obj[`${key}~method`];
   
-        if (arr) {
+        if (arr && (_method===undefined || _method===method)) {
           const {host, origin, pathname, search} = new URL(url);
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
           const log = `${browser[browserName]} ${typ} (${origin}${msg}).match(${key})`;

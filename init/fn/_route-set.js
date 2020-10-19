@@ -10,6 +10,19 @@ function toRegex(str, flags='') {
     replace(/\.([^*+]|$)/g, (m,p1)=>`\\.${p1}`).
     replace(/\?/g, '\\?'), flags);
 }
+
+function routerSet(router, typ, str) {
+  let regex;
+  const method = str.match(/^(GET|PUT|POST|DELETE):(.+)/);
+  if (method) {
+    router[typ][`${str}~method`] = method[1];  
+    regex = toRegex(method[2]);
+  } else {
+    regex = toRegex(str)
+  }
+  router[typ][str] = regex;
+}
+
 const fkeys = x=>x!=='tags' && x!=='contentType';
 
 function _routeSet(r, namespace, print=false) {
@@ -48,8 +61,7 @@ function _routeSet(r, namespace, print=false) {
     for (let typ of typlist) {
       router[typ] = {};
       for (let str of r[typ]) {
-        const regex = toRegex(str);
-        router[typ][str] = regex;
+        routerSet(router, typ, str);
       }
     }
   }
@@ -57,8 +69,7 @@ function _routeSet(r, namespace, print=false) {
   function addType(typ) {
     router[typ] = {};
     for (let str in r[typ]) {
-      const regex = toRegex(str);
-      router[typ][str] = regex;
+      routerSet(router, typ, str);
       const site = r[typ][str];
       if (site) {
         if (site.tags) {
