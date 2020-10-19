@@ -50,9 +50,8 @@ module.exports = () => {
         const p = `${global.__app}/plugins`;
         let path = `${process.cwd()}/`;
         if (plugins.length) {
-          path = `${ppath}/`;
+          path = `${p}/chrome,${ppath}/`;
           path += plugins.join(`,${path}`);
-          path += `,${p}/chrome`;
         } else {
           path = `${p}/chrome`;
         }

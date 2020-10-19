@@ -23,7 +23,8 @@ module.exports = ({match, reqs}) => {
   } else {
     _root = root(reqs, 'cache');
   }
-  const fpath1 = `${_root}/${stamp1}`;
-  const fpath2 = `${_root}/${stamp2}.json`;
+  const {method} = reqs;
+  const fpath1 = `${_root}/${stamp1}~${method}`;
+  const fpath2 = `${_root}/${stamp2}~${method}.json`;
   return {fpath1, fpath2};  
 }
