@@ -312,6 +312,7 @@ cache: {
     querystring: true, // hash of unique file-cache
     session: true, // optional - set session id
     hidden: true, // optional - no consolo.log
+    path: './api', // optional cache file-path
     log: false, // optional - disable logging
     at: 'mycache', // 'mycache' part of filename
     tags: 'js-img', // enable/disable route by tags
