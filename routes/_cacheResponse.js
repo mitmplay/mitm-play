@@ -65,7 +65,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         if (logs.cache) {
           if (!global.mitm.argv.ommit.cache && !hidden) {
             if (match.route.path) {
-              console.log(c.redBright(match.log));
+              console.log(c.green(match.log));
             } else {
               console.log(c.greenBright(match.log));
             }
