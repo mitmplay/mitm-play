@@ -19,7 +19,7 @@ const chgRequest = async function (reqs, _3d) {
       }
     }
     if (request) {
-      const reqs2 = request(reqs);
+      const reqs2 = request(reqs. match);
       result = {
         ...reqs,
         ...reqs2

@@ -56,7 +56,7 @@ ${body}`;
       },
     },
     '/mitm-play/jslib/([\\w-]+.js)': {
-      response: (resp, match) => {
+      response: (resp, reqs, match) => {
         path = `${global.__app}/plugins/js-lib/${match.arr[1]}`;
         if (fs.existsSync(path)) {
           resp.body = fs.readFileSync(path);

@@ -40,7 +40,7 @@ const mockResponse = async function ({reqs, route}, _3d) {
     } else {          
       if (response || file || js) {
         if (response) {
-          const resp2 = response(resp, match);
+          const resp2 = response(resp, reqs, match);
           resp2 && (resp = {...resp, ...resp2});
         } else if (file) {
           let id = 1;

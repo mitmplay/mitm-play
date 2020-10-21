@@ -31,7 +31,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
             resp.body = script_src(resp.body, src);
           }
           if (response) {
-            const resp2 = response(resp, match);
+            const resp2 = response(resp, reqs, match);
             resp2 && (resp = {...resp, ...resp2});
           }
         }

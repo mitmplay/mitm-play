@@ -39,7 +39,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
         const body = jsonResp({reqs, resp, match});
         filesave({fpath1, body}, {fpath2, meta}, 'log');
         if (response) {
-          const resp2 = response(resp, match);
+          const resp2 = response(resp, reqs, match);
           resp2 && (resp = {...resp, ...resp2});
         }        
       }

@@ -19,7 +19,7 @@ const allRequest = async function (reqs, responseHandler, _3d) {
     responseHandler.push(resp => {
       if (response) {
         if (contentType===undefined || ctype(match, resp)) {
-          const resp2 = response(resp, match);
+          const resp2 = response(resp, reqs, match);
           resp2 && (resp = {
             ...resp,
             ...resp2
