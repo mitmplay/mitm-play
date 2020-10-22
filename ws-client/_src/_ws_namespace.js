@@ -1,16 +1,17 @@
+/* global location */
 module.exports = () => {
-  const {hostname: host} = location;
-  let namespace;
+  const { hostname: host } = location
+  let namespace
 
-  function toRegex(str) {
-    return str.replace(/\./g, '\\.').replace(/\?/g, '\\?');
+  function toRegex (str) {
+    return str.replace(/\./g, '\\.').replace(/\?/g, '\\?')
   }
 
-  for (let key in window.mitm.routes) {
-    if (host.match(toRegex(key.replace(/~/,'[^.]*')))) {
-      namespace = key;
-      break;
+  for (const key in window.mitm.routes) {
+    if (host.match(toRegex(key.replace(/~/, '[^.]*')))) {
+      namespace = key
+      break
     }
   }
-  return namespace;
+  return namespace
 }

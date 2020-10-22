@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable } from 'svelte/store'
 
 export const logstore = writable({
   respHeader: {},
@@ -8,5 +8,5 @@ export const logstore = writable({
   title: '',
   path: '',
   url: '',
-  ext: '',
-});
+  ext: ''
+})

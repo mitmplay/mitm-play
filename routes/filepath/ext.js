@@ -16,21 +16,21 @@ const types = {
 }
 
 module.exports = (resp) => {
-  let ext = '';
-  let ctype = resp.headers['content-type'] || 'plain';
+  const ext = ''
+  let ctype = resp.headers['content-type'] || 'plain'
   if (ctype) {
     if (Array.isArray(ctype)) {
-      ctype = ctype[0];
+      ctype = ctype[0]
     }
-    if (ctype.indexOf('script')>-1 && ctype.indexOf('json')===-1) { 
-      return 'js';   
+    if (ctype.indexOf('script') > -1 && ctype.indexOf('json') === -1) {
+      return 'js'
     } else {
-      for (let key in types) {
-        if (ctype.indexOf(key)>-1) {
-          return types[key];
+      for (const key in types) {
+        if (ctype.indexOf(key) > -1) {
+          return types[key]
         }
       }
     }
   }
-  return ext;
+  return ext
 }

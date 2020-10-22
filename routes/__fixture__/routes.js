@@ -1,7 +1,7 @@
-const hello = () => {};
+const hello = () => {}
 
 const routes = {
-  '_global_': {
+  _global_: {
     _regex_: /_global_/,
     mock: {
       // '/mitm-play/websocket.js': {
@@ -14,16 +14,16 @@ const routes = {
     url: 'https://google.com/search?q=github+playwright',
     skip: [
       'search',
-      'exclude.com',
+      'exclude.com'
     ],
     html: {
       'www.gtm.com/search': {
-        el: 'e_end', //JS at end of 
-        js: [hello], //html body
-      },
-    }, //all js request from gstatic.com 
-    js: {'gstatic.com': ''} // will be empty response
-  }  
+        el: 'e_end', // JS at end of
+        js: [hello] // html body
+      }
+    }, // all js request from gstatic.com
+    js: { 'gstatic.com': '' } // will be empty response
+  }
 }
 
-module.exports = routes;
+module.exports = routes

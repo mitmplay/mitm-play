@@ -1,16 +1,16 @@
-const xjson = /^[\n\t\[ ]*({[\n\t ]*"\w+" *:)/g;
+const xjson = /^[\n\t[ ]*({[\n\t ]*"\w+" *:)/g
 
-function searchParams(url) {
-  const urlParams = {};
-  const urlSearch = new URLSearchParams(url);
+function searchParams (url) {
+  const urlParams = {}
+  const urlSearch = new URLSearchParams(url)
   for (const [key, value] of urlSearch) {
     if (value.match(xjson)) {
-      urlParams[key] = JSON.parse(`${value}`);
+      urlParams[key] = JSON.parse(`${value}`)
     } else {
-      urlParams[key] = value;
+      urlParams[key] = value
     }
   }
-  return urlParams;
+  return urlParams
 }
-searchParams.xjson = xjson;
-module.exports = searchParams;
+searchParams.xjson = xjson
+module.exports = searchParams

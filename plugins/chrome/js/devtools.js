@@ -1,1 +1,2 @@
-chrome.devtools.panels.create("mitm-play", "images/toolbarIconBW.png", "panel.html");
+/* global chrome */
+chrome.devtools.panels.create('mitm-play', 'images/toolbarIconBW.png', 'panel.html')

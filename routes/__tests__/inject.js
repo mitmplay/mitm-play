@@ -1,17 +1,19 @@
-global.mitm = {};
+/* global alert */
+/* eslint-disable camelcase */
+global.mitm = {}
 
 const {
-  test, 
+  test,
   expect,
-  describe, 
-} = global;
+  describe
+} = global
 
 const {
   script_src,
   source,
   e_head,
-  e_end,
-} = require('../inject');
+  e_end
+} = require('../inject')
 
 describe('fetch.js - script_src', () => {
   test('insert <script> inside <html>', () => {
@@ -38,7 +40,7 @@ describe('fetch.js - source', () => {
 })
 
 describe('fetch.js - e_head', () => {
-  const fn = () => {alert(0)};
+  const fn = () => { alert(0) }
   test('insert js function inside <html>', () => {
     const result = e_head('<html><body></body>', [fn])
     expect(result).toBe(
@@ -70,7 +72,7 @@ describe('fetch.js - e_head', () => {
 })
 
 describe('fetch.js - e_end', () => {
-  const fn = () => {alert(0)};
+  const fn = () => { alert(0) }
   test('insert js code at end of </body>', () => {
     const result = e_end('<html><body>Hi</body>', [fn])
     expect(result).toBe(
@@ -99,5 +101,4 @@ describe('fetch.js - e_end', () => {
     alert(0);
   })();</script>\n`)
   })
-
 })

@@ -1,12 +1,12 @@
-module.exports = ({data}) =>{
+module.exports = ({ data }) => {
   const client = {
     ...global.mitm.client,
-    ...data,
-  };
+    ...data
+  }
 
-  global.mitm.client = client;
-  const serial = JSON.stringify({data: client});
+  global.mitm.client = client
+  const serial = JSON.stringify({ data: client })
 
-  global.broadcast({data: `_setClient${serial}`});
-  return client;
-};
+  global.broadcast({ data: `_setClient${serial}` })
+  return client
+}

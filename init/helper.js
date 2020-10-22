@@ -1,4 +1,4 @@
-const c = require('ansi-colors');
+const c = require('ansi-colors')
 
 module.exports = (_package) => {
   console.log(c.greenBright(
@@ -33,6 +33,6 @@ module.exports = (_package) => {
     -W --webkit   \t run webkit browser
 
   v${_package.version}
-`));
-process.exit();
+`))
+  process.exit()
 }

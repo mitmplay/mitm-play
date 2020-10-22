@@ -1,81 +1,82 @@
-import App from './App.svelte';
+/* global chrome */
+import App from './App.svelte'
 
-console.log('Load MITM plugin');
+console.log('Load MITM plugin')
 
-function toRegex(str, flags='') {
-  return new RegExp(str.
-    replace(/\//g, '\\/').
-    replace(/\./g, '\\.').
-    replace(/\?/g, '\\?'), flags);
+function toRegex (str, flags = '') {
+  return new RegExp(str
+    .replace(/\//g, '\\/')
+    .replace(/\./g, '\\.')
+    .replace(/\?/g, '\\?'), flags)
 }
 
-window.mitm.fn.toRegex = toRegex;
-window.mitm.browser = { 
+window.mitm.fn.toRegex = toRegex
+window.mitm.browser = {
   chgUrl_events: {},
   activeUrl: '',
-  page: {},
+  page: {}
 }
 
-function chgUrl(url) {
+function chgUrl (url) {
   if (!url) {
-    return;
+    return
   }
-  console.log('Chg url:', url);
-  const {browser} = window.mitm;
-  browser.activeUrl = url;
-  for (let e in browser.chgUrl_events) {
-    browser.chgUrl_events[e]();
+  console.log('Chg url:', url)
+  const { browser } = window.mitm
+  browser.activeUrl = url
+  for (const e in browser.chgUrl_events) {
+    browser.chgUrl_events[e]()
   }
 }
 
-function getUrl() {
-  chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT},
-    function(tabs){
-      const url = tabs[0].url;
-      chgUrl(url);
+function getUrl () {
+  chrome.tabs.query({ active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
+    function (tabs) {
+      const url = tabs[0].url
+      chgUrl(url)
     }
-  );
+  )
 };
 
-console.log('Init event tabs');
-let debounce;
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+console.log('Init event tabs')
+let debounce
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (!tab.active) {
-    return;
+    return
   }
 
-  const {browser} = window.mitm;
+  const { browser } = window.mitm
   browser.page = {
     ...browser.page,
     ...changeInfo,
-    ...tab,
+    ...tab
   }
 
   if (changeInfo.status === 'loading') {
-    browser.page.title = '';
+    browser.page.title = ''
   } else if (browser.page.status === 'complete' && browser.page.title) {
     if (debounce) {
-      clearTimeout(debounce);
-      debounce = undefined;
+      clearTimeout(debounce)
+      debounce = undefined
     }
     debounce = setTimeout(() => {
       // console.log('Tab Update!!!', tab.url);
-      debounce = undefined;
-      chgUrl(tab.url);  
-    }, 1000);
+      debounce = undefined
+      chgUrl(tab.url)
+    }, 1000)
   }
-});
+})
 
-chrome.tabs.onActivated.addListener(function(activeInfo) {
+chrome.tabs.onActivated.addListener(function (activeInfo) {
   // console.log('Tab Change!!!', activeInfo);
-  getUrl();
-});
+  getUrl()
+})
 
-const app = new App({target: document.body});
-console.log('Start plugin');
-getUrl();
+const app = new App({ target: document.body })
+console.log('Start plugin')
+getUrl()
 
-export default app;
+export default app
 
 // let inprocess = false;
 // const replay = ()=>{
@@ -92,12 +93,10 @@ export default app;
 //       const width = _w - innerWidth;
 //       console.log({width, height, _w});
 //       ws__send('setViewport', {width, height, _w}, replay);
-//     })  
+//     })
 //   }
 // }
 // window.addEventListener("resize", reportWindowSize);
 // window.addEventListener('message', event => {
 //   console.log({event});
 // });
-
-

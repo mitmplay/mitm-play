@@ -1,30 +1,31 @@
-const _ws_client = require('./_ws_client');
-const _ws_wccmd = _ws_client();
+/* eslint-disable camelcase */
+const _ws_client = require('./_ws_client')
+const _ws_wccmd = _ws_client()
 
 module.exports = (event, msg) => {
   if (window.mitm.argv.debug) {
-    if (msg.length>40) {
-      console.log('>>> ws-message: `%s...`', msg.slice(0,40));
+    if (msg.length > 40) {
+      console.log('>>> ws-message: `%s...`', msg.slice(0, 40))
     } else {
-      console.log('>>> ws-message: `%s`', msg);
-    }  
+      console.log('>>> ws-message: `%s`', msg)
+    }
   }
-  const arr = msg.replace(/\s+$/, '').match(/^ *([\w:]+) *(\{.*)/);
+  const arr = msg.replace(/\s+$/, '').match(/^ *([\w:]+) *(\{.*)/)
   if (arr) {
-    let [,cmd,json] = arr;
+    let [, cmd, json] = arr
     try {
-      if (typeof(json)==='string') {
-        json = JSON.parse(json);
+      if (typeof (json) === 'string') {
+        json = JSON.parse(json)
       }
     } catch (error) {
-      console.error(json,error);
-    }        
+      console.error(json, error)
+    }
     if (window._ws_queue[cmd]) {
-      const handler = window._ws_queue[cmd];
-      delete window._ws_queue[cmd];
-      handler(json.data);
+      const handler = window._ws_queue[cmd]
+      delete window._ws_queue[cmd]
+      handler(json.data)
     } else if (_ws_wccmd[cmd]) {
       _ws_wccmd[cmd].call(event, json)
-    }       
-  }    
+    }
+  }
 }

@@ -1,4 +1,4 @@
-const hello = () => {};
+const hello = () => {}
 
 const routes = {
   _global_: {
@@ -7,25 +7,23 @@ const routes = {
       //   resp() {return {}},
       // },
     },
-    config: {},
+    config: {}
   },
   'google.com': {
     title: 'Search - google',
     url: 'https://google.com/search?q=github+playwright',
     skip: [
-    ],
-    skip: [
       'search',
-      'exclude.com',
+      'exclude.com'
     ],
     html: {
       'www.gtm.com/search': {
-        el: 'e_end', //JS at end of 
-        js: [hello], //html body
-      },
-    }, //all js request from gstatic.com 
-    js: {'gstatic.com': ''} // will be empty response
-  }  
+        el: 'e_end', // JS at end of
+        js: [hello] // html body
+      }
+    }, // all js request from gstatic.com
+    js: { 'gstatic.com': '' } // will be empty response
+  }
 }
 
-module.exports = routes;
+module.exports = routes

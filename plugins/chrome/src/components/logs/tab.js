@@ -1,6 +1,6 @@
-import { writable } from 'svelte/store';
+import { writable } from 'svelte/store'
 
 export const tabstore = writable({
   editor: {},
-  tab: 0,
-});
+  tab: 0
+})

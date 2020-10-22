@@ -1,83 +1,83 @@
-const {fn: {home, _nameSpace}} = global.mitm;
-const browser = {chromium: '[C]', firefox: '[F]', webkit: '[W]'};
+const { fn: { home, _nameSpace } } = global.mitm
+const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 
-function typTags(typ, namespace) {
-  const {routes, __tag4} = global.mitm;
-  const ns = __tag4[namespace];
+function typTags (typ, namespace) {
+  const { __tag4 } = global.mitm
+  const ns = __tag4[namespace]
   // if (typ==='proxy')
   //   debugger;
   if (ns) {
-    return ns[typ] || [];
+    return ns[typ] || []
   } else {
-    return [];
+    return []
   }
 }
 
-const searchArr = ({typ: typs, url}) => {
-  const {router,routes} = global.mitm;
+const searchArr = ({ typ: typs, url }) => {
+  const { router, routes } = global.mitm
 
-  return function(nspace) {
-    const namespace = _nameSpace(nspace);
+  return function (nspace) {
+    const namespace = _nameSpace(nspace)
     if (!namespace) {
-      return;
+      return
     }
     if (routes[namespace]) {
-      const list = typTags(typs, namespace);
-      for (let typ of list) {
-        let obj = router[namespace][typ];
-        let arr = routes[namespace][typ] || [];
-        for (let str of arr) {
+      const list = typTags(typs, namespace)
+      for (const typ of list) {
+        const obj = router[namespace][typ]
+        const arr = routes[namespace][typ] || []
+        for (const str of arr) {
           if (obj && url.match(obj[str])) {
-            return str;
+            return str
           }
         }
       }
     }
-  };
-};
+  }
+}
 
-const searchFN = (typs, {url, method, browserName}) => {
-//const {router,routes, data} = global.mitm;
-  const {router,routes, __tag3} = global.mitm;
+const searchFN = (typs, { url, method, browserName }) => {
+// const {router,routes, data} = global.mitm;
+  const { router, routes, __tag3 } = global.mitm
 
-  return function search(nspace) {
-    const namespace = _nameSpace(nspace);
+  return function search (nspace) {
+    const namespace = _nameSpace(nspace)
     if (!namespace) {
-      return;
+      return
     }
 
-    let workspace = routes[namespace].workspace;
+    let workspace = routes[namespace].workspace
     if (workspace) {
-      workspace = home(workspace);
+      workspace = home(workspace)
     }
 
-    const list = typTags(typs, namespace);
+    const list = typTags(typs, namespace)
 
-    for (let typ of list) {
+    for (const typ of list) {
       // if (namespace==='oldstorage.com.sg' && typs==='cache' && url.match('meta'))
       //   debugger;
-      const route = routes[namespace][typ];
-      const obj = router[namespace][typ];
-      const tg3 = __tag3[namespace]||{};
+      const route = routes[namespace][typ]
+      const obj = router[namespace][typ]
+      const tg3 = __tag3[namespace] || {}
 
-      for (let key in route) {
-        let isTagsOk = true;
+      for (const key in route) {
+        let isTagsOk = true
         if (tg3[key] && tg3[key][typ]) {
-          const nodes = tg3[key][typ];
-          for (let tag in nodes) {
-            if (nodes[tag]===false) {
-              isTagsOk = false;
-              break;
+          const nodes = tg3[key][typ]
+          for (const tag in nodes) {
+            if (nodes[tag] === false) {
+              isTagsOk = false
+              break
             }
           }
         }
-        const arr = isTagsOk && url.match(obj[key]);
-        const _method = obj[`${key}~method`];
-  
-        if (arr && (_method===undefined || _method===method)) {
-          const {host, origin, pathname, search} = new URL(url);
-          const msg = pathname.length <= 100 ? pathname : pathname.slice(0,100)+'...';
-          const log = `${browser[browserName]} ${typ} (${origin}${msg}).match(${key})`;
+        const arr = isTagsOk && url.match(obj[key])
+        const _method = obj[`${key}~method`]
+
+        if (arr && (_method === undefined || _method === method)) {
+          const { host, origin, pathname, search } = new URL(url)
+          const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
+          const log = `${browser[browserName]} ${typ} (${origin}${msg}).match(${key})`
           const matched = {
             contentType: obj[`${key}~contentType`],
             route: route[key],
@@ -90,7 +90,7 @@ const searchFN = (typs, {url, method, browserName}) => {
             key,
             arr,
             log,
-            typ,
+            typ
           }
           // if (data.maches===undefined) {
           //   data.maches = [];
@@ -98,48 +98,48 @@ const searchFN = (typs, {url, method, browserName}) => {
           //   data.maches.shift();
           // }
           // data.maches.push(matched);
-          return matched;
+          return matched
         }
-      }  
+      }
     }
-  };
-};
+  }
+}
 
 const searchKey = key => {
-  const {router,routes} = global.mitm;
+  const { routes } = global.mitm
 
-  return function search(nspace) {
-    const namespace = _nameSpace(nspace);
+  return function search (nspace) {
+    const namespace = _nameSpace(nspace)
     if (!namespace) {
-      return;
+      return
     }
 
-    return routes[namespace][key];
-  };
-};
+    return routes[namespace][key]
+  }
+}
 
-const matched = (search, {url, headers}) => {
-  //match to domain|origin|referer|_global_
-  const {_tldomain} = global.mitm.fn;
-  const {origin, referer} = headers;
+const matched = (search, { url, headers }) => {
+  // match to domain|origin|referer|_global_
+  const { _tldomain } = global.mitm.fn
+  const { origin, referer } = headers
 
-  let domain = _tldomain(url);
-  let match = search(domain);
+  const domain = _tldomain(url)
+  let match = search(domain)
 
   if (!match && (origin || referer)) {
-    let orref = _tldomain(origin || referer);
-    match = search(orref);
-  } 
+    const orref = _tldomain(origin || referer)
+    match = search(orref)
+  }
   if (!match) {
-    match = search('_global_');
+    match = search('_global_')
   }
   // console.log('>>> Match', tld, !!match)
-  return match;
+  return match
 }
 
 module.exports = {
   searchArr,
   searchKey,
   searchFN,
-  matched,
+  matched
 }

@@ -1,9 +1,9 @@
 module.exports = () => {
-  let ifrm;
+  let ifrm
   try {
-    ifrm = window.self !== window.top;
+    ifrm = window.self !== window.top
   } catch (e) {
-    ifrm = true;
+    ifrm = true
   }
-  return ifrm ? 'iframe' : 'window';
-};
+  return ifrm ? 'iframe' : 'window'
+}

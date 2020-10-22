@@ -1,12 +1,12 @@
-module.exports = ({data}) =>{
-  const {browserName} = data;
+module.exports = ({ data }) => {
+  const { browserName } = data
 
   global.mitm.fn._clear({
     delete: 'log',
-    browserName,
-  });
+    browserName
+  })
 
-  let json = {ok:'OK'};
-  console.log(data);
-  return json;
-};
+  const json = { ok: 'OK' }
+  console.log(data)
+  return json
+}

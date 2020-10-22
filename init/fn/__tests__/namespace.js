@@ -5,33 +5,33 @@ global.mitm = {
   routes: require('../__fixture__/routes'),
   router: {
     _global_: {
-      config: {},
+      config: {}
     }
   },
   data: {},
   argv: {},
   fn: {
-    _routeSet: require('../_route-set')._routeSet,
+    _routeSet: require('../_route-set')._routeSet
   }
-};
+}
 
-global.mitm.fn._routeSet(global.mitm.routes['_global_'], '_global_', true);
-global.mitm.fn._routeSet(global.mitm.routes['google.com'], 'google.com', true);
+global.mitm.fn._routeSet(global.mitm.routes._global_, '_global_', true)
+global.mitm.fn._routeSet(global.mitm.routes['google.com'], 'google.com', true)
 
-const _namespace = require('../_namespace');
+const _namespace = require('../_namespace')
 
 const {
-  test, 
+  test,
   expect,
-  describe, 
-} = global;
+  describe
+} = global
 
 describe('name-space.js - function', () => {
   test('return namespace exist or not', () => {
-    let ns = _namespace('google.com');
-    expect(ns).toBe('google.com');
+    let ns = _namespace('google.com')
+    expect(ns).toBe('google.com')
 
-    ns = _namespace('www.google.com');
-    expect(ns).toBe('google.com');
+    ns = _namespace('www.google.com')
+    expect(ns).toBe('google.com')
   })
 })

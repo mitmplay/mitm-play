@@ -1,11 +1,11 @@
-function addReplaceBody(body, match) {
-  const token = match.route.match(/^[ \n]*=>/);
+function addReplaceBody (body, match) {
+  const token = match.route.match(/^[ \n]*=>/)
   if (token) {
-    body += match.route.replace(token[0],'');
+    body += match.route.replace(token[0], '')
   } else {
-    body = match.route;
+    body = match.route
   }
-  return body;
+  return body
 }
 
-module.exports = addReplaceBody;
+module.exports = addReplaceBody

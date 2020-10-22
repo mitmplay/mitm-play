@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.8.30",
+  "version": "0.8.31",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -11,6 +11,7 @@
     "eslint": "eslint --fix **/*.js",
     "start": "node --inspect ./mitm-play.js",
     "client": "rollup -wc ws-client/rollup.js",
+    "standard": "standard --verbose | snazzy",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand",
     "test": "jest"
   },
@@ -47,9 +48,20 @@
     "npm": "^6.14.8",
     "rollup": "^2.30.00",
     "rollup-plugin-cjs-es": "^1.0.1",
-    "rollup-plugin-sourcemaps": "^0.6.2"
+    "rollup-plugin-sourcemaps": "^0.6.2",
+    "snazzy": "^8.0.0",
+    "standard": "^15.0.0"
   },
   "engines": {
     "node": ">=12.19.0"
+  },
+  "standard": {
+    "ignore": [
+      "/ws-client/index.js",
+      "/plugins/chrome/js/bundle.js",
+      "/plugins/chrome/vs/**/*.js",
+      "/plugins/js-lib/**/*.js",
+      "/user-route/**/*.js"
+    ]
   }
 }
