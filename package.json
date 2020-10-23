@@ -8,7 +8,6 @@
   },
   "scripts": {
     "coverage": "jest --coverage",
-    "eslint": "eslint --fix **/*.js",
     "start": "node --inspect ./mitm-play.js",
     "client": "rollup -wc ws-client/rollup.js",
     "standard": "standard --verbose | snazzy",
@@ -39,9 +38,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^9.0.0",
-    "chance": "^1.1.7",
     "css-selector-generator": "^2.1.2",
-    "eslint": "^7.11.0",
     "install": "^0.13.0",
     "jest": "^26.5.3",
     "nock": "^13.0.4",
