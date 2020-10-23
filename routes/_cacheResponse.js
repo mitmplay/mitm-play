@@ -3,33 +3,12 @@ const c = require('ansi-colors')
 const _match = require('./match')
 const _ext = require('./filepath/ext')
 const { ctype } = require('./content-type')
+const resetCookies = require('./reset-cookies')
 const filesave = require('./filesave/filesave')
 const metaResp = require('./filesave/meta-resp')
 const fpathcache = require('./filepath/fpath-cache')
 
 const { matched, searchFN } = _match
-
-function resetCookies (setCookie) {
-  const cookies = []
-  for (const item of setCookie) {
-    const { _elapsed, ...rest } = item
-    const cookie = []
-    for (const key in rest) {
-      if (key === 'expires') {
-        const now = new Date()
-        const time = now.getTime()
-        now.setTime(time + _elapsed)
-        cookie.push(`expires=${now.toGMTString()}`)
-      } else if (rest[key] === true) {
-        cookie.push(`${key}`)
-      } else {
-        cookie.push(`${key}=${rest[key]}`)
-      }
-    }
-    cookies.push(cookie.join('; '))
-  }
-  return cookies
-}
 
 const cacheResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs)

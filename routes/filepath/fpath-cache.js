@@ -1,9 +1,9 @@
 const { root, filename } = require('./file-util')
+const filePath = require('./file-path')
 
 module.exports = ({ match, reqs }) => {
-  let { host, namespace, route: { at, path, file } } = match
+  let { host, route: { at, path, file } } = match
   const fpath = filename(match)
-  const { argv } = global.mitm
   let fpath1, fpath2;
 
   (at === undefined) && (at = '')
@@ -18,9 +18,13 @@ module.exports = ({ match, reqs }) => {
     stamp1 = `${host}${at}${fpath}`
     stamp2 = `${host}${at}/$${fpath}`
   }
-  let _root, fmatch
-  if (path && (fmatch = path.match(/^[\t ]*\.\/(.+)/))) {
-    _root = `${argv.route}/${namespace}/${fmatch[1]}`
+  let _root
+  if (path) {
+    _root = filePath(path, match)
+  } else if (file) {
+    const fullpath = filePath(file, match).split('/')
+    file = fullpath.pop()
+    _root = fullpath.join('/')
   } else {
     _root = root(reqs, 'cache')
   }

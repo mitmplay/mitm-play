@@ -3,12 +3,10 @@ const c = require('ansi-colors')
 const _match = require('./match')
 const inject = require('./inject')
 const { xtype } = require('./content-type')
+const filePath = require('./filepath/file-path')
 
 const { matched, searchFN } = _match
 const { source } = inject
-const _home = /^[\t ]*~\/(.+)/
-const _route = /^[\t ]*\.\.\/(.+)/
-const _nmspace = /^[\t ]*\.\/(.+)/
 
 const mock = ({ url }) => {
   return {
@@ -21,36 +19,10 @@ const mock = ({ url }) => {
   }
 }
 
-function filePath (match) {
-  const { file } = match.route
-  const { fn: { home }, argv, routes } = global.mitm
-  let fmatch, fpath
-
-  fmatch = file.match(_home)
-  if (fmatch) {
-    fpath = home(`~/${fmatch[1]}`)
-  } else {
-    fmatch = file.match(_route)
-    if (fmatch) {
-      fpath = `${argv.route}/${fmatch[1]}`
-    } else {
-      fmatch = file.match(_nmspace)
-      if (fmatch) {
-        fpath = `${argv.route}/${match.namespace}/${fmatch[1]}`
-      } else {
-        const { workspace: ws } = routes._global_
-        const workspace = match.workspace || ws
-        fpath = workspace ? `${workspace}/${file}` : file
-      }
-    }
-  }
-  return fpath
-}
-
 const mockResponse = async function ({ reqs, route }, _3d) {
   const search = searchFN('mock', reqs)
+  const { fn: { _skipByTag }, router } = global.mitm
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { fn: { _skipByTag, home }, router } = global.mitm
 
   if (match && !_skipByTag(match, 'mock')) {
     let { response, file, js } = match.route
@@ -75,7 +47,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           }
           const ext = file.match(/\.(\w+)$/)
           if (ext) {
-            const fpath = filePath(match)
+            const fpath = filePath(file, match)
             resp.body = `${await fs.readFile(fpath)}`
             resp.headers['content-type'] = xtype[ext[1]]
           } else {
