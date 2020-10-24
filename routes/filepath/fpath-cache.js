@@ -21,20 +21,24 @@ module.exports = ({ match, reqs }) => {
   let _root
   if (path) {
     _root = filePath(path, match)
-  } else if (file) {
-    const fullpath = filePath(file, match).split('/')
-    file = fullpath.pop()
-    _root = fullpath.join('/')
-  } else {
-    _root = root(reqs, 'cache')
   }
-  const { method } = reqs
   if (file) {
     let id = 1
     for (const key of match.arr.slice(1)) {
       file = file.replace(`:${id}`, key)
       id++
     }
+    if (_root === undefined) {
+      const fullpath = filePath(file, match).split('/')
+      file = fullpath.pop()
+      _root = fullpath.join('/')
+    }
+  }
+  if (_root === undefined) {
+    _root = root(reqs, 'cache')
+  }
+  const { method } = reqs
+  if (file) {
     fpath1 = `${_root}/${file}~${method}`
     fpath2 = `${_root}/$/${file}~${method}.json`
   } else {
