@@ -32,7 +32,13 @@ module.exports = () => {
       return false
     }
     saveArgs = JSON.parse(fs.readFileSync(_prfl))
-    console.log(c.green(`>>> cmd: mitm-play ${saveArgs._args}`), `(${profile})`)
+    let msg1 = saveArgs._args
+    const arr1 = msg1.match(/=['"]?([^:]+:[^@]+)@\w+/)
+    if (arr1) {
+      // feat: hide password
+      msg1 = msg1.replace(arr1[1], '******:******')
+    }
+    console.log(c.green(`>>> cmd: mitm-play ${msg1}`), `(${profile})`)
     // console.log(c.green(`>>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
     return true
   }
@@ -45,7 +51,7 @@ module.exports = () => {
 
   if (saveArgs && !argv.save) {
     let msg2 = process.argv.slice(2).join(' ')
-    const arr2 = msg2.match(/=([^:]+:[^@]+)@\w+/)
+    const arr2 = msg2.match(/=['"]?([^:]+:[^@]+)@\w+/)
     if (arr2) {
       // feat: hide password
       msg2 = msg2.replace(arr2[1], '******:******')
