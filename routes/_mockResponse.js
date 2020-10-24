@@ -16,7 +16,7 @@ const mock = ({ url }) => {
     headers: {
       'content-type': 'text/plain'
     },
-    body: ''
+    body: 'Hello mock! - mitm-play'
   }
 }
 
@@ -26,21 +26,18 @@ const mockResponse = async function ({ reqs, route }, _3d) {
   const match = _3d ? search('_global_') : matched(search, reqs)
 
   if (match && !_skipByTag(match, 'mock')) {
-    let { response, path, file, js } = match.route
-    if (router._global_.config.logs.mock) {
-      if (!match.url.match('/mitm-play/websocket')) {
-        console.log(c.cyanBright(match.log))
-      }
-    }
     let resp = mock(reqs)
     if (typeof (match.route) === 'string') {
       resp.body = match.route
     } else {
-      if (response || file || js) {
-        if (response) {
-          const resp2 = response(resp, reqs, match)
-          resp2 && (resp = { ...resp, ...resp2 })
-        } else if (file) {
+      const { response } = match.route
+      if (response) {
+        const resp2 = response(resp, reqs, match)
+        resp2 && (resp = { ...resp, ...resp2 })
+      }
+      let { path, file, js } = match.route
+      if (file || js) {
+        if (file) {
           let _root
           if (path) {
             _root = filePath(path, match)
@@ -53,8 +50,14 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           }
           const fpath1 = `${_root}/${file}`
           const fpath2 = `${_root}/$/${file}.json`
-          resp.body = `${await fs.readFile(fpath1)}`
-          if (fs.existsSync(fpath2)) {
+          if (await fs.pathExists(fpath1)) {
+            resp.body = `${await fs.readFile(fpath1)}`
+          } else {
+            console.log(c.redBright(`>>> ERROR: ${fpath1} did not exists!`))
+            route.continue()
+            return false
+          }
+          if (await fs.pathExists(fpath2)) {
             const json = JSON.parse(await fs.readFile(fpath2))
             const { setCookie, respHeader: headers } = json
             if (setCookie && global.mitm.argv.cookie) {
@@ -62,6 +65,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
             }
             resp.headers = headers
           } else {
+            match.log += '!?'
             const ext = file.match(/\.(\w+)$/)
             if (ext) {
               resp.headers['content-type'] = xtype[ext[1]]
@@ -73,8 +77,11 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           resp.body = source(resp.body, js)
           resp.headers['content-type'] = 'application/javascript'
         }
-      } else {
-        resp.body = 'Hello mock! - mitm-play'
+      }
+    }
+    if (router._global_.config.logs.mock) {
+      if (!match.url.match('/mitm-play/websocket')) {
+        console.log(c.cyanBright(match.log))
       }
     }
     route.fulfill(resp)

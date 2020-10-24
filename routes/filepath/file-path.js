@@ -26,7 +26,7 @@ function filePath (file, match) {
   }
   let id = 1
   for (const key of match.arr.slice(1)) {
-    file = file.replace(`:${id}`, key)
+    fpath = fpath.replace(`:${id}`, key)
     id++
   }
   return fpath
