@@ -22,6 +22,9 @@ module.exports = ({ match, reqs }) => {
   if (path) {
     _root = filePath(path, match)
   }
+  if (typeof file === 'function') {
+    file = file(reqs, match)
+  }
   if (file) {
     file = filePath(file, match)
     if (_root === undefined) {

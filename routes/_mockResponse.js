@@ -30,12 +30,10 @@ const mockResponse = async function ({ reqs, route }, _3d) {
     if (typeof (match.route) === 'string') {
       resp.body = match.route
     } else {
-      const { response } = match.route
-      if (response) {
-        const resp2 = response(resp, reqs, match)
-        resp2 && (resp = { ...resp, ...resp2 })
-      }
       let { path, file, js } = match.route
+      if (typeof file === 'function') {
+        file = file(reqs, match)
+      }
       if (file || js) {
         if (file) {
           let _root
@@ -59,10 +57,11 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           }
           if (await fs.pathExists(fpath2)) {
             const json = JSON.parse(await fs.readFile(fpath2))
-            const { setCookie, respHeader: headers } = json
+            const { general: { status }, setCookie, respHeader: headers } = json
             if (setCookie && global.mitm.argv.cookie) {
               headers['set-cookie'] = resetCookies(setCookie)
             }
+            resp.status = status
             resp.headers = headers
           } else {
             match.log += '!?'
@@ -77,6 +76,11 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           resp.body = source(resp.body, js)
           resp.headers['content-type'] = 'application/javascript'
         }
+      }
+      const { response } = match.route
+      if (response) {
+        const resp2 = response(resp, reqs, match)
+        resp2 && (resp = { ...resp, ...resp2 })
       }
     }
     if (router._global_.config.logs.mock) {

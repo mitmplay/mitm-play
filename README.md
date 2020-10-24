@@ -268,13 +268,13 @@ Manipulate **response** with `response` *function*
 ```js
 mock: {
   'mitm-play/twitter.js': {
-    response({status, headers, body}) {
+    response(resp, reqs, match) {
       return {body} //can be {} or combination of {status, headers, body}
     },
   },
 },
 ```
-Replace **response body** from `file`, if `workspace` exists, it will be use as base path (ie: `${workspace}/${file}`)
+Below is the logic of `file` getting translate combine with `path` or `workspace`, if `workspace` exists, and `file` value not start with dot(`.`), it will use `workspace` (ie: `${workspace}/${file}`) and the `path` will be ignore.
 ```js
 mock: {
   'mitm-play/twitter.js': {
@@ -282,6 +282,7 @@ mock: {
     // file: '../relative/to/route/folder/file.html',
     // file: './relative/to/route/folder/file.html',
     // file: '~/relative/to/home/folder/file.html',
+    // file: (reqs, match) => 'filename'
   },
 },
 ```
@@ -313,18 +314,30 @@ cache: {
     session: true, // optional - set session id
     hidden: true, // optional - no consolo.log
     path: './api', // optional cache file-path
+    file: ':1', // optional cache file-name
     log: false, // optional - disable logging
     at: 'mycache', // 'mycache' part of filename
     tags: 'js-img', // enable/disable route by tags
   }
 },
 ```
+logic for `file` is the same as in `mock`, if `workspace` exists and `file` value not start with dot(`.`), it will use `workspace` (ie: `${workspace}/${file}`) and the `path` will be ignore.
+```js
+cache: {
+  'amazon.com': {
+    file: 'relative/to/workspace/file.html', // --OR--
+    // file: '../relative/to/route/folder/file.html',
+    // file: './relative/to/route/folder/file.html',
+    // file: '~/relative/to/home/folder/file.html',
+    // file: (reqs, match) => 'filename'
+  },
+},
 `cache` support `response` function, it means the result can be manipulate first before send to the browser.
 ```js
 cache: {
   'amazon.com': {
     contentType: ['json'], //required! 
-    response({status, headers, body}) {
+    response(resp, reqs, match) {
       return {body} //can be {} or combination of {status, headers, body}
     },    
   }
@@ -356,9 +369,9 @@ log: {
 log: {
   'amazon.com': {
     contentType: ['json'], //required! 
-    response({status, headers, body}) {
+    response(resp, reqs, match) {
       return {body} //can be {} or combination of {status, headers, body}
-    },    
+    },
   }
 },
 ```
@@ -399,7 +412,7 @@ Manipulate **response** with `response` *function*
 ```js
 html: {
   'https://keybr.com/': {
-    response({status, headers, body}) {
+    response(resp, reqs, match) {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
@@ -426,7 +439,7 @@ Manipulate **response** with `response` *function*
 ```js
 json: {
   'twitter.com/home': {
-    response({status, headers, body}) {
+    response(resp, reqs, match) {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
@@ -454,7 +467,7 @@ Manipulate **response** with `response` *function*
 ```js
 css: {
   'twitter.com/home': {
-    response({status, headers, body}) {
+    response(resp, reqs, match) {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
@@ -482,7 +495,7 @@ Manipulate **response** with ~~`response`~~ *function*
 ```js
 js: {
   'twitter.com/home': {
-    response({status, headers, body}) {
+    response(resp, reqs, match) {
       ....
       return {body} //can be {} or combination of {status, headers, body}
     },
@@ -1019,7 +1032,7 @@ __Block/Mock unnecessary javascript with an empty result__, be careful to not bl
 ```js
 mock: {
   'some/url/with/adv.js': {
-    response({body}) {
+    response(resp, reqs, match) {
       return {body: '/* content is blocked! */'}
     },
   },

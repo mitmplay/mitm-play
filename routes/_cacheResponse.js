@@ -28,7 +28,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
       // get from cache
       try {
         const json = JSON.parse(await fs.readFile(fpath2))
-        const { setCookie, general: { status }, respHeader: headers } = json
+        const { general: { status }, setCookie, respHeader: headers } = json
         if (!ctype(match, { headers })) {
           return { match: undefined, resp }
         }
