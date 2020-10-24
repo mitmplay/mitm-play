@@ -26,7 +26,7 @@ module.exports = ({ match, reqs }) => {
     file = file(reqs, match)
   }
   if (file) {
-    file = filePath(file, match)
+    file = filePath(file, match, path)
     if (_root === undefined) {
       const apath = file.split('/')
       file = apath.pop()

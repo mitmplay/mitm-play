@@ -40,7 +40,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           if (path) {
             _root = filePath(path, match)
           }
-          file = filePath(file, match)
+          file = filePath(file, match, path)
           if (_root === undefined) {
             const apath = file.split('/')
             file = apath.pop()
