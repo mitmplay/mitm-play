@@ -3,6 +3,7 @@ const c = require('ansi-colors')
 const _match = require('./match')
 const inject = require('./inject')
 const { xtype } = require('./content-type')
+const resetCookies = require('./reset-cookies')
 const filePath = require('./filepath/file-path')
 
 const { matched, searchFN } = _match
@@ -25,7 +26,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
   const match = _3d ? search('_global_') : matched(search, reqs)
 
   if (match && !_skipByTag(match, 'mock')) {
-    let { response, file, js } = match.route
+    let { response, path, file, js } = match.route
     if (router._global_.config.logs.mock) {
       if (!match.url.match('/mitm-play/websocket')) {
         console.log(c.cyanBright(match.log))
@@ -40,18 +41,33 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           const resp2 = response(resp, reqs, match)
           resp2 && (resp = { ...resp, ...resp2 })
         } else if (file) {
-          let id = 1
-          for (const key of match.arr.slice(1)) {
-            file = file.replace(`:${id}`, key)
-            id++
+          let _root
+          if (path) {
+            _root = filePath(path, match)
           }
-          const ext = file.match(/\.(\w+)$/)
-          if (ext) {
-            const fpath = filePath(file, match)
-            resp.body = `${await fs.readFile(fpath)}`
-            resp.headers['content-type'] = xtype[ext[1]]
+          file = filePath(file, match)
+          if (_root === undefined) {
+            const apath = file.split('/')
+            file = apath.pop()
+            _root = apath.join('/')
+          }
+          const fpath1 = `${_root}/${file}`
+          const fpath2 = `${_root}/$/${file}.json`
+          resp.body = `${await fs.readFile(fpath1)}`
+          if (fs.existsSync(fpath2)) {
+            const json = JSON.parse(await fs.readFile(fpath2))
+            const { setCookie, respHeader: headers } = json
+            if (setCookie && global.mitm.argv.cookie) {
+              headers['set-cookie'] = resetCookies(setCookie)
+            }
+            resp.headers = headers
           } else {
-            console.log(c.redBright('>>> ERROR: Need a proper file extension'))
+            const ext = file.match(/\.(\w+)$/)
+            if (ext) {
+              resp.headers['content-type'] = xtype[ext[1]]
+            } else {
+              console.log(c.redBright('>>> WARNING: Need a proper file extension'))
+            }
           }
         } else if (js) {
           resp.body = source(resp.body, js)

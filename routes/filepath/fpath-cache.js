@@ -23,15 +23,11 @@ module.exports = ({ match, reqs }) => {
     _root = filePath(path, match)
   }
   if (file) {
-    let id = 1
-    for (const key of match.arr.slice(1)) {
-      file = file.replace(`:${id}`, key)
-      id++
-    }
+    file = filePath(file, match)
     if (_root === undefined) {
-      const fullpath = filePath(file, match).split('/')
-      file = fullpath.pop()
-      _root = fullpath.join('/')
+      const apath = file.split('/')
+      file = apath.pop()
+      _root = apath.join('/')
     }
   }
   if (_root === undefined) {
