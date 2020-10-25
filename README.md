@@ -534,10 +534,10 @@ response: {
 /**
  * reqs/request: {
  *   url        : '',
- *   method     : '', 
+ *   method     : 'GET',/PUT/POST/DELETE 
  *   headers    : {}, 
  *   body       : '',/null,
- *   browserName: ''
+ *   browserName: 'chromium',/webkit/firefox
  * }
 */
 ```
@@ -551,9 +551,9 @@ response: {
 /**
  * resp/response: {
  *   url    : '',
- *   status : <http-status ie: 200>,. 
+ *   status : 200,/302/400/500/etc.. 
  *   headers: {},
- *   body   : ''
+ *   body   : '',
  * }
 */
 ```
@@ -590,7 +590,9 @@ response: {
 
 ```js
 /**
- * arguments: <reqs: object>
+ * arguments:
+ * - <reqs: object>
+ * - <match: object>
  * 
  * return: <filename: string>/false
  * 
