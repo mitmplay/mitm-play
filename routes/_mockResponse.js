@@ -33,6 +33,9 @@ const mockResponse = async function ({ reqs, route }, _3d) {
       let { path, file, js } = match.route
       if (typeof file === 'function') {
         file = file(reqs, match)
+        if (!file) {
+          return false
+        }
       }
       if (file || js) {
         if (file) {
