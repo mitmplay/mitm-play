@@ -1058,5 +1058,6 @@ Goodluck!,
 >*-wh*.
 
 # Known Limitation
-Open Issue:
-* Support service workers [#1090](https://github.com/microsoft/playwright/issues/1090)
+Issue or Limitation on Playwright:
+* Support route aka request interception for service workers [#1090](https://github.com/microsoft/playwright/issues/1090)
+* Route handler to support redirects [#3993](https://github.com/microsoft/playwright/issues/3993) / Disallow intercepting redirects [#2617](https://github.com/microsoft/playwright/pull/2617)
