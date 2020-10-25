@@ -49,15 +49,28 @@ const mockResponse = async function ({ reqs, route }, _3d) {
             file = apath.pop()
             _root = apath.join('/')
           }
-          const fpath1 = `${_root}/${file}`
-          const fpath2 = `${_root}/$/${file}.json`
+          let fileMethod, fpath1, fpath2
+          const arr = file.match(/\.\w+$/)
+          if (arr) {
+            fileMethod = file.replace(arr[0], `~${reqs.method}`) + arr[0]
+          }
+          fpath1 = `${_root}/${fileMethod}`
+          fpath2 = `${_root}/$/${fileMethod}.json`
           if (await fs.pathExists(fpath1)) {
             resp.body = `${await fs.readFile(fpath1)}`
+            file = fileMethod
           } else {
-            console.log(c.redBright(`>>> ERROR: ${fpath1} did not exists!`))
-            route.continue()
-            return false
+            fpath1 = `${_root}/${file}`
+            fpath2 = `${_root}/$/${file}.json`
+            if (await fs.pathExists(fpath1)) {
+              resp.body = `${await fs.readFile(fpath1)}`
+            } else {
+              console.log(c.redBright(`>>> ERROR: ${_root}/(${fileMethod} or ${file}) did not exists!`))
+              route.continue()
+              return false
+            }
           }
+          match.log += `[${file}]`
           if (await fs.pathExists(fpath2)) {
             const json = JSON.parse(await fs.readFile(fpath2))
             const { general: { status }, setCookie, respHeader: headers } = json
