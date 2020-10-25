@@ -512,12 +512,134 @@ Manipulate **response** with `response` function
 ```js
 response: {
   '.+': {
-    request({status, headers, body}) {
+    response(resp) {
+      const {headers} = reqs;
       headers['new-header'] = 'with some value';
+
       return {headers};
     },
     tags: 'all-response',
   }
+},
+```
+</p>
+</details>
+
+## Common info:
+### Objects
+<details><summary><b>object: reqs/request</b></summary>
+<p>
+
+```js
+/**
+ * reqs/request: {
+ *   url        : '',
+ *   method     : '', 
+ *   headers    : {}, 
+ *   body       : '',/null,
+ *   browserName: ''
+ * }
+*/
+```
+</p>
+</details>
+
+<details><summary><b>object: resp/response</b></summary>
+<p>
+
+```js
+/**
+ * resp/response: {
+ *   url    : '',
+ *   status : <http-status ie: 200>,. 
+ *   headers: {},
+ *   body   : ''
+ * }
+*/
+```
+</p>
+</details>
+
+<details><summary><b>object: match</b></summary>
+<p>
+
+```js
+/**
+ * match: {
+ *   route      : {}, 
+ *   contentType: {}, 
+ *   workspace  : '',/undefined,
+ *   namespace  : '', 
+ *   pathname   : '', 
+ *   search     : '',
+ *   host       : '',
+ *   arr        : [],
+ *   url        : '',
+ *   key        : '',
+ *   log        : '',
+ *   typ        : ''
+ * }
+*/
+```
+</p>
+</details>
+
+### Functions
+<details><summary><b>function: file(reqs, match)</b></summary>
+<p>
+
+```js
+/**
+ * arguments: <reqs: object>
+ * 
+ * return: <filename: string>
+*/
+file(reqs, match) {
+  ...
+  return 'common.js';
+},
+```
+</p>
+</details>
+
+<details><summary><b>function: request(reqs, match)</b></summary>
+<p>
+
+```js
+/**
+ * arguments:
+ * - <reqs: object>
+ * - <match: object>
+ * 
+ * return: <reqs: object>
+*/
+request(reqs, match) {
+  const {headers} = reqs;
+  headers['new-header'] = 'with some value';
+
+  return {headers};
+},
+```
+</p>
+</details>
+
+<details><summary><b>function: response(resp, reqs, match)</b></summary>
+<p>
+
+```js
+/**
+ * arguments:
+ * - <resp: object>
+ * - <reqs: object>
+ * - <match: object>
+ * 
+ * return: <resp: object>
+*/
+response(reqs, reqs, match) {
+  const {headers} = reqs;
+  headers['new-header'] = 'with some value';
+
+  return {headers};
 },
 ```
 </p>
