@@ -30,7 +30,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
     if (typeof (match.route) === 'string') {
       resp.body = match.route
     } else {
-      let { path, file, js } = match.route
+      let { file, js } = match.route
       if (typeof file === 'function') {
         file = file(reqs, match)
         if (!file) {
@@ -38,6 +38,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
         }
       }
       if (file || js) {
+        const { path } = match.route
         if (file) {
           let _root
           if (path) {
