@@ -28,6 +28,7 @@ module.exports = () => {
   console.log(c.green(`\nv${pkg.version}\n`))
   console.log(c.whiteBright('FILE WATCHER!'))
   // must be last or other watcher wont work
+  require('./chokidar/profile')() // file watcher for profile // feat: profile
   require('./chokidar/route')() // file watcher for routes
   require('./chokidar/logs')() // file watcher for logs
   // require('./chokidar/cache')(); // file watcher for cache

@@ -14,11 +14,15 @@ const $screencap = require('./_screencap')
 const $clearLogs = require('./_clearLogs')
 const $setClient = require('./_setClient')
 const $getContent = require('./_getContent')
+const $getProfile = require('./_getProfile') // feat: profile
+const $saveProfile = require('./_saveProfile')
 
 // accessible from client
 const wscmd = {
   ..._global(),
   ..._client(),
+  $saveProfile,
+  $getProfile,
   $getContent,
   $setClient,
   $clearLogs,

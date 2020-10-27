@@ -18,7 +18,9 @@ module.exports = function ({ url }) {
       log_events: {},
       cache_events: {},
       route_events: {},
-      getRoute_events: {}
+      getRoute_events: {},
+      profile_events: {}, // feat: profile
+      getProfile_events: {}
     },
     fn: {}
   }
