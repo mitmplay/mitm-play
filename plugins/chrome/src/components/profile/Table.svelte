@@ -99,7 +99,7 @@ function dragend({detail}) {
   </BStatic>
   <BResize left={_profile} on:dragend={dragend} height="47">
     <div class="edit-container">
-      <div id="monaco2">
+      <div id="profile">
       </div>
     </div>
   </BResize>
@@ -118,7 +118,7 @@ function dragend({detail}) {
   position: relative;
   height: calc(100vh - 50px);
 }
-#monaco2 {
+#profile {
   position: absolute;
   top: 0;
   left: 0;

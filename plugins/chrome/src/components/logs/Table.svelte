@@ -70,7 +70,7 @@ function nohostlogs(flag) {
 </script>
 
 <div class="vbox">
-  <BStatic>
+  <BStatic height="0">
     <BHeader>-Logs-</BHeader>
     <Button/>
     <BTable update={nohostlogs($client.nohostlogs)}>

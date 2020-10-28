@@ -34,5 +34,5 @@ module.exports = () => {
     ws.onopen = onopen
     ws.onclose = onclose
     ws.onmessage = onmessage
-  }, 10) // minimize intermitten
+  }, 1) // minimize intermitten
 }

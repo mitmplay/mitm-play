@@ -30,7 +30,7 @@ window.mitm.files.getRoute_events.tagsTable = () => {
 
 <Button/>
 <div class="vbox">
-  <BStatic>
+  <BStatic height="0">
     <BHeader>-Tags-</BHeader>
     <BTable>
       <tr class="set-tags">

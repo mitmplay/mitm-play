@@ -7,7 +7,7 @@ export let onChange;
 
 onMount(async () => {
   const { editor: { _profile }} = window.mitm;
-  const element = window.document.getElementById('monaco2');
+  const element = window.document.getElementById('profile');
   var ro = new ResizeObserver(entries => {
     const {width: w, height: h} = entries[0].contentRect;
     _profile && _profile.layout({width: w, height: h})
