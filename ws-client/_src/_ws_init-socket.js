@@ -1,34 +1,38 @@
-/* global location, WebSocket */
+/* global WebSocket */
 /* eslint-disable camelcase */
 const _ws_msgParser = require('./_ws_msg-parser')
 const _ws_inIframe = require('./_ws_in-iframe')
 
 module.exports = () => {
-  const ws = new WebSocket(`wss://localhost:3001/ws?page=${_ws_inIframe()}`)
-
-  ws.onmessage = function (event) {
-    _ws_msgParser(event, event.data)
-  }
-
-  ws.onopen = function () {
-    ws.send(`url:${(location + '').split(/[?#]/)[0]}`)
-    // console.log("ws: sent...");
-  }
-
-  ws.onclose = function () {
-    console.log('ws: Connection is closed')
-  }
-
-  window._ws = ws
   window._ws_queue = {}
   window._ws_connect = {}
   window._ws_connected = false
-  ws.onopen = (data) => {
-    console.warn('ws: onopen')
+
+  const onopen = data => {
+    console.timeEnd('ws: onopen')
     window._ws_connected = true
     for (const key in window._ws_connect) {
       console.warn(window._ws_connect[key] + '')
       window._ws_connect[key](data)
     }
   }
+
+  const onclose = function () {
+    console.log('ws: Connection is closed')
+  }
+
+  const onmessage = function (event) {
+    _ws_msgParser(event, event.data)
+  }
+
+  const url = `wss://localhost:3001/ws?page=${_ws_inIframe()}`
+  const ws = new WebSocket(url)
+  console.time('ws: onopen')
+  window._ws = ws
+
+  setTimeout(() => {
+    ws.onopen = onopen
+    ws.onclose = onclose
+    ws.onmessage = onmessage
+  }, 10) // minimize intermitten
 }
