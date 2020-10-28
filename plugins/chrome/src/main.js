@@ -11,6 +11,7 @@ function toRegex (str, flags = '') {
 }
 
 window.mitm.fn.toRegex = toRegex
+window.mitm.editor = {};
 window.mitm.browser = {
   chgUrl_events: {},
   activeUrl: '',
@@ -38,9 +39,13 @@ function getUrl () {
   )
 };
 
-console.log('Init event tabs')
 let debounce
+let firstRunTabsOnUpdated = 1
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  if (firstRunTabsOnUpdated) {
+    console.log('first run chrome.tabs.onUpdated')
+    firstRunTabsOnUpdated = 0
+  }
   if (!tab.active) {
     return
   }
@@ -67,7 +72,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   }
 })
 
+let firstRunTabsOnActivated = 1
 chrome.tabs.onActivated.addListener(function (activeInfo) {
+  if (firstRunTabsOnActivated) {
+    console.log('first run chrome.tabs.onActivated')
+    firstRunTabsOnActivated = 0
+  }
   // console.log('Tab Change!!!', activeInfo);
   getUrl()
 })

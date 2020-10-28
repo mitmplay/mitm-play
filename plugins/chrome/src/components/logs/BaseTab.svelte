@@ -28,6 +28,7 @@ function resize(editor) {
 }
 
 onMount(async () => {
+  console.warn('onMount logs - BaseTab.svelte');
   console.log($logstore)
   const hdrs = JSON.parse($logstore.headers);
   const csp3 = hdrs.CSP || {};
@@ -65,7 +66,8 @@ onMount(async () => {
   edit1 =  window.monaco.editor.create(node1, val1);
   edit2 =  window.monaco.editor.create(node2, val2);
   edit3 =  window.monaco.editor.create(node3, val3);
-  
+
+  console.log('load monaco: logs 1,2,3')
   const ro1 = new ResizeObserver(resize(edit1));
   const ro2 = new ResizeObserver(resize(edit2));
   const ro3 = new ResizeObserver(resize(edit3));

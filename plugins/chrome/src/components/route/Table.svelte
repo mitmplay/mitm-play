@@ -9,16 +9,24 @@ import BTable from '../box/BTable.svelte';
 import Button from './Button.svelte';
 import Item from './Item.svelte';
 
+let rerender = 0;
 let route = 163;
 let data = [];
-
-let rerender = 0;
 
 $: _route = route;
 $: _data = data;
 
+onMount(async () => {
+  console.warn('onMount route');
+  _ws_connect.routeOnMount = () => ws__send('getRoute', '', routeHandler);
+
+  chrome.storage.local.get('route', function(data) {
+    data.route && (route = data.route);
+  });
+});
+
 const routeHandler = obj => {
-  console.log('ws__send(getRoute)', obj);
+  console.warn('ws__send(getRoute)', obj);
   if (obj._tags_) {
     window.mitm.__tag1 = obj._tags_.__tag1;
     window.mitm.__tag2 = obj._tags_.__tag2;
@@ -47,55 +55,8 @@ const routeHandler = obj => {
   for (let key in getRoute_events) {
     getRoute_events[key](data);
   }
-  rerender++;
+  rerender = rerender + 1;
 }
-
-onMount(async () => {
-  // setTimeout(() => {
-  //   window.ws__send('getRoute', '', routeHandler)
-  // }, 10);
-  window._ws_connect.routeOnMount = () => {
-    window.ws__send('getRoute', '', routeHandler);
-  }
-  chrome.storage.local.get('route', function(data) {
-    data.route && (route = data.route);
-  });
-
-  function initCodeEditor() {
-    const element = window.document.getElementById('monaco');
-    const editor =  window.monaco.editor.create(element, {
-      language: 'javascript',
-      // theme: "vs-dark",
-      minimap: {
-        enabled: false,
-      },
-      value: '',
-    });
-
-    window.monacoEl = element;
-    window.monacoEditor = editor;
-    editor.onDidChangeModelContent(editorChanged);
-
-    var ro = new ResizeObserver(entries => {
-      const {width: w, height: h} = entries[0].contentRect;
-      editor.layout({width: w, height: h})
-    });
-    ro.observe(element);
-  }
-  let intervalTic = 0;
-  const intervalID = window.setInterval(() => {
-    if (window.monaco.editor) {
-      console.log('Run', {intervalTic});
-      clearInterval(intervalID);
-      initCodeEditor();
-    } else if (intervalTic > 5) {
-      console.log('Out', {intervalTic});
-      clearInterval(intervalID);
-      initCodeEditor();
-    }
-    intervalTic += 1;
-  }, 100);
-});
 
 window.mitm.files.route_events.routeTable = () => {
   console.log('routeTable getting called!!!');
@@ -105,16 +66,17 @@ window.mitm.files.route_events.routeTable = () => {
 let editbuffer;
 let _timeout = null;
 function editorChanged(e) {
+  const { editor: { _route }} = window.mitm;
   let saveDisabled;
   if (e===false) {
     saveDisabled = true;
     source.update(n => {return {...n, saveDisabled}})
-    editbuffer = window.monacoEditor.getValue();
+    editbuffer = _route.getValue();
   }
   _timeout && clearTimeout(_timeout);
   _timeout = setTimeout(() => {
-    if (window.monacoEditor){
-      saveDisabled = (window.monacoEditor.getValue()===editbuffer)
+    if (_route){
+      saveDisabled = (_route.getValue()===editbuffer)
       source.update(n => {return {...n, saveDisabled}});
       console.log(e);
     }

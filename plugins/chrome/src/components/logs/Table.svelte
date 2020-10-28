@@ -18,19 +18,16 @@ $: _json = json;
 $: _data = data;
 
 onMount(async () => {
-  // setTimeout(() => {
-  //   ws__send('getLog', '', logHandler)
-  // }, 10);
-  window._ws_connect.logOnMount = () => {
-    ws__send('getLog', '', logHandler)
-  }
+  console.warn('onMount logs');
+  _ws_connect.logOnMount = () => ws__send('getLog', '', logHandler);
+
   chrome.storage.local.get('json', function(data) {
     data.json && (json = data.json);
   });
 });
 
 const logHandler = obj => {
-  console.log('ws__send(getLog)', obj);
+  console.warn('ws__send(getLog)', obj);
   if ( window.mitm.client.clear) {
     delete window.mitm.client.clear;
     logstore.set({
@@ -66,6 +63,7 @@ function dragend({detail}) {
   json = detail.left;
   chrome.storage.local.set({json})
 }
+
 function nohostlogs(flag) {
   console.log('nohostlogs', flag);
 }

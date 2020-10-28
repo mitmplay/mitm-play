@@ -24,8 +24,10 @@ module.exports = () => {
   window._ws_connect = {}
   window._ws_connected = false
   ws.onopen = (data) => {
+    console.warn('ws: onopen')
     window._ws_connected = true
     for (const key in window._ws_connect) {
+      console.warn(window._ws_connect[key] + '')
       window._ws_connect[key](data)
     }
   }

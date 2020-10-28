@@ -5,28 +5,62 @@ import { onMount } from 'svelte';
 export let item;
 export let onChange;
 
-onMount(async () => {});
+onMount(async () => {
+  const { editor: { _profile }} = window.mitm;
+  const element = window.document.getElementById('monaco2');
+  var ro = new ResizeObserver(entries => {
+    const {width: w, height: h} = entries[0].contentRect;
+    _profile && _profile.layout({width: w, height: h})
+  });
+  ro.observe(element);
+
+  window.mitm.editor._profileEl = element;
+});
+
+function initCodeEditor(src) {
+  console.log('load monaco: profile')
+  const element = window.mitm.editor._profileEl;
+  const _profile =  window.monaco.editor.create(element, {
+    language: 'javascript',
+    // theme: "vs-dark",
+    minimap: {
+      enabled: false,
+    },
+    value: '',
+  });
+  window.mitm.editor._profile = _profile;
+
+  _profile.onDidChangeModelContent(onChange);
+  _profile.setValue(src);
+}
 
 function clickHandler(e) {
   let {item} = e.target.dataset;
   const url = item;
-  const obj = window.mitm.files.profile[item];
+  const { editor: { _profile }, files } = window.mitm;
+  const obj = files.profile[item];
   console.log(item, obj);
 
-  window.monacoEditor2.setValue(obj.content);
-  window.monacoEditor2.revealLine(1);
-  onChange(false);
+  if (_profile===undefined) {
+    initCodeEditor(obj.content);
+  } else {
+    _profile.setValue(obj.content || '');
+    _profile.revealLine(1);
+  }
+  setTimeout(() => {
+    onChange(false);
 
-  source.update(n => {
-    return {
-      ...n,
-      goDisabled: (url===undefined),
-      content: obj.content,
-      fpath: obj.fpath,
-      path: obj.path,
-      item,
-    }
-  });
+    source.update(n => {
+      return {
+        ...n,
+        goDisabled: (url===undefined),
+        content: obj.content,
+        fpath: obj.fpath,
+        path: obj.path,
+        item,
+      }
+    });
+  }, 1);
 }
 </script>
 

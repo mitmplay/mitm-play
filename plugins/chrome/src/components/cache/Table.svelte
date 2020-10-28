@@ -6,7 +6,7 @@ let data =  [];
 $: _data = data;
 
 const cacheHandler = obj => {
-  console.log('ws__send(getCache)', obj);
+  console.warn('ws__send(getCache)', obj);
   if (window.mitm.files.cache===undefined) {
     window.mitm.files.cache = obj;
     data = obj;

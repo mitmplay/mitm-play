@@ -9,16 +9,24 @@ import BTable from '../box/BTable.svelte';
 import Button from './Button.svelte';
 import Item from './Item.svelte';
 
+let rerender = 0;
 let profile = 163;
 let data = [];
-
-let rerender = 0;
 
 $: _profile = profile;
 $: _data = data;
 
+onMount(async () => {
+  console.warn('onMount profile');
+  _ws_connect.profileOnMount = () => ws__send('getProfile', '', profileHandler);
+
+  chrome.storage.local.get('profile', function(data) {
+    data.profile && (profile = data.profile);
+  });
+});
+
 const profileHandler = obj => {
-  console.log('ws__send(getProfile)', obj);
+  console.warn('ws__send(getProfile)', obj);
   if (window.mitm.files.profile===undefined) {
     window.mitm.files.profile = obj;
     data = obj;
@@ -40,52 +48,8 @@ const profileHandler = obj => {
   for (let key in getProfile_events) {
     getProfile_events[key](data);
   }
-  rerender++;
+  rerender = rerender + 1;
 }
-
-onMount(async () => {
-  window._ws_connect.profileOnMount = () => {
-    window.ws__send('getProfile', '', profileHandler);
-  }
-  chrome.storage.local.get('profile', function(data) {
-    data.profile && (profile = data.profile);
-  });
-
-  function initCodeEditor() {
-    const element = window.document.getElementById('monaco2');
-    const editor =  window.monaco.editor.create(element, {
-      language: 'javascript',
-      // theme: "vs-dark",
-      minimap: {
-        enabled: false,
-      },
-      value: '',
-    });
-
-    window.monacoEl2 = element;
-    window.monacoEditor2 = editor;
-    editor.onDidChangeModelContent(editorChanged);
-
-    var ro = new ResizeObserver(entries => {
-      const {width: w, height: h} = entries[0].contentRect;
-      editor.layout({width: w, height: h})
-    });
-    ro.observe(element);
-  }
-  let intervalTic = 0;
-  const intervalID = window.setInterval(() => {
-    if (window.monaco.editor) {
-      console.log('Run', {intervalTic});
-      clearInterval(intervalID);
-      initCodeEditor();
-    } else if (intervalTic > 5) {
-      console.log('Out', {intervalTic});
-      clearInterval(intervalID);
-      initCodeEditor();
-    }
-    intervalTic += 1;
-  }, 100);
-});
 
 window.mitm.files.profile_events.profileTable = () => {
   console.log('profileTable getting called!!!');
@@ -95,16 +59,17 @@ window.mitm.files.profile_events.profileTable = () => {
 let editbuffer;
 let _timeout = null;
 function editorChanged(e) {
+  const { editor: { _profile }} = window.mitm;
   let saveDisabled;
   if (e===false) {
     saveDisabled = true;
     source.update(n => {return {...n, saveDisabled}})
-    editbuffer = window.monacoEditor2.getValue();
+    editbuffer = _profile.getValue();
   }
   _timeout && clearTimeout(_timeout);
   _timeout = setTimeout(() => {
-    if (window.monacoEditor2){
-      saveDisabled = (window.monacoEditor2.getValue()===editbuffer)
+    if (_profile){
+      saveDisabled = (_profile.getValue()===editbuffer)
       source.update(n => {return {...n, saveDisabled}});
       console.log(e);
     }

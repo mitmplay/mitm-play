@@ -5,27 +5,61 @@ import { onMount } from 'svelte';
 export let item;
 export let onChange;
 
-onMount(async () => {});
+onMount(async () => {
+  const { editor: { _route }} = window.mitm;
+  const element = window.document.getElementById('monaco');
+  const ro = new ResizeObserver(entries => {
+    const {width: w, height: h} = entries[0].contentRect;
+    _route && _route.layout({width: w, height: h})
+  });
+  ro.observe(element);
+
+  window.mitm.editor._routeEl = element;
+});
+
+function initCodeEditor(src) {
+  console.log('load monaco: route')
+  const element = window.mitm.editor._routeEl;
+  const _route =  window.monaco.editor.create(element, {
+    language: 'javascript',
+    // theme: "vs-dark",
+    minimap: {
+      enabled: false,
+    },
+    value: '',
+  });
+  window.mitm.editor._route = _route;
+
+  _route.onDidChangeModelContent(onChange);
+  _route.setValue(src);
+}
 
 function clickHandler(e) {
   let {item} = e.target.dataset;
   const url = mitm.routes[item].url;
-  const obj = window.mitm.files.route[item];
+  const { editor: { _route }, files } = window.mitm;
+  const obj = files.route[item];
   console.log(item, obj);
 
-  window.monacoEditor.setValue(obj.content);
-  window.monacoEditor.revealLine(1);
-  onChange(false);
+  if (_route===undefined) {
+    initCodeEditor(obj.content);
+  } else {
+    _route.setValue(obj.content || '');
+    _route.revealLine(1);
+  }
+  setTimeout(() => {
+    onChange(false);
 
-  source.update(n => {
-    return {
-      ...n,
-      goDisabled: (url===undefined),
-      content: obj.content,
-      path: obj.path,
-      item,
-    }
-  });
+    source.update(n => {
+      return {
+        ...n,
+        goDisabled: (url===undefined),
+        content: obj.content,
+        path: obj.path,
+        item,
+      }
+    }, 1);
+  })
 }
 </script>
 
