@@ -59,17 +59,17 @@ module.exports = () => {
         console.log('>>> Plugins:', path.split(','))
         args.push(`--disable-extensions-except=${path}`)
         args.push(`--load-extension=${path}`)
-        if (argv.proxypac && typeof argv.proxy === 'string') {
+        if (argv.proxypac) {
+          console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxypac ${argv.proxypac}`))
+          args.push(`--proxy-pac-url=${argv.proxypac}`)
+        } else if (typeof argv.proxy === 'string') {
           let msg = argv.proxy
           const arr = msg.match(/([^:]+:[^@]+)@\w+/)
           if (arr) {
             // feat: hide password
             msg = msg.replace(arr[1], '******:******')
           }
-          console.log(c.red.bgYellowBright(`>>> --proxy ${msg} will take presedence over --proxypac ${argv.proxypac}`))
-        } else if (argv.proxypac) {
-          console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxypac ${argv.proxypac}`))
-          args.push(`--proxy-pac-url=${argv.proxypac}`)
+          console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxy ${msg}`))
         }
         options.viewport = null
         options.args = args
