@@ -25,12 +25,13 @@ module.exports = () => {
     // ex: ws__
     _files ({ typ, data }) {
       const { files } = window.mitm
-      // console.log(`receive brodcast ${typ}`);
+      console.warn(`receive brodcast ${typ}`)
       /**
        * event handler after receiving ws packet
        * ie: window.mitm.files.route_events = {eventObject...}
        */
       for (const key in files[`${typ}_events`]) {
+        console.warn(files[`${typ}_events`][key] + '')
         files[`${typ}_events`][key](data)
       }
     },

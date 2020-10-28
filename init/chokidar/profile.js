@@ -7,19 +7,21 @@ const broadcast = require('./broadcast')
 const showFiles = global._debounce(broadcast('profile'), 1002, 'profile')
 
 function loadSource (path) {
+  const { win32, source, files: { profile } } = global.mitm
+  win32 && (path = path.replace(/\\/g, '/'))
   fs.readFile(path, 'utf8', function (err, data) {
     if (err) {
       console.log(c.redBright('Error read source file'), err)
     } else {
-      global.mitm.source[path] = data
+      if (profile.indexOf(path) === -1) {
+        profile.push(path)
+      }
+      source[path] = data
     }
   })
 }
 
 function addProfile (path) {
-  const { win32, files: { profile } } = global.mitm
-  win32 && (path = path.replace(/\\/g, '/'))
-  profile.push(path)
   loadSource(path)
   showFiles()
 }

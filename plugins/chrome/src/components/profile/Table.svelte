@@ -56,21 +56,26 @@ window.mitm.files.profile_events.profileTable = () => {
   window.ws__send('getProfile', '', profileHandler);
 }
 
-let editbuffer;
 let _timeout = null;
 function editorChanged(e) {
   const { editor: { _profile }} = window.mitm;
   let saveDisabled;
   if (e===false) {
-    saveDisabled = true;
-    source.update(n => {return {...n, saveDisabled}})
-    editbuffer = _profile.getValue();
+    source.update(n => {return {
+      ...n,
+      saveDisabled: true,
+      editbuffer: _profile.getValue()
+    }})
+    
   }
   _timeout && clearTimeout(_timeout);
   _timeout = setTimeout(() => {
     if (_profile){
-      saveDisabled = (_profile.getValue()===editbuffer)
-      source.update(n => {return {...n, saveDisabled}});
+      saveDisabled = (_profile.getValue()===$source.editbuffer)
+      source.update(n => {return {
+        ...n,
+        saveDisabled
+      }});
       console.log(e);
     }
   }, 500)  

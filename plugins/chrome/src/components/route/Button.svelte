@@ -2,23 +2,34 @@
 import { source } from './stores.js';
 
 function btnMin() {
-  window.monacoEditor.trigger('fold', 'editor.foldAll');
+  const { editor: { _route }} = window.mitm;
+  _route && _route.trigger('fold', 'editor.foldAll');
 }
 
 function btnPlus() {
-  window.monacoEditor.trigger('unfold', 'editor.unfoldAll');
+  const { editor: { _route }} = window.mitm;
+  _route && _route.trigger('unfold', 'editor.unfoldAll');
 }
 
 function btnSave(e) {
-  source.update(n => {
-    return {...n, content: window.monacoEditor.getValue()}
-  })
-  console.log($source);
+  const { editor: { _route }} = window.mitm;
+  if (_route) {
+    const content = _route.getValue()
+    source.update(n => {
+      return {
+        ...n,
+        content,
+        saveDisabled: true,
+        editbuffer: content
+      }
+    })
+    console.log($source);
 
-  ws__send('saveRoute', $source, data => {
-    source.update(n => {return {...n, saveDisabled: true}});
-    console.log('Done Save!');
-  });
+    ws__send('saveRoute', $source, data => {
+      source.update(n => {return {...n, saveDisabled: true}});
+      console.log('Done Save!');
+    });
+  }
 }
 
 function btnOpen() {

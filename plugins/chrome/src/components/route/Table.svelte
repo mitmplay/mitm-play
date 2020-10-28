@@ -63,21 +63,26 @@ window.mitm.files.route_events.routeTable = () => {
   window.ws__send('getRoute', '', routeHandler);
 }
 
-let editbuffer;
 let _timeout = null;
 function editorChanged(e) {
   const { editor: { _route }} = window.mitm;
   let saveDisabled;
   if (e===false) {
     saveDisabled = true;
-    source.update(n => {return {...n, saveDisabled}})
-    editbuffer = _route.getValue();
+    source.update(n => {return {
+      ...n,
+      saveDisabled: true,
+      editbuffer: _route.getValue()
+    }})
   }
   _timeout && clearTimeout(_timeout);
   _timeout = setTimeout(() => {
     if (_route){
-      saveDisabled = (_route.getValue()===editbuffer)
-      source.update(n => {return {...n, saveDisabled}});
+      saveDisabled = (_route.getValue()===$source.editbuffer)
+      source.update(n => {return {
+        ...n,
+        saveDisabled
+      }});
       console.log(e);
     }
   }, 500)  
