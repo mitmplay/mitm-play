@@ -2,14 +2,14 @@
   <head>
     <meta charset="utf-8">
     <title>MITM-PLAY</title>
-    <link rel='stylesheet' href='css/bulma.css'>
-    <link rel='stylesheet' href='css/bundle.css'>
-    <link rel="stylesheet" href="css/overwrites.css">
-    <link rel="stylesheet" data-name="vs/editor/editor.main" href="vs/editor/editor.main.css">
+    <link rel='stylesheet' href='css/bulma.css' onload="this.media='all'">
+    <link rel='stylesheet' href='css/bundle.css' onload="this.media='all'">
+    <link rel="stylesheet" href="css/overwrites.css" onload="this.media='all'">
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="vs/editor/editor.main.css" onload="this.media='all'">
     <script src="https://localhost:3001/mitm-play/mitm.js"></script>
     <script src="https://localhost:3001/mitm-play/websocket.js"></script>
-    <script src="vs/loader.js"></script>
-    <script src="vs/init.js"></script>
+    <script src="vs/loader.js" async></script>
+    <script src="vs/init.js" async></script>
     <style>
       html {
         overflow: hidden;
@@ -17,6 +17,6 @@
     </style>
   </head>
   <body>
-    <script src='js/bundle.js'></script>
+    <script src='js/bundle.js' async></script>
   </body>
 </html>
