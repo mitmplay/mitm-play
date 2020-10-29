@@ -25,14 +25,14 @@ const headerchg = headers => {
 }
 
 const addWebSocket = async function (reqs, responseHandler, _3d) {
-  const { url, headers } = reqs
+  const { url, headers, browserName } = reqs
   const accpt = headers.accept + ''
   const { origin, referer } = headers
   if (origin || referer) {
     return
   }
   if (accpt === '*/*' || accpt.indexOf('text/html') > -1) {
-    const search = searchArr({ typ: 'nosocket', url })
+    const search = searchArr({ typ: 'nosocket', url, browserName })
     const match = _3d ? search('_global_') : matched(search, reqs)
     if (match) {
       const { logs } = router._global_.config

@@ -34,13 +34,14 @@ describe('match.js - searchArr', () => {
   test('return undefined for not found or string for found in url', () => {
     const typ = 'skip'
     const url = 'https://google.com/search?q=github+playwright'
-    const fn = searchArr({ typ, url })
+    const browserName = 'chromium'
+    const fn = searchArr({ typ, url, browserName })
 
     const r1 = fn('google')
     expect(typeof r1).toBe('undefined')
 
     const r2 = fn('google.com')
-    expect(typeof r2).toBe('string')
+    expect(typeof r2).toBe('object')
   })
 })
 
@@ -65,7 +66,7 @@ describe('match.js - matched', () => {
     const fn = searchArr({ typ, url })
 
     const found = matched(fn, { url, headers: {} })
-    expect(typeof found).toBe('string')
+    expect(typeof found).toBe('object')
   })
 
   test('return matched origin/referer', () => {

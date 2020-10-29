@@ -26,6 +26,8 @@ const mockResponse = async function ({ reqs, route }, _3d) {
   const match = _3d ? search('_global_') : matched(search, reqs)
 
   if (match && !_skipByTag(match, 'mock')) {
+    const { logs } = router._global_.config
+    const { response, hidden } = match.route
     let resp = mock(reqs)
     if (typeof (match.route) === 'string') {
       resp.body = match.route
@@ -94,13 +96,12 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           resp.headers['content-type'] = 'application/javascript'
         }
       }
-      const { response } = match.route
       if (response) {
         const resp2 = response(resp, reqs, match)
         resp2 && (resp = { ...resp, ...resp2 })
       }
     }
-    if (router._global_.config.logs.mock) {
+    if (logs.mock && !hidden) {
       if (!match.url.match('/mitm-play/websocket')) {
         console.log(c.cyanBright(match.log))
       }

@@ -13,7 +13,7 @@ function typTags (typ, namespace) {
   }
 }
 
-const searchArr = ({ typ: typs, url }) => {
+const searchArr = ({ typ: typs, url, browserName }) => {
   const { router, routes } = global.mitm
 
   return function (nspace) {
@@ -26,9 +26,28 @@ const searchArr = ({ typ: typs, url }) => {
       for (const typ of list) {
         const obj = router[namespace][typ]
         const arr = routes[namespace][typ] || []
-        for (const str of arr) {
-          if (obj && url.match(obj[str])) {
-            return str
+        for (const key of arr) {
+          if (obj) {
+            const arr = url.match(obj[key])
+            if (arr) {
+              const { host, origin, pathname, search } = new URL(url)
+              const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
+              const log = `${browser[browserName]} ${typ} (${origin}${msg}).match(${key})`
+              const hidden = typ.indexOf(':hidden') > -1
+              const matched = {
+                namespace,
+                pathname,
+                hidden,
+                search,
+                host,
+                url,
+                key,
+                arr,
+                log,
+                typ
+              }
+              return matched
+            }
           }
         }
       }
@@ -78,12 +97,14 @@ const searchFN = (typs, { url, method, browserName }) => {
           const { host, origin, pathname, search } = new URL(url)
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
           const log = `${browser[browserName]} ${typ} (${origin}${msg}).match(${key})`
+          const hidden = typ.indexOf(':hidden') > -1
           const matched = {
             contentType: obj[`${key}~contentType`],
             route: route[key],
             workspace,
             namespace,
             pathname,
+            hidden,
             search,
             host,
             url,

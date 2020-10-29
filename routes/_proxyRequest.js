@@ -1,9 +1,9 @@
 const { searchArr, matched } = require('./match')
 
 const proxyRequest = async function (reqs, _3d) {
-  const { url } = reqs
-  const search1 = searchArr({ typ: 'noproxy', url })
-  const search2 = searchArr({ typ: 'proxy', url })
+  const { url, browserName } = reqs
+  const search1 = searchArr({ typ: 'noproxy', url, browserName })
+  const search2 = searchArr({ typ: 'proxy', url, browserName })
   let nopro, proxy
   if (_3d) {
     nopro = search1('_global_')

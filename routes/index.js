@@ -38,12 +38,11 @@ module.exports = async ({ route, request, browserName }) => {
   }
 
   const _3ds = _3rdparties(reqs)
-  const skip = await _skipResponse(reqs, _3ds)
+  const matchSkip = await _skipResponse(reqs, _3ds)
   const { origin, pathname } = new URL(reqs.url)
-  if (skip) {
-    if (logs.skip) {
-      const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
-      console.log(c.grey(`>>> skip (${origin}${msg}).match(${skip})`))
+  if (matchSkip) {
+    if (logs.skip && !matchSkip.hidden) {
+      console.log(c.grey(matchSkip.log))
     }
     route.continue()
     return

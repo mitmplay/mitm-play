@@ -571,6 +571,7 @@ response: {
  *   workspace  : '',/undefined,
  *   namespace  : '', 
  *   pathname   : '', 
+ *   hidden     : true,/false 
  *   search     : '',
  *   host       : '',
  *   arr        : [],
@@ -745,9 +746,13 @@ To show all the options Command Line Interface (CLI). this option can be arbitra
 $ mitm-play -h  <OR>
 $ mitm-play --help
 
-  Usage: mitm-play <profl> [options]
+  Usage: mitm-play [args] [options]
 
-  Options:
+  args:
+    1st for searching url/urls
+    2nd for loading profile
+
+  options:
     -h --help            show this help
     -u --url             go to specific url
     -s --save            save as default <profl>

@@ -3,9 +3,13 @@ const c = require('ansi-colors')
 module.exports = (_package) => {
   console.log(c.greenBright(
   `
-  Usage: mitm-play <profl> [options]
+  Usage: mitm-play [args] [options]
   
-  Options:
+  args:
+    1st for searching url/urls
+    2nd for loading profile
+
+  options:
     -h --help     \t show this help
     -u --url      \t go to specific url
     -s --save     \t save as default <profl>
