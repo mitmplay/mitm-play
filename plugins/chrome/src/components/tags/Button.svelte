@@ -20,17 +20,20 @@ function btnSave(e) {
 onMount(() => {
   let debounce = false;
   document.querySelector('.set-tags').onclick = function(e) {
-    const {value} = e.target.attributes.type;
-    if (autoSave && value==='checkbox') {
-      if (debounce) {
-        clearTimeout(debounce);
+    const {type} = e.target.attributes;
+    if (type) {
+      const {value} = type;
+      if (autoSave && value==='checkbox') {
+        if (debounce) {
+          clearTimeout(debounce);
+        }
+        debounce = setTimeout(() => {
+          debounce = false;
+          btnSave(e);
+        },50)
       }
-      debounce = setTimeout(() => {
-        debounce = false;
-        btnSave(e);
-      },50)
+      console.log('clicked', e.target);
     }
-    console.log('clicked', e.target);
   };
 
   window.mitm.browser.chgUrl_events.tagsEvent = function() {

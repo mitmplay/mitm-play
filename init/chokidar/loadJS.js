@@ -44,8 +44,9 @@ const routeSort = function (fn) {
   global.mitm.__tag3 = sort(global.mitm.__tag3)
   let tag1 = {}
   for (const ns in global.mitm.__tag2) {
-    // if (ns==='oldstorage.com.sg')
-    //   debugger;
+    // if (ns === '_global_') {
+    //   debugger
+    // }
     const tagX = {}
     const flag = global.mitm.routes[ns].tags
     const tag2 = global.mitm.__tag2[ns]

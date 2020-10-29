@@ -60,11 +60,11 @@ function listTags(tags) {
       const rgx = toRegex(ns.replace(/~/,'[^.]*'));
       if (mitm.browser.activeUrl.match(rgx)) {
         add(ns);
-        add('_global_');
-        return Object.keys(list).sort();
+        break;
       }
     }
-    return [];
+    add('_global_');
+    return Object.keys(list).sort();
   } else {
     return Object.keys(tags.__tag1);
   }
