@@ -36,7 +36,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
     const match = _3d ? search('_global_') : matched(search, reqs)
     if (match) {
       const { logs } = router._global_.config
-      if (logs.nosocket) {
+      if (logs.nosocket && !match.hidden) {
         const { origin, pathname } = new URL(url)
         console.log(c.redBright(`>>> nosocket (${origin}${pathname})`))
       }

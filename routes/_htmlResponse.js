@@ -18,7 +18,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/html')) {
         const len = match.log.length
-        if (logs.html && !hidden) {
+        if (logs.html && !match.hidden && !hidden) {
           console.log(`${'-'.repeat(len)}\n${c.yellowBright(match.log)}`)
         }
         if (typeof (match.route) === 'string') {

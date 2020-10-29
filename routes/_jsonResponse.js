@@ -9,11 +9,11 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
   const { logs } = router._global_.config
 
   if (match && !_skipByTag(match, 'json')) {
-    const { response } = match.route
+    const { response, hidden } = match.route
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('application/json')) {
-        if (logs.json) {
+        if (logs.json && !match.hidden && !hidden) {
           console.log(c.yellowBright(match.log))
         }
         if (typeof (match.route) === 'string') {

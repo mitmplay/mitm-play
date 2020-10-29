@@ -41,8 +41,8 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           headers['set-cookie'] = resetCookies(setCookie)
         }
         fpath1 = `${fpath1}.${_ext({ headers })}`
-        if (logs.cache) {
-          if (!global.mitm.argv.ommit.cache && !hidden) {
+        if (logs.cache && !match.hidden && !hidden) {
+          if (!global.mitm.argv.ommit.cache) {
             if (match.route.path) {
               console.log(c.green(match.log))
             } else {
@@ -72,7 +72,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             global.mitm._session_ = true
           }
           fpath1 = `${fpath1}.${_ext(resp)}`
-          if (logs.cache) {
+          if (logs.cache && !match.hidden) {
             if (hidden !== 2) {
               console.log(c.magentaBright(match.log))
             }

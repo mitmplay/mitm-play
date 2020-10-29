@@ -10,11 +10,11 @@ const jsResponse = async function (reqs, responseHandler, _3d) {
   const { logs } = router._global_.config
 
   if (match && !_skipByTag(match, 'js')) {
-    const { response } = match.route
+    const { response, hidden } = match.route
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('javascript')) {
-        if (logs.js) {
+        if (logs.js && !match.hidden && !hidden) {
           console.log(c.cyanBright(match.log))
         }
         if (typeof (match.route) === 'string') {

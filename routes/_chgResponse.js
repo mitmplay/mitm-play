@@ -11,8 +11,8 @@ const allRequest = async function (reqs, responseHandler, _3d) {
   const { logs } = router._global_.config
 
   if (match && !_skipByTag(match, 'response')) {
-    const { response, contentType } = match.route
-    if (logs.response) {
+    const { response, contentType, hidden } = match.route
+    if (logs.response && !match.hidden && !hidden) {
       console.log(c.cyanBright(match.log))
     }
     responseHandler.push(resp => {

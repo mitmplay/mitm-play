@@ -10,10 +10,10 @@ const chgRequest = async function (reqs, _3d) {
 
   let result = match && !_skipByTag(match, 'request')
   if (result) {
-    const { hidden, request } = match.route
-    if (logs.request) {
+    const { request, hidden } = match.route
+    if (logs.request && !match.hidden && !hidden) {
       if (!match.url.match('/mitm-play/websocket')) {
-        if (!global.mitm.argv.ommit.request && !hidden) {
+        if (!global.mitm.argv.ommit.request) {
           console.log(c.cyanBright(match.log))
         }
       }

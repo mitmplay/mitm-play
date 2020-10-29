@@ -16,7 +16,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
   const { logs } = router._global_.config
 
   if (match && !_skipByTag(match, 'log')) {
-    const { hidden, log, response } = match.route
+    const { log, response, hidden } = match.route
     const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
     responseHandler.push((resp, reqs) => {
       if (ctype(match, resp)) {
@@ -24,10 +24,8 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
           return resp
         }
         let { fpath1, fpath2 } = fpathflat({ match, reqs, stamp })
-        if (logs.log) {
-          if (!hidden) {
-            console.log(c.bold.blueBright(match.log))
-          }
+        if (logs.log && !match.hidden && !hidden) {
+          console.log(c.bold.blueBright(match.log))
         }
         if (log) {
           // complete r/resp json log

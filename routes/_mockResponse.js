@@ -101,7 +101,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
         resp2 && (resp = { ...resp, ...resp2 })
       }
     }
-    if (logs.mock && !hidden) {
+    if (logs.mock && !match.hidden && !hidden) {
       if (!match.url.match('/mitm-play/websocket')) {
         console.log(c.cyanBright(match.log))
       }
