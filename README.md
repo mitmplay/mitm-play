@@ -685,7 +685,7 @@ _global_ = {
 // toggle to show/hide from console.log()
 _global_.config = {
   logs: {
-    'ws-receive':   true,
+    'ws-message':   true,
     'no-namespace': true,
     'ws-broadcast': true,
     'referer-reqs': true,

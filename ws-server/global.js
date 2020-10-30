@@ -15,7 +15,7 @@ module.exports = () => {
         }
       }
     })
-    if (logs['ws-broadcast']) {
+    if (global.mitm.argv.debug || logs['ws-broadcast']) {
       console.log('broadcast', data, pages)
     }
   }

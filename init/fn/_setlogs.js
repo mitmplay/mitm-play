@@ -1,6 +1,6 @@
 const _logs = function (_silent = false) {
   return {
-    'ws-receive': !_silent,
+    'ws-message': !_silent,
     'ws-broadcast': !_silent,
     'no-namespace': !_silent,
     'referer-reqs': !_silent,
