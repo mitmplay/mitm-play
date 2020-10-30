@@ -60,15 +60,18 @@ module.exports = async ({ route, request, browserName }) => {
   // --resp can be undefined or local cached & can skip logs (.nolog)
   const { match, resp } = await _cacheResponse(reqs, responseHandler, _3ds)
 
-  // --order is important and log must not contain the body modification
+  // --order is important, log must not contain the body modification
   await _logResponse(reqs, responseHandler, _3ds, match)
-  await _htmlResponse(reqs, responseHandler, _3ds)
+
+  // --order is important, no need second time inject ws in _addWebSocket
+  const matchHtml = await _htmlResponse(reqs, responseHandler, _3ds)
+
   await _jsonResponse(reqs, responseHandler, _3ds)
   await _cssResponse(reqs, responseHandler, _3ds)
   await _jsResponse(reqs, responseHandler, _3ds)
   await _chgResponse(reqs, responseHandler, _3ds)
 
-  if (!nosocket) {
+  if (!(matchHtml && matchHtml.route.ws) && !nosocket) {
     // --inject websocket client to html
     await _addWebSocket(reqs, responseHandler, _3ds)
   }

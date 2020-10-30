@@ -3,8 +3,8 @@ const c = require('ansi-colors')
 const _match = require('./match')
 const _inject = require('./inject')
 
-const { matched, searchFN } = _match
-const { script_src, e_head } = _inject
+const { matched, searchFN, searchKey } = _match
+const { script_src, e_head, injectWS } = _inject
 
 const htmlResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs)
@@ -13,7 +13,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
   const { logs } = router._global_.config
 
   if (match && !_skipByTag(match, 'html')) {
-    const { el, js, src, response, hidden } = match.route
+    const { el, js, src, response, hidden, ws } = match.route
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/html')) {
@@ -35,10 +35,15 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
             const resp2 = response(resp, reqs, match)
             resp2 && (resp = { ...resp, ...resp2 })
           }
+          if (ws) {
+            const jsLib = matched(searchKey('jsLib'), reqs)
+            resp.body = injectWS(resp, reqs.url, jsLib)
+          }
         }
       }
       return resp
     })
+    return match
   }
 }
 

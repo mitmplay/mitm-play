@@ -59,8 +59,23 @@ function e_end (body, fn) {
   return b
 }
 
+function injectWS (resp, url, jsLib) {
+  const { _tldomain, _nameSpace } = global.mitm.fn
+  const js = ['/mitm-play/mitm.js']
+  if (_nameSpace(_tldomain(url))) {
+    js.push('/mitm-play/macros.js')
+  }
+  js.push('/mitm-play/websocket.js')
+  js.push('/mitm-play/jslib/selector.js')
+  js.push('/mitm-play/jslib/log-patch.js')
+  if (jsLib) {
+    js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
+  }
+  return script_src(resp.body, js)
+}
 module.exports = {
   script_src,
+  injectWS,
   source,
   e_head,
   e_end

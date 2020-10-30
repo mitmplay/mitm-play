@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 const c = require('ansi-colors')
 const _match = require('./match')
+const { injectWS } = require('./inject')
 const { matched, searchKey, searchArr } = _match
-const { script_src } = require('./inject')
-const { fn: { _tldomain, _nameSpace }, router } = global.mitm
+const { fn: { _nameSpace }, router } = global.mitm
 
 function replaceCSP (csp) {
   csp = csp.replace(/default-src[^;]+;/g, '')
@@ -50,17 +50,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
         const redirect = (status + '').match(/^30\d/)
         if (!redirect && contentType && contentType.match('text/html')) {
           const jsLib = matched(searchKey('jsLib'), reqs)
-          const js = ['/mitm-play/mitm.js']
-          if (_nameSpace(_tldomain(url))) {
-            js.push('/mitm-play/macros.js')
-          }
-          js.push('/mitm-play/websocket.js')
-          js.push('/mitm-play/jslib/selector.js')
-          js.push('/mitm-play/jslib/log-patch.js')
-          if (jsLib) {
-            js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
-          }
-          resp.body = script_src(resp.body, js)
+          resp.body = injectWS(resp, url, jsLib)
           if (global.mitm.argv.relaxcsp) {
             headerchg(h)
           }
