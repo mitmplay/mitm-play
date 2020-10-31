@@ -1,12 +1,29 @@
 <script>
 import { tags } from './stores.js';
 
+/***
+* ex:
+* __tag1[remove-ads~1] = true
+* __tag1[remove-ads~2] = false
+***/
+
 function clicked(e) {
+  const {__tag1: {...tagx}} = $tags;
   setTimeout(()=>{
     const {__tag1,__tag2,__tag3} = $tags;
-    const {item} = e.target.dataset;
-    const flag = __tag1[item];
-    console.log('e', flag);
+    const {item} = e.target.dataset; // item = remove-ads~2
+    const flag = __tag1[item];       // flag = true ~> already changed
+    console.log('e', $tags);
+
+    const [group1, id1] = item.split('~');
+    if (id1) {
+      for (let ns in __tag1) {
+        const [group2, id2] = ns.split('~');
+        if (!tagx[item] && group1===group2 && id1!==id2) {
+          __tag1[ns] = !flag;
+        }
+      }
+    }
 
     for (let ns in __tag2) {
       const namespace = __tag2[ns];
@@ -14,6 +31,9 @@ function clicked(e) {
         const typ2 = itm.split(':')[1] || itm;
         if (item===typ2) {
           namespace[itm] = flag;
+        } 
+        if (group1===typ2.split('~')[0]) {
+          namespace[itm] = __tag1[typ2] || false;
         }
       }
     }
@@ -27,6 +47,9 @@ function clicked(e) {
           for (let itm in namespace) {
             if (item===itm) {
               namespace[itm] = flag;
+            }
+            if (group1===itm.split('~')[0]) {
+              namespace[itm] = __tag1[itm] || false;
             }
           }
         }
@@ -78,7 +101,7 @@ function listTags(tags) {
       <label>
         <input type="checkbox"
         data-item={item}
-        on:click={clicked} 
+        on:click={clicked}
         bind:checked={$tags.__tag1[item]}/>
         <span class="big">{item}</span>
       </label>

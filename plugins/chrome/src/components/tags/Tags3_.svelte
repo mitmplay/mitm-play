@@ -16,9 +16,9 @@ function istag(ns) {
 </script>
 
 <td>
-{#each Object.keys($tags.__tag3) as item}
-  {#if istag(item)}
-    <Tags31 items={$tags.__tag3[item]} key={item}/>
+{#each Object.keys($tags.__tag3) as ns}
+  {#if istag(ns)}
+    <Tags31 items={$tags.__tag3[ns]} {ns}/>
   {/if}
 {/each}
 </td>

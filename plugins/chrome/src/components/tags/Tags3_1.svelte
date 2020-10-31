@@ -3,14 +3,20 @@ import { tags } from './stores.js';
 import Tags32 from './Tags3_2.svelte';
 
 export let items;
-export let key;
+export let ns;
+
+function xitems(tags) {
+  const {__tag3} = tags;
+  const namespace = __tag3[ns];
+  return Object.keys(namespace);
+}
 </script>
 
 <div class="border">
-  <div class="space0">[{key==='_global_' ? ' * ' : key}]</div>
-  {#each Object.keys(items) as item}
-    <div class="space1">{item}</div>
-    <Tags32 items={items[item]} key={item}/>
+  <div class="space0">[{ns==='_global_' ? ' * ' : ns}]</div>
+  {#each xitems($tags) as path}
+    <div class="space1">{path}</div>
+    <Tags32 items={items[path]} {path} {ns}/>
   {/each}
 </div>
 

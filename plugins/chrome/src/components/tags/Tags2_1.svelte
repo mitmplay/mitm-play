@@ -5,20 +5,42 @@ export let items;
 export let ns;
 
 function clicked(e) {
+  const {__tag1,__tag2,__tag3} = $tags;
+  const {item} = e.target.dataset;
+  const typ1 = item.split(':')[1] || item;
+  const [group1, id1] = typ1.split('~');
+  const namespace = __tag2[ns];
+  const tagx = {};
+  for (let itm in namespace) {
+    tagx[itm] = namespace[itm]
+  }
   setTimeout(()=>{
-    const {__tag1,__tag2,__tag3} = $tags;
-    const {item} = e.target.dataset;
-    const flag = __tag2[ns][item];
-    console.log('e', flag);
+    const flag =namespace[item];
+    console.log('e', {__tag2,__tag3});
+
+    if (id1) {
+      for (let itm in namespace) {
+        const typ2 = itm.split(':')[1] || itm;
+        const [group2, id2] = typ2.split('~');
+        if (!(tagx && tagx[item])) {
+          if (group1===group2 && id1!==id2) {
+            namespace[itm] = !flag;
+          }
+        }
+      }
+    }
 
     const urls = __tag3[ns];
     for (let url in urls) {
       const typs = urls[url];
       for (let typ in typs) {
-        const namespace = typs[typ];
-        for (let itm in namespace) {
+        const namespace3 = typs[typ];
+        for (let itm in namespace3) {
           if (item===itm) {
-            namespace[itm] = flag;
+            namespace3[itm] = flag;
+          }
+          if (group1===itm.split('~')[0]) {
+            namespace3[itm] = namespace[itm] || false;
           }
         }
       }
