@@ -139,13 +139,13 @@ the execution order as documented start with `skip`, end with `js`, no need to i
 
 `Title`: provide basic information about this route.
 
-`Url`: when user enter cli with first param as `non dashes`, it will try to find it in **`url`**, if match it will open the browser with that **`url`**.
+`Url`: when user enter cli with `1st args`, it will try to find in **`url`**, then open the browser with that **`location`**.
 
-`Urls`: additional search for object key inside urls, this open up to much more option to open more than one tabs.
+`Urls`: additional search `urls` key, the `1st args` can be split by [`,`], if find more than one, it will  open multi tabs.
 
-`workspace`: will be use as the base folder for `file` option in `Mock`.
+`workspace`: will be use as the base folder for `file` option in `Mock` and `Cache`.
 
-`lib`: add js library to all html on the namespace, options can be ['**jquery.js**', '**faker.js**', '**chance.js**']
+`lib`: inject js library into html which having websocket, it can be [`jquery.js`, `faker.js`, `chance.js`]
 
 ```js
 routes = {
@@ -158,7 +158,8 @@ routes = {
   workspace: '~/Projects',
   jsLib: ['chance.js'],
 };
-// mitm-play ama -dpsr='.' -> search: 'ama' in url and go to the website
+// cli: mitm-play ama -dpsr='.' 
+// search: 'ama' and it will open two browser tabs
 ```
 </p>
 </details>
