@@ -45,12 +45,13 @@ function clicked(e) {
         }
       }
     }
-    const {filterUrl} = $tags;
+    const {filterUrl, tgroup} = $tags;
     tags.set({
       filterUrl,
       __tag1,
       __tag2,
       __tag3,
+      tgroup,
     })
   }, 10);
 }

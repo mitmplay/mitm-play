@@ -55,14 +55,14 @@ function xitems(tags) {
       data-item={item}
       on:click={clicked} 
       bind:checked={items[item]}/>
-      {item}
+      <span>{item}</span>
     </label>
   </div>
 {/each}
 
 <style>
 .space3 {
-  padding-left: 30px;
+  padding-left: 20px;
 }
 
 .rtag {

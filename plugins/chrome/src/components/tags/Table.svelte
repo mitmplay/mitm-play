@@ -19,11 +19,20 @@ window.mitm.files.getRoute_events.tagsTable = () => {
   console.log('tagsTable getting called!!!');
   const {__tag1, __tag2, __tag3} = window.mitm;
   const {filterUrl} = $tags;
+  const tgroup = {};
+  for (let ns in __tag2) {
+    const tsks = __tag2[ns]
+    for (let task in tsks) {
+      const [,v] = task.split(':');
+      v && (tgroup[v] = true)
+    }
+  }  
   tags.set({
     filterUrl,
     __tag1,
     __tag2,
     __tag3,
+    tgroup,
   })
 }
 </script>

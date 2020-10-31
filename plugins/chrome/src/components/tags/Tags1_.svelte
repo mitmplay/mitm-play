@@ -1,6 +1,5 @@
 <script>
 import { tags } from './stores.js';
-
 /***
 * ex:
 * __tag1[remove-ads~1] = true
@@ -55,29 +54,35 @@ function clicked(e) {
         }
       }
     }
-    const {filterUrl} = $tags;
+    const {filterUrl, tgroup} = $tags;
     tags.set({
       filterUrl,
       __tag1,
       __tag2,
       __tag3,
+      tgroup,
     })
   }, 10);
 }
 
 function routetag(item) {
-  return $tags.__tag1[item] ? 'rtag slc' : 'rtag';
+  const slc = $tags.__tag1[item] ? 'slc' : '';
+  const grp = $tags.tgroup[item] ? 'grp' : '';
+  return `rtag ${grp} ${slc}`;
 }
 
 function listTags(tags) {
   const {toRegex} = window.mitm.fn;
   const list = {};
+
   function add(ns) {
     for (let id in tags.__tag2[ns]) {
       const [k,v] = id.split(':');
       list[v||k] = true;
     }
   }
+
+  let tgs;
   if (tags.filterUrl) {
     for (let ns in tags.__tag2) {
       const rgx = toRegex(ns.replace(/~/,'[^.]*'));
@@ -87,10 +92,11 @@ function listTags(tags) {
       }
     }
     add('_global_');
-    return Object.keys(list).sort();
+    tgs = Object.keys(list).sort();
   } else {
-    return Object.keys(tags.__tag1);
+    tgs = Object.keys(tags.__tag1);
   }
+  return tgs;
 }
 </script>
 
@@ -131,5 +137,8 @@ function listTags(tags) {
 .rtag.slc {
   color: green;
   font-weight: bolder;
+}
+.rtag.grp {
+  background-color: beige;
 }
 </style>
