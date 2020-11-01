@@ -59,6 +59,25 @@ function e_end (body, fn) {
   return b
 }
 
+function replaceCSP (csp) {
+  csp = csp.replace(/default-src[^;]+;/g, '')
+  csp = csp.replace(/connect-src[^;]+;/g, '')
+  csp = csp.replace(/script-src[^;]+;/g, '')
+  csp = csp.replace(/style-src[^;]+;/g, '')
+  return csp
+}
+
+const headerchg = headers => {
+  let csp
+  if (headers['content-security-policy']) {
+    csp = replaceCSP(headers['content-security-policy'])
+    headers['content-security-policy'] = csp
+  } else if (headers['content-security-policy-report-only']) {
+    csp = replaceCSP(headers['content-security-policy-report-only'])
+    headers['content-security-policy-report-only'] = csp
+  }
+}
+
 function injectWS (resp, url, jsLib) {
   const { _tldomain, _nameSpace } = global.mitm.fn
   const js = ['/mitm-play/mitm.js']
@@ -71,7 +90,10 @@ function injectWS (resp, url, jsLib) {
   if (jsLib) {
     js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
   }
-  return script_src(resp.body, js)
+  resp.body = script_src(resp.body, js)
+  if (global.mitm.argv.relaxcsp) {
+    headerchg(resp.headers)
+  }
 }
 module.exports = {
   script_src,
