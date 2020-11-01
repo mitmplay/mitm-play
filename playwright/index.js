@@ -13,16 +13,15 @@ function sleep (ms) {
 }
 
 function currentTab (browser) {
-  browser.currentTab = async function () {
+  browser.currentTab = async function (url) {
     const pages = await browser.pages()
-    let active
     for (const page of pages) {
-      const hidden = await page.evaluate('document.hidden')
-      if (!hidden) {
-        active = page
+      const URL = await page.evaluate('document.URL')
+      if (url === undefined || URL === url) {
+        return page
       }
     }
-    return active
+    return pages[0]
   }
 }
 
