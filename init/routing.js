@@ -72,7 +72,8 @@ ${body}`
     _global_: {
       mock,
       config: {
-        logs: {}
+        logs: {},
+        args: {}
       }
     }
   }
@@ -87,7 +88,8 @@ ${body}`
         '/mitm-play/websocket.js': new RegExp('\\/mitm-play\\/websocket\\.js')
       },
       config: {
-        logs: {}
+        logs: {},
+        args: {}
       }
     }
   }

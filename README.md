@@ -33,13 +33,11 @@ npm install -g mitm-play
 ```js
 // create new folder/file: ~/user-route/keybr.com/index.js & add this content:
 const css = `
-.Body-header,
-.Body-aside {
+.Body-header,.Body-aside {
   display: none !important;
 }`;
 
 const route = {
-  title: 'keybr.com',
   url: 'https://keybr.com',
   'mock:remove-ads': {
     'googletagservices.com': '',
@@ -83,7 +81,7 @@ Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools
 | `cache`     | __response__ | 1st call save to local - next call, read from cache
 | `log`       | __response__ | save/log reqs/resp to local - call to remote server
 |             | __response__ | modify resp based on contentType - call remote server
-| =>>         | * `html`     | - response handler (replace / update + JS)
+| =>>         | * `html`     | - response handler (replace / update + JS + ws)
 | =>>         | * `json`     | - response handler (replace / update)
 | =>>         | * `css`      | - response handler (replace / update)
 | =>>         | * `js`       | - response handler (replace / update)
@@ -145,7 +143,7 @@ the execution order as documented start with `skip`, end with `js`, no need to i
 
 `workspace`: will be use as the base folder for `file` option in `Mock` and `Cache`.
 
-`lib`: inject js library into html which having websocket, it can be [`jquery.js`, `faker.js`, `chance.js`]
+`lib`: inject js library into html which having websocket, it can be [`jquery.js`, `faker.js`, `chance.js`, `log-patch.js`]
 
 ```js
 routes = {
@@ -406,6 +404,7 @@ Insert `<script src="..."></script>` into `<head>` section
 html: {
   'https://keybr.com/': {
     src: ['http://localhost:/myscript.js'],
+    ws: true, // inject web socket
   },
 },
 ```
