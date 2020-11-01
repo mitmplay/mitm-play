@@ -37,7 +37,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
           }
           if (ws) {
             const jsLib = matched(searchKey('jsLib'), reqs)
-            resp.body = injectWS(resp, reqs.url, jsLib)
+            injectWS(resp, reqs.url, jsLib)
           }
         }
       }
