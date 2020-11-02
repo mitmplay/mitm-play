@@ -1,17 +1,23 @@
-<style></style>
-
 <script>
 //https://c0bra.github.io/svelma/install
-import { Tabs, Tab, Button } from 'svelma';
+import { onMount } from 'svelte';
+
+import { Tabs, Tab } from 'svelma';
 import TagsTable from './components/tags/Table.svelte';
 import LogsTable from './components/logs/Table.svelte';
 import RouteTable from './components/route/Table.svelte';
 import ProfileTable from './components/profile/Table.svelte'; // feat: profile
 import OtherTab from './components/other/Tab.svelte';
-import Editor from './components/monaco/Editor.svelte';
-// import CacheTable from './components/cache/Table.svelte';
 
-// let counter = 0;
+onMount(async () => {
+  setTimeout(()=>{
+    const node = document.querySelector('nav.tabs>ul');
+    const li = document.createElement('LI');
+    li.innerHTML = 'v'+window.mitm.version;
+    li.classList.add('version');
+    node.appendChild(li);
+  }, 10);
+})
 </script>
 
 <main class="main">
@@ -23,7 +29,14 @@ import Editor from './components/monaco/Editor.svelte';
   <Tab label="Other"><OtherTab/></Tab>
   <!-- <Tab label="Monaco"><Editor/></Tab> -->
 </Tabs>
-
 </main>
-<!-- <Tab label="Cache"><CacheTable/></Tab> -->
-<!-- <Button type="is-primary" on:click={() => counter++}>Click!: {counter}</Button> -->
+
+<style>
+	:global(li.version) {
+    font-size: 10px;
+    padding-top: 3px;
+    padding-left: 5px;
+    color: chocolate;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	}
+</style>

@@ -5,6 +5,7 @@ module.exports = () => {
 
   require('./init-ap')
   require('./cli-arg')() // deal with cli args
+  global.mitm.version = pkg.version
   if (global.mitm.argv.help) {
     require('./helper')(pkg)
   }

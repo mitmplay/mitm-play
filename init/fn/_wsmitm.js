@@ -1,5 +1,5 @@
 module.exports = function ({ url }) {
-  const { argv, client, fn: { _nameSpace } } = global.mitm
+  const { argv, client, version, fn: { _nameSpace } } = global.mitm
   const namespace = _nameSpace(url)
   const { routes } = global.mitm
   let macros = []
@@ -22,7 +22,8 @@ module.exports = function ({ url }) {
       profile_events: {}, // feat: profile
       getProfile_events: {}
     },
-    fn: {}
+    fn: {},
+    version
   }
   json = JSON.stringify(json, null, 2)
   json = json.replace(/\n}$/g, macros)
