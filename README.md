@@ -32,6 +32,7 @@ npm install -g mitm-play
 
 ```js
 // create new folder/file: ~/user-route/keybr.com/index.js & add this content:
+// Object.keys(require.cache).forEach(function(key) { delete require.cache[key] })
 const css = `
 .Body-header,.Body-aside {
   display: none !important;
