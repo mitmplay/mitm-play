@@ -2,6 +2,7 @@ const fs = require('fs-extra')
 const fg = require('fast-glob')
 const c = require('ansi-colors')
 const chokidar = require('chokidar')
+const clearModule = require('clear-module');
 
 const { routeSort } = require('./chokidar/loadJS')
 const { _routeSet, toRegex } = require('./fn/_route-set')
@@ -24,6 +25,7 @@ const flist = require('./fn/flist')
 
 module.exports = () => {
   global.mitm.lib = {
+    clearModule,
     routeSort,
     chokidar,
     execFile,
