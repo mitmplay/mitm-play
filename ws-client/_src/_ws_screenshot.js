@@ -31,8 +31,8 @@ function screenshot (e) {
       node = node.parentNode
     }
     if (node !== document.body) {
-      const _guid = window.page_guid
-      const params = { namespace, _guid, host, fname, browser }
+      const _page = window['xplay-page']
+      const params = { namespace, _page, host, fname, browser }
       window.ws__send('screenshot', params)
       if (mitm.argv.lazyclick) {
         // delay action to finish screenshot

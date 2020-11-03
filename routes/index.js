@@ -24,9 +24,13 @@ const _resp = {
 }
 
 module.exports = async ({ route, request, browserName }) => {
-  const { router, argv: { nosocket, proxy } } = global.mitm
+  const { browsers, router, argv: { nosocket, proxy } } = global.mitm
   const reqs = extract({ route, request, browserName })
   const { logs } = router._global_.config
+  const _page = reqs.headers['xplay-page']
+  if (_page) {
+    reqs.page = await browsers[browserName].currentTab(_page)
+  }
 
   // catch unknown url scheme & handle by browser
   if (reqs.url.match(noURL) || reqs.url.match(wNull)) {

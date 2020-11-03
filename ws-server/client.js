@@ -77,7 +77,7 @@ On browser console type "ws"`
   }
 
   async function _screenshot (data, { path, browser }) {
-    const page = await global.mitm.browsers[browser].currentTab(data._guid)
+    const page = await global.mitm.browsers[browser].currentTab(data._page)
     const err = await fs.ensureFile(path)
     if (err) {
       console.log(c.redBright('(*rrror saving screenshot*)'), path)

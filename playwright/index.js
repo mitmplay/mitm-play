@@ -13,17 +13,14 @@ function sleep (ms) {
 }
 
 function currentTab (browser) {
-  browser.currentTab = async function (_guid) {
+  browser.currentTab = async function (_page) {
     const pages = await browser.pages()
-    let idx = 0
     for (const page of pages) {
-      if (_guid === page._guid) {
-        console.log('page', _guid, idx)
+      if (_page === page._page) {
         return page
       }
-      idx += 1
     }
-    console.log('undetect page')
+    console.log(c.red('(*undetect page*)'))
     return pages[0]
   }
 }
@@ -144,13 +141,17 @@ module.exports = () => {
 }
 
 async function attach (page) {
-  page.setExtraHTTPHeaders({ page_guid: page._guid })
+  page._page = 'page@' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
+  global.mitm.__page[page._page] = { session: {} }
+  page.setExtraHTTPHeaders({ 'xplay-page': page._page })
+
   page.on('worker', worker => {
     console.log('Worker created: ' + worker.url())
     worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()))
   })
   page.on('load', async () => {
-    await page.evaluate(_guid => { window.page_guid = _guid }, page._guid)
+    console.log('xplay-page load', page._page)
+    await page.evaluate(_page => { window['xplay-page'] = _page }, page._page)
   })
 }
 

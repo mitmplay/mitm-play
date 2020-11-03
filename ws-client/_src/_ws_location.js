@@ -84,9 +84,9 @@ module.exports = () => {
       }
       const browser = _ws_vendor()
       const lenth = autofill.length
-      const _guid = window.page_guid
+      const _page = window['xplay-page']
       console.log(lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2))
-      window.ws__send('autofill', { autofill, browser, _guid })
+      window.ws__send('autofill', { autofill, browser, _page })
     }
   }
 

@@ -1,8 +1,8 @@
 module.exports = async ({ data }) => {
   const c = require('ansi-colors')
-  const { autofill, browser, _guid } = data
+  const { autofill, browser, _page } = data
   // const page = global.mitm.pages[browser];
-  const page = await global.mitm.browsers[browser].currentTab(_guid)
+  const page = await global.mitm.browsers[browser].currentTab(_page)
 
   console.log(c.greenBright('>>> autofill'))
   for (let obj of autofill) {

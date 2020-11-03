@@ -55,6 +55,7 @@ global.mitm = {
   routes: { _global_: { config: {} } },
   router: { _global_: { config: {} } },
   source: {},
+  __page: {},
   __mock: {},
   __tag1: {},
   __tag2: {},

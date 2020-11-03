@@ -10,6 +10,14 @@ const fpathcache = require('./filepath/fpath-cache')
 
 const { matched, searchFN } = _match
 
+function setSession (reqs, match, session) {
+  if (session) {
+    const path = session === true ? '' : session
+    global.mitm.fn._session(match.host, path)
+    global.mitm._session_ = true
+  }
+}
+
 const cacheResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
@@ -32,11 +40,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         if (!ctype(match, { headers })) {
           return { match: undefined, resp }
         }
-        if (session) {
-          const path = session === true ? '' : session
-          global.mitm.fn._session(match.host, path)
-          global.mitm._session_ = true
-        }
+        setSession(reqs, match, session)
         const { argv } = global.mitm
         if (setCookie && ((args.cookie === undefined) ? argv : args).cookie) {
           headers['set-cookie'] = resetCookies(setCookie)
@@ -65,13 +69,9 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     }
     if (remote) {
       // get from remote
-      responseHandler.push(resp => {
+      responseHandler.push(async resp => {
         if (ctype(match, resp)) {
-          if (session) {
-            const path = session === true ? '' : session
-            global.mitm.fn._session(match.host, path)
-            global.mitm._session_ = true
-          }
+          setSession(reqs, match, session)
           fpath1 = `${fpath1}.${_ext(resp)}`
           if (logs.cache && !match.hidden) {
             if (hidden !== 2) {
