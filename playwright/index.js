@@ -144,6 +144,7 @@ module.exports = () => {
 }
 
 async function attach (page) {
+  page.setExtraHTTPHeaders({ page_guid: page._guid })
   page.on('worker', worker => {
     console.log('Worker created: ' + worker.url())
     worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()))
