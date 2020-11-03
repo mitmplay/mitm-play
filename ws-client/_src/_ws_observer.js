@@ -38,6 +38,7 @@ module.exports = () => {
 
   let fname
   const callback = _ws_debounce(function () {
+    const _page = window['xplay-page']
     for (const id in nodes) {
       const el = document.body.querySelectorAll(id)
       if (el.length) {
@@ -49,7 +50,7 @@ module.exports = () => {
           if (sshot[id].insert) {
             fname = location.pathname.replace(/^\//, '').replace(/\//g, '-')
             fname = `${fname}-${sshot[id].title}-insert`
-            window.ws__send('screenshot', { namespace, host, fname, browser })
+            window.ws__send('screenshot', { namespace, _page, host, fname, browser })
           }
         }
       } else {
@@ -59,7 +60,7 @@ module.exports = () => {
           if (sshot[id].remove) {
             fname = location.pathname.replace(/^\//, '').replace(/\//g, '-')
             fname = `${fname}-${sshot[id].title}-remove`
-            window.ws__send('screenshot', { namespace, host, fname, browser })
+            window.ws__send('screenshot', { namespace, _page, host, fname, browser })
           }
         }
       }

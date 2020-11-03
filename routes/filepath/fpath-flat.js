@@ -4,6 +4,23 @@ module.exports = ({ match, reqs, stamp }) => {
   let { host, route: { at, contentType } } = match
   const fpath = filename(match, '-')
 
+  const _pageId = reqs.headers['xplay-page']
+  let _sessionId = reqs.headers['xplay-session']
+  let _session
+  if (_pageId && _sessionId) {
+    const _page = global.mitm.__page[_pageId]
+    if (_page && _page.session) {
+      if (!_sessionId.match(/^\w+-/)) {
+        const [id1, id2] = _sessionId.split('||')
+        _sessionId = reqs.headers[id1] || `_base-${id2}`
+        if (_page.session[_sessionId] === undefined) {
+          _page.session[_sessionId] = { url: reqs.url, log: [] }
+        }
+      }
+      _session = _page.session[_sessionId]
+    }
+  }
+
   if (at === undefined) {
     at = contentType.join('-')
   }
@@ -18,23 +35,19 @@ module.exports = ({ match, reqs, stamp }) => {
     stamp2 = `$/${stamp}--${at}@${host}${fpath}`
   }
 
-  const { session } = global.mitm
+  // const { session } = global.mitm
+  const session = `${_pageId}-${_sessionId}`
   const _root = root(reqs, 'log')
   const fpath1 = `${_root}/${session}/${stamp1}`
   const fpath2 = `${_root}/${session}/${stamp2}.json`
-  if (reqs.headers['xplay-page'] && reqs.headers['xplay-session']) {
-    const _page = global.mitm.__page[reqs.headers['xplay-page']]
-    if (_page && _page.session) {
-      const _session = _page.session[reqs.headers['xplay-session']]
-      if (_session && _session.log) {
-        _session.log.push({
-          method: reqs.method,
-          url: reqs.url,
-          fpath1,
-          fpath2
-        })
-      }
-    }
+
+  if (_session && _session.log) {
+    _session.log.push({
+      method: reqs.method,
+      url: reqs.url,
+      fpath1,
+      fpath2
+    })
   }
   return { fpath1, fpath2 }
 }

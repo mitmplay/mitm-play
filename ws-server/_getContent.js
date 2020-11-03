@@ -3,7 +3,7 @@ const cssbeauty = require('cssbeautify')
 
 module.exports = ({ data }) => {
   const { fpath } = data
-  const fmeta = fpath.replace(/\/log\/\w+/, m => `${m}/$`)
+  const fmeta = fpath.replace(/\/log\/[^/]+/, m => `${m}/$`)
   const headers = `${fs.readFileSync(fmeta.replace(/.\w+$/, '.json'))}`
   const content = `${fs.readFileSync(fpath)}`
   let response = content

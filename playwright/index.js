@@ -141,7 +141,7 @@ module.exports = () => {
 }
 
 async function attach (page) {
-  page._page = 'page@' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
+  page._page = 'page-' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
   global.mitm.__page[page._page] = { session: {} }
   page.setExtraHTTPHeaders({ 'xplay-page': page._page })
 
@@ -152,6 +152,10 @@ async function attach (page) {
   page.on('load', async () => {
     console.log('xplay-page load', page._page)
     await page.evaluate(_page => { window['xplay-page'] = _page }, page._page)
+  })
+  page.on('frameattached', async (frame) => {
+    console.log('xplay-page frame', page._page)
+    await frame.evaluate(_page => { window['xplay-page'] = _page }, page._page)
   })
 }
 

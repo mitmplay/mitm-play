@@ -76,8 +76,7 @@ On browser console type "ws"`
     }
   }
 
-  async function _screenshot (data, { path, browser }) {
-    const page = await global.mitm.browsers[browser].currentTab(data._page)
+  async function _screenshot (data, { path, page }) {
     const err = await fs.ensureFile(path)
     if (err) {
       console.log(c.redBright('(*rrror saving screenshot*)'), path)
@@ -92,9 +91,10 @@ On browser console type "ws"`
   }
 
   let _stamp = []
-  const delayCapture = global._debounce(function (data) {
-    const { namespace, host, fname, browser } = data
-    const { session, routes, path: { home }, argv: { group } } = global.mitm
+  const delayCapture = global._debounce(async function (data) {
+    const { namespace, host, fname, browser, _page } = data
+    const page = await global.mitm.browsers[browser].currentTab(_page)
+    const { routes, __page, path: { home }, argv: { group } } = global.mitm
     const stamp = _stamp[0]
     let at = 'sshot'
     _stamp = []
@@ -111,7 +111,8 @@ On browser console type "ws"`
     } else {
       root = `${home}/${browser}/log`
     }
-
+    const _session = Object.keys(__page[_page].session).pop()
+    const session = `${_page}-${_session}`
     let path
     if (at.match(/^\^/)) {
       at = at.slice(1)
@@ -119,7 +120,7 @@ On browser console type "ws"`
     } else {
       path = `${root}/${session}/${stamp}--${at}@${host}--${fname}.png`
     }
-    _screenshot(data, { path, browser })
+    _screenshot(data, { path, page })
   }, 400, 'screenshot')
 
   function $screenshot ({ data }) {
