@@ -84,9 +84,9 @@ module.exports = () => {
       }
       const browser = _ws_vendor()
       const lenth = autofill.length
-      const url = location.href
+      const _guid = window.page_guid
       console.log(lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2))
-      window.ws__send('autofill', { autofill, browser, url })
+      window.ws__send('autofill', { autofill, browser, _guid })
     }
   }
 

@@ -13,14 +13,17 @@ function sleep (ms) {
 }
 
 function currentTab (browser) {
-  browser.currentTab = async function (url) {
+  browser.currentTab = async function (_guid) {
     const pages = await browser.pages()
+    let idx = 0
     for (const page of pages) {
-      const URL = await page.evaluate('document.URL')
-      if (url === undefined || URL === url) {
+      if (_guid === page._guid) {
+        console.log('page', _guid, idx)
         return page
       }
+      idx += 1
     }
+    console.log('undetect page')
     return pages[0]
   }
 }
@@ -99,7 +102,7 @@ module.exports = () => {
         console.log('>>> Browser profile', bprofile)
         browser = await playBrowser.launchPersistentContext(bprofile, options)
         page = await browser.pages()[0]
-        bcontext = browser
+        bcontext = page.context()
       } else {
         console.log('>>> Browser option', options)
         browser = await playBrowser.launch(options)
@@ -127,6 +130,7 @@ module.exports = () => {
       bcontext.route(/.*/, (route, request) => {
         routes({ route, request, bcontext, browserName })
       })
+      bcontext.on('page', attach)
       let count = 0
       for (const url of argv.urls) {
         newPage(browser, page, url, count)
@@ -139,11 +143,26 @@ module.exports = () => {
   })()
 }
 
+async function attach (page) {
+  page.on('worker', worker => {
+    console.log('Worker created: ' + worker.url())
+    worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()))
+  })
+  page.on('load', async () => {
+    await page.evaluate(_guid => { window.page_guid = _guid }, page._guid)
+  })
+}
+
+async function goto (page, url) {
+  attach(page)
+  await page.goto(url)
+}
+
 const newPage = async (browser, page, url, count) => {
   if (count > 0) {
     const page = await browser.newPage()
-    await page.goto(url)
+    await goto(page, url)
   } else {
-    await page.goto(url)
+    await goto(page, url)
   }
 }

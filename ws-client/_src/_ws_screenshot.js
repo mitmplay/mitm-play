@@ -16,7 +16,7 @@ function screenshot (e) {
       return
     }
   }
-  const { href: url, hostname: host } = location
+  const { hostname: host } = location
   const namespace = _ws_namespace()
   const browser = _ws_vendor()
   const route = window.mitm.routes[namespace]
@@ -31,7 +31,8 @@ function screenshot (e) {
       node = node.parentNode
     }
     if (node !== document.body) {
-      const params = { namespace, url, host, fname, browser }
+      const _guid = window.page_guid
+      const params = { namespace, _guid, host, fname, browser }
       window.ws__send('screenshot', params)
       if (mitm.argv.lazyclick) {
         // delay action to finish screenshot
