@@ -29,7 +29,15 @@ module.exports = () => {
   const {
     argv,
     fn: { home }
-  } = global.mitm;
+  } = global.mitm
+
+  process.on('unhandledRejection', (err, p) => {
+    if (argv.debug || !`${err}`.match('Execution context was destroyed')) {
+      console.log('An unhandledRejection occurred')
+      console.log(`Rejected Promise: ${p}`)
+      console.log(`Rejection: ${err}`)
+    }
+  });
   (async () => {
     global.mitm.pages = pages
     global.mitm.browsers = browsers
@@ -141,21 +149,24 @@ module.exports = () => {
 }
 
 async function attach (page) {
-  page._page = 'page-' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
-  global.mitm.__page[page._page] = { session: {} }
-  page.setExtraHTTPHeaders({ 'xplay-page': page._page })
+  const _page = 'page-' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
 
+  page._page = _page
+  global.mitm.__page[_page] = { session: {} }
+  page.setExtraHTTPHeaders({ 'xplay-page': _page })
+
+  const { argv } = global.mitm
   page.on('worker', worker => {
-    console.log('Worker created: ' + worker.url())
+    argv.debug && console.log('Worker created: ' + worker.url())
     worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()))
   })
   page.on('load', async () => {
-    console.log('xplay-page load', page._page)
-    await page.evaluate(_page => { window['xplay-page'] = _page }, page._page)
+    argv.debug && console.log('xplay-page load', _page)
+    await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
   })
   page.on('frameattached', async (frame) => {
-    console.log('xplay-page frame', page._page)
-    await frame.evaluate(_page => { window['xplay-page'] = _page }, page._page)
+    argv.debug && console.log('xplay-page frame', _page)
+    await frame.evaluate(_page => { window['xplay-page'] = _page }, _page)
   })
 }
 

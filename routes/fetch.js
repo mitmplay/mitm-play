@@ -109,9 +109,10 @@ Redirect...
   // delete reqs.headers['accept-encoding'];
   if (typeof (global.mitm.argv.browser[browserName]) === 'string' && reqs.body === null && (reqs.method === 'POST' || reqs.method === 'PUT')) {
     console.log(c.red.bgYellowBright(`>>> WARNING!!! ${reqs.method} having request payload NULL!, might be a bug from browser? Please use --${browserName} without browser path.`))
-    console.log(reqs, opts)
-  } else if (argv.debug) {
-    console.log(reqs, opts)
+  }
+  if (argv.debug) {
+    const { method } = reqs
+    console.log(method, opts)
   }
   fetchRetry(url, { ...reqs, ...opts }, 2)
 }
