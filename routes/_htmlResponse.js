@@ -2,24 +2,10 @@
 const c = require('ansi-colors')
 const _match = require('./match')
 const _inject = require('./inject')
+const setSession = require('./set-session')
 
 const { matched, searchFN, searchKey } = _match
 const { script_src, e_head, injectWS } = _inject
-
-async function setSession (reqs, session) {
-  const { page, url } = reqs
-  if (page && session) {
-    const id = (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
-    let _session
-    if (session === true) {
-      _session = `session-${id}`
-      global.mitm.__page[page._page].session[_session] = { url, log: [] }
-    } else {
-      _session = `${session}||${id}`
-    }
-    page.setExtraHTTPHeaders({ 'xplay-page': page._page, 'xplay-session': _session })
-  }
-}
 
 const htmlResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs)
