@@ -242,10 +242,12 @@ nosocket: ['sso'],
 Manipulate **request** with `request` function
 ```js
 request: {
-  'disqus.com/embed/comments/': {
-    request({url, method, headers, body, browserName}) {
-      return {}
-    }
+  'GET:/disqus.com/embed/comments/': {
+    request(reqs, match) {
+      {headers} = reqs;
+      return {headers};
+    },
+    session: true, // optional - set session id
   }
 },
 ```
@@ -310,7 +312,6 @@ cache: {
   'amazon.com': {
     contentType: ['javascript', 'image'], //required!
     querystring: true, // hash of unique file-cache
-    session: true, // optional - set session id
     hidden: true, // optional - no consolo.log
     path: './api', // optional cache file-path
     file: ':1', // optional cache file-name

@@ -24,9 +24,10 @@ const _resp = {
 }
 
 module.exports = async ({ route, request, browserName }) => {
-  const { browsers, router, argv: { nosocket, proxy } } = global.mitm
-  const reqs = extract({ route, request, browserName })
+  const { browsers, router, argv: { nosocket, proxy, verbose } } = global.mitm
+  let reqs = extract({ route, request, browserName })
   const { logs } = router._global_.config
+
   const _page = reqs.headers['xplay-page']
   if (_page) {
     reqs.page = await browsers[browserName].currentTab(_page)
@@ -52,12 +53,18 @@ module.exports = async ({ route, request, browserName }) => {
     return
   }
 
-  if (await _mockResponse({ reqs, route }, _3ds)) {
-    return
+  const rqs2 = await _chngRequest(reqs, _3ds)
+  if (rqs2) {
+    reqs = { ...reqs, ...rqs2 }
+    if (verbose) {
+      const msg = JSON.stringify(reqs.headers)
+      const log = msg.length <= 100 ? msg : msg.slice(0, 100) + '...'
+      console.log(c.redBright(`>>> request (${log})`))
+    }
   }
 
-  if (proxy && await _proxyRequest(reqs, _3ds)) {
-    reqs.proxy = proxy
+  if (await _mockResponse({ reqs, route }, _3ds)) {
+    return
   }
 
   const responseHandler = []
@@ -83,18 +90,15 @@ module.exports = async ({ route, request, browserName }) => {
   if (resp) {
     Events(responseHandler, resp, reqs, route)
   } else {
-    const rqs2 = await _chngRequest(reqs, _3ds)
-    if (rqs2) {
-      const { headers } = rqs2
-      const msg = JSON.stringify({ headers })
-      const log = msg.length <= 100 ? msg : msg.slice(0, 100) + '...'
-      console.log(c.redBright(`>>> request (${log})`))
-    }
     if (responseHandler.length) { // fetch from remote server
-      fetch(route, browserName, (rqs2 || reqs), function (resp) {
-        Events(responseHandler, resp, (rqs2 || reqs), route)
+      fetch(route, browserName, reqs, function (resp) {
+        Events(responseHandler, resp, reqs, route)
       })
     } else { // not handle
+      if (proxy && await _proxyRequest(reqs, _3ds)) {
+        reqs.proxy = proxy
+      }
+
       if (!rqs2 && logs) {
         const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
         if (_3ds) {
@@ -107,7 +111,7 @@ module.exports = async ({ route, request, browserName }) => {
           }
         }
       }
-      const { headers, method, body: postData } = rqs2 || reqs
+      const { headers, method, body: postData } = reqs
       route.continue({ headers, method, postData })
     }
   }

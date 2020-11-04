@@ -2,7 +2,6 @@
 const c = require('ansi-colors')
 const _match = require('./match')
 const _inject = require('./inject')
-const setSession = require('./set-session')
 
 const { matched, searchFN, searchKey } = _match
 const { script_src, e_head, injectWS } = _inject
@@ -24,8 +23,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
         if (typeof (match.route) === 'string') {
           resp.body = match.route
         } else {
-          const { el, js, src, session, response, ws } = match.route
-          setSession(reqs, session)
+          const { el, js, src, response, ws } = match.route
           if (js) {
             const inject = _inject[el] || e_head
             resp.body = inject(resp.body, js)

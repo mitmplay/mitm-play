@@ -1,3 +1,7 @@
+function sleep (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 async function setSession (reqs, session) {
   const { page, url } = reqs
   if (page && session) {
@@ -9,6 +13,7 @@ async function setSession (reqs, session) {
     } else {
       _session = `${session}||${id}`
     }
+    typeof session === 'number' && sleep(session)
     page.setExtraHTTPHeaders({ 'xplay-page': page._page, 'xplay-session': _session })
   }
 }
