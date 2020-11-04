@@ -10,7 +10,7 @@ module.exports = ({ match, reqs, stamp }) => {
   if (_pageId && _sessionId) {
     const _page = global.mitm.__page[_pageId]
     if (_page && _page.session) {
-      if (!_sessionId.match(/^\w+-/)) {
+      if (!_sessionId.match(/[a-z]+~[0-9]+/)) {
         const [id1, id2] = _sessionId.split('||')
         _sessionId = reqs.headers[id1] || `_base-${id2}`
         if (_page.session[_sessionId] === undefined) {

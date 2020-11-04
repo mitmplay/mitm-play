@@ -149,7 +149,7 @@ module.exports = () => {
 }
 
 async function attach (page) {
-  const _page = 'page-' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
+  const _page = 'page~' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
 
   page._page = _page
   global.mitm.__page[_page] = { session: {} }

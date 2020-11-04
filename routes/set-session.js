@@ -8,7 +8,7 @@ async function setSession (reqs, session) {
     const id = (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
     let _session
     if (session === true) {
-      _session = `session-${id}`
+      _session = `session~${id}`
       global.mitm.__page[page._page].session[_session] = { url, log: [] }
     } else {
       _session = `${session}||${id}`
