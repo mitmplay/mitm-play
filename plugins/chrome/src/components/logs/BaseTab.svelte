@@ -10,6 +10,9 @@ const option = {
   readOnly: true,
   // model: null,
   minimap,
+  fontFamily: ['Cascadia Code', 'Consolas', 'Courier New', 'monospace'],
+  fontLigatures: true,
+  fontSize: 11  
 }
 
 let node1;

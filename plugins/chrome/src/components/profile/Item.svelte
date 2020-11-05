@@ -27,6 +27,9 @@ function initCodeEditor(src) {
       enabled: false,
     },
     value: '',
+    fontFamily: ['Cascadia Code', 'Consolas', 'Courier New', 'monospace'],
+    fontLigatures: true,
+    fontSize: 11
   });
   window.mitm.editor._profile = _profile;
 
