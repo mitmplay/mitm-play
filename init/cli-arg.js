@@ -19,60 +19,29 @@ function obj (key, id) {
   }
 }
 
+function loadProfile (profile) {
+  const { path } = global.mitm
+  const _prfl = `${path.home}/argv/${profile}.js`
+  const exist = fs.existsSync(_prfl)
+  if (!exist) {
+    return false
+  }
+  const saveArgs = JSON.parse(fs.readFileSync(_prfl))
+  let msg1 = saveArgs._args
+  const arr1 = msg1.match(/=['"]?([^:]+:[^@]+)@\w+/)
+  if (arr1) {
+    // feat: hide password
+    msg1 = msg1.replace(arr1[1], '******:******')
+  }
+  console.log(c.green(`>>> cmd: mitm-play ${msg1}`), `(${profile})`)
+  // console.log(c.green(`>>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
+  return saveArgs
+}
+
 module.exports = () => {
-  let { argv, path } = global.mitm
+  let { argv } = global.mitm
   const [, prm1] = argv._
   argv.profile = false
-
-  let browser, saveArgs
-  function loadProfile (profile) {
-    const _prfl = `${path.home}/argv/${profile}.js`
-    const exist = fs.existsSync(_prfl)
-    if (!exist) {
-      return false
-    }
-    saveArgs = JSON.parse(fs.readFileSync(_prfl))
-    let msg1 = saveArgs._args
-    const arr1 = msg1.match(/=['"]?([^:]+:[^@]+)@\w+/)
-    if (arr1) {
-      // feat: hide password
-      msg1 = msg1.replace(arr1[1], '******:******')
-    }
-    console.log(c.green(`>>> cmd: mitm-play ${msg1}`), `(${profile})`)
-    // console.log(c.green(`>>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
-    return true
-  }
-
-  if (prm1 && loadProfile(prm1)) {
-    argv.profile = true
-  } else if (prm1 !== 'default') {
-    loadProfile('default')
-  }
-
-  if (saveArgs && !argv.save) {
-    let msg2 = process.argv.slice(2).join(' ')
-    const arr2 = msg2.match(/=['"]?([^:]+:[^@]+)@\w+/)
-    if (arr2) {
-      // feat: hide password
-      msg2 = msg2.replace(arr2[1], '******:******')
-    }
-    console.log(c.green(`>>> cmd2 mitm-play ${msg2}`))
-    const {
-      _argv: {
-        browser: b,
-        chromium,
-        firefox,
-        webkit,
-        ...rest
-      }
-    } = saveArgs
-    browser = b
-    if (argv._.length === 0) {
-      delete argv._
-    }
-    global.mitm.argv = { ...rest, ...argv }
-    argv = global.mitm.argv
-  }
 
   argsChg('c', 'relaxcsp')
   argsChg('d', 'delete')
@@ -103,6 +72,39 @@ module.exports = () => {
   obj('browser', 'chromium') // on Window: Chrome POST payload is missing!
   obj('browser', 'firefox')
   obj('browser', 'webkit')
+
+  let saveArgs = loadProfile(prm1)
+  if (prm1 && saveArgs) {
+    argv.profile = true
+  } else if (prm1 !== 'default') {
+    saveArgs = loadProfile('default')
+  }
+
+  let browser
+  if (saveArgs && !argv.save) {
+    let msg2 = process.argv.slice(2).join(' ')
+    const arr2 = msg2.match(/=['"]?([^:]+:[^@]+)@\w+/)
+    if (arr2) {
+      // feat: hide password
+      msg2 = msg2.replace(arr2[1], '******:******')
+    }
+    console.log(c.green(`>>> cmd2 mitm-play ${msg2}`))
+    const {
+      _argv: {
+        browser: b,
+        chromium,
+        firefox,
+        webkit,
+        ...rest
+      }
+    } = saveArgs
+    browser = b
+    if (argv._.length === 0) {
+      delete argv._
+    }
+    global.mitm.argv = { ...rest, ...argv }
+    argv = global.mitm.argv
+  }
 
   if (argv.debug) {
     process.env.DEBUG = 'pw:api'
