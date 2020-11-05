@@ -21,9 +21,17 @@ function addLog (path) {
         }
       }
     } else {
-      const json = JSON.parse(`${data}`)
-      const g = json.general
-      g.path = (new URL(g.url)).pathname
+      let json
+      try {
+        json = JSON.parse(`${data}`)
+        const g = json.general
+        g.path = (new URL(g.url)).pathname
+      } catch (error) {
+        json = {
+          error: 'Error: JSON.parse',
+          data: `${data}`
+        }
+      }
       _log[path] = json
     }
   })
