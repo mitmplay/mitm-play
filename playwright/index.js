@@ -37,10 +37,13 @@ module.exports = () => {
   } = global.mitm
 
   process.on('unhandledRejection', (err, p) => {
-    if (argv.debug || !`${err}`.match('Execution context was destroyed')) {
+    const econtext = `${err}`.match('Execution context was destroyed')
+    if (argv.debug || !econtext) {
       console.log('An unhandledRejection occurred')
       console.log(`Rejected Promise: ${p}`)
       console.log(`Rejection: ${err}`)
+    } else {
+      console.log(c.red('(*execution context was destroyed*)'))
     }
   });
   (async () => {
@@ -176,8 +179,14 @@ async function attach (page) {
   })
   page.on('frameattached', async (frame) => {
     await frame.waitForNavigation()
-    argv.debug && console.log('xplay-page frame', _page)
-    await frame.evaluate(_page => { window['xplay-page'] = _page }, _page)
+    argv.debug && console.log('xplay-page frame', _page, frame.url())
+    const url = await frame.evaluate(_page => {
+      if (window['xplay-page'] === undefined) {
+        window['xplay-page'] = _page
+      }
+      return document.URL
+    }, _page)
+    argv.debug && console.log('URL', url)
   })
 }
 
