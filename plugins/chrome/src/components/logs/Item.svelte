@@ -64,13 +64,19 @@ function method2({general:g}) {
   return g.method.toLowerCase() + (g.ext ? `<${g.ext}> ` : '');
 }
 function url({general:g}) {
+  let msg
   if (g.url.match('/log/')) {
-    return g.url.split('@')[1];
+    msg = g.url.split('@')[1];
   } else if ($client.nohostlogs) {
-    return g.path;
+    msg = g.path;
   } else {
-    return `${g.url.split('?')[0]}`;
+    msg = `${g.url.split('?')[0]}`;
   }
+  if ($client.nohostlogs && g.ext==='') {
+    const [a1,a2] = msg.split('--');
+    msg = a2 || a1;
+  }
+  return msg;
 }
 function pth({general:g}) {
   if ($client.noarglogs || g.url.match('/log/')) {
