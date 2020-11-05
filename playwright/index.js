@@ -14,7 +14,12 @@ function sleep (ms) {
 
 function currentTab (browser) {
   browser.currentTab = async function (_page) {
-    const pages = await browser.pages()
+    let pages
+    if (browser.pages) {
+      pages = await browser.pages()
+    } else {
+      pages = browser.contexts()[0].pages()
+    }
     for (const page of pages) {
       if (_page === page._page) {
         return page
