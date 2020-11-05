@@ -79,13 +79,13 @@ On browser console type "ws"`
   async function _screenshot (data, { path, page }) {
     const err = await fs.ensureFile(path)
     if (err) {
-      console.log(c.redBright('(*rrror saving screenshot*)'), path)
+      console.log(c.redBright('(*error saving screenshot*)'), path)
     } else {
       try {
         console.log(c.green('(*screenshot*)'))
         await page.screenshot({ path })
       } catch (error) {
-        console.log(c.redBright('(*rrror screenshot*)'), error)
+        console.log(c.redBright('(*error screenshot*)'), error)
       }
     }
   }
