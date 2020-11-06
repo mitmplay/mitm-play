@@ -16,12 +16,16 @@ module.exports = () => {
     }
   }
   for (const domain in global.mitm.routes) {
-    const title = domain
-    const { path } = global.mitm.routes[domain]
+    const { path: fpath } = global.mitm.routes[domain]
+    const arr = fpath.split('/')
+    arr.pop()
+    const path = arr.join('/')
     const content = global.mitm.source[domain]
+    const title = domain
     routes[domain] = {
       path,
       title,
+      fpath,
       content
     }
   }
