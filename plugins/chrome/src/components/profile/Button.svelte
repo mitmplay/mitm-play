@@ -24,7 +24,6 @@ function btnSave(e) {
       }
     })
     console.log($source);
-
     ws__send('saveProfile', $source, data => {
       source.update(n => {return {...n, saveDisabled: true}});
       console.log('Done Save!');
@@ -33,6 +32,7 @@ function btnSave(e) {
 }
 
 function btnOpen() {
+  console.log($source);
   ws__send('openFolder', $source, data => {
     console.log('Done Open!');
   });

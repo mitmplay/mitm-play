@@ -8,10 +8,12 @@ const broadcast = _broadcast('route')
 const slash = p => p.replace(/\\/g, '/')
 
 module.exports = () => {
+  const { win32 } = global.mitm
   const { userroute } = global.mitm.path
   const files = fg.sync([userroute])
 
   function updateJS (path, msg) {
+    win32 && (path = path.replace(/\\/g, '/'))
     loadJS(path, msg, broadcast)
   }
 

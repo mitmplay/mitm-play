@@ -97,7 +97,7 @@ const loadJS = function (path, msg, fn) {
   const { _routeSet } = global.mitm.fn
   msg && console.log(msg)
   try {
-    path = _path.normalize(path)
+    // path = _path.normalize(path)
     const domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1]
     // domain = domain.replace(/~/,'[^.]*');
     const route = { path, ...load(path) }
