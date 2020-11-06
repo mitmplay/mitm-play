@@ -33,7 +33,7 @@ function btnSave(e) {
 }
 
 function btnOpen() {
-  ws__send('openRoute', $source, data => {
+  ws__send('openFolder', $source, data => {
     console.log('Done Open!');
   });
 }

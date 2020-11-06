@@ -33,7 +33,7 @@ function btnSave(e) {
 }
 
 function btnOpen() {
-  ws__send('openRoute', $source, data => {
+  ws__send('openFolder', $source, data => {
     console.log('Done Open!');
   });
 }
@@ -72,9 +72,9 @@ function btnGo(e) {
 	<div class="btn-container">
   {#each btns($source.item) as item}
   <button class="tlb btn-go" on:click="{btnTag}"
-  data-url="{btnUrl(item)}">{item}</button> - 
+  data-url="{btnUrl(item)}">{item}</button>
   {/each}
-  <button class="tlb btn-go" disabled={$source.goDisabled} on:click="{btnGo}">Go</button>.
+  <!-- <button class="tlb btn-go" disabled={$source.goDisabled} on:click="{btnGo}">Go</button>. -->
   </div>
 {/if}
 <div class="file-path">

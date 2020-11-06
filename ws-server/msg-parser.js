@@ -9,10 +9,10 @@ const $openHome = require('./_openHome')
 const $codeHome = require('./_codeHome')
 const $saveTags = require('./_saveTags')
 const $saveRoute = require('./_saveRoute')
-const $openRoute = require('./_openRoute')
 const $screencap = require('./_screencap')
 const $clearLogs = require('./_clearLogs')
 const $setClient = require('./_setClient')
+const $openFolder = require('./_openFolder')
 const $getContent = require('./_getContent')
 const $getProfile = require('./_getProfile') // feat: profile
 const $saveProfile = require('./_saveProfile')
@@ -24,11 +24,11 @@ const wscmd = {
   $saveProfile,
   $getProfile,
   $getContent,
+  $openFolder,
   $setClient,
   $clearLogs,
   $screencap,
   $saveRoute,
-  $openRoute,
   $saveTags,
   $openHome,
   $codeHome,
