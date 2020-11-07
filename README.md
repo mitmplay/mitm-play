@@ -31,39 +31,50 @@ npm install -g mitm-play
 <p>
 
 ```js
-// create new folder/file: ~/user-route/keybr.com/index.js & add this content:
+// create file: ~/user-route/keybr.com/index.js & add this content:
 const css = `
 .Body-header,.Body-aside {
   display: none !important;
 }`;
-
+ 
 const route = {
   url: 'https://keybr.com',
-  'mock:remove-ads': {
-    'googletagservices.com': '',
-    'google-analytics.com': '',
+  tags: [],
+  'mock:no-ads': {
     'doubleclick.net': '',
     'a.pub.network': '',
+    'google.+.com': '',
   },
-  'css:remove-ads': {
-    '/assets/[a-z]+': `=>${css}`
+  'css:no-ads': {
+    '/assets/[a-z0-9]+': `=>${css}`
   },
+}
+module.exports = route;
+```
+
+```js
+// create file: ~/user-route/_global_/index.js & add this content:
+const route = {
+  tags: [],
+  'config:no-logs': {
+    logs: {
+      'referer-reqs': false,
+      'no-namespace': false,
+    }
+  }
 }
 module.exports = route;
 ```
 
 ```bash
 # 1st run will be to save all cli option to 'default'
-mitm-play keyb --delete --save
-mitm-play -ds
+mitm-play keyb --delete --save  # --OR--
+mitm-play keyb -ds
 
 # next run should be simple as:
 mitm-play
 ```
 Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools "mitm-play" "tags" as an option to enabled / disabled rules. You can see the togling process on [this video.](https://www.youtube.com/watch?v=sXTsy_XxILg)
-
-![tags](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-tags.png)
-
 
 </p>
 </details>
