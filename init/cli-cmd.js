@@ -47,18 +47,20 @@ module.exports = () => {
   }
 
   if (!fs.pathExistsSync(route)) {
-    const pth = `${home('~/user-route')}/google.com`
-    const src = `${path.app}/user-route/google.com/index.js`
-    const n = prompt('\nCreate ~/user-route/google.com route (Y/n)? ')
+    const uroute = '~/user-route'
+    const n = prompt(`\nCreate ${path} (Y/n)? `)
 
     if (n !== '' && n.toLowerCase() !== 'y') {
       console.log('Please provide correct "route" folder using -r option')
       process.exit()
     } else {
-      route = home('~/user-route')
-      console.log('PATH', { src, pth })
-      fs.ensureDirSync(pth)
-      fs.copyFileSync(src, `${pth}/index.js`)
+      route = home(uroute)
+      console.log('PATH', uroute)
+      const src = `${path.app}/user-route`
+      fs.ensureDirSync(`${route}/_global_`)
+      fs.ensureDirSync(`${route}/keybr.com`)
+      fs.copyFileSync(`${src}/_global_/index.js`, `${route}/_global_/index.js`)
+      fs.copyFileSync(`${src}/keybr.com/index.js`, `${route}/keybr.com/index.js`)
     }
   }
 
@@ -79,7 +81,7 @@ module.exports = () => {
   delete global.mitm.data.nolog
 
   if (typeof (argv.url) === 'string') {
-    if (!argv.url.match('http')) {
+    if (!argv.url.match('https')) {
       argv.urls = [`https://${argv.url}`]
     } else {
       argv.urls = [argv.url]
@@ -116,7 +118,7 @@ module.exports = () => {
       if (_urls.length) {
         argv.urls = _urls
       } else {
-        argv.urls = ['http://google.com/']
+        argv.urls = ['https://keybr.com/']
       }
     } else {
       const { routes } = global.mitm
