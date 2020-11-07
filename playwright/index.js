@@ -58,7 +58,7 @@ module.exports = () => {
       let page, browser, bcontext
 
       if (browserName === 'chromium') {
-        const { fn: { flist }, path: { userroute } } = global.mitm
+        const { fn: { flist, tilde }, path: { userroute } } = global.mitm
         const ppath = userroute.split('*')[0] + '_plugins_'
         options.excludeSwitches = ['enable-automation']
         const plugins = flist(ppath)
@@ -71,7 +71,7 @@ module.exports = () => {
           path = `${p}/chrome`
         }
         path = path.replace(/\\/g, '/')
-        console.log('>>> Plugins:', path.split(','))
+        console.log('>>> Plugins:', tilde(path).split(','))
         args.push(`--disable-extensions-except=${path}`)
         args.push(`--load-extension=${path}`)
         if (argv.proxypac) {

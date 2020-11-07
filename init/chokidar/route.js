@@ -9,6 +9,7 @@ const slash = p => p.replace(/\\/g, '/')
 
 module.exports = () => {
   const { win32 } = global.mitm
+  const { tilde } = global.mitm.fn
   const { userroute } = global.mitm.path
   const files = fg.sync([userroute])
 
@@ -23,7 +24,8 @@ module.exports = () => {
   }
 
   // Initialize watcher.
-  console.log(c.magentaBright(`watcher(route): ${userroute}`))
+  const msg = tilde(userroute)
+  console.log(c.magentaBright(`watcher(route): ${msg}`))
   const urouteWatcher = chokidar.watch(userroute, {
     ignored: /(^|[/\\])\../, // ignore dotfiles
     persistent: true
@@ -32,8 +34,8 @@ module.exports = () => {
   // Something to use when events are received.
   const log = console.log.bind(console)
   urouteWatcher // Add event listeners.
-    .on('add', p => { p = slash(p); updateJS(p, c.greenBright(`>>> add route ${p}`)) })
-    .on('change', p => { p = slash(p); updateJS(p, c.cyanBright(`>>> chg route ${p}`)) })
-    .on('unlink', p => { p = slash(p); log(c.redBright(`>>> del route ${p}`)) })
+    .on('add', p => { p = slash(p); updateJS(p, c.greenBright(`>>> add route ${tilde(p)}`)) })
+    .on('change', p => { p = slash(p); updateJS(p, c.cyanBright(`>>> chg route ${tilde(p)}`)) })
+    .on('unlink', p => { p = slash(p); log(c.redBright(`>>> del route ${tilde(p)}`)) })
   global.mitm.watcher.urouteWatcher = urouteWatcher
 }

@@ -119,8 +119,7 @@ function _routeSet (r, namespace, print = false) {
   }
 
   if (namespace === '_global_') {
-    const { config } = global.mitm.router[namespace]
-    router.config = config
+    router.config = global.mitm.router._global_.config
   }
   global.mitm.router[namespace] = router
   if (Object.keys(tags).length) {

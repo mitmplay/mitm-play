@@ -25,7 +25,7 @@ module.exports = () => {
     _ws_msgParser(event, event.data)
   }
 
-  const url = `wss://localhost:3001/ws?page=${_ws_inIframe()}`
+  const url = `wss://localhost:3001/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
   const ws = new WebSocket(url)
   console.time('ws: onopen')
   window._ws = ws

@@ -686,9 +686,11 @@ _global_ = {
 // toggle to show/hide from console.log()
 _global_.config = {
   logs: {
-    'ws-message':   true,
+    'mitm-mock': false, // true if --verbose/--debug
+    'ws-connect': false, // true if --verbose/--debug
+    'ws-message':  false, // true if --verbose/--debug
+    'ws-broadcast': false, // true if --verbose/--debug
     'no-namespace': true,
-    'ws-broadcast': true,
     'referer-reqs': true,
     silent: false, //true: hide all
     skip:   false,

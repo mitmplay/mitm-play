@@ -1,7 +1,9 @@
 const _logs = function (_silent = false) {
   return {
-    'ws-message': !_silent,
-    'ws-broadcast': !_silent,
+    'mitm-mock': false,
+    'ws-connect': false,
+    'ws-message': false,
+    'ws-broadcast': false,
     'no-namespace': !_silent,
     'referer-reqs': !_silent,
     silent: false, // ok
@@ -20,27 +22,40 @@ const _logs = function (_silent = false) {
 }
 
 function _setlogs () {
-  const { _global_: _g1 } = global.mitm.__tag2
-  const { _global_: _g2 } = global.mitm.routes
-  const { _global_: _g3 } = global.mitm.router
+  const { argv, __tag2, routes, router } = global.mitm
+  const { _global_: _gTag2 } = __tag2
+  const { _global_: _gRoutes } = routes
+  const { _global_: _gRouter } = router
   let logs = {}
   let args = {}
-  if (_g1) {
-    for (const id in _g1) {
-      if (id.match('config:') && _g1[id]) {
-        logs = { ...logs, ..._g2[id].logs }
-        args = { ...args, ..._g2[id].args }
+  if (_gTag2) {
+    for (const id in _gTag2) {
+      if (id.match('config:') && _gTag2[id]) {
+        logs = { ...logs, ..._gRoutes[id].logs }
+        args = { ...args, ..._gRoutes[id].args }
       }
     }
   }
-  if (_g2.config) {
-    if (_g2.config.logs) { logs = { ...logs, ..._g2.config.logs } }
-    if (_g2.config.args) { args = { ...args, ..._g2.config.args } }
+  if (_gRoutes.config) {
+    if (_gRoutes.config.logs) { logs = { ...logs, ..._gRoutes.config.logs } }
+    if (_gRoutes.config.args) { args = { ...args, ..._gRoutes.config.args } }
   }
-  if (_g3) {
-    _g3.config === undefined && (_g3.config = {})
-    _g3.config.logs = { ..._logs(logs.silent), ...logs }
-    _g3.config.args = args
+  if (_gRouter) {
+    if (logs.websocket) {
+      logs['mitm-mock'] = true
+      logs['ws-connect'] = true
+      logs['ws-message'] = true
+      logs['ws-broadcast'] = true
+    }
+    _gRouter.config === undefined && (_gRouter.config = {})
+    _gRouter.config.logs = { ..._logs(logs.silent), ...logs }
+    _gRouter.config.args = args
+    if (argv.debug || argv.verbose) {
+      _gRouter.config.logs['mitm-mock'] = true
+      _gRouter.config.logs['ws-connect'] = true
+      _gRouter.config.logs['ws-message'] = true
+      _gRouter.config.logs['ws-broadcast'] = true
+    }
   }
 }
 

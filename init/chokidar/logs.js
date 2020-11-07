@@ -48,10 +48,14 @@ function delLog (path) {
 
 module.exports = () => {
   const home = global.mitm.path.home
-  const glob = Object.keys(global.mitm.argv.browser).map(x => `${home}/${x}/**/log/**`)
+  let glob = Object.keys(global.mitm.argv.browser).map(x => `${home}/${x}/**/log/**`)
+  if (glob.length === 1) {
+    glob = glob[0]
+  }
 
   // Initialize watcher.
-  console.log(c.magentaBright(`watcher(log): ${JSON.stringify(glob)}`))
+  const msg = global.mitm.fn.tilde(typeof glob === 'string' ? glob : JSON.stringify(glob))
+  console.log(c.magentaBright(`watcher(log): ${msg}`))
   const logWatcher = chokidar.watch(glob, {
     ignored: /\/\$\//, // ignore /$/
     persistent: true

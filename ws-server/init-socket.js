@@ -7,6 +7,7 @@ const msgParser = require('./msg-parser')
 const path = `${global.__app}/cert`
 
 module.exports = () => {
+  const { fn: { _wsmitm, _wsclient }, router } = global.mitm
   const app = express()
   const servers = https.createServer({
     cert: fs.readFileSync(`${path}/selfsigned.crt`),
@@ -17,13 +18,13 @@ module.exports = () => {
 
   app.use(express.static(global.mitm.path.home))
   app.get('/mitm-play/mitm.js', (req, res) => {
-    const _body = global.mitm.fn._wsmitm(req)
+    const _body = _wsmitm(req)
     res.type('.js')
     res.send(_body)
   })
 
   app.get('/mitm-play/websocket.js', (req, res) => {
-    const _body = global.mitm.fn._wsclient()
+    const _body = _wsclient()
     res.type('.js')
     res.send(_body)
   })
@@ -33,21 +34,26 @@ module.exports = () => {
   })
 
   function connection (client, request) {
-    let host
+    const { logs } = router._global_.config
+    const { origin, host } = request.headers
+    if (logs['ws-connect']) {
+      console.log(c.red('connected'), `${host}${request.url}`)
+    }
+    let _host
     try {
-      if (request.headers.origin !== 'null') {
-        host = (new URL(request.headers.origin)).host
+      if (origin !== 'null') {
+        _host = (new URL(origin)).host
       } else {
-        host = 'null'
+        _host = 'null'
       }
     } catch (error) {
       console.log(c.redBright('>>> Error init Socket'), error)
     }
     const page = request.url.match(/page=(\w+)/)[1]
-    client._page = `${host}:${page}`
+    client._page = `${_host}:${page}`
 
     if (page === 'window' && !global.mitm._session_) {
-      global.mitm.fn._session(host)
+      global.mitm.fn._session(_host)
     }
 
     function incoming (data) {

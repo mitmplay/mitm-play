@@ -45,7 +45,8 @@ module.exports = () => {
   const glob = `${home}/argv/*.js`
 
   // Initialize watcher.
-  console.log(c.magentaBright(`watcher(profile): ${glob}`))
+  const msg = global.mitm.fn.tilde(glob)
+  console.log(c.magentaBright(`watcher(profile): ${msg}`))
   const profileWatcher = chokidar.watch(glob, {
     ignored: /\/\$\//, // ignore /$/
     persistent: true
