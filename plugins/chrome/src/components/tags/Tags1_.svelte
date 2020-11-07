@@ -129,6 +129,9 @@ function listTags(tags) {
 .space0 .big {
   margin-left: -4px;
 }
+.space0>label {
+  padding-left: 6px;
+}
 .rtag {
   color: grey;
   font-style: italic;
