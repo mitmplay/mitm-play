@@ -1,9 +1,9 @@
 const fs = require('fs-extra')
 
 module.exports = ({ data }) => {
-  const { path, content } = data
-  fs.writeFile(path, content, err => {
-    err && console.log('Error write file', path, err)
+  const { fpath, content } = data
+  fs.writeFile(fpath, content, err => {
+    err && console.log('Error write file', fpath, err)
   })
   return 'OK'
 }

@@ -58,6 +58,7 @@ function clickHandler(e) {
         ...n,
         goDisabled: (url===undefined),
         content: obj.content,
+        fpath: obj.fpath,
         path: obj.path,
         item,
       }
