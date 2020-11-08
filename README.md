@@ -100,15 +100,16 @@ Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools
 
 # Concept
 Mitm intercept is hierarchical checking routes`(*)`. First check is try to `match` domain on the url with `route-folder(*)` as a domain (namespace), `if match` next action is to `match` url with `routing-url(*)` inside of each rule, `if match` again then handler can be execute inside object `routing-url`. Different rule can have same/different set handler/option.
+<details><summary><b>Object simulation of Routes:</b></summary>
+<p>
 
-Object simulation of Routes: 
 ```js
 {
-  'keybr.com': { // route-folder(*) map to object as namespace
+  'abc.com': { // route-folder(*) map to object as namespace
     request: { // rules: request, mock, cache, log, html, json, css, js & response 
       '/assets/main.js': { // routing-url(*) 
         request: reqs => { // handler to execute
-          const { body } = ...
+          const { body } = reqs
           return { body }
         }
       }
@@ -116,6 +117,8 @@ Object simulation of Routes:
   }
 }
 ```
+</p>
+</details>
 
 If the process of checking is not match, then it will fallback to `_global_` namespace to check, and the operation is the same as mention in first paragraph. 
 
