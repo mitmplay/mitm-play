@@ -140,7 +140,7 @@ routes = {
 </p>
 </details>
 <p>
-the execution order as documented start with `skip`, end with `js`, no need to implement all of routing rules. 
+the execution order as documented start with `skip`, end with `response`, no need to implement all of routing rules. 
 </p>
 
 <details><summary><b>Title, url, urls, workspace & jsLib</b></summary>

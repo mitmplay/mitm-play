@@ -5,5 +5,6 @@ export const source = writable({
   saveDisabled: true,
   goDisabled: true,
   content: '',
+  fpath: '',
   path: ''
 })

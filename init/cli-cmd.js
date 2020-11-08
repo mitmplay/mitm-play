@@ -48,7 +48,7 @@ module.exports = () => {
 
   if (!fs.pathExistsSync(route)) {
     const uroute = '~/user-route'
-    const n = prompt(`\nCreate ${path} (Y/n)? `)
+    const n = prompt(`\nCreate ${uroute} (Y/n)? `)
 
     if (n !== '' && n.toLowerCase() !== 'y') {
       console.log('Please provide correct "route" folder using -r option')
