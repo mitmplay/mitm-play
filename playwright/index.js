@@ -111,8 +111,9 @@ module.exports = () => {
       const playBrowser = playwright[browserName]
       if (argv.pristine) {
         // buggy route will not work :(
+        const { fn: { tilde } } = global.mitm
         const bprofile = `${global.mitm.path.home}/.${browserName}`
-        console.log('>>> Browser profile', bprofile)
+        console.log('>>> Browser profile', tilde(bprofile))
         browser = await playBrowser.launchPersistentContext(bprofile, options)
         page = await browser.pages()[0]
         bcontext = page.context()

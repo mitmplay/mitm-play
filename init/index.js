@@ -25,7 +25,8 @@ module.exports = () => {
     // feat: hide password
     msg = msg.replace(arr[1], '******:******')
   }
-  console.log(c.greenBright(msg))
+  const { tilde } = global.mitm.fn
+  console.log(c.greenBright(tilde(msg)))
   console.log(c.green(`\nv${pkg.version}\n`))
   console.log(c.whiteBright('FILE WATCHER!'))
   // must be last or other watcher wont work
