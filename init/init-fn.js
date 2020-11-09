@@ -12,7 +12,6 @@ const { exec, execFile } = require('./fn/_exec-file')
 const { tilde, home } = require('./fn/tildehome')
 const _skipByTag = require('./fn/_skipbytag')
 const _nameSpace = require('./fn/_namespace')
-const _stringify = require('./fn/_stringify')
 const _tldomain = require('./fn/_tldomain')
 const _wsclient = require('./fn/_wsclient')
 const _debounce = require('./fn/_debounce')
@@ -36,7 +35,6 @@ module.exports = () => {
   }
   global.mitm.fn = {
     _nameSpace,
-    _stringify,
     _skipByTag,
     _debounce,
     _routeSet,

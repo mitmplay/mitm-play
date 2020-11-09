@@ -1,5 +1,4 @@
 const c = require('ansi-colors')
-const _stringify = require('./_stringify')
 const typs = require('./_typs')
 
 const { typC, typA, typO } = typs
@@ -132,10 +131,6 @@ function _routeSet (r, namespace, print = false) {
     if (global.mitm.__tag3[namespace]) {
       delete global.mitm.__tag3[namespace]
     }
-  }
-  if (!global.mitm.data.nolog && global.mitm.argv.verbose) {
-    const msg = `>>> ${namespace}\n${_stringify(routes[namespace])}`
-    print && console.log(c.blueBright(msg))
   }
   return r
 }
