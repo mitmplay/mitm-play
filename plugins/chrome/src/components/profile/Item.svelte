@@ -1,37 +1,37 @@
 <script> // feat: profile
 import { source } from './stores.js';
-import { onMount } from 'svelte';
 
 export let item;
 export let onChange;
 
-onMount(async () => {
-  const { editor: { _profile }} = window.mitm;
-  const element = window.document.getElementById('profile');
-  var ro = new ResizeObserver(entries => {
-    const {width: w, height: h} = entries[0].contentRect;
-    _profile && _profile.layout({width: w, height: h})
-  });
-  ro.observe(element);
+function resize(editor) {
+  return entries => {
+    const {width, height} = entries[0].contentRect
+    editor.layout({width, height})
+  }
+}
 
-  window.mitm.editor._profileEl = element;
-});
+const cfg = {
+  language: 'javascript',
+  // theme: "vs-dark",
+  minimap: {
+    enabled: false,
+  },
+  value: '',
+  fontFamily: ['Cascadia Code', 'Consolas', 'Courier New', 'monospace'],
+  fontLigatures: true,
+  fontSize: 11
+}
 
 function initCodeEditor(src) {
   console.log('load monaco: profile')
-  const element = window.mitm.editor._profileEl;
-  const _profile =  window.monaco.editor.create(element, {
-    language: 'javascript',
-    // theme: "vs-dark",
-    minimap: {
-      enabled: false,
-    },
-    value: '',
-    fontFamily: ['Cascadia Code', 'Consolas', 'Courier New', 'monospace'],
-    fontLigatures: true,
-    fontSize: 11
-  });
+  const element = window.document.getElementById('profile');
+  const _profile =  window.monaco.editor.create(element, cfg);
+  const ro = new ResizeObserver(resize(_profile))
+  ro.observe(element);
+
   window.mitm.editor._profile = _profile;
+  window.mitm.editor._profileEl = element;
 
   _profile.onDidChangeModelContent(onChange);
   _profile.setValue(src);

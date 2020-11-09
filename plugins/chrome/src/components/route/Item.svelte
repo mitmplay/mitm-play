@@ -1,37 +1,37 @@
 <script>
 import { source } from './stores.js';
-import { onMount } from 'svelte';
 
 export let item;
 export let onChange;
 
-onMount(async () => {
-  const { editor: { _route }} = window.mitm;
-  const element = window.document.getElementById('monaco');
-  const ro = new ResizeObserver(entries => {
-    const {width: w, height: h} = entries[0].contentRect;
-    _route && _route.layout({width: w, height: h})
-  });
-  ro.observe(element);
+function resize(editor) {
+  return entries => {
+    const {width, height} = entries[0].contentRect
+    editor.layout({width, height})
+  }
+}
 
-  window.mitm.editor._routeEl = element;
-});
+const cfg =  {
+  language: 'javascript',
+  // theme: "vs-dark",
+  minimap: {
+    enabled: false,
+  },
+  value: '',
+  fontFamily: ['Cascadia Code', 'Consolas', 'Courier New', 'monospace'],
+  fontLigatures: true,
+  fontSize: 11
+}
 
 function initCodeEditor(src) {
   console.log('load monaco: route')
-  const element = window.mitm.editor._routeEl;
-  const _route =  window.monaco.editor.create(element, {
-    language: 'javascript',
-    // theme: "vs-dark",
-    minimap: {
-      enabled: false,
-    },
-    value: '',
-    fontFamily: ['Cascadia Code', 'Consolas', 'Courier New', 'monospace'],
-    fontLigatures: true,
-    fontSize: 11
-  });
+  const element = window.document.getElementById('monaco');
+  const _route =  window.monaco.editor.create(element, cfg);
+  const ro = new ResizeObserver(resize(_route))
+  ro.observe(element);
+
   window.mitm.editor._route = _route;
+  window.mitm.editor._routeEl = element;
 
   _route.onDidChangeModelContent(onChange);
   _route.setValue(src);
