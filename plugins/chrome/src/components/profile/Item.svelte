@@ -1,27 +1,9 @@
 <script> // feat: profile
+import { cfg, resize } from '../monaco/init';
 import { source } from './stores.js';
 
 export let item;
 export let onChange;
-
-function resize(editor) {
-  return entries => {
-    const {width, height} = entries[0].contentRect
-    editor.layout({width, height})
-  }
-}
-
-const cfg = {
-  language: 'javascript',
-  // theme: "vs-dark",
-  minimap: {
-    enabled: false,
-  },
-  value: '',
-  fontFamily: ['Cascadia Code', 'Consolas', 'Courier New', 'monospace'],
-  fontLigatures: true,
-  fontSize: 11
-}
 
 function initCodeEditor(src) {
   console.log('load monaco: profile')

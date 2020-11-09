@@ -1,18 +1,14 @@
 <script>
-import { onMount } from 'svelte';
+import { cfg, resize } from '../monaco/init';
 import { logstore } from './stores.js';
 import { tabstore } from './tab.js';
+import { onMount } from 'svelte';
 import { Tab } from 'svelma';
 
-const minimap = {enabled: false};
 const option = {
-  contextmenu: false,
+  ...cfg,
   readOnly: true,
-  // model: null,
-  minimap,
-  fontFamily: ['Cascadia Code', 'Consolas', 'Courier New', 'monospace'],
-  fontLigatures: true,
-  fontSize: 11  
+  contextmenu: false,
 }
 
 let node1;
@@ -23,32 +19,25 @@ let edit1;
 let edit2;
 let edit3;
 
-function resize(editor) {
-  return entries => {
-    const {width, height} = entries[0].contentRect
-    editor.layout({width, height})
-  }
-}
-
 onMount(async () => {
   console.warn('onMount logs - BaseTab.svelte');
   console.log($logstore)
   const hdrs = JSON.parse($logstore.headers);
   const csp3 = hdrs.CSP || {};
   const val1 = {
-    value: $logstore.headers,
-    language: 'json',
     ...option,
+    language: 'json',
+    value: $logstore.headers,
   };
   const val2 = {
-    value: $logstore.response,
-    language: $logstore.ext,
     ...option,
+    language: $logstore.ext,
+    value: $logstore.response,
   };
   const val3 = {
-    value: JSON.stringify(csp3, null, 2),
-    language: 'json',
     ...option,
+    language: 'json',
+    value: JSON.stringify(csp3, null, 2),
   };
   const ctype = $logstore.respHeader["content-type"] || 'text/plain';
   if (ctype.match('html')) {
