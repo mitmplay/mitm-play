@@ -1,3 +1,4 @@
+const c = require('ansi-colors')
 const WebSocket = require('ws')
 
 module.exports = () => {
@@ -16,7 +17,7 @@ module.exports = () => {
       }
     })
     if (logs['ws-broadcast']) {
-      console.log('broadcast', data, pages)
+      console.log(c.blue('broadcast'), data, pages)
     }
   }
 
