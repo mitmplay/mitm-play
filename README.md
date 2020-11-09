@@ -134,7 +134,7 @@ on each route you can add section supported:
 <p>
 
 ```js
-routes = {
+route = {
   url:     '',
   urls:    {},
   title:   '',
@@ -176,7 +176,7 @@ the execution order as documented start with `skip`, end with `response`, no nee
 `lib`: inject js library into html which having websocket, it can be [`jquery.js`, `faker.js`, `chance.js`, `log-patch.js`]
 
 ```js
-routes = {
+route = {
   title: 'Amazon - amazon',
   url:  'https://www.amazon.com/b?node=229189',
   urls: {
@@ -847,8 +847,8 @@ $ mitm-play --save='google'
 Specify which folder contains routes config
 
 ```
-$ mitm-play -r='../userroutes'  <OR>
-$ mitm-play --route='../userroutes'
+$ mitm-play -r='../user-route'  <OR>
+$ mitm-play --route='../user-route'
 ```
 </p>
 </details>
