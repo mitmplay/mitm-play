@@ -52,10 +52,6 @@ module.exports = () => {
     const page = request.url.match(/page=(\w+)/)[1]
     client._page = `${_host}:${page}`
 
-    if (page === 'window' && !global.mitm._session_) {
-      global.mitm.fn._session(_host)
-    }
-
     function incoming (data) {
       msgParser(client, data)
     }

@@ -1,10 +1,12 @@
+const c = require('ansi-colors')
+
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-async function setSession (reqs, session) {
+async function setSession (reqs, session, persist=false) {
   const { page, url } = reqs
-  if (page && session) {
+  if (page && session && (!page._persist || persist)) {
     const id = (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
     let _session
     if (session === true) {
@@ -15,6 +17,12 @@ async function setSession (reqs, session) {
     }
     typeof session === 'number' && sleep(session)
     page.setExtraHTTPHeaders({ 'xplay-page': page._page, 'xplay-session': _session })
+    if (persist) {
+      page._persist = true
+      console.log(c.magenta(`>>> session: ${id}**`))
+    } else {
+      console.log(c.magenta(`>>> session: ${id}`))
+    }
   }
 }
 

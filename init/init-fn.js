@@ -16,7 +16,6 @@ const _tldomain = require('./fn/_tldomain')
 const _wsclient = require('./fn/_wsclient')
 const _debounce = require('./fn/_debounce')
 const relaxCSP = require('./fn/relaxCSP')
-const _session = require('./fn/_session')
 const _wsmitm = require('./fn/_wsmitm')
 const _clear = require('./fn/_clear')
 const _tag4 = require('./fn/_tag4')
@@ -40,7 +39,6 @@ module.exports = () => {
     _routeSet,
     _tldomain,
     _wsclient,
-    _session,
     _noproxy,
     _wsmitm,
     _proxy,

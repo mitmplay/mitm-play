@@ -2,6 +2,7 @@
 const c = require('ansi-colors')
 const _match = require('./match')
 const { injectWS } = require('./inject')
+const setSession = require('./set-session')
 const { matched, searchKey, searchArr } = _match
 const { fn: { _nameSpace }, router } = global.mitm
 
@@ -15,6 +16,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
   if (accpt === '*/*' || accpt.indexOf('text/html') > -1) {
     const search = searchArr({ typ: 'nosocket', url, browserName })
     const match = _3d ? search('_global_') : matched(search, reqs)
+    setSession(reqs, true)
     if (match) {
       const { logs } = router._global_.config
       if (logs.nosocket && !match.hidden) {

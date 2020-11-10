@@ -20,7 +20,7 @@ const chgRequest = async function (reqs, _3d) {
         }
       }
     }
-    setSession(reqs, session)
+    setSession(reqs, session, true)
     if (request) {
       const reqs2 = request(reqs, match)
       result = {
