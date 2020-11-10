@@ -17,7 +17,7 @@ module.exports = () => {
       }
     })
     if (logs['ws-broadcast']) {
-      console.log(c.blue('broadcast'), data, pages)
+      console.log(c.blue('>>> ws-broadcast:'), data, pages)
     }
   }
 

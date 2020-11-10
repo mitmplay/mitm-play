@@ -37,7 +37,7 @@ module.exports = () => {
     const { logs } = router._global_.config
     const { origin, host } = request.headers
     if (logs['ws-connect']) {
-      console.log(c.red('connected'), `${host}${request.url}`)
+      console.log(c.red('>>> ws-connect:'), `${host}${request.url}`)
     }
     let _host
     try {
