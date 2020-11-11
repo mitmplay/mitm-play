@@ -10,15 +10,15 @@ import Js from './Js.svelte';
 <div class="item-show">
   {#if $logstore.title.match('.png')}
     <img src="{$logstore.url}" alt="image"/>
-  {:else if $logstore.title.match('.json')}
+  {:else if $logstore.ext==='json'}
     <Json/>
-  {:else if $logstore.title.match('.html')}
+  {:else if $logstore.ext==='html'}
     <Html/>
-  {:else if $logstore.title.match('.txt')}
+  {:else if $logstore.ext==='txt'}
     <Text/>
-  {:else if $logstore.title.match('.css')}
+  {:else if $logstore.ext==='css'}
     <Css/>
-  {:else if $logstore.title.match('.js')}
+  {:else if $logstore.ext==='js'}
     <Js/>
   {:else}
     <pre>{$logstore.response}</pre>

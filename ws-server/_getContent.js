@@ -11,9 +11,7 @@ module.exports = ({ data }) => {
 
   if (ext) {
     ext = ext[1]
-    if (ext === 'js') {
-      ext = 'javaacript'
-    } else if (ext === 'css') {
+    if (ext === 'css') {
       response = cssbeauty(content, {
         autosemicolon: true
       })

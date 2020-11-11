@@ -22,6 +22,7 @@ let edit3;
 onMount(async () => {
   console.warn('onMount logs - BaseTab.svelte');
   console.log($logstore)
+  const ext = $logstore.ext==='js' ? 'javascript' : $logstore.ext
   const hdrs = JSON.parse($logstore.headers);
   const csp3 = hdrs.CSP || {};
   const val1 = {
@@ -31,7 +32,7 @@ onMount(async () => {
   };
   const val2 = {
     ...option,
-    language: $logstore.ext,
+    language: ext,
     value: $logstore.response,
   };
   const val3 = {

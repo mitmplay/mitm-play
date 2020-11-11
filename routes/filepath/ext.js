@@ -12,7 +12,8 @@ const types = {
   xml: 'xml',
   css: 'css',
   plain: 'txt',
-  mpegURL: 'm3u8'
+  mpegURL: 'm3u8',
+  javascript: 'js'
 }
 
 module.exports = (resp) => {
