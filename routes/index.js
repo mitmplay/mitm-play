@@ -35,10 +35,10 @@ module.exports = async ({ route, request, browserName }) => {
 
   // catch unknown url scheme & handle by browser
   if (reqs.url.match(noURL) || reqs.url.match(wNull)) {
-    route.fulfill(_resp)
+    routeCall(route, 'fulfill', _resp)
     return
   } else if (reqs.url.match(/blob:http/)) {
-    route.continue()
+    routeCall(route, 'continue')
     return
   }
 
@@ -49,7 +49,7 @@ module.exports = async ({ route, request, browserName }) => {
     if (logs.skip && !matchSkip.hidden) {
       console.log(c.grey(matchSkip.log))
     }
-    route.continue()
+    routeCall(route, 'continue')
     return
   }
 
@@ -112,7 +112,7 @@ module.exports = async ({ route, request, browserName }) => {
         }
       }
       const { headers, method, body: postData } = reqs
-      route.continue({ headers, method, postData })
+      routeCall(route, 'continue', { headers, method, postData })
     }
   }
 }
@@ -125,5 +125,14 @@ function Events (responseHandler, resp, reqs, route) {
     }
     resp = resp2
   }
-  route.fulfill(resp)
+  routeCall(route, 'fulfill', resp)
+}
+
+function routeCall(route, cmd, params) {
+  const { headers } = params || {}
+  if (headers) {
+    delete headers['xplay-page']
+    delete headers['xplay-session']  
+  }
+  route[cmd](params)
 }
