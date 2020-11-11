@@ -24,27 +24,23 @@ const _resp = {
 }
 
 module.exports = async ({ route, request, browserName }) => {
-  const { browsers, router, argv: { nosocket, proxy, verbose } } = global.mitm
-  let reqs = extract({ route, request, browserName })
-  const { logs } = router._global_.config
-
-  const _page = reqs.headers['xplay-page']
-  if (_page) {
-    reqs.page = await browsers[browserName].currentTab(_page)
-  }
+  const { router, argv: { nosocket, proxy, verbose } } = global.mitm
+  let reqs = await extract({ route, request, browserName })
 
   // catch unknown url scheme & handle by browser
-  if (reqs.url.match(noURL) || reqs.url.match(wNull)) {
+  const { url } = reqs
+  if (url.match(noURL) || url.match(wNull)) {
     routeCall(route, 'fulfill', _resp)
     return
-  } else if (reqs.url.match(/blob:http/)) {
+  } else if (url.match(/blob:http/)) {
     routeCall(route, 'continue')
     return
   }
 
   const _3ds = _3rdparties(reqs)
   const matchSkip = await _skipResponse(reqs, _3ds)
-  const { origin, pathname } = new URL(reqs.url)
+  const { origin, pathname } = new URL(url)
+  const { logs } = router._global_.config
   if (matchSkip) {
     if (logs.skip && !matchSkip.hidden) {
       console.log(c.grey(matchSkip.log))
@@ -75,12 +71,13 @@ module.exports = async ({ route, request, browserName }) => {
   await _logResponse(reqs, responseHandler, _3ds, match)
 
   // --order is important, no need second time inject ws in _addWebSocket
-  const matchHtml = await _htmlResponse(reqs, responseHandler, _3ds)
-
-  await _jsonResponse(reqs, responseHandler, _3ds)
-  await _cssResponse(reqs, responseHandler, _3ds)
-  await _jsResponse(reqs, responseHandler, _3ds)
-  await _chgResponse(reqs, responseHandler, _3ds)
+  const [matchHtml] = await Promise.all([
+    _htmlResponse(reqs, responseHandler, _3ds),
+    _jsonResponse(reqs, responseHandler, _3ds),
+    _cssResponse( reqs, responseHandler, _3ds),
+    _jsResponse(  reqs, responseHandler, _3ds),
+    _chgResponse( reqs, responseHandler, _3ds)
+  ])
 
   if (!(matchHtml && matchHtml.route.ws) && !nosocket) {
     // --inject websocket client to html

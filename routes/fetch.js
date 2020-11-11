@@ -1,13 +1,20 @@
 const c = require('ansi-colors')
 const _fetch = require('make-fetch-happen')
 
-function extract ({ route, request: r, browserName }) {
+async function extract ({ request: r, browserName }) {
+  const headers = r.headers()
+  let page
+  if (headers['xplay-page']) {
+    const { browsers } = global.mitm
+    page = await browsers[browserName].currentTab(headers['xplay-page'])
+  }
   return {
-    url: r.url(),
     method: r.method(),
-    headers: r.headers(),
     body: r.postData(),
-    browserName
+    url: r.url(),
+    browserName,
+    headers,
+    page
   }
 }
 
