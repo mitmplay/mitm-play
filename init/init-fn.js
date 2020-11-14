@@ -4,7 +4,6 @@ const c = require('ansi-colors')
 const chokidar = require('chokidar')
 const clearModule = require('clear-module');
 
-const { routeSort } = require('./chokidar/loadJS')
 const { _routeSet, toRegex } = require('./fn/_route-set')
 const { formToObj, objToForm } = require('./fn/form')
 const { _proxy, _noproxy } = require('./fn/_proxies')
@@ -24,7 +23,6 @@ const flist = require('./fn/flist')
 module.exports = () => {
   global.mitm.lib = {
     clearModule,
-    routeSort,
     chokidar,
     execFile,
     exec,

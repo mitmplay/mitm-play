@@ -30,8 +30,9 @@ describe('fetch.js - extract', () => {
       postData: () => null
     }
     const route = {}
-    const result = extract({ route, request, browserName: 'chromium' })
-    expect(Object.keys(result).join(',')).toBe('url,method,headers,body,browserName')
+    return extract({ route, request, browserName: 'chromium' }).then(function (result) {
+      expect(Object.keys(result).join(',')).toBe('method,body,url,browserName,headers,page')
+    });
   })
 })
 

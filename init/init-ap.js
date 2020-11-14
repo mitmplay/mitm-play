@@ -12,7 +12,7 @@ if (platform === 'win32') {
 }
 
 const cwd = process.cwd()
-const app = global.__app.replace(/\\/, '/')
+const app =  (global.__app || '').replace(/\\/, '/')
 const home = `${_home.replace(/\\/g, '/')}/.mitm-play`
 const userroute = './**/*.js'
 
