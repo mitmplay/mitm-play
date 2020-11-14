@@ -16,6 +16,7 @@ const _cacheResponse = require('./_cacheResponse')
 
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const noURL = /(brave|edge|chrome-extension):\/\//
+const wBlob = /^blob:http/
 const wNull = /\/null$/
 const _resp = {
   status: 200,
@@ -32,14 +33,13 @@ module.exports = async ({ route, request, browserName }) => {
   if (url.match(noURL) || url.match(wNull)) {
     routeCall(route, 'fulfill', _resp)
     return
-  } else if (url.match(/blob:http/)) {
+  } else if (url.match(wBlob)) {
     routeCall(route, 'continue')
     return
   }
 
   const _3ds = _3rdparties(reqs)
   const matchSkip = await _skipResponse(reqs, _3ds)
-  const { origin, pathname } = new URL(url)
   const { logs } = router._global_.config
   if (matchSkip) {
     if (logs.skip && !matchSkip.hidden) {
@@ -96,6 +96,7 @@ module.exports = async ({ route, request, browserName }) => {
         reqs.proxy = proxy
       }
 
+      const { origin, pathname } = new URL(url)
       if (!rqs2 && logs) {
         const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
         if (_3ds) {
