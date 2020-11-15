@@ -54,6 +54,9 @@ module.exports = () => {
       console.log('Please provide correct "route" folder using -r option')
       process.exit()
     } else {
+      if (!fs.pathExistsSync(`${path.home}/argv/default.js`)) {
+        argv.save = true
+      }
       route = home(uroute)
       console.log('PATH', uroute)
       const src = `${path.app}/user-route`

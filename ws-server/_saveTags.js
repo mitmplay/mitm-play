@@ -12,7 +12,7 @@ module.exports = ({ data }) => {
     const ns = routes[namespace]
     if (ns.jpath && ns.jtags) {
       const json = {
-        _: 'auto generate during saveTags!',
+        _: 'auto-generated during saveTags!',
         tags: ns.jtags
       }
       fs.writeJson(ns.jpath, json, {spaces: '  '}, err => {
