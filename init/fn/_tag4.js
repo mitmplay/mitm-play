@@ -31,17 +31,24 @@ const tags = function (_ns) {
     }
   }
   for (const namespace in tag2) {
+    const tags = {}
     const ns = tag2[namespace]
     const node = tag4[namespace]
     for (const id in ns) {
       const [typ, tag] = id.split(':')
-      if (tag && ns[id]) {
-        if (node[typ] === undefined) {
-          node[typ] = [typ]
+      if (ns[id]) {
+        if (tag) {
+          if (node[typ] === undefined) {
+            node[typ] = [typ]
+          }
+          node[typ].push(id)
+          tags[tag] = true
+        } else {
+          tags[typ] = true
         }
-        node[typ].push(id)
       }
     }
+    global.mitm.routes[namespace].jtags = Object.keys(tags).sort()
   }
   if (_ns) {
     if (tag4[_ns]) {

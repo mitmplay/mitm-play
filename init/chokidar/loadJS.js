@@ -8,19 +8,38 @@ const load = function (path) {
   if (require.cache[rpath]) {
     delete require.cache[rpath]
   }
-  return require(path)
+  const reslt = require(path)
+  const jpath = rpath.replace(/\.js/, '.json')
+  reslt.jpath = jpath.replace(/\\/g, '/')
+
+  if (fs.existsSync(jpath)) {
+    const jsn = fs.readJsonSync(jpath)
+    if (jsn.tags) {
+      reslt.tags = jsn.tags
+    }
+  }
+  return reslt
 }
 
-function sort (obj) {
-  const _g = obj._global_
-  delete obj._global_
-  const newobj = {}
-  const keys = Object.keys(obj).sort()
-  for (const id of keys) {
-    newobj[id] = obj[id]
+const loadJS = function (path, msg, fn) {
+  const { _routeSet } = global.mitm.fn
+  msg && console.log(msg)
+  try {
+    const domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1]
+    const route = { path, ...load(path) }
+    _routeSet(route, domain, true)
+    fs.readFile(path, 'utf8', function (err, data) {
+      if (err) {
+        console.log(c.redBright('Error read source file'), err)
+      } else {
+        global.mitm.source[domain] = data
+      }
+    })
+    resort(fn)
+  } catch (error) {
+    console.log(c.redBright('Failed load route'), error)
+    process.exit(1)
   }
-  _g && (newobj._global_ = _g)
-  return newobj
 }
 
 function routeSort (fn) {
@@ -90,25 +109,16 @@ function routeSort (fn) {
   fn && fn()
 }
 
-const loadJS = function (path, msg, fn) {
-  const { _routeSet } = global.mitm.fn
-  msg && console.log(msg)
-  try {
-    const domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1]
-    const route = { path, ...load(path) }
-    _routeSet(route, domain, true)
-    fs.readFile(path, 'utf8', function (err, data) {
-      if (err) {
-        console.log(c.redBright('Error read source file'), err)
-      } else {
-        global.mitm.source[domain] = data
-      }
-    })
-    resort(fn)
-  } catch (error) {
-    console.log(c.redBright('Failed load route'), error)
-    process.exit(1)
+function sort (obj) {
+  const _g = obj._global_
+  delete obj._global_
+  const newobj = {}
+  const keys = Object.keys(obj).sort()
+  for (const id of keys) {
+    newobj[id] = obj[id]
   }
+  _g && (newobj._global_ = _g)
+  return newobj
 }
 
 loadJS.load = load
