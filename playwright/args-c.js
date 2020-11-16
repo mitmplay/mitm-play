@@ -3,7 +3,7 @@
 // https://peter.sh/experiments/chromium-command-line-switches/#enable-automation
 // https://chromedriver.chromium.org/capabilities
 // page.setViewportSize({width:0, height:0});
-const { platform } = process
+
 module.exports = argv => {
   const args = [
     '--disable-features=site-per-process', // exclude:IsolateOrigins or plugins will failed!
@@ -19,16 +19,12 @@ module.exports = argv => {
   ]
 
   if (argv.nogpu) {
-    if (platform !== 'win32') {
-      args.push('–-disable-gpu')
-    } else {
       args.push(
         '--disable-accelerated-2d-canvas',
         '--disable-gpu-rasterization',
         '--disable-oop-rasterization',
         '--disable-gpu-compositing'
         )
-    }  
   }
   
   return args
