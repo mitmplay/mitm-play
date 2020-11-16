@@ -1,6 +1,5 @@
 const c = require('ansi-colors')
 const playwright = require('playwright')
-const args = require('./chromium-args')
 const _options = require('./options')
 const routes = require('../routes')
 
@@ -35,6 +34,7 @@ module.exports = () => {
     argv,
     fn: { home }
   } = global.mitm
+  const args = require('./args-c')(argv)
 
   process.on('unhandledRejection', (err, p) => {
     const econtext = `${err}`.match('Execution context was destroyed')

@@ -27,6 +27,7 @@ module.exports = (_package) => {
     -z --lazy     \t delay ~700ms click action
 
     -D --debug    \t show ws messages
+    -G --nogpu    \t set chromium without GPU
     -O --ommitlog \t removed unnecessary console log
     -R --redirect \t set redirection: true/false/manual
     -V --verbose  \t show more detail of console log

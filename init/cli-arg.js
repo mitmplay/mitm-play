@@ -63,6 +63,7 @@ module.exports = () => {
   argsChg('z', 'lazyclick')
 
   argsChg('D', 'debug')
+  argsChg('G', 'nogpu')
   argsChg('O', 'ommitlog')
   argsChg('R', 'redirect')
   argsChg('V', 'verbose')

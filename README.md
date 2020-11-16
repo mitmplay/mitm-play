@@ -803,6 +803,7 @@ $ mitm-play --help
     -z --lazyclick       delay ~700ms click action
 
     -D --debug           show ws messages
+    -G --nogpu           set chromium without GPU
     -O --ommitlog        removed unnecessary console log
     -R --redirect        set redirection: true/false/manual
     -V --verbose         show more detail of console log
