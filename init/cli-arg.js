@@ -140,4 +140,5 @@ module.exports = () => {
   } else if (argv.pristine === undefined) {
     argv.pristine = true
   }
+  global.mitm._argv = {...argv}
 }

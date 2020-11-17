@@ -80,7 +80,6 @@ const headerchg = headers => {
 
 function injectWS (resp, url, jsLib) {
   const { argv, fn: { _tldomain, _nameSpace } } = global.mitm
-  const { args } = global.mitm.router._global_.config
   const js = ['/mitm-play/mitm.js']
   if (_nameSpace(_tldomain(url))) {
     js.push('/mitm-play/macros.js')
@@ -91,7 +90,7 @@ function injectWS (resp, url, jsLib) {
     js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
   }
   resp.body = script_src(resp.body, js)
-  if (((args.relaxcsp === undefined) ? argv : args).relaxcsp) {
+  if (argv.relaxcsp) {
     headerchg(resp.headers)
   }
 }

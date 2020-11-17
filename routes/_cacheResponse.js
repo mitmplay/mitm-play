@@ -20,7 +20,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     const { url } = reqs
     const { route } = match
     const { response, session, hidden } = route
-    const { logs, args } = router._global_.config
+    const { logs } = router._global_.config
 
     let { fpath1, fpath2 } = fpathcache({ match, reqs })
     let remote = true
@@ -33,12 +33,12 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           return { match: undefined, resp }
         }
         const { argv } = global.mitm
-        if (setCookie && ((args.cookie === undefined) ? argv : args).cookie) {
+        if (argv.cookie) {
           headers['set-cookie'] = resetCookies(setCookie)
         }
         fpath1 = `${fpath1}.${_ext({ headers })}`
         if (logs.cache && !match.hidden && !hidden) {
-          if (!global.mitm.argv.ommit.cache) {
+          if (!argv.ommit.cache) {
             if (match.route.path) {
               console.log(c.green(match.log))
             } else {

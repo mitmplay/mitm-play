@@ -22,7 +22,7 @@ const mock = ({ url }) => {
 
 const mockResponse = async function ({ reqs, route }, _3d) {
   const search = searchFN('mock', reqs)
-  const { fn: { _skipByTag }, router } = global.mitm
+  const { argv, fn: { _skipByTag }, router } = global.mitm
   const match = _3d ? search('_global_') : matched(search, reqs)
 
   if (match && !_skipByTag(match, 'mock')) {
@@ -77,7 +77,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           if (await fs.pathExists(fpath2)) {
             const json = JSON.parse(await fs.readFile(fpath2))
             const { general: { status }, setCookie, respHeader: headers } = json
-            if (setCookie && global.mitm.argv.cookie) {
+            if (setCookie && argv.cookie) {
               headers['set-cookie'] = resetCookies(setCookie)
             }
             resp.status = status

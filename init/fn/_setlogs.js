@@ -22,7 +22,7 @@ const _logs = function (_silent = false) {
 }
 
 function _setlogs () {
-  const { argv, __tag2, routes, router } = global.mitm
+  const { _argv, __tag2, routes, router } = global.mitm
   const { _global_: _gTag2 } = __tag2
   const { _global_: _gRoutes } = routes
   const { _global_: _gRouter } = router
@@ -40,6 +40,8 @@ function _setlogs () {
     if (_gRoutes.config.logs) { logs = { ...logs, ..._gRoutes.config.logs } }
     if (_gRoutes.config.args) { args = { ...args, ..._gRoutes.config.args } }
   }
+  const argv = { ...args, ..._argv }
+  global.mitm.argv = argv
   if (_gRouter) {
     if (logs.websocket) {
       logs['mitm-mock'] = true

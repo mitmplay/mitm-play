@@ -3,7 +3,7 @@ const c = require('ansi-colors')
 const _debounce = require('../fn/_debounce')
 const resort = _debounce(routeSort, 900, 'clear')
 
-const loadJS = function (path, msg, fn) {
+function loadJS (path, msg, fn) {
   const { _routeSet } = global.mitm.fn
   msg && console.log(msg)
   try {
