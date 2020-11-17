@@ -18,6 +18,11 @@ module.exports = () => {
     loadJS(path, msg, broadcast)
   }
 
+  function remove (path, msg) {
+    win32 && (path = path.replace(/\\/g, '/'))
+    loadJS.remove(path, msg, broadcast)
+  }
+
   if (!files.length) {
     console.log('>>> no watcher', userroute, files)
     return
@@ -34,8 +39,8 @@ module.exports = () => {
   // Something to use when events are received.
   const log = console.log.bind(console)
   urouteWatcher // Add event listeners.
-    .on('add', p => { p = slash(p); updateJS(p, c.greenBright(`>>> add route ${tilde(p)}`)) })
-    .on('change', p => { p = slash(p); updateJS(p, c.cyanBright(`>>> chg route ${tilde(p)}`)) })
-    .on('unlink', p => { p = slash(p); log(c.redBright(`>>> del route ${tilde(p)}`)) })
+    .on('add', p => {    p = slash(p); updateJS(p, c.greenBright(`>>> add route ${tilde(p)}`)) })
+    .on('change', p => { p = slash(p); updateJS(p, c.cyanBright( `>>> chg route ${tilde(p)}`)) })
+    .on('unlink', p => { p = slash(p); remove(  p, c.redBright(  `>>> del route ${tilde(p)}`)) })
   global.mitm.watcher.urouteWatcher = urouteWatcher
 }

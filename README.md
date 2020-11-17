@@ -1006,6 +1006,17 @@ $ mitm-play --debug
 ```
 </p>
 </details>
+<details><summary><b>-G --nogppu</b></summary>
+<p>
+
+Necessary option for [Macbook owner](https://discussions.apple.com/thread/250878229)
+
+```
+$ mitm-play -G  <OR>
+$ mitm-play --nogpu
+```
+</p>
+</details>
 <details><summary><b>-O --ommitlog</b></summary>
 <p>
 

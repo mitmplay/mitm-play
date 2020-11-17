@@ -3,24 +3,6 @@ const c = require('ansi-colors')
 const _debounce = require('../fn/_debounce')
 const resort = _debounce(routeSort, 900, 'clear')
 
-const load = function (path) {
-  const rpath = require.resolve(path)
-  if (require.cache[rpath]) {
-    delete require.cache[rpath]
-  }
-  const reslt = require(path)
-  const jpath = rpath.replace(/\.js/, '.json')
-  reslt.jpath = jpath.replace(/\\/g, '/')
-
-  if (fs.existsSync(jpath)) {
-    const jsn = fs.readJsonSync(jpath)
-    if (jsn.tags) {
-      reslt.tags = jsn.tags
-    }
-  }
-  return reslt
-}
-
 const loadJS = function (path, msg, fn) {
   const { _routeSet } = global.mitm.fn
   msg && console.log(msg)
@@ -38,6 +20,40 @@ const loadJS = function (path, msg, fn) {
     resort(fn)
   } catch (error) {
     console.log(c.redBright('Failed load route'), error)
+    process.exit(1)
+  }
+}
+
+function load (path) {
+  const rpath = require.resolve(path)
+  if (require.cache[rpath]) {
+    delete require.cache[rpath]
+  }
+  const reslt = require(path)
+  const jpath = rpath.replace(/\.js/, '.json')
+  reslt.jpath = jpath.replace(/\\/g, '/')
+
+  if (fs.existsSync(jpath)) {
+    const jsn = fs.readJsonSync(jpath)
+    if (jsn.tags) {
+      reslt.tags = jsn.tags
+    }
+  }
+  return reslt
+}
+
+const remove = function (path, msg, fn) {
+  msg && console.log(msg)
+  try {
+    const domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1]
+    delete global.mitm.routes[domain]
+    delete global.mitm.router[domain]
+    delete global.mitm.__tag2[domain]
+    delete global.mitm.__tag3[domain]
+    delete global.mitm.__tag4[domain]
+    resort(fn)
+  } catch (error) {
+    console.log(c.redBright('Failed delete route'), error)
     process.exit(1)
   }
 }
@@ -122,6 +138,7 @@ function sort (obj) {
 }
 
 loadJS.load = load
+loadJS.remove = remove
 loadJS.routeSort = routeSort
 
 module.exports = loadJS

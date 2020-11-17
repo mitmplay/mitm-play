@@ -2,6 +2,7 @@
 // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#setting-up-chrome-linux-sandbox
 // https://peter.sh/experiments/chromium-command-line-switches/#enable-automation
 // https://chromedriver.chromium.org/capabilities
+// https://usefyi.com/chrome-flags/
 // page.setViewportSize({width:0, height:0});
 
 module.exports = argv => {
@@ -19,14 +20,13 @@ module.exports = argv => {
   ]
 
   if (argv.nogpu) {
-      args.push(
-        '--disable-accelerated-2d-canvas',
-        '--disable-gpu-rasterization',
-        '--disable-oop-rasterization',
-        '--disable-gpu-compositing'
-        )
+    args.push(
+      '--disable-accelerated-2d-canvas',
+      '--disable-gpu-rasterization',
+      '--disable-oop-rasterization',
+      '--disable-gpu-compositing'
+    )
   }
   
   return args
 }
-//https://threejs.org/examples/#webgl_animation_keyframes
