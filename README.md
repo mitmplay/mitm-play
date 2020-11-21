@@ -99,15 +99,25 @@ Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools
 | `response`  | __response__ | modify resp object - call to remote server
 
 # Concept
-Mitm intercept is hierarchical checking routes`(*)`. First check is try to `match` domain on the url with `route-folder(*)` as a domain (namespace), `if match` next action is to `match` url with `routing-url(*)` inside of each rule, `if match` again then handler can be execute inside object `routing-url`. Different rule can have same/different set handler/option.
-<details><summary><b>Object simulation of Routes:</b></summary>
+Mitm intercept is **hierarchical checking routes**.
+
+First check is to **match** domain on the url with **route-folder** as a domain `namespace`.
+
+Next check is to **match** te full url with **regex-routing** inside of each section/rule. **the regex-routing** can be made of:
+* **an Array** [ `skip, proxy, nonproxy, nosocket` ] 
+* **object-key** with two type of object: 
+  1. general url [ `request, mock, cache, log` ], need to select which contentType to be applied. 
+  2. specific to contentType [ `html, json, css, js` ] 
+
+`if match`, then based on the section/rules meaning, the applying process can be carry over, detail explanations will be on the title of: "**Route Section/rules**".
+<details><summary><b>Structure Object of Routes:</b></summary>
 <p>
 
 ```js
 {
-  'abc.com': { // route-folder(*) map to object as namespace
-    request: { // rules: request, mock, cache, log, html, json, css, js & response 
-      '/assets/main.js': { // routing-url(*) 
+  'abc.com': { // route-folder mapped to object as namespace
+    request: { // section/rules: request, mock, cache, log, html, json, css, js & response 
+      '/assets/main.js': { // regex-routing-url
         request: reqs => { // handler to execute
           const { body } = reqs
           return { body }
@@ -118,16 +128,16 @@ Mitm intercept is hierarchical checking routes`(*)`. First check is try to `matc
 }
 ```
 </p>
-</details>
+</details><br/>
 
-If the process of checking is not match, then it will fallback to `_global_` namespace to check, and the operation is the same as mention in first paragraph. 
+If the process of checking is not match, then it will fallback to **_global_** `namespace` to check, and the operation is the same as mention in _above paragraph_: `'Next ceck...'`. 
 
-Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those type of assets, it use browser headers attributes: `origin` or `referer`, in which will scoping to the same namespace.
+Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those type of assets, it use browser headers attributes: `origin` or `referer`, in which will scoping to the `same namespace`.
 
 # Profile: ~/.mitm-play
 By default all save file are on the `~/.mitm-play` profile folder.
 
-# Route Sections
+# Route Section/rules
 on each route you can add section supported:
 
 <details><summary>Skeleton</summary>
@@ -1220,7 +1230,6 @@ mock: {
 <p>
 
 as developer sometime we need to get access to lots website in which some of the page need to be automated fill in and submit to the next page. 
-
 With `Macros` it can be done!
 </p>
 </details>
