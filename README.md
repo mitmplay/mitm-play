@@ -116,9 +116,9 @@ Next check is to **match** te full url with **regex-routing** inside of each sec
 ```js
 {
   'abc.com': { // route-folder mapped to object as namespace
-    request: { // section/rules: request, mock, cache, log, html, json, css, js & response 
-      '/assets/main.js': { // regex-routing-url
-        request: reqs => { // handler to execute
+    request: { // section/rules: skip, proxy,... request,... 
+      '/assets/main.js': { // regex-routing
+        request: reqs => { // handler 
           const { body } = reqs
           return { body }
         }
@@ -130,7 +130,7 @@ Next check is to **match** te full url with **regex-routing** inside of each sec
 </p>
 </details><br/>
 
-If the process of checking is not match, then it will fallback to **_global_** `namespace` to check, and the operation is the same as mention in _above paragraph_: `'Next ceck...'`. 
+If the process of checking is not match, then it will fallback to **\_global\_** `namespace` for checking, and the operation is the same as mention in _above paragraph_: `'Next ceck...'`. 
 
 Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those type of assets, it use browser headers attributes: `origin` or `referer`, in which will scoping to the `same namespace`.
 
