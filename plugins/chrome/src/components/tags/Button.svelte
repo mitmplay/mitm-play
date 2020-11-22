@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import { tags } from './stores.js';
 let autoSave = true;
+let _tags = $tags;
 
 function btnReset(e) {
   window.mitm.files.route_events.routeTable();
@@ -14,7 +15,7 @@ function btnSave(e) {
     __tag2,
     __tag3,
   };
-  ws__send('saveTags', $tags);
+  ws__send('saveTags', _tags);
 }
 
 onMount(() => {
