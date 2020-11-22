@@ -88,8 +88,8 @@ function routeSort (fn) {
   console.log(c.red('(*reset routes*)'))
   global.mitm.routes = sort(global.mitm.routes, true)
   global.mitm.router = sort(global.mitm.router, true)
-  global.mitm.__tag2 = sort(global.mitm.__tag2)
-  global.mitm.__tag3 = sort(global.mitm.__tag3)
+  global.mitm.__tag2 = sort(global.mitm.__tag2, true)
+  global.mitm.__tag3 = sort(global.mitm.__tag3, true)
   let tag1 = {}
   for (const ns in global.mitm.__tag2) {
     // if (ns === '_global_') {
