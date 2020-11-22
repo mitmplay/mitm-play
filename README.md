@@ -106,7 +106,7 @@ First check is to **match** domain on the url with **route-folder** as a domain 
 Next check is to **match** full-url with **regex-routing** of each section/rule. the **regex-routing** having two type:
 * **An Array** [ `skip, proxy, nonproxy, nosocket` ] 
 * **Object Key**: 
-  1. General url [ `request, mock, cache, log` ] 
+  1. General [ `request, mock, cache, log, response` ] 
   2. Specific to content-type [ `html, json, css, js` ] 
 
 `if match`, then based on the section/rules meaning, the next process can be carry over, detail explanations will be on the title of: "**Route Section/rules**".
