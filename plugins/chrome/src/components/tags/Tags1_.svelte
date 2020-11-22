@@ -88,7 +88,6 @@ function listTags(tags) {
       const rgx = toRegex(ns.replace(/~/,'[^.]*'));
       if (mitm.browser.activeUrl.match(rgx)) {
         add(ns);
-        break;
       }
     }
     add('_global_');

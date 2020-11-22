@@ -104,12 +104,12 @@ Mitm intercept is **hierarchical checking routes**.
 First check is to **match** domain on the url with **route-folder** as a domain `namespace`.
 
 Next check is to **match** te full url with **regex-routing** inside of each section/rule. **the regex-routing** can be made of:
-* **an Array** [ `skip, proxy, nonproxy, nosocket` ] 
-* **object-key** with two type of object: 
-  1. general url [ `request, mock, cache, log` ], need to select which contentType to be applied. 
-  2. specific to contentType [ `html, json, css, js` ] 
+* **An Array** [ `skip, proxy, nonproxy, nosocket` ] 
+* **Object key** with two type of object: 
+  1. General url [ `request, mock, cache, log` ], need to select which content-type to be applied. 
+  2. Specific to content-type [ `html, json, css, js` ] 
 
-`if match`, then based on the section/rules meaning, the applying process can be carry over, detail explanations will be on the title of: "**Route Section/rules**".
+`if match`, then based on the section/rules meaning, the next process can be carry over, detail explanations will be on the title of: "**Route Section/rules**".
 <details><summary><b>Structure Object of Routes:</b></summary>
 <p>
 

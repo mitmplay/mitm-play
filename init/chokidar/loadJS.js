@@ -58,22 +58,36 @@ const remove = function (path, msg, fn) {
   }
 }
 
+function keyLength (a, b) {
+  return b.length - a.length || // sort by length, if equal then
+         a.localeCompare(b) // sort by dictionary order
+}
+
+function sort (obj, size=false) {
+  const _g = obj._global_
+  delete obj._global_
+  const newobj = {}
+  const arr = Object.keys(obj)
+  let keys
+  if (size) {
+    keys = arr.sort(keyLength)
+  } else {
+    keys = arr.sort()
+  }
+  for (const id of keys) {
+    newobj[id] = obj[id]
+  }
+  _g && (newobj._global_ = _g)
+  return newobj
+}
+
 function routeSort (fn) {
   const { routes: { _global_ } } = global.mitm
   const { _routeSet } = global.mitm.fn
   _routeSet(_global_, '_global_')
-
-  let keys = Object.keys(global.mitm.routes)
-  keys = keys.sort(function (a, b) {
-    return b.length - a.length || // sort by length, if equal then
-           a.localeCompare(b) // sort by dictionary order
-  })
-  const routes = {}
-  for (const key of keys) {
-    routes[key] = global.mitm.routes[key]
-  }
   console.log(c.red('(*reset routes*)'))
-  global.mitm.routes = routes
+  global.mitm.routes = sort(global.mitm.routes, true)
+  global.mitm.router = sort(global.mitm.router, true)
   global.mitm.__tag2 = sort(global.mitm.__tag2)
   global.mitm.__tag3 = sort(global.mitm.__tag3)
   let tag1 = {}
@@ -123,18 +137,6 @@ function routeSort (fn) {
   global.mitm.fn._clear()
   global.mitm.fn._tag4()
   fn && fn()
-}
-
-function sort (obj) {
-  const _g = obj._global_
-  delete obj._global_
-  const newobj = {}
-  const keys = Object.keys(obj).sort()
-  for (const id of keys) {
-    newobj[id] = obj[id]
-  }
-  _g && (newobj._global_ = _g)
-  return newobj
 }
 
 loadJS.load = load

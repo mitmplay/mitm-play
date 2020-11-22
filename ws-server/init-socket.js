@@ -7,7 +7,7 @@ const msgParser = require('./msg-parser')
 const path = `${global.__app}/cert`
 
 module.exports = () => {
-  const { fn: { _wsmitm, _wsclient }, router } = global.mitm
+  const { fn: { _wsmitm, _wsclient } } = global.mitm
   const app = express()
   const servers = https.createServer({
     cert: fs.readFileSync(`${path}/selfsigned.crt`),
@@ -34,7 +34,7 @@ module.exports = () => {
   })
 
   function connection (client, request) {
-    const { logs } = router._global_.config
+    const { logs } = global.mitm.router._global_.config
     const { origin, host } = request.headers
     if (logs['ws-connect']) {
       console.log(c.red('>>> ws-connect:'), `${host}${request.url}`)
