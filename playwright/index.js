@@ -165,14 +165,16 @@ async function attach (page) {
   await page.setExtraHTTPHeaders({ 'xplay-page': _page })
 
   const { argv } = global.mitm
-  await page.waitForNavigation()
-  argv.debug && console.log('xplay-page load', _page)
-  await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
 
   page.on('worker', worker => {
     argv.debug && console.log('Worker created: ' + worker.url())
     worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()))
   })
+
+  await page.waitForNavigation()
+  argv.debug && console.log('xplay-page load', _page)
+  await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
+
   page.on('load', async () => {
     await page.waitForNavigation()
     argv.debug && console.log('xplay-page load', _page)

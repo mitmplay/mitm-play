@@ -85,11 +85,11 @@ module.exports = async ({ route, request, browserName }) => {
   }
 
   if (resp) {
-    Events(responseHandler, resp, reqs, route)
+    await Events(responseHandler, resp, reqs, route)
   } else {
     if (responseHandler.length) { // fetch from remote server
-      fetch(route, browserName, reqs, function (resp) {
-        Events(responseHandler, resp, reqs, route)
+      fetch(route, browserName, reqs, async function (resp) {
+        await Events(responseHandler, resp, reqs, route)
       })
     } else { // not handle
       if (proxy && await _proxyRequest(reqs, _3ds)) {
@@ -115,13 +115,13 @@ module.exports = async ({ route, request, browserName }) => {
   }
 }
 
-function Events (responseHandler, resp, reqs, route) {
+async function Events (responseHandler, resp, reqs, route) {
   for (const fn of responseHandler) {
-    const resp2 = fn(resp, reqs)
-    if (resp2 === undefined) {
+    const rsp2 = await fn(resp, reqs)
+    if (rsp2 === undefined) {
       break
     }
-    resp = resp2
+    resp = rsp2
   }
   routeCall(route, 'fulfill', resp)
 }
