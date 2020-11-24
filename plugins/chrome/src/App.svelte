@@ -3,11 +3,12 @@
 import { onMount } from 'svelte';
 
 import { Tabs, Tab } from 'svelma';
-import TagsTable from './components/tags/Table.svelte';
-import LogsTable from './components/logs/Table.svelte';
-import RouteTable from './components/route/Table.svelte';
-import ProfileTable from './components/profile/Table.svelte'; // feat: profile
-import OtherTab from './components/other/Tab.svelte';
+import Route from './components/route/Index.svelte';
+import Profile from './components/profile/Index.svelte'; // feat: profile
+import LogsTab from './components/logs/Index.svelte';
+import TagsTab from './components/tags/Index.svelte';
+import Other from './components/other/Index.svelte';
+import Help from './components/help/Index.svelte';
 
 onMount(async () => {
   setTimeout(()=>{
@@ -22,12 +23,12 @@ onMount(async () => {
 
 <main class="main">
 <Tabs style="is-boxed" size="is-small">
-  <Tab label="Route"><RouteTable/></Tab>
-  <Tab label="Profile"><ProfileTable/></Tab>
-  <Tab label="Logs"><LogsTable/></Tab>
-  <Tab label="Tags"><TagsTable/></Tab>
-  <Tab label="Other"><OtherTab/></Tab>
-  <!-- <Tab label="Monaco"><Editor/></Tab> -->
+  <Tab label="Route"><Route/></Tab>
+  <Tab label="Profile"><Profile/></Tab>
+  <Tab label="Logs"><LogsTab/></Tab>
+  <Tab label="Tags"><TagsTab/></Tab>
+  <Tab label="Other"><Other/></Tab>
+  <Tab label="Help"><Help/></Tab>
 </Tabs>
 </main>
 

@@ -112,7 +112,6 @@ function dragend({detail}) {
   </BResize>
 </div>
 
-
 <style>
 .vbox {
   flex: auto;
