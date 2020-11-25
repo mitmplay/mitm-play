@@ -19,6 +19,7 @@ li.version{font-size:10px;padding-top:3px;padding-left:5px;color:chocolate;font-
 .table-content.svelte-z01nhz{margin-top:19px
 }table.svelte-z01nhz{border-collapse:collapse;font-family:Consolas, Lucida Console, Courier New, monospace;font-size:12px;width:100%}
 .resize.svelte-l4qu26{width:2px;position:absolute;height:calc(100vh - 27px);background-color:#f3c49d;cursor:col-resize;z-index:5}
+.vbox.svelte-isss4r{flex:auto;display:flex;flex-direction:column;position:relative}
 ul.svelte-eb1kd7{margin:0 0 0 5px}li.svelte-eb1kd7{margin-bottom:5px}
 .view-container.svelte-1tedr8d{position:relative;height:calc(100vh - 50px)}#monaco1.svelte-1tedr8d,#monaco2.svelte-1tedr8d,#monaco3.svelte-1tedr8d{position:absolute;top:0;left:0;bottom:0;right:0}
 .btn-container.svelte-16f7euc{position:absolute;margin-top:-1px;left:48px;top:-3px}button.svelte-16f7euc{border:0;width:24px;cursor:pointer;background:transparent}

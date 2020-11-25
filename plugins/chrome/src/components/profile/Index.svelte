@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import { source } from './stores.js';
 
+import VBox from '../box/VBox.svelte';
 import BStatic from '../box/BStatic.svelte';
 import BResize from '../box/BResize.svelte';
 import BHeader from '../box/BHeader.svelte';
@@ -89,7 +90,7 @@ function dragend({detail}) {
 </script>
 
 <Button/>
-<div class="vbox">
+<VBox>
   <BStatic height="47">
     <BHeader>-profile(s)-</BHeader>
     <BTable>
@@ -101,14 +102,4 @@ function dragend({detail}) {
   <BResize left={_profile} on:dragend={dragend} height="47">
     <Editor onChange={editorChanged}/>
   </BResize>
-</div>
-
-
-<style>
-.vbox {
-  flex: auto;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-</style>
+</VBox>

@@ -3,6 +3,7 @@ import { onMount } from 'svelte';
 import { logstore } from './stores.js';
 import { client } from '../other/stores.js';
 
+import VBox from '../box/VBox.svelte';
 import BStatic from '../box/BStatic.svelte';
 import BResize from '../box/BResize.svelte';
 import BHeader from '../box/BHeader.svelte';
@@ -69,7 +70,7 @@ function nohostlogs(flag) {
 }
 </script>
 
-<div class="vbox">
+<VBox>
   <BStatic height="0">
     <BHeader>-Logs-</BHeader>
     <Button/>
@@ -88,13 +89,4 @@ function nohostlogs(flag) {
       <Show/>
     </BResize>
   {/if}
-</div>
-
-<style>
-.vbox {
-  flex: auto;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-</style>
+</VBox>
