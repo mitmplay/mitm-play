@@ -21,3 +21,17 @@ label {
 .set-tags label:hover {
   background-color: greenyellow;
 }
+
+.edit-container {
+  position: relative;
+  height: calc(100vh - 50px);
+}
+
+#monaco,
+#profile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

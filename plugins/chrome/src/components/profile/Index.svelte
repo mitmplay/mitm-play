@@ -7,6 +7,7 @@ import BResize from '../box/BResize.svelte';
 import BHeader from '../box/BHeader.svelte';
 import BTable from '../box/BTable.svelte';
 import Button from './Button.svelte';
+import Editor from './Editor.svelte';
 import Item from './Item.svelte';
 
 let rerender = 0;
@@ -98,10 +99,7 @@ function dragend({detail}) {
     </BTable>
   </BStatic>
   <BResize left={_profile} on:dragend={dragend} height="47">
-    <div class="edit-container">
-      <div id="profile">
-      </div>
-    </div>
+    <Editor onChange={editorChanged}/>
   </BResize>
 </div>
 
@@ -112,17 +110,5 @@ function dragend({detail}) {
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-.edit-container {
-  position: relative;
-  height: calc(100vh - 50px);
-}
-#profile {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
 }
 </style>

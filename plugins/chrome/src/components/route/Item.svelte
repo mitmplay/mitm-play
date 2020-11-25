@@ -1,33 +1,18 @@
 <script>
-import { cfg, resize } from '../monaco/init';
 import { source } from './stores.js';
 
 export let item;
 export let onChange;
 
-function initCodeEditor(src) {
-  console.log('load monaco: route')
-  const element = window.document.getElementById('monaco');
-  const _route =  window.monaco.editor.create(element, cfg);
-  const ro = new ResizeObserver(resize(_route))
-  ro.observe(element);
-
-  window.mitm.editor._route = _route;
-  window.mitm.editor._routeEl = element;
-
-  _route.onDidChangeModelContent(onChange);
-  _route.setValue(src);
-}
-
 function clickHandler(e) {
   let {item} = e.target.dataset;
+  const { editor: { _route, _routeEdit }, files } = mitm;
   const url = mitm.routes[item].url;
-  const { editor: { _route }, files } = window.mitm;
   const obj = files.route[item];
   console.log(item, obj);
 
   if (_route===undefined) {
-    initCodeEditor(obj.content);
+    _routeEdit(obj.content)
   } else {
     _route.setValue(obj.content || '');
     _route.revealLine(1);

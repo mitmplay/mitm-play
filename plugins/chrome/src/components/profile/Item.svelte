@@ -1,33 +1,18 @@
 <script> // feat: profile
-import { cfg, resize } from '../monaco/init';
 import { source } from './stores.js';
 
 export let item;
 export let onChange;
 
-function initCodeEditor(src) {
-  console.log('load monaco: profile')
-  const element = window.document.getElementById('profile');
-  const _profile =  window.monaco.editor.create(element, cfg);
-  const ro = new ResizeObserver(resize(_profile))
-  ro.observe(element);
-
-  window.mitm.editor._profile = _profile;
-  window.mitm.editor._profileEl = element;
-
-  _profile.onDidChangeModelContent(onChange);
-  _profile.setValue(src);
-}
-
 function clickHandler(e) {
   let {item} = e.target.dataset;
-  const url = item;
-  const { editor: { _profile }, files } = window.mitm;
+  const { editor: { _profile, _profileEdit }, files } = mitm;
   const obj = files.profile[item];
+  const url = item;
   console.log(item, obj);
 
   if (_profile===undefined) {
-    initCodeEditor(obj.content);
+    _profileEdit(obj.content);
   } else {
     _profile.setValue(obj.content || '');
     _profile.revealLine(1);
