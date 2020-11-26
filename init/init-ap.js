@@ -11,8 +11,8 @@ if (platform === 'win32') {
   _home = HOME
 }
 
-const cwd = process.cwd()
-const app =  (global.__app || '').replace(/\\/, '/')
+const app = global.__app || ''
+const cwd = process.cwd().replace(/\\/g, '/')
 const home = `${_home.replace(/\\/g, '/')}/.mitm-play`
 const userroute = './**/*.js'
 
@@ -22,6 +22,8 @@ const win32 = platform === 'win32'
 const argv = { ommit: {}, browser: {}, ...yargs(process.argv.slice(2)) }
 const path = { app, cwd, home, userroute }
 const files = {
+  _markdown: {}, // feat: markdown
+  markdown: [],
   _profile: {}, // feat: profile
   profile: [],
   _cache: {},

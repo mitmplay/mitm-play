@@ -33,6 +33,7 @@ module.exports = () => {
   require('./chokidar/profile')() // file watcher for profile // feat: profile
   require('./chokidar/route')() // file watcher for routes
   require('./chokidar/logs')() // file watcher for logs
+  require('./chokidar/md')() // file watcher for md
   // require('./chokidar/cache')(); // file watcher for cache
 }
 // mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -dpsr='.'

@@ -70,6 +70,7 @@ module.exports = () => {
   route = route.replace(/\\/g, '/')
   argv.route = route
 
+  path.route = route
   path.userroute = `${route}/*/index.js`
   const files = fg.sync([path.userroute])
   if (!files.length) {
