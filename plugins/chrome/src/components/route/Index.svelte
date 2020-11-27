@@ -9,6 +9,7 @@ import List from './List.svelte';
 
 let left = 165;
 let height='47';
+let title='-Route(s)-' 
 
 onMount(async () => {
   chrome.storage.local.get('routeLeft', function(opt) {
@@ -47,6 +48,6 @@ function onChange(e) {
 </script>
 
 <Button/>
-<VBox2 title="-Route(s)-" {left} {height} {dragend} {List} props={{onChange}}>
+<VBox2 {title} {left} {height} {dragend} {List} props={{onChange}}>
   <Editor {onChange}/>
 </VBox2>

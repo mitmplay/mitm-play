@@ -9,6 +9,7 @@ import List from './List.svelte';
 let rerender = 0;
 let left = 165;
 let data = [];
+let title='-Help-'
 
 $: _data = data;
 
@@ -50,9 +51,8 @@ const markdownHandler = obj => {
   }
   rerender = rerender + 1;
 }
-
 </script>
 
-<VBox2 title="-Help-" {left} {dragend} {List}>
+<VBox2 {title} {left} {dragend} {List}>
   <Content/>
 </VBox2>

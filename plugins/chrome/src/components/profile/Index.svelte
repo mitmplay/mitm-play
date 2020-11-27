@@ -2,64 +2,27 @@
 import { onMount } from 'svelte';
 import { source } from './stores.js';
 
-import VBox from '../box/VBox.svelte';
-import BStatic from '../box/BStatic.svelte';
-import BResize from '../box/BResize.svelte';
-import BHeader from '../box/BHeader.svelte';
-import BTable from '../box/BTable.svelte';
+import VBox2 from '../box/VBox2.svelte';
 import Button from './Button.svelte';
 import Editor from './Editor.svelte';
-import Item from './Item.svelte';
+import List from './List.svelte';
 
-let rerender = 0;
-let profile = 163;
-let data = [];
-
-$: _profile = profile;
-$: _data = data;
+let left = 165;
+let height='47';
+let title='-Profile(s)-' 
 
 onMount(async () => {
-  console.warn('onMount profile');
-  _ws_connect.profileOnMount = () => ws__send('getProfile', '', profileHandler);
-
-  chrome.storage.local.get('profile', function(data) {
-    data.profile && (profile = data.profile);
+  chrome.storage.local.get('profileLeft', function(opt) {
+    opt.profileLeft && (left = opt.profileLeft)
   });
 });
 
-const profileHandler = obj => {
-  console.warn('ws__send(getProfile)', obj);
-  if (window.mitm.files.profile===undefined) {
-    window.mitm.files.profile = obj;
-    data = obj;
-  } else {
-    const {profile} = window.mitm.files;
-    const newprofile = {};
-    for (let k in obj) {
-      newprofile[k] = profile[k] ? profile[k] : obj[k];
-      newprofile[k].content = obj[k].content;
-    }
-    data = newprofile;
-    window.mitm.files.profile = newprofile
-  }
-  /**
-   * event handler after receiving ws packet
-   * ie: window.mitm.files.getProfile_events = {eventObject...}
-   */
-  const {getProfile_events} = window.mitm.files;
-  for (let key in getProfile_events) {
-    getProfile_events[key](data);
-  }
-  rerender = rerender + 1;
-}
-
-window.mitm.files.profile_events.profileTable = () => {
-  console.log('profileTable getting called!!!');
-  window.ws__send('getProfile', '', profileHandler);
+function dragend({detail}) {
+  chrome.storage.local.set({profileLeft: detail.left})
 }
 
 let _timeout = null;
-function editorChanged(e) {
+function onChange(e) {
   const { editor: { _profile }} = window.mitm;
   let saveDisabled;
   if (e===false) {
@@ -82,24 +45,9 @@ function editorChanged(e) {
     }
   }, 500)  
 }
-
-function dragend({detail}) {
-  profile = detail.left;
-  chrome.storage.local.set({profile})
-}
 </script>
 
 <Button/>
-<VBox>
-  <BStatic height="47">
-    <BHeader>-profile(s)-</BHeader>
-    <BTable>
-      {#each Object.keys(_data) as item}
-      <Item item={{element: item, ..._data[item]}} onChange={editorChanged}/>
-      {/each}
-    </BTable>
-  </BStatic>
-  <BResize left={_profile} on:dragend={dragend} height="47">
-    <Editor onChange={editorChanged}/>
-  </BResize>
-</VBox>
+<VBox2 {title} {left} {height} {dragend} {List} props={{onChange}}>
+  <Editor {onChange}/>
+</VBox2>
