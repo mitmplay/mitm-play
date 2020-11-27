@@ -11,8 +11,8 @@ let left = 165;
 let height='47';
 
 onMount(async () => {
-  chrome.storage.local.get('routeLeft', function(data) {
-    data.routeLeft && (left = data.routeLeft)
+  chrome.storage.local.get('routeLeft', function(opt) {
+    opt.routeLeft && (left = opt.routeLeft)
   });
 });
 

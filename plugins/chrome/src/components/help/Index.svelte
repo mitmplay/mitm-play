@@ -7,20 +7,23 @@ import Content from './Content.svelte';
 import List from './List.svelte';
 
 let rerender = 0;
-let markdown = 163;
+let left = 165;
 let data = [];
 
-$: _markdown = markdown;
 $: _data = data;
 
 onMount(async () => {
   console.warn('onMount markdown');
   _ws_connect.markdownOnMount = () => ws__send('getMarkdown', '', markdownHandler);
 
-  chrome.storage.local.get('markdown', function(data) {
-    data.markdown && (markdown = data.markdown);
+  chrome.storage.local.get('helpLeft', function(opt) {
+    opt.helpLeft && (left = opt.helpLeft)
   });
 });
+
+function dragend({detail}) {
+  chrome.storage.local.set({helpLeft: detail.left})
+}
 
 const markdownHandler = obj => {
   console.warn('ws__send(getMarkdown)', obj);
@@ -48,12 +51,8 @@ const markdownHandler = obj => {
   rerender = rerender + 1;
 }
 
-function dragend({detail}) {
-  markdown = detail.left;
-  chrome.storage.local.set({markdown})
-}
 </script>
 
-<VBox2 title="-Help-" left={_markdown} {dragend} {List}>
+<VBox2 title="-Help-" {left} {dragend} {List}>
   <Content/>
 </VBox2>
