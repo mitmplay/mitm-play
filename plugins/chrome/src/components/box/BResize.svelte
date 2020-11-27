@@ -24,7 +24,7 @@ function dragend(e) {
 }
 </script>
 
-<div class="vbox right" style="{resize()}">
+<div class="vbox right" style="{resize(left)}">
   <Splitter on:drag={dragged} on:dragend={dragend} height="{height}"/>
   <slot></slot>
 </div>

@@ -2,11 +2,9 @@
 import { onMount } from 'svelte';
 import { source } from './stores.js';
 
-import VBox from '../box/VBox.svelte';
-import BStatic from '../box/BStatic.svelte';
-import BResize from '../box/BResize.svelte';
-import BHeader from '../box/BHeader.svelte';
-import BTable from '../box/BTable.svelte';
+import VBox2 from '../box/VBox2.svelte';
+import Content from './Content.svelte';
+import List from './List.svelte';
 
 let rerender = 0;
 let markdown = 163;
@@ -56,26 +54,6 @@ function dragend({detail}) {
 }
 </script>
 
-
-<VBox>
-  <BStatic height="0">
-    <BHeader>-Help-</BHeader>
-    <BTable>
-      ...
-    </BTable>
-  </BStatic>
-  <BResize left={_markdown} on:dragend={dragend}>
-    <ul>
-      <li>Hi</li>
-    </ul>
-  </BResize>
-</VBox>
-
-<style>
-ul {
-  margin: 0 0 0 5px;
-}
-li {
-  margin-bottom: 5px;
-}
-</style>
+<VBox2 title="-Help-" left={_markdown} {dragend} {List}>
+  <Content/>
+</VBox2>

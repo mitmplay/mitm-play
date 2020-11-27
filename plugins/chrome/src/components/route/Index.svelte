@@ -2,71 +2,26 @@
 import { onMount } from 'svelte';
 import { source } from './stores.js';
 
-import VBox from '../box/VBox.svelte';
-import BStatic from '../box/BStatic.svelte';
-import BResize from '../box/BResize.svelte';
-import BHeader from '../box/BHeader.svelte';
-import BTable from '../box/BTable.svelte';
+import VBox2 from '../box/VBox2.svelte';
 import Button from './Button.svelte';
 import Editor from './Editor.svelte';
-import Item from './Item.svelte';
+import List from './List.svelte';
 
-let rerender = 0;
-let route = 163;
-let data = [];
-
-$: _route = route;
-$: _data = data;
+let left = 165;
+let height='47';
 
 onMount(async () => {
-  console.warn('onMount route');
-  _ws_connect.routeOnMount = () => ws__send('getRoute', '', routeHandler);
-
-  chrome.storage.local.get('route', function(data) {
-    data.route && (route = data.route);
+  chrome.storage.local.get('routeLeft', function(data) {
+    data.routeLeft && (left = data.routeLeft)
   });
 });
 
-const routeHandler = obj => {
-  console.warn('ws__send(getRoute)', obj);
-  if (obj._tags_) {
-    window.mitm.__tag1 = obj._tags_.__tag1;
-    window.mitm.__tag2 = obj._tags_.__tag2;
-    window.mitm.__tag3 = obj._tags_.__tag3;
-    window.mitm.__tag4 = obj._tags_.__tag4;
-  }
-  if (window.mitm.files.route===undefined) {
-    window.mitm.files.route = obj.routes;
-    data = obj.routes;
-  } else {
-    const {route} = window.mitm.files;
-    const newRoute = {};
-    const {routes} = obj;
-    for (let k in routes) {
-      newRoute[k] = route[k] ? route[k] : routes[k];
-      newRoute[k].content = routes[k].content;
-    }
-    data = newRoute;
-    window.mitm.files.route = newRoute
-  }
-  /**
-   * event handler after receiving ws packet
-   * ie: window.mitm.files.getRoute_events = {eventObject...}
-   */
-  const {getRoute_events} = window.mitm.files;
-  for (let key in getRoute_events) {
-    getRoute_events[key](data);
-  }
-  rerender = rerender + 1;
-}
-
-window.mitm.files.route_events.routeTable = () => {
-  console.log('routeTable getting called!!!');
-  window.ws__send('getRoute', '', routeHandler);
+function dragend({detail}) {
+  chrome.storage.local.set({routeLeft: detail.left})
 }
 
 let _timeout = null;
-function editorChanged(e) {
+function onChange(e) {
   const { editor: { _route }} = window.mitm;
   let saveDisabled;
   if (e===false) {
@@ -89,24 +44,9 @@ function editorChanged(e) {
     }
   }, 500)  
 }
-
-function dragend({detail}) {
-  route = detail.left;
-  chrome.storage.local.set({route})
-}
 </script>
 
 <Button/>
-<VBox>
-  <BStatic height="47">
-    <BHeader>-Route(s)-</BHeader>
-    <BTable>
-      {#each Object.keys(_data) as item}
-      <Item item={{element: item, ..._data[item]}} onChange={editorChanged}/>
-      {/each}
-    </BTable>
-  </BStatic>
-  <BResize left={_route} on:dragend={dragend} height="47">
-    <Editor onChange={editorChanged}/>
-  </BResize>
-</VBox>
+<VBox2 title="-Route(s)-" {left} {height} {dragend} {List} props={{onChange}}>
+  <Editor {onChange}/>
+</VBox2>
