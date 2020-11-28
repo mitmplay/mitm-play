@@ -9,7 +9,8 @@ import List from './List.svelte';
 let rerender = 0;
 let left = 165;
 let data = [];
-let title='-Help-'
+const title = '-Help-';
+const id  = 'helpLeft';
 
 $: _data = data;
 
@@ -17,13 +18,16 @@ onMount(async () => {
   console.warn('onMount markdown');
   _ws_connect.markdownOnMount = () => ws__send('getMarkdown', '', markdownHandler);
 
-  chrome.storage.local.get('helpLeft', function(opt) {
-    opt.helpLeft && (left = opt.helpLeft)
+  chrome.storage.local.get(id, function(opt) {
+    opt[id] && (left = opt[id])
   });
 });
 
 function dragend({detail}) {
-  chrome.storage.local.set({helpLeft: detail.left})
+  left = detail.left
+  const data = {}
+  data[id] = left
+  chrome.storage.local.set(data)
 }
 
 const markdownHandler = obj => {

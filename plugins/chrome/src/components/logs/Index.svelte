@@ -8,19 +8,23 @@ import List from './List.svelte';
 import Show from './Show.svelte';
 
 let left = 163;
-let height='47';
+const height = '47';
+const id = 'logsLeft';
 
 onMount(async () => {
-  chrome.storage.local.get('logsLeft', function(opt) {
-    opt.routeLeft && (left = opt.routeLeft)
+  chrome.storage.local.get(id, function(opt) {
+    opt[id] && (left = opt[id])
   });
 });
 
 function dragend({detail}) {
-  chrome.storage.local.set({logsLeft: detail.left})
+  left = detail.left
+  const data = {}
+  data[id] = left
+  chrome.storage.local.set(data)
 }
 </script>
 
-<VBox2 {title} {left} {height} {dragend} {List} show={$logstore.logid}>
+<VBox2 {title} {height} {left} {dragend} {List} show={$logstore.logid}>
   <Show/>
 </VBox2>

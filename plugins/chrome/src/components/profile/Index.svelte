@@ -8,17 +8,21 @@ import Editor from './Editor.svelte';
 import List from './List.svelte';
 
 let left = 165;
-let height='47';
-let title='-Profile(s)-' 
+const height = '47';
+const title = '-Profile(s)-' 
+const id = 'profileLeft';
 
 onMount(async () => {
-  chrome.storage.local.get('profileLeft', function(opt) {
-    opt.profileLeft && (left = opt.profileLeft)
+  chrome.storage.local.get(id, function(opt) {
+    opt[id] && (left = opt[id])
   });
 });
 
 function dragend({detail}) {
-  chrome.storage.local.set({profileLeft: detail.left})
+  left = detail.left
+  const data = {}
+  data[id] = left
+  chrome.storage.local.set(data)
 }
 
 let _timeout = null;
