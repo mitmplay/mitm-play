@@ -1,92 +1,26 @@
 <script>
 import { onMount } from 'svelte';
 import { logstore } from './stores.js';
-import { client } from '../other/stores.js';
 
-import VBox from '../box/VBox.svelte';
-import BStatic from '../box/BStatic.svelte';
-import BResize from '../box/BResize.svelte';
-import BHeader from '../box/BHeader.svelte';
-import BTable from '../box/BTable.svelte';
-import Button from './Button.svelte';
-import Item from './Item.svelte';
+import VBox2 from '../box/VBox2.svelte';
+import title from './Title.svelte';
+import List from './List.svelte';
 import Show from './Show.svelte';
 
-let json = 163;
-let data =  [];
-
-$: _json = json;
-$: _data = data;
+let left = 163;
+let height='47';
 
 onMount(async () => {
-  console.warn('onMount logs');
-  _ws_connect.logOnMount = () => ws__send('getLog', '', logHandler);
-
-  chrome.storage.local.get('json', function(data) {
-    data.json && (json = data.json);
+  chrome.storage.local.get('logsLeft', function(opt) {
+    opt.routeLeft && (left = opt.routeLeft)
   });
 });
 
-const logHandler = obj => {
-  console.warn('ws__send(getLog)', obj);
-  if ( window.mitm.client.clear) {
-    delete window.mitm.client.clear;
-    logstore.set({
-      respHeader: {},
-      response: '',
-      headers: '',
-      logid: '',
-      title: '',
-      path: '',
-      url: '',
-      ext: '',
-    })
-  }
-  if (window.mitm.files.log===undefined) {
-    window.mitm.files.log = obj;
-    data = obj;
-  } else {
-    const {log} = window.mitm.files;
-    const newLog = {};
-    for (let k in obj) {
-      newLog[k] = log[k] ? log[k] : obj[k]; 
-    }
-    window.mitm.files.log = newLog
-    data = newLog;
-  }
-}
-
-window.mitm.files.log_events.LogsTable = () => {
-  ws__send('getLog', '', logHandler)
-}
-
 function dragend({detail}) {
-  json = detail.left;
-  chrome.storage.local.set({json})
-}
-
-function nohostlogs(flag) {
-  console.log('nohostlogs', flag);
+  chrome.storage.local.set({logsLeft: detail.left})
 }
 </script>
 
-<VBox>
-  <BStatic height="0">
-    <BHeader>-Logs-</BHeader>
-    <Button/>
-    <BTable update={nohostlogs($client.nohostlogs)}>
-      {#each Object.keys(_data) as logid}
-      <Item item={{
-        logid,
-        ..._data[logid],
-        nohostlogs: $client.nohostlogs,
-        }}/>
-      {/each}
-    </BTable>
-  </BStatic>
-  {#if $logstore.logid}
-    <BResize left={_json} on:dragend={dragend}>
-      <Show/>
-    </BResize>
-  {/if}
-</VBox>
+<VBox2 {title} {left} {height} {dragend} {List} show={$logstore.logid}>
+  <Show/>
+</VBox2>

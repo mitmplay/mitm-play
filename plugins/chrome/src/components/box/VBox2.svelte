@@ -3,6 +3,7 @@ export let List;
 export let left;
 export let title;
 export let dragend;
+export let show = 1;
 export let props = {};
 export let height = "0";
 
@@ -15,10 +16,18 @@ import BTable from '../box/BTable.svelte';
 
 <VBox>
   <BStatic {height}>
-    <BHeader>{title}</BHeader>
+    <BHeader>
+      {#if typeof title === 'string'}
+        {title}
+      {:else}
+        <svelte:component this={title}/>
+      {/if}
+    </BHeader>
     <BTable><svelte:component this={List} {...props}/></BTable>
   </BStatic>
+  {#if show}
   <BResize {left} on:dragend={dragend} {height}>
     <slot></slot>
   </BResize>
+  {/if}
 </VBox>

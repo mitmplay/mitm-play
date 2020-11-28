@@ -31,13 +31,3 @@ onMount(async () => {
   <Tab label="Help"><Help/></Tab>
 </Tabs>
 </main>
-
-<style>
-	:global(li.version) {
-    font-size: 10px;
-    padding-top: 3px;
-    padding-left: 5px;
-    color: chocolate;
-    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-	}
-</style>
