@@ -8,7 +8,7 @@ import Editor from './Editor.svelte';
 import List from './List.svelte';
 
 let left = 165;
-const height = '47';
+const top = '47';
 const title = '-Route(s)-' 
 const id = 'routeLeft';
 
@@ -52,6 +52,6 @@ function onChange(e) {
 </script>
 
 <Button/>
-<VBox2 {title} {left} {height} {dragend} {List} props={{onChange}}>
+<VBox2 {title} {top} {left} {dragend} {List} props={{onChange}}>
   <Editor {onChange}/>
 </VBox2>

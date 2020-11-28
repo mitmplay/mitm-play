@@ -1,8 +1,8 @@
 <script>
-export let height;
+export let top;
 
 function resize() {
-  return height ? `height: calc(100vh - ${height}px);` : '';
+  return top ? `height: calc(100vh - ${top}px);` : '';
 }
 </script>
 

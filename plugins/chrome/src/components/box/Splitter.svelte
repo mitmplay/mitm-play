@@ -1,5 +1,5 @@
 <script>
-export let height;
+export let top;
 
 import {spring} from 'svelte/motion'
 import { createEventDispatcher } from 'svelte';
@@ -70,7 +70,7 @@ function draggable(node, params) {
 }
 
 function resize() {
-  return height ? `height: calc(100vh - ${height}px);` : '';
+  return top ? `height: calc(100vh - ${top}px);` : '';
 }
 </script>
 
