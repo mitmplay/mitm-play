@@ -39,7 +39,7 @@
     "yargs-parser": "^20.2.3"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
     "css-selector-generator": "^2.1.2",
     "install": "^0.13.0",
     "jest": "^26.5.3",

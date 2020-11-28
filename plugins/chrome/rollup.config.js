@@ -1,8 +1,10 @@
+// https://github.com/sveltejs/template/blob/master/rollup.config.js
+
 import svelte from 'rollup-plugin-svelte'
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import livereload from 'rollup-plugin-livereload'
+import commonjs from '@rollup/plugin-commonjs'
+import resolve from '@rollup/plugin-node-resolve'
 import preprocess from 'svelte-preprocess'
+import css from 'rollup-plugin-css-only'
 
 export default {
   input: 'src/main.js',
@@ -13,16 +15,18 @@ export default {
     name: 'app'
   },
   plugins: [
-    svelte({
-      dev: true,
-      preprocess: [preprocess()],
-      css: css => {
-        css.write('css/bundle.css')
-      }
+		svelte({
+			compilerOptions: {
+        dev: true,
+      },
+      preprocess:  preprocess()
     }),
-    resolve(),
+    css({ output: 'css/bundle.css' }),   
+		resolve({
+			browser: true,
+			dedupe: ['svelte']
+		}),
     commonjs(),
-    livereload('.')
   ],
   watch: {
     chokidar: {
