@@ -16,11 +16,13 @@ const $openFolder = require('./_openFolder')
 const $getContent = require('./_getContent')
 const $getProfile = require('./_getProfile') // feat: profile
 const $saveProfile = require('./_saveProfile')
+const $getMarkdown = require('./_getMarkdown')
 
 // accessible from client
 const wscmd = {
   ..._global(),
   ..._client(),
+  $getMarkdown,
   $saveProfile,
   $getProfile,
   $getContent,

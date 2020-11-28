@@ -18,9 +18,11 @@ module.exports = function ({ url }) {
       log_events: {},
       cache_events: {},
       route_events: {},
-      getRoute_events: {},
       profile_events: {}, // feat: profile
-      getProfile_events: {}
+      markdown_events: {}, // feat: markdown
+      getRoute_events: {},
+      getProfile_events: {},
+      getMarkdown_events: {}
     },
     fn: {},
     version
