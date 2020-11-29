@@ -1,4 +1,4 @@
-# mitm-play
+# Mitm-play
 ### Man in the middle using playwright
 
 <details><summary><b>mitm-play in action</b></summary>

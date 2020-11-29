@@ -2,35 +2,18 @@
 import { source } from './stores.js';
 
 export let item;
-export let onChange;
 
 function clickHandler(e) {
-  let {item} = e.target.dataset;
-  // const { editor: { _markdown, _markdownEdit }, files } = mitm;
-  const obj = files.markdown[item];
-  const url = item;
-  console.log(item, obj);
-
-  if (_markdown===undefined) {
-    // _markdownEdit(obj.content);
-  } else {
-    // _markdown.setValue(obj.content || '');
-    // _markdown.revealLine(1);
-  }
-  setTimeout(() => {
-    onChange(false);
-
+  console.log(item);
+  const {fpath} = item;
+  ws__send('getMContent', {fpath}, ({content}) => {
     source.update(n => {
       return {
         ...n,
-        goDisabled: (url===undefined),
-        // content: obj.content,
-        fpath: obj.fpath,
-        path: obj.path,
-        item,
+        content
       }
-    });
-  }, 1);
+    })
+  });
 }
 </script>
 

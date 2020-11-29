@@ -1,11 +1,11 @@
-// feat: profile
+// feat: markdown
 import { writable } from 'svelte/store'
 
 export const source = writable({
   openDisabled: false,
   saveDisabled: true,
   goDisabled: true,
-  content: '',
+  content: 'Hi!',
   fpath: '',
   path: ''
 })

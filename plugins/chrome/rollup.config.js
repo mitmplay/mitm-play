@@ -21,7 +21,7 @@ export default {
       },
       preprocess:  preprocess()
     }),
-    css({ output: 'css/bundle.css' }),   
+    css({ output: 'bundle.css' }),   
 		resolve({
 			browser: true,
 			dedupe: ['svelte']

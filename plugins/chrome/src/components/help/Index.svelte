@@ -1,18 +1,13 @@
 <script>
 import { onMount } from 'svelte';
-import { source } from './stores.js';
 
 import VBox2 from '../box/VBox2.svelte';
-import Content from './Content.svelte';
+import View from './View.svelte';
 import List from './List.svelte';
 
-let rerender = 0;
-let left = 165;
-let data = [];
+let left = 150;
 const title = '-Help-';
 const id  = 'helpLeft';
-
-$: _data = data;
 
 onMount(async () => {
   chrome.storage.local.get(id, function(opt) {
@@ -29,5 +24,5 @@ function dragend({detail}) {
 </script>
 
 <VBox2 {title} {left} {dragend} {List}>
-  <Content/>
+  <View/>
 </VBox2>
