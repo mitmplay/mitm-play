@@ -1,17 +1,6 @@
 @font-face {
   font-family: Roboto;
-  src: url(../fonts/Roboto-Black.ttf);
-  src: url(../fonts/Roboto-BlackItalic.ttf);
-  src: url(../fonts/Roboto-Bold.ttf);
-  src: url(../fonts/Roboto-BoldItalic.ttf);
-  src: url(../fonts/Roboto-Italic.ttf);
-  src: url(../fonts/Roboto-Light.ttf);
-  src: url(../fonts/Roboto-LightItalic.ttf);
-  src: url(../fonts/Roboto-Medium.ttf);
-  src: url(../fonts/Roboto-MediumItalic.ttf);
-  src: url(../fonts/Roboto-Regular.ttf);
-  src: url(../fonts/Roboto-Thin.ttf);
-  src: url(../fonts/Roboto-ThinItalic.ttf); }
+  src: url(../fonts/roboto-v20-latin-300.woff2); }
 
 nav.tabs.is-small.is-boxed {
   height: 22;

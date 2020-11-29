@@ -13,7 +13,7 @@
    * [Features](#features)
    * [Concept](#concept)
    * [Profile: ~/.mitm-play](#profile-mitm-play)
-   * [Route Sections](#route-sections)
+   * [Route Sections/rules](#route-sectionrules)
    * [\_global\_ Route](#_global_-route)
    * [HTTP_PROXY](#http_proxy)
    * [CLI Options](#cli-options)
