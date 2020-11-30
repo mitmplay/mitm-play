@@ -2,11 +2,9 @@
 ### Man in the middle using playwright
 
 <details><summary><b>mitm-play in action</b></summary>
-<p>
 
 [![mitm-play](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-ytube.png)](https://www.youtube.com/watch?v=sXTsy_XxILg)
 
-</p>
 </details>
 
    * [Installation](#installation)
@@ -28,7 +26,6 @@
 npm install -g mitm-play
 ```
 <details><summary>Example</summary>
-<p>
 
 ```js
 // create file: ~/user-route/keybr.com/index.js & add this content:
@@ -76,7 +73,6 @@ mitm-play
 ```
 Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools "mitm-play" "tags" as an option to enabled / disabled rules. You can see the togling process on [this video.](https://www.youtube.com/watch?v=sXTsy_XxILg)
 
-</p>
 </details>
 
 # Features
@@ -111,7 +107,6 @@ Next check is to **match** full-url with **regex-routing** of each section/rule.
 
 `if match`, then based on the section/rules meaning, the next process can be carry over, detail explanations will be on the title of: "**Route Section/rules**".
 <details><summary><b>Structure Object of Routes:</b></summary>
-<p>
 
 ```js
 {
@@ -127,7 +122,6 @@ Next check is to **match** full-url with **regex-routing** of each section/rule.
   }
 }
 ```
-</p>
 </details><br/>
 
 If the process of checking is not match, then it will fallback to **\_global\_** `namespace` for checking, and the operation is the same as mention in _above paragraph_: `'Next ceck...'`. 
@@ -141,7 +135,6 @@ By default all save file are on the `~/.mitm-play` profile folder.
 on each route you can add section supported:
 
 <details><summary>Skeleton</summary>
-<p>
 
 ```js
 route = {
@@ -166,14 +159,12 @@ route = {
   response:{}, //end routing rules
 }
 ```
-</p>
 </details>
 <p>
 the execution order as documented start with `skip`, end with `response`, no need to implement all of routing rules. 
 </p>
 
 <details><summary><b>Title, url, urls, workspace & jsLib</b></summary>
-<p>
 
 `Title`: provide basic information about this route.
 
@@ -199,10 +190,8 @@ route = {
 // cli: mitm-play ama -dpsr='.' 
 // search: 'ama' and it will open two browser tabs
 ```
-</p>
 </details>
 <details><summary><b>Screenshot</b></summary>
-<p>
 
 Capture/Screeshot when user *click* specific DOM-Element *match* with `selector` or state-change, like DOM-Element getting *insert* or *remove* and match **selector** inside `observer` key.
 
@@ -233,19 +222,15 @@ screenshot: {
 },
 ```
 `at` is a partion of filename and having a simple rule attach on it. Guess what is it?.
-</p>
 </details>
 <details><summary><b>Skip</b></summary>
-<p>
 
 Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
 ```js
 skip: ['wp-admin'],
 ```
-</p>
 </details>
 <details><summary><b>Proxy</b></summary>
-<p>
 
 Certain domain will go thru proxy, `proxy` & `noproxy` will make sanse if command line contains -x/--proxy
 ```js
@@ -254,10 +239,8 @@ proxy: [
   'google-analytics.com',
 ],
 ```
-</p>
 </details>
 <details><summary><b>Noproxy</b></summary>
-<p>
 
 if proxy config was set to all request/response, `noproxy` will exclude it from proxy. Example below will set domain nytimes.com with direct access and the rest will go thru proxy. 
 ```js
@@ -265,19 +248,15 @@ if proxy config was set to all request/response, `noproxy` will exclude it from 
 noproxy: ['nytimes.com'],
 proxy:   ['.+'],
 ```
-</p>
 </details>
 <details><summary><b>Nosocket</b></summary>
-<p>
 
 No `WebSocket` Injection to **`html`**, `mitm-play` will process further.
 ```js
 nosocket: ['sso'],
 ```
-</p>
 </details>
 <details><summary><b>Request</b></summary>
-<p>
 
 Manipulate **request** with `request` function
 ```js
@@ -291,10 +270,8 @@ request: {
   }
 },
 ```
-</p>
 </details>
 <details><summary><b>Mock</b></summary>
-<p>
 
 Mocking the **response**.
 
@@ -341,10 +318,8 @@ mock: {
 },
 ```
 If both options are defined: `response`, `js`, `js` will be ignored.
-</p>
 </details>
 <details><summary><b>Cache</b></summary>
-<p>
 
 Save the first request to your local disk so next request will serve from there.
 ```js
@@ -383,10 +358,8 @@ cache: {
   }
 },
 ```
-</p>
 </details>
 <details><summary><b>Log</b></summary>
-<p>
 
 Save the response to your local disk. by default contentType `json` will log complete request / response, for different type default log should be response payload. 
 
@@ -415,10 +388,8 @@ log: {
   }
 },
 ```
-</p>
 </details>
 <details><summary><b>Html</b></summary>
-<p>
 
 Manipulate the response.
 
@@ -462,10 +433,8 @@ html: {
   },
 },
 ```
-</p>
 </details>
 <details><summary><b>Json</b></summary>
-<p>
 
 Manipulate the response.
 
@@ -488,10 +457,8 @@ json: {
   },
 },
 ```
-</p>
 </details>
 <details><summary><b>Css</b></summary>
-<p>
 
 Manipulate the response.
 
@@ -516,10 +483,8 @@ css: {
   },
 },
 ```
-</p>
 </details>
 <details><summary><b>Js</b></summary>
-<p>
 
 Manipulate the response.
 
@@ -544,10 +509,8 @@ js: {
   },
 },
 ```
-</p>
 </details>
 <details><summary><b>Response</b></summary>
-<p>
 
 Manipulate **response** with `response` function
 ```js
@@ -563,13 +526,11 @@ response: {
   }
 },
 ```
-</p>
 </details>
 
 ## Common info:
 ### Objects
 <details><summary><b>object: reqs/request</b></summary>
-<p>
 
 ```js
 /**
@@ -582,11 +543,9 @@ response: {
  * }
 */
 ```
-</p>
 </details>
 
 <details><summary><b>object: resp/response</b></summary>
-<p>
 
 ```js
 /**
@@ -598,11 +557,9 @@ response: {
  * }
 */
 ```
-</p>
 </details>
 
 <details><summary><b>object: match</b></summary>
-<p>
 
 ```js
 /**
@@ -623,12 +580,10 @@ response: {
  * }
 */
 ```
-</p>
 </details>
 
 ### Functions
 <details><summary><b>function: file(reqs, match)</b></summary>
-<p>
 
 ```js
 /**
@@ -645,11 +600,9 @@ file(reqs, match) {
   return 'common.js';
 },
 ```
-</p>
 </details>
 
 <details><summary><b>function: request(reqs, match)</b></summary>
-<p>
 
 ```js
 /**
@@ -666,11 +619,9 @@ request(reqs, match) {
   return {headers};
 },
 ```
-</p>
 </details>
 
 <details><summary><b>function: response(resp, reqs, match)</b></summary>
-<p>
 
 ```js
 /**
@@ -688,7 +639,6 @@ response(reqs, reqs, match) {
   return {headers};
 },
 ```
-</p>
 </details>
 
 # \_global\_ Route
@@ -696,7 +646,6 @@ A special route to handle global scope (without namespace) and serving as a comm
 
 The default `config.logs` setting can be override as needed.
 <details><summary><b>Common route rules</b></summary>
-<p>
 
 ```js
 _global_ = {
@@ -717,10 +666,8 @@ _global_ = {
   config:  {}, //see Default config below
 }
 ```
-</p>
 </details>
 <details><summary><b>Default config</b></summary>
-<p>
 
 ```js
 // toggle to show/hide from console.log()
@@ -747,7 +694,6 @@ _global_.config = {
   }
 }
 ```
-</p>
 </details>
 
 # HTTP_PROXY
@@ -757,7 +703,6 @@ mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system re
 when entering CLI commands, `mitm-play`  support two kind of arguments: 
 
 <details><summary><b>mitm-play [args] [-options]</b></summary>
-<p>
 
 * `args`:
   * **1st** for searching url/urls
@@ -777,12 +722,10 @@ $ mitm-play yahoo secure -k
 # if no profile, fallback to 'default'
 $ mitm-play yahoo --cookie
 ```
-
-</p>
 </details>
 
 <details><summary><b>-h --help</b></summary>
-<p>
+
 To show all the options Command Line Interface (CLI). this option can be arbitrary position on cli, the result should be always display this messages:
 
 ```
@@ -825,10 +768,8 @@ $ mitm-play --help
     
   v0.8.xx
 ```
-</p>
 </details>
 <details><summary><b>-u --url</b></summary>
-<p>
 
 Open Browser to specific `URL`
 
@@ -836,10 +777,8 @@ Open Browser to specific `URL`
 $ mitm-play -u='https://google.com'  <OR>
 $ mitm-play --url='https://google.com'
 ```
-</p>
 </details>
 <details><summary><b>-s --save</b></summary>
-<p>
 
 Save CLI options with `default`  or named so later time you don't need to type long CLI options
 
@@ -850,10 +789,8 @@ $ mitm-play --save
 $ mitm-play -s='google'  <OR>
 $ mitm-play --save='google'
 ```
-</p>
 </details>
 <details><summary><b>-r --route</b></summary>
-<p>
 
 Specify which folder contains routes config
 
@@ -861,10 +798,8 @@ Specify which folder contains routes config
 $ mitm-play -r='../user-route'  <OR>
 $ mitm-play --route='../user-route'
 ```
-</p>
 </details>
 <details><summary><b>-c --relaxcsp</b></summary>
-<p>
 
 Update CSP header on Html Page injected with websocket.js to unblock Websocket communication
 
@@ -872,10 +807,8 @@ Update CSP header on Html Page injected with websocket.js to unblock Websocket c
 $ mitm-play -c  <OR>
 $ mitm-play --relaxcsp
 ```
-</p>
 </details>
 <details><summary><b>-d --delete</b></summary>
-<p>
 
 Delete logs or cache, can be all or specific one
 
@@ -889,10 +822,8 @@ $ mitm-play --delete='log'
 $ mitm-play -d='cache'  <OR>
 $ mitm-play --delete='cache'
 ```
-</p>
 </details>
 <details><summary><b>-p --pristine [default]</b></summary>
-<p>
 
 Launch browser with non Incognito, this is the default configuration, the opposite is to use --incognito. 
 
@@ -900,10 +831,8 @@ Launch browser with non Incognito, this is the default configuration, the opposi
 $ mitm-play -p  <OR>
 $ mitm-play --pristine
 ```
-</p>
 </details>
 <details><summary><b>-i --insecure</b></summary>
-<p>
 
 Set NodeJS to operate within insecure / no https checking 
 
@@ -911,10 +840,8 @@ Set NodeJS to operate within insecure / no https checking
 $ mitm-play -i  <OR>
 $ mitm-play --insecure
 ```
-</p>
 </details>
 <details><summary><b>-n --nosocket</b></summary>
-<p>
 
 No Injection of websocket to the browser
 
@@ -922,10 +849,8 @@ No Injection of websocket to the browser
 $ mitm-play -n  <OR>
 $ mitm-play --nosocket
 ```
-</p>
 </details>
 <details><summary><b>-k --cookie</b></summary>
-<p>
 
 Set proper cache retriver with an update expiry of the cookies
 
@@ -933,10 +858,8 @@ Set proper cache retriver with an update expiry of the cookies
 $ mitm-play -k  <OR>
 $ mitm-play --cookie
 ```
-</p>
 </details>
 <details><summary><b>-l --lazylog</b></summary>
-<p>
 
 Delay console log ~500ms or you can provide value in milisecond.
 
@@ -947,10 +870,8 @@ $ mitm-play --lazylog
 $ mitm-play -l=400  <OR>
 $ mitm-play --lazylog=400
 ```
-</p>
 </details>
 <details><summary><b>-g --group</b></summary>
-<p>
 
 Add group name to file cache/logs, if necessary when large capturing is done and difficult to check the files. 
 
@@ -960,10 +881,8 @@ There is an option `at` on the rules of `cache`/`log` for additional filename gr
 $ mitm-play -g='mygroup'  <OR>
 $ mitm-play --group='mygroup'
 ```
-</p>
 </details>
 <details><summary><b>-t --incognito</b></summary>
-<p>
 
 By Default program will run in normal/--pristine browser, adding this option will result in Incognito mode.
 
@@ -971,10 +890,8 @@ By Default program will run in normal/--pristine browser, adding this option wil
 $ mitm-play -t  <OR>
 $ mitm-play --incognito
 ```
-</p>
 </details>
 <details><summary><b>-x --proxy</b></summary>
-<p>
 
 Some traffict with domain match to proxy section will use proxy.
 
@@ -989,10 +906,8 @@ $ mitm-play --proxy
 $ mitm-play -x='http://username:pass@my.proxy.com'  <OR>
 $ mitm-play --proxy='http://username:pass@my.proxy.com'
 ```
-</p>
 </details>
 <details><summary><b>-z --lazyclick</b></summary>
-<p>
 
 Delay click action ~700ms or you can provide value in milisecond, to provide enough time for screenshot to be taken
 
@@ -1003,10 +918,8 @@ $ mitm-play --lazyclick
 $ mitm-play -z=400  <OR>
 $ mitm-play --lazyclick=400
 ```
-</p>
-</details><br/>
+</details><hr/>
 <details><summary><b>-D --debug</b></summary>
-<p>
 
 More information will be shown in console.log (ex: websocket), including info from `DEBUG=pw:api`
 
@@ -1014,10 +927,8 @@ More information will be shown in console.log (ex: websocket), including info fr
 $ mitm-play -D  <OR>
 $ mitm-play --debug
 ```
-</p>
 </details>
 <details><summary><b>-G --nogppu</b></summary>
-<p>
 
 Necessary option for [Macbook owner](https://discussions.apple.com/thread/250878229)
 
@@ -1025,10 +936,8 @@ Necessary option for [Macbook owner](https://discussions.apple.com/thread/250878
 $ mitm-play -G  <OR>
 $ mitm-play --nogpu
 ```
-</p>
 </details>
 <details><summary><b>-O --ommitlog</b></summary>
-<p>
 
 hide some console.log
 
@@ -1036,10 +945,8 @@ hide some console.log
 $ mitm-play -O  <OR>
 $ mitm-play --ommitlog
 ```
-</p>
 </details>
 <details><summary><b>-R --redirect</b></summary>
-<p>
 
 Change mechanism of redirection
 
@@ -1047,10 +954,8 @@ Change mechanism of redirection
 $ mitm-play -R  <OR>
 $ mitm-play --redirect
 ```
-</p>
 </details>
 <details><summary><b>-V --verbose</b></summary>
-<p>
 
 Add additional info in console.log
 
@@ -1058,10 +963,8 @@ Add additional info in console.log
 $ mitm-play -V  <OR>
 $ mitm-play --verbose
 ```
-</p>
 </details>
 <details><summary><b>-X --proxypac</b></summary>
-<p>
 
 When network on your having a proxypac settings, might be usefull to use the same. This option only in Chromium
 
@@ -1069,10 +972,8 @@ When network on your having a proxypac settings, might be usefull to use the sam
 $ mitm-play -X='w3proxy.netscape.com:8080'  <OR>
 $ mitm-play --proxypac='w3proxy.netscape.com:8080'
 ```
-</p>
-</details><br/>
+</details><hr/>
 <details><summary><b>-C --chromium</b></summary>
-<p>
 
 Launch Chromium browser
 
@@ -1085,10 +986,8 @@ $ mitm-play --chromium
 $ mitm-play -C="/Applications/Google\ Chrome.app"  <OR> 
 $ mitm-play --chromium="/Applications/Google\ Chrome.app"
 ```
-</p>
 </details>
 <details><summary><b>-F --firefox</b></summary>
-<p>
 
 Launch Firefox browser
 
@@ -1096,10 +995,8 @@ Launch Firefox browser
 $ mitm-play -F  <OR>
 $ mitm-play --firefox
 ```
-</p>
 </details>
 <details><summary><b>-W --webkit</b></summary>
-<p>
 
 Launch Webkit browser
 
@@ -1107,14 +1004,12 @@ Launch Webkit browser
 $ mitm-play -W  <OR>
 $ mitm-play --webkit
 ```
-</p>
 </details>
 
 # Macros
 When creating rule for specific website site (ie: **autologin to gmail**), inside folder you can add `macros.js` to contains what automation need to be run 
 
 <details><summary><b>Example</b></summary>
-<p>
 
 ```bash
 # folder
@@ -1159,7 +1054,6 @@ window.mitm.autobuttons = {
 window.mitm.macrokeys = {...}
 ```
 </details>
-</p>
 
 # Macro Keys
 A hot keys that can be press on specific page and it will do similar thing with _a macro from mechanical keyboard_, except its generated from injected mitm-play `macros.js`, 
@@ -1171,7 +1065,6 @@ Example below show a defined macro keys: `KeyP` & To activate, it need to press 
 list of `key.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
 
 <details><summary><b>Example</b></summary>
-<p>
 
 ```js
 // macros.js
@@ -1191,7 +1084,6 @@ window.mitm.macros = {
 }    
 ```
 </details>
-</p>
 
 # User Route
 [User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
@@ -1200,7 +1092,6 @@ If you think you have a nice routing want to share, you can create a PR to the [
 
 # Use Cases
 <details><summary><b>Reduce Internet usage</b></summary>
-<p>
 
 There are several strategy to reduce internet usage, user commonly use different tools to achieve, either install new browser (ie: Brave) or install Add Blocker (ie: uBlock). Using mitm-play, developer can controll which need to be pass, blocked or cached. 
 
@@ -1224,13 +1115,11 @@ mock: {
   },
 },
 ```
-</p>
 </details>
 <details><summary><b>Simplify Developer workflow</b></summary>
-<p>
+
 as developer sometime we need to get access to lots website in which some of the page need to be automated fill in and submit to the next page. 
 With `Macros` it can be done!
-</p>
 </details>
 
 # Early Stage
