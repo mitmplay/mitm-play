@@ -28,10 +28,7 @@ module.exports = () => {
 
   // Initialize watcher.
   console.log(c.magentaBright('markdown watcher:'), glob)
-  const markdownWatcher = chokidar.watch(glob, {
-    ignored: /node_modules/, // ignore node_modules
-    persistent: true
-  })
+  const markdownWatcher = chokidar.watch(glob, { persistent: true })
 
   markdownWatcher // Add event listeners.
     .on('add', path => addMarkdown(path))
