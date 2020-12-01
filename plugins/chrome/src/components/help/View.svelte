@@ -19,10 +19,15 @@ onMount(() => {
   };
 });
 
+let mermaid;
 const r = /(%.{2}|[~.])/g;
 function content(src) {
+  !mermaid && (mermaid = window.mermaid);
   console.log('plot the content...');
   setTimeout(() => {
+    if (document.querySelector('div.mermaid')) {
+      mermaid.init();
+    }
     let _top;
     const h1 = document.querySelector('h1');
     const arr = document.querySelectorAll('h1,h2,h3,h4,h5');
