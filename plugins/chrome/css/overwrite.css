@@ -59,7 +59,7 @@ label {
       font-weight: thin;
       white-space: normal;
       text-transform: none;
-      margin-top: 20px;
+      margin-top: 18px;
       margin-bottom: 12px; }
     .show-container #markdown h1 {
       font-size: 1.8em;
@@ -106,6 +106,9 @@ label {
       .show-container #markdown ul li {
         margin-bottom: 6px;
         font-size: 1em; }
+    .show-container #markdown a.up {
+      font-size: 16px;
+      vertical-align: middle; }
 
 li.version {
   font-size: 10px;

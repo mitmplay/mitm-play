@@ -23,8 +23,14 @@ const r = /(%.{2}|[~.])/g;
 function content(src) {
   console.log('plot the content...');
   setTimeout(() => {
+    let _top;
+    const h1 = document.querySelector('h1');
     const arr = document.querySelectorAll('h1,h2,h3,h4,h5');
-    for (let node of arr) {
+    h1 && (_top = ` <a class="up" href="#${h1.id}">{up}</a>`); 
+    for (let [i, node] of arr.entries()) {
+      if (_top && i > 0) {
+        node.innerHTML = `${node.innerHTML}${_top}`
+      }
       node.id = node.id.replace(r, '');
       console.log(node);
     }
