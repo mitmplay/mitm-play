@@ -15,7 +15,7 @@ function btnSave(e) {
     __tag2,
     __tag3,
   };
-  ws__send('saveTags', _tags);
+  ws__send('saveTags', tags);
 }
 
 onMount(() => {
