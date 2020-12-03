@@ -1,6 +1,7 @@
 <script>
 import { onMount } from 'svelte';
 
+import Button from './Button.svelte';
 import VBox2 from '../box/VBox2.svelte';
 import View from './View.svelte';
 import List from './List.svelte';
@@ -23,6 +24,7 @@ function dragend({detail}) {
 }
 </script>
 
+<Button/>
 <VBox2 {title} {left} {dragend} {List}>
   <View/>
 </VBox2>
