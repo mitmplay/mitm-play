@@ -20,13 +20,19 @@ module.exports = argv => {
   ]
 
   if (argv.nogpu) {
-    args.push(
-      '--disable-accelerated-2d-canvas',
-      '--disable-gpu-rasterization',
-      '--disable-oop-rasterization',
-      '--disable-gpu-compositing'
-    )
+    if (argv.nogpu==='all') {
+      args.push('--disable-gpu')
+    } else {
+      args.push(
+        '--disable-accelerated-2d-canvas',
+        '--disable-gpu-rasterization',
+        '--disable-oop-rasterization',
+        '--disable-gpu-compositing'
+      )  
+    }
   }
-  
+  if (argv.verbose) {
+    console.log('Chromium flags', args)
+  }
   return args
 }

@@ -756,7 +756,7 @@ $ mitm-play --help
     -z --lazyclick       delay ~700ms click action
 
     -D --debug           show ws messages
-    -G --nogpu           set chromium without GPU
+    -G --nogpu           set chromium without/'all' GPU
     -O --ommitlog        removed unnecessary console log
     -R --redirect        set redirection: true/false/manual
     -V --verbose         show more detail of console log
@@ -930,7 +930,9 @@ $ mitm-play --debug
 </details>
 <details><summary><b>-G --nogppu</b></summary>
 
-Necessary option for [Macbook owner](https://discussions.apple.com/thread/250878229)
+Necessary option for [Macbook owner](https://discussions.apple.com/thread/250878229).
+
+Options can be added with value -G=all to disabled all gpu (might hang notebook)
 
 ```
 $ mitm-play -G  <OR>
