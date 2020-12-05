@@ -1,17 +1,17 @@
 <script>
 import { source } from './stores.js';
 
-let value = 65;
+let value = 61;
 function plotValue(e) {
   value = +e.target.value
   const node = document.querySelector('#scale-mermaid')
-  node.innerHTML = `div.mermaid svg {height: ${value}% !important;}`
+  node.innerHTML = `.mermaid {height: ${value}vh;}`
 }
 </script>
 
 <div class="btn-container">
-  <span>{parseInt(value/65*100)}%</span>
-  <input name="weight" type="range" min="10" max="65" step="1" {value} on:input={plotValue} />
+  <span>{parseInt(value)}</span>
+  <input name="weight" type="range" min="10" max="100" step="1" {value} on:input={plotValue} />
 </div>
 
 <style>

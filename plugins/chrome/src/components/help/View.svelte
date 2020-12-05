@@ -25,8 +25,17 @@ function content(src) {
   !mermaid && (mermaid = window.mermaid);
   console.log('plot the content...');
   setTimeout(() => {
-    if (document.querySelector('#markdown div.mermaid')) {
+    if (document.querySelector('#markdown .mermaid')) {
       mermaid.init();
+      const details = document.querySelectorAll('div.details')
+      for (let node of details) {
+        const item = node.children[0]
+        const title = node.getAttribute('title')
+        const summary = document.createElement('details')
+        summary.innerHTML = `<summary>${title}</summary>`
+        summary.appendChild(item)
+        node.appendChild(summary)
+      }
     }
     if (!document.querySelector('#markdown a.up')) {
       let _top;

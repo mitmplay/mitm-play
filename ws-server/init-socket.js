@@ -1,37 +1,19 @@
-const express = require('express')
 const fs = require('fs-extra')
 const https = require('https')
 const WebSocket = require('ws')
 const c = require('ansi-colors')
+const website = require('./website')
 const msgParser = require('./msg-parser')
 const path = `${global.__app}/cert`
 
 module.exports = () => {
-  const { fn: { _wsmitm, _wsclient } } = global.mitm
-  const app = express()
   const servers = https.createServer({
     cert: fs.readFileSync(`${path}/selfsigned.crt`),
     key: fs.readFileSync(`${path}/selfsigned.key`)
-  }, app)
+  }, website())
+
   const wss = new WebSocket.Server({ server: servers, path: '/ws' })
-  servers.listen(3001)
-
-  app.use(express.static(global.mitm.path.home))
-  app.get('/mitm-play/mitm.js', (req, res) => {
-    const _body = _wsmitm(req)
-    res.type('.js')
-    res.send(_body)
-  })
-
-  app.get('/mitm-play/websocket.js', (req, res) => {
-    const _body = _wsclient()
-    res.type('.js')
-    res.send(_body)
-  })
-
-  app.get('/', (req, res) => {
-    res.send('Hi Mitm-play!')
-  })
+  servers.listen(3001)  
 
   function connection (client, request) {
     const { logs } = global.mitm.router._global_.config
