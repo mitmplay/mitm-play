@@ -1,10 +1,12 @@
 const express = require('express')
+const app = express()
 
 module.exports = () => {
-  const app = express()
-  const { fn: { _wsmitm, _wsclient } } = global.mitm
+  const {path, fn: {_wsmitm, _wsclient}} = mitm
 
-  app.use(express.static(global.mitm.path.home))
+  app.use(express.static(path.home))
+  app.use('/mitm-image', express.static(path.route));
+
   app.get('/mitm-play/mitm.js', (req, res) => {
     const _body = _wsmitm(req)
     res.type('.js')
