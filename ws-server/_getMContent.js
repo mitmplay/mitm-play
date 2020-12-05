@@ -40,7 +40,7 @@ module.exports = ({data: {fpath}}) => {
   let md1 = `${fs.readFileSync(fpath)}`
   if (fpath.match(route)) {
     const arr = fpath.replace(`${route}/`, '').split('/')
-    const rpl = (s,p) => `${p}https://localhost:3001/mitm-image/${arr[0] ? arr[0]+'/' : ''}_image_/`
+    const rpl = (s,p) => `${p}https://localhost:3001/mitm-assets/${arr[0] ? arr[0]+'/' : ''}_assets_/`
     let flag = true
     while (flag) {
       const md2 = md1.replace(regx, rpl)
@@ -51,6 +51,15 @@ module.exports = ({data: {fpath}}) => {
       }
     }  
   }
-  const content = md.render(md1);
+  let content = md.render(md1);
+  let flag = true
+  while (flag) {
+    const arr = content.match(/:att ([^"]+)/)
+    if (arr) {
+      content = content.replace(`:att ${arr[1]}"`, `" ${arr[1]}`)
+    } else {
+      flag = false
+    }
+  }  
   return {content}
 }

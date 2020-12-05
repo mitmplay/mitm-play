@@ -5,7 +5,7 @@ module.exports = () => {
   const {path, fn: {_wsmitm, _wsclient}} = mitm
 
   app.use(express.static(path.home))
-  app.use('/mitm-image', express.static(path.route));
+  app.use('/mitm-assets', express.static(path.route));
 
   app.get('/mitm-play/mitm.js', (req, res) => {
     const _body = _wsmitm(req)
