@@ -60,13 +60,13 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           fpath1 = `${_root}/${fileMethod}`
           fpath2 = `${_root}/$/${fileMethod}.json`
           if (await fs.pathExists(fpath1)) {
-            resp.body = `${await fs.readFile(fpath1)}`
+            resp.body = await fs.readFile(fpath1)
             file = fileMethod
           } else {
             fpath1 = `${_root}/${file}`
             fpath2 = `${_root}/$/${file}.json`
             if (await fs.pathExists(fpath1)) {
-              resp.body = `${await fs.readFile(fpath1)}`
+              resp.body = await fs.readFile(fpath1)
             } else {
               console.log(c.redBright(`>>> ERROR: ${_root}/(${fileMethod} or ${file}) did not exists!`))
               route.continue()
