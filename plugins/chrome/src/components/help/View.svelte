@@ -27,14 +27,19 @@ function content(src) {
   setTimeout(() => {
     if (document.querySelector('#markdown .mermaid')) {
       mermaid.init();
-      const details = document.querySelectorAll('div.details')
-      for (let node of details) {
-        const item = node.children[0]
+      const arr = document.querySelectorAll('div.details')
+      for (let node of arr) {
         const title = node.getAttribute('title')
-        const summary = document.createElement('details')
-        summary.innerHTML = `<summary>${title}</summary>`
-        summary.appendChild(item)
-        node.appendChild(summary)
+        const details = document.createElement('details')
+        details.innerHTML = `<summary>${title}</summary>`
+        const childs = []
+        for (let child of node.children) {
+          childs.push(child)
+        }
+        for (let child of childs) {
+          details.appendChild(child)
+        }
+        node.appendChild(details)
       }
     }
     if (!document.querySelector('#markdown a.up')) {
