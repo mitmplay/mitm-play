@@ -33,9 +33,24 @@ md.use(require('markdown-it-container'), 'spoiler', {
     }
   }
 });
-
-module.exports = ({ data }) => {
-  const markdown = `${fs.readFileSync(data.fpath)}`
-  const content = md.render(markdown);
+const regx = /(!\[\w+\]\()(\.)\//
+module.exports = ({data: {fpath}}) => {
+  const {route} = mitm.path
+  console.log('markdown', fpath)
+  let md1 = `${fs.readFileSync(fpath)}`
+  if (fpath.match(route)) {
+    const arr = fpath.replace(`${route}/`, '').split('/')
+    const rpl = (s,p) => `${p}https://localhost:301/${arr[0] ? arr[0]+'/' : ''}_image_/`
+    let flag = true
+    while (flag) {
+      const md2 = md1.replace(regx, rpl)
+      if (md1.length !== md2.length) {
+        md1 = md2
+      } else {
+        flag = false
+      }
+    }  
+  }
+  const content = md.render(md1);
   return {content}
 }
