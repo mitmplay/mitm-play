@@ -57,14 +57,14 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           if (arr) {
             fileMethod = file.replace(arr[0], `~${reqs.method}`) + arr[0]
           }
+          let xfile = fileMethod
           fpath1 = `${_root}/${fileMethod}`
-          fpath2 = `${_root}/$/${fileMethod}.json`
           if (await fs.pathExists(fpath1)) {
             resp.body = await fs.readFile(fpath1)
             file = fileMethod
           } else {
+            xfile = file
             fpath1 = `${_root}/${file}`
-            fpath2 = `${_root}/$/${file}.json`
             if (await fs.pathExists(fpath1)) {
               resp.body = await fs.readFile(fpath1)
             } else {
@@ -73,8 +73,16 @@ const mockResponse = async function ({ reqs, route }, _3d) {
               return false
             }
           }
-          match.log += `[${file}]`
-          if (await fs.pathExists(fpath2)) {
+          match.log += `[${xfile}]`
+          const xfile2 = xfile.split('@')[0]
+          if (await fs.pathExists(`${_root}/$/${xfile}.json`)) {
+            fpath2 = `${_root}/$/${xfile}.json`
+          } else if (xfile2 !== xfile) {
+            if (await fs.pathExists(`${_root}/$/${xfile2}.json`)) {
+              fpath2 = `${_root}/$/${xfile2}.json`
+            }
+          }
+          if (fpath2) {
             const json = JSON.parse(await fs.readFile(fpath2))
             const { general: { status }, setCookie, respHeader: headers } = json
             if (setCookie && argv.cookie) {
