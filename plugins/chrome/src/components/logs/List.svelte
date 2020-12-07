@@ -1,4 +1,5 @@
 <script>
+import { logstore } from './stores.js';
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
 import { client } from '../other/stores.js';
