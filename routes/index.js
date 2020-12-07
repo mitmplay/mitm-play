@@ -59,11 +59,17 @@ module.exports = async ({ route, request, browserName }) => {
     }
   }
 
-  if (await _mockResponse({ reqs, route }, _3ds)) {
+  const responseHandler = []
+  const mock = await _mockResponse({ reqs, route }, _3ds)
+  if (mock) {
+    const { match, resp } = mock
+    if (mock.log) {
+      await _logResponse(reqs, responseHandler, _3ds, match)
+    }
+    await Events(responseHandler, resp, reqs, route)
     return
   }
 
-  const responseHandler = []
   // --resp can be undefined or local cached & can skip logs (.nolog)
   const { match, resp } = await _cacheResponse(reqs, responseHandler, _3ds)
 

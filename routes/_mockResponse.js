@@ -116,8 +116,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
         }
       }
     }
-    route.fulfill(resp)
-    return true
+    return {match, resp}
   }
 }
 

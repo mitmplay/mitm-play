@@ -273,7 +273,7 @@ request: {
 </details>
 <details><summary><b>Mock</b></summary>
 
-Mocking the **response**.
+Mock the **response**.
 
 Basic rule:
 
@@ -289,6 +289,7 @@ mock: {
     response(resp, reqs, match) {
       return {body} //can be {} or combination of {status, headers, body}
     },
+    log: true, // optional - enable logging
   },
 },
 ```
@@ -330,7 +331,7 @@ cache: {
     hidden: true, // optional - no consolo.log
     path: './api', // optional cache file-path
     file: ':1', // optional cache file-name
-    log: false, // optional - disable logging
+    log: true, // optional - enable logging
     at: 'mycache', // 'mycache' part of filename
     tags: 'js-img', // enable/disable route by tags
   }
