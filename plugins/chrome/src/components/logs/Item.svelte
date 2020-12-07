@@ -121,7 +121,7 @@ td {
 }
 .td-item.true {
   color: blue;
-  font-weight: bolder;
+  font-weight: bold;
   background: greenyellow;
 }
 .status {

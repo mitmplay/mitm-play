@@ -20,7 +20,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
     const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
     responseHandler.push((resp, reqs) => {
       if (ctype(match, resp)) {
-        if (cache && ctype(cache, resp) && !cache.route.log) {
+        if (cache && !cache.route.log) {
           return resp
         }
         let { fpath1, fpath2 } = fpathflat({ match, reqs, stamp })
