@@ -63,7 +63,7 @@ module.exports = async ({ route, request, browserName }) => {
   const mock = await _mockResponse({ reqs, route }, _3ds)
   if (mock) {
     const { match, resp } = mock
-    if (mock.log) {
+    if (mock.route.log) {
       await _logResponse(reqs, responseHandler, _3ds, match)
     }
     await Events(responseHandler, resp, reqs, route)
