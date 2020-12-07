@@ -15,6 +15,18 @@ onMount(() => {
       const top = element.getBoundingClientRect().top - 40;
       const _window = document.querySelector('.show-container');
       _window.scroll({top, behavior});
+    } else {
+      let node = e.target
+      while (node.id!=='markdown') {
+        if (node.nodeName==='A') {
+          console.log('anchor');
+          if (node.href.match(/https?:\//)) {
+            chrome.tabs.create({ url: node.href });
+          }
+          break;
+        }
+        node = node.parentElement;
+      }
     }
   };
 });
