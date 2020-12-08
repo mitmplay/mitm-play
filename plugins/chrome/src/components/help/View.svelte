@@ -21,6 +21,8 @@ onMount(() => {
         if (node.nodeName==='A') {
           console.log('anchor');
           if (node.href.match(/https?:\//)) {
+            e.preventDefault();
+            e.stopPropagation();
             chrome.tabs.create({ url: node.href });
           }
           break;
