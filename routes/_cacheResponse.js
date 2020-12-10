@@ -25,7 +25,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
 
     let { fpath1, fpath2 } = fpathcache({ match, reqs })
     let remote = true
-    if (!(argv.activity && match.route.recs) && fs.existsSync(fpath2)) {
+    if (!argv.activity && fs.existsSync(fpath2)) {
       // get from cache
       try {
         const json = JSON.parse(await fs.readFile(fpath2))
@@ -61,7 +61,11 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     if (remote) {
       // get from remote
       responseHandler.push(async resp => {
-        if (ctype(match, resp)) {
+        if (argv.activity && !match.route.recs) {
+          if (logs.cache && !match.hidden) {
+            console.log(c.grey(match.log))
+          }
+        } else if (ctype(match, resp)) {
           fpath1 = `${fpath1}.${_ext(resp)}`
           if (logs.cache && !match.hidden) {
             if (hidden !== 2) {
