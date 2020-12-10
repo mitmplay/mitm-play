@@ -46,6 +46,7 @@ module.exports = () => {
   const [, prm1] = argv._
   argv.profile = false
 
+  argsChg('a', 'activity')
   argsChg('c', 'relaxcsp')
   argsChg('d', 'delete')
   argsChg('g', 'group')

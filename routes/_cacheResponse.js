@@ -21,10 +21,11 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     const { route } = match
     const { response, session, hidden } = route
     const { logs } = router._global_.config
+    const { argv } = global.mitm
 
     let { fpath1, fpath2 } = fpathcache({ match, reqs })
     let remote = true
-    if (fs.existsSync(fpath2)) {
+    if (!(argv.activity && match.route.recs) && fs.existsSync(fpath2)) {
       // get from cache
       try {
         const json = JSON.parse(await fs.readFile(fpath2))
@@ -32,7 +33,6 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         if (!ctype(match, { headers })) {
           return { match: undefined, resp }
         }
-        const { argv } = global.mitm
         if (argv.cookie) {
           headers['set-cookie'] = resetCookies(setCookie)
         }
