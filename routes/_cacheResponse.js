@@ -38,7 +38,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         if (!ctype(match, { headers })) {
           return { match: undefined, resp }
         }
-        if (argv.cookie) {
+        if (setCookie && argv.cookie) {
           headers['set-cookie'] = resetCookies(setCookie)
         }
         fpath1 = `${fpath1}.${_ext({ headers })}`
