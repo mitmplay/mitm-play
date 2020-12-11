@@ -19,13 +19,18 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
   if (match && !_skipByTag(match, 'cache')) {
     const { url } = reqs
     const { route } = match
-    const { response, session, hidden } = route
+    const { response, hidden } = route
     const { logs } = router._global_.config
     const { argv } = global.mitm
 
     let { fpath1, fpath2 } = fpathcache({ match, reqs })
     let remote = true
-    if (!argv.activity && fs.existsSync(fpath2)) {
+    // feat: activity
+    let actyp, actag
+    if (argv.activity) {
+      [actyp, actag] = argv.activity.split(':')
+    }
+    if ((!actyp || actyp==='play') && fs.existsSync(fpath2)) {
       // get from cache
       try {
         const json = JSON.parse(await fs.readFile(fpath2))
@@ -61,12 +66,17 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     if (remote) {
       // get from remote
       responseHandler.push(async resp => {
-        if (argv.activity && !match.route.recs) {
+        // feat: activity
+        if (actyp && !match.route.recs) {
           if (logs.cache && !match.hidden) {
             console.log(c.grey(match.log))
           }
         } else if (ctype(match, resp)) {
           fpath1 = `${fpath1}.${_ext(resp)}`
+          if (actyp && match.route.recs) {
+            const msg = ` ${actyp}(${fpath1.split('/').pop()})`
+            match.log += actyp==='play' ? c.red(msg) : msg
+          }
           if (logs.cache && !match.hidden) {
             if (hidden !== 2) {
               console.log(c.magentaBright(match.log))

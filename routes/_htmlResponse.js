@@ -13,10 +13,18 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
   const { logs } = router._global_.config
 
   if (match && !_skipByTag(match, 'html')) {
+    const { argv } = global.mitm
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/html')) {
         const len = match.log.length
+        // feat: activity
+        if (argv.activity) {
+          const [actyp, actag] = argv.activity.split(':')
+          if (actag && match.route.tags.match(`(^| )${actag}( |$)`)) {
+            global.mitm.activity = {} // init rec/play sequences
+          }
+        }
         if (logs.html && !match.hidden && !match.route.hidden) {
           console.log(`${'-'.repeat(len)}\n${c.yellowBright(match.log)}`)
         }

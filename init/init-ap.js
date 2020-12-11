@@ -52,8 +52,9 @@ global.mitm = {
   fn: {},
   data: {},
   pages: {},
-  browsers: {},
   watcher: {},
+  browsers: {},
+  activity: {}, // feat: activity
   routes: { _global_: { config: {} } },
   router: { _global_: { config: {} } },
   source: {},

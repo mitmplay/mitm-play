@@ -40,6 +40,7 @@ function _setlogs () {
     if (_gRoutes.config.logs) { logs = { ...logs, ..._gRoutes.config.logs } }
     if (_gRoutes.config.args) { args = { ...args, ..._gRoutes.config.args } }
   }
+  // re-set argv from _global_ namespace and re-apply from original argv
   const argv = { ...args, ..._argv }
   global.mitm.argv = argv
   if (_gRouter) {

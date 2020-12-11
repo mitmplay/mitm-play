@@ -46,22 +46,22 @@ module.exports = () => {
   const [, prm1] = argv._
   argv.profile = false
 
-  argsChg('a', 'activity')
-  argsChg('c', 'relaxcsp')
+  argsChg('a', 'activity') // _global_.args
+  argsChg('c', 'relaxcsp') // _global_.args
   argsChg('d', 'delete')
   argsChg('g', 'group')
   argsChg('h', 'help')
   argsChg('i', 'insecure')
-  argsChg('k', 'cookie')
+  argsChg('k', 'cookie') // _global_.args
   argsChg('l', 'lazylog')
-  argsChg('n', 'nosocket')
+  argsChg('n', 'nosocket') // _global_.args
   argsChg('p', 'pristine')
   argsChg('r', 'route')
   argsChg('s', 'save')
   argsChg('t', 'incognito')
   argsChg('u', 'url')
   argsChg('x', 'proxy')
-  argsChg('z', 'lazyclick')
+  argsChg('z', 'lazyclick') // _global_.args
 
   argsChg('D', 'debug')
   argsChg('G', 'nogpu')
@@ -77,6 +77,10 @@ module.exports = () => {
   obj('browser', 'chromium') // on Window: Chrome POST payload is missing!
   obj('browser', 'firefox')
   obj('browser', 'webkit')
+
+  if (argv.activity===true) {
+    argv.activity = 'rec' // rec:tag-html
+  }
 
   let saveArgs = loadProfile(prm1)
   if (prm1 && saveArgs) {
@@ -141,5 +145,5 @@ module.exports = () => {
   } else if (argv.pristine === undefined) {
     argv.pristine = true
   }
-  global.mitm._argv = {...argv}
+  global.mitm._argv = {...argv} // original argv
 }
