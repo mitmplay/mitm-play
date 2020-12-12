@@ -25,7 +25,14 @@ const _resp = {
 }
 
 module.exports = async ({ route, request, browserName }) => {
-  const { router, argv: { nosocket, proxy, verbose } } = global.mitm
+  const {
+    router,
+    argv: {
+      proxy,
+      verbose,
+      nosocket,
+    },
+  } = global.mitm
   let reqs = await extract({ route, request, browserName })
 
   // catch unknown url scheme & handle by browser

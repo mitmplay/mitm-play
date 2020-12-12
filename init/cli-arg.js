@@ -46,37 +46,37 @@ module.exports = () => {
   const [, prm1] = argv._
   argv.profile = false
 
-  argsChg('a', 'activity') // _global_.args
-  argsChg('c', 'relaxcsp') // _global_.args
-  argsChg('d', 'delete')
-  argsChg('g', 'group')
-  argsChg('h', 'help')
-  argsChg('i', 'insecure')
-  argsChg('k', 'cookie') // _global_.args
-  argsChg('l', 'lazylog')
-  argsChg('n', 'nosocket') // _global_.args
-  argsChg('p', 'pristine')
-  argsChg('r', 'route')
-  argsChg('s', 'save')
-  argsChg('t', 'incognito')
-  argsChg('u', 'url')
-  argsChg('x', 'proxy')
-  argsChg('z', 'lazyclick') // _global_.args
+  argsChg('a', 'activity'  ) // feat: _global_.args
+  argsChg('c', 'relaxcsp'  ) // feat: _global_.args
+  argsChg('d', 'delete'    )
+  argsChg('g', 'group'     )
+  argsChg('h', 'help'      )
+  argsChg('i', 'insecure'  )
+  argsChg('k', 'cookie'    ) // feat: _global_.args
+  argsChg('l', 'lazylog'   )
+  argsChg('n', 'nosocket'  ) // feat: _global_.args
+  argsChg('p', 'pristine'  )
+  argsChg('r', 'route'     )
+  argsChg('s', 'save'      )
+  argsChg('t', 'incognito' )
+  argsChg('u', 'url'       )
+  argsChg('x', 'proxy'     )
+  argsChg('z', 'lazyclick' ) // feat: _global_.args
 
-  argsChg('D', 'debug')
-  argsChg('G', 'nogpu')
-  argsChg('O', 'ommitlog')
-  argsChg('R', 'redirect')
-  argsChg('V', 'verbose')
-  argsChg('X', 'proxypac')
+  argsChg('D', 'debug'     )
+  argsChg('G', 'nogpu'     )
+  argsChg('O', 'ommitlog'  )
+  argsChg('R', 'redirect'  )
+  argsChg('V', 'verbose'   )
+  argsChg('X', 'proxypac'  )
 
-  argsChg('C', 'chromium')
-  argsChg('F', 'firefox')
-  argsChg('W', 'webkit')
+  argsChg('C', 'chromium'  )
+  argsChg('F', 'firefox'   )
+  argsChg('W', 'webkit'    )
 
   obj('browser', 'chromium') // on Window: Chrome POST payload is missing!
-  obj('browser', 'firefox')
-  obj('browser', 'webkit')
+  obj('browser', 'firefox' )
+  obj('browser', 'webkit'  )
 
   if (argv.activity===true) {
     argv.activity = 'rec' // rec:tag-html

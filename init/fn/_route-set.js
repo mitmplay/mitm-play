@@ -110,6 +110,7 @@ function _routeSet (r, namespace, print = false) {
     }
   }
 
+  // feat: _global_.args
   if (namespace === '_global_') {
     typO.unshift('args', 'logs')
   }

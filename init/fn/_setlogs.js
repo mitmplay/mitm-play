@@ -22,7 +22,7 @@ const _logs = function (_silent = false) {
 }
 
 function _setlogs () {
-  const { _argv, __tag2, routes, router } = global.mitm
+  const { _argv, __tag2, routes, router, fn: { _globalTag } } = global.mitm
   const { _global_: _gTag2 } = __tag2
   const { _global_: _gRoutes } = routes
   const { _global_: _gRouter } = router
@@ -40,7 +40,12 @@ function _setlogs () {
     if (_gRoutes.config.logs) { logs = { ...logs, ..._gRoutes.config.logs } }
     if (_gRoutes.config.args) { args = { ...args, ..._gRoutes.config.args } }
   }
+
+  // feat: _global_.args
   // re-set argv from _global_ namespace and re-apply from original argv
+  const gt = _globalTag()
+  global.mitm.__args = gt.args
+  global.mitm.__logs = gt.logs
   const argv = { ...args, ..._argv }
   global.mitm.argv = argv
   if (_gRouter) {
