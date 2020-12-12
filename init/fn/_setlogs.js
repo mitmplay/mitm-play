@@ -43,28 +43,30 @@ function _setlogs () {
 
   // feat: _global_.args
   // re-set argv from _global_ namespace and re-apply from original argv
-  const gt = _globalTag()
-  global.mitm.__args = gt.args
-  global.mitm.__logs = gt.logs
   const argv = { ...args, ..._argv }
+  const silent = _logs(logs.silent)
   global.mitm.argv = argv
+  const logs2 = {}
   if (_gRouter) {
     if (logs.websocket) {
-      logs['mitm-mock'] = true
-      logs['ws-connect'] = true
-      logs['ws-message'] = true
-      logs['ws-broadcast'] = true
+      logs2['mitm-mock'] = true
+      logs2['ws-connect'] = true
+      logs2['ws-message'] = true
+      logs2['ws-broadcast'] = true
     }
     _gRouter.config === undefined && (_gRouter.config = {})
-    _gRouter.config.logs = { ..._logs(logs.silent), ...logs }
-    _gRouter.config.args = args
     if (argv.debug || argv.verbose) {
-      _gRouter.config.logs['mitm-mock'] = true
-      _gRouter.config.logs['ws-connect'] = true
-      _gRouter.config.logs['ws-message'] = true
-      _gRouter.config.logs['ws-broadcast'] = true
+      logs2['mitm-mock'] = true
+      logs2['ws-connect'] = true
+      logs2['ws-message'] = true
+      logs2['ws-broadcast'] = true
     }
+    _gRouter.config.logs = { ...silent, ...logs, ...logs2 }
+    _gRouter.config.args = args
   }
+  const gt = _globalTag()
+  global.mitm.__args = { ...gt.args, ..._argv }  
+  global.mitm.__logs = { ...silent,...gt.logs, ...logs2}
 }
 
 module.exports = _setlogs

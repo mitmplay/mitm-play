@@ -13,30 +13,30 @@ function _globalTag() {
       _global_.config.logs = {}
     }
   }
-  const cfg  = _global_.config
-  const args = _global_.args ? {...cfg.args, ..._global_.args} : cfg.args
-  const logs = _global_.logs ? {...cfg.logs, ..._global_.logs} : cfg.logs
 
-  let obj = {args, logs}
+  let obj = {args: {}, logs: {}}
   for (const [key, value] of Object.entries(__tag2._global_)) {
-    if (value) {
-      if (key.split(':')[0]==='config') {
-        obj = {...obj, ..._global_[key]}
-      }
-    }
-  }
-  for (const [key, value] of Object.entries(__tag2._global_)) {
-    console.log(`${key}: ${value}`);
     if (value) {
       const [id] = key.split(':')
       if (id==='args' || id==='logs') {
-        if (config) {
-          obj[id] = {..._global_[key], ...obj[id]}
-        }
+        obj[id] = {..._global_[key], ...obj[id]}
       }
     }
   }
-  return obj  
+  for (const [key, value] of Object.entries(__tag2._global_)) {
+    if (value) {
+      if (key.split(':')[0]==='config') {
+        obj.args = {...obj.args, ..._global_[key].args}
+        obj.logs = {...obj.logs, ..._global_[key].logs}
+      }
+    }
+  }
+  const cfg  = _global_.config
+  const args = _global_.args ? {..._global_.args, ...cfg.args} : cfg.args
+  const logs = _global_.logs ? {..._global_.logs, ...cfg.logs} : cfg.logs
+  obj.args = {...obj.args, ...args}
+  obj.logs = {...obj.logs, ...logs}
+return obj  
 }
 
 module.exports = _globalTag
