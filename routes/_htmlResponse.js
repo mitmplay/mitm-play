@@ -9,7 +9,7 @@ const { script_src, e_head, injectWS } = _inject
 const htmlResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __flag, fn: { _skipByTag } } = global.mitm
+  const { __args, __flag, fn: { _skipByTag } } = global.mitm
 
   if (match && !_skipByTag(match, 'html')) {
     const { argv } = global.mitm
@@ -18,8 +18,8 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
       if (contentType && contentType.match('text/html')) {
         const len = match.log.length
         // feat: activity
-        if (argv.activity) {
-          const [actyp, actag] = argv.activity.split(':')
+        if (__args.activity) {
+          const [actyp, actag] = __args.activity.split(':')
           if (actag && match.route.tags.match(`(^| )${actag}( |$)`)) {
             global.mitm.activity = {} // init rec/play sequences
           }

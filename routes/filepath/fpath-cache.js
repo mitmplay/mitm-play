@@ -3,7 +3,7 @@ const filePath = require('./file-path')
 
 module.exports = ({ match, reqs }) => {
   let { host, route: { at, path, file } } = match
-  const { argv, activity } = global.mitm
+  const { __args } = global.mitm
   const fpath = filename(match)
   let fpath1, fpath2;
 
@@ -41,7 +41,7 @@ module.exports = ({ match, reqs }) => {
   if (file) {
     let fname = `${file}~${method}`
     // feat: activity
-    if (argv.activity && match.route.recs) {
+    if (__args.activity && match.route.recs) {
       const activity = global.mitm.activity
       if (activity[fname]===undefined) {
         activity[fname] = -1

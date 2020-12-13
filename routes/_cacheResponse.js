@@ -13,7 +13,7 @@ const { matched, searchFN } = _match
 const cacheResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __flag, fn: { _skipByTag, tilde } } = global.mitm
+  const { __args, __flag, fn: { _skipByTag, tilde } } = global.mitm
   let resp, resp2
 
   if (match && !_skipByTag(match, 'cache')) {
@@ -26,8 +26,8 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     let remote = true
     // feat: activity
     let actyp, actag
-    if (argv.activity) {
-      [actyp, actag] = argv.activity.split(':')
+    if (__args.activity) {
+      [actyp, actag] = __args.activity.split(':')
     }
     if ((!actyp || actyp==='play') && fs.existsSync(fpath2)) {
       // get from cache
@@ -37,12 +37,12 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         if (!ctype(match, { headers })) {
           return { match: undefined, resp }
         }
-        if (setCookie && argv.cookie) {
+        if (setCookie && __args.cookie) {
           headers['set-cookie'] = resetCookies(setCookie)
         }
         fpath1 = `${fpath1}.${_ext({ headers })}`
         if (__flag.cache && !match.hidden && !hidden) {
-          if (!argv.ommit.cache) {
+          if (!__args.ommit.cache) {
             if (match.route.path) {
               console.log(c.green(match.log))
             } else {

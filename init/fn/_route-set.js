@@ -12,10 +12,10 @@ function toRegex (str, flags = '') {
 
 function routerSet (router, typ, str) {
   let regex // feat: url start with method: ie: GET:/api/login
-  const method = str.match(/^(GET|PUT|POST|DELETE):(.+)/)
+  const method = str.match(/^(GET|PUT|POST|DELETE):(hidden:|)(.+)/)
   if (method) {
     router[typ][`${str}~method`] = method[1]
-    regex = toRegex(method[2])
+    regex = toRegex(method.pop())
   } else {
     regex = toRegex(str)
   }

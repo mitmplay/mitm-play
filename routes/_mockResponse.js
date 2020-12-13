@@ -22,7 +22,7 @@ const mock = ({ url }) => {
 
 const mockResponse = async function ({ reqs, route }, _3d) {
   const search = searchFN('mock', reqs)
-  const { __flag, argv, fn: { _skipByTag } } = global.mitm
+  const { __args, __flag, fn: { _skipByTag } } = global.mitm
   const match = _3d ? search('_global_') : matched(search, reqs)
 
   if (match && !_skipByTag(match, 'mock')) {
@@ -84,7 +84,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           if (fpath2) {
             const json = JSON.parse(await fs.readFile(fpath2))
             const { general: { status }, setCookie, respHeader: headers } = json
-            if (setCookie && argv.cookie) {
+            if (setCookie && __args.cookie) {
               headers['set-cookie'] = resetCookies(setCookie)
             }
             resp.status = status
@@ -109,10 +109,8 @@ const mockResponse = async function ({ reqs, route }, _3d) {
       }
     }
     if (__flag.mock && !match.hidden && !hidden) {
-      if (!match.url.match('/mitm-play/websocket')) {
-        if (!(match.url.match('mitm-play') && !__flag['mitm-mock'])) {
-          console.log(c.cyanBright(match.log))
-        }
+      if (!match.key.match(':hidden:')) {
+        console.log(c.cyanBright(match.log))
       }
     }
     return {match, resp}
