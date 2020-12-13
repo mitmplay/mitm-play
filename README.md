@@ -757,7 +757,8 @@ $ mitm-play --help
     -z --lazyclick       delay ~700ms click action
 
     -D --debug           show ws messages
-    -G --nogpu           set chromium without/'all' GPU
+    -G --nogpu           set chromium without GPU
+    -H --nohost          set logs without host name
     -O --ommitlog        removed unnecessary console log
     -R --redirect        set redirection: true/false/manual
     -V --verbose         show more detail of console log
@@ -767,7 +768,7 @@ $ mitm-play --help
     -F --firefox         run firefox browser
     -W --webkit          run webkit browser
     
-  v0.8.xx
+  v0.8.xxx
 ```
 </details>
 <details><summary><b>-u --url</b></summary>
@@ -940,6 +941,16 @@ $ mitm-play -G  <OR>
 $ mitm-play --nogpu
 ```
 </details>
+<details><summary><b>-H --nohost</b></summary>
+
+set logs without host name
+
+```
+$ mitm-play -H  <OR>
+$ mitm-play --nohost
+```
+</details>
+
 <details><summary><b>-O --ommitlog</b></summary>
 
 hide some console.log

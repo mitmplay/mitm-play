@@ -14,7 +14,7 @@ function typTags (typ, namespace) {
 }
 
 const searchArr = ({ typ: typs, url, browserName }) => {
-  const { router, routes } = global.mitm
+  const { __args, router, routes } = global.mitm
 
   return function (nspace) {
     const namespace = _nameSpace(nspace)
@@ -32,7 +32,7 @@ const searchArr = ({ typ: typs, url, browserName }) => {
             if (arr) {
               const { host, origin, pathname, search } = new URL(url)
               const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
-              const log = `${browser[browserName]} ${typ} (${origin}${msg}).match(${key})`
+              const log = `${browser[browserName]} ${typ} (${__args.nohost ? '' : origin}${msg}).match(${key})`
               const hidden = typ.indexOf(':hidden') > -1
               const matched = {
                 namespace,
@@ -57,7 +57,7 @@ const searchArr = ({ typ: typs, url, browserName }) => {
 
 const searchFN = (typs, { url, method, browserName }) => {
 // const {router,routes, data} = global.mitm;
-  const { router, routes, __tag3 } = global.mitm
+  const { __args, __tag3, router, routes } = global.mitm
 
   return function search (nspace) {
     const namespace = _nameSpace(nspace)
@@ -96,7 +96,7 @@ const searchFN = (typs, { url, method, browserName }) => {
         if (arr && (_method === undefined || _method === method)) {
           const { host, origin, pathname, search } = new URL(url)
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
-          const log = `${browser[browserName]} ${typ} (${origin}${msg}).match(${key})`
+          const log = `${browser[browserName]} ${typ} (${__args.nohost ? '' : origin}${msg}).match(${key})`
           const hidden = typ.indexOf(':hidden') > -1
           const matched = {
             contentType: obj[`${key}~contentType`],

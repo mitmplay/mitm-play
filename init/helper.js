@@ -28,6 +28,7 @@ module.exports = (_package) => {
 
     -D --debug    \t show ws messages
     -G --nogpu    \t set chromium without GPU
+    -H --nohost   \t set logs without host name
     -O --ommitlog \t removed unnecessary console log
     -R --redirect \t set redirection: true/false/manual
     -V --verbose  \t show more detail of console log
