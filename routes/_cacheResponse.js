@@ -44,7 +44,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         fpath1 = `${fpath1}.${_ext({ headers })}`
         if (__flag.cache && !match.hidden && !hidden) {
           if (!__args.ommit.cache) {
-            if (actyp && match.route.rec) {
+            if (actyp && match.route.seq) {
               msg += c.blueBright(`[${actyp}:${fpath1.split('/').pop()}]`)
             }
             if (match.route.path) {
@@ -70,17 +70,17 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
       // get from remote
       responseHandler.push(async resp => {
         // feat: activity
-        if (!match.rec && fpath1.match('@')) {
+        if (!match.route.seq && fpath1.match(/~\w+@\d+_/)) {
           if (__flag.cache && !match.hidden) {
             msg = c.grey(msg)
             const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
-            msg += actyp==='play' ? c.red(msg2) : c.cyan(fpath1)
+            msg += actyp==='play' ? c.red(msg2) : c.cyan(msg2)
             console.log(msg)
           }
         } else if (ctype(match, resp)) {
           msg = c.magentaBright(msg)
           fpath1 = `${fpath1}.${_ext(resp)}`
-          if (actyp && match.route.rec) {
+          if (actyp && match.route.seq) {
             const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
             msg += actyp==='play' ? c.red(msg2) : c.blueBright(msg2)
           }

@@ -39,20 +39,19 @@ module.exports = ({ match, reqs }) => {
   }
   const { method } = reqs
   if (file) {
-    let fname = file
+    const id = `${file}~${method}`
+    let fname = id
     // feat: activity
-    if (__args.activity && match.route.rec) {
+    if (__args.activity && match.route.seq) {
       const { activity } = global.mitm
-      const id = `${file}~${method}`
       if (activity[id]===undefined) {
         activity[id] = -1
       }
       activity[id] += 1
       if (activity[id]>0) {
-        fname += `@${activity[fname]}`
+        fname += `@${activity[id]}_`
       }
     }
-    fname += `~${method}`
     fpath1 = `${_root}/${fname}`
     fpath2 = `${_root}/$/${fname}.json`
   } else {

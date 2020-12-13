@@ -16,17 +16,18 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/html')) {
+        let msg = c.yellowBright(match.log)
         const len = match.log.length
         // feat: activity
         if (__args.activity) {
           const [actyp, actag] = __args.activity.split(':')
           if (actag && match.route.tags.match(`(^| )${actag}( |$)`)) {
             global.mitm.activity = {} // init rec/play sequences
-            match.log += `[${actag}]`
+            msg += c.blueBright(`[${actyp}:${actag}]`)
           }
         }
         if (__flag.html && !match.hidden && !match.route.hidden) {
-          console.log(`${'-'.repeat(len)}\n${c.yellowBright(match.log)}`)
+          console.log(`${'-'.repeat(len)}\n${msg}`)
         }
         if (typeof (match.route) === 'string') {
           resp.body = match.route
