@@ -4,9 +4,9 @@ const _match = require('./match')
 const { injectWS } = require('./inject')
 const setSession = require('./set-session')
 const { matched, searchKey, searchArr } = _match
-const { fn: { _nameSpace }, router } = global.mitm
 
 const addWebSocket = async function (reqs, responseHandler, _3d) {
+  const { __flag, fn: { _nameSpace } } = global.mitm
   const { url, headers, browserName } = reqs
   const accpt = headers.accept + ''
   const { origin, referer } = headers
@@ -18,8 +18,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
     const match = _3d ? search('_global_') : matched(search, reqs)
     setSession(reqs, true)
     if (match) {
-      const { logs } = router._global_.config
-      if (logs.nosocket && !match.hidden) {
+      if (__flag.nosocket && !match.hidden) {
         const { origin, pathname } = new URL(url)
         console.log(c.redBright(`>>> nosocket (${origin}${pathname})`))
       }

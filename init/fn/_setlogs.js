@@ -41,7 +41,6 @@ function _setlogs () {
     if (_gRoutes.config.args) { args = { ...args, ..._gRoutes.config.args } }
   }
 
-  // feat: _global_.args
   // re-set argv from _global_ namespace and re-apply from original argv
   const argv = { ...args, ..._argv }
   const silent = _logs(logs.silent)
@@ -64,9 +63,10 @@ function _setlogs () {
     _gRouter.config.logs = { ...silent, ...logs, ...logs2 }
     _gRouter.config.args = args
   }
+  // feat: _global_.flag
   const gt = _globalTag()
   global.mitm.__args = { ...gt.args, ..._argv }  
-  global.mitm.__logs = { ...silent,...gt.logs, ...logs2}
+  global.mitm.__flag = { ...silent,...gt.flag, ...logs2}
 }
 
 module.exports = _setlogs

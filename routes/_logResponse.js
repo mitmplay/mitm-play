@@ -12,8 +12,7 @@ const { matched, searchFN } = _match
 const logResponse = async function (reqs, responseHandler, _3d, cache) {
   const search = searchFN('log', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { router, fn: { _skipByTag } } = global.mitm
-  const { logs } = router._global_.config
+  const { __flag, fn: { _skipByTag } } = global.mitm
 
   if (match && !_skipByTag(match, 'log')) {
     const { log, response, hidden } = match.route
@@ -24,7 +23,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
           return resp
         }
         let { fpath1, fpath2 } = fpathflat({ match, reqs, stamp })
-        if (logs.log && !match.hidden && !hidden) {
+        if (__flag.log && !match.hidden && !hidden) {
           console.log(c.bold.blueBright(match.log))
         }
         if (log) {

@@ -7,13 +7,12 @@ const { matched, searchFN } = _match
 const chgRequest = async function (reqs, _3d) {
   const search = searchFN('request', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { router, argv, fn: { _skipByTag } } = global.mitm
+  const { __flag, argv, fn: { _skipByTag } } = global.mitm
 
   let result = match && !_skipByTag(match, 'request')
   if (result) {
-    const { logs } = router._global_.config
     const { request, session, hidden } = match.route
-    if (logs.request && !match.hidden && !hidden) {
+    if (__flag.request && !match.hidden && !hidden) {
       if (!match.url.match('/mitm-play/websocket')) {
         if (!argv.ommit.request) {
           console.log(c.cyanBright(match.log))

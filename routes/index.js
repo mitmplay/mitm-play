@@ -26,7 +26,7 @@ const _resp = {
 
 module.exports = async ({ route, request, browserName }) => {
   const {
-    router,
+    __flag,
     argv: {
       proxy,
       verbose,
@@ -47,9 +47,8 @@ module.exports = async ({ route, request, browserName }) => {
 
   const _3ds = _3rdparties(reqs)
   const matchSkip = await _skipResponse(reqs, _3ds)
-  const { logs } = router._global_.config
   if (matchSkip) {
-    if (logs.skip && !matchSkip.hidden) {
+    if (__flag.skip && !matchSkip.hidden) {
       console.log(c.grey(matchSkip.log))
     }
     routeCall(route, 'continue')
@@ -77,7 +76,7 @@ module.exports = async ({ route, request, browserName }) => {
     return
   }
 
-  // --resp can be undefined or local cached & can skip logs (.nolog)
+  // --resp can be undefined or local cached & can skip __flag (.nolog)
   const { match, resp } = await _cacheResponse(reqs, responseHandler, _3ds)
 
   // --order is important, log must not contain the body modification
@@ -110,14 +109,14 @@ module.exports = async ({ route, request, browserName }) => {
       }
 
       const { origin, pathname } = new URL(url)
-      if (!rqs2 && logs) {
+      if (!rqs2 && __flag) {
         const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
         if (_3ds) {
-          if (logs['no-namespace']) {
+          if (__flag['no-namespace']) {
             console.log(c.redBright(`${browser[browserName]} no-namespace (${origin}${msg})`))
           }
         } else {
-          if (logs['referer-reqs']) {
+          if (__flag['referer-reqs']) {
             console.log(c.redBright.italic(`${browser[browserName]} referer-reqs (${origin}${msg})`))
           }
         }

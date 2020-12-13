@@ -13,14 +13,13 @@ const { matched, searchFN } = _match
 const cacheResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { router, fn: { _skipByTag, tilde } } = global.mitm
+  const { __flag, fn: { _skipByTag, tilde } } = global.mitm
   let resp, resp2
 
   if (match && !_skipByTag(match, 'cache')) {
     const { url } = reqs
     const { route } = match
     const { response, hidden } = route
-    const { logs } = router._global_.config
     const { argv } = global.mitm
 
     let { fpath1, fpath2 } = fpathcache({ match, reqs })
@@ -42,7 +41,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           headers['set-cookie'] = resetCookies(setCookie)
         }
         fpath1 = `${fpath1}.${_ext({ headers })}`
-        if (logs.cache && !match.hidden && !hidden) {
+        if (__flag.cache && !match.hidden && !hidden) {
           if (!argv.ommit.cache) {
             if (match.route.path) {
               console.log(c.green(match.log))
@@ -68,7 +67,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
       responseHandler.push(async resp => {
         // feat: activity
         if (actyp && !match.route.recs) {
-          if (logs.cache && !match.hidden) {
+          if (__flag.cache && !match.hidden) {
             console.log(c.grey(match.log))
           }
         } else if (ctype(match, resp)) {
@@ -77,7 +76,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             const msg = ` ${actyp}(${fpath1.split('/').pop()})`
             match.log += actyp==='play' ? c.red(msg) : msg
           }
-          if (logs.cache && !match.hidden) {
+          if (__flag.cache && !match.hidden) {
             if (hidden !== 2) {
               console.log(c.magentaBright(match.log))
             }

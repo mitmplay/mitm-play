@@ -110,9 +110,9 @@ function _routeSet (r, namespace, print = false) {
     }
   }
 
-  // feat: _global_.args
+  // feat: _global_.flag
   if (namespace === '_global_') {
-    typO.unshift('args', 'logs')
+    typO.unshift('args', 'flag')
   }
   for (const typs of typO) {
     const typlist = _typlist(typs)

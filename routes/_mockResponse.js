@@ -22,11 +22,10 @@ const mock = ({ url }) => {
 
 const mockResponse = async function ({ reqs, route }, _3d) {
   const search = searchFN('mock', reqs)
-  const { argv, fn: { _skipByTag }, router } = global.mitm
+  const { __flag, argv, fn: { _skipByTag } } = global.mitm
   const match = _3d ? search('_global_') : matched(search, reqs)
 
   if (match && !_skipByTag(match, 'mock')) {
-    const { logs } = router._global_.config
     const { response, hidden } = match.route
     let resp = mock(reqs)
     if (typeof (match.route) === 'string') {
@@ -109,9 +108,9 @@ const mockResponse = async function ({ reqs, route }, _3d) {
         resp2 && (resp = { ...resp, ...resp2 })
       }
     }
-    if (logs.mock && !match.hidden && !hidden) {
+    if (__flag.mock && !match.hidden && !hidden) {
       if (!match.url.match('/mitm-play/websocket')) {
-        if (!(match.url.match('mitm-play') && !logs['mitm-mock'])) {
+        if (!(match.url.match('mitm-play') && !__flag['mitm-mock'])) {
           console.log(c.cyanBright(match.log))
         }
       }

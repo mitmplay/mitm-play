@@ -7,12 +7,11 @@ const { matched, searchFN } = _match
 const allRequest = async function (reqs, responseHandler, _3d) {
   const search = searchFN('response', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { router, fn: { _skipByTag } } = global.mitm
-  const { logs } = router._global_.config
+  const { __flag, fn: { _skipByTag } } = global.mitm
 
   if (match && !_skipByTag(match, 'response')) {
     const { response, contentType, hidden } = match.route
-    if (logs.response && !match.hidden && !hidden) {
+    if (__flag.response && !match.hidden && !hidden) {
       console.log(c.cyanBright(match.log))
     }
     responseHandler.push(resp => {
