@@ -23,6 +23,9 @@ function _globalTag() {
       }
     }
   }
+  const {args: _args, flag: _flag} = obj
+  _global_.args && (obj.args =  {...obj.args, ..._global_.args})
+  _global_.flag && (obj.flag =  {...obj.flag, ..._global_.flag})
   for (const [key, value] of Object.entries(__tag2._global_)) {
     if (value) {
       if (key.split(':')[0]==='config') {
@@ -36,7 +39,18 @@ function _globalTag() {
   const logs = _global_.logs ? {..._global_.logs, ...cfg.logs} : cfg.logs
   obj.args = {...obj.args, ...args}
   obj.flag = {...obj.flag, ...logs}
-return obj  
+
+  for (const [key, value] of Object.entries(_args)) {
+    if (obj.args[key]!==value) {
+      console.log(c.red(`Warning: overwritten args.${key}`))
+    }
+  }
+  for (const [key, value] of Object.entries(_flag)) {
+    if (obj.flag[key]!==value) {
+      console.log(c.red(`Warning: overwritten flag.${key}`))
+    }
+  }
+return obj
 }
 
 module.exports = _globalTag
