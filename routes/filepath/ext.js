@@ -12,6 +12,7 @@ const types = {
   xml: 'xml',
   css: 'css',
   plain: 'txt',
+  woff2: 'woff2',
   mpegURL: 'm3u8',
   javascript: 'js'
 }

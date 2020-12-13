@@ -22,6 +22,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
           const [actyp, actag] = __args.activity.split(':')
           if (actag && match.route.tags.match(`(^| )${actag}( |$)`)) {
             global.mitm.activity = {} // init rec/play sequences
+            match.log += `[${actag}]`
           }
         }
         if (__flag.html && !match.hidden && !match.route.hidden) {

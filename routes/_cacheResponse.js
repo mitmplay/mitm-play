@@ -26,6 +26,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     let remote = true
     // feat: activity
     let actyp, actag
+    let msg = match.log
     if (__args.activity) {
       [actyp, actag] = __args.activity.split(':')
     }
@@ -43,10 +44,13 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         fpath1 = `${fpath1}.${_ext({ headers })}`
         if (__flag.cache && !match.hidden && !hidden) {
           if (!__args.ommit.cache) {
+            if (actyp && match.route.rec) {
+              msg += c.blueBright(`[${actyp}:${fpath1.split('/').pop()}]`)
+            }
             if (match.route.path) {
-              console.log(c.green(match.log))
+              console.log(c.green(msg))
             } else {
-              console.log(c.greenBright(match.log))
+              console.log(c.greenBright(msg))
             }
           }
         }
@@ -66,19 +70,23 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
       // get from remote
       responseHandler.push(async resp => {
         // feat: activity
-        if (actyp && !match.route.recs) {
+        if (!match.rec && fpath1.match('@')) {
           if (__flag.cache && !match.hidden) {
-            console.log(c.grey(match.log))
+            msg = c.grey(msg)
+            const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
+            msg += actyp==='play' ? c.red(msg2) : c.cyan(fpath1)
+            console.log(msg)
           }
         } else if (ctype(match, resp)) {
+          msg = c.magentaBright(msg)
           fpath1 = `${fpath1}.${_ext(resp)}`
-          if (actyp && match.route.recs) {
-            const msg = ` ${actyp}(${fpath1.split('/').pop()})`
-            match.log += actyp==='play' ? c.red(msg) : msg
+          if (actyp && match.route.rec) {
+            const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
+            msg += actyp==='play' ? c.red(msg2) : c.blueBright(msg2)
           }
           if (__flag.cache && !match.hidden) {
             if (hidden !== 2) {
-              console.log(c.magentaBright(match.log))
+              console.log(msg)
             }
           }
           const meta = metaResp({ reqs, resp })
