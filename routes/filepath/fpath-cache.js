@@ -49,7 +49,7 @@ module.exports = ({ match, reqs }) => {
       }
       activity[id] += 1
       if (activity[id]>0) {
-        fname += `@${activity[id]}_`
+        fname += `_${activity[id]}_`  // feat: seq
       }
     }
     fpath1 = `${_root}/${fname}`

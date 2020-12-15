@@ -70,7 +70,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
       // get from remote
       responseHandler.push(async resp => {
         // feat: activity
-        if (!match.route.seq && fpath1.match(/~\w+@\d+_/)) {
+        if (!match.route.seq && fpath1.match(/~\w+_\d+_/)) { // feat: seq
           if (__flag.cache && !match.hidden) {
             msg = c.grey(msg)
             const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
