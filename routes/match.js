@@ -32,7 +32,7 @@ const searchArr = ({ typ: typs, url, browserName }) => {
             if (arr) {
               const { host, origin, pathname, search } = new URL(url)
               const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
-              const log = `${browser[browserName]} ${typ} (${__args.nohost ? '' : origin}${msg}).match(${key})`
+              const log = `${browser[browserName]} ${typ} (${key}).url(${__args.nohost ? '' : origin}${msg})`
               const hidden = typ.indexOf(':hidden') > -1
               const matched = {
                 namespace,
@@ -96,7 +96,7 @@ const searchFN = (typs, { url, method, browserName }) => {
         if (arr && (_method === undefined || _method === method)) {
           const { host, origin, pathname, search } = new URL(url)
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
-          const log = `${browser[browserName]} ${typ} (${__args.nohost ? '' : origin}${msg}).match(${key})`
+          const log = `${browser[browserName]} ${typ} (${key}).url(${__args.nohost ? '' : origin}${msg})`
           const hidden = typ.indexOf(':hidden') > -1
           const matched = {
             contentType: obj[`${key}~contentType`],
