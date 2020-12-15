@@ -1,5 +1,5 @@
 module.exports = function ({ url }) {
-  const { argv, client, version, fn: { _nameSpace } } = global.mitm
+  const { argv, path, client, version, fn: { _nameSpace } } = global.mitm
   const namespace = _nameSpace(url)
   const { routes } = global.mitm
   let macros = []
@@ -12,6 +12,7 @@ module.exports = function ({ url }) {
   macros = `,\n  "macros": {${macros.join(',')}\n  }\n}`
   let json = {
     argv,
+    path,
     client,
     routes,
     files: {

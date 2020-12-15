@@ -12,7 +12,6 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
   const { __args, __flag, fn: { _skipByTag } } = global.mitm
 
   if (match && !_skipByTag(match, 'html')) {
-    const { argv } = global.mitm
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/html')) {
@@ -23,7 +22,8 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
           const [actyp, actag] = __args.activity.split(':')
           if (actag && match.route.tags.match(`(^| )${actag}( |$)`)) {
             global.mitm.activity = {} // init rec/play sequences
-            msg += c.blueBright(`[${actyp}:${actag}]`)
+            const msg2 = `[${actyp}:${actag}]`
+            msg += actyp==='rec' ? c.red(msg2) : c.blueBright(msg2)
           }
         }
         if (__flag.html && !match.hidden && !match.route.hidden) {

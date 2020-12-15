@@ -23,7 +23,8 @@ module.exports = () => {
   const { app, route } = global.mitm.path
   const glob = [
     `${app}/*.md`,
-    `${route}/**/*.md`
+    `${route}/**/*.md`,
+    `${app}/markdown/*.md`
   ]
 
   // Initialize watcher.

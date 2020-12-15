@@ -82,7 +82,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           fpath1 = `${fpath1}.${_ext(resp)}`
           if (actyp && match.route.seq) {
             const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
-            msg += actyp==='play' ? c.red(msg2) : c.blueBright(msg2)
+            msg += actyp==='rec' ? c.red(msg2) : c.cyan(msg2)
           }
           if (__flag.cache && !match.hidden) {
             if (hidden !== 2) {

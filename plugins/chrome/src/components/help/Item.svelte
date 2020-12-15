@@ -10,36 +10,35 @@ function clickHandler(e) {
     source.update(n => {
       return {
         ...n,
-        content
+        content,
+        fpath: item.fpath
       }
     })
   });
 }
+
+function title(t) {
+  const string = t.title.split('.')[0].toLowerCase()
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 </script>
 
-<tr class="tr">
-  <td>
-    <div class="td-item {$source.fpath===item.fpath}"
-      data-item={item.element}
-      on:click="{clickHandler}"
-    >{item.title}</div>
-  </td>
-</tr>
+<div class="td-item {$source.fpath===item.fpath}"
+  data-item={item.element}
+  on:click="{clickHandler}"
+>{title(item)}</div>
 
 <style>
 .td-item:hover {
   color: blue;
   font-weight: bolder;
 }
-td {
-  border-bottom: 3px solid #c0d8cca1;
-}
 .td-item,
 .td-show {
   cursor: pointer;
   padding: 0.1rem;
   line-height: 15px;
-  padding-left: 5px;  
+  padding-left: 12px;
 }
 .td-item.true {
   color: blue;
