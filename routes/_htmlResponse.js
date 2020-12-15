@@ -22,8 +22,8 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
           const [actyp, actag] = __args.activity.split(':')
           if (actag && match.route.tags.match(`(^| )${actag}( |$)`)) {
             global.mitm.activity = {} // init rec/play sequences
-            const msg2 = `[${actyp}:${actag}]`
-            msg += actyp==='rec' ? c.red(msg2) : c.blueBright(msg2)
+            const color = {rec: 'red', mix: 'magenta'}[actyp] || 'blueBright'
+            msg +=  c[color]( `[${actyp}:${actag}]`)
           }
         }
         if (__flag.html && !match.hidden && !match.route.hidden) {

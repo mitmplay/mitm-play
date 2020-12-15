@@ -30,7 +30,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     if (__args.activity) {
       [actyp, actag] = __args.activity.split(':')
     }
-    if ((!actyp || actyp==='play') && fs.existsSync(fpath2)) {
+    if ((!actyp || actyp==='play' || (actyp==='mix' && !route.seq)) && fs.existsSync(fpath2)) {
       // get from cache
       try {
         const json = JSON.parse(await fs.readFile(fpath2))
@@ -44,10 +44,10 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         fpath1 = `${fpath1}.${_ext({ headers })}`
         if (__flag.cache && !match.hidden && !hidden) {
           if (!__args.ommit.cache) {
-            if (actyp && match.route.seq) {
+            if (actyp && route.seq) {
               msg += c.blueBright(`[${actyp}:${fpath1.split('/').pop()}]`)
             }
-            if (match.route.path) {
+            if (route.path) {
               console.log(c.green(msg))
             } else {
               console.log(c.greenBright(msg))
@@ -70,7 +70,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
       // get from remote
       responseHandler.push(async resp => {
         // feat: activity
-        if (!match.route.seq && fpath1.match(/~\w+_\d+_/)) { // feat: seq
+        if (!route.seq && fpath1.match(/~\w+_\d+_/)) { // feat: seq
           if (__flag.cache && !match.hidden) {
             msg = c.grey(msg)
             const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
@@ -80,9 +80,9 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         } else if (ctype(match, resp)) {
           msg = c.magentaBright(msg)
           fpath1 = `${fpath1}.${_ext(resp)}`
-          if (actyp && match.route.seq) {
-            const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
-            msg += actyp==='rec' ? c.red(msg2) : c.cyan(msg2)
+          if (route.seq && actyp) {
+            const color = {rec: 'red', mix: 'magenta'}[actyp] || 'cyan'
+            msg += c[color](`[${actyp}:${fpath1.split('/').pop()}]`)
           }
           if (__flag.cache && !match.hidden) {
             if (hidden !== 2) {
