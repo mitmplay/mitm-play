@@ -30,60 +30,78 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     if (__args.activity) {
       [actyp, actag] = __args.activity.split(':')
     }
-    if ((!actyp || actyp==='play' || (actyp==='mix' && !route.seq)) && fs.existsSync(fpath2)) {
+    if ((!actyp || actyp==='play' || (actyp==='mix' && !route.seq)) ) {
       // get from cache
-      try {
-        const json = JSON.parse(await fs.readFile(fpath2))
-        const { general: { status }, setCookie, respHeader: headers } = json
-        if (!ctype(match, { headers })) {
-          return { match: undefined, resp }
+      let getFromCache = true
+      const fpath0 = fpath2.replace(/_\d+_/,'')
+      if (!fs.existsSync(fpath2)) {
+        if (fpath0!==fpath2 && fs.existsSync(fpath0)) {
+          msg += c.red(`[${fpath2.match(/\$\/(.+)\.json/)[1]}]`)
+          fpath1 = fpath1.replace(/_\d+_/,'')
+          fpath2 = fpath0
+        } else {
+          getFromCache = false
         }
-        if (setCookie && __args.cookie) {
-          headers['set-cookie'] = resetCookies(setCookie)
-        }
-        fpath1 = `${fpath1}.${_ext({ headers })}`
-        if (__flag.cache && !match.hidden && !hidden) {
-          if (!__args.ommit.cache) {
-            if (actyp && route.seq) {
-              msg += c.blueBright(`[${actyp}:${fpath1.split('/').pop()}]`)
+      }
+      if (getFromCache) {
+        try {
+          const json = JSON.parse(await fs.readFile(fpath2))
+          const { general: { status }, setCookie, respHeader: headers } = json
+          const fname1 = `${fpath1}.${_ext({ headers })}`
+          if (!ctype(match, { headers })) {
+            return { match: undefined, resp }
+          }
+          if (setCookie && __args.cookie) {
+            headers['set-cookie'] = resetCookies(setCookie)
+          }
+          if (__flag.cache && !match.hidden && !hidden) {
+            if (!__args.ommit.cache) {
+              if (actyp && route.seq) {
+                msg += c.blueBright(`[${actyp}:${fname1.split('/').pop()}]`)
+              }
+              msg = route.path ? c.green(msg) :  c.greenBright(msg)
+              __args.fullog && console.log(msg) // feat: fullog
             }
-            msg = route.path ? c.green(msg) :  c.greenBright(msg)
-            __args.fullog && console.log(msg) // feat: fullog
+          }
+          remote = false
+          const body = await fs.readFile(fname1)
+          resp = { url, status, headers, body }
+          if (response) {
+            resp2 = response(resp, reqs, match)
+            resp2 && (resp = { ...resp, ...resp2 })
+          }
+        } catch (error) {
+          const msg1 = c.red(`>>> cache (${tilde(fpath1)})`)
+          const msg2 = c.red(`   Error in ${error}`)
+          msg = `${msg1}\n${msg2}`
+          __args.fullog && console.log(msg) // feat: fullog
+          resp = {
+            url,
+            status: 500,
+            headers: {'content-type': 'text/plain'},
+            body: `Mitm-play - Cache error!\n\nError in ${error}`.replace(', ','\n')
           }
         }
-        const body = await fs.readFile(fpath1)
-        resp = { url, status, headers, body }
-        if (response) {
-          resp2 = response(resp, reqs, match)
-          resp2 && (resp = { ...resp, ...resp2 })
-        }
-        remote = false
-      } catch (error) {
-        const msg1 = c.red(`>>> cache (${tilde(fpath1)})`)
-        const msg2 = c.red(`   Error in ${error}`)
-        msg = `${msg1}\n${msg2}`
-        __args.fullog && console.log(msg) // feat: fullog
-        resp = {}
+        resp.log = msg ? {msg, mtyp: 'cache'} : undefined
       }
-      resp.log = msg ? {msg, mtyp: 'cache'} : undefined
     }
     if (remote) {
       // get from remote
       responseHandler.push(async resp => {
         // feat: activity
-        if (!route.seq && fpath1.match(/~\w+_\d+_/)) { // feat: seq
+        const fname1 = `${fpath1}.${_ext(resp)}`
+        if (!route.seq && fname1.match(/~\w+_\d+_/)) { // feat: seq
           if (__flag.cache && !match.hidden) {
             msg = c.grey(msg)
-            const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
+            const msg2 = `[${actyp}:${fname1.split('/').pop()}]`
             msg += actyp==='play' ? c.red(msg2) : c.cyan(msg2)
             __args.fullog && console.log(msg) // feat: fullog
           }
         } else if (ctype(match, resp)) {
           msg = c.magentaBright(msg)
-          fpath1 = `${fpath1}.${_ext(resp)}`
           if (route.seq && actyp) {
-            const color = {rec: 'red', mix: 'magenta'}[actyp] || 'cyan'
-            msg += c[color](`[${actyp}:${fpath1.split('/').pop()}]`)
+            const color = {mix: 'magenta'}[actyp] || 'red'
+            msg += c[color](`[${actyp}:${fname1.split('/').pop()}]`)
           }
           if (__flag.cache && !match.hidden) {
             if (hidden !== 2) {
@@ -92,7 +110,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           }
           const meta = metaResp({ reqs, resp })
           const body = resp.body
-          filesave({ fpath1, body }, { fpath2, meta }, 'cache')
+          filesave({ fpath1: fname1, body }, { fpath2, meta }, 'cache')
           if (response) {
             resp2 = response(resp, reqs, match)
             resp2 && (resp = { ...resp, ...resp2 })
