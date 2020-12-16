@@ -92,9 +92,9 @@ On browser console type "ws"`
 
   let _stamp = []
   const delayCapture = global._debounce(async function (data) {
-    const { namespace, host, fname, browser, _page } = data
+    const { namespace, host, fname, browser, _page, session } = data
     const page = await global.mitm.browsers[browser].currentTab(_page)
-    const { routes, __page, path: { home }, argv: { group } } = global.mitm
+    const { routes, path: { home }, argv: { group } } = global.mitm
     const stamp = _stamp[0]
     let at = 'sshot'
     _stamp = []
@@ -111,8 +111,6 @@ On browser console type "ws"`
     } else {
       root = `${home}/${browser}/log`
     }
-    const _session = Object.keys(__page[_page].session).pop()
-    const session = `${_page}-${_session}`
     let path
     if (at.match(/^\^/)) {
       at = at.slice(1)
@@ -125,7 +123,10 @@ On browser console type "ws"`
   }, 400, 'screenshot')
 
   function $screenshot ({ data }) {
+    const { __page, _page } = global.mitm
     _stamp.push((new Date()).toISOString().replace(/[:-]/g, ''))
+    const _session = Object.keys(__page[_page].session).pop()
+    data.session = `${_page}-${_session}`
     delayCapture(data)
   }
 
