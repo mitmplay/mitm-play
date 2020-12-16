@@ -10,12 +10,13 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __args, __flag, fn: { _skipByTag } } = global.mitm
+  let resp, msg
 
   if (match && !_skipByTag(match, 'html')) {
     responseHandler.push(resp => {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/html')) {
-        let msg = c.yellowBright(match.log)
+        msg = c.yellowBright(match.log)
         const len = match.log.length
         // feat: activity
         if (__args.activity) {
@@ -27,7 +28,8 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
           }
         }
         if (__flag.html && !match.hidden && !match.route.hidden) {
-          console.log(`${'-'.repeat(len)}\n${msg}`)
+          console.log(`${'-'.repeat(len)}`)
+          __args.fullog && console.log(msg) // feat: fullog
         }
         if (typeof (match.route) === 'string') {
           resp.body = match.route
@@ -50,10 +52,12 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
           }
         }
       }
+      resp.log = msg ? {msg, mtyp: 'html'} : undefined // feat: fullog
       return resp
     })
-    return match
+    resp = undefined
   }
+  return { match, resp }
 }
 
 module.exports = htmlResponse

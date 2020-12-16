@@ -6,6 +6,7 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('json', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __flag, fn: { _skipByTag } } = global.mitm
+  let resp, msg
 
   if (match && !_skipByTag(match, 'json')) {
     const { response, hidden } = match.route
@@ -13,7 +14,8 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('application/json')) {
         if (__flag.json && !match.hidden && !hidden) {
-          console.log(c.yellowBright(match.log))
+          msg = c.yellowBright(match.log)
+          __args.fullog && console.log(msg) // feat: fullog
         }
         if (typeof (match.route) === 'string') {
           resp.body = match.route
@@ -24,9 +26,12 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
           }
         }
       }
+      resp.log = msg ? {msg, mtyp: 'json'} : undefined // feat: fullog
       return resp
     })
+    resp = undefined
   }
+  return { match, resp }
 }
 
 module.exports = jsonResponse

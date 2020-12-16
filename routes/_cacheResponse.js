@@ -14,7 +14,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __args, __flag, fn: { _skipByTag, tilde } } = global.mitm
-  let resp, resp2
+  let resp, resp2, msg
 
   if (match && !_skipByTag(match, 'cache')) {
     const { url } = reqs
@@ -26,7 +26,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     let remote = true
     // feat: activity
     let actyp, actag
-    let msg = match.log
+    msg = match.log
     if (__args.activity) {
       [actyp, actag] = __args.activity.split(':')
     }
@@ -47,11 +47,8 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             if (actyp && route.seq) {
               msg += c.blueBright(`[${actyp}:${fpath1.split('/').pop()}]`)
             }
-            if (route.path) {
-              console.log(c.green(msg))
-            } else {
-              console.log(c.greenBright(msg))
-            }
+            msg = route.path ? c.green(msg) :  c.greenBright(msg)
+            __args.fullog && console.log(msg) // feat: fullog
           }
         }
         const body = await fs.readFile(fpath1)
@@ -62,9 +59,13 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         }
         remote = false
       } catch (error) {
-        console.log(c.red(`>>> cache (${tilde(fpath1)})`))
-        console.log(c.red(`   Error in ${error}`))
+        const msg1 = c.red(`>>> cache (${tilde(fpath1)})`)
+        const msg2 = c.red(`   Error in ${error}`)
+        msg = `${msg1}\n${msg2}`
+        __args.fullog && console.log(msg) // feat: fullog
+        resp = {}
       }
+      resp.log = msg ? {msg, mtyp: 'cache'} : undefined
     }
     if (remote) {
       // get from remote
@@ -75,7 +76,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             msg = c.grey(msg)
             const msg2 = `[${actyp}:${fpath1.split('/').pop()}]`
             msg += actyp==='play' ? c.red(msg2) : c.cyan(msg2)
-            console.log(msg)
+            __args.fullog && console.log(msg) // feat: fullog
           }
         } else if (ctype(match, resp)) {
           msg = c.magentaBright(msg)
@@ -86,7 +87,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           }
           if (__flag.cache && !match.hidden) {
             if (hidden !== 2) {
-              console.log(msg)
+              __args.fullog && console.log(msg) // feat: fullog
             }
           }
           const meta = metaResp({ reqs, resp })
@@ -97,9 +98,11 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             resp2 && (resp = { ...resp, ...resp2 })
           }
         }
+        resp.log = msg ? {msg, mtyp: 'cache'} : undefined // feat: fullog
         return resp // back to events loop call in fetch
       })
     }
+    resp = undefined
   }
   return { match, resp }
 }

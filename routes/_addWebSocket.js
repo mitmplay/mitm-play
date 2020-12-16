@@ -6,10 +6,12 @@ const setSession = require('./set-session')
 const { matched, searchKey, searchArr } = _match
 
 const addWebSocket = async function (reqs, responseHandler, _3d) {
-  const { __flag, fn: { _nameSpace } } = global.mitm
+  const { __args, __flag, fn: { _nameSpace } } = global.mitm
   const { url, headers, browserName } = reqs
   const accpt = headers.accept + ''
   const { origin, referer } = headers
+  let resp, msg
+
   if (origin || referer) {
     return
   }
@@ -20,7 +22,8 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
     if (match) {
       if (__flag.nosocket && !match.hidden) {
         const { origin, pathname } = new URL(url)
-        console.log(c.redBright(`>>> nosocket (${origin}${pathname})`))
+        msg = c.redBright(`>>> nosocket (${origin}${pathname})`)
+        __args.fullog && console.log(msg) // feat: fullog
       }
     } else {
       responseHandler.push(resp => {
@@ -34,6 +37,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
           const jsLib = matched(searchKey('jsLib'), reqs)
           injectWS(resp, url, jsLib)
         }
+        resp.log = msg ? {msg, mtyp: 'nosocket'} : undefined // feat: fullog
         return resp
       })
     }

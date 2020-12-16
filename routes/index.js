@@ -80,7 +80,7 @@ module.exports = async ({ route, request, browserName }) => {
   const { match, resp } = await _cacheResponse(reqs, responseHandler, _3ds)
 
   // --order is important, log must not contain the body modification
-  await _logResponse(reqs, responseHandler, _3ds, match)
+  // await _logResponse(reqs, responseHandler, _3ds, match)
 
   // --order is important, no need second time inject ws in _addWebSocket
   const [matchHtml] = await Promise.all([
@@ -88,10 +88,11 @@ module.exports = async ({ route, request, browserName }) => {
     _jsonResponse(reqs, responseHandler, _3ds),
     _cssResponse( reqs, responseHandler, _3ds),
     _jsResponse(  reqs, responseHandler, _3ds),
-    _chgResponse( reqs, responseHandler, _3ds)
+    _chgResponse( reqs, responseHandler, _3ds),
+    _logResponse( reqs, responseHandler, _3ds, match)
   ])
-
-  if (!(matchHtml && matchHtml.route.ws) && !nosocket) {
+  const {match: _m} = matchHtml
+  if (!(_m && _m.route.ws) && !nosocket) {
     // --inject websocket client to html
     await _addWebSocket(reqs, responseHandler, _3ds)
   }
@@ -128,12 +129,30 @@ module.exports = async ({ route, request, browserName }) => {
 }
 
 async function Events (responseHandler, resp, reqs, route) {
+  const { __args } = global.mitm
+  let msg
+  let count = 0
+  const mtyp = []
   for (const fn of responseHandler) {
     const rsp2 = await fn(resp, reqs)
+    if (!__args.fullog && rsp2.log) { // feat: fullog
+      if (count===0) {
+        msg = rsp2.log.msg
+      } else {
+        mtyp.push(rsp2.log.mtyp)
+      }
+      count ++  
+    }
     if (rsp2 === undefined) {
       break
     }
     resp = rsp2
+  }
+  if (!__args.fullog) { // feat: fullog
+    if (mtyp.length) {
+      msg += `[${mtyp.join(',')}]`
+    }
+    msg && console.log(msg)  
   }
   routeCall(route, 'fulfill', resp)
 }

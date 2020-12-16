@@ -24,10 +24,11 @@ const mockResponse = async function ({ reqs, route }, _3d) {
   const search = searchFN('mock', reqs)
   const { __args, __flag, fn: { _skipByTag } } = global.mitm
   const match = _3d ? search('_global_') : matched(search, reqs)
+  let resp, msg = ''
 
   if (match && !_skipByTag(match, 'mock')) {
     const { response, hidden } = match.route
-    let resp = mock(reqs)
+    resp = mock(reqs)
     if (typeof (match.route) === 'string') {
       resp.body = match.route
     } else {
@@ -67,7 +68,8 @@ const mockResponse = async function ({ reqs, route }, _3d) {
             if (await fs.pathExists(fpath1)) {
               resp.body = await fs.readFile(fpath1)
             } else {
-              console.log(c.redBright(`>>> ERROR: ${_root}/(${fileMethod} or ${file}) did not exists!`))
+              msg = c.redBright(`>>> ERROR: ${_root}/(${fileMethod} or ${file}) did not exists!`)
+              __args.fullog && console.log(msg) // feat: fullog
               route.continue()
               return false
             }
@@ -95,7 +97,8 @@ const mockResponse = async function ({ reqs, route }, _3d) {
             if (ext) {
               resp.headers['content-type'] = xtype[ext[1]]
             } else {
-              console.log(c.redBright('>>> WARNING: Need a proper file extension'))
+              msg = c.redBright('>>> WARNING: Need a proper file extension')
+              __args.fullog && console.log(msg) // feat: fullog
             }
           }
         } else if (js) {
@@ -110,9 +113,11 @@ const mockResponse = async function ({ reqs, route }, _3d) {
     }
     if (__flag.mock && !match.hidden && !hidden) {
       if (!match.key.match(':hidden:')) {
-        console.log(c.cyanBright(match.log))
+        msg = c.cyanBright(match.log) + msg
+        __args.fullog && console.log(msg) // feat: fullog
       }
     }
+    resp.log = msg ? {msg, mtyp: 'mock'} : undefined // feat: fullog
     return {match, resp}
   }
 }

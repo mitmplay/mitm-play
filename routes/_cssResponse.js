@@ -6,7 +6,8 @@ const { matched, searchFN } = _match
 const cssResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('css', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __flag, fn: { _skipByTag } } = global.mitm
+  const { __args, __flag, fn: { _skipByTag } } = global.mitm
+  let resp, msg
 
   if (match && !_skipByTag(match, 'css')) {
     const { response, hidden } = match.route
@@ -14,7 +15,8 @@ const cssResponse = async function (reqs, responseHandler, _3d) {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/css')) {
         if (__flag.css && !match.hidden && !hidden) {
-          console.log(c.greenBright(match.log))
+          msg = c.greenBright(match.log)
+          __args.fullog && console.log(msg) // feat: fullog
         }
         if (typeof (match.route) === 'string') {
           resp.body = addReplaceBody(resp.body, match)
@@ -25,9 +27,12 @@ const cssResponse = async function (reqs, responseHandler, _3d) {
           }
         }
       }
+      resp.log = msg ? {msg, mtyp: 'css'} : undefined // feat: fullog
       return resp
     })
+    resp = undefined
   }
+  return { match, resp }
 }
 
 module.exports = cssResponse

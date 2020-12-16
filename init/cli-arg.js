@@ -49,6 +49,7 @@ module.exports = () => {
   argsChg('a', 'activity'  ) // feat: _global_.args
   argsChg('c', 'relaxcsp'  ) // feat: _global_.args
   argsChg('d', 'delete'    )
+  argsChg('f', 'fullog'    ) // feat: _global_.args
   argsChg('g', 'group'     )
   argsChg('h', 'help'      )
   argsChg('i', 'insecure'  )

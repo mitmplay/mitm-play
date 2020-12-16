@@ -34,18 +34,18 @@ module.exports = () => {
     argv,
     fn: { home }
   } = global.mitm
-  const args = require('./args-c')(argv)
+  const args = require('./args-c')(argv);
 
-  process.on('unhandledRejection', (err, p) => {
-    const econtext = `${err}`.match('Execution context was destroyed')
-    if (argv.debug || !econtext) {
-      console.log('An unhandledRejection occurred')
-      console.log(`Rejected Promise: ${p}`)
-      console.log(`Rejection: ${err}`)
-    } else {
-      console.log(c.red('(*execution context was destroyed*)'))
-    }
-  });
+  // process.on('unhandledRejection', (err, p) => {
+  //   const econtext = `${err}`.match('Execution context was destroyed')
+  //   if (argv.debug || !econtext) {
+  //     console.log('An unhandledRejection occurred')
+  //     console.log(`Rejected Promise: ${p}`)
+  //     console.log(`Rejection: ${err}`)
+  //   } else {
+  //     console.log(c.red('(*execution context was destroyed*)'))
+  //   }
+  // });
   (async () => {
     global.mitm.pages = pages
     global.mitm.browsers = browsers

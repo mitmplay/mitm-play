@@ -7,6 +7,7 @@ const jsResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('js', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __flag, fn: { _skipByTag } } = global.mitm
+  let resp, msg
 
   if (match && !_skipByTag(match, 'js')) {
     const { response, hidden } = match.route
@@ -14,7 +15,8 @@ const jsResponse = async function (reqs, responseHandler, _3d) {
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('javascript')) {
         if (__flag.js && !match.hidden && !hidden) {
-          console.log(c.cyanBright(match.log))
+          msg = c.cyanBright(match.log)
+          __args.fullog && console.log(msg) // feat: fullog
         }
         if (typeof (match.route) === 'string') {
           resp.body = addReplaceBody(resp.body, match)
@@ -25,9 +27,12 @@ const jsResponse = async function (reqs, responseHandler, _3d) {
           }
         }
       }
+      resp.log = msg ? {msg, mtyp: 'js'} : undefined // feat: fullog
       return resp
     })
+    resp = undefined
   }
+  return { match, resp }
 }
 
 module.exports = jsResponse

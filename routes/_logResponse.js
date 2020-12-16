@@ -12,7 +12,8 @@ const { matched, searchFN } = _match
 const logResponse = async function (reqs, responseHandler, _3d, cache) {
   const search = searchFN('log', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __flag, fn: { _skipByTag } } = global.mitm
+  const { __args, __flag, fn: { _skipByTag } } = global.mitm
+  let resp, msg
 
   if (match && !_skipByTag(match, 'log')) {
     const { log, response, hidden } = match.route
@@ -20,11 +21,13 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
     responseHandler.push((resp, reqs) => {
       if (ctype(match, resp)) {
         if (cache && !cache.route.log) {
+          resp.log = undefined
           return resp
         }
         let { fpath1, fpath2 } = fpathflat({ match, reqs, stamp })
         if (__flag.log && !match.hidden && !hidden) {
-          console.log(c.bold.blueBright(match.log))
+          msg = c.bold.blueBright(match.log)
+          __args.fullog && console.log(msg) // feat: fullog
         }
         if (log) {
           // complete r/resp json log
@@ -40,9 +43,12 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
           resp2 && (resp = { ...resp, ...resp2 })
         }
       }
+      resp.log = msg ? {msg, mtyp: 'log'} : undefined // feat: fullog
       return resp
     })
+    resp = undefined
   }
+  return { match, resp }
 }
 
 module.exports = logResponse
