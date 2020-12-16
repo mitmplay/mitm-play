@@ -133,6 +133,10 @@ async function Events (responseHandler, resp, reqs, route) {
   let msg
   let count = 0
   const mtyp = []
+  if (!__args.fullog && rsp.log) { // feat: fullog
+    msg = rsp.log.msg
+    count = 1
+  }
   for (const fn of responseHandler) {
     const rsp2 = await fn(resp, reqs)
     if (!__args.fullog && rsp2.log) { // feat: fullog

@@ -101,8 +101,8 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         resp.log = msg ? {msg, mtyp: 'cache'} : undefined // feat: fullog
         return resp // back to events loop call in fetch
       })
+      resp = undefined
     }
-    resp = undefined
   }
   return { match, resp }
 }
