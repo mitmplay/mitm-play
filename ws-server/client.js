@@ -123,11 +123,17 @@ On browser console type "ws"`
   }, 400, 'screenshot')
 
   function $screenshot ({ data }) {
-    const { __page, _page } = global.mitm
+    const { _page } = data
+    const { __page } = global.mitm
     _stamp.push((new Date()).toISOString().replace(/[:-]/g, ''))
-    const _session = Object.keys(__page[_page].session).pop()
-    data.session = `${_page}-${_session}`
-    delayCapture(data)
+    try {
+      const _session = Object.keys(__page[_page].session).pop()
+      data.session = `${_page}-${_session}`
+      delayCapture(data)
+    } catch (error) {
+      console.log(error)
+      debugger
+    }
   }
 
   function $csp_error ({ data }) {
