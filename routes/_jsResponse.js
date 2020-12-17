@@ -6,7 +6,7 @@ const { matched, searchFN } = _match
 const jsResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('js', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __flag, fn: { _skipByTag } } = global.mitm
+  const { __args, __flag, fn: { _skipByTag } } = global.mitm
   let resp, msg
 
   if (match && !_skipByTag(match, 'js')) {

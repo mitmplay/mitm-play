@@ -146,12 +146,12 @@ async function Events (responseHandler, resp, reqs, route) {
         } else {
           mtyp.push(rsp2.log.mtyp)
         }
-        count ++  
+        count ++
       }
       if (rsp2 === undefined) {
         break
       }
-      resp = rsp2  
+      resp = rsp2
     }
   }
   if (!__args.fullog) { // feat: fullog
