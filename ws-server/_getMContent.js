@@ -33,24 +33,34 @@ md.use(require('markdown-it-container'), 'spoiler', {
     }
   }
 });
+
+function updateUrl(md1, fpath, path, dir) {
+  const arr = fpath.replace(`${path}/`, '').split('/')
+  const rpl = (s,p) => `${p}https://localhost:3001/${dir}/${arr[0] ? arr[0]+'/' : ''}_assets_/`
+  let flag = true
+  while (flag) {
+    const md2 = md1.replace(regx, rpl)
+    if (md1.length !== md2.length) {
+      md1 = md2
+    } else {
+      flag = false
+    }
+  }
+  return md1
+}
+
 const regx = /(!\[\w+\]\()(\.)\//
 module.exports = ({data: {fpath}}) => {
-  const {route} = mitm.path
-  console.log('markdown', fpath)
   let md1 = `${fs.readFileSync(fpath)}`
-  if (fpath.match(route)) {
-    const arr = fpath.replace(`${route}/`, '').split('/')
-    const rpl = (s,p) => `${p}https://localhost:3001/mitm-assets/${arr[0] ? arr[0]+'/' : ''}_assets_/`
-    let flag = true
-    while (flag) {
-      const md2 = md1.replace(regx, rpl)
-      if (md1.length !== md2.length) {
-        md1 = md2
-      } else {
-        flag = false
-      }
-    }  
+  const {route, app} = mitm.path
+  console.log('markdown', fpath)
+
+  if (fpath.match(app)) {
+    md1 = updateUrl(md1, fpath, app, 'mitm-app')
+  } else if (fpath.match(route)) {
+    md1 = updateUrl(md1, fpath, route, 'mitm-assets')
   }
+
   let content = md.render(md1);
   let flag = true
   while (flag) {

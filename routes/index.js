@@ -139,18 +139,20 @@ async function Events (responseHandler, resp, reqs, route) {
   }
   for (const fn of responseHandler) {
     const rsp2 = await fn(resp, reqs)
-    if (!__args.fullog && rsp2.log) { // feat: fullog
-      if (count===0) {
-        msg = rsp2.log.msg
-      } else {
-        mtyp.push(rsp2.log.mtyp)
+    if (rsp2) {
+      if (!__args.fullog && rsp2.log) { // feat: fullog
+        if (count===0) {
+          msg = rsp2.log.msg
+        } else {
+          mtyp.push(rsp2.log.mtyp)
+        }
+        count ++  
       }
-      count ++  
+      if (rsp2 === undefined) {
+        break
+      }
+      resp = rsp2  
     }
-    if (rsp2 === undefined) {
-      break
-    }
-    resp = rsp2
   }
   if (!__args.fullog) { // feat: fullog
     if (mtyp.length) {

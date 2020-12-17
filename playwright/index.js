@@ -183,13 +183,20 @@ async function attach (page) {
   page.on('frameattached', async (frame) => {
     await frame.waitForNavigation()
     argv.debug && console.log('xplay-page frame', _page, frame.url())
-    const url = await frame.evaluate(_page => {
-      if (window['xplay-page'] === undefined) {
-        window['xplay-page'] = _page
+    await frame.waitForTimeout(1000)
+    try {
+      const url = await frame.evaluate(_page => {
+        if (window['xplay-page'] === undefined) {
+          window['xplay-page'] = _page
+        }
+        return document.URL
+      }, _page)
+      argv.debug && console.log('URL', url)
+    } catch (error) {
+      if (!error.message.match('Execution Context is not available')) {
+        console.log('ERROR', error)
       }
-      return document.URL
-    }, _page)
-    argv.debug && console.log('URL', url)
+    }
   })
 }
 
