@@ -67,8 +67,8 @@ module.exports = () => {
   argsChg('D', 'debug'     )
   argsChg('G', 'nogpu'     )
   argsChg('H', 'nohost'    ) // feat: _global_.args
-  argsChg('O', 'ommitlog'  )
   argsChg('R', 'redirect'  )
+  argsChg('U', 'nourl'     ) // feat: _global_.args
   argsChg('V', 'verbose'   )
   argsChg('X', 'proxypac'  )
 
@@ -133,13 +133,6 @@ module.exports = () => {
     if (typeof (browser) === 'string') {
       argv.browser[id] = browser.replace(/\\/g, '/')
     }
-  }
-
-  const { ommitlog } = argv
-  if (ommitlog) {
-    ommitlog.split(',').forEach(element => {
-      argv.ommit[element] = true
-    })
   }
 
   if (argv.incognito) {

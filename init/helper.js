@@ -14,29 +14,32 @@ module.exports = (_package) => {
     -u --url      \t go to specific url
     -s --save     \t save as default <profl>
     -r --route    \t userscript folder routes
-    -c --relaxcsp \t relax CSP unblock websocket
+    -c --relaxcsp \t relax CSP unblock websocket*
     -d --delete   \t delete/clear cache & logs
+    -f --fullog   \t show detail logs on each rule* 
     -p --pristine \t pristine browser, default option
     -i --insecure \t accept insecure cert in nodejs env 
-    -n --nosocket \t no websocket injection to html page
-    -k --cookie   \t reset cookies expire date
+    -n --nosocket \t no websocket injection to html page*
+    -k --cookie   \t reset cookies expire date*
     -l --lazylog  \t delay ~500ms print console.log
     -g --group    \t create cache group/rec
     -t --incognito\t set chromium incognito
     -x --proxy    \t a proxy request
-    -z --lazy     \t delay ~700ms click action
+    -z --lazy     \t delay ~700ms click action*
 
     -D --debug    \t show ws messages
     -G --nogpu    \t set chromium without GPU
-    -H --nohost   \t set logs without host name
-    -O --ommitlog \t removed unnecessary console log
+    -H --nohost   \t set logs without host name*
     -R --redirect \t set redirection: true/false/manual
+    -U --nourl    \t set logs without URL*
     -V --verbose  \t show more detail of console log
     -X --proxypac \t set chromium proxypac
 
     -C --chromium \t run chromium browser
     -F --firefox  \t run firefox browser
     -W --webkit   \t run webkit browser
+
+  * _global_.config.args
 
   v${_package.version}
 `))

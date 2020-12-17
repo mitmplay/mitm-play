@@ -33,11 +33,11 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     if ((!actyp || actyp==='play' || (actyp==='mix' && !route.seq)) ) {
       // get from cache
       let getFromCache = true
-      const fpath0 = fpath2.replace(/_\d+_/,'')
+      const fpath0 = fpath2.replace(/_\d+_/,'_') // feat: seq
       if (!fs.existsSync(fpath2)) {
         if (fpath0!==fpath2 && fs.existsSync(fpath0)) {
           msg += c.red(`[${fpath2.match(/\$\/(.+)\.json/)[1]}]`)
-          fpath1 = fpath1.replace(/_\d+_/,'')
+          fpath1 = fpath1.replace(/_\d+_/,'_') // feat: seq
           fpath2 = fpath0
         } else {
           getFromCache = false

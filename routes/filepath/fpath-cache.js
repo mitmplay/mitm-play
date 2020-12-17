@@ -39,7 +39,7 @@ module.exports = ({ match, reqs }) => {
   }
   const { method } = reqs
   if (file) {
-    const id = `${file}~${method}`
+    const id = `${file}~${method}_`
     let fname = id
     // feat: activity
     if (__args.activity && match.route.seq) {
@@ -49,14 +49,15 @@ module.exports = ({ match, reqs }) => {
       }
       activity[id] += 1
       if (activity[id]>0) {
-        fname += `_${activity[id]}_`  // feat: seq
+        const no = `${activity[id]}`
+        fname += `${no.padStart(3, '0')}_`  // feat: seq
       }
     }
     fpath1 = `${_root}/${fname}`
     fpath2 = `${_root}/$/${fname}.json`
   } else {
-    fpath1 = `${_root}/${stamp1}~${method}`
-    fpath2 = `${_root}/${stamp2}~${method}.json`
+    fpath1 = `${_root}/${stamp1}~${method}_`
+    fpath2 = `${_root}/${stamp2}~${method}_.json`
   }
   return { fpath1, fpath2 }
 }
