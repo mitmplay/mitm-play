@@ -1,5 +1,13 @@
 const c = require('ansi-colors')
 
+function checkOverWritten(id, obj) {
+  for (const [key, value] of Object.entries(obj)) {
+    if (obj[id][key]!==value) {
+      console.log(c.red(`Warning: overwritten ${id}.${key}`))
+    }
+  }
+}
+
 // feat: _global_.flag
 function _globalTag() {
   const {routes: {_global_}, __tag2} = global.mitm
@@ -14,31 +22,39 @@ function _globalTag() {
     }
   }
 
-  let obj = {args: {}, flag: {}}
+  // _global_.config.args
+  // _global_.config.logs
+  let {args, logs: flag}  = _global_.config
+
+  for (const [key, value] of Object.entries(__tag2._global_)) {
+    if (value) {
+      if (key.split(':')[0]==='config') {
+        // ie: _global_['config:test'].args
+        // ie: _global_['config:test'].flag
+        args = {...args, ..._global_[key].args}
+        flag = {...flag, ..._global_[key].logs}
+      }
+    }
+  }
+  // _global_.args
+  // _global_.flag
+  _global_.args && (args =  {...args, ..._global_.args})
+  _global_.flag && (flag =  {...flag, ..._global_.flag})
+
+  let obj = {args, flag}
+  const _args = {...args}
+  const _flag = {...flag}
+
   for (const [key, value] of Object.entries(__tag2._global_)) {
     if (value) {
       const [id] = key.split(':')
       if (id==='args' || id==='flag') {
-        obj[id] = {..._global_[key], ...obj[id]}
+        // ie: _global_['args:test'].args
+        // ie: _global_['args:test'].flag
+        obj[id] = {...obj[id], ..._global_[key]}
       }
     }
   }
-  const {args: _args, flag: _flag} = obj
-  _global_.args && (obj.args =  {...obj.args, ..._global_.args})
-  _global_.flag && (obj.flag =  {...obj.flag, ..._global_.flag})
-  for (const [key, value] of Object.entries(__tag2._global_)) {
-    if (value) {
-      if (key.split(':')[0]==='config') {
-        obj.args = {...obj.args, ..._global_[key].args}
-        obj.flag = {...obj.flag, ..._global_[key].logs}
-      }
-    }
-  }
-  const cfg  = _global_.config
-  const args = _global_.args ? {..._global_.args, ...cfg.args} : cfg.args
-  const logs = _global_.logs ? {..._global_.logs, ...cfg.logs} : cfg.logs
-  obj.args = {...obj.args, ...args}
-  obj.flag = {...obj.flag, ...logs}
 
   for (const [key, value] of Object.entries(_args)) {
     if (obj.args[key]!==value) {
@@ -50,7 +66,7 @@ function _globalTag() {
       console.log(c.red(`Warning: overwritten flag.${key}`))
     }
   }
-return obj
+  return obj
 }
 
 module.exports = _globalTag
