@@ -144,19 +144,19 @@ route = {
   jsLib:   [],
   workspace: '',
   screenshot: {}, //user interaction rules & observe DOM-Element
-  skip:    [], //start routing rules
   proxy:   [], //request with proxy
   noproxy: [], 
   nosocket:[],
+  skip:    [], //start routing rules
   request: {},
   mock:    {}, 
   cache:   {},
-  log:     {},
+  response:{},
   html:    {},
   json:    {},
   css:     {},
   js:      {},
-  response:{}, //end routing rules
+  log:     {}, //end routing rules
 }
 ```
 </details>
@@ -223,13 +223,6 @@ screenshot: {
 ```
 `at` is a partion of filename and having a simple rule attach on it. Guess what is it?.
 </details>
-<details><summary><b>Skip</b></summary>
-
-Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
-```js
-skip: ['wp-admin'],
-```
-</details>
 <details><summary><b>Proxy</b></summary>
 
 Certain domain will go thru proxy, `proxy` & `noproxy` will make sanse if command line contains -x/--proxy
@@ -254,6 +247,13 @@ proxy:   ['.+'],
 No `WebSocket` Injection to **`html`**, `mitm-play` will process further.
 ```js
 nosocket: ['sso'],
+```
+</details>
+<details><summary><b>Skip</b></summary>
+
+Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
+```js
+skip: ['wp-admin'],
 ```
 </details>
 <details><summary><b>Request</b></summary>
@@ -360,32 +360,19 @@ cache: {
 },
 ```
 </details>
-<details><summary><b>Log</b></summary>
+<details><summary><b>Response</b></summary>
 
-Save the response to your local disk. by default contentType `json` will log complete request / response, for different type default log should be response payload. 
+Manipulate **response** with `response` function
+```js
+response: {
+  '.+': {
+    response(resp) {
+      const {headers} = reqs;
+      headers['new-header'] = 'with some value';
 
-Special usacase like google-analytic will send contentType of `gif` with [GET] request, and response payload is not needed, there is an option `log` to force log with json complete request / response.  
-```js
-log: {
-  'amazon.com': {
-    contentType: ['json'],
-    tags: 'json-bo' // enable/disable route by tags
-    at: 'myjson', // 'myjson' part of log filename
-  },
-  'google-analytics.com/collect': {
-    contentType: ['gif'],
-    log: true, //'<remove>'
-  }
-},
-```
-`log` support `response` function, it means the result can be manipulate first before send to the browser.
-```js
-log: {
-  'amazon.com': {
-    contentType: ['json'], //required! 
-    response(resp, reqs, match) {
-      return {body} //can be {} or combination of {status, headers, body}
+      return {headers};
     },
+    tags: 'all-response',
   }
 },
 ```
@@ -511,19 +498,32 @@ js: {
 },
 ```
 </details>
-<details><summary><b>Response</b></summary>
+<details><summary><b>Log</b></summary>
 
-Manipulate **response** with `response` function
+Save the response to your local disk. by default contentType `json` will log complete request / response, for different type default log should be response payload. 
+
+Special usacase like google-analytic will send contentType of `gif` with [GET] request, and response payload is not needed, there is an option `log` to force log with json complete request / response.  
 ```js
-response: {
-  '.+': {
-    response(resp) {
-      const {headers} = reqs;
-      headers['new-header'] = 'with some value';
-
-      return {headers};
+log: {
+  'amazon.com': {
+    contentType: ['json'],
+    tags: 'json-bo' // enable/disable route by tags
+    at: 'myjson', // 'myjson' part of log filename
+  },
+  'google-analytics.com/collect': {
+    contentType: ['gif'],
+    log: true, //'<remove>'
+  }
+},
+```
+`log` support `response` function, it means the result can be manipulate first before send to the browser.
+```js
+log: {
+  'amazon.com': {
+    contentType: ['json'], //required! 
+    response(resp, reqs, match) {
+      return {body} //can be {} or combination of {status, headers, body}
     },
-    tags: 'all-response',
   }
 },
 ```

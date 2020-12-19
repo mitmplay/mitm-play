@@ -18,7 +18,7 @@ const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const noURL = /(brave|edge|chrome-extension):\/\//
 const wBlob = /^blob:http/
 const wNull = /\/null$/
-const _resp = {
+const response = {
   status: 200,
   headers: {},
   body: ''
@@ -38,7 +38,7 @@ module.exports = async ({ route, request, browserName }) => {
   // catch unknown url scheme & handle by browser
   const { url } = reqs
   if (url.match(noURL) || url.match(wNull)) {
-    routeCall(route, 'fulfill', _resp)
+    routeCall(route, 'fulfill', response)
     return
   } else if (url.match(wBlob)) {
     routeCall(route, 'continue')
@@ -79,15 +79,15 @@ module.exports = async ({ route, request, browserName }) => {
   // --resp can be undefined or local cached & can skip __flag (.nolog)
   const { match, resp } = await _cacheResponse(reqs, responseHandler, _3ds)
   // --order is important, no need second time inject ws in _addWebSocket
-  const [matchHtml] = await Promise.all([
+  const [_resp,_html] = await Promise.all([
+    _chgResponse( reqs, responseHandler, _3ds),
     _htmlResponse(reqs, responseHandler, _3ds),
     _jsonResponse(reqs, responseHandler, _3ds),
     _cssResponse( reqs, responseHandler, _3ds),
     _jsResponse(  reqs, responseHandler, _3ds),
-    _chgResponse( reqs, responseHandler, _3ds),
     _logResponse( reqs, responseHandler, _3ds, match)
   ])
-  const {match: _m} = matchHtml
+  const {match: _m} = _html
   if (!(_m && _m.route.ws) && !nosocket) {
     // --inject websocket client to html
     await _addWebSocket(reqs, responseHandler, _3ds)
