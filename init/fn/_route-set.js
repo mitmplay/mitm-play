@@ -54,8 +54,6 @@ function _routeSet (r, namespace, print = false) {
   }
 
   for (const typs of typA) {
-    // if (namespace==='_global_' && typs==='proxy')
-    //   debugger;
     const typlist = _typlist(typs)
     for (const typ of typlist) {
       router[typ] = {}

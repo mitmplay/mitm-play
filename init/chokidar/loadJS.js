@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
 const c = require('ansi-colors')
+const typs = require('../fn/_typs')
 const _debounce = require('../fn/_debounce')
 const resort = _debounce(routeSort, 900, 'clear')
 
@@ -63,10 +64,11 @@ function keyLength (a, b) {
          a.localeCompare(b) // sort by dictionary order
 }
 
-function sort (obj, size=false) {
+function sort (obj, size=false, _typO) {
   const _g = obj._global_
   delete obj._global_
   const newobj = {}
+  // Sort namespace
   const arr = Object.keys(obj)
   let keys
   if (size) {
@@ -75,7 +77,21 @@ function sort (obj, size=false) {
     keys = arr.sort()
   }
   for (const id of keys) {
-    newobj[id] = obj[id]
+    const ns = obj[id]
+    newobj[id] = ns
+    if (_typO) {
+      // Sort URL in rule
+      for (rule in ns) {
+        if (_typO.indexOf(rule)>-1) {
+          const sorted = {}
+          const arr = Object.keys(ns[rule]).sort(keyLength)
+          for (const str of arr) {
+            sorted[str] = ns[rule][str]
+          }
+          ns[rule] = sorted
+        }
+      }
+    }
   }
   _g && (newobj._global_ = _g)
   return newobj
@@ -86,8 +102,8 @@ function routeSort (fn) {
   const { _routeSet } = global.mitm.fn
   _routeSet(_global_, '_global_')
   console.log(c.red('(*reset routes*)'))
-  global.mitm.routes = sort(global.mitm.routes, true)
-  global.mitm.router = sort(global.mitm.router, true)
+  global.mitm.routes = sort(global.mitm.routes, true, typs.typO)
+  global.mitm.router = sort(global.mitm.router, true, typs.typO)
   global.mitm.__tag2 = sort(global.mitm.__tag2, true)
   global.mitm.__tag3 = sort(global.mitm.__tag3, true)
   let tag1 = {}
