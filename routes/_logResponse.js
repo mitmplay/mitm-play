@@ -19,10 +19,16 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
     const { log, response, hidden } = match.route
     const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
     responseHandler.push((resp, reqs) => {
-      if (ctype(match, resp)) {
-        if (cache && !cache.route.log) {
-          resp.log = undefined
-          return resp
+      const mtype = ctype(match, resp)
+      if (mtype) {
+        if (cache) {
+          const f = typ => mtype.match(typ)
+          const arr = cache.route.contentType.filter(f)
+          // applied if contentType is the same scope
+          if (arr.length && !cache.route.log) {
+            resp.log = undefined
+            return resp
+          }
         }
         let { fpath1, fpath2 } = fpathflat({ match, reqs, stamp })
         if (__flag.log && !match.hidden && !hidden) {
