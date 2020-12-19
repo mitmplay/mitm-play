@@ -58,12 +58,14 @@ global.mitm = {
   routes: { _global_: { config: {} } },
   router: { _global_: { config: {} } },
   source: {},
-  __page: {},
-  __mock: {},
+  __args: {},
+  __flag: {},
   __tag1: {},
   __tag2: {},
   __tag3: {},
   __tag4: {},
+  __mock: {},
+  __page: {},
   wscmd: {},
   cdp: {}
 }
