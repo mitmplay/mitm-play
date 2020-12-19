@@ -184,6 +184,10 @@ async function attach (page) {
     await frame.waitForNavigation()
     argv.debug && console.log('xplay-page frame', _page, frame.url())
     await frame.waitForTimeout(1000)
+    if (frame.isDetached()) {
+      console.log('DETACHED IFRAME URL',  frame.url())
+      return
+    }
     try {
       const url = await frame.evaluate(_page => {
         if (window['xplay-page'] === undefined) {
