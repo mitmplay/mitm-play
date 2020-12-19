@@ -1,8 +1,13 @@
+const c = require('ansi-colors')
+
 function ctype (match, resp) {
   const atype = match.route.contentType
   const ctype = resp.headers['content-type'] || 'text'
 
-  if (atype.length && ctype) {
+  if (atype===undefined) {
+    console.log(c.red(`Warning: no contentType`), match.log)
+    return false
+  } else if (atype.length && ctype) {
     return atype.find(t => {
       const rgx = match.contentType[t]
       const rtn = ctype.match(rgx)

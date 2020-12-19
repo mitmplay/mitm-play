@@ -49,7 +49,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           const { general: { status }, setCookie, respHeader: headers } = json
           const fname1 = `${fpath1}.${_ext({ headers })}`
           if (!ctype(match, { headers })) {
-            return { match: undefined, resp }
+            return { match: undefined, resp: undefined }
           }
           if (setCookie && __args.cookie) {
             headers['set-cookie'] = resetCookies(setCookie)
@@ -115,9 +115,9 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             resp2 = response(resp, reqs, match)
             resp2 && (resp = { ...resp, ...resp2 })
           }
+          resp.log = msg ? {msg, mtyp: 'cache'} : undefined // feat: fullog
+          return resp // back to events loop call in fetch
         }
-        resp.log = msg ? {msg, mtyp: 'cache'} : undefined // feat: fullog
-        return resp // back to events loop call in fetch
       })
       resp = undefined
     }
