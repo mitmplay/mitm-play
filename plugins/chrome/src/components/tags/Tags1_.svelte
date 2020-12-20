@@ -19,7 +19,12 @@ function clicked(e) {
       for (let ns in __tag1) {
         const [group2, id2] = ns.split('~');
         if (!tagx[item] && group1===group2 && id1!==id2) {
+          if (__tag1[group1]!==undefined) {
+            __tag1[group1] = flag;
+          }
           __tag1[ns] = !flag;
+        } else if (__tag1[group1]!==undefined) {
+          __tag1[group1] = flag;
         }
       }
     }
