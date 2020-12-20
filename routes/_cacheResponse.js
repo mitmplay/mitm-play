@@ -20,7 +20,6 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     const { url } = reqs
     const { route } = match
     const { response, hidden } = route
-    const { argv } = global.mitm
 
     let { fpath1, fpath2 } = fpathcache({ match, reqs })
     let remote = true

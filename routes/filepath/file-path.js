@@ -1,4 +1,5 @@
-const _home = /^[\t ]*~\/(.+)/
+const _root = /^[\t ]*\/((.+)|$)/
+const _home = /^[\t ]*~(\/(.+)|$)/
 const _route = /^[\t ]*\.\.\/(.+)/
 const _nmspace = /^[\t ]*\.\/(.+)/
 
@@ -9,22 +10,27 @@ function filePath (file, match, path) {
   if (path) {
     fpath = file
   } else {
-    fmatch = file.match(_home)
+    fmatch = file.match(_root)
     if (fmatch) {
-      fpath = home(`~/${fmatch[1]}`)
+      fpath = fmatch[1] ? `/${fmatch[1]}` : '/'
     } else {
-      fmatch = file.match(_route)
+      fmatch = file.match(_home)
       if (fmatch) {
-        fpath = `${__args.route}/${fmatch[1]}`
+        fpath = fmatch[1] ? home(`~/${fmatch[1]}`) : home(`~`)
       } else {
-        fmatch = file.match(_nmspace)
-        const nspath = `${__args.route}/${match.namespace}`
+        fmatch = file.match(_route)
         if (fmatch) {
-          fpath = `${nspath}/${fmatch[1]}`
+          fpath = `${__args.route}/${fmatch[1]}`
         } else {
-          const { workspace: ws } = routes._global_
-          const workspace = match.workspace || ws
-          fpath = workspace ? `${workspace}/${file}` : `${nspath}/${file}`
+          fmatch = file.match(_nmspace)
+          const nspath = `${__args.route}/${match.namespace}`
+          if (fmatch) {
+            fpath = `${nspath}/${fmatch[1]}`
+          } else {
+            const { workspace: ws } = routes._global_
+            const workspace = match.workspace || ws
+            fpath = workspace ? `${workspace}/${file}` : `${nspath}/${file}`
+          }
         }
       }
     }
@@ -34,7 +40,7 @@ function filePath (file, match, path) {
     fpath = fpath.replace(`:${id}`, key)
     id++
   }
-  return fpath
+  return fpath.replace(/\/\/+/,'/')
 }
 
 module.exports = filePath
