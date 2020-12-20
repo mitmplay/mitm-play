@@ -3,7 +3,7 @@ const _route = /^[\t ]*\.\.\/(.+)/
 const _nmspace = /^[\t ]*\.\/(.+)/
 
 function filePath (file, match, path) {
-  const { fn: { home }, __args, argv, routes } = global.mitm
+  const { fn: { home }, __args, routes } = global.mitm
   let fmatch, fpath
 
   if (path) {
@@ -18,12 +18,13 @@ function filePath (file, match, path) {
         fpath = `${__args.route}/${fmatch[1]}`
       } else {
         fmatch = file.match(_nmspace)
+        const nspath = `${__args.route}/${match.namespace}`
         if (fmatch) {
-          fpath = `${__args.route}/${match.namespace}/${fmatch[1]}`
+          fpath = `${nspath}/${fmatch[1]}`
         } else {
           const { workspace: ws } = routes._global_
           const workspace = match.workspace || ws
-          fpath = workspace ? `${workspace}/${file}` : file
+          fpath = workspace ? `${workspace}/${file}` : `${nspath}/${file}`
         }
       }
     }

@@ -24,9 +24,9 @@ module.exports = () => {
     if (err) {
       console.log(c.redBright('>>> Error creating home folder'), err)
     } else { // browwser profile
-      fs.ensureDir(`${path.home}/_chromium_`, dirhandler)
-      fs.ensureDir(`${path.home}/_firefox_`, dirhandler)
-      fs.ensureDir(`${path.home}/_webkit_`, dirhandler)
+      fs.ensureDir(`${path.home}/_profiles_/chromium`, dirhandler)
+      fs.ensureDir(`${path.home}/_profiles_/firefox`, dirhandler)
+      fs.ensureDir(`${path.home}/_profiles_/webkit`, dirhandler)
     }
   })
 
