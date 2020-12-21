@@ -21,6 +21,8 @@ sequenceDiagram
 
 "_Save the first request to your local disk so next request will serve from there._"
 
+<details><summary><b>Simple Usage</b></summary>
+
 ## Simple Usage
 For simple caching, minimum requirement to set up are the `url` and `contentType`. Example below show `url` combine with regex notation 
 
@@ -41,8 +43,11 @@ Structure folder will resemble the URL path, the `headers` information is saved 
 ![Icon](./cache-01-logs.png 'cache-01-logs:att width=100%')
 
 </div>
+</details>
 
-## Dynamic file: with regex grouping
+<details><summary><b>Dynamic file-name</b></summary>
+
+## Dynamic file-name: with regex grouping
 `file` property was introduce to move file-cache from Mitm-profile, value can be just literal String (but restricted the usefullness) or combine with _reqex search-result-label_ denoted with `:1`, `:2`, etc.
 ```js
 'cache:_test~02': {
@@ -84,3 +89,53 @@ or your root-folder
 ```js
 path: '/_assets_'
 ```
+</details>
+
+<details><summary><b>Rec/Mix/Play Cache</b></summary>
+
+## Rec/Mix/Play Cache
+`seq` property it was introduce to record caching sequences to the same `URL`, typically `cache` act as **record & replay steps**, this scenario usually to debug UI bug with specific steps of the flow of app.
+
+It must have a **html-tag** to flag as the start of steps so the sequences can be counted correctly.
+
+```js
+'cache:_test~22': {
+  '/css/(_.+).css': {
+    contentType: ['css'],
+    file: '_assets_/my-css',
+    seq: true,
+  }
+},
+```
+### Html-tag
+```js
+html: {
+  '/typing-test$': {
+    tags: 'activity',
+  }
+},
+```
+### How to run
+The first step is to record the flow and do the navigation
+```
+$ mitm-play -a='rec:activity' 
+```
+
+Next step is to replay the flow
+```
+$ mitm-play -a='play:activity' 
+```
+OR it can add as an option tags
+```js
+'args:activity~a.rec': {
+  activity: 'rec:activity',
+},
+'args:activity~b.mix': {
+  activity: 'mix:activity',
+},
+'args:activity~c.play': {
+  activity: 'play:activity',
+},
+```
+
+</details>

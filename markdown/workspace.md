@@ -3,6 +3,7 @@
 `workspace` property in which in same level as rule works similar as `path`, it was to remove the need to add `path` to  **mock** / **cache** rules
 
 ## Original 
+internally parent `path` is `home` folder
 ```js
 'cache:_test~03': {
   '/css/(_.+).css': {
@@ -13,7 +14,8 @@
 },
 ```
 
-## After adding `workspace` and remove the `path`
+## After adding `workspace`
+Same result with above by removing `path` and add `workspace` property
 ```js
 workspace: '~/_assets_',
 'cache:_test~03': {
@@ -23,9 +25,9 @@ workspace: '~/_assets_',
   }
 },
 ```
-or want to keep 'em all
+or the default path change from `home` folder to `root` folder
 ```js
-workspace: '/_cache_',
+workspace: '/',
 'cache:_test~03': {
   '/css/(_.+).css': {
     contentType: ['css'],

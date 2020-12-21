@@ -744,6 +744,7 @@ $ mitm-play --help
     -u --url             go to specific url
     -s --save            save as default <profl>
     -r --route           userscript folder routes
+    -a --activity        rec/replay cache activity*
     -c --relaxcsp        relax CSP unblock websocket*
     -d --delete          delete/clear cache & logs
     -f --fullog          show detail logs on each rule* 
@@ -803,6 +804,31 @@ Specify which folder contains routes config
 $ mitm-play -r='../user-route'  <OR>
 $ mitm-play --route='../user-route'
 ```
+</details>
+<details><summary><b>-c --activity</b></summary>
+
+Flag the caching with sequences, the are three mode of activity:
+*  `rec:activity`  to record cache w/ `seq`, all cache always recorded
+*  `mix:activity`  to record cache w/ `seq`, non `seq` behave as std cache 
+*  `play:activity` to replay cache w/ `seq`, non `seq` behave as std cache
+
+Tag `activity` need to be add to **html - rule** to indicate the point when `sequences` cached will be start.
+
+```
+$ mitm-play -a='rec:activity'  <OR>
+$ mitm-play --activity='rec:activity'
+```
+
+The first step is to record the flow and do the navigation
+```
+$ mitm-play -a='rec:activity' 
+```
+
+Next step is to replay the flow 
+```
+$ mitm-play -a='play:activity' 
+```
+
 </details>
 <details><summary><b>-c --relaxcsp</b></summary>
 

@@ -14,6 +14,7 @@ module.exports = (_package) => {
     -u --url      \t go to specific url
     -s --save     \t save as default <profl>
     -r --route    \t userscript folder routes
+    -a --activity \t rec/replay cache activity*
     -c --relaxcsp \t relax CSP unblock websocket*
     -d --delete   \t delete/clear cache & logs
     -f --fullog   \t show detail logs on each rule* 
