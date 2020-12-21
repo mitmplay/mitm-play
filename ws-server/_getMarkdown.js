@@ -1,6 +1,7 @@
 // feat: markdown
 module.exports = () => {
   const data = {}
+  const { _sortLength } = global.mitm.fn
   const {app, route} = global.mitm.path
   global.mitm.files.markdown.forEach(fpath => {
     let fapp = fpath.replace(app, '')
@@ -20,5 +21,6 @@ module.exports = () => {
       // content
     }
   })
+  data['<b>Mitm-play</b>'] = _sortLength(data['<b>Mitm-play</b>'])
   return data
 }

@@ -807,7 +807,7 @@ $ mitm-play --route='../user-route'
 </details>
 <details><summary><b>-c --activity</b></summary>
 
-Flag the caching with sequences, the are three mode of activity:
+Flag the caching with sequences, they are three mode of activity:
 *  `rec:activity`  to record cache w/ `seq`, all cache always recorded
 *  `mix:activity`  to record cache w/ `seq`, non `seq` behave as std cache 
 *  `play:activity` to replay cache w/ `seq`, non `seq` behave as std cache
@@ -821,12 +821,12 @@ $ mitm-play --activity='rec:activity'
 
 The first step is to record the flow and do the navigation
 ```
-$ mitm-play -a='rec:activity' 
+$ mitm-play -a='rec:activity'
 ```
 
 Next step is to replay the flow 
 ```
-$ mitm-play -a='play:activity' 
+$ mitm-play -a='play:activity'
 ```
 
 </details>

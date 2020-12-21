@@ -59,12 +59,8 @@ const remove = function (path, msg, fn) {
   }
 }
 
-function keyLength (a, b) {
-  return b.length - a.length || // sort by length, if equal then
-         a.localeCompare(b) // sort by dictionary order
-}
-
 function sort (obj, size=false, _typO) {
+  const { _keyLength, _sortLength } = global.mitm.fn
   const _g = obj._global_
   delete obj._global_
   const newobj = {}
@@ -72,7 +68,7 @@ function sort (obj, size=false, _typO) {
   const arr = Object.keys(obj)
   let keys
   if (size) {
-    keys = arr.sort(keyLength)
+    keys = arr.sort(_keyLength)
   } else {
     keys = arr.sort()
   }
@@ -83,12 +79,7 @@ function sort (obj, size=false, _typO) {
       // Sort URL in rule
       for (rule in ns) {
         if (_typO.indexOf(rule)>-1) {
-          const sorted = {}
-          const arr = Object.keys(ns[rule]).sort(keyLength)
-          for (const str of arr) {
-            sorted[str] = ns[rule][str]
-          }
-          ns[rule] = sorted
+          ns[rule] = _sortLength(ns[rule])
         }
       }
     }
