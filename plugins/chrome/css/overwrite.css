@@ -121,3 +121,7 @@ div.mermaid {
   /* font-family: 'trebuchet ms', verdana, arial; */
   font-family: 'Courier New', Courier, monospace !important;
   color: white; }
+
+.readme .td-item {
+  font-weight: bolder;
+  color: crimson; }
