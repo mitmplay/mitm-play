@@ -1,3 +1,5 @@
+# Example
+"_Sample user & global route **used** in `Mitm-play` tutorial_"
 <details><summary><b>Namespace</b></summary>
 
 # Namespace

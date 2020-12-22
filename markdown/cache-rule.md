@@ -1,5 +1,7 @@
 # Cache rule
 
+"_Save the first request to your local disk so next request will serve from there._"
+
 <div class="details" title="Diagram">
 <div class="mermaid">
 sequenceDiagram
@@ -18,8 +20,6 @@ sequenceDiagram
     Route->>-Browser: Response
 </div>
 </div>
-
-"_Save the first request to your local disk so next request will serve from there._"
 
 <details><summary><b>Simple Usage</b></summary>
 

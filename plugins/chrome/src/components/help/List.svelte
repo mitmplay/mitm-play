@@ -47,9 +47,15 @@ window.mitm.files.markdown_events.markdownTable = () => {
 </script>
 
 {#each Object.keys(_data) as key, i}
-  <details><summary>{@html key}</summary>
-  {#each Object.keys(_data[key]) as item}
-    <Item item={{element: item, ..._data[key][item]}} {onChange}/>
-  {/each}
-  </details>
+  {#if key==='_readme_'}
+    {#each Object.keys(_data[key]) as item}
+      <Item item={{element: item, ..._data[key][item]}} {onChange}/>
+    {/each}
+  {:else}
+    <details><summary>{@html key}</summary>
+      {#each Object.keys(_data[key]) as item}
+        <Item item={{element: item, ..._data[key][item]}} {onChange}/>
+      {/each}
+    </details>  
+  {/if}
 {/each}
