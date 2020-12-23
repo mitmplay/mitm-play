@@ -18,8 +18,11 @@ function clickHandler(e) {
 }
 
 function title(t) {
-  const string = t.title.split('.')[0].toLowerCase()
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  console.log(t.title)
+  const string = t.title.replace(/\.md$/,'')
+  const pre = string.match(/^([^a-zA-Z]+.|.)/)[0]
+  const post = string.replace(pre,'').toLowerCase()
+  return pre.toUpperCase() + post;
 }
 </script>
 

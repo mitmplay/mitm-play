@@ -6,7 +6,7 @@
 	"scripts": {
 		"rollup": "rollup -wc",
 		"scss": "node-sass scss/overwrite.scss -w scss -o css",
-		"start": "npm-run-all rollup scss",
+		"start": "npm-run-all scss rollup ",
 		"eslint": "eslint --ext .js,.svelte ."
 	},
 	"devDependencies": {
