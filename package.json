@@ -1,10 +1,10 @@
 {
   "name": "mitm-play",
-  "version": "0.8.147",
+  "version": "0.8.148",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
-    "mitm-play": "bin/mitm-play.js"
+    "mitm-play": "bin/mitm-run.js"
   },
   "scripts": {
     "coverage": "jest --coverage",
