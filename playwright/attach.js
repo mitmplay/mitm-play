@@ -15,9 +15,8 @@ module.exports = async function(page) {
   await page.setExtraHTTPHeaders({ 'xplay-page': _page })
 
   page.on('worker', worker => {
-    const { host } = new URL(worker.url())
-    log(`Worker created ${host}`)
-    worker.on('close', worker => log('Worker destroyed: ' + host))
+    log(`xplay-page worker ${_page}`)
+    worker.on('close', worker => log('Worker destroyed: ' + worker.url()))
   })
 
   page.on('load', async () => {
@@ -27,22 +26,19 @@ module.exports = async function(page) {
     await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
   })
   page.on('frameattached', async (frame) => {
-    const { host } = new URL(frame.url())
     await frame.waitForNavigation()
-    log(`xplay-page frame ${_page} ${host}`)
+    log(`xplay-page frame ${_page}`)
     await frame.waitForTimeout(1000)
     if (frame.isDetached()) {
-      console.log('DETACHED IFRAME URL',  host)
+      console.log('DETACHED IFRAME URL', frame.url())
       return
     }
     try {
-      const url = await frame.evaluate(_page => {
+      await frame.evaluate(_page => {
         if (window['xplay-page'] === undefined) {
           window['xplay-page'] = _page
         }
-        return document.URL
       }, _page)
-      log(`URL ${url}`)
     } catch (error) {
       if (!error.message.match('Execution Context is not available')) {
         console.log('ERROR', error)
