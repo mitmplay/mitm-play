@@ -2,6 +2,7 @@
 const c = require('ansi-colors')
 const _match = require('./match')
 const _inject = require('./inject')
+const setSession = require('./set-session')
 
 const { matched, searchFN, searchKey } = _match
 const { script_src, e_head, injectWS } = _inject
@@ -47,6 +48,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
             resp2 && (resp = { ...resp, ...resp2 })
           }
           if (ws) {
+            setSession(reqs, true) // feat: session
             const jsLib = matched(searchKey('jsLib'), reqs)
             injectWS(resp, reqs.url, jsLib)
           }

@@ -15,8 +15,9 @@ module.exports = async function(page) {
   await page.setExtraHTTPHeaders({ 'xplay-page': _page })
 
   page.on('worker', worker => {
-    log(`Worker created ${worker.url()}`)
-    worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()))
+    const { host } = new URL(worker.url())
+    log(`Worker created ${host}`)
+    worker.on('close', worker => log('Worker destroyed: ' + host))
   })
 
   page.on('load', async () => {
@@ -26,11 +27,12 @@ module.exports = async function(page) {
     await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
   })
   page.on('frameattached', async (frame) => {
+    const { host } = new URL(frame.url())
     await frame.waitForNavigation()
-    log(`xplay-page frame ${_page} ${frame.url()}`)
+    log(`xplay-page frame ${_page} ${host}`)
     await frame.waitForTimeout(1000)
     if (frame.isDetached()) {
-      console.log('DETACHED IFRAME URL',  frame.url())
+      console.log('DETACHED IFRAME URL',  host)
       return
     }
     try {

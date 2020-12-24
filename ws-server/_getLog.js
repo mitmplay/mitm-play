@@ -1,6 +1,6 @@
 const { chromium, firefox } = require("playwright")
 
-const regex = /(chromium|firefox|webkit)\/log\/page~(\d+)-session~(\d+)/
+const regex = /(chromium|firefox|webkit)\/log\/page~(\d+)-(session~(\d+)|undefined)/
 
 module.exports = () => {
   const browser = { chromium: 0, firefox_: 0, webkit__: 0 }
