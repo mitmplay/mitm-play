@@ -2,7 +2,16 @@
 import { client } from '../other/stores.js';
 
 function btnClear(e) {
-  ws__send('clearLogs', {browserName: 'chromium'}, data => {
+  const data = {}
+  const arr = document.querySelectorAll('summary.true');
+  if (arr.length) {
+    const folders = []
+    for (let node of arr) {
+      folders.push(node.dataset.path)
+    }
+    data.folders = folders
+  }
+  ws__send('clearLogs', data, data => {
     // logs view will be close when .log_events.LogsTable
     // logstore.set() to empty on Table.svelte 
     window.mitm.client.clear = true;

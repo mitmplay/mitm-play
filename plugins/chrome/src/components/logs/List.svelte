@@ -2,6 +2,7 @@
 import { logstore } from './stores.js';
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
+import Summary from './Summary.svelte';
 import { client } from '../other/stores.js';
 
 let rerender = 0;
@@ -51,15 +52,10 @@ function nohostlogs(flag) {
   console.log('nohostlogs', flag);
 }
 
-// function title(key, i) {
-//   const browser = key.split('~')[0]
-//   const count = `${i}`.padStart(2, '0')
-//   return `${browser}~${count}`
-// }
 </script>
 
 {#each Object.keys(_data) as key, i}
-  <details><summary>{@html key}</summary>
+<details><Summary item={_data[key]} {key} />
   {#each Object.keys(_data[key]) as logid}
   <Item item={{
     key,
@@ -70,9 +66,3 @@ function nohostlogs(flag) {
   {/each}
 </details>  
 {/each}
-
-<style>
-  summary:hover {
-    background: #eae4f1;
-  }
-</style>

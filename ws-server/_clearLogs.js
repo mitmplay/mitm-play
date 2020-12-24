@@ -1,9 +1,9 @@
 module.exports = ({ data }) => {
-  const { browserName } = data
+  const { folders } = data
 
   global.mitm.fn._clear({
     delete: 'log',
-    // browserName
+    folders
   })
 
   const json = { ok: 'OK' }
