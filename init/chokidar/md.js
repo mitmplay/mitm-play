@@ -9,7 +9,7 @@ function addMarkdown (path) {
   win32 && (path = path.replace(/\\/g, '/'))
   markdown.push(path)
   if (global.mitm.__flag['file-md']) {
-    console.log(c.blueBright(`Markdown: ${path}`))
+    console.log(c.blueBright(`Markdown add: ${path}`))
   }
   showFiles()
 }
@@ -19,6 +19,9 @@ function delMarkdown (path) {
   win32 && (path = path.replace(/\\/g, '/'))
   const idx = markdown.indexOf(path);
   (idx > -1) && markdown.splice(idx, 1)
+  if (global.mitm.__flag['file-log']) {
+    console.log(c.blueBright(`Markdown del: ${path}`))
+  }
   showFiles()
 }
 

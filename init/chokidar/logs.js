@@ -10,7 +10,7 @@ function addLog (path) {
   const { files: { _log, log } } = global.mitm
   log.push(path)
   if (global.mitm.__flag['file-log']) {
-    console.log(c.blueBright(`Log: ${path}`))
+    console.log(c.blueBright(`Log add: ${path}`))
   }
   const meta = path.replace(/\/log\/[^/]+/, m => `${m}/$`)
   fs.readFile(meta.replace(/.\w+$/, '.json'), (err, data) => {
@@ -46,15 +46,17 @@ function delLog (path) {
   _log[path] && delete _log[path]
   const idx = log.indexOf(path);
   (idx > -1) && log.splice(idx, 1)
+  if (global.mitm.__flag['file-log']) {
+    console.log(c.blueBright(`Log del: ${path}`))
+  }
   showFiles()
 }
 
 module.exports = () => {
   const home = global.mitm.path.home
-  let glob = Object.keys(global.mitm.argv.browser).map(x => `${home}/${x}/**/log/**`)
-  if (glob.length === 1) {
-    glob = glob[0]
-  }
+  const glob1 = Object.keys(global.mitm.argv.browser).map(x => `${home}/${x}/log`)
+  const glob2 = Object.keys(global.mitm.argv.browser).map(x => `${home}/${x}/log/**`)
+  const glob = Array(glob1, glob2).flat()
 
   // Initialize watcher.
   const msg = global.mitm.fn.tilde(typeof glob === 'string' ? glob : JSON.stringify(glob))
@@ -67,5 +69,6 @@ module.exports = () => {
   logWatcher // Add event listeners.
     .on('add', p => { p = slash(p); addLog(p) })
     .on('unlink', p => { p = slash(p); delLog(p) })
+    // .on('unlinkDir', p => console.log(`Directory ${p} has been removed`))
   global.mitm.watcher.logWatcher = logWatcher
 }

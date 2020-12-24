@@ -10,7 +10,7 @@ if (platform === 'win32') {
 }
 
 function tilde (path) {
-  return path.replace(_home, '~')
+  return path.replace(new RegExp(_home, 'g'), '~')
 }
 
 function home (path) {
