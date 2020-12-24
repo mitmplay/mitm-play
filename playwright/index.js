@@ -2,6 +2,7 @@ const c = require('ansi-colors')
 const playwright = require('playwright')
 const _options = require('./options')
 const routes = require('../routes')
+const attach = require('./attach')
 
 const pages = {}
 const browsers = {}
@@ -155,55 +156,6 @@ module.exports = () => {
       })
     }
   })()
-}
-
-async function attach (page) {
-  const _page = 'page~' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
-
-  page._page = _page
-  global.mitm.__page[_page] = { session: {} }
-  await page.setExtraHTTPHeaders({ 'xplay-page': _page })
-
-  const { argv } = global.mitm
-
-  page.on('worker', worker => {
-    argv.debug && console.log('Worker created: ' + worker.url())
-    worker.on('close', worker => console.log('Worker destroyed: ' + worker.url()))
-  })
-
-  await page.waitForNavigation()
-  argv.debug && console.log('xplay-page load', _page)
-  await page.waitForTimeout(1000)
-  await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
-
-  page.on('load', async () => {
-    await page.waitForNavigation()
-    argv.debug && console.log('xplay-page load', _page)
-    await page.waitForTimeout(1000)
-    await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
-  })
-  page.on('frameattached', async (frame) => {
-    await frame.waitForNavigation()
-    argv.debug && console.log('xplay-page frame', _page, frame.url())
-    await frame.waitForTimeout(1000)
-    if (frame.isDetached()) {
-      console.log('DETACHED IFRAME URL',  frame.url())
-      return
-    }
-    try {
-      const url = await frame.evaluate(_page => {
-        if (window['xplay-page'] === undefined) {
-          window['xplay-page'] = _page
-        }
-        return document.URL
-      }, _page)
-      argv.debug && console.log('URL', url)
-    } catch (error) {
-      if (!error.message.match('Execution Context is not available')) {
-        console.log('ERROR', error)
-      }
-    }
-  })
 }
 
 async function goto (page, url) {
