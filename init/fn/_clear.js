@@ -10,8 +10,16 @@ function ehandler (err) {
 function clear (o) {
   const { path } = global.mitm
   if (o) {
-    const { browserName, delete: d } = o
-    fs.remove(`${path.home}/${browserName}/${d}`, ehandler)
+    if (o.browserName) {
+      const { browserName, delete: d } = o
+      fs.remove(`${path.home}/${browserName}/${d}`, ehandler)
+    } else {
+      const d = o.delete
+      const { browser } = global.mitm.argv
+      for (const browserName in browser) {
+        fs.remove(`${path.home}/${browserName}/${d}`, ehandler)
+      }
+    }
   } else {
     const { browser, delete: d } = global.mitm.argv
     for (const browserName in browser) {

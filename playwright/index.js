@@ -173,11 +173,13 @@ async function attach (page) {
 
   await page.waitForNavigation()
   argv.debug && console.log('xplay-page load', _page)
+  await page.waitForTimeout(1000)
   await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
 
   page.on('load', async () => {
     await page.waitForNavigation()
     argv.debug && console.log('xplay-page load', _page)
+    await page.waitForTimeout(1000)
     await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
   })
   page.on('frameattached', async (frame) => {

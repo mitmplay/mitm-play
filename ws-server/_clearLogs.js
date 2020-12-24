@@ -3,7 +3,7 @@ module.exports = ({ data }) => {
 
   global.mitm.fn._clear({
     delete: 'log',
-    browserName
+    // browserName
   })
 
   const json = { ok: 'OK' }

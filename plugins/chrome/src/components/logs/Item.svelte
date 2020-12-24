@@ -23,7 +23,7 @@ function clickHandler(e) {
     empty();
   } else {
     empty();
-    const o = window.mitm.files.log[logid];
+    const o = window.mitm.files.log[item.key][logid];
     const src = {
       respHeader: o.respHeader,
       response: '<empty>',
@@ -88,19 +88,15 @@ function pth({general:g}) {
 }
 </script>
 
-<tr class="tr">
-  <td class="{item.logid ? 'selected' : ''}">
-    <div class="td-item {$logstore.logid===item.logid}"
-    data-logid={item.logid}
-    on:click="{clickHandler}"
-    >
-      <span class="status {status(item)}">{item.general.status}</span> 
-      <span class="method {method(item)}">{method2(item)}</span> 
-      <span class="url">{url(item)}</span> 
-      <span class="prm">{pth(item)}</span> 
-    </div>
-  </td>
-</tr>
+<div class="td-item {$logstore.logid===item.logid}"
+data-logid={item.logid}
+on:click="{clickHandler}"
+>
+  <span class="status {status(item)}">{item.general.status}</span> 
+  <span class="method {method(item)}">{method2(item)}</span> 
+  <span class="url">{url(item)}</span> 
+  <span class="prm">{pth(item)}</span> 
+</div>
 
 <style>
 .td-item:hover {

@@ -16,9 +16,8 @@ module.exports = () => {
   servers.listen(3001)  
 
   function connection (client, request) {
-    const { logs } = global.mitm.router._global_.config
     const { origin, host } = request.headers
-    if (logs['ws-connect']) {
+    if (global.mitm.__flag['ws-connect']) {
       console.log(c.red('>>> ws-connect:'), `${host}${request.url}`)
     }
     let _host

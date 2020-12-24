@@ -50,12 +50,29 @@ window.mitm.files.log_events.LogsTable = () => {
 function nohostlogs(flag) {
   console.log('nohostlogs', flag);
 }
+
+// function title(key, i) {
+//   const browser = key.split('~')[0]
+//   const count = `${i}`.padStart(2, '0')
+//   return `${browser}~${count}`
+// }
 </script>
 
-{#each Object.keys(_data) as logid}
-<Item item={{
-  logid,
-  ..._data[logid],
-  nohostlogs: $client.nohostlogs,
-  }}/>
+{#each Object.keys(_data) as key, i}
+  <details><summary>{@html key}</summary>
+  {#each Object.keys(_data[key]) as logid}
+  <Item item={{
+    key,
+    logid,
+    ..._data[key][logid],
+    nohostlogs: $client.nohostlogs,
+    }}/>
+  {/each}
+</details>  
 {/each}
+
+<style>
+  summary:hover {
+    background: #eae4f1;
+  }
+</style>
