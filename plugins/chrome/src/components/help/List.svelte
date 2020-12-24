@@ -23,8 +23,7 @@ const markdownHandler = obj => {
     const {markdown} = window.mitm.files;
     const newmarkdown = {};
     for (let k in obj) {
-      newmarkdown[k] = markdown[k] ? markdown[k] : obj[k];
-      // newmarkdown[k].content = obj[k].content;
+      newmarkdown[k] = obj[k];
     }
     data = newmarkdown;
     window.mitm.files.markdown = newmarkdown

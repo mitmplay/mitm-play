@@ -8,6 +8,9 @@ function addMarkdown (path) {
   const { win32, files: { markdown } } = global.mitm
   win32 && (path = path.replace(/\\/g, '/'))
   markdown.push(path)
+  if (global.mitm.__flag['file-md']) {
+    console.log(c.blueBright(`Markdown: ${path}`))
+  }
   showFiles()
 }
 

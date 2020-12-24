@@ -9,6 +9,9 @@ const slash = p => p.replace(/\\/g, '/')
 function addLog (path) {
   const { files: { _log, log } } = global.mitm
   log.push(path)
+  if (global.mitm.__flag['file-log']) {
+    console.log(c.blueBright(`Log: ${path}`))
+  }
   const meta = path.replace(/\/log\/[^/]+/, m => `${m}/$`)
   fs.readFile(meta.replace(/.\w+$/, '.json'), (err, data) => {
     if (err) {

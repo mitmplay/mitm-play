@@ -36,10 +36,10 @@ const logHandler = obj => {
     const {log} = window.mitm.files;
     const newLog = {};
     for (let k in obj) {
-      newLog[k] = log[k] ? log[k] : obj[k]; 
+      newLog[k] = obj[k];
     }
-    window.mitm.files.log = newLog
     data = newLog;
+    window.mitm.files.log = newLog
   }
 }
 
