@@ -674,24 +674,27 @@ _global_ = {
 // toggle to show/hide from console.log()
 _global_.config = {
   logs: {
-    'mitm-mock': false, // true if --verbose/--debug
-    'ws-connect': false, // true if --verbose/--debug
-    'ws-message':  false, // true if --verbose/--debug
-    'ws-broadcast': false, // true if --verbose/--debug
-    'no-namespace': true,
     'referer-reqs': true,
-    silent: false, //true: hide all
-    skip:   false,
-    nosocket:true,
-    request: true,
-    mock:    true,
-    cache:   true,
-    log:     true,
-    html:    true,
-    json:    true,
-    css:     true,
-    js:      true,
-    response:true,
+    'no-namespace': true,
+    'ws-broadcast': false, // true if --verbose/--debug
+    'ws-connect': false,   // true if --verbose/--debug
+    'ws-message': false,   // true if --verbose/--debug
+    'mitm-mock': false,    // true if --verbose/--debug
+    'page-load': false,    // true if --verbose/--debug
+    'file-log': false,     // true if --verbose/--debug
+    'file-md': false,      // true if --verbose/--debug  
+    silent:   false,       // true: hide all
+    skip:     false,
+    nosocket: true,
+    request:  true,
+    mock:     true,
+    cache:    true,
+    log:      true,
+    html:     true,
+    json:     true,
+    css:      true,
+    js:       true,
+    response: true,
   }
 }
 ```

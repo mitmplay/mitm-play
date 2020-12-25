@@ -48,17 +48,20 @@ function _setlogs () {
   const logs2 = {}
   if (_gRouter) {
     if (logs.websocket) {
-      logs2['mitm-mock'] = true
-      logs2['ws-connect'] = true
-      logs2['ws-message'] = true
       logs2['ws-broadcast'] = true
+      logs2['ws-message'] = true
+      logs2['ws-connect'] = true
+      logs2['mitm-mock']  = true
     }
     _gRouter.config === undefined && (_gRouter.config = {})
     if (argv.debug || argv.verbose) {
-      logs2['mitm-mock'] = true
-      logs2['ws-connect'] = true
-      logs2['ws-message'] = true
       logs2['ws-broadcast'] = true
+      logs2['ws-message'] = true
+      logs2['ws-connect'] = true
+      logs2['mitm-mock']  = true
+      logs2['page-load']  = true
+      logs2['file-log']   = true
+      logs2['file-md']    = true
     }
     _gRouter.config.logs = { ...silent, ...logs, ...logs2 }
     _gRouter.config.args = args

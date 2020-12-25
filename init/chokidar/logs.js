@@ -10,7 +10,7 @@ function addLog (path) {
   const { files: { _log, log } } = global.mitm
   log.push(path)
   if (global.mitm.__flag['file-log']) {
-    console.log(c.blueBright(`Log add: ${path}`))
+    console.log(c.red(`Log add: ${path}`))
   }
   const meta = path.replace(/\/log\/[^/]+/, m => `${m}/$`)
   fs.readFile(meta.replace(/.\w+$/, '.json'), (err, data) => {
@@ -47,7 +47,7 @@ function delLog (path) {
   const idx = log.indexOf(path);
   (idx > -1) && log.splice(idx, 1)
   if (global.mitm.__flag['file-log']) {
-    console.log(c.blueBright(`Log del: ${path}`))
+    console.log(c.red(`Log del: ${path}`))
   }
   showFiles()
 }
