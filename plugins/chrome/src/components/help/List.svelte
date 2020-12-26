@@ -1,6 +1,4 @@
 <script>
-export let onChange;
-
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
 
@@ -50,13 +48,13 @@ window.mitm.files.markdown_events.markdownTable = () => {
     {#if key==='_readme_'}
       <div class="readme">
         {#each Object.keys(_data[key]) as item}
-          <Item item={{element: item, ..._data[key][item]}} {onChange}/>
+          <Item item={{element: item, ..._data[key][item]}}/>
         {/each}    
       </div>
     {:else}
       <details><summary>{@html key}</summary>
         {#each Object.keys(_data[key]) as item}
-          <Item item={{element: item, ..._data[key][item]}} {onChange}/>
+          <Item item={{element: item, ..._data[key][item]}}/>
         {/each}
       </details>  
     {/if}

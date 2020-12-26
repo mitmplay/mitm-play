@@ -17,10 +17,6 @@ onMount(async () => {
   });
 });
 
-function onChange(e) {
-
-}
-
 function dragend({detail}) {
   left = detail.left
   const data = {}
@@ -30,6 +26,6 @@ function dragend({detail}) {
 </script>
 
 <Button/>
-<VBox2 {title} {left} {dragend} {List} props={{onChange}}>
+<VBox2 {title} {left} {dragend} {List}>
   <View/>
 </VBox2>
