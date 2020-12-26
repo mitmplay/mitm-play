@@ -7,7 +7,6 @@ import title from './Title.svelte';
 import List from './List.svelte';
 import Show from './Show.svelte';
 
-let box = false
 let left = 163;
 const top = '47';
 const id = 'logsLeft';
@@ -26,6 +25,6 @@ function dragend({detail}) {
 }
 </script>
 
-<VBox2 {title} {top} {left} {dragend} {box} {List} show={$logstore.logid}>
+<VBox2 {title} {top} {left} {dragend} {List} show={$logstore.logid}>
   <Show/>
 </VBox2>

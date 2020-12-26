@@ -6,7 +6,6 @@ import VBox2 from '../box/VBox2.svelte';
 import View from './View.svelte';
 import List from './List.svelte';
 
-let box = false
 let left = 150;
 const title = '-Help-';
 const id  = 'helpLeft';
@@ -26,6 +25,6 @@ function dragend({detail}) {
 </script>
 
 <Button/>
-<VBox2 {title} {left} {dragend} {box} {List}>
+<VBox2 {title} {left} {dragend} {List}>
   <View/>
 </VBox2>

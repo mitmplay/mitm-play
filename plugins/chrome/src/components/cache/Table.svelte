@@ -23,9 +23,6 @@ const cacheHandler = obj => {
 }
 
 onMount(async () => {
-  // setTimeout(() => {
-  //   ws__send('getCache', '', cacheHandler)
-  // }, 10);
   window._ws_connect.cacheOnMount = () => {
      ws__send('getCache', '', cacheHandler)
   };
