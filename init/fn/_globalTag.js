@@ -21,6 +21,9 @@ function _globalTag() {
       _global_.config.logs = {}
     }
   }
+  if (__tag2._global_===undefined) {
+    __tag2._global_ = {}
+  }
 
   // _global_.config.args
   // _global_.config.logs
