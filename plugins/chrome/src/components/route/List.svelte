@@ -10,7 +10,7 @@ let data = [];
 $: _data = data;
 
 onMount(async () => {
-  console.warn('onMount route');
+  console.warn('onMount route/list');
   _ws_connect.routeOnMount = () => ws__send('getRoute', '', routeHandler);
 });
 

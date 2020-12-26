@@ -11,7 +11,7 @@ let data = [];
 $: _data = data;
 
 onMount(async () => {
-  console.warn('onMount logs');
+  console.warn('onMount logs/list');
   _ws_connect.logOnMount = () => ws__send('getLog', '', logHandler);
 });
 

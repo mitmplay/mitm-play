@@ -13,6 +13,7 @@ const title = '-Profile(s)-'
 const id = 'profileLeft';
 
 onMount(async () => {
+  console.warn('onMount profile/index');
   chrome.storage.local.get(id, function(opt) {
     opt[id] && (left = opt[id])
   });

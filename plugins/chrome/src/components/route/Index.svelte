@@ -13,6 +13,7 @@ const title = '-Route(s)-'
 const id = 'routeLeft';
 
 onMount(async () => {
+  console.warn('onMount route/index');
   chrome.storage.local.get(id, function(opt) {
     opt[id] && (left = opt[id])
   });

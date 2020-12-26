@@ -11,10 +11,15 @@ const title = '-Help-';
 const id  = 'helpLeft';
 
 onMount(async () => {
+  console.warn('onMount help/index');
   chrome.storage.local.get(id, function(opt) {
     opt[id] && (left = opt[id])
   });
 });
+
+function onChange(e) {
+
+}
 
 function dragend({detail}) {
   left = detail.left
@@ -25,6 +30,6 @@ function dragend({detail}) {
 </script>
 
 <Button/>
-<VBox2 {title} {left} {dragend} {List}>
+<VBox2 {title} {left} {dragend} {List} props={{onChange}}>
   <View/>
 </VBox2>

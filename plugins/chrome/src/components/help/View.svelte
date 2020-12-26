@@ -37,7 +37,7 @@ let mermaid;
 const r = /(%.{2}|[~.])/g;
 function content(src) {
   !mermaid && (mermaid = window.mermaid);
-  console.log('plot the content...');
+  // console.log('plot the content...');
   setTimeout(() => {
     if (document.querySelector('#markdown .mermaid')) {
       mermaid.init();

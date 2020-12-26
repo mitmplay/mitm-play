@@ -10,7 +10,7 @@ let data = [];
 $: _data = data;
 
 onMount(async () => {
-  console.warn('onMount markdown');
+  console.warn('onMount help/list');
   _ws_connect.markdownOnMount = () => ws__send('getMarkdown', '', markdownHandler);
 });
 

@@ -23,6 +23,5 @@
 </script>
 
 <div class="edit-container">
-  <div id="monaco">
-  </div>
+  <div id="monaco"></div>
 </div>

@@ -10,8 +10,10 @@ import Tags1 from './Tags1_.svelte';
 import Tags2 from './Tags2_.svelte'; 
 import Tags3 from './Tags3_.svelte'; 
 
-onMount(async () => {
+export let top = "0";
 
+onMount(async () => {
+  console.warn('onMount tags/index');
 });
 
 window.mitm.files.getRoute_events.tagsTable = () => {
@@ -39,7 +41,7 @@ window.mitm.files.getRoute_events.tagsTable = () => {
 
 <Button/>
 <div class="vbox">
-  <BStatic height="0">
+  <BStatic {top}>
     <BHeader>-Tags-</BHeader>
     <BTable>
       <tr class="set-tags">

@@ -10,7 +10,7 @@ let data = [];
 $: _data = data;
 
 onMount(async () => {
-  console.warn('onMount profile');
+  console.warn('onMount profile/list');
   _ws_connect.profileOnMount = () => ws__send('getProfile', '', profileHandler);
 });
 

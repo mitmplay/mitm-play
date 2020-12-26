@@ -12,6 +12,7 @@ const top = '47';
 const id = 'logsLeft';
 
 onMount(async () => {
+  console.warn('onMount logs/index');
   chrome.storage.local.get(id, function(opt) {
     opt[id] && (left = opt[id])
   });
