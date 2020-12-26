@@ -66,15 +66,15 @@ function nohostlogs(flag) {
 
 <div id="list-logs">
   {#each Object.keys(_data) as key, i}
-  <details><Summary item={_data[key]} {key} />
-    {#each Object.keys(_data[key]) as logid}
-    <Item item={{
-      key,
-      logid,
-      ..._data[key][logid],
-      nohostlogs: $client.nohostlogs,
-      }}/>
-    {/each}
-  </details>  
-  {/each}  
+    <details><Summary item={_data[key]} {key} />
+      {#each Object.keys(_data[key]) as logid}
+      <Item item={{
+        key,
+        logid,
+        ..._data[key][logid],
+        nohostlogs: $client.nohostlogs,
+        }}/>
+      {/each}
+    </details>  
+  {/each}
 </div>
