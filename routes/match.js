@@ -1,3 +1,4 @@
+const c = require('ansi-colors')
 const { fn: { home, _nameSpace } } = global.mitm
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 
@@ -95,10 +96,19 @@ const searchFN = (typs, { url, method, browserName }) => {
         const _method = obj[`${key}~method`]
 
         if (arr && (_method === undefined || _method === method)) {
-          let log = `${browser[browserName]} ${typ} (${key})`
           const { host, origin, pathname, search } = new URL(url)
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
-          !__args.nourl && (log += `.url(${__args.nohost ? '' : origin}${msg})`)
+
+          const [ty, tg] = typ.split(':')
+          let log = `${browser[browserName]} ${ty.padEnd(5, ' ')} `
+          if (__args.nourl && __args.nourl==='url') {
+            log += `${__args.nohost ? '' : origin}${msg}`
+          } else {
+            log += `(${key})`
+            !__args.nourl && (log += `.url(${__args.nohost ? '' : origin}${msg})`)
+          }
+          tg && (log += c.red(`:${tg}`))
+
           const hidden = typ.indexOf(':hidden') > -1
           const matched = {
             contentType: obj[`${key}~contentType`],
