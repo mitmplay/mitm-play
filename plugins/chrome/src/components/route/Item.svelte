@@ -34,29 +34,18 @@ function clickHandler(e) {
 }
 </script>
 
-<tr class="tr">
-  <td>
-    <div class="td-item {$source.path===item.path}"
-      data-item={item.element}
-      on:click="{clickHandler}"
-    >{item.title}</div>
-  </td>
-</tr>
+<div class="td-item {$source.path===item.path}"
+  data-item={item.element}
+  on:click="{clickHandler}"
+>{item.title}</div>
 
 <style>
-.td-item:hover {
-  color: blue;
-  font-weight: bolder;
-}
-td {
-  border-bottom: 3px solid #c0d8cca1;
-}
-.td-item,
-.td-show {
+.td-item {
   cursor: pointer;
   padding: 0.1rem;
   line-height: 15px;
-  padding-left: 5px;  
+  padding-left: 5px;
+  border-bottom: 3px solid #c0d8cca1;
 }
 .td-item.true {
   color: blue;
