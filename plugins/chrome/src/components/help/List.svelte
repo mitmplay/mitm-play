@@ -1,6 +1,7 @@
 <script>
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
+import Summary from './Summary.svelte';
 
 let rerender = 0;
 let data = [];
@@ -52,7 +53,8 @@ window.mitm.files.markdown_events.markdownTable = () => {
         {/each}    
       </div>
     {:else}
-      <details><summary>{@html key}</summary>
+      <details>
+        <Summary item={_data[key]} {key} />
         {#each Object.keys(_data[key]) as item}
           <Item item={{element: item, ..._data[key][item]}}/>
         {/each}

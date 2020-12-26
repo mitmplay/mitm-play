@@ -53,7 +53,7 @@ const regx = /(!\[\w+\]\()(\.)\//
 module.exports = ({data: {fpath}}) => {
   let md1 = `${fs.readFileSync(fpath)}`
   const {route, app} = mitm.path
-  console.log('markdown', fpath)
+  console.log('>>> help ', fpath)
 
   if (fpath.match(app)) {
     md1 = updateUrl(md1, fpath, app, 'mitm-app')

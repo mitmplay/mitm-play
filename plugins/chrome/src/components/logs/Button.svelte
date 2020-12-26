@@ -57,8 +57,8 @@ function btnClose() {
 
 <div class="btn-container" style="top: 1px;">
   <button on:click="{btnClear}">
-    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 512 512">
-      <path style="fill:red" d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10pt" height="10pt" viewBox="0 0 10 10" version="1.1">
+      <g id="surface1"><path style=" stroke:none;fill-rule:nonzero;fill:red;fill-opacity:1;" d="M 5 0.15625 C 2.324219 0.15625 0.15625 2.324219 0.15625 5 C 0.15625 7.675781 2.324219 9.84375 5 9.84375 C 7.675781 9.84375 9.84375 7.675781 9.84375 5 C 9.84375 2.324219 7.675781 0.15625 5 0.15625 Z M 7.542969 2.457031 C 8.820312 3.738281 8.910156 5.691406 7.945312 7.0625 L 2.9375 2.054688 C 4.308594 1.089844 6.261719 1.179688 7.542969 2.457031 Z M 2.457031 7.542969 C 1.179688 6.261719 1.089844 4.308594 2.054688 2.9375 L 7.0625 7.945312 C 5.691406 8.910156 3.738281 8.820312 2.457031 7.542969 Z M 2.457031 7.542969 "/></g>
     </svg>
   </button>  
   <button class="clollapse" on:click="{btnClose}">[--]</button>
@@ -77,16 +77,27 @@ function btnClose() {
   left: 48px;
   top: -3px;
 }
+.checkbox {
+  vertical-align: top;
+  padding-top: 2px;
+}
+.checkbox input {
+  cursor: pointer;
+  margin-right: 2px;
+  vertical-align: middle;
+}
 button {
   border: 0;
-  width: 24px;
   cursor: pointer;
   background: transparent;
+  font-family: Consolas, Lucida Console, Courier New, monospace;
 }
 button.clollapse {
   padding: 1px;
-  width: 18px;
   font-weight: 700;
+  font-size: 10px;
   color: #002aff;
+  margin-top: -5px;
+  vertical-align: middle;
 }
 </style>
