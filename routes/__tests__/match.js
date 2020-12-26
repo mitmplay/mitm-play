@@ -1,12 +1,16 @@
 require('../../init/init-ap')
 const { routeSort } = require('../../init/chokidar/loadJS')
 const { _routeSet } = require('../../init/fn/_route-set')
+const _globalTag = require('../../init/fn/_globalTag')
+const {_sortLength} = require('../../init/fn/_key-length')
 
 global.mitm = {
   ...global.mitm,
   routes: require('../__fixture__/routes'),
   fn: {
     _routeSet,
+    _globalTag,
+    _sortLength,
     _clear: () => {},
     _nameSpace: require('../../init/fn/_namespace'),
     _tldomain: require('../../init/fn/_tldomain'),

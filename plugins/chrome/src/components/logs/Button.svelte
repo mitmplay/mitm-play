@@ -44,8 +44,14 @@ function btnArgswch(e) {
 function hostflag() {
   return !window.mitm.client.nohostlogs;
 }
+
 function argsflag() {
   return !window.mitm.client.noarglogs;
+}
+
+function btnClose() {
+  const nodes = document.querySelectorAll('details[open]')
+  nodes.forEach(node => node.removeAttribute('open'))
 }
 </script>
 
@@ -55,6 +61,7 @@ function argsflag() {
       <path style="fill:red" d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"/>
     </svg>
   </button>  
+  <button class="clollapse" on:click="{btnClose}">[--]</button>
   <label class="checkbox">
     <input type="checkbox" on:click={btnHostswch} checked={hostflag()}>host
   </label>
@@ -75,5 +82,11 @@ button {
   width: 24px;
   cursor: pointer;
   background: transparent;
+}
+button.clollapse {
+  padding: 1px;
+  width: 18px;
+  font-weight: 700;
+  color: #002aff;
 }
 </style>

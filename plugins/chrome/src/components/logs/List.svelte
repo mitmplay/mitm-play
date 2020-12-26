@@ -30,17 +30,27 @@ const logHandler = obj => {
       ext: '',
     })
   }
-  if (window.mitm.files.log===undefined) {
-    window.mitm.files.log = obj;
+  const {files} = window.mitm
+  if (files.log===undefined) {
+    files.log = obj;
     data = obj;
   } else {
-    const {log} = window.mitm.files;
+    const {log} = files;
     const newLog = {};
     for (let k in obj) {
       newLog[k] = obj[k];
     }
     data = newLog;
-    window.mitm.files.log = newLog
+    const ln1 = Object.keys(log)
+    const ln2 = Object.keys(newLog)
+    if (ln2<ln1) {
+      const nodes1 = document.querySelectorAll('details[open]')
+      nodes1.forEach(node => node.removeAttribute('open'))
+
+      const nodes2 = document.querySelectorAll('summary input:checked')
+      nodes2.forEach(node => node.checked = false)
+    }
+    files.log = newLog
   }
 }
 
