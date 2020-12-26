@@ -50,7 +50,7 @@ function argsflag() {
 }
 
 function btnClose() {
-  const nodes = document.querySelectorAll('details[open]')
+  const nodes = document.querySelectorAll('#list-logs details[open]')
   nodes.forEach(node => node.removeAttribute('open'))
 }
 </script>

@@ -44,10 +44,10 @@ const logHandler = obj => {
     const ln1 = Object.keys(log)
     const ln2 = Object.keys(newLog)
     if (ln2<ln1) {
-      const nodes1 = document.querySelectorAll('details[open]')
+      const nodes1 = document.querySelectorAll('#list-logs details[open]')
       nodes1.forEach(node => node.removeAttribute('open'))
 
-      const nodes2 = document.querySelectorAll('summary input:checked')
+      const nodes2 = document.querySelectorAll('#list-logs summary input:checked')
       nodes2.forEach(node => node.checked = false)
     }
     files.log = newLog
@@ -64,15 +64,17 @@ function nohostlogs(flag) {
 
 </script>
 
-{#each Object.keys(_data) as key, i}
-<details><Summary item={_data[key]} {key} />
-  {#each Object.keys(_data[key]) as logid}
-  <Item item={{
-    key,
-    logid,
-    ..._data[key][logid],
-    nohostlogs: $client.nohostlogs,
-    }}/>
-  {/each}
-</details>  
-{/each}
+<div id="list-logs">
+  {#each Object.keys(_data) as key, i}
+  <details><Summary item={_data[key]} {key} />
+    {#each Object.keys(_data[key]) as logid}
+    <Item item={{
+      key,
+      logid,
+      ..._data[key][logid],
+      nohostlogs: $client.nohostlogs,
+      }}/>
+    {/each}
+  </details>  
+  {/each}  
+</div>
