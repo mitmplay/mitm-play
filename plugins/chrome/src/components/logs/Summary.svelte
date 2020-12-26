@@ -2,6 +2,8 @@
 export let item; 
 export let key;
 
+import { logstore } from './stores.js';
+
 let _checked = false;
 
 function data(i) {
@@ -16,14 +18,30 @@ function clickHandler(e) {
   let {path} = node.parentElement.dataset;
   _checked = node.checked;
 }
+
+function klass(store) {
+  for (const itm in item) {
+    if (itm===store.logid) {
+      return ' chk'
+    }
+  }
+  return ''
+}
 </script>
 
-<summary data-path={data(item)} class="{_checked}">
+<summary
+  data-path={data(item)}
+  class="{_checked}{klass($logstore)}"
+>
   <input on:click="{clickHandler}" type="checkbox" />
   {@html key}
 </summary>
 
 <style>
+  summary.chk {
+    font-weight: 700;
+    background: #e6f7d9;
+  }
   summary.true {
     background: #f3dddd;
   }
