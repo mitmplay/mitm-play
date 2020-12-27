@@ -26,14 +26,14 @@ module.exports = async function(page) {
     await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
   })
   page.on('frameattached', async (frame) => {
-    await frame.waitForNavigation()
-    log(`xplay-page frame ${_page}`)
-    await frame.waitForTimeout(1000)
     if (frame.isDetached()) {
       console.log('DETACHED IFRAME URL', frame.url())
       return
     }
     try {
+      await frame.waitForNavigation()
+      log(`xplay-page frame ${_page}`)
+      await frame.waitForTimeout(1000)
       await frame.evaluate(_page => {
         if (window['xplay-page'] === undefined) {
           window['xplay-page'] = _page
