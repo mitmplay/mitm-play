@@ -2,8 +2,22 @@ const fs = require('fs-extra')
 const c = require('ansi-colors')
 
 function err (e) {
-  if (e) {
-    console.log(c.redBright('Error remove files'), e)
+  e && console.log(c.redBright('Error remove files'), e)
+}
+
+function folders(path) {
+  try {
+    const arr = fs.readdirSync(path)
+    return arr.filter(f => fs.statSync(`${path}/${f}`).isDirectory())
+  } catch (error) {
+    return []
+  }
+}
+
+function remove(path) {
+  const arr = folders(path)
+  for (const f of arr) {
+    fs.remove(`${path}/${f}`, err)
   }
 }
 
@@ -28,10 +42,10 @@ function clear (o) {
     const { browser, delete: d } = global.mitm.argv
     for (const browserName in browser) {
       if (d === true) {
-        fs.remove(`${path.home}/${browserName}/cache`, err)
-        fs.remove(`${path.home}/${browserName}/log`, err)
+        remove(`${path.home}/${browserName}/log`)
+        remove(`${path.home}/${browserName}/cache`)
       } else {
-        fs.remove(`${path.home}/${browserName}/${d}`, err)
+        remove(`${path.home}/${browserName}/${d}`)
       }
     }
   }
