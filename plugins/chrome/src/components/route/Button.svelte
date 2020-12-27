@@ -1,15 +1,6 @@
 <script>
 import { source } from './stores.js';
-
-function btnMin() {
-  const { editor: { _route }} = window.mitm;
-  _route && _route.trigger('fold', 'editor.foldAll');
-}
-
-function btnPlus() {
-  const { editor: { _route }} = window.mitm;
-  _route && _route.trigger('unfold', 'editor.unfoldAll');
-}
+import Exbutton from '../monaco/Exbutton.svelte';
 
 function btnSave(e) {
   const { editor: { _route }} = window.mitm;
@@ -29,13 +20,6 @@ function btnSave(e) {
       console.log('Done Save!');
     });
   }
-}
-
-function btnOpen() {
-  console.log($source);
-  ws__send('openFolder', $source, data => {
-    console.log('Done Open!');
-  });
 }
 
 function btns(id) {
@@ -81,10 +65,8 @@ function btnGo(e) {
 Path:{$source.path}
 {#if $source.path}
 	<div class="btn-container">
-  <button class="tlb btn-min"  on:click="{btnMin}" >[--]</button> -
-  <button class="tlb btn-plus" on:click="{btnPlus}">[++]</button> -
-  <button class="tlb btn-save" disabled={$source.saveDisabled} on:click="{btnSave}">Save</button> -
-  <button class="tlb btn-open" disabled={$source.openDisabled} on:click="{btnOpen}">Open</button>
+  <Exbutton source={$source} editor="_route"/>
+  <button class="tlb btn-save" disabled={$source.saveDisabled} on:click="{btnSave}">Save</button>
   </div>
 {/if}
 </div>

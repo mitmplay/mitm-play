@@ -14,7 +14,7 @@
             ],
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/mitm-play.js",
-            "args": ["speed"]
+            "args": ["speed", "-d"]
         }
     ]
 }

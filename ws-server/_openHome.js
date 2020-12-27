@@ -1,11 +1,14 @@
 const pc = require('child_process')
 
 module.exports = ({ data }) => {
+  const { home } = global.mitm.path
   const { platform } = process
   if (platform === 'win32') {
-    pc.exec(`start "" "${global.mitm.path.home}"`)
+    pc.exec(`start "" "${home}"`)
+  } else if (platform === 'darwin') {
+    pc.exec(`open "${home}"`)
   } else {
-    pc.exec(`open "${global.mitm.path.home}"`)
+    pc.exec(`xdg-open "${home}"`)
   }
   return 'OK'
 }

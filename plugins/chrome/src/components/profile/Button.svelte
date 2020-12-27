@@ -1,15 +1,6 @@
 <script>// feat: profile
 import { source } from './stores.js';
-
-function btnMin() {
-  const { editor: { _profile }} = window.mitm;
-  _profile && _profile.trigger('fold', 'editor.foldAll');
-}
-
-function btnPlus() {
-  const { editor: { _profile }} = window.mitm;
-  _profile && _profile.trigger('unfold', 'editor.unfoldAll');
-}
+import Exbutton from '../monaco/Exbutton.svelte';
 
 function btnSave(e) {
   const { editor: { _profile }} = window.mitm;
@@ -81,10 +72,8 @@ function btnGo(e) {
 Path:{$source.path}
 {#if $source.path}
 	<div class="btn-container">
-  <button class="tlb btn-min"  on:click="{btnMin}" >[--]</button> -
-  <button class="tlb btn-plus" on:click="{btnPlus}">[++]</button> -
-  <button class="tlb btn-save" disabled={$source.saveDisabled} on:click="{btnSave}">Save</button> -
-  <button class="tlb btn-open" disabled={$source.openDisabled} on:click="{btnOpen}">Open</button>
+  <Exbutton source={$source} editor="_profile"/>
+  <button class="tlb btn-save" disabled={$source.saveDisabled} on:click="{btnSave}">Save</button>
   </div>
 {/if}
 </div>

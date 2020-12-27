@@ -4,13 +4,13 @@ import { logstore } from './stores.js';
 
 function btnMin() {
   const {tab, editor} = $tabstore;
-  const id = `editor${tab+1}`;
+  const id = `edit${tab+1}`;
   editor[id].trigger('fold', 'editor.foldAll');
 }
 
 function btnPlus() {
   const {tab, editor} = $tabstore;
-  const id = `editor${tab+1}`;
+  const id = `edit${tab+1}`;
   editor[id].trigger('fold', 'editor.unfoldAll');
 }
 
@@ -42,8 +42,12 @@ function btnOpen() {
   top: -2px;
 }
 .btn-container button {
-  font-size: 10px;
+  border: 0;
+  padding: 0;
   cursor: pointer;
+  background: transparent;
+  font-family: Consolas, Lucida Console, Courier New, monospace;
+  font-size: 10px;
 }
 .btn-container button:disabled {
   cursor: auto;
