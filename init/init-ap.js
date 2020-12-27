@@ -1,15 +1,7 @@
 const yargs = require('yargs-parser')
+const _home = require('os').homedir();
 
-let _home
-const { platform, env: { HOME, HOMEPATH } } = process
-if (platform === 'win32') {
-  _home = HOMEPATH
-  if (!_home.match(/^[^:]:/)) {
-    _home = `${process.cwd().match(/^[^:]/)[0].toUpperCase()}:${_home}`
-  }
-} else {
-  _home = HOME
-}
+const { platform } = process
 
 const app = global.__app || ''
 const cwd = process.cwd().replace(/\\/g, '/')
