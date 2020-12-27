@@ -17,13 +17,19 @@
       padding: 10px;
       border-radius: 6px;
       margin-bottom: 10px;
+      background: #1c1b1b;
     }
     code {
-      font-size: 85%;
+      font-size: 80%;
       color: inherit;
       border-radius: 6px;
-      background-color: #efefef;
       font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+    }
+    .language-bash {
+      color: greenyellow;
+    }
+    .language-js {
+      color: #c4e2c4;
     }
     h1, h2, h3 {
       padding: 0;
@@ -31,11 +37,11 @@
       font-weight: thin;
       white-space: normal;
       text-transform: none;
-      margin-top: 18px;
-      margin-bottom: 12px;
+      margin-top: 8px;
+      margin-bottom: 5px;
     }
     h1 {
-      font-size: 1.8em;
+      font-size: 1.6em;
       line-height: 1.2;
       padding-bottom: .3em;
       letter-spacing: -0.8px;

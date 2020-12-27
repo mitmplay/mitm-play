@@ -5,7 +5,7 @@
 	"author": "Widi Harsojo",
 	"scripts": {
 		"rollup": "rollup -wc",
-		"scss": "node-sass scss/overwrite.scss -w scss -o css",
+		"scss": "node-sass scss/overwrite.scss -w -o css",
 		"start": "npm-run-all scss rollup ",
 		"eslint": "eslint --ext .js,.svelte ."
 	},

@@ -4,7 +4,7 @@
 
 nav.tabs.is-small.is-boxed {
   height: 22;
-  margin-bottom: 4px;
+  margin-bottom: 1px;
   background-color: #e6e4e4; }
 
 .tab-content {
@@ -46,23 +46,27 @@ label {
     .show-container #markdown pre {
       padding: 10px;
       border-radius: 6px;
-      margin-bottom: 10px; }
+      margin-bottom: 10px;
+      background: #1c1b1b; }
     .show-container #markdown code {
-      font-size: 85%;
+      font-size: 80%;
       color: inherit;
       border-radius: 6px;
-      background-color: #efefef;
       font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace; }
+    .show-container #markdown .language-bash {
+      color: greenyellow; }
+    .show-container #markdown .language-js {
+      color: #c4e2c4; }
     .show-container #markdown h1, .show-container #markdown h2, .show-container #markdown h3 {
       padding: 0;
       text-align: left;
       font-weight: thin;
       white-space: normal;
       text-transform: none;
-      margin-top: 18px;
-      margin-bottom: 12px; }
+      margin-top: 8px;
+      margin-bottom: 5px; }
     .show-container #markdown h1 {
-      font-size: 1.8em;
+      font-size: 1.6em;
       line-height: 1.2;
       padding-bottom: .3em;
       letter-spacing: -0.8px;

@@ -86,6 +86,10 @@ function btnClose() {
   margin-right: 2px;
   vertical-align: middle;
 }
+svg {
+  padding-top: 2px;
+  padding-left: 2px;
+}
 button {
   border: 0;
   cursor: pointer;

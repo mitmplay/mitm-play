@@ -10,24 +10,25 @@ const userroute = './**/*.js'
 
 const splitter = /([&?;,]|:\w|url|\/\w+=)/
 const session = (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '') // cli-options\fn\session.js
-const win32 = platform === 'win32'
 const argv = { ommit: {}, browser: {}, ...yargs(process.argv.slice(2)) }
 const path = { app, cwd, home, userroute }
+const win32 = platform === 'win32'
+
 const files = {
-  _markdown: {}, // feat: markdown
-  markdown: [],
+  _markdown:{}, // feat: markdown
   _profile: {}, // feat: profile
-  profile: [],
-  _cache: {},
-  cache: [],
-  _log: {},
-  log: []
+  _cache:   {},
+  _log:     {},
+  markdown: [],
+  profile:  [],
+  cache:    [],
+  log:      []
 }
 const client = {
-  csp: false,
-  noarglogs: false,
+  postmessage: false,
   nohostlogs: false,
-  postmessage: false
+  noarglogs: false,
+  csp: false
 }
 
 /**
