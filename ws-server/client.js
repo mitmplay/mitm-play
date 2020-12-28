@@ -125,14 +125,18 @@ On browser console type "ws"`
   function $screenshot ({ data }) {
     const { _page } = data
     const { __page } = global.mitm
-    _stamp.push((new Date()).toISOString().replace(/[:-]/g, ''))
-    try {
-      const _session = Object.keys(__page[_page].session).pop()
-      data.session = `${_page}-${_session}`
-      delayCapture(data)
-    } catch (error) {
-      console.log(error)
-      debugger
+    if (_page) {
+      _stamp.push((new Date()).toISOString().replace(/[:-]/g, ''))
+      try {
+        const _session = Object.keys(__page[_page].session).pop()
+        data.session = `${_page}-${_session}`
+        delayCapture(data)
+      } catch (error) {
+        console.log(error)
+        debugger
+      }
+    } else {
+      console.log('no session in _page', __page)
     }
   }
 
