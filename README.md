@@ -1,5 +1,5 @@
-# Mitm-play
-### Man in the middle using playwright
+# Man in the middle
+### Using Playwright to intercept traffic in between and do lots of stuff for Developer to exercise
 
 <details><summary><b>mitm-play in action</b></summary>
 
@@ -10,9 +10,10 @@
    * [Installation](#installation)
    * [Features](#features)
    * [Concept](#concept)
-   * [Profile: ~/.mitm-play](#profile-mitm-play)
+   * [Object & function](#object--function)
    * [Route Sections/rules](#route-sectionrules)
    * [\_global\_ Route](#_global_-route)
+   * [~/.mitm-play](#mitm-play)
    * [HTTP_PROXY](#http_proxy)
    * [CLI Options](#cli-options)
    * [Macros](#macros)
@@ -128,8 +129,120 @@ If the process of checking is not match, then it will fallback to **\_global\_**
 
 Usually html page load with several assets (image, js & css) that not belong to the same domain, and to match those type of assets, it use browser headers attributes: `origin` or `referer`, in which will scoping to the `same namespace`.
 
-# Profile: ~/.mitm-play
-By default all save file are on the `~/.mitm-play` profile folder.
+## Object & function
+Detail structure of `Object` and `Function` shared accros **Section** 
+#### _Objects_
+
+<details><summary><b>match</b></summary>
+
+```js
+/**
+ * match: {
+ *   route      : {}, 
+ *   contentType: {}, 
+ *   workspace  : '',/undefined,
+ *   namespace  : '', 
+ *   pathname   : '', 
+ *   hidden     : true,/false 
+ *   search     : '',
+ *   host       : '',
+ *   arr        : [],
+ *   url        : '',
+ *   key        : '',
+ *   log        : '',
+ *   typ        : ''
+ * }
+*/
+```
+</details>
+
+<details><summary><b>request</b></summary>
+
+```js
+/**
+ * reqs/request: {
+ *   url        : '',
+ *   method     : 'GET',/PUT/POST/DELETE 
+ *   headers    : {}, 
+ *   body       : '',/null,
+ *   browserName: 'chromium',/webkit/firefox
+ * }
+*/
+```
+</details>
+
+<details><summary><b>response</b></summary>
+
+```js
+/**
+ * resp/response: {
+ *   url    : '',
+ *   status : 200,/302/400/500/etc.. 
+ *   headers: {},
+ *   body   : '',
+ * }
+*/
+```
+</details>
+
+#### _Functions_
+<details><summary><b>file(reqs, match)</b></summary>
+
+```js
+/**
+ * arguments:
+ * - <reqs: object>
+ * - <match: object>
+ * 
+ * return: <filename: string>/false
+ * 
+ * for Mock: False value indicate skip mocking
+*/
+file(reqs, match) {
+  ...
+  return 'common.js';
+},
+```
+</details>
+
+<details><summary><b>request(reqs, match)</b></summary>
+
+```js
+/**
+ * arguments:
+ * - <reqs: object>
+ * - <match: object>
+ * 
+ * return: <reqs: object>
+*/
+request(reqs, match) {
+  const {headers} = reqs;
+  headers['new-header'] = 'with some value';
+
+  return {headers};
+},
+```
+</details>
+
+<details><summary><b>response(resp, reqs, match)</b></summary>
+
+```js
+/**
+ * arguments:
+ * - <resp: object>
+ * - <reqs: object>
+ * - <match: object>
+ * 
+ * return: <resp: object>
+*/
+response(reqs, reqs, match) {
+  const {headers} = reqs;
+  headers['new-header'] = 'with some value';
+
+  return {headers};
+},
+```
+</details>
 
 # Route Section/rules
 on each route you can add section supported:
@@ -143,7 +256,7 @@ route = {
   title:   '',
   jsLib:   [],
   workspace: '',
-  screenshot: {}, //user interaction rules & observe DOM-Element
+  screenshot: {}, //user interaction rules & DOM-element observer
   proxy:   [], //request with proxy
   noproxy: [], 
   nosocket:[],
@@ -529,123 +642,10 @@ log: {
 ```
 </details>
 
-## Common info:
-### Objects
-<details><summary><b>object: reqs/request</b></summary>
-
-```js
-/**
- * reqs/request: {
- *   url        : '',
- *   method     : 'GET',/PUT/POST/DELETE 
- *   headers    : {}, 
- *   body       : '',/null,
- *   browserName: 'chromium',/webkit/firefox
- * }
-*/
-```
-</details>
-
-<details><summary><b>object: resp/response</b></summary>
-
-```js
-/**
- * resp/response: {
- *   url    : '',
- *   status : 200,/302/400/500/etc.. 
- *   headers: {},
- *   body   : '',
- * }
-*/
-```
-</details>
-
-<details><summary><b>object: match</b></summary>
-
-```js
-/**
- * match: {
- *   route      : {}, 
- *   contentType: {}, 
- *   workspace  : '',/undefined,
- *   namespace  : '', 
- *   pathname   : '', 
- *   hidden     : true,/false 
- *   search     : '',
- *   host       : '',
- *   arr        : [],
- *   url        : '',
- *   key        : '',
- *   log        : '',
- *   typ        : ''
- * }
-*/
-```
-</details>
-
-### Functions
-<details><summary><b>function: file(reqs, match)</b></summary>
-
-```js
-/**
- * arguments:
- * - <reqs: object>
- * - <match: object>
- * 
- * return: <filename: string>/false
- * 
- * for Mock: False value indicate skip mocking
-*/
-file(reqs, match) {
-  ...
-  return 'common.js';
-},
-```
-</details>
-
-<details><summary><b>function: request(reqs, match)</b></summary>
-
-```js
-/**
- * arguments:
- * - <reqs: object>
- * - <match: object>
- * 
- * return: <reqs: object>
-*/
-request(reqs, match) {
-  const {headers} = reqs;
-  headers['new-header'] = 'with some value';
-
-  return {headers};
-},
-```
-</details>
-
-<details><summary><b>function: response(resp, reqs, match)</b></summary>
-
-```js
-/**
- * arguments:
- * - <resp: object>
- * - <reqs: object>
- * - <match: object>
- * 
- * return: <resp: object>
-*/
-response(reqs, reqs, match) {
-  const {headers} = reqs;
-  headers['new-header'] = 'with some value';
-
-  return {headers};
-},
-```
-</details>
-
 # \_global\_ Route
-A special route to handle global scope (without namespace) and serving as a common config. 
 
-The default `config.logs` setting can be override as needed.
+A special route to handle global scope (without namespace) 
+
 <details><summary><b>Common route rules</b></summary>
 
 ```js
@@ -664,16 +664,32 @@ _global_ = {
   css:     {},
   js:      {},
   response:{}, //end routing rules
-  config:  {}, //see Default config below
 }
 ```
 </details>
-<details><summary><b>Default config</b></summary>
+<details><summary><b>Args & flag</b></summary>
+
+Two additional Section only appear in _\_global\__
+
+`args`, `flag` and it can be served as a section-tags
 
 ```js
-// toggle to show/hide from console.log()
-_global_.config = {
-  logs: {
+_global_ = {
+  args: { // part of cli options
+    activity,  // rec/replay cache activity*
+    cookie,    // reset cookies expire date*
+    fullog,    // show detail logs on each rule*
+    lazyclick, // delay ~700ms click action*
+    nosocket,  // no websocket injection to html page*
+    nohost,    // set logs without host name*
+    nourl,     // set logs without URL*
+    relaxcsp,  // relax CSP unblock websocket*
+  }
+}
+```
+```js
+_global_ = {
+  flag: { // toggle to show/hide from console.log()
     'referer-reqs': true,
     'no-namespace': true,
     'ws-broadcast': false, // true if --verbose/--debug
@@ -699,6 +715,9 @@ _global_.config = {
 }
 ```
 </details>
+
+# ~/.mitm-play
+By default all save file are on the `~/.mitm-play` profile folder.
 
 # HTTP_PROXY
 mitm-play support env variable **HTTP_PROXY** and **NO_PROXY** if your system required proxy to access internet. Please check on `CLI Options > -x --proxy` section for detail explanation. 
