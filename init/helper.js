@@ -26,7 +26,7 @@ module.exports = (_package) => {
     -g --group    \t create cache group/rec
     -t --incognito\t set chromium incognito
     -x --proxy    \t a proxy request
-    -z --lazy     \t delay ~700ms click action*
+    -z --lazyclick\t delay ~700ms click action*
 
     -D --debug    \t show ws messages
     -G --nogpu    \t set chromium without GPU

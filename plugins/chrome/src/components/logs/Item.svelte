@@ -4,6 +4,13 @@ export let item;
 import { logstore } from './stores.js';
 import { client } from '../other/stores.js';
 
+const m = {
+  POST:  'post',
+  PUT:   'put ',
+  GET:   'get ',
+  DELETE:'del ',
+}
+
 function empty() {
   logstore.set({
     respHeader: {},
@@ -58,10 +65,10 @@ function status({general:g}) {
 }
 
 function method({general:g}) {
-  return `${g.method.toLowerCase()}`;
+  return `${m[g.method]}`;
 }
 function method2({general:g}) {
-  return g.method.toLowerCase() + (g.ext ? `<${g.ext}> ` : '');
+  return m[g.method] + (g.ext ? `<${g.ext}> ` : '');
 }
 function url({general:g}) {
   let msg
@@ -92,10 +99,10 @@ function pth({general:g}) {
 data-logid={item.logid}
 on:click="{clickHandler}"
 >
-  <span class="status {status(item)}">{item.general.status}</span> 
-  <span class="method {method(item)}">{method2(item)}</span> 
-  <span class="url">{url(item)}</span> 
-  <span class="prm">{pth(item)}</span> 
+  <span class="status {status(item)}">{item.general.status}</span>
+  <span class="method {method(item)}">{method2(item)}</span>
+  <span class="url">{url(item)}</span>
+  <span class="prm">{pth(item)}</span>
 </div>
 
 <style>
@@ -143,5 +150,6 @@ td {
 }
 .prm {
   color: #ccb7b7;
+  margin-left: -6px;
 }
 </style>

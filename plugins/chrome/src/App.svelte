@@ -27,7 +27,7 @@ onMount(async () => {
   <Tab label="Profile"><Profile/></Tab>
   <Tab label="Logs"><LogsTab/></Tab>
   <Tab label="Tags"><TagsTab/></Tab>
-  <Tab label="Other"><Other/></Tab>
+  <!-- <Tab label="Other"><Other/></Tab> -->
   <Tab label="Help"><Help/></Tab>
 </Tabs>
 </main>
