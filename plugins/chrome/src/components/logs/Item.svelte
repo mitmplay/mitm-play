@@ -61,17 +61,38 @@ function clickHandler(e) {
 }
 
 function status({general:g}) {
+  if (g===undefined) {
+    return ''
+  }
   return `_${Math.trunc(g.status/100)}`;
 }
 
+function status2({general:g}) {
+  if (g===undefined) {
+    return ''
+  }
+  return g.status;
+}
+
 function method({general:g}) {
+  if (g===undefined) {
+    return ''
+  }
   return `${m[g.method]}`;
 }
+
 function method2({general:g}) {
+  if (g===undefined) {
+    return ''
+  }
   return m[g.method] + (g.ext ? `<${g.ext}> ` : '');
 }
+
 function url({general:g}) {
   let msg
+  if (g===undefined) {
+    return ''
+  }
   if (g.url.match('/log/')) {
     msg = g.url.split('@')[1];
   } else if ($client.nohostlogs) {
@@ -85,7 +106,11 @@ function url({general:g}) {
   }
   return msg;
 }
+
 function pth({general:g}) {
+  if (g===undefined) {
+    return ''
+  }
   if ($client.noarglogs || g.url.match('/log/')) {
     return '';
   } else {
@@ -99,7 +124,7 @@ function pth({general:g}) {
 data-logid={item.logid}
 on:click="{clickHandler}"
 >
-  <span class="status {status(item)}">{item.general.status}</span>
+  <span class="status {status(item)}">{status2(item)}</span>
   <span class="method {method(item)}">{method2(item)}</span>
   <span class="url">{url(item)}</span>
   <span class="prm">{pth(item)}</span>

@@ -101,7 +101,7 @@ Redirect...
         okCallback(resp)
         break
       } catch (err) {
-        if (err.code === 'ECONNRESET' && i <= n) {
+        if ((err.code === 'ECONNRESET' || err.code === 'ENETUNREACH') && i <= n) {
           console.log(c.yellowBright(`RETRY:${i}`), url)
           await delay(2500)
         } else {
