@@ -100,9 +100,15 @@ function url({general:g}) {
   } else {
     msg = `${g.url.split('?')[0]}`;
   }
-  if ($client.nohostlogs && g.ext==='') {
-    const [a1,a2] = msg.split('--');
-    msg = a2 || a1;
+  if ($client.nohostlogs) {
+    if (g.url.match('-sshot@')) {
+      msg = g.url.split('~').pop()
+    } else if (g.ext==='') {
+      const [a1,a2] = msg.split('--');
+      msg = a2 || a1;
+    }
+  } else if (g.url.match('-sshot@')) {
+    msg = (new URL(msg)).pathname 
   }
   return msg;
 }
@@ -136,12 +142,7 @@ on:click="{clickHandler}"
   background: yellow
   /* font-weight: bolder; */
 }
-td {
-  border-bottom: 3px solid #c0d8cca1;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-.td-item,
-.td-show {
+.td-item {
   cursor: pointer;
   padding: 0.1rem;
   line-height: 15px;

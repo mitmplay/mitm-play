@@ -114,9 +114,9 @@ On browser console type "ws"`
     let path
     if (at.match(/^\^/)) {
       at = at.slice(1)
-      path = `${root}/${session}/${at}/${stamp}-${host}--`
+      path = `${root}/${session}/${at}/${stamp}-${host}`
     } else {
-      path = `${root}/${session}/${stamp}--${at}@${host}--`
+      path = `${root}/${session}/${stamp}--${at}@${host}`
     }
     path += `${fname||'_'}.png`
     _screenshot(data, { path, page })

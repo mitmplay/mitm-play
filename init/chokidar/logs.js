@@ -22,6 +22,10 @@ function addLog (path) {
         url: path
       }
       if (path.match('-sshot@')) {
+        let url = path.replace(/(http.?)~~/, (s,p1) => `${p1}://`)
+        url = url.replace(/~/g, '/').split('-sshot@')[1]
+        general.url = url
+        general.path= (new URL(url)).pathname
         general.ext = path.match(/\.(\w+)$/)[1]
         general.method = 'GET'
         general.status = 200

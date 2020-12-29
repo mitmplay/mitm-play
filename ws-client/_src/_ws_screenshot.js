@@ -16,14 +16,14 @@ function screenshot (e) {
       return
     }
   }
-  const { hostname: host } = location
   const namespace = _ws_namespace()
   const browser = _ws_vendor()
+  const host = location.origin.replace('://' ,'~~')
   const route = window.mitm.routes[namespace]
   const { selector } = route.screenshot
 
   const arr = document.body.querySelectorAll(selector)
-  const fname = location.pathname.replace(/^\//, '').replace(/\//g, '-')
+  const fname = location.pathname.replace(/^\//g, '~')
   const delay = mitm.argv.lazyclick === true ? 700 : mitm.argv.lazyclick
   for (const el of arr) {
     let node = e.target
@@ -32,7 +32,8 @@ function screenshot (e) {
     }
     if (node !== document.body) {
       const _page = window['xplay-page']
-      const params = { namespace, _page, host, fname, browser }
+      const params = { namespace, _page, host, browser }
+      params.fname = fname==='~' ? '~_' : fname
       window.ws__send('screenshot', params)
       if (mitm.argv.lazyclick) {
         // delay action to finish screenshot
