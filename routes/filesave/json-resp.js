@@ -1,7 +1,6 @@
 const c = require('ansi-colors')
 const _ext = require('../filepath/ext')
 const searchParams = require('./search-params')
-const cookieRequest = require('./cookier')
 const { xjson } = searchParams
 
 module.exports = ({ reqs, resp, match }) => {
@@ -21,7 +20,6 @@ module.exports = ({ reqs, resp, match }) => {
           _resp.headers && (respHeader = _resp.headers)
         }
       }
-      cookieRequest(reqsHeader)
       const urlParams = searchParams(url)
       if (respBody && respBody.match(xjson)) {
         respBody = JSON.parse(`${respBody}`)

@@ -1,7 +1,6 @@
 const c = require('ansi-colors')
 const _ext = require('../filepath/ext')
 const searchParams = require('./search-params')
-const cookieRequest = require('./cookier')
 const _setCookie = require('./set-cookie')
 const { xjson } = searchParams
 
@@ -40,7 +39,6 @@ module.exports = ({ reqs, resp }) => {
     } else {
       reqsBody = ''
     }
-    cookieRequest(reqsHeader)
     meta = {
       general: {
         ext: _ext(resp),

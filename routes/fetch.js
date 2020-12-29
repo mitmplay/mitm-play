@@ -1,8 +1,10 @@
 const c = require('ansi-colors')
 const _fetch = require('make-fetch-happen')
+const { cookieToObj, objToCookie } = require('./filesave/cookier')
 
 async function extract ({ request: r, browserName }) {
   const headers = r.headers()
+  cookieToObj(headers) // feat: cookie autoconvert
   let page
   if (headers['xplay-page']) {
     const { browsers } = global.mitm
@@ -97,7 +99,11 @@ Redirect...
         if (global.mitm.argv.debug) {
           console.log(c.yellowBright(`URL:${url}`))
         }
-        const resp = await _fetch(url, opt)
+        const headers = {...opt.headers}
+        if (typeof headers.cookie !== 'string') {
+          objToCookie(headers) // feat: cookie autoconvert
+        }  
+        const resp = await _fetch(url, {...opt, headers})
         okCallback(resp)
         break
       } catch (err) {

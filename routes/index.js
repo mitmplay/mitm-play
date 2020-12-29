@@ -119,6 +119,9 @@ module.exports = async ({ route, request, browserName }) => {
         }
       }
       const { headers, method, body: postData } = reqs
+      if (typeof headers.cookie !== 'string') {
+        objToCookie(headers) // feat: cookie autoconvert
+      }  
       routeCall(route, 'continue', { headers, method, postData })
     }
   }
