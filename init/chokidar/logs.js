@@ -15,14 +15,18 @@ function addLog (path) {
   const meta = path.replace(/\/log\/[^/]+/, m => `${m}/$`)
   fs.readFile(meta.replace(/.\w+$/, '.json'), (err, data) => {
     if (err) {
-      _log[path] = {
-        general: {
-          ext: '',
-          status: '',
-          method: '',
-          url: path
-        }
+      const general = {
+        ext: '',
+        status: '',
+        method: '',
+        url: path
       }
+      if (path.match('-sshot@')) {
+        general.ext = path.match(/\.(\w+)$/)[1]
+        general.method = 'GET'
+        general.status = 200
+      }
+      _log[path] = {general}
     } else {
       let json
       try {

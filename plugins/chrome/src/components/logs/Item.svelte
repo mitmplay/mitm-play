@@ -85,7 +85,7 @@ function method2({general:g}) {
   if (g===undefined) {
     return ''
   }
-  return m[g.method] + (g.ext ? `<${g.ext}> ` : '');
+  return m[g.method] + (g.ext ? `<${g.ext.padEnd(4, ' ')}> ` : '');
 }
 
 function url({general:g}) {
