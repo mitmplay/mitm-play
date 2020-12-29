@@ -17,11 +17,12 @@ async function setSession (reqs, session, persist=false) {
     }
     typeof session === 'number' && sleep(session)
     page.setExtraHTTPHeaders({ 'xplay-page': page._page, 'xplay-session': _session })
+    const { origin } = new URL(url)
     if (persist) {
       page._persist = true
-      console.log(c.magenta(`>>> session: ${id}**`))
+      console.log(c.magenta(`>>> session: ${id} ${origin}**`))
     } else {
-      console.log(c.magenta(`>>> session: ${id}`))
+      console.log(c.magenta(`>>> session: ${id} ${origin}`))
     }
   }
 }

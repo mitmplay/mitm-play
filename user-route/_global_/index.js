@@ -1,11 +1,10 @@
 // create file: ~/user-route/_global_/index.js & add this content:
 const route = {
   tags: [],
-  'config:no-logs': {
-    logs: {
-      'referer-reqs': false,
-      'no-namespace': false,
-    }
+  'flag:no-logs': {
+    'referer-reqs': false,
+    'no-namespace': false,
+    // 'page-load': true,
   }
 }
 module.exports = route;

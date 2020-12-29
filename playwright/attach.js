@@ -7,11 +7,27 @@ function log(msg) {
   }
 }
 
+async function evalPage(page, _page, msg, ifrm=false) {
+  log(`${msg} ${_page}`)
+  await page.waitForTimeout(2000)
+  if (ifrm && page.isDetached()) {
+    const url = page.url()
+    if (url!=='about:blank') {
+      const { origin, pathname } = new URL(url)
+      console.log(c.gray(`(*detached iframe ${origin}${pathname}*)`))
+    }
+  } else {
+    // await page.waitForNavigation()
+    await page.evaluate(pg => window['xplay-page'] = pg, _page)
+  }
+}
+
 module.exports = async function(page) {
   const _page = 'page~' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
 
   page._page = _page
   global.mitm.__page[_page] = { session: {} }
+
   await page.setExtraHTTPHeaders({ 'xplay-page': _page })
 
   page.on('worker', worker => {
@@ -20,34 +36,18 @@ module.exports = async function(page) {
   })
 
   page.on('load', async () => {
-    await page.waitForNavigation()
-    log(`xplay-page load ${_page}`)
-    await page.waitForTimeout(1000)
-    await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
+    await evalPage(page, _page, 'xplay-page load ')
   })
+
   page.on('frameattached', async (frame) => {
-    if (frame.isDetached()) {
-      console.log('DETACHED IFRAME URL', frame.url())
-      return
-    }
     try {
-      await frame.waitForNavigation()
-      log(`xplay-page frame ${_page}`)
-      await frame.waitForTimeout(1000)
-      await frame.evaluate(_page => {
-        if (window['xplay-page'] === undefined) {
-          window['xplay-page'] = _page
-        }
-      }, _page)
+      await evalPage(frame, _page, 'xplay-page frame', true)
     } catch (error) {
       if (!error.message.match('Execution Context is not available')) {
         console.log('ERROR', error)
       }
     }
-  })  
+  })
 
-  await page.waitForNavigation()
-  log(`xplay-page init ${_page}`)
-  await page.waitForTimeout(1000)
-  await page.evaluate(_page => { window['xplay-page'] = _page }, _page)
+  await evalPage(page, _page, 'xplay-page init ')
 }
