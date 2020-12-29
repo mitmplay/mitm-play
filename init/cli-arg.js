@@ -42,7 +42,7 @@ function loadProfile (profile) {
 }
 
 module.exports = () => {
-  let { argv } = global.mitm
+  let { argv, path } = global.mitm
   const [, prm1] = argv._
   argv.profile = false
 
@@ -82,6 +82,10 @@ module.exports = () => {
 
   if (argv.activity===true) {
     argv.activity = 'rec' // rec:tag-html
+  }
+
+  if (argv.route===true) {
+    argv.route = `${path.app}/user-route`
   }
 
   let saveArgs = loadProfile(prm1)

@@ -7,7 +7,7 @@ module.exports = () => {
   global.mitm.files.markdown.forEach(fpath => {
     let fapp = fpath.replace(app, '')
     let froute = fpath.replace(route, '')
-    let section = (fapp!==fpath ? '<b>Mitm-play</b>' : froute.split('/')[1])
+    let section = (fapp!==fpath && !fpath.match('/user-route/') ? '<b>Mitm-play</b>' : froute.split('/')[1])
     if (data[section]===undefined) {
       data[section] = {}
     }
