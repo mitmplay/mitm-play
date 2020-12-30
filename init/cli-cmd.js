@@ -91,7 +91,7 @@ module.exports = () => {
       argv.urls = [argv.url]
     }
   } else {
-    let argv0 = argv._[0]
+    let argv0 = argv._[0]+''
     const _urls = []
     if (argv0) {
       // on window comma change to space
