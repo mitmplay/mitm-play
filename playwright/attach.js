@@ -21,7 +21,8 @@ async function evalPage(page, _page, msg, ifrm=false) {
       await page.waitForNavigation()
       await page.evaluate(pg => window['xplay-page'] = pg, _page)
     } catch (error) {
-      if (error.message.match('detached!')) {
+      const { message } = error
+      if (message.match('detached!')) {
         if (url) {
           const { origin, pathname } = new URL(url)
           console.log(c.gray(`(*detached iframe url ${origin}${pathname}*)`))
@@ -31,7 +32,7 @@ async function evalPage(page, _page, msg, ifrm=false) {
             console.log(c.gray(`(*detached iframe name ${name}*)`))
           }
         }
-      } else {
+      } else if (!(message.match('closed!')||message.match('crashed!'))) {
         console.log('IFRAME ERROR', error)
       }
     }
