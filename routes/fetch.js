@@ -110,6 +110,16 @@ Redirect...
         if ((err.code === 'ECONNRESET' || err.code === 'ENETUNREACH') && i <= n) {
           console.log(c.yellowBright(`RETRY:${i}`), url)
           await delay(2500)
+        } else if (err.code === 'ENOTFOUND') {
+          const { origin } = new URL(url)
+          console.log(c.red(`(*ENOTFOUND ${origin}*)`))
+          handler({
+            url,
+            status: 500,
+            headers: {'content-type': 'text/plain'},
+            body: JSON.stringify(err)
+          })
+          break
         } else {
           throw err
         }
