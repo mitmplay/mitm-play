@@ -1,24 +1,40 @@
 const c = require('ansi-colors')
 
-function log(msg) {
+async function log(msg) {
   const { argv, __flag } = global.mitm
   if (argv.debug || __flag['page-load']) {
-    console.log(c.red(`(*${msg})`))
+    console.log(c.red(`(*${msg}*)`))
   }
 }
 
 async function evalPage(page, _page, msg, ifrm=false) {
-  log(`${msg} ${_page}`)
+  let url = page.url()
   await page.waitForTimeout(2000)
+  await log(`${msg} ${_page} ${url || page.name()}`)
   if (ifrm && page.isDetached()) {
-    const url = page.url()
-    if (url!=='about:blank') {
+    if (url && url!=='about:blank') {
       const { origin, pathname } = new URL(url)
       console.log(c.gray(`(*detached iframe ${origin}${pathname}*)`))
     }
-  } else {
-    // await page.waitForNavigation()
-    await page.evaluate(pg => window['xplay-page'] = pg, _page)
+  } else if (page) {
+    try {
+      await page.waitForNavigation()
+      await page.evaluate(pg => window['xplay-page'] = pg, _page)
+    } catch (error) {
+      if (error.message.match('detached!')) {
+        if (url) {
+          const { origin, pathname } = new URL(url)
+          console.log(c.gray(`(*detached iframe url ${origin}${pathname}*)`))
+        } else {
+          const name = page.name()
+          if (name && name.length<30) {
+            console.log(c.gray(`(*detached iframe name ${name}*)`))
+          }
+        }
+      } else {
+        console.log('IFRAME ERROR', error)
+      }
+    }
   }
 }
 
