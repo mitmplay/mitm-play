@@ -1,20 +1,71 @@
 const c = require('ansi-colors')
 
 async function log(msg) {
+  const bypass = !msg.match(' frame')
   const { argv, __flag } = global.mitm
-  if (argv.debug || __flag['page-load']) {
+  if (bypass || (argv.debug || __flag['page-load'])) {
     console.log(c.red(`(*${msg}*)`))
   }
 }
 
+function grey(page, msg) {
+  let url = ''
+  if (typeof page.url==='function') {
+    url = page.url()
+  }
+  if (url) { //&& url!=='about:blank'
+    let msg2 = ''
+    const { origin, pathname } = new URL(url)
+    msg2 = origin!=='null' ? `${origin}${pathname}` : `${url}`
+    console.log(c.gray(`(*${msg} url: ${msg2}*)`))
+  } else {
+    let name = '.'
+    if (typeof page.name==='function') {
+      name = page.name()
+    }
+    if (name && name.length>30) {
+      name = name.substr(0,27) + '...'
+    }
+    console.log(c.gray(`(*${msg} name ${name}*)`))
+  }
+}
+
 async function evalPage(page, _page, msg, ifrm=false) {
+  const { argv, __flag } = global.mitm
+  let name = '.'
   let url = page.url()
-  await page.waitForTimeout(2000)
-  await log(`${msg} ${_page} ${url || page.name()}`)
+
+  if (ifrm) {
+    await page.waitForTimeout(2000)
+  }
+
+  let msg1 = ''
+  const _pg = global.mitm.__page[_page]
+  if (_pg && _pg.session) {
+    msg1 = Object.keys(_pg.session).pop()+' '
+  }
+
+  let msg2 = ''
+  if (url) {
+    const { origin, pathname } = new URL(url)
+    msg2 = origin!=='null' ? `url: ${origin}${pathname}` : `url: ${url}`
+  } else {
+    if (typeof page.name==='function') {
+      name = page.name()
+      if (name && name.length>30) {
+        name = name.substr(0,27) + '...'
+      }  
+    }
+    msg2 = `name ${name}`  
+  }
+
+  await log(`${msg} ${_page} ${msg1}${msg2}`)
   if (ifrm && page.isDetached()) {
     if (url && url!=='about:blank') {
-      const { origin, pathname } = new URL(url)
-      console.log(c.gray(`(*detached iframe ${origin}${pathname}*)`))
+      if (argv.debug || __flag['page-load']) {
+        const { origin, pathname } = new URL(url)
+        console.log(c.gray(`(*detached! frame ${origin}${pathname}*)`))
+      }
     }
   } else if (page) {
     try {
@@ -22,18 +73,16 @@ async function evalPage(page, _page, msg, ifrm=false) {
       await page.evaluate(pg => window['xplay-page'] = pg, _page)
     } catch (error) {
       const { message } = error
-      if (message.match('detached!')) {
-        if (url) {
-          const { origin, pathname } = new URL(url)
-          console.log(c.gray(`(*detached iframe url ${origin}${pathname}*)`))
+      if (argv.debug || __flag['page-load']) {
+        if (message.match('detached!')) {
+          grey(page, 'detached! frame')
+        } else if (message.match('closed!')) {
+          grey(page, 'closed! page')
+        } else if (message.match('crashed!')) {
+          grey(page, 'crashed page')
         } else {
-          const name = page.name()
-          if (name && name.length<30) {
-            console.log(c.gray(`(*detached iframe name ${name}*)`))
-          }
+          console.log('IFRAME ERROR', error)
         }
-      } else if (!(message.match('closed!')||message.match('crashed!'))) {
-        console.log('IFRAME ERROR', error)
       }
     }
   }

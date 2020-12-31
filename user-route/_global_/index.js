@@ -4,7 +4,7 @@ const route = {
   'flag:no-logs': {
     'referer-reqs': false,
     'no-namespace': false,
-    // 'page-load': true,
+    'page-load': true,
   }
 }
 module.exports = route;
