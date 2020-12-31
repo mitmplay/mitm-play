@@ -61,12 +61,7 @@ async function evalPage(page, _page, msg, ifrm=false) {
 
   await log(`${msg} ${_page} ${msg1}${msg2}`)
   if (ifrm && page.isDetached()) {
-    if (url && url!=='about:blank') {
-      if (argv.debug || __flag['page-load']) {
-        const { origin, pathname } = new URL(url)
-        console.log(c.gray(`(*detached! frame ${origin}${pathname}*)`))
-      }
-    }
+    grey(page, 'detached-1! frame')
   } else if (page) {
     try {
       await page.waitForNavigation()
@@ -75,7 +70,7 @@ async function evalPage(page, _page, msg, ifrm=false) {
       const { message } = error
       if (argv.debug || __flag['page-load']) {
         if (message.match('detached!')) {
-          grey(page, 'detached! frame')
+          grey(page, 'detached-2! frame')
         } else if (message.match('closed!')) {
           grey(page, 'closed! page')
         } else if (message.match('crashed!')) {
