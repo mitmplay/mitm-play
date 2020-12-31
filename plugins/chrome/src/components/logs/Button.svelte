@@ -56,11 +56,7 @@ function btnClose() {
 </script>
 
 <div class="btn-container" style="top: 1px;">
-  <button on:click="{btnClear}">
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10pt" height="10pt" viewBox="0 0 10 10" version="1.1">
-      <g id="surface1"><path style=" stroke:none;fill-rule:nonzero;fill:red;fill-opacity:1;" d="M 5 0.15625 C 2.324219 0.15625 0.15625 2.324219 0.15625 5 C 0.15625 7.675781 2.324219 9.84375 5 9.84375 C 7.675781 9.84375 9.84375 7.675781 9.84375 5 C 9.84375 2.324219 7.675781 0.15625 5 0.15625 Z M 7.542969 2.457031 C 8.820312 3.738281 8.910156 5.691406 7.945312 7.0625 L 2.9375 2.054688 C 4.308594 1.089844 6.261719 1.179688 7.542969 2.457031 Z M 2.457031 7.542969 C 1.179688 6.261719 1.089844 4.308594 2.054688 2.9375 L 7.0625 7.945312 C 5.691406 8.910156 3.738281 8.820312 2.457031 7.542969 Z M 2.457031 7.542969 "/></g>
-    </svg>
-  </button>  
+  <input class="stop" on:click="{btnClear}" type="image" src="images/stop.svg" alt=""/>
   <button class="clollapse" on:click="{btnClose}">[--]</button>
   <label class="checkbox">
     <input type="checkbox" on:click={btnHostswch} checked={hostflag()}>host
@@ -86,9 +82,10 @@ function btnClose() {
   margin-right: 2px;
   vertical-align: middle;
 }
-svg {
-  padding-top: 2px;
-  padding-left: 2px;
+input.stop {
+  position: relative;
+  top: 1.5px;
+  left: 5px;
 }
 button {
   border: 0;
@@ -97,7 +94,8 @@ button {
   font-family: Consolas, Lucida Console, Courier New, monospace;
 }
 button.clollapse {
-  padding: 1px;
+  margin-top: -6px;
+  padding: 2px 1px 1px 1px;
   font-weight: 700;
   font-size: 10px;
   color: #002aff;
