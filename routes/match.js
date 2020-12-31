@@ -100,7 +100,7 @@ const searchFN = (typs, { url, method, browserName }) => {
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
 
           const [ty, tg] = typ.split(':')
-          let log = `${browser[browserName]} ${ty.padEnd(5, ' ')} `
+          let log = `${browser[browserName]} ${ty.padEnd(8, ' ')} `
           if (__args.nourl && __args.nourl==='url') {
             log += `${__args.nohost ? '' : origin}${msg}`
           } else {

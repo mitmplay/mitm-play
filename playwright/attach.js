@@ -59,10 +59,12 @@ async function evalPage(page, _page, msg, ifrm=false) {
     msg2 = `name ${name}`  
   }
 
-  await log(`${msg} ${_page} ${msg1}${msg2}`)
   if (ifrm && page.isDetached()) {
-    grey(page, 'detached-1! frame')
+    if (argv.debug || __flag['page-load']) {
+      grey(page, 'detached-1! frame')
+    }
   } else if (page) {
+    await log(`${msg} ${_page} ${msg1}${msg2}`)
     try {
       await page.waitForNavigation()
       await page.evaluate(pg => window['xplay-page'] = pg, _page)
