@@ -85,7 +85,7 @@ function btnClose() {
 input.stop {
   position: relative;
   top: 1.5px;
-  left: 5px;
+  left: 10px;
 }
 button {
   border: 0;
@@ -95,6 +95,7 @@ button {
 }
 button.clollapse {
   margin-top: -6px;
+  margin-left: 10px;
   padding: 2px 1px 1px 1px;
   font-weight: 700;
   font-size: 10px;
