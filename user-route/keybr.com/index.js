@@ -6,14 +6,19 @@ const css = `
  
 const route = {
   url: 'https://keybr.com',
-  tags: [],
+  tags: ['no-ads'],
   'mock:no-ads': {
     'doubleclick.net': '',
     'a.pub.network': '',
     'google.+.com': '',
   },
-  'css:no-ads': {
-    '/assets/[a-z0-9]+': `=>${css}`
+  css: {
+    'GET:no-ads:/assets/[a-z0-9]+': `=>${css}`
   },
+  html: {
+    '/': {
+      tags: 'sample-tag'
+    }
+  }
 }
 module.exports = route;

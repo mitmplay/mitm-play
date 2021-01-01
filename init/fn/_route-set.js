@@ -2,6 +2,7 @@ const c = require('ansi-colors')
 const typs = require('./_typs')
 
 const { typC, typA, typO } = typs
+const rmethod = /^(GET|PUT|POST|DELETE):([\w~-]+:|)(.+)/ // feat: tags in url
 
 function toRegex (str, flags = '') {
   return new RegExp(str
@@ -10,9 +11,8 @@ function toRegex (str, flags = '') {
     .replace(/\?/g, '\\?'), flags)
 }
 
-function routerSet (router, typ, str) {
+function routerSet (router, typ, method, str) {
   let regex // feat: url start with method: ie: GET:/api/login
-  const method = str.match(/^(GET|PUT|POST|DELETE):(hidden:|)(.+)/)
   if (method) {
     router[typ][`${str}~method`] = method[1]
     regex = toRegex(method.pop())
@@ -58,26 +58,31 @@ function _routeSet (r, namespace, print = false) {
     for (const typ of typlist) {
       router[typ] = {}
       for (const str of r[typ]) {
-        routerSet(router, typ, str)
+        const method = str.match(rmethod)
+        routerSet(router, typ, method, str)
       }
     }
   }
 
+  function _nsstag(typ, str){
+    if (urls[str] === undefined) {
+      urls[str] = {}
+    }
+    const nss = urls[str]
+    if (nss[typ] === undefined) {
+      nss[typ] = {}
+    }
+    return {nss, nsstag: nss[typ]}
+  }
   function addType (typ) {
     router[typ] = {}
     for (const str in r[typ]) {
-      routerSet(router, typ, str)
+      const method = str.match(rmethod)
+      routerSet(router, typ, method, str)
       const site = r[typ][str]
       if (site) {
         if (site.tags) {
-          if (urls[str] === undefined) {
-            urls[str] = {}
-          }
-          const nss = urls[str]
-          if (nss[typ] === undefined) {
-            nss[typ] = {}
-          }
-          const nsstag = nss[typ]
+          const {nss, nsstag} = _nsstag(typ, str)
           const ctype = site.contentType ? `[${site.contentType.join(',')}]` : ''
           const keys = Object.keys(site).filter(fkeys).join(',')
           nss[`:${typ}`] = `${ctype}<${keys}>`.replace('<>', '')
@@ -86,11 +91,20 @@ function _routeSet (r, namespace, print = false) {
             throw new Error('char ":" cannot be included in tags!')
           }
           const arr = site.tags.split(/ +/)
-          for (const key of arr) {
-            nsstag[key] = true
-            tags[key] = true
+          for (const tag of arr) {
+            nsstag[tag] = true
+            tags[tag] = true
           }
         }
+        // feat: tags in url
+        if (str.match(/:[\w~-]+:/) && method[2]!=='hidden:') {
+          const {nss, nsstag} = _nsstag(typ, str)
+          const tag = method[2].split(':')[0]
+          nss[`:${typ}`] = ''
+          nsstag[tag] = true
+          tags[tag] = true
+        }
+
         if (site.contentType) {
           const contentType = {}
           for (const typ2 of site.contentType) {

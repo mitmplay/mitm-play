@@ -26,6 +26,10 @@
 ```bash
 npm install -g mitm-play
 ```
+Execute mitm-play command with demo route route included:
+```bash
+mitm-play -rG
+```
 <details><summary>Example</summary>
 
 ```js
@@ -43,8 +47,8 @@ const route = {
     'a.pub.network': '',
     'google.+.com': '',
   },
-  'css:no-ads': {
-    '/assets/[a-z0-9]+': `=>${css}`
+  css: {
+    'GET:no-ads/assets/[a-z0-9]+': `=>${css}`
   },
 }
 module.exports = route;
