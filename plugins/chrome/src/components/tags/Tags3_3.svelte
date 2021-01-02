@@ -74,7 +74,6 @@ function xitems(tags) {
 .rtag {
   font-size: 13px;
   color: cadetblue;
-  background-color: beige;
 }
 .rtag.slc {
   color: #5dac75;

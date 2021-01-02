@@ -16,6 +16,10 @@ function title(item) {
   const v = items[`:${item}`]
   return `${item.split(':')[0]}:${v}`
 }
+function title2(item) {
+  const [r, t] = item.split(':')
+  return `${t}{${r}}`
+}
 function check(item) {
   return $tags.__tag2[ns][item]
 }
@@ -39,7 +43,7 @@ function routetag(item) {
   {#if check(item)!==undefined}
     <div class="space3 {routetag(item)} r2">
       <input type="checkbox" bind:checked={$tags.__tag2[ns][item]} disabled/>
-      <span>{item.split(':')[1]}</span>
+      <span>{title2(item)}</span>
     </div>
   {/if}
   <Tags33 items={items[item]} {item} {path} {ns}/>
@@ -69,7 +73,7 @@ function routetag(item) {
 .rtag {
   color: cadetblue;
   font-size: medium;
-  background-color: beige;
+  /* background-color: beige; */
 }
 .rtag.slc {
   color: #5dac75;
