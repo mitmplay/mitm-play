@@ -90,7 +90,7 @@ function routetag(item) {
           const rule = rules[id]
           if (typeof rule!=='string') {
             for (const tag in rule) {
-              if (item===tag) {
+              if (item===tag.split(':').pop()) {
                 itm = 'itm'
                 break
               }
