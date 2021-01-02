@@ -40,15 +40,28 @@ function clicked(e) {
 }
 
 function routetag(item) {
-  return items[item] ? 'rtag slc' : 'rtag';
+  let klas = items[item] ? 'rtag slc' : 'rtag';
+  if (item.match(':')) {
+    klas += ' r2'
+  }
+  return klas
 }
 
+const sort = (a,b) => {
+  const [k1,v1] = a.split(':');
+  const [k2,v2] = b.split(':');
+  a = v1 || k1;
+  b = v2 || k2;
+  if (a<b) return -1;
+  if (a>b) return 1;
+  return 0;
+}
+function title(item) {
+  const [key, tag] = item.split(':')
+  return tag ? `${tag}{${key}}` : key
+}
 function xitems(tags) {
-  const {__tag3} = tags;
-  const namespace = __tag3[ns];
-  const typs = namespace[path];
-  const itms = typs[item];
-  return Object.keys(itms).sort();
+  return Object.keys(items).sort(sort)
 }
 </script>
 
@@ -58,8 +71,9 @@ function xitems(tags) {
       <input type="checkbox"
       data-item={item}
       on:click={clicked} 
-      bind:checked={items[item]}/>
-      <span>{item}</span>
+      bind:checked={items[item]}
+      disabled={!!item.match(':')} />
+      <span>{title(item)}</span>
     </label>
   </div>
 {/each}
@@ -78,5 +92,8 @@ function xitems(tags) {
 .rtag.slc {
   color: #5dac75;
   font-weight: bolder;
+}
+.rtag.slc.r2 {
+  color: #da8181;
 }
 </style>
