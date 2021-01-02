@@ -32,8 +32,9 @@ function xitems(tags) {
   background: lightgrey;
 }
 .space1 {
-  padding-left: 10px;
+  font-size: 15px;
   font-weight: bolder;
-  color: blueviolet
+  color: blueviolet;
+  padding-left: 10px;
 }
 </style>

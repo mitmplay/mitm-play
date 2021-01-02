@@ -114,13 +114,16 @@ function show(item) {
   color: grey;
   padding-left: 10px;
 }
+.space1 span {
+  font-size: 15px;
+  vertical-align: 15%;
+}
 .space1 .big {
-  margin-left: -4px;
+  margin-left: -2px;
 }
 .rtag {
   color: cadetblue;
   font-size: medium;
-  font-style: italic;
   background-color: beige;
 }
 .rtag.slc {

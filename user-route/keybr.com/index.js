@@ -15,9 +15,16 @@ const route = {
   css: {
     'GET:no-ads:/assets/[a-z0-9]+': `=>${css}`
   },
+  'log:sample-tag0': {
+    'GET:sample-tag1:/': {
+      contentType: ['html'],
+      tags: 'sample-tag0 sample-tag1',
+    }
+  },
   html: {
-    '/': {
-      tags: 'sample-tag'
+    'GET:sample-tag1:/': {
+      tags: 'sample-tag2',
+      log: true
     }
   }
 }

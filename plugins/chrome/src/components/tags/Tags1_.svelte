@@ -130,6 +130,9 @@ function listTags(tags) {
   color: darkblue;
   /* background: deepskyblue; */
 }
+.space0 span {
+  vertical-align: 15%;
+}
 .space0 .big {
   margin-left: -4px;
 }

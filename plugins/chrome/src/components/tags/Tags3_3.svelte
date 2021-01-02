@@ -23,15 +23,19 @@ function clicked(e) {
             const [group2, id2] = itm.split('~');
             if (group1===group2 && id1!==id2) {
               items2[itm] = false;
-              tags.set({
-                ...$tags,
-                __tag3,
-              })
+              // tags.set({
+              //   ...$tags,
+              //   __tag3,
+              // })
             }
           }
         }
       }
     }
+    tags.set({
+      ...$tags,
+      __tag3,
+    })
   }, 50);
 }
 
@@ -64,15 +68,16 @@ function xitems(tags) {
 .space3 {
   padding-left: 20px;
 }
-
+.space3 span {
+  vertical-align: 15%;
+}
 .rtag {
+  font-size: 13px;
   color: cadetblue;
-  font-size: medium;
-  font-style: italic;
   background-color: beige;
 }
 .rtag.slc {
-  color: red;
+  color: #5dac75;
   font-weight: bolder;
 }
 </style>
