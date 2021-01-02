@@ -45,15 +45,34 @@ function clicked(e) {
         }
       }
     }
-    const {filterUrl, tgroup} = $tags;
+    const {filterUrl, tgroup, uniq} = $tags;
     tags.set({
       filterUrl,
       __tag1,
       __tag2,
       __tag3,
       tgroup,
+      uniq
     })
   }, 10);
+}
+
+const sort = (a,b) => {
+  const [k1,v1] = a.split(':');
+  const [k2,v2] = b.split(':');
+  a = v1 || k1;
+  b = v2 || k2;
+  if (a<b) return -1;
+  if (a>b) return 1;
+  return 0;
+}
+
+function itemlist(items) {
+  let arr = Object.keys(items);
+  if ($tags.uniq) {
+    arr = arr.filter(x => x.match(':'))
+  }
+  return arr.sort(sort);
 }
 
 function routetag(item) {
@@ -62,19 +81,6 @@ function routetag(item) {
   } else {
     return items[item] ? 'stag slc' : '';
   }
-}
-
-function itemlist(items) {
-  const arr = Object.keys(items).sort((a,b) => {
-    const [k1,v1] = a.split(':');
-    const [k2,v2] = b.split(':');
-    a = v1 || k1;
-    b = v2 || k2;
-    if (a<b) return -1;
-    if (a>b) return 1;
-    return 0;
-  });
-  return arr;
 }
 
 function show(item) {

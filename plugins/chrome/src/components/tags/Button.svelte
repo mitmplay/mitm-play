@@ -47,15 +47,20 @@ onMount(() => {
 <div class="btn-container">
   <label class="checker">
     <input type="checkbox"
+    bind:checked={$tags.uniq}/>
+    uniq
+  </label>
+  <label class="checker">
+    <input type="checkbox"
     bind:checked={$tags.filterUrl}/>
-    Activeurl
+    url
   </label>
   <button class="tlb btn-go" on:click="{btnReset}" disabled={autoSave}>Reset</button>
   <button class="tlb btn-go" on:click="{btnSave}"  disabled={autoSave}>Save</button>
   <label class="checker">
     <input type="checkbox"
     bind:checked={autoSave}/>
-    Autosave
+    autosave
   </label>
   .
 </div>
@@ -83,5 +88,6 @@ onMount(() => {
 .checker {
   color: chocolate;
   font-weight: 600;
+  font-size: 12px;
 }
 </style>

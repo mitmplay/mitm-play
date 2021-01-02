@@ -59,25 +59,49 @@ function clicked(e) {
         }
       }
     }
-    const {filterUrl, tgroup} = $tags;
+    const {filterUrl, tgroup, uniq} = $tags;
     tags.set({
       filterUrl,
       __tag1,
       __tag2,
       __tag3,
       tgroup,
+      uniq
     })
   }, 10);
 }
 
 function routetag(item) {
+  const { browser } = window.mitm;
   const slc = $tags.__tag1[item] ? 'slc' : '';
   const grp = $tags.tgroup[item] ? 'grp' : '';
-  return `rtag ${grp} ${slc}`;
+  let itm = ''
+  if ($tags.tgroup[item]) {
+    for (const ns of browser.nss) {
+      const obj = $tags.__tag3[ns]
+      const urls = obj || []
+      for (const url in urls) {
+        const rules = urls[url]
+        for (const id in rules) {
+          const rule = rules[id]
+          if (typeof rule!=='string') {
+            for (const tag in rule) {
+              if (item===tag) {
+                itm = 'itm'
+                break
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return `rtag ${grp} ${slc} ${itm}`;
 }
 
 function listTags(tags) {
-  const {toRegex} = window.mitm.fn;
+  console.log('listTags');
+  const {browser, fn: {toRegex}} = window.mitm;
   const list = {};
 
   function add(ns) {
@@ -89,15 +113,19 @@ function listTags(tags) {
 
   let tgs;
   if (tags.filterUrl) {
+    const nss = []
     for (let ns in tags.__tag2) {
       const rgx = toRegex(ns.replace(/~/,'[^.]*'));
-      if (mitm.browser.activeUrl.match(rgx)) {
+      if (browser.activeUrl.match(rgx)) {
+        nss.push(ns)
         add(ns);
       }
     }
     add('_global_');
+    browser.nss = nss;
     tgs = Object.keys(list).sort();
   } else {
+    browser.nss = Object.keys(tags.__tag2)
     tgs = Object.keys(tags.__tag1);
   }
   return tgs;
@@ -148,7 +176,17 @@ function listTags(tags) {
   color: green;
   font-weight: bolder;
 }
+.rtag.slc.grp {
+  color: #045bb4;
+  font-weight: bolder;
+}
+.rtag.slc.grp.itm {
+  color: green;
+}
 .rtag.grp {
   background-color: beige;
+}
+.rtag.grp.itm {
+  text-decoration: underline;
 }
 </style>
