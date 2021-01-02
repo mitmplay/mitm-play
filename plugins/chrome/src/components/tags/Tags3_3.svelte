@@ -23,10 +23,6 @@ function clicked(e) {
             const [group2, id2] = itm.split('~');
             if (group1===group2 && id1!==id2) {
               items2[itm] = false;
-              // tags.set({
-              //   ...$tags,
-              //   __tag3,
-              // })
             }
           }
         }
@@ -49,15 +45,6 @@ function routetag(item) {
   return klas
 }
 
-const sort = (a,b) => {
-  const [k1,v1] = a.split(':');
-  const [k2,v2] = b.split(':');
-  a = v1 || k1;
-  b = v2 || k2;
-  if (a<b) return -1;
-  if (a>b) return 1;
-  return 0;
-}
 function uniq(value, index, self) {
   return self.indexOf(value) === index;
 }
@@ -66,43 +53,32 @@ function title(item) {
   return tag ? `${tag}{${key}}` : key
 }
 function xitems(tags) {
+  const {fn: {sortTag}} = window.mitm;
   const arr = Object.keys(items)
-  if (tags.__tag2[ns][item]) {
+  if (tags.__tag2[ns][item]!==undefined) {
     arr.push(item)
   }
-  return arr.filter(uniq).sort(sort)
-}
-function disable(item) {
-  if (item.indexOf('url:')>-1) {
-    return false
-  } else if (item.indexOf(':')>-1) {
-    return true
-  }
-  return false
+  return arr.filter(uniq).sort(sortTag)
 }
 function check(item) {
-  return items[item]
+  return item.indexOf('url:')===-1 && item.indexOf(':')>-1
 }
 </script>
 
 {#each xitems($tags) as item}
   <div class="space3 {routetag(item)}">
-    <label>
-      {#if item.indexOf('url:')===-1 && item.indexOf(':')>-1 }
-        <input type="checkbox"
-        data-item={item}
-        on:click={clicked} 
-        bind:checked={$tags.__tag2[ns][item]}
-        disabled={disable(item)}/>
-      {:else}
-        <input type="checkbox"
-        data-item={item}
-        on:click={clicked} 
-        bind:checked={items[item]}
-        disabled={disable(item)}/>
-      {/if}
-      <span>{title(item)}</span>
-    </label>
+    {#if check(item) }
+      <input type="checkbox"
+      data-item={item}
+      checked={$tags.__tag2[ns][item]}
+      disabled/>
+    {:else}
+      <input type="checkbox"
+      data-item={item}
+      on:click={clicked} 
+      bind:checked={items[item]}/>
+    {/if}
+    <span>{title(item)}</span>
   </div>
 {/each}
 

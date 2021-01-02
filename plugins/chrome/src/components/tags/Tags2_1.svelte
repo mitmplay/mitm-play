@@ -57,22 +57,13 @@ function clicked(e) {
   }, 10);
 }
 
-const sort = (a,b) => {
-  const [k1,v1] = a.split(':');
-  const [k2,v2] = b.split(':');
-  a = v1 || k1;
-  b = v2 || k2;
-  if (a<b) return -1;
-  if (a>b) return 1;
-  return 0;
-}
-
 function itemlist(items) {
+  const {fn: {sortTag}} = window.mitm;
   let arr = Object.keys(items);
   if ($tags.uniq) {
     arr = arr.filter(x => x.match(':'))
   }
-  return arr.sort(sort);
+  return arr.sort(sortTag);
 }
 
 function routetag(item) {

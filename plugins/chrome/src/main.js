@@ -10,7 +10,18 @@ function toRegex (str, flags = '') {
     .replace(/\?/g, '\\?'), flags)
 }
 
+const sortTag = (a,b) => {
+  const [k1,v1] = a.split(':');
+  const [k2,v2] = b.split(':');
+  a = v1 || k1;
+  b = v2 || k2;
+  if (a<b) return -1;
+  if (a>b) return 1;
+  return 0;
+}
+
 window.mitm.fn.toRegex = toRegex
+window.mitm.fn.sortTag = sortTag
 window.mitm.editor = {};
 window.mitm.browser = {
   chgUrl_events: {},
