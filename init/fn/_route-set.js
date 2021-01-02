@@ -99,7 +99,7 @@ function _routeSet (r, namespace, print = false) {
         // feat: tags in url
         if (str.match(/:[\w~-]+:/) && method[2]!=='hidden:') {
           const {nss, nsstag} = _nsstag(typ, str)
-          const tag = method[2].split(':')[0]
+          const tag = `url:${method[2].split(':')[0]}`
           nss[`:${typ}`] = ''
           nsstag[tag] = true
           tags[tag] = true

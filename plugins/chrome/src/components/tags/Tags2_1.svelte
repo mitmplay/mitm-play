@@ -93,15 +93,17 @@ function show(item) {
 <div class="border">
   <div class="space0">[{ns==='_global_' ? ' * ' : ns}]</div>
   {#each itemlist(items) as item}
-    <div class="space1 {routetag(item)}">
-      <label>
-        <input type="checkbox"
-        data-item={item}
-        on:click={clicked} 
-        bind:checked={items[item]}/>
-        <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
-      </label>
-    </div>
+    {#if !item.match('url:')}
+      <div class="space1 {routetag(item)}">
+        <label>
+          <input type="checkbox"
+          data-item={item}
+          on:click={clicked} 
+          bind:checked={items[item]}/>
+          <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
+        </label>
+      </div>
+    {/if}
   {/each}
 </div>
 

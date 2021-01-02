@@ -71,8 +71,7 @@ function xitems(tags) {
       <input type="checkbox"
       data-item={item}
       on:click={clicked} 
-      bind:checked={items[item]}
-      disabled={!!item.match(':')} />
+      bind:checked={items[item]}/>
       <span>{title(item)}</span>
     </label>
   </div>
