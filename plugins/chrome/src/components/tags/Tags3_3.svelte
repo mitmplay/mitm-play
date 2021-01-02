@@ -41,8 +41,10 @@ function clicked(e) {
 
 function routetag(item) {
   let klas = items[item] ? 'rtag slc' : 'rtag';
-  if (item.match(':')) {
-    klas += ' r2'
+  if (item.indexOf('url:')===-1) {
+    if (item.indexOf(':')>-1) {
+      klas += ' r2'
+    }
   }
   return klas
 }
@@ -56,22 +58,49 @@ const sort = (a,b) => {
   if (a>b) return 1;
   return 0;
 }
+function uniq(value, index, self) {
+  return self.indexOf(value) === index;
+}
 function title(item) {
   const [key, tag] = item.split(':')
   return tag ? `${tag}{${key}}` : key
 }
 function xitems(tags) {
-  return Object.keys(items).sort(sort)
+  const arr = Object.keys(items)
+  if (tags.__tag2[ns][item]) {
+    arr.push(item)
+  }
+  return arr.filter(uniq).sort(sort)
+}
+function disable(item) {
+  if (item.indexOf('url:')>-1) {
+    return false
+  } else if (item.indexOf(':')>-1) {
+    return true
+  }
+  return false
+}
+function check(item) {
+  return items[item]
 }
 </script>
 
 {#each xitems($tags) as item}
   <div class="space3 {routetag(item)}">
     <label>
-      <input type="checkbox"
-      data-item={item}
-      on:click={clicked} 
-      bind:checked={items[item]}/>
+      {#if item.indexOf('url:')===-1 && item.indexOf(':')>-1 }
+        <input type="checkbox"
+        data-item={item}
+        on:click={clicked} 
+        bind:checked={$tags.__tag2[ns][item]}
+        disabled={disable(item)}/>
+      {:else}
+        <input type="checkbox"
+        data-item={item}
+        on:click={clicked} 
+        bind:checked={items[item]}
+        disabled={disable(item)}/>
+      {/if}
       <span>{title(item)}</span>
     </label>
   </div>

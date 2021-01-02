@@ -49,7 +49,11 @@ function clicked(e) {
         for (let typ in typs) {
           const namespace = typs[typ];
           for (let itm in namespace) {
-            if (item===itm) {
+            const id = itm.split('url:').pop()
+            console.log({group1, itm, id})
+            if (id==='no-ads')
+              debugger
+            if (item===id) {
               namespace[itm] = flag;
             }
             if (group1===itm.split('~')[0]) {
