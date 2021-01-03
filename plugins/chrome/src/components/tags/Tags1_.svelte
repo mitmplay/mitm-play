@@ -61,13 +61,14 @@ function clicked(e) {
         }
       }
     }
-    const {filterUrl, tgroup, uniq} = $tags;
+    const {filterUrl, tgroup, hidden, uniq} = $tags;
     tags.set({
       filterUrl,
       __tag1,
       __tag2,
       __tag3,
       tgroup,
+      hidden,
       uniq
     })
   }, 10);

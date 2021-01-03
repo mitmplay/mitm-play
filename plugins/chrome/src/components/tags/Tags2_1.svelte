@@ -45,13 +45,14 @@ function clicked(e) {
         }
       }
     }
-    const {filterUrl, tgroup, uniq} = $tags;
+    const {filterUrl, tgroup, hidden, uniq} = $tags;
     tags.set({
       filterUrl,
       __tag1,
       __tag2,
       __tag3,
       tgroup,
+      hidden,
       uniq
     })
   }, 10);
@@ -84,6 +85,33 @@ function show(item) {
   if (v===undefined) return k;
   return `${v}{${k}}`;
 }
+function urllist(tags, item) {
+  if (tags.hidden) {
+    return []
+  } else {
+    const obj = window.mitm.routes[ns][item]
+    return obj ? Object.keys(obj) : []
+  }
+}
+function spacex(tags, item, url) {
+  let klas = items[item] ? 'slc' : '';
+  const node = tags.__tag3[ns][url]
+  let grey = false
+  if (node) {
+    for (const id in node) {
+      if (typeof node[id]!=='string') {
+        for (const tag in node[id]) {
+          if (node[id][tag]===false) {
+            grey = true
+            break
+          }
+        }
+      }
+    }
+  }
+  grey && (klas += ' grey')
+  return klas
+}
 </script>
 
 <div class="border">
@@ -98,7 +126,10 @@ function show(item) {
         <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
       </label>
     </div>
-  {/each}
+    {#each urllist($tags, item) as url}
+      <div class="spacex {spacex($tags, item, url)}">{url}</div>
+    {/each}
+{/each}
 </div>
 
 <style>
@@ -123,6 +154,18 @@ function show(item) {
 .space1 .big {
   margin-left: -2px;
 }
+.spacex {
+  padding-left: 30px;
+  color: grey;
+  font-size: 13px;
+  font-family: monospace;
+}
+.spacex.slc {
+  color: blueviolet;
+}
+.spacex.grey {
+  color: #ecd7d7;
+}
 .rtag {
   color: cadetblue;
   font-size: medium;
@@ -137,6 +180,7 @@ function show(item) {
 }
 .rtag.slc.url {
   color: #c36e01;
+  font-weight: bolder;
 }
 .stag.slc {
   color: green;

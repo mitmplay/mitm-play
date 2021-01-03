@@ -52,8 +52,13 @@ onMount(() => {
   </label>
   <label class="checker">
     <input type="checkbox"
+    bind:checked={$tags.hidden}/>
+    hide
+  </label>
+  <label class="checker">
+    <input type="checkbox"
     bind:checked={$tags.filterUrl}/>
-    url
+    current-tab
   </label>
   <button class="tlb btn-go" on:click="{btnReset}" disabled={autoSave}>Reset</button>
   <button class="tlb btn-go" on:click="{btnSave}"  disabled={autoSave}>Save</button>
