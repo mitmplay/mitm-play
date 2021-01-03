@@ -15,6 +15,7 @@ function btnSave(e) {
     __tag2,
     __tag3,
   };
+  console.log('saveTags', e.target);
   ws__send('saveTags', tags);
 }
 
@@ -33,7 +34,6 @@ onMount(() => {
           btnSave(e);
         },50)
       }
-      console.log('clicked', e.target);
     }
   };
 

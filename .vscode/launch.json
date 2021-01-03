@@ -14,7 +14,7 @@
             ],
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/mitm-play.js",
-            "args": ["kybr", "-r"]
+            "args": ["kybr", "-rG"]
         }
     ]
 }
