@@ -20,7 +20,8 @@ module.exports = () => {
 
   function connection (client, request) {
     const { origin, host } = request.headers
-    if (global.mitm.__flag['ws-connect']) {
+    const { __flag } = global.mitm
+    if (__flag['ws-connect']) {
       console.log(c.red('>>> ws-connect:'), `${host}${request.url}`)
     }
     let _host

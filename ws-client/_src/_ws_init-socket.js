@@ -7,9 +7,12 @@ module.exports = () => {
   window._ws_queue = {}
   window._ws_connect = {}
   window._ws_connected = false
+  const { __flag } = window.mitm
 
   const onopen = data => {
-    console.log('ws: open connection')
+    if (__flag['ws-connect']) {
+      console.log('ws: open connection')
+    }
     console.timeEnd('ws:')
     window._ws_connected = true
     for (const key in window._ws_connect) {
@@ -19,12 +22,15 @@ module.exports = () => {
   }
 
   const onclose = function () {
-    console.log('ws: close connection')
-    console.log('ws: Connection is closed')
+    if (__flag['ws-connect']) {
+      console.log('ws: close connection')
+    }
   }
 
   const onmessage = function (e) {
-    console.log('on-message:', e.data)
+    if (__flag['ws-connect']) {
+      console.log('on-message:', e.data)
+    }
     _ws_msgParser(event, event.data)
   }
 
@@ -37,6 +43,8 @@ module.exports = () => {
     ws.onopen = onopen
     ws.onclose = onclose
     ws.onmessage = onmessage
-    console.log('ws: init connection')
+    if (__flag['ws-connect']) {
+      console.log('ws: init connection')
+    }
   }, 1) // minimize intermitten
 }

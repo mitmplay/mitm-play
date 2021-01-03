@@ -49,6 +49,7 @@ module.exports = () => {
   }
 
   window.ws__send = (cmd, data, handler) => {
+    const { __flag } = window.mitm
     const id = nanoid()
     const key = `${cmd}:${id}`
     window._ws_queue[key] = handler || (w => {})
@@ -60,7 +61,7 @@ module.exports = () => {
       }
     }, 5000)
     const params = `${key}${JSON.stringify({ data })}`
-    if (window.mitm.argv.debug) {
+    if (__flag['ws-message']) {
       console.log('_ws.send', params)
     }
     _ws.send(params)

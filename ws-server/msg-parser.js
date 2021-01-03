@@ -44,7 +44,8 @@ const wscmd = {
 global.mitm.wscmd = wscmd
 
 module.exports = (client, msg) => {
-  if (global.mitm.__flag['ws-message']) {
+  const { __flag } = global.mitm
+  if (__flag['ws-message']) {
     if (msg.length > 97) {
       console.log(c.blue('>>> ws-message: `%s...`'), msg.slice(0, 97))
     } else {

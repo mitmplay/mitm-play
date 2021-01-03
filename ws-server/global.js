@@ -4,6 +4,7 @@ const WebSocket = require('ws')
 module.exports = () => {
 // ex: broadcast({data:"there"});
   function broadcast ({ data, _all }) {
+    const { __flag } = global.mitm
     const pages = []
     const that = this
     data = typeof (data) === 'string' ? data : JSON.stringify(data)
@@ -15,7 +16,7 @@ module.exports = () => {
         }
       }
     })
-    if (global.mitm.__flag['ws-broadcast']) {
+    if (__flag['ws-broadcast']) {
       console.log(c.blue('>>> ws-broadcast:'), data, pages)
     }
   }
