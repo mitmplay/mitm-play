@@ -50,7 +50,7 @@ function clicked(e) {
           const namespace = typs[typ];
           for (let itm in namespace) {
             const id = itm.split('url:').pop()
-            console.log({group1, itm, id})
+            // console.log({group1, itm, id})
             if (item===id) {
               namespace[itm] = flag;
             }
@@ -182,18 +182,17 @@ function listTags(tags) {
 }
 .rtag {
   color: grey;
-  font-style: italic;
-  /* background-color: beige; */
 }
 .rtag.slc {
   color: green;
   font-weight: bolder;
 }
 .rtag.slc.grp {
-  color: #045bb4;
+  color: red;
   font-weight: bolder;
 }
-.rtag.slc.url {
+.rtag.slc.url,
+.rtag.slc.grp.itm.url {
   color: #c36e01;
 }
 .rtag.slc.grp.itm {

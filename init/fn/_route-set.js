@@ -82,6 +82,9 @@ function _routeSet (r, namespace, print = false) {
       const site = r[typ][str]
       if (site) {
         if (site.tags) {
+          if (Array.isArray(site.tags)) {
+            site.tags = site.tags.join(' ')
+          }
           const {nss, nsstag} = _nsstag(typ, str)
           const ctype = site.contentType ? `[${site.contentType.join(',')}]` : ''
           const keys = Object.keys(site).filter(fkeys).join(',')

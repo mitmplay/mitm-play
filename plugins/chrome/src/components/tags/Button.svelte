@@ -48,7 +48,7 @@ onMount(() => {
   <label class="checker">
     <input type="checkbox"
     bind:checked={$tags.uniq}/>
-    uniq
+    fit
   </label>
   <label class="checker">
     <input type="checkbox"

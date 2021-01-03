@@ -61,17 +61,22 @@ function itemlist(items) {
   const {fn: {sortTag}} = window.mitm;
   let arr = Object.keys(items);
   if ($tags.uniq) {
-    arr = arr.filter(x => x.match(':'))
+    arr = arr.filter(x => x.match(':')).filter(x => !x.match('url:'))
   }
   return arr.sort(sortTag);
 }
 
 function routetag(item) {
+  let klas
   if (item.match(':')) {
-    return items[item] ? 'rtag slc' : 'rtag';
+    klas = items[item] ? 'rtag slc' : 'rtag';
   } else {
-    return items[item] ? 'stag slc' : '';
+    klas = items[item] ? 'stag slc' : '';
   }
+  if (item.match('url:')) {
+    klas += ' url'
+  }
+  return klas
 }
 
 function show(item) {
@@ -84,17 +89,15 @@ function show(item) {
 <div class="border">
   <div class="space0">[{ns==='_global_' ? ' * ' : ns}]</div>
   {#each itemlist(items) as item}
-    {#if !item.match('url:')}
-      <div class="space1 {routetag(item)}">
-        <label>
-          <input type="checkbox"
-          data-item={item}
-          on:click={clicked} 
-          bind:checked={items[item]}/>
-          <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
-        </label>
-      </div>
-    {/if}
+    <div class="space1 {routetag(item)}">
+      <label>
+        <input type="checkbox"
+        data-item={item}
+        on:click={clicked} 
+        bind:checked={items[item]}/>
+        <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
+      </label>
+    </div>
   {/each}
 </div>
 
@@ -125,9 +128,15 @@ function show(item) {
   font-size: medium;
   background-color: beige;
 }
+.rtag.url {
+  background-color: inherit;
+}
 .rtag.slc {
   color: red;
   font-weight: bolder;
+}
+.rtag.slc.url {
+  color: #c36e01;
 }
 .stag.slc {
   color: green;
