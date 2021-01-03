@@ -90,7 +90,12 @@ function urllist(tags, item) {
     return []
   } else {
     const obj = window.mitm.routes[ns][item]
-    return obj ? Object.keys(obj) : []
+    if (Array.isArray(obj)) {
+      return obj
+    } else if (obj) {
+      return Object.keys(obj)
+    }
+    return []
   }
 }
 function spacex(tags, item, url) {
