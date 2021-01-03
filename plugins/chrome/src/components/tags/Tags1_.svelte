@@ -51,8 +51,6 @@ function clicked(e) {
           for (let itm in namespace) {
             const id = itm.split('url:').pop()
             console.log({group1, itm, id})
-            if (id==='no-ads')
-              debugger
             if (item===id) {
               namespace[itm] = flag;
             }
@@ -100,7 +98,18 @@ function routetag(item) {
       }
     }
   }
-  return `rtag ${grp} ${slc} ${itm}`;
+  let url = ''
+  for (const ns of browser.nss) {
+    const obj = $tags.__tag3[ns]
+    const urls = obj || []
+    for (const _url in urls) {
+      if (_url.match(`:${item}:`)) {
+        url = 'url'
+        break
+      }
+    }
+  }
+  return `rtag ${grp} ${slc} ${itm} ${url}`;
 }
 
 function listTags(tags) {
@@ -184,13 +193,16 @@ function listTags(tags) {
   color: #045bb4;
   font-weight: bolder;
 }
+.rtag.slc.url {
+  color: #c36e01;
+}
 .rtag.slc.grp.itm {
   color: green;
 }
 .rtag.grp {
   background-color: beige;
 }
-.rtag.grp.itm {
+.rtag.grp.itm, .rtag.url {
   text-decoration: underline;
 }
 </style>

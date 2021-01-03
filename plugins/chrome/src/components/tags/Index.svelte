@@ -25,8 +25,10 @@ window.mitm.files.getRoute_events.tagsTable = () => {
   for (let ns in __tag2) {
     const tsks = __tag2[ns]
     for (let task in tsks) {
-      const [,v] = task.split(':');
-      v && (tgroup[v] = true)
+      const [k,v] = task.split(':');
+      if (v && k!=='url') {
+        tgroup[v] = true
+      }
     }
   }  
   tags.set({
