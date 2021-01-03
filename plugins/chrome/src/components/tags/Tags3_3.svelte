@@ -35,12 +35,13 @@ function clicked(e) {
   }, 50);
 }
 
-function routetag(item) {
+function routetag(tags, item) {
   let klas = items[item] ? 'rtag slc' : 'rtag';
-  if (item.indexOf('url:')===-1) {
-    if (item.indexOf(':')>-1) {
-      klas += ' r2'
-    }
+  if (item.indexOf('url:')>-1) {
+    klas += ' url'
+  } else if (item.indexOf(':')>-1) {
+    klas += tags.__tag2[ns][item] ? ' slc' : ''
+    klas += ' r2'
   }
   return klas
 }
@@ -66,19 +67,23 @@ function check(item) {
 </script>
 
 {#each xitems($tags) as item}
-  <div class="space3 {routetag(item)}">
+  <div class="space3 {routetag($tags, item)}">
     {#if check(item) }
-      <input type="checkbox"
-      data-item={item}
-      checked={$tags.__tag2[ns][item]}
-      disabled/>
+      <label>
+        <input type="checkbox"
+        data-item={item}
+        checked={$tags.__tag2[ns][item]} disabled/>
+        <span>{title(item)}</span>
+      </label>
     {:else}
-      <input type="checkbox"
-      data-item={item}
-      on:click={clicked} 
-      bind:checked={items[item]}/>
+      <label>
+        <input type="checkbox"
+        data-item={item}
+        on:click={clicked} 
+        bind:checked={items[item]}/>
+        <span>{title(item)}</span>      
+      </label>
     {/if}
-    <span>{title(item)}</span>
   </div>
 {/each}
 
@@ -97,7 +102,10 @@ function check(item) {
   color: #5dac75;
   font-weight: bolder;
 }
+.rtag.slc.url {
+  color: #c36e01;
+}
 .rtag.slc.r2 {
-  color: #da8181;
+  color: #ff1616
 }
 </style>

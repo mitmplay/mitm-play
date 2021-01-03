@@ -43,10 +43,11 @@ function xitems(tags) {
 .atag {
   font-style: italic;
   font-size: 15px;
-  color: grey;
+  color: #dac5c5
 }
 .atag.slc {
   color: red;
   font-weight: bolder;
+  background-color: beige;
 }
 </style>
