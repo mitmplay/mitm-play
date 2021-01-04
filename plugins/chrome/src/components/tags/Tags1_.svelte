@@ -43,26 +43,7 @@ function clicked(e) {
       }
     }
 
-    resetRule3($tags)
-    // for (let ns in __tag3) {
-    //   const urls = __tag3[ns];
-    //   for (let url in urls) {
-    //     const typs = urls[url];
-    //     for (let typ in typs) {
-    //       const namespace3 = typs[typ];
-    //       for (let itm in namespace3) {
-    //         const id = itm.split('url:').pop()
-    //         // console.log({group1, itm, id})
-    //         if (item===id) {
-    //           namespace3[itm] = flag;
-    //         }
-    //         if (group1===itm.split('~')[0]) {
-    //           namespace3[itm] = __tag1[itm] || false;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    resetRule3($tags, item)
     const {filterUrl, tgroup, hidden, uniq} = $tags;
     tags.set({
       filterUrl,

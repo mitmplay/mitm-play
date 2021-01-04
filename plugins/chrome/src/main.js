@@ -74,18 +74,14 @@ function resetRule3(tags, _item, _ns) {
         const namespace3 = typs[typ];
         for (let itm in namespace3) {
           const id = itm.split('url:').pop()
-          const flag = tg1 ? namespace[id] : namespace[item]
-          // let flag = tg1 ? __tag1[id] : namespace[item]
-          // console.log({group1, itm, id, flag})
-          // if (tg1 && item===id) {
-          //   namespace3[itm] = flag;
-          // } else 
+          const t1 = item.split('url:').pop()
+          let flag = tg1 ? __tag1[t1] : namespace[item]
           if (item===itm) {
             namespace3[itm] = flag;
           }
           if (group1===id.split('~')[0]) {
             if (tg1) {
-              namespace3[itm] = flag || false;
+              namespace3[itm] =  __tag1[id] || false;
             } else {
               namespace3[itm] = namespace[itm] || false;
             }

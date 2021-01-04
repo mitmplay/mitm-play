@@ -15,38 +15,6 @@ function clicked(e) {
   }
   setTimeout(()=>{
     console.log('e', {__tag2,__tag3});
-
-    // const typ1 = item.split(':')[1] || item;
-    // const [group1, id1] = typ1.split('~');
-    // const flag =namespace[item];
-    // if (id1) {
-    //   for (let itm in namespace) {
-    //     const typ2 = itm.split(':')[1] || itm;
-    //     const [group2, id2] = typ2.split('~');
-    //     if (!(tagx && tagx[item])) {
-    //       if (group1===group2 && id1!==id2) {
-    //         namespace[itm] = !flag;
-    //       }
-    //     }
-    //   }
-    // }
-
-    // const urls = __tag3[ns];
-    // for (let url in urls) {
-    //   const typs = urls[url];
-    //   for (let typ in typs) {
-    //     const namespace3 = typs[typ];
-    //     for (let itm in namespace3) {
-    //       if (item===itm) {
-    //         namespace3[itm] = flag;
-    //       }
-    //       if (group1===itm.split('~')[0]) {
-    //         namespace3[itm] = namespace[itm] || false;
-    //       }
-    //     }
-    //   }
-    // }
-
     resetRule2($tags, item, ns, tagx)
     resetRule3($tags, item, ns)
     const {filterUrl, tgroup, hidden, uniq} = $tags;
