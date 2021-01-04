@@ -90,7 +90,7 @@ function check(item) {
 
 <style>
 .space3 {
-  padding-left: 20px;
+  padding-left: 28px;
 }
 .space3 span {
   vertical-align: 15%;

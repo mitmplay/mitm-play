@@ -114,10 +114,10 @@ function spacex(tags, item, url) {
 }
 summary label {
   display: inline;
-  margin-left: -5px;
+  margin-left: -2px;
 }
 summary.space1 {
-  padding-left: 0;
+  padding-left: 5px;
 }
 .space0 {
   line-height: 1.5;
@@ -131,7 +131,7 @@ summary.space1 {
   padding-left: 12px;
 }
 .space1 span {
-  font-size: 15px;
+  font-size: 13px;
   vertical-align: 15%;
 }
 .space1 .big {
@@ -150,8 +150,8 @@ summary.space1 {
   color: #ecd7d7;
 }
 .rtag {
+  font-size: 13px;
   color: cadetblue;
-  font-size: medium;
   background-color: beige;
 }
 .rtag.url {

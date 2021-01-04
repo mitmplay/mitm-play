@@ -7,9 +7,9 @@ export let path;
 export let ns;
 
 function title(item) {
-  const v = items[`:${item}`]
-  return `${item.split(':')[0]}:${v}`
+  return `${item.split(':')[0]}:`;
 }
+
 function active(item) {
   let enabled = $tags.__tag2[ns][item]===false ? false : true
   for (const id in items[item]) {
@@ -20,6 +20,7 @@ function active(item) {
   }
   return enabled ? 'atag slc' : 'atag';
 }
+
 function xitems(tags) {
   const {__tag3} = tags;
   const namespace = __tag3[ns];
@@ -27,22 +28,51 @@ function xitems(tags) {
   const arr = Object.keys(typs);
   return arr;
 }
+function xtags() {
+  let arr
+  for (const id in items) {
+    if (id.slice(0,1)!==':') {
+      arr = Object.keys( items[id])
+      break
+    }
+  }
+  const map = arr.map(x => x.split(':').pop())
+  return map.sort().join(' ')
+}
 </script>
 
 {#each xitems($tags).filter(x=>x[0]!==':') as item}
-  <div class="space2 {active(item)}">{title(item)}</div>
-  <Tags33 items={items[item]} {item} {path} {ns}/>
+  <details>
+    <summary class="space2 {active(item)}">
+      {title(item)}
+      <span class="prop">{items[`:${item}`]}</span>
+      <span class="tags">{`<${xtags($tags)}>`}</span>
+    </summary>
+    <Tags33 items={items[item]} {item} {path} {ns}/>
+  </details>
 {/each}
 
 <style>
+details summary .prop,
+details[open] summary .tags {
+  display: none;
+}
+details summary .tags,
+details[open] summary .prop {
+  font-family: Roboto;
+  font-size: 11px;
+  display: inline;
+}
+details summary .tags {
+  margin-left: -5px;
+  color: green;
+}
 .space2 {
-  padding-left: 20px;
+  padding-left: 12px;
   font-weight: bolder;
   color: green;
 }
 .atag {
-  font-style: italic;
-  font-size: 15px;
   color: #dac5c5
 }
 .atag.slc {

@@ -35,6 +35,6 @@ function xitems(tags) {
   font-size: 15px;
   font-weight: bolder;
   color: blueviolet;
-  padding-left: 10px;
+  padding-left: 3px;
 }
 </style>

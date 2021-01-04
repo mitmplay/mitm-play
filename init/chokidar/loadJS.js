@@ -18,7 +18,7 @@ function loadJS (path, msg, fn) {
         global.mitm.source[domain] = data
       }
     })
-    resort(fn)
+    resort(fn) // feat: upadte tags
   } catch (error) {
     console.log(c.redBright('Failed load route'), error)
     process.exit(1)
@@ -88,7 +88,7 @@ function sort (obj, size=false, _typO) {
   return newobj
 }
 
-function routeSort (fn) {
+function routeSort (fn) { // feat: upadte tags
   const { routes: { _global_ } } = global.mitm
   const { _routeSet } = global.mitm.fn
   _routeSet(_global_, '_global_')
@@ -119,9 +119,9 @@ function routeSort (fn) {
           for (const d of flag) {
             if (typs[d]===undefined) {
               const d2 = arr.filter(x => x.indexOf(d)>-1)[0] // tag url:tag-name
-              d2 && (typs[d2] = true)
+              d2 && (typs[d2] = true) // feat: upadte tags
             } else {
-              typs[d] = true
+              typs[d] = true // feat: upadte tags 
             }
           }
         }
