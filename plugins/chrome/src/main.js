@@ -20,6 +20,90 @@ const sortTag = (a,b) => {
   return 0;
 }
 
+function isRuleOff(tags, ns, url) {
+  const node = tags.__tag3[ns][url]
+  let grey = false
+  if (node) {
+    for (const id in node) {
+      if (typeof node[id]!=='string') {
+        for (const tag in node[id]) {
+          if (node[id][tag]===false) {
+            grey = true
+            break
+          }
+        }
+      }
+    }
+  }
+  return grey
+}
+
+function resetRule2(tags, item, ns, tagx) {
+  const typ1 = item.split(':')[1] || item;
+  const [ group1, id1 ] = typ1.split('~');
+  const namespace = tags.__tag2[ns];
+  const flag = namespace[item];
+  if (id1) {
+    for (let itm in namespace) {
+      const typ2 = itm.split(':')[1] || itm;
+      const [group2, id2] = typ2.split('~');
+      if (!(tagx && tagx[item])) {
+        if (group1===group2 && id1!==id2) {
+          namespace[itm] = !flag;
+        }
+      }
+    }
+  }
+}
+
+function resetRule3(tags, _item, _ns) {
+  const {__tag1,__tag2,__tag3} = tags;
+  let tg1 = !_ns
+
+  function update(ns, item) {
+    if (ns==='keybr.com')
+      debugger
+
+    const typ1 = item.split(':')[1] || item;
+    const [ group1 ] = typ1.split('~');
+    const namespace = __tag2[ns];
+    const urls = __tag3[ns];
+    for (let url in urls) {
+      const typs = urls[url];
+      for (let typ in typs) {
+        const namespace3 = typs[typ];
+        for (let itm in namespace3) {
+          const id = itm.split('url:').pop()
+          const t1 = item.split('url:').pop()
+          let flag = tg1 ? __tag1[t1] : namespace[item]
+          if (item===itm) {
+            namespace3[itm] = flag;
+          }
+          if (group1===id.split('~')[0]) {
+            if (tg1) {
+              namespace3[itm] =  __tag1[id] || false;
+            } else {
+              namespace3[itm] = namespace[itm] || false;
+            }
+          }
+        }
+      }
+    }  
+  }
+
+  if (_ns) {
+    update(_ns, _item)
+  } else {
+    const nss =  tags.__tag2
+    for (let ns in nss) {
+      update(ns, _item)
+    }
+  }
+}
+
+window.mitm.fn.resetRule2 = resetRule2
+window.mitm.fn.resetRule3 = resetRule3
+window.mitm.fn.isRuleOff = isRuleOff
 window.mitm.fn.toRegex = toRegex
 window.mitm.fn.sortTag = sortTag
 window.mitm.editor = {};

@@ -30,7 +30,7 @@ window.mitm.files.getRoute_events.tagsTable = () => {
         tgroup[v] = true
       }
     }
-  }  
+  } 
   tags.set({
     filterUrl,
     __tag1,
