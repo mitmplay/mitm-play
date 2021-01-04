@@ -7,6 +7,7 @@ import { tags } from './stores.js';
 ***/
 
 function clicked(e) {
+  const { resetRule3 } = window.mitm.fn;
   const {__tag1: {...tagx}} = $tags;
   setTimeout(()=>{
     const {__tag1,__tag2,__tag3} = $tags;
@@ -42,25 +43,26 @@ function clicked(e) {
       }
     }
 
-    for (let ns in __tag3) {
-      const urls = __tag3[ns];
-      for (let url in urls) {
-        const typs = urls[url];
-        for (let typ in typs) {
-          const namespace = typs[typ];
-          for (let itm in namespace) {
-            const id = itm.split('url:').pop()
-            // console.log({group1, itm, id})
-            if (item===id) {
-              namespace[itm] = flag;
-            }
-            if (group1===itm.split('~')[0]) {
-              namespace[itm] = __tag1[itm] || false;
-            }
-          }
-        }
-      }
-    }
+    resetRule3($tags)
+    // for (let ns in __tag3) {
+    //   const urls = __tag3[ns];
+    //   for (let url in urls) {
+    //     const typs = urls[url];
+    //     for (let typ in typs) {
+    //       const namespace3 = typs[typ];
+    //       for (let itm in namespace3) {
+    //         const id = itm.split('url:').pop()
+    //         // console.log({group1, itm, id})
+    //         if (item===id) {
+    //           namespace3[itm] = flag;
+    //         }
+    //         if (group1===itm.split('~')[0]) {
+    //           namespace3[itm] = __tag1[itm] || false;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
     const {filterUrl, tgroup, hidden, uniq} = $tags;
     tags.set({
       filterUrl,

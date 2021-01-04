@@ -11,8 +11,8 @@ const route = {
     'doubleclick.net': '',
     'a.pub.network': '',
     'google.+.com': '',
-    'GET:/test': {
-      tags: ['in-mock']
+    'GET:in-mock~1:/test': {
+      tags: ['in-mock~2  in-mock~3']
     }
   },
   css: {
