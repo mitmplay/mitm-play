@@ -61,8 +61,8 @@ function resetRule3(tags, _item, _ns) {
   let tg1 = !_ns
 
   function update(ns, item) {
-    if (ns==='keybr.com')
-      debugger
+    // if (ns==='keybr.com')
+    //   debugger
 
     const typ1 = item.split(':')[1] || item;
     const [ group1 ] = typ1.split('~');

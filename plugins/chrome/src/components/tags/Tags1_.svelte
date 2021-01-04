@@ -44,14 +44,13 @@ function clicked(e) {
     }
 
     resetRule3($tags, item)
-    const {filterUrl, tgroup, hidden, uniq} = $tags;
+    const {filterUrl, tgroup, uniq} = $tags;
     tags.set({
       filterUrl,
       __tag1,
       __tag2,
       __tag3,
       tgroup,
-      hidden,
       uniq
     })
   }, 10);

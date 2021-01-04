@@ -20,7 +20,7 @@ window.mitm.files.getRoute_events.tagsTable = () => {
   // window.ws__send('getRoute', '', routeHandler);
   console.log('tagsTable getting called!!!');
   const {__tag1, __tag2, __tag3} = window.mitm;
-  const {filterUrl, hidden, uniq} = $tags;
+  const {filterUrl, uniq} = $tags;
   const tgroup = {};
   for (let ns in __tag2) {
     const tsks = __tag2[ns]
@@ -37,7 +37,6 @@ window.mitm.files.getRoute_events.tagsTable = () => {
     __tag2,
     __tag3,
     tgroup,
-    hidden,
     uniq
   })
 }

@@ -52,11 +52,6 @@ onMount(() => {
   </label>
   <label class="checker">
     <input type="checkbox"
-    bind:checked={$tags.hidden}/>
-    hide
-  </label>
-  <label class="checker">
-    <input type="checkbox"
     bind:checked={$tags.filterUrl}/>
     current-tab
   </label>

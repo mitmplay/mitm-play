@@ -17,14 +17,13 @@ function clicked(e) {
     console.log('e', {__tag2,__tag3});
     resetRule2($tags, item, ns, tagx)
     resetRule3($tags, item, ns)
-    const {filterUrl, tgroup, hidden, uniq} = $tags;
+    const {filterUrl, tgroup, uniq} = $tags;
     tags.set({
       filterUrl,
       __tag1,
       __tag2,
       __tag3,
       tgroup,
-      hidden,
       uniq
     })
   }, 10);
@@ -57,18 +56,17 @@ function show(item) {
   if (v===undefined) return k;
   return `${v}{${k}}`;
 }
+function isGroup(item) {
+  return window.mitm.routes[ns][item]
+}
 function urllist(tags, item) {
-  if (tags.hidden) {
-    return []
-  } else {
-    const obj = window.mitm.routes[ns][item]
-    if (Array.isArray(obj)) {
-      return obj
-    } else if (obj) {
-      return Object.keys(obj)
-    }
-    return []
+  const obj = window.mitm.routes[ns][item]
+  if (Array.isArray(obj)) {
+    return obj
+  } else if (obj) {
+    return Object.keys(obj)
   }
+  return []
 }
 function spacex(tags, item, url) {
   const { isRuleOff } = window.mitm.fn;
@@ -81,24 +79,45 @@ function spacex(tags, item, url) {
 <div class="border">
   <div class="space0">[{ns==='_global_' ? ' * ' : ns}]</div>
   {#each itemlist(items) as item}
-    <div class="space1 {routetag(item)}">
-      <label>
-        <input type="checkbox"
-        data-item={item}
-        on:click={clicked} 
-        bind:checked={items[item]}/>
-        <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
-      </label>
-    </div>
-    {#each urllist($tags, item) as url}
-      <div class="spacex {spacex($tags, item, url)}">{url}</div>
-    {/each}
+    {#if isGroup(item)}
+      <details>
+        <summary class="space1 {routetag(item)}">
+          <label>
+            <input type="checkbox"
+            data-item={item}
+            on:click={clicked} 
+            bind:checked={items[item]}/>
+            <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
+          </label> 
+        </summary>
+        {#each urllist($tags, item) as url}
+          <div class="spacex {spacex($tags, item, url)}">{url}</div>
+        {/each}
+      </details>
+    {:else}
+      <div class="space1 {routetag(item)}">
+        <label>
+          <input type="checkbox"
+          data-item={item}
+          on:click={clicked} 
+          bind:checked={items[item]}/>
+          <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
+        </label>
+      </div>
+    {/if}
 {/each}
 </div>
 
 <style>
 .border {
   border: 1px grey solid;
+}
+summary label {
+  display: inline;
+  margin-left: -5px;
+}
+summary.space1 {
+  padding-left: 0;
 }
 .space0 {
   line-height: 1.5;
@@ -109,7 +128,7 @@ function spacex(tags, item, url) {
 }
 .space1 {
   color: grey;
-  padding-left: 10px;
+  padding-left: 12px;
 }
 .space1 span {
   font-size: 15px;
