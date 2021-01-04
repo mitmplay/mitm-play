@@ -115,8 +115,14 @@ function routeSort (fn) {
           }
         }
         if (flag) {
-          for (const d of global.mitm.routes[ns].tags) {
-            typs[d] !== undefined && (typs[d] = true)
+          const arr = Object.keys(typs)
+          for (const d of flag) {
+            if (typs[d]===undefined) {
+              const d2 = arr.filter(x => x.indexOf(d)>-1)[0] // tag url:tag-name
+              d2 && (typs[d2] = true)
+            } else {
+              typs[d] = true
+            }
           }
         }
       }
@@ -127,7 +133,7 @@ function routeSort (fn) {
       tag2[id] = !flag
       if (flag) {
         // can be improve!!!
-        for (const d of global.mitm.routes[ns].tags) {
+        for (const d of flag) {
           if (id === d || mainTag[1] === d) {
             tag2[id] = true
             tagX[d] = true

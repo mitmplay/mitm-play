@@ -5,46 +5,18 @@ export let items;
 export let ns;
 
 function clicked(e) {
+  const { resetRule2, resetRule3 } = window.mitm.fn;
   const {__tag1,__tag2,__tag3} = $tags;
   const {item} = e.target.dataset;
-  const typ1 = item.split(':')[1] || item;
-  const [group1, id1] = typ1.split('~');
   const namespace = __tag2[ns];
   const tagx = {};
   for (let itm in namespace) {
     tagx[itm] = namespace[itm]
   }
   setTimeout(()=>{
-    const flag =namespace[item];
     console.log('e', {__tag2,__tag3});
-
-    if (id1) {
-      for (let itm in namespace) {
-        const typ2 = itm.split(':')[1] || itm;
-        const [group2, id2] = typ2.split('~');
-        if (!(tagx && tagx[item])) {
-          if (group1===group2 && id1!==id2) {
-            namespace[itm] = !flag;
-          }
-        }
-      }
-    }
-
-    const urls = __tag3[ns];
-    for (let url in urls) {
-      const typs = urls[url];
-      for (let typ in typs) {
-        const namespace3 = typs[typ];
-        for (let itm in namespace3) {
-          if (item===itm) {
-            namespace3[itm] = flag;
-          }
-          if (group1===itm.split('~')[0]) {
-            namespace3[itm] = namespace[itm] || false;
-          }
-        }
-      }
-    }
+    resetRule2($tags, item, ns, tagx)
+    resetRule3($tags, item, ns)
     const {filterUrl, tgroup, hidden, uniq} = $tags;
     tags.set({
       filterUrl,
@@ -99,23 +71,10 @@ function urllist(tags, item) {
   }
 }
 function spacex(tags, item, url) {
-  let klas = items[item] ? 'slc' : '';
-  const node = tags.__tag3[ns][url]
-  let grey = false
-  if (node) {
-    for (const id in node) {
-      if (typeof node[id]!=='string') {
-        for (const tag in node[id]) {
-          if (node[id][tag]===false) {
-            grey = true
-            break
-          }
-        }
-      }
-    }
-  }
-  grey && (klas += ' grey')
-  return klas
+  const { isRuleOff } = window.mitm.fn;
+  let klass = items[item] ? 'slc' : '';
+  isRuleOff(tags, ns, url) && (klass += ' grey');
+  return klass
 }
 </script>
 

@@ -11,7 +11,7 @@ function clicked(e) {
     const {__tag3} = $tags;
     const namespace = __tag3[ns];
     const {item: i} = e.target.dataset;
-    const [group1, id1] = i.split('~');
+    const [group1, id1] = i.split('url:').pop().split('~');
     console.log('e', {__tag3});
 
     for (let pth in namespace) {
@@ -20,7 +20,8 @@ function clicked(e) {
         const items2 = typs[tsk];
         if (typeof items2!=='string') {
           for (let itm in items2) {
-            const [group2, id2] = itm.split('~');
+            const id = itm.split('url:').pop()
+            const [group2, id2] = id.split('~');
             if (group1===group2 && id1!==id2) {
               items2[itm] = false;
             }
