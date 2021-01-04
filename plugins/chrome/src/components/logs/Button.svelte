@@ -1,5 +1,7 @@
 <script>
 import { client } from '../other/stores.js';
+import  Collapse from '../button/Collapse.svelte';
+import  Expand from '../button/Expand.svelte';
 
 function btnClear(e) {
   const data = {}
@@ -48,16 +50,12 @@ function hostflag() {
 function argsflag() {
   return !window.mitm.client.noarglogs;
 }
-
-function btnClose() {
-  const nodes = document.querySelectorAll('#list-logs details[open]')
-  nodes.forEach(node => node.removeAttribute('open'))
-}
 </script>
 
 <div class="btn-container" style="top: 1px;">
   <input class="stop" on:click="{btnClear}" type="image" src="images/stop.svg" alt=""/>
-  <button class="clollapse" on:click="{btnClose}">[--]</button>
+  <Collapse q="#list-logs"></Collapse>
+  <Expand q="#list-logs"></Expand>
   <label class="checkbox">
     <input type="checkbox" on:click={btnHostswch} checked={hostflag()}>host
   </label>
@@ -84,23 +82,8 @@ function btnClose() {
 }
 input.stop {
   position: relative;
+  margin-right: 10px;
   top: 1.5px;
   left: 10px;
-}
-button {
-  border: 0;
-  cursor: pointer;
-  background: transparent;
-  font-family: Consolas, Lucida Console, Courier New, monospace;
-}
-button.clollapse {
-  margin-top: -6px;
-  margin-left: 10px;
-  padding: 2px 1px 1px 1px;
-  font-weight: 700;
-  font-size: 10px;
-  color: #002aff;
-  margin-top: -5px;
-  vertical-align: middle;
 }
 </style>

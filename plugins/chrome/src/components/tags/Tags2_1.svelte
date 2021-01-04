@@ -1,5 +1,7 @@
 <script>
 import { tags } from './stores.js';
+import  Collapse from '../button/Collapse.svelte';
+import  Expand from '../button/Expand.svelte';
 
 export let items;
 export let ns;
@@ -74,11 +76,19 @@ function spacex(tags, item, url) {
   isRuleOff(tags, ns, url) && (klass += ' grey');
   return klass
 }
+function q(key) {
+  return key.replace(/\./g, '-')
+}
 </script>
 
 <div class="border">
-  <div class="space0">[{ns==='_global_' ? ' * ' : ns}]</div>
+  <div class="space0">
+    <Collapse q="{`.t2.${q(ns)}`}"></Collapse>
+    <Expand q="{`.t2.${q(ns)}`}"></Expand>
+    <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
+  </div>
   {#each itemlist(items) as item}
+    <div class="t2 {q(ns)}">
     {#if isGroup(item)}
       <details>
         <summary class="space1 {routetag(item)}">
@@ -105,10 +115,15 @@ function spacex(tags, item, url) {
         </label>
       </div>
     {/if}
-{/each}
+    </div>
+  {/each}
 </div>
 
 <style>
+.ns {
+  margin-left: -3px;
+  font-size: 15px;
+}
 .border {
   border: 1px grey solid;
 }
