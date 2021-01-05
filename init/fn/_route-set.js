@@ -2,7 +2,8 @@ const c = require('ansi-colors')
 const typs = require('./_typs')
 
 const { typC, typA, typO } = typs
-const rmethod = /^(GET|PUT|POST|DELETE):([\w~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE):([\w.~-]+:|)(.+)/ // feat: tags in url
+const tgInUrl = /:[\w.~-]+:/
 
 function toRegex (str, flags = '') {
   return new RegExp(str
@@ -100,7 +101,7 @@ function _routeSet (r, namespace, print = false) {
           }
         }
         // feat: tags in url
-        if (str.match(/:[\w~-]+:/) && method[2]!=='hidden:') {
+        if (str.match(tgInUrl) && method[2]!=='hidden:') {
           const {nss, nsstag} = _nsstag(typ, str)
           const tag = `url:${method[2].split(':')[0]}`
           nss[`:${typ}`] = ''
