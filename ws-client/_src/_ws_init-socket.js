@@ -28,9 +28,9 @@ module.exports = () => {
   }
 
   const onmessage = function (e) {
-    if (__flag['ws-connect']) {
-      console.log('on-message:', e.data)
-    }
+    // if (__flag['ws-connect']) {
+    //   console.log('on-message:', e.data)
+    // }
     _ws_msgParser(event, event.data)
   }
 

@@ -143,7 +143,7 @@ summary.space1 {
 }
 .space1 {
   color: grey;
-  padding-left: 12px;
+  padding-left: 17px;
 }
 .space1 span {
   font-size: 13px;

@@ -9,6 +9,7 @@ import Button from './Button.svelte';
 import Tags1 from './Tags1_.svelte'; 
 import Tags2 from './Tags2_.svelte'; 
 import Tags3 from './Tags3_.svelte'; 
+import Urls from './Urls.svelte';
 
 export let top = "0";
 
@@ -44,16 +45,23 @@ window.mitm.files.getRoute_events.tagsTable = () => {
 
 <Button/>
 <div class="vbox">
-  <BStatic {top}>
-    <BHeader>-Tags-</BHeader>
-    <BTable>
-      <tr class="set-tags">
-        <Tags1/>
-        <Tags2/>
-        <Tags3/>
-      </tr>
-    </BTable>
-  </BStatic>
+  <details open="true">
+    <summary>Enable / Disable Tags</summary>
+    <BStatic {top}>
+      <BHeader>-Tags-</BHeader>
+      <BTable>
+        <tr class="set-tags">
+          <Tags1/>
+          <Tags2/>
+          <Tags3/>
+        </tr>
+      </BTable>
+    </BStatic>
+  </details>
+  <details>
+    <summary>Effected Url(s)</summary>
+    <Urls/>
+  </details>
 </div>
 
 <style>
