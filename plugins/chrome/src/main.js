@@ -56,14 +56,15 @@ function resetRule2(tags, item, ns, tagx) {
   }
 }
 
-function resetRule3(tags, _item, _ns) {
+function resetRule3(tags, item, _ns) {
   const {__tag1,__tag2,__tag3} = tags;
+  const t1 = item.split('url:').pop();
+  const typ1 = item.split(':')[1] || item;
+  const group1 = typ1.split('~')[0];
+
   let tag1 = !_ns
 
-  function update(ns, item) {
-    const typ1 = item.split(':')[1] || item;
-    const t1 = item.split('url:').pop();
-    const group1 = typ1.split('~')[0];
+  function update(ns) {
     const namespace = __tag2[ns];
     const urls = __tag3[ns];
 
@@ -96,11 +97,11 @@ function resetRule3(tags, _item, _ns) {
   }
 
   if (_ns) {
-    update(_ns, _item)
+    update(_ns)
   } else {
     const nss =  tags.__tag2
     for (let ns in nss) {
-      update(ns, _item)
+      update(ns)
     }
   }
 }
