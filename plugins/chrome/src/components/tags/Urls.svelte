@@ -20,6 +20,7 @@ function oneSite(ns) {
 }
 
 function itemlist(tags) {
+  const { isRuleOff } = window.mitm.fn;
   console.log('itemlist called...')
   const { __tag2, __tag3 } = tags
   const { routes } = window.mitm
@@ -50,30 +51,12 @@ function itemlist(tags) {
   }
   for (const ns in __tag3) {
     if (oneSite(ns)) {
-      const _ns = __tag3[ns]
-      if (Array.isArray(_ns)) {
-        urls = urls.concat(urls, _ns);
+      const _urls = __tag3[ns]
+      if (Array.isArray(_urls)) {
+        urls = urls.concat(urls, _urls);
       } else {
-        for (const url in _ns) {
-          if (_ns[url]) {
-            let ok = true
-            const rules = _ns[url]
-            for (const id in rules) {
-              if (typeof rules[id]!=='string') {
-                const tags = rules[id]
-                for (const tag in tags) {
-                  if (tags[tag]===false) {
-                    ok = false
-                    break
-                  }
-                }
-              }
-              if (rules[id]===false) {
-                ok = false
-              }
-            }
-            ok && (urls.push(url))
-          }
+        for (const url in _urls) {
+          !isRuleOff(tags, ns, url) && (urls.push(url))
         }
       }
     }
