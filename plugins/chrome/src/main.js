@@ -58,29 +58,33 @@ function resetRule2(tags, item, ns, tagx) {
 
 function resetRule3(tags, _item, _ns) {
   const {__tag1,__tag2,__tag3} = tags;
-  let tg1 = !_ns
+  let tag1 = !_ns
 
   function update(ns, item) {
-    // if (ns==='keybr.com')
-    //   debugger
-
     const typ1 = item.split(':')[1] || item;
-    const [ group1 ] = typ1.split('~');
+    const t1 = item.split('url:').pop();
+    const group1 = typ1.split('~')[0];
     const namespace = __tag2[ns];
     const urls = __tag3[ns];
+
+    let flag
+    if (tag1) {
+      flag = __tag1[t1]
+    } else {
+      flag = namespace[item]
+    }
+
     for (let url in urls) {
       const typs = urls[url];
       for (let typ in typs) {
         const namespace3 = typs[typ];
         for (let itm in namespace3) {
-          const id = itm.split('url:').pop()
-          const t1 = item.split('url:').pop()
-          let flag = tg1 ? __tag1[t1] : namespace[item]
           if (item===itm) {
             namespace3[itm] = flag;
           }
+          const id = itm.split('url:').pop()
           if (group1===id.split('~')[0]) {
-            if (tg1) {
+            if (tag1) {
               namespace3[itm] =  __tag1[id] || false;
             } else {
               namespace3[itm] = namespace[itm] || false;
