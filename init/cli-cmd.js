@@ -45,7 +45,7 @@ module.exports = () => {
       route = route.replace(/^\..\//, `${cwd}/../`)
     }
   }
-
+  argv.route = route
   if (!fs.pathExistsSync(route)) {
     const uroute = '~/user-route'
     const n = prompt(`\nCreate ${uroute} (Y/n)? `)
