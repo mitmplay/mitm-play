@@ -7,12 +7,13 @@ const loadJS = require('./chokidar/loadJS')
 
 module.exports = () => {
   const {
-    argv,
     fn: {
       home,
       _clear,
       toRegex
-    }
+    },
+    argv,
+    _argv
   } = global.mitm
 
   const { path } = global.mitm
@@ -45,7 +46,7 @@ module.exports = () => {
       route = route.replace(/^\..\//, `${cwd}/../`)
     }
   }
-  argv.route = route
+
   if (!fs.pathExistsSync(route)) {
     const uroute = '~/user-route'
     const n = prompt(`\nCreate ${uroute} (Y/n)? `)
@@ -68,6 +69,7 @@ module.exports = () => {
   }
 
   route = route.replace(/\\/g, '/')
+  _argv.route = route
   argv.route = route
 
   path.route = route
