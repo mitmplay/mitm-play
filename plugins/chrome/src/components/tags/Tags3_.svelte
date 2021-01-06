@@ -1,4 +1,5 @@
 <script>
+  export let one;
 import { tags } from './stores.js';
 import Tags31 from './Tags3_1.svelte';
 
@@ -15,7 +16,7 @@ function istag(ns) {
 }
 </script>
 
-<td>
+<td style="{one && 'display:none;'}">
 {#each Object.keys($tags.__tag3) as ns}
   {#if istag(ns)}
     <Tags31 items={$tags.__tag3[ns]} {ns}/>

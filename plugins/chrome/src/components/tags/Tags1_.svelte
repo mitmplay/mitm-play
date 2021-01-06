@@ -1,5 +1,6 @@
 <script>
 import { tags } from './stores.js';
+export let one;
 /***
 * ex:
 * __tag1[remove-ads~1] = true
@@ -128,7 +129,7 @@ function listTags(tags) {
 }
 </script>
 
-<td>
+<td style="{one && 'display:none;'}">
   <div class="border">
     {#each listTags($tags) as item}
     <div class="space0 {routetag(item)}">

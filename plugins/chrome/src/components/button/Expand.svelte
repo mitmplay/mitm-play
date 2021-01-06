@@ -1,13 +1,19 @@
 <script>
 export let q;
+let expand = false;
 
 function btnOpen(e) {
+  expand = !expand
   const nodes = document.querySelectorAll(`${q} details`)
-  nodes.forEach(node => node.setAttribute('open', ''))
+  if (expand) {
+    nodes.forEach(node => node.setAttribute('open', ''))
+  } else {
+    nodes.forEach(node => node.removeAttribute('open'))
+  }
 }
 </script>
 
-<button class="expand" on:click="{btnOpen}">[++]</button>
+<button class="expand" on:click="{btnOpen}">[<b>+</b>]</button>
 
 <style>
 button {
