@@ -7,7 +7,7 @@ const css = `
 const route = {
   url: 'https://keybr.com',
   tags: ['no-ads'],
-  'mock:no-ads': {
+  'mock:1.no-ads~g': {
     'doubleclick.net': '',
     'a.pub.network': '',
     'google.+.com': '',

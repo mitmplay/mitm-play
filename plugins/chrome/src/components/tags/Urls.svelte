@@ -40,7 +40,7 @@ function itemlist(rerender) {
     url2[url][rule] = true
     if (tags && Array.isArray(tags)) {
       for (let tag of tags) {
-        tag = tag.split(':').pop()
+        tag = '_'+tag.split(':').pop().replace(/[.~]/g, '-')
         if (url3[url]===undefined) {
           url3[url] = {}
         }

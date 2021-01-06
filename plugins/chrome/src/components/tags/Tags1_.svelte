@@ -131,7 +131,8 @@ function enter(e) {
   const {item} = e.target.dataset;
   const node = document.querySelector(`#urls`)
   if (node) {
-    node.innerHTML = `.${item} {background: yellow;}`
+    console.log(item.replace(/[.~]/g, '-'))
+    node.innerHTML = `._${item.replace(/[.~]/g, '-')} {background: yellow;}`
   }
 }
 function leave(e) {
