@@ -16,6 +16,7 @@ const route = {
     }
   },
   css: {
+    'GET:dodl:/test': `=>${css}`,
     'GET:no-ads:/assets/[a-z0-9]+': `=>${css}`
   },
   'log:sample-tag2': {

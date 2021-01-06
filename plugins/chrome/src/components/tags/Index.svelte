@@ -64,6 +64,7 @@ function oneClick(e) {
     </BStatic>
   </details>
   <details class="urls">
+    {@html '<style id="urls"></style>'}
     <summary>Effected Url(s)</summary>
     <Urls/>
   </details>

@@ -127,13 +127,31 @@ function listTags(tags) {
   }
   return tgs;
 }
+function enter(e) {
+  const {item} = e.target.dataset;
+  const node = document.querySelector(`#urls`)
+  if (node) {
+    node.innerHTML = `.${item} {background: yellow;}`
+  }
+}
+function leave(e) {
+  const {item} = e.target.dataset;
+  const node = document.querySelector(`#urls`)
+  if (node) {
+    node.innerHTML = ``
+  }
+}
 </script>
 
 <td style="{one && 'display:none;'}">
   <div class="border">
     {#each listTags($tags) as item}
     <div class="space0 {routetag(item)}">
-      <label>
+      <label 
+      data-item={item}
+      on:mouseenter={enter}
+      on:mouseleave={leave}
+      >
         <input type="checkbox"
         data-item={item}
         on:click={clicked}
