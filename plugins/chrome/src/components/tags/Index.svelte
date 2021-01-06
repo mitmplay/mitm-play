@@ -19,7 +19,7 @@ onMount(async () => {
 
 window.mitm.files.getRoute_events.tagsTable = () => {
   // window.ws__send('getRoute', '', routeHandler);
-  console.log('tagsTable getting called!!!');
+  console.log('events.tagsTable...');
   const {__tag1, __tag2, __tag3} = window.mitm;
   const {filterUrl, uniq} = $tags;
   const tgroup = {};

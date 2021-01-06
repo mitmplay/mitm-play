@@ -96,7 +96,7 @@ function routetag(item) {
 }
 
 function listTags(tags) {
-  console.log('listTags');
+  console.log('rerender...');
   const {browser, fn: {toRegex}} = window.mitm;
   const list = {};
 

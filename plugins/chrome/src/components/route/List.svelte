@@ -1,6 +1,7 @@
 <script>
 export let onChange;
 
+import { urls } from '../tags/url-debounce';
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
 
@@ -21,6 +22,7 @@ const routeHandler = obj => {
     window.mitm.__tag2 = obj._tags_.__tag2;
     window.mitm.__tag3 = obj._tags_.__tag3;
     window.mitm.__tag4 = obj._tags_.__tag4;
+    setTimeout(() => urls(), 1)
   }
   if (window.mitm.files.route===undefined) {
     window.mitm.files.route = obj.routes;

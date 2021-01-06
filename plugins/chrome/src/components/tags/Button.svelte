@@ -1,4 +1,5 @@
 <script>
+import { urls } from './url-debounce';
 import { onMount } from 'svelte';
 import { tags } from './stores.js';
 let autoSave = true;
@@ -17,6 +18,7 @@ function btnSave(e) {
   };
   console.log('saveTags', e.target);
   ws__send('saveTags', tags);
+  urls()
 }
 
 onMount(() => {
@@ -46,19 +48,23 @@ onMount(() => {
 
 <div class="btn-container">
   <label class="checker">
-    <input type="checkbox"
+    <input
+    type="checkbox"
     bind:checked={$tags.uniq}/>
     fit
   </label>
   <label class="checker">
-    <input type="checkbox"
+    <input 
+    type="checkbox"
+    on:click="{urls}"
     bind:checked={$tags.filterUrl}/>
     current-tab
   </label>
   <button class="tlb btn-go" on:click="{btnReset}" disabled={autoSave}>Reset</button>
   <button class="tlb btn-go" on:click="{btnSave}"  disabled={autoSave}>Save</button>
   <label class="checker">
-    <input type="checkbox"
+    <input
+    type="checkbox"
     bind:checked={autoSave}/>
     autosave
   </label>

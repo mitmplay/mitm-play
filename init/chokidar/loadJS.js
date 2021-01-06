@@ -2,6 +2,10 @@ const fs = require('fs-extra')
 const c = require('ansi-colors')
 const typs = require('../fn/_typs')
 const _debounce = require('../fn/_debounce')
+/**
+ * at loadJS end of linear call will trigger the non liniear code: routeSort
+ * to populate remaining: __tag1, __tag4
+ */
 const resort = _debounce(routeSort, 900, 'clear')
 
 function loadJS (path, msg, fn) {
@@ -10,6 +14,9 @@ function loadJS (path, msg, fn) {
   try {
     const domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1]
     const route = { path, ...load(path) }
+    /**
+     * populate: __tag2, __tag3 on each namespace
+     */
     _routeSet(route, domain, true)
     fs.readFile(path, 'utf8', function (err, data) {
       if (err) {
