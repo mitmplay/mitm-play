@@ -12,6 +12,7 @@ import Tags3 from './Tags3_.svelte';
 import Urls from './Urls.svelte';
 
 export let top = "0";
+let block = true;
 
 onMount(async () => {
   console.warn('onMount tags/index');
@@ -47,7 +48,7 @@ window.mitm.files.getRoute_events.tagsTable = () => {
 <div class="vbox">
   <details open="true">
     <summary>Enable / Disable Tags</summary>
-    <BStatic {top}>
+    <BStatic {top} {block}>
       <BHeader>-Tags-</BHeader>
       <BTable>
         <tr class="set-tags">

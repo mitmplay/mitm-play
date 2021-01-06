@@ -1,5 +1,6 @@
 <script>
 export let top;
+export let block=false;
 
 function resize() {
   return top ? `height: calc(100vh - ${top}px);` : '';
@@ -7,9 +8,13 @@ function resize() {
 </script>
 
 <div class="vbox left">
-  <div class="table-container" style="{resize()}">
+  {#if block}
     <slot></slot>
-  </div>
+  {:else}
+    <div class="table-container" style="{resize()}">
+      <slot></slot>
+    </div>
+  {/if}
 </div>
 
 <style>
