@@ -17,7 +17,7 @@ const route = {
   },
   css: {
     'GET:/test': `=>${css}`,
-    'GET:/assets/[a-z0-9]+': `=>${css}`
+    'GET:hide-content:/assets/[a-z0-9]+': `=>${css}`
   },
   'log:sample-tag1': {
     'GET:/log1': {

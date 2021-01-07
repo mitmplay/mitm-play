@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const { fn: { home, _nameSpace } } = global.mitm
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
+const rmethod = /^(GET|PUT|POST|DELETE):([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 function typTags (typ, namespace) {
   const { __tag4 } = global.mitm
@@ -31,6 +32,8 @@ const searchArr = ({ typ: typs, url, browserName }) => {
           if (obj) {
             const arr = url.match(obj[key])
             if (arr) {
+              let utag = key.match(rmethod)
+              utag = utag ? utag[3] : undefined
               let log = `${browser[browserName]} ${typ} (${key})`
               const { host, origin, pathname, search } = new URL(url)
               const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
@@ -42,6 +45,7 @@ const searchArr = ({ typ: typs, url, browserName }) => {
                 hidden,
                 search,
                 host,
+                utag,
                 url,
                 key,
                 arr,
@@ -107,6 +111,8 @@ const searchFN = (typs, { url, method, browserName }) => {
             log += `(${key})`
             !__args.nourl && (log += `.url(${__args.nohost ? '' : origin}${msg})`)
           }
+          let utag = key.match(rmethod)
+          utag = utag ? utag[3] : undefined
           tg && (log += c.red(`:${tg}`))
 
           const hidden = typ.indexOf(':hidden') > -1
@@ -119,6 +125,7 @@ const searchFN = (typs, { url, method, browserName }) => {
             hidden,
             search,
             host,
+            utag,
             url,
             key,
             arr,
