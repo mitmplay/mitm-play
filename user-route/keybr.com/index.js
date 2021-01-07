@@ -10,9 +10,9 @@ const route = {
   'mock:1.no-ads~g': {
     'doubleclick.net': '',
     'a.pub.network': '',
-    'GET:err~#4:google.+.com': '',
-    'GET:in-mock~1:/test': {
-      tags: ['in-mock~2  in-mock~3']
+    'GET:2.err~#4:google.+.com': '',
+    'GET:3.in-mock:/test': {
+      tags: ['3.in-mock~1  3.in-mock~2']
     }
   },
   css: {
