@@ -2,7 +2,7 @@
 import { rerender } from './rerender.js';
 import { debug } from 'svelte/internal';
 import { tags } from './stores.js';  
-const rmethod = /^(GET|PUT|POST|DELETE):([\w.~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE):([\w.#~-]+:|)(.+)/ // feat: tags in url
 const replace = (s,p1,p2,p3) => p3
 
 function unique(value, index, self) {
@@ -40,7 +40,7 @@ function itemlist(rerender) {
     url2[url][rule] = true
     if (tags && Array.isArray(tags)) {
       for (let tag of tags) {
-        tag = '_'+tag.split(':').pop().replace(/[.~]/g, '-')
+        tag = '_'+tag.split(':').pop().replace(/[.#~]/g, '-') // feat: tags in url
         if (url3[url]===undefined) {
           url3[url] = {}
         }

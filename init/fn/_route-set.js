@@ -2,8 +2,8 @@ const c = require('ansi-colors')
 const typs = require('./_typs')
 
 const { typC, typA, typO } = typs
-const rmethod = /^(GET|PUT|POST|DELETE):([\w.~-]+:|)(.+)/ // feat: tags in url
-const tgInUrl = /:[\w.~-]+:/
+const rmethod = /^(GET|PUT|POST|DELETE):([\w.#~-]+:|)(.+)/ // feat: tags in url
+const tgInUrl = /:[\w.#~-]+:/ // feat: tags in url
 
 function toRegex (str, flags = '') {
   return new RegExp(str
@@ -81,7 +81,7 @@ function _routeSet (r, namespace, print = false) {
       const method = str.match(rmethod)
       routerSet(router, typ, method, str)
       const site = r[typ][str]
-      if (site) {
+      if (site!==undefined) { // fix:empty-string{'GET:/google': ''}
         if (site.tags) {
           if (Array.isArray(site.tags)) {
             site.tags = site.tags.join(' ')

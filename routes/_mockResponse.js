@@ -9,8 +9,8 @@ const filePath = require('./filepath/file-path')
 const { matched, searchFN } = _match
 const { source } = inject
 
-const mock = ({ url }) => {
-  return {
+const mock = ({ url }, match) => {
+  const resp = {
     url,
     status: 200,
     headers: {
@@ -18,6 +18,11 @@ const mock = ({ url }) => {
     },
     body: 'Hello mock! - mitm-play'
   }
+  const status = match.key.match(/(#\d+)/) // feat: tags in url
+  if (status && status[1]) {
+    resp.status = +status[1]
+  }
+  return resp
 }
 
 const mockResponse = async function ({ reqs, route }, _3d) {
@@ -28,7 +33,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
 
   if (match && !_skipByTag(match, 'mock')) {
     const { response, hidden } = match.route
-    resp = mock(reqs)
+    resp = mock(reqs, match)
     if (typeof (match.route) === 'string') {
       resp.body = match.route
     } else {

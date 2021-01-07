@@ -131,8 +131,8 @@ function enter(e) {
   const {item} = e.target.dataset;
   const node = document.querySelector(`#urls`)
   if (node) {
-    console.log(item.replace(/[.~]/g, '-'))
-    node.innerHTML = `._${item.replace(/[.~]/g, '-')} {background: yellow;}`
+    // console.log(item.replace(/[.#~]/g, '-')) // feat: tags in url
+    node.innerHTML = `._${item.replace(/[.#~]/g, '-')} {background: yellow;}`
   }
 }
 function leave(e) {
