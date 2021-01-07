@@ -1,6 +1,7 @@
 <script>
 import { tags } from './stores.js';
 import  Expand from '../button/Expand.svelte';
+import  Collapse from '../button/Collapse.svelte';
 
 export let items;
 export let ns;
@@ -82,6 +83,7 @@ function q(key) {
 
 <div class="border">
   <div class="space0">
+    <Collapse q="{`.t2.${q(ns)}`}"></Collapse>
     <Expand q="{`.t2.${q(ns)}`}"></Expand>
     <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
   </div>

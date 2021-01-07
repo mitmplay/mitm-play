@@ -169,7 +169,7 @@ function leave(e) {
   border: 1px dotted;
 }
 .space0 {
-  font-size: medium;
+  font-size: 13px;
   font-weight: bolder;
   color: darkblue;
   /* background: deepskyblue; */

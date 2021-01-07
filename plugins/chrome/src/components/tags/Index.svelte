@@ -78,6 +78,11 @@ function oneClick(e) {
   flex-direction: column;
   height: calc(100vh - 23px);
 }
+summary {
+  font-size: 13px;
+  padding-left: 5px;
+  background: #fdaaaa;
+}
 summary:hover,
 .urls summary:hover {
   background: #fdf621;
