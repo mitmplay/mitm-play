@@ -7,25 +7,20 @@ export let path;
 export let ns;
 
 function clicked(e) {
+  const {__tag3} = $tags;
+  const _item = __tag3[ns][path][item]
+
   setTimeout(()=>{
-    const {__tag3} = $tags;
-    const namespace = __tag3[ns];
     const {item: i} = e.target.dataset;
     const [group1, id1] = i.split('url:').pop().split('~');
-    console.log('e', {__tag3});
 
-    for (let pth in namespace) {
-      const typs = namespace[pth];
-      for (let tsk in typs) {
-        const items2 = typs[tsk];
-        if (typeof items2!=='string') {
-          for (let itm in items2) {
-            const id = itm.split('url:').pop()
-            const [group2, id2] = id.split('~');
-            if (group1===group2 && id1!==id2) {
-              items2[itm] = false;
-            }
-          }
+    for (let itm in _item) {
+      const [group2, id2] = itm.split('url:').pop().split('~');
+      if (group1===group2 && item!==itm) {
+        if (id2===undefined) {
+          _item[itm] = _item[i]
+        } else if (id1!==id2) {
+          _item[itm] = false;
         }
       }
     }

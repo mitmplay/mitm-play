@@ -10,24 +10,24 @@ const route = {
   'mock:1.no-ads~g': {
     'doubleclick.net': '',
     'a.pub.network': '',
-    'GET:2.err~#4:google.+.com': '',
-    'GET:3.in-mock:/test': {
-      tags: ['3.in-mock~1  3.in-mock~2']
+    'GET:google.+.com': '',
+    'GET:/test': {
+      //tags: '3.in-mock~1'
     }
   },
   css: {
-    'GET:dodl:/test': `=>${css}`,
-    'GET:no-ads:/assets/[a-z0-9]+': `=>${css}`
+    'GET:/test': `=>${css}`,
+    'GET:/assets/[a-z0-9]+': `=>${css}`
   },
-  'log:sample-tag2': {
-    'GET:sample-tag1:/tag1': {
+  'log:sample-tag1': {
+    'GET:/log1': {
       contentType: ['html'],
-      tags: 'sample-tag0 sample-tag3',
+      tags: 'sample-tag1',
     }
   },
   html: {
-    'GET:sample-tag1:/tag2': {
-      tags: 'sample-tag2',
+    'GET:/html1': {
+      tags: 'sample-tag1',
       log: true
     }
   }

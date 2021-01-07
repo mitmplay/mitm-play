@@ -65,12 +65,14 @@ function itemlist(rerender) {
           if (gtag.match('url:')) {
             const key = gtag.split(':').pop()
             for (const url in __tag3[ns]) {
-              if (url.match(key)) {
-                const _url = addUrls(url)
-                for (const id in __tag3[ns][url]) {
-                  const tags = __tag3[ns][url][id]
-                  if (id.slice(0, 1)!==':') {
-                    addUrl2(id, _url, Object.keys(tags))
+              if (!isRuleOff(window.mitm, ns, url)) {
+                if (url.match(key)) {
+                  const _url = addUrls(url)
+                  for (const id in __tag3[ns][url]) {
+                    const tags = __tag3[ns][url][id]
+                    if (id.slice(0, 1)!==':') {
+                      addUrl2(id, _url, Object.keys(tags))
+                    }
                   }
                 }
               }

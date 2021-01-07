@@ -67,6 +67,9 @@ details summary .tags {
   margin-left: -5px;
   color: green;
 }
+details summary .prop {
+  color: #dddddd
+}
 .space2 {
   padding-left: 12px;
   font-weight: bolder;

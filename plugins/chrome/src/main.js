@@ -47,9 +47,11 @@ function resetRule2(tags, item, ns, tagx) {
     for (let itm in namespace) {
       const typ2 = itm.split(':')[1] || itm;
       const [group2, id2] = typ2.split('~');
-      if (!(tagx && tagx[item])) {
-        if (group1===group2 && id1!==id2) {
-          namespace[itm] = !flag;
+      if (group1===group2) {
+        if (id2===undefined) {
+          namespace[itm] = namespace[item]
+        } else if (id1!==id2) {
+          namespace[itm] = false;
         }
       }
     }
@@ -60,7 +62,7 @@ function resetRule3(tags, item, _ns) {
   const {__tag1,__tag2,__tag3} = tags;
   const t1 = item.split('url:').pop();
   const typ1 = item.split(':')[1] || item;
-  const group1 = typ1.split('~')[0];
+  const [group1, id1] = typ1.split('~');
 
   let tag1 = !_ns
 
@@ -84,11 +86,17 @@ function resetRule3(tags, item, _ns) {
             namespace3[itm] = flag;
           }
           const id = itm.split('url:').pop()
-          if (group1===id.split('~')[0]) {
+          const [group2, id2] = id.split('~')
+
+          if (group1===group2) {
             if (tag1) {
               namespace3[itm] =  __tag1[id] || false;
             } else {
-              namespace3[itm] = namespace[itm] || false;
+              if (id2===undefined) {
+                namespace3[itm] = namespace[item]
+              } else if (id1!==id2) {
+                namespace3[itm] = false;
+              }
             }
           }
         }
