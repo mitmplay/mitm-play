@@ -18,9 +18,9 @@ const mock = ({ url }, match) => {
     },
     body: 'Hello mock! - mitm-play'
   }
-  const status = match.key.match(/(#\d+)/) // feat: tags in url
+  const status = match.key.match(/#(\d+)/) // feat: tags in url
   if (status && status[1]) {
-    resp.status = +status[1]
+    resp.status = +(status[1].slice(0,3).padEnd(3, '0'))
   }
   return resp
 }
