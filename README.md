@@ -755,7 +755,7 @@ $ mitm-play yahoo --cookie
 
 To show all the options Command Line Interface (CLI). this option can be arbitrary position on cli, the result should be always display this messages:
 
-```
+```bash
 $ mitm-play -h  <OR>
 $ mitm-play --help
 
@@ -805,7 +805,7 @@ $ mitm-play --help
 
 Open Browser to specific `URL`
 
-```
+```bash
 $ mitm-play -u='https://google.com'  <OR>
 $ mitm-play --url='https://google.com'
 ```
@@ -814,7 +814,7 @@ $ mitm-play --url='https://google.com'
 
 Save CLI options with `default`  or named so later time you don't need to type long CLI options
 
-```
+```bash
 $ mitm-play -s  <OR>
 $ mitm-play --save
   <OR>
@@ -826,7 +826,7 @@ $ mitm-play --save='google'
 
 Specify which folder contains routes config
 
-```
+```bash
 $ mitm-play -r='../user-route'  <OR>
 $ mitm-play --route='../user-route'
 ```
@@ -840,18 +840,18 @@ Flag the caching with sequences, they are three mode of activity:
 
 Tag `activity` need to be add to **html - rule** to indicate the point when `sequences` cached will be start.
 
-```
+```bash
 $ mitm-play -a='rec:activity'  <OR>
 $ mitm-play --activity='rec:activity'
 ```
 
 The first step is to record the flow and do the navigation
-```
+```bash
 $ mitm-play -a='rec:activity'
 ```
 
 Next step is to replay the flow 
-```
+```bash
 $ mitm-play -a='play:activity'
 ```
 
@@ -860,7 +860,7 @@ $ mitm-play -a='play:activity'
 
 Update CSP header on Html Page injected with websocket.js to unblock Websocket communication
 
-```
+```bash
 $ mitm-play -c  <OR>
 $ mitm-play --relaxcsp
 ```
@@ -869,7 +869,7 @@ $ mitm-play --relaxcsp
 
 Delete logs or cache, can be all or specific one
 
-```
+```bash
 $ mitm-play -d  <OR>
 $ mitm-play --delete
   <OR>
@@ -884,7 +884,7 @@ $ mitm-play --delete='cache'
 
 Launch browser with non Incognito, this is the default configuration, the opposite is to use --incognito. 
 
-```
+```bash
 $ mitm-play -p  <OR>
 $ mitm-play --pristine
 ```
@@ -893,7 +893,7 @@ $ mitm-play --pristine
 
 Set NodeJS to operate within insecure / no https checking 
 
-```
+```bash
 $ mitm-play -i  <OR>
 $ mitm-play --insecure
 ```
@@ -902,7 +902,7 @@ $ mitm-play --insecure
 
 No Injection of websocket to the browser
 
-```
+```bash
 $ mitm-play -n  <OR>
 $ mitm-play --nosocket
 ```
@@ -911,7 +911,7 @@ $ mitm-play --nosocket
 
 Set proper cache retriver with an update expiry of the cookies
 
-```
+```bash
 $ mitm-play -k  <OR>
 $ mitm-play --cookie
 ```
@@ -920,7 +920,7 @@ $ mitm-play --cookie
 
 Delay console log ~500ms or you can provide value in milisecond.
 
-```
+```bash
 $ mitm-play -l  <OR>
 $ mitm-play --lazylog
   <OR>
@@ -934,7 +934,7 @@ Add group name to file cache/logs, if necessary when large capturing is done and
 
 There is an option `at` on the rules of `cache`/`log` for additional filename grouping path.
 
-```
+```bash
 $ mitm-play -g='mygroup'  <OR>
 $ mitm-play --group='mygroup'
 ```
@@ -943,7 +943,7 @@ $ mitm-play --group='mygroup'
 
 By Default program will run in normal/--pristine browser, adding this option will result in Incognito mode.
 
-```
+```bash
 $ mitm-play -t  <OR>
 $ mitm-play --incognito
 ```
@@ -956,7 +956,7 @@ this option serving two kind of needs:
 1. if --proxy without value, mitm-play traffict will get thru proxy. Proxy configuration will get from ENV variable.
 2. if --proxy with string domain, all (mitm-play or browser) traffict will get thru proxy. (ie: `--proxy`='http://username:pass@my.proxy.com')  
 
-```
+```bash
 $ mitm-play -x  <OR>
 $ mitm-play --proxy
   <OR>
@@ -968,7 +968,7 @@ $ mitm-play --proxy='http://username:pass@my.proxy.com'
 
 Delay click action ~700ms or you can provide value in milisecond, to provide enough time for screenshot to be taken
 
-```
+```bash
 $ mitm-play -z  <OR>
 $ mitm-play --lazyclick
   <OR>
@@ -980,7 +980,7 @@ $ mitm-play --lazyclick=400
 
 More information will be shown in console.log (ex: websocket), including info from `DEBUG=pw:api`
 
-```
+```bash
 $ mitm-play -D  <OR>
 $ mitm-play --debug
 ```
@@ -991,7 +991,7 @@ Necessary option for [Macbook owner](https://discussions.apple.com/thread/250878
 
 Options can be added with value -G=all to disabled all gpu (might hang notebook)
 
-```
+```bash
 $ mitm-play -G  <OR>
 $ mitm-play --nogpu
 ```
@@ -1000,7 +1000,7 @@ $ mitm-play --nogpu
 
 set logs without host name
 
-```
+```bash
 $ mitm-play -H  <OR>
 $ mitm-play --nohost
 ```
@@ -1009,7 +1009,7 @@ $ mitm-play --nohost
 
 Change mechanism of redirection
 
-```
+```bash
 $ mitm-play -R  <OR>
 $ mitm-play --redirect
 ```
@@ -1018,7 +1018,7 @@ $ mitm-play --redirect
 
 set logs without URL
 
-```
+```bash
 $ mitm-play -U  <OR>
 $ mitm-play --nourl
 ```
@@ -1027,7 +1027,7 @@ $ mitm-play --nourl
 
 Add additional info in console.log
 
-```
+```bash
 $ mitm-play -V  <OR>
 $ mitm-play --verbose
 ```
@@ -1036,7 +1036,7 @@ $ mitm-play --verbose
 
 When network on your having a proxypac settings, might be usefull to use the same. This option only in Chromium
 
-```
+```bash
 $ mitm-play -X='w3proxy.netscape.com:8080'  <OR>
 $ mitm-play --proxypac='w3proxy.netscape.com:8080'
 ```
@@ -1045,7 +1045,7 @@ $ mitm-play --proxypac='w3proxy.netscape.com:8080'
 
 Launch Chromium browser
 
-```
+```bash
 $ mitm-play -C  <OR>
 $ mitm-play --chromium
 
@@ -1059,7 +1059,7 @@ $ mitm-play --chromium="/Applications/Google\ Chrome.app"
 
 Launch Firefox browser
 
-```
+```bash
 $ mitm-play -F  <OR>
 $ mitm-play --firefox
 ```
@@ -1068,7 +1068,7 @@ $ mitm-play --firefox
 
 Launch Webkit browser
 
-```
+```bash
 $ mitm-play -W  <OR>
 $ mitm-play --webkit
 ```
