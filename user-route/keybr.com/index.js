@@ -15,7 +15,7 @@ const route = {
       //tags: '3.in-mock~1'
     }
   },
-  css: {
+  'css:parent-tag': {
     'GET:/test': `=>${css}`,
     'GET:hide-content:/assets/[a-z0-9]+': `=>${css}`
   },
@@ -27,9 +27,13 @@ const route = {
   },
   html: {
     'GET:/html1': {
-      tags: 'sample-tag1',
+      tags: 'sample-tag1 hide-content',
       log: true
-    }
+    },
+    'GET:/assets/[a-z0-9]+': {
+      tags: 'hide-content',
+      log: true
+    },
   }
 }
 module.exports = route;
