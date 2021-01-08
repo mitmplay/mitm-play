@@ -1,16 +1,42 @@
-// create file: ~/user-route/_global_/index.js & add this content:
 const route = {
-  tags: [],
-  'skip:skipper': [
-    'GET:/one',
-    'GET:/two'  
-  ],
-  'flag:no-logs': {
+  'flag': {
     'referer-reqs': false,
     'no-namespace': false,
     'ws-connect': true,
     'ws-message': true,
-    'page-load': true,
   }
 }
 module.exports = route;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 'page-load': true,
+
+// create file: ~/user-route/_global_/index.js & add this content:
+//:no-logs
+// 'skip:skipper': [
+//   'GET:/one',
+//   'GET:/two'  
+// ],

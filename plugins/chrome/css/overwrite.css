@@ -43,6 +43,8 @@ label {
       display: block; }
     .show-container #markdown hr {
       margin: 4px 0; }
+    .show-container #markdown p {
+      margin: 4px 0 6px 0; }
     .show-container #markdown pre {
       padding: 10px;
       border-radius: 6px;
