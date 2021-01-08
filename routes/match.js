@@ -1,7 +1,7 @@
 const c = require('ansi-colors')
 const { fn: { home, _nameSpace } } = global.mitm
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
-const rmethod = /^(GET|PUT|POST|DELETE):([\w.#~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|):([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 function typTags (typ, namespace) {
   const { __tag4 } = global.mitm

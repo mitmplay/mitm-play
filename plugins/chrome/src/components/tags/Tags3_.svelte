@@ -6,13 +6,12 @@ import Tags31 from './Tags3_1.svelte';
 function istag(ns) {
   const {toRegex} = window.mitm.fn;
   const arr = Object.keys($tags.__tag2[ns]);
-  const ok = arr.filter(x=>!x.match(':')).length;
+  let ok = arr.filter(x=> x.match('url:') || !x.match(':')).length;
   if ($tags.filterUrl) {
     const rgx = toRegex(ns.replace(/~/,'[^.]*'));
-    return ok && mitm.browser.activeUrl.match(rgx) || ns==='_global_';
-  } else {
-    return ok;
+    ok = ok && mitm.browser.activeUrl.match(rgx) || ns==='_global_';
   }
+  return ok;
 }
 </script>
 

@@ -2,7 +2,7 @@ const c = require('ansi-colors')
 const typs = require('./_typs')
 
 const { typC, typA, typO } = typs
-const rmethod = /^(GET|PUT|POST|DELETE):([\w.#~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|):([\w.#~-]+:|)(.+)/ // feat: tags in url
 const tgInUrl = /:[\w.#~-]+:/ // feat: tags in url
 
 function toRegex (str, flags = '') {
@@ -70,7 +70,7 @@ function _routeSet (r, namespace, print = false) {
     const arrTag = str.match(rmethod)
     if (arrTag) {
       const [, method,, path] = arrTag
-      str = `${method}:${path}`
+      str = method ? `${method}:${path}` : path
     }
     if (urls[str] === undefined) {
       urls[str] = {}

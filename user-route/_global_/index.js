@@ -7,36 +7,3 @@ const route = {
   }
 }
 module.exports = route;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 'page-load': true,
-
-// create file: ~/user-route/_global_/index.js & add this content:
-//:no-logs
-// 'skip:skipper': [
-//   'GET:/one',
-//   'GET:/two'  
-// ],

@@ -2,7 +2,7 @@
 import { rerender } from './rerender.js';
 import { debug } from 'svelte/internal';
 import { tags } from './stores.js';  
-const rmethod = /^(GET|PUT|POST|DELETE):([\w.#~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|):([\w.#~-]+:|)(.+)/ // feat: tags in url
 const replace = (s,p1,p2,p3) => p3
 
 function unique(value, index, self) {

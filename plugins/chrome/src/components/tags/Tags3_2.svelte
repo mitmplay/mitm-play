@@ -25,7 +25,8 @@ function xitems(tags) {
   const {__tag3} = tags;
   const namespace = __tag3[ns];
   const typs = namespace[path];
-  const arr = Object.keys(typs);
+  let arr = Object.keys(typs);
+  arr = arr.filter(x=>x[0]!==':')
   return arr;
 }
 function xtags() {
@@ -41,7 +42,7 @@ function xtags() {
 }
 </script>
 
-{#each xitems($tags).filter(x=>x[0]!==':') as item}
+{#each xitems($tags) as item}
   <details>
     <summary class="space2 {active(item)}">
       {title(item)}
