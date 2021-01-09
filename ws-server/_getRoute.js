@@ -1,12 +1,14 @@
 module.exports = () => {
   const files = {}
   const {
+    routes,
     __tag1,
     __tag2,
     __tag3,
     __tag4
   } = global.mitm
   const data = {
+    routes,
     files,
     _tags_: {
       __tag1,

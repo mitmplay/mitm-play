@@ -10,8 +10,8 @@ const route = {
     // 'a.pub.network': '',
   },
   'css:no-ads': {
-    'GET:nested:/assets/[a-z0-9]+': `=>${css}`,
-    ':content:/main/css': `=>${css}`
+    'GET:no-ads:/assets/[a-z0-9]+': `=>${css}`,
+    'GET:/main/css': `=>${css}`
   },
   'log': {
     '/': {

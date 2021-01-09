@@ -17,6 +17,7 @@ onMount(async () => {
 
 const routeHandler = obj => {
   console.warn('ws__send(getRoute)', obj);
+  window.mitm.routes = obj.routes
   if (obj._tags_) {
     window.mitm.__tag1 = obj._tags_.__tag1;
     window.mitm.__tag2 = obj._tags_.__tag2;
