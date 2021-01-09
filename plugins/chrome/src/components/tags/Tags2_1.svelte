@@ -62,13 +62,13 @@ function isGroup(item) {
   return window.mitm.routes[ns][item]
 }
 function urllist(tags, item) {
-  const obj = window.mitm.routes[ns][item]
-  if (Array.isArray(obj)) {
-    return obj
-  } else if (obj) {
-    return Object.keys(obj)
+  let obj = window.mitm.routes[ns][item]
+  if (obj===undefined) {
+    obj = []
+  } else if (!Array.isArray(obj)) {
+    obj = Object.keys(obj)
   }
-  return []
+  return obj
 }
 function spacex(tags, item, url) {
   const { isRuleOff } = window.mitm.fn;

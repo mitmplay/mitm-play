@@ -16,7 +16,7 @@ const route = {
   'log': {
     '/': {
       contentType: ['html'],
-      // tags: 'lol'  
+      // tags: 'loll'
     }
   },
 }

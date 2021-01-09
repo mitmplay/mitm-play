@@ -1,5 +1,5 @@
 module.exports = () => {
-  const routes = {}
+  const files = {}
   const {
     __tag1,
     __tag2,
@@ -7,7 +7,7 @@ module.exports = () => {
     __tag4
   } = global.mitm
   const data = {
-    routes,
+    files,
     _tags_: {
       __tag1,
       __tag2,
@@ -23,7 +23,7 @@ module.exports = () => {
       const path = arr.join('/')
       const content = global.mitm.source[domain]
       const title = domain
-      routes[domain] = {
+      files[domain] = {
         path,
         title,
         fpath,

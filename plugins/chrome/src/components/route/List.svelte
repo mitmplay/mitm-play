@@ -25,15 +25,15 @@ const routeHandler = obj => {
     setTimeout(() => urls(), 1)
   }
   if (window.mitm.files.route===undefined) {
-    window.mitm.files.route = obj.routes;
-    data = obj.routes;
+    window.mitm.files.route = obj.files;
+    data = obj.files;
   } else {
     const {route} = window.mitm.files;
+    const {files} = obj;
     const newRoute = {};
-    const {routes} = obj;
-    for (let k in routes) {
-      newRoute[k] = route[k] ? route[k] : routes[k];
-      newRoute[k].content = routes[k].content;
+    for (let k in files) {
+      newRoute[k] = route[k] ? route[k] : files[k];
+      newRoute[k].content = files[k].content;
     }
     data = newRoute;
     window.mitm.files.route = newRoute
