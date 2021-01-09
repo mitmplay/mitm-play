@@ -8,9 +8,9 @@ function _skipByTag (match, typ) {
   let arrTag = key.match(rmethod)
   if (arrTag) {
     const [, method,, path] = arrTag
+    //__tag3[namespace][key] - key match to rule without tag
     key = method ? `${method}:${path}` : path
   }
-  //__tag3[namespace][key] - key match to rule without tag
   const tag = typ.split(':')[0]
   if (__tag3._global_ && __tag3._global_[key]) {
     tags = __tag3._global_[key][typ]

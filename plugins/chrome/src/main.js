@@ -1,5 +1,6 @@
 /* global chrome */
 import App from './App.svelte'
+const rmethod = /^(GET|PUT|POST|DELETE|):([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 console.log('Load MITM plugin')
 
@@ -20,8 +21,14 @@ const sortTag = (a,b) => {
   return 0;
 }
 
-function isRuleOff(tags, ns, url) {
-  const node = tags.__tag3[ns][url]
+function isRuleOff(tags, ns, rule) {
+  let arrTag = rule.match(rmethod)
+  if (arrTag) {
+    const [, method,, path] = arrTag
+    //__tag3[namespace][key] - key match to rule without tag
+    rule = method ? `${method}:${path}` : path
+  }
+  const node = tags.__tag3[ns][rule]
   let grey = false
   if (node) {
     for (const id in node) {

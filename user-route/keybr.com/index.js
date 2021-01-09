@@ -11,7 +11,11 @@ const route = {
   },
   'css:no-ads': {
     'GET:no-ads:/assets/[a-z0-9]+': `=>${css}`,
-    'GET:/main/css': `=>${css}`
+    'GET:no-ads~1:/assets/[a-z0-9]+': `=>${css}`,
+    // 'GET:/main/css': `=>${css}`,
+    'GET:/asset2/[a-z0-9]+': {
+      tags: 'no-ads~2'
+    }
   },
   'log': {
     '/': {
