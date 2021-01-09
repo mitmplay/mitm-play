@@ -62,12 +62,17 @@ function isGroup(item) {
   return window.mitm.routes[ns][item]
 }
 function urllist(tags, item) {
+  const { rmethod, uniq } = window.mitm.fn;
   let obj = window.mitm.routes[ns][item]
   if (obj===undefined) {
     obj = []
   } else if (!Array.isArray(obj)) {
     obj = Object.keys(obj)
   }
+  obj = obj.map(x => {
+    const arr = x.match(rmethod) // feat: tags in url
+    return arr ? `${arr[1]}:${arr[3]}` : x
+  }).filter(uniq)
   return obj
 }
 function spacex(tags, item, url) {
@@ -100,8 +105,8 @@ function q(key) {
             <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
           </label> 
         </summary>
-        {#each urllist($tags, item) as url}
-          <div class="spacex {spacex($tags, item, url)}">{url}</div>
+        {#each urllist($tags, item) as rule}
+          <div class="spacex {spacex($tags, item, rule)}">{rule}</div>
         {/each}
       </details>
     {:else}

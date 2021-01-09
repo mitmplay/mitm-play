@@ -22,12 +22,6 @@ const sortTag = (a,b) => {
 }
 
 function isRuleOff(tags, ns, rule) {
-  let arrTag = rule.match(rmethod)
-  if (arrTag) {
-    const [, method,, path] = arrTag
-    //__tag3[namespace][key] - key match to rule without tag
-    rule = method ? `${method}:${path}` : path
-  }
   const node = tags.__tag3[ns][rule]
   let grey = false
   if (node) {
@@ -120,12 +114,16 @@ function resetRule3(tags, item, _ns) {
     }
   }
 }
-
+function uniq(value, index, self) {
+  return self.indexOf(value) === index;
+}
+window.mitm.fn.rmethod = rmethod;
 window.mitm.fn.resetRule2 = resetRule2
 window.mitm.fn.resetRule3 = resetRule3
 window.mitm.fn.isRuleOff = isRuleOff
 window.mitm.fn.toRegex = toRegex
 window.mitm.fn.sortTag = sortTag
+window.mitm.fn.uniq = uniq
 window.mitm.editor = {};
 window.mitm.browser = {
   chgUrl_events: {},
