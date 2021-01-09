@@ -19,7 +19,7 @@ function clicked(e) {
       if (group1===group2 && item!==itm) {
         if (id2===undefined) {
           _item[itm] = _item[i]
-        } else if (id1!==id2) {
+        } else if (id1!==undefined && id1!==id2) {
           _item[itm] = false;
         }
       }
@@ -42,15 +42,12 @@ function routetag(tags, item) {
   return klas
 }
 
-function uniq(value, index, self) {
-  return self.indexOf(value) === index;
-}
 function title(item) {
   const [key, tag] = item.split(':')
   return tag ? `${tag}{${key}}` : key
 }
 function xitems(tags) {
-  const {fn: {sortTag}} = window.mitm;
+  const {uniq, sortTag} = window.mitm.fn;
   const arr = Object.keys(items)
   if (tags.__tag2[ns][item]!==undefined) {
     arr.push(item)
