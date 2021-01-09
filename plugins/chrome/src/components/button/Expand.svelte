@@ -1,11 +1,11 @@
 <script>
 export let q;
-let expand = false;
+export let st;
 
 function btnOpen(e) {
-  expand = !expand
+  st.expand = !st.expand
   const nodes = document.querySelectorAll(`${q} details`)
-  if (expand) {
+  if (st.expand) {
     nodes.forEach(node => node.setAttribute('open', ''))
   } else {
     nodes.forEach(node => node.removeAttribute('open'))

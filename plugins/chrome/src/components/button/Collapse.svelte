@@ -1,7 +1,10 @@
 <script>
 export let q;
+export let st;
 
 function btnClose(e) {
+  st.expand = false
+  st.collapse = true
   const nodes = document.querySelectorAll(`${q} details[open]`)
   nodes.forEach(node => node.removeAttribute('open'))
 }

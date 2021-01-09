@@ -2,6 +2,10 @@
 import { client } from '../other/stores.js';
 import  Collapse from '../button/Collapse.svelte';
 import  Expand from '../button/Expand.svelte';
+let st = {
+  collapse: true,
+  expand: false
+};
 
 function btnClear(e) {
   const data = {}
@@ -54,8 +58,8 @@ function argsflag() {
 
 <div class="btn-container" style="top: 1px;">
   <input class="stop" on:click="{btnClear}" type="image" src="images/stop.svg" alt=""/>
-  <Collapse q="#list-logs"></Collapse>
-  <Expand q="#list-logs"></Expand>
+  <Collapse {st} q="#list-logs"></Collapse>
+  <Expand {st} q="#list-logs"></Expand>
   <label class="checkbox">
     <input type="checkbox" on:click={btnHostswch} checked={hostflag()}>host
   </label>
