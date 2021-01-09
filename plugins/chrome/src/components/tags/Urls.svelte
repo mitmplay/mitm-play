@@ -22,7 +22,7 @@ function oneSite(ns) {
 function itemlist(rerender) {
   console.log('rerender...');
   const { __tag2, __tag3 } = window.mitm;
-  const { isRuleOff } = window.mitm.fn;
+  const { noTagInRule, isRuleOff } = window.mitm.fn;
   const { routes } = window.mitm
   let urls = {}
   let url2 = {}
@@ -82,13 +82,19 @@ function itemlist(rerender) {
             let arr = routes[ns][gtag]
             if (!Array.isArray(arr)) {
               for (const url in arr) {
-                const _url = addUrls(url)
-                addUrl2(gtag, _url, [tag])
+                const rule = noTagInRule(url)
+                if (!isRuleOff(window.mitm, ns, rule)) {
+                  const _url = addUrls(url)
+                  addUrl2(gtag, _url, [tag])
+                }
               }
             } else {
               for (const url of arr) {
-                const _url = addUrls(url)
-                addUrl2(gtag, _url, [tag])
+                const rule = noTagInRule(url)
+                if (!isRuleOff(window.mitm, ns, rule)) {
+                  const _url = addUrls(url)
+                  addUrl2(gtag, _url, [tag])
+                }
               }
             }
           }

@@ -65,23 +65,20 @@ function isGroup(item) {
   return window.mitm.routes[ns][item]
 }
 function urllist(tags, item) {
-  const { rmethod, uniq } = window.mitm.fn;
+  const { noTagInRule, uniq } = window.mitm.fn;
   let obj = window.mitm.routes[ns][item]
   if (obj===undefined) {
     obj = []
   } else if (!Array.isArray(obj)) {
     obj = Object.keys(obj)
   }
-  obj = obj.map(x => {
-    const arr = x.match(rmethod) // feat: tags in url
-    return arr ? `${arr[1]}:${arr[3]}` : x
-  }).filter(uniq)
+  obj = obj.map(noTagInRule).filter(uniq)
   return obj
 }
-function spacex(tags, item, url) {
+function spacex(tags, item, rule) {
   const { isRuleOff } = window.mitm.fn;
   let klass = items[item] ? 'slc' : '';
-  isRuleOff(tags, ns, url) && (klass += ' grey');
+  isRuleOff(tags, ns, rule) && (klass += ' grey');
   return klass
 }
 function q(key) {

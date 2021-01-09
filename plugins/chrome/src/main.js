@@ -20,7 +20,10 @@ const sortTag = (a,b) => {
   if (a>b) return 1;
   return 0;
 }
-
+function noTagInRule(rule) {
+  const arr = rule.match(rmethod) // feat: tags in url
+  return arr ? `${arr[1]}:${arr[3]}` : rule
+}
 function isRuleOff(tags, ns, rule) {
   const node = tags.__tag3[ns][rule]
   let grey = false
@@ -118,6 +121,7 @@ function uniq(value, index, self) {
   return self.indexOf(value) === index;
 }
 window.mitm.fn.rmethod = rmethod;
+window.mitm.fn.noTagInRule = noTagInRule
 window.mitm.fn.resetRule2 = resetRule2
 window.mitm.fn.resetRule3 = resetRule3
 window.mitm.fn.isRuleOff = isRuleOff
