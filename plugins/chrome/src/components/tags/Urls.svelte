@@ -28,72 +28,71 @@ function itemlist(rerender) {
   let url2 = {}
   let url3 = {}
 
-  function addUrl2(gtag, url, tags) {
-    url = url.replace(rmethod, replace)
-    let [rule, oth] = gtag.split(':')
-    if (url2[url]===undefined) {
-      url2[url] = {}
+  function addUrl2(sec, rule, tags) {
+    rule = rule.replace(rmethod, replace)
+    sec = sec.split(':')[0]
+    if (url2[rule]===undefined) {
+      url2[rule] = {}
     }
-    if (url2[url][rule]===undefined) {
-      url2[url][rule] = {}
+    if (url2[rule][sec]===undefined) {
+      url2[rule][sec] = {}
     }
-    url2[url][rule] = true
+    url2[rule][sec] = true
     if (tags && Array.isArray(tags)) {
       for (let tag of tags) {
         tag = '_'+tag.split(':').pop().replace(/[.#~]/g, '-') // feat: tags in url
-        if (url3[url]===undefined) {
-          url3[url] = {}
+        if (url3[rule]===undefined) {
+          url3[rule] = {}
         }
-        if (url3[url][tag]===undefined) {
-          url3[url][tag] = {}
+        if (url3[rule][tag]===undefined) {
+          url3[rule][tag] = {}
         }
-        url3[url][tag] = true
+        url3[rule][tag] = true
       }
     }
   }
-  function addUrls(url) {
-    url = url.replace(rmethod, replace)
-    urls[url] = true
-    return url
+  function addUrls(rule) {
+    rule = rule.replace(rmethod, replace)
+    urls[rule] = true
+    return rule
   }
 
   for (const ns in __tag2) {
     if (oneSite(ns)) {
-      const gtags =  __tag2[ns]
-      for (const gtag in gtags) {
-        if (gtags[gtag] && !gtag.match(/(flag|args):/)) {
-          if (gtag.match('url:')) {
-            const key = gtag.split(':').pop()
-            for (const url in __tag3[ns]) {
-              if (!isRuleOff(window.mitm, ns, url)) {
-                if (url.match(key)) {
-                  const _url = addUrls(url)
-                  for (const id in __tag3[ns][url]) {
-                    const tags = __tag3[ns][url][id]
-                    if (id.slice(0, 1)!==':') {
-                      addUrl2(id, _url, Object.keys(tags))
-                    }
+      const secs =  __tag2[ns]
+      for (const sec in secs) {
+        if (secs[sec] && !sec.match(/(flag|args):/)) {
+          if (sec.match('url:')) {
+            const rules =  __tag3[ns]
+            for (const rule in rules) {
+              if (!isRuleOff(window.mitm, ns, rule)) {
+                const _rule = addUrls(rule)
+                for (const sec in rules[rule]) {
+                  const tags = rules[rule][sec]
+                  if (sec.slice(0, 1)!==':') {
+                    addUrl2(sec, _rule, Object.keys(tags))
+                    break
                   }
                 }
               }
             }
-          } else if (gtag.match(':')) {
-            const tag = gtag.split(':')[1];
-            let arr = routes[ns][gtag]
+          } else if (sec.match(':')) {
+            const tag = sec.split(':')[1];
+            let arr = routes[ns][sec]
             if (!Array.isArray(arr)) {
               for (const url in arr) {
                 const rule = noTagInRule(url)
                 if (!isRuleOff(window.mitm, ns, rule)) {
-                  const _url = addUrls(url)
-                  addUrl2(gtag, _url, [tag])
+                  const _rule = addUrls(url)
+                  addUrl2(sec, _rule, [tag])
                 }
               }
             } else {
               for (const url of arr) {
                 const rule = noTagInRule(url)
                 if (!isRuleOff(window.mitm, ns, rule)) {
-                  const _url = addUrls(url)
-                  addUrl2(gtag, _url, [tag])
+                  const _rule = addUrls(url)
+                  addUrl2(sec, _rule, [tag])
                 }
               }
             }
@@ -104,14 +103,15 @@ function itemlist(rerender) {
   }
   for (const ns in __tag3) {
     if (oneSite(ns)) {
-      const _urls = __tag3[ns]
-      for (const url in _urls) {
-        if (!isRuleOff(window.mitm, ns, url)) {
-          const _url = addUrls(url)
-          for (const id in _urls[url]) {
-            const tags = _urls[url][id]
-            if (id.slice(0, 1)!==':') {
-              addUrl2(id, _url, Object.keys(tags))
+      const rules = __tag3[ns]
+      for (const rule in rules) {
+        if (!isRuleOff(window.mitm, ns, rule)) {
+          const _rule = addUrls(rule)
+          const secs = rules[rule]
+          for (const sec in secs) {
+            const tags = secs[sec]
+            if (sec.slice(0, 1)!==':') {
+              addUrl2(sec, _rule, Object.keys(tags))
             }
           }
         }
