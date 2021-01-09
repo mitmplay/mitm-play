@@ -66,12 +66,13 @@ function _routeSet (r, namespace, print = false) {
   }
 
   function _nsstag(typ, str){
-    // feat: remove tag from url for __tag3
+    // feat: remove tag from url/rule for __tag3
     const arrTag = str.match(rmethod)
     if (arrTag) {
       const [, method,, path] = arrTag
-      str = method ? `${method}:${path}` : path
+      str = method ? `${method}:${path}` : path // remove from url
     }
+    typ = typ.split(':')[0] // remove from rule
     if (urls[str] === undefined) {
       urls[str] = {}
     }
