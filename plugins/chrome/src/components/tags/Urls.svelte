@@ -1,8 +1,8 @@
 <script>
 import { rerender } from './rerender.js';
-import { debug } from 'svelte/internal';
-import { tags } from './stores.js';  
-import { urls } from './url-debounce.js';
+import { tags } from './stores.js';
+
+import TitleUrl from './Title-url.svelte';
 const replace = (s,p1,p2,p3) => p3;
 
 let _urls, _cfgs
@@ -18,7 +18,7 @@ function oneSite(ns) {
 
 function itemlist(rerender) {
   console.log('rerender...');
-  const { __tag2, __tag3 } = window.mitm;
+  const { __tag2, __tag3, __urls } = window.mitm;
   const { rmethod, noTagInRule, isRuleOff } = window.mitm.fn;
   const { routes } = window.mitm
   let urls = {}
@@ -96,12 +96,14 @@ function itemlist(rerender) {
           }
         }
       }
-      const _urls = mitm.__urls[ns] || []
+      const _urls = __urls[ns] || []
       for (const url in _urls) {
-        const {secs, tags} = _urls[url]
-        for (const sec in secs) {
-          const _rule = addUrls(url)
-          addUrl2(sec, _rule, tags)
+        const {pure, secs, tags} = _urls[url]
+        if (pure) {
+          for (const sec in secs) {
+            const _rule = addUrls(url)
+            addUrl2(sec, _rule, tags)
+          }
         }
       }
     }
@@ -129,10 +131,22 @@ function itemlist(rerender) {
   for (const url of arr) {
     const secs = Object.keys(url2[url])
     const tags = Object.keys(url3[url])
+    let ctyp = []
+    for (const ns in __urls) {
+      if (oneSite(ns)) {
+        const _urls = __urls[ns] || []
+        for (const _url in _urls) {
+          if (url===_url) {
+            ctyp = _urls[_url].ctyp
+            break
+          }
+        }
+      }
+    }
     if (secs.find(x => /^(args|flag)/.test(x))) {
-      urls3.push({url, secs, tags})
+      urls3.push({url, secs, ctyp, tags})
     } else {
-      urls2.push({url, secs, tags})
+      urls2.push({url, secs, ctyp, tags})
     }
   }
   _urls = urls2
@@ -141,7 +155,8 @@ function itemlist(rerender) {
 }
 function title(item) {
   const {url, secs} = item
-  return `* ${url} <${secs ? secs.join(' ') : ''}>`
+  const ctyp = item.ctyp ? `[${item.ctyp.join(',')}]` : '[]'
+  return `* ${url}{${secs ? secs.join(' ') : ''}}${ctyp==='[]' ? '' : ctyp}`
 }
 </script>
 
@@ -155,14 +170,14 @@ function title(item) {
     <td>
       <ul>
         {#each _urls as item}
-        <li><div class="url {item.tags && item.tags.join(' ')}">{title(item)}</div></li>
+        <li><TitleUrl {item}/></li>
         {/each}
       </ul>      
     </td>
     <td>
       <ul>
         {#each _cfgs as item}
-        <li><div class="url {item.tags && item.tags.join(' ')}">{title(item)}</div></li>
+        <li><TitleUrl {item}/></li>
         {/each}
       </ul>      
     </td>
@@ -170,16 +185,6 @@ function title(item) {
 </table>
 
 <style>
-.url {
-  font-size: 12px;
-  font-weight: 600;
-  margin-left: 7px;
-  color: chocolate;
-  font-family: monospace;
-}
-.url._notag {
-  color: cornflowerblue;
-}
 table {
   width: calc(100% - 12px);
   margin: 5px;
