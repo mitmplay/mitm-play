@@ -13,7 +13,7 @@ import Urls from './Urls.svelte';
 
 export let top = "23";
 let block = true;
-let one = false;
+let cols = 3;
 
 onMount(async () => {
   console.warn('onMount tags/index');
@@ -44,7 +44,8 @@ window.mitm.files.getRoute_events.tagsTable = () => {
   })
 }
 function oneClick(e) {
-  one = !one;
+  const {_cols} = e.target.dataset;
+  cols = +_cols;
 }
 </script>
 
@@ -54,12 +55,16 @@ function oneClick(e) {
     <summary>Enable / Disable Tags</summary>
     <div class="vbox-1">
       <BStatic {top} {block}>
-        <BHeader>-Tags- <button on:click="{oneClick}">[one]</button></BHeader>
+        <BHeader>-Tags-
+          <button data-_cols=3 on:click="{oneClick}">[full]</button>
+          <button data-_cols=2 on:click="{oneClick}">[two]</button>
+          <button data-_cols=1 on:click="{oneClick}">[one]</button>
+        </BHeader>
         <BTable>
           <tr class="set-tags">
-            <Tags1 {one}/>
-            <Tags2/>
-            <Tags3 {one}/>
+            <Tags1 {cols}/>
+            <Tags2 {cols}/>
+            <Tags3 {cols}/>
           </tr>
         </BTable>
       </BStatic>  

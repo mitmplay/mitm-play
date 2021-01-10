@@ -86,6 +86,7 @@ function q(key) {
 }
 </script>
 
+{#if Object.keys(items).length}
 <div class="border">
   <div class="space0">
     <Collapse {st} q="{`.t2.${q(ns)}`}"></Collapse>
@@ -123,6 +124,7 @@ function q(key) {
     </div>
   {/each}
 </div>
+{/if}
 
 <style>
 .ns {

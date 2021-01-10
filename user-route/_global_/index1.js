@@ -1,5 +1,8 @@
 const route = {
-  flag: {
+  'args': {
+    debug: false
+  },
+  'flag': {
     'referer-reqs': false,
     'no-namespace': false,
     'ws-connect': true,

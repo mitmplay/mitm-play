@@ -96,16 +96,6 @@ function itemlist(rerender) {
           }
         }
       }
-      const _urls = __urls[ns] || []
-      for (const url in _urls) {
-        const {pure, secs, tags} = _urls[url]
-        if (pure) {
-          for (const sec in secs) {
-            const _rule = addUrls(url)
-            addUrl2(sec, _rule, tags)
-          }
-        }
-      }
     }
   }
   for (const ns in __tag3) {
@@ -120,6 +110,20 @@ function itemlist(rerender) {
             if (sec.slice(0, 1)!==':') {
               addUrl2(sec, _rule, Object.keys(tags))
             }
+          }
+        }
+      }
+    }
+  }
+  for (const ns in __urls) {
+    if (oneSite(ns)) {
+      const _urls = __urls[ns] || []
+      for (const url in _urls) {
+        const {pure, secs, tags} = _urls[url]
+        if (pure) {
+          for (const sec in secs) {
+            const _rule = addUrls(url)
+            addUrl2(sec, _rule, tags)
           }
         }
       }

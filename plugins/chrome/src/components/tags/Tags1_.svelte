@@ -1,12 +1,12 @@
 <script>
 import { tags } from './stores.js';
-export let one;
+export let cols;
 /***
 * ex:
 * __tag1[remove-ads~1] = true
 * __tag1[remove-ads~2] = false
 ***/
-
+let tgs = [];
 function clicked(e) {
   const { resetRule3 } = window.mitm.fn;
   const {__tag1: {...tagx}} = $tags;
@@ -108,7 +108,7 @@ function listTags(tags) {
     }
   }
 
-  let tgs;
+  tgs = [];
   if (tags.filterUrl) {
     const nss = []
     for (let ns in tags.__tag2) {
@@ -144,9 +144,10 @@ function leave(e) {
 }
 </script>
 
-<td style="{one && 'display:none;'}">
+{#if listTags($tags).length}
+<td style="{cols>1 ? '' : 'display:none;'}">
   <div class="border">
-    {#each listTags($tags) as item}
+    {#each tgs as item}
     <div class="space0 {routetag(item)}">
       <label 
       data-item={item}
@@ -163,6 +164,7 @@ function leave(e) {
     {/each}
   </div>
 </td>
+{/if}
 
 <style>
   td {
