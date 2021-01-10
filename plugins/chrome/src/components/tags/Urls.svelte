@@ -99,6 +99,14 @@ function itemlist(rerender) {
           }
         }
       }
+      const _urls = mitm.__urls[ns] || []
+      for (const url in _urls) {
+        const {secs, tags} = _urls[url]
+        for (const sec in secs) {
+          const _rule = addUrls(url)
+          addUrl2(sec, _rule, tags)
+        }
+      }
     }
   }
   for (const ns in __tag3) {
@@ -121,20 +129,21 @@ function itemlist(rerender) {
   let arr = Object.keys(urls).sort()
   const urls2 = []
   for (const url of arr) {
-    const rules = Object.keys(url2[url])
+    const secs = Object.keys(url2[url])
     const tags = Object.keys(url3[url])
-    urls2.push({url, rules, tags})
+    urls2.push({url, secs, tags})
   }
   return urls2
 }
 function title(item) {
-  return `* ${item.url} <${item.rules.join(' ')}>`
+  const {url, secs} = item
+  return `* ${url} <${secs ? secs.join(' ') : ''}>`
 }
 </script>
 
 <ul>
   {#each itemlist($rerender) as item}
-    <li><div class="url {item.tags && item.tags.join(' ')}">* {item.url} {item.rules && `<${item.rules.join(' ')}>`}</div></li>
+    <li><div class="url {item.tags && item.tags.join(' ')}">{title(item)}</div></li>
   {/each}
 </ul>
 
@@ -145,5 +154,8 @@ function title(item) {
   margin-left: 17px;
   color: chocolate;
   font-family: monospace;
+}
+.url._notag {
+  color: cornflowerblue;
 }
 </style>
