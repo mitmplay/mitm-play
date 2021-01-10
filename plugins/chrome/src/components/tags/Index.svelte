@@ -52,16 +52,18 @@ function oneClick(e) {
 <div class="vbox">
   <details open="true">
     <summary>Enable / Disable Tags</summary>
-    <BStatic {top} {block}>
-      <BHeader>-Tags- <button on:click="{oneClick}">[one]</button></BHeader>
-      <BTable>
-        <tr class="set-tags">
-          <Tags1 {one}/>
-          <Tags2/>
-          <Tags3 {one}/>
-        </tr>
-      </BTable>
-    </BStatic>
+    <div class="vbox-1">
+      <BStatic {top} {block}>
+        <BHeader>-Tags- <button on:click="{oneClick}">[one]</button></BHeader>
+        <BTable>
+          <tr class="set-tags">
+            <Tags1 {one}/>
+            <Tags2/>
+            <Tags3 {one}/>
+          </tr>
+        </BTable>
+      </BStatic>  
+    </div>
   </details>
   <details class="urls">
     {@html '<style id="urls"></style>'}
@@ -78,14 +80,21 @@ function oneClick(e) {
   flex-direction: column;
   height: calc(100vh - 23px);
 }
+.vbox-1 {
+  margin-bottom: 10px;
+}
+details, summary {
+  outline: none;
+}
 summary {
+  border: none;
+  cursor: pointer;
   font-size: 13px;
   padding-left: 5px;
   background: #fdaaaa;
 }
-summary:hover,
 .urls summary:hover {
-  background: #fdf621;
+  background-color: #f1f6fbbd;
 }
 .urls {
   height: 100%;

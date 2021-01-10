@@ -54,9 +54,15 @@ module.exports = () => {
       for (_rule in rules) {
         const arr = _rule.match(rmethod)
         if (!arr || !arr[3]) {
-          const url = noTagInRule(_rule)
+          let url = noTagInRule(_rule)
+          if (sec==='flag' || sec==='args') {
+            url = `${url}:${rules[_rule]}`
+          }
           if (urls[url]===undefined) {
-            urls[url] = {secs: {}, tags: ['notag']}
+            urls[url] = {
+              tags: ['notag'],
+              secs: {},
+            }
           }
           urls[url].secs[sec] = true
         }

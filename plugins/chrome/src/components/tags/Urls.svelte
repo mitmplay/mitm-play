@@ -2,13 +2,10 @@
 import { rerender } from './rerender.js';
 import { debug } from 'svelte/internal';
 import { tags } from './stores.js';  
-const rmethod = /^(GET|PUT|POST|DELETE|):([\w.#~-]+:|)(.+)/ // feat: tags in url
-const replace = (s,p1,p2,p3) => p3
+import { urls } from './url-debounce.js';
+const replace = (s,p1,p2,p3) => p3;
 
-function unique(value, index, self) {
-  return self.indexOf(value) === index;
-}
-
+let _urls, _cfgs
 function oneSite(ns) {
   const {toRegex} = window.mitm.fn;
   if ($tags.filterUrl) {
@@ -22,7 +19,7 @@ function oneSite(ns) {
 function itemlist(rerender) {
   console.log('rerender...');
   const { __tag2, __tag3 } = window.mitm;
-  const { noTagInRule, isRuleOff } = window.mitm.fn;
+  const { rmethod, noTagInRule, isRuleOff } = window.mitm.fn;
   const { routes } = window.mitm
   let urls = {}
   let url2 = {}
@@ -128,12 +125,19 @@ function itemlist(rerender) {
   }
   let arr = Object.keys(urls).sort()
   const urls2 = []
+  const urls3 = []
   for (const url of arr) {
     const secs = Object.keys(url2[url])
     const tags = Object.keys(url3[url])
-    urls2.push({url, secs, tags})
+    if (secs.find(x => /^(args|flag)/.test(x))) {
+      urls3.push({url, secs, tags})
+    } else {
+      urls2.push({url, secs, tags})
+    }
   }
-  return urls2
+  _urls = urls2
+  _cfgs = urls3
+  return ''
 }
 function title(item) {
   const {url, secs} = item
@@ -141,21 +145,50 @@ function title(item) {
 }
 </script>
 
-<ul>
-  {#each itemlist($rerender) as item}
-    <li><div class="url {item.tags && item.tags.join(' ')}">{title(item)}</div></li>
-  {/each}
-</ul>
+{itemlist($rerender)}
+<table>
+  <tr>
+    <th>URLs</th>
+    <th>Flag &  Args</th>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        {#each _urls as item}
+        <li><div class="url {item.tags && item.tags.join(' ')}">{title(item)}</div></li>
+        {/each}
+      </ul>      
+    </td>
+    <td>
+      <ul>
+        {#each _cfgs as item}
+        <li><div class="url {item.tags && item.tags.join(' ')}">{title(item)}</div></li>
+        {/each}
+      </ul>      
+    </td>
+  </tr>
+</table>
 
 <style>
 .url {
   font-size: 12px;
   font-weight: 600;
-  margin-left: 17px;
+  margin-left: 7px;
   color: chocolate;
   font-family: monospace;
 }
 .url._notag {
   color: cornflowerblue;
+}
+table {
+  width: calc(100% - 12px);
+  margin: 5px;
+}
+th {
+  padding-left: 5px;
+}
+td {
+  padding: 5px 0;
+  border: thin solid;
 }
 </style>

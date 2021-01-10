@@ -1,4 +1,7 @@
 const route = {
+  'args': {
+    debug: false
+  },
   'flag': {
     'referer-reqs': false,
     'no-namespace': false,
