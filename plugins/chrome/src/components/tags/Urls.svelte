@@ -189,6 +189,9 @@ table {
   width: calc(100% - 12px);
   margin: 5px;
 }
+th, td {
+  width: 50%;
+}
 th {
   padding-left: 5px;
 }

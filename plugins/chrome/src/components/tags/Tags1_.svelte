@@ -165,6 +165,9 @@ function leave(e) {
 </td>
 
 <style>
+  td {
+    width: 20%;
+  }
 .border {
   border: 1px dotted;
 }

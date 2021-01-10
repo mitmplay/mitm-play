@@ -24,4 +24,7 @@ function istag(ns) {
 </td>
 
 <style>
+  td {
+    width: 35%;
+  }
 </style>

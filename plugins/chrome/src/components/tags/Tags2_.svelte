@@ -22,4 +22,7 @@ function oneSite(ns) {
 </td>
 
 <style>
+  td {
+    width: 45%;
+  }
 </style>
