@@ -109,7 +109,7 @@ const searchFN = (typs, { url, method, browserName }) => {
           }
           tg && (log += c.red(`:${tg}`))
 
-          const hidden = typ.indexOf(':hidden') > -1
+          const hidden = key.match(/^\w*!:/)
           const matched = {
             contentType: obj[`${key}~contentType`],
             route: route[key],

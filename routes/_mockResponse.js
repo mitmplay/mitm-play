@@ -117,10 +117,8 @@ const mockResponse = async function ({ reqs, route }, _3d) {
       }
     }
     if (__flag.mock && !match.hidden && !hidden) {
-      if (!match.key.match(':hidden:')) {
-        msg = c.cyanBright(match.log) + msg
-        __args.fullog && console.log(msg) // feat: fullog
-      }
+      msg = c.cyanBright(match.log) + msg
+      __args.fullog && console.log(msg) // feat: fullog
     }
     resp.log = msg ? {msg, mtyp: 'mock'} : undefined // feat: fullog
     return {match, resp}

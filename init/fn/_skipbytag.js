@@ -1,5 +1,5 @@
 const c = require('ansi-colors')
-const rmethod = /^(GET|PUT|POST|DELETE|):([\w.#~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|)!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 function _skipByTag (match, typ) {
   let tags

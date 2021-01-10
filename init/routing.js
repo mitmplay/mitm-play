@@ -18,13 +18,13 @@ module.exports = () => {
   const { argv, fn: { _tldomain, _nameSpace } } = global.mitm
 
   const mock = {
-    ':hidden:/mitm-play/mitm.js': {
+    '!:/mitm-play/mitm.js': {
       response: resp => {
         resp.body = global.mitm.fn._wsmitm(resp)
         resp.headers['content-type'] = 'application/javascript'
       }
     },
-    ':hidden:/mitm-play/macros.js': {
+    '!:/mitm-play/macros.js': {
       response: resp => {
         let global = ''; let body = ''
         const namespace = _nameSpace(_tldomain(resp.url))
@@ -49,13 +49,13 @@ ${body}`
         resp.headers['content-type'] = 'application/javascript'
       }
     },
-    ':hidden:/mitm-play/websocket.js': {
+    '!:/mitm-play/websocket.js': {
       response: resp => {
         resp.body = global.mitm.fn._wsclient()
         resp.headers['content-type'] = 'application/javascript'
       }
     },
-    ':hidden:/mitm-play/jslib/([\\w-]+.js)': {
+    '!:/mitm-play/jslib/([\\w-]+.js)': {
       response: (resp, reqs, match) => {
         const path = `${global.__app}/plugins/js-lib/${match.arr[1]}`
         if (fs.existsSync(path)) {
@@ -82,10 +82,10 @@ ${body}`
     _global_: {
       _namespace_: /_global_/,
       mock: {
-        ':hidden:/mitm-play/mitm.js': new RegExp('\\/mitm-play\\/mitm\\.js'),
-        ':hidden:/mitm-play/chance.js': new RegExp('\\/mitm-play\\/chance\\.js'),
-        ':hidden:/mitm-play/macros.js': new RegExp('\\/mitm-play\\/macros\\.js'),
-        ':hidden:/mitm-play/websocket.js': new RegExp('\\/mitm-play\\/websocket\\.js')
+        '!:/mitm-play/mitm.js': new RegExp('\\/mitm-play\\/mitm\\.js'),
+        '!:/mitm-play/chance.js': new RegExp('\\/mitm-play\\/chance\\.js'),
+        '!:/mitm-play/macros.js': new RegExp('\\/mitm-play\\/macros\\.js'),
+        '!:/mitm-play/websocket.js': new RegExp('\\/mitm-play\\/websocket\\.js')
       },
       config: {
         logs: {},
