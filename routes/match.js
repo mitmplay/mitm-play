@@ -95,7 +95,7 @@ const searchFN = (typs, { url, method, browserName }) => {
         const arr = isTagsOk && url.match(obj[key])
         const _m = obj[`${key}~method`]
 
-        if (arr && (_m===undefined || _m==='' ||_m===method)) {
+        if (arr && (!_m ||_m===method)) {
           const { host, origin, pathname, search } = new URL(url)
           const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
 
