@@ -25,8 +25,8 @@ export let item;
   }
   .url span {
     margin-left: -5px;
-    font-family: cursive;
+    font-family: system-ui;
     font-size: smaller;
-    font-style: italic;
+    font-weight: 300;
   }
   </style>
