@@ -2,7 +2,7 @@ const c = require('ansi-colors')
 const typs = require('./_typs')
 
 const { typC, typA, typO } = typs
-const rmethod = /^(GET|PUT|POST|DELETE|)!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
 const tgInUrl = /:[\w.#~-]+:/ // feat: tags in url
 
 function toRegex (str, flags = '') {

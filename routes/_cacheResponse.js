@@ -3,6 +3,7 @@ const c = require('ansi-colors')
 const _match = require('./match')
 const _ext = require('./filepath/ext')
 const { ctype } = require('./content-type')
+const changeStatus = require('./change-status')
 const resetCookies = require('./reset-cookies')
 const filesave = require('./filesave/filesave')
 const metaResp = require('./filesave/meta-resp')
@@ -65,6 +66,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           remote = false
           const body = await fs.readFile(fname1)
           resp = { url, status, headers, body }
+          changeStatus(match, resp)
           if (response) {
             resp2 = response(resp, reqs, match)
             resp2 && (resp = { ...resp, ...resp2 })
@@ -87,6 +89,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     if (remote) {
       // get from remote
       responseHandler.push(async resp => {
+        changeStatus(match, resp)
         // feat: activity
         const fname1 = `${fpath1}.${_ext(resp)}`
         if (!route.seq && fname1.match(/~\w+_\d+_/)) { // feat: seq

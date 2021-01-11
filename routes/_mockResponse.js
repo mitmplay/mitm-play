@@ -3,6 +3,7 @@ const c = require('ansi-colors')
 const _match = require('./match')
 const inject = require('./inject')
 const { xtype } = require('./content-type')
+const changeStatus = require('./change-status')
 const resetCookies = require('./reset-cookies')
 const filePath = require('./filepath/file-path')
 
@@ -18,10 +19,7 @@ const mock = ({ url }, match) => {
     },
     body: 'Hello mock! - mitm-play'
   }
-  const status = match.key.match(/#(\d+)/) // feat: tags in url
-  if (status && status[1]) {
-    resp.status = +(status[1].slice(0,3).padEnd(3, '0'))
-  }
+  changeStatus(match, resp)
   return resp
 }
 

@@ -3,6 +3,7 @@ const c = require('ansi-colors')
 const _match = require('./match')
 const _inject = require('./inject')
 const setSession = require('./set-session')
+const changeStatus = require('./change-status')
 
 const { matched, searchFN, searchKey } = _match
 const { script_src, e_head, injectWS } = _inject
@@ -15,6 +16,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
 
   if (match && !_skipByTag(match, 'html')) {
     responseHandler.push(resp => {
+      changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/html')) {
         msg = c.yellowBright(match.log)

@@ -1,5 +1,5 @@
 const {typC, typA, typO} = require('../init/fn/_typs')
-const rmethod = /^(GET|PUT|POST|DELETE|)!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 function noTagInRule(rule) {
   const arr = rule.match(rmethod) // feat: tags in url

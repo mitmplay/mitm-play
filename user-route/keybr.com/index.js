@@ -4,7 +4,7 @@ const css = `
 }`;
 const route = {
   'mock:no-ads': {
-    'google.+.com': '',
+    '#201:google.+.com': '',
     'doubleclick.net': '',
   },
   mock: {
@@ -13,7 +13,7 @@ const route = {
     ':scenario~2:/api/login': '...', 
   },
   css: { 
-    'GET!:no-ads:/assets/[a-z0-9]+': `=>${css}`
+    'GET#202!:no-ads:/assets/[a-z0-9]+': `=>${css}`
   },
   log: {
     '/': {

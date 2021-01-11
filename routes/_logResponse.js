@@ -2,6 +2,7 @@ const c = require('ansi-colors')
 const _match = require('./match')
 const ext = require('./filepath/ext')
 const { ctype } = require('./content-type')
+const changeStatus = require('./change-status')
 const filesave = require('./filesave/filesave')
 const metaResp = require('./filesave/meta-resp')
 const jsonResp = require('./filesave/json-resp')
@@ -19,6 +20,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
     const { log, response, hidden } = match.route
     const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
     responseHandler.push((resp, reqs) => {
+      changeStatus(match, resp)
       const mtype = ctype(match, resp)
       if (mtype) {
         if (cache) {

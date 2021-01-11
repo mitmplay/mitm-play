@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const _match = require('./match')
 const { ctype } = require('./content-type')
+const changeStatus = require('./change-status')
 
 const { matched, searchFN } = _match
 
@@ -17,6 +18,7 @@ const allRequest = async function (reqs, responseHandler, _3d) {
       __args.fullog && console.log(msg) // feat: fullog
     }
     responseHandler.push(resp => {
+      changeStatus(match, resp)
       if (response) {
         if (contentType === undefined || ctype(match, resp)) {
           const resp2 = response(resp, reqs, match)

@@ -1,5 +1,7 @@
 const c = require('ansi-colors')
 const _match = require('./match')
+const changeStatus = require('./change-status')
+
 const { matched, searchFN } = _match
 
 const jsonResponse = async function (reqs, responseHandler, _3d) {
@@ -11,6 +13,7 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
   if (match && !_skipByTag(match, 'json')) {
     const { response, hidden } = match.route
     responseHandler.push(resp => {
+      changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('application/json')) {
         if (__flag.json && !match.hidden && !hidden) {

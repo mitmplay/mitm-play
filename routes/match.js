@@ -35,7 +35,7 @@ const searchArr = ({ typ: typs, url, browserName }) => {
               const { host, origin, pathname, search } = new URL(url)
               const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
               !__args.nourl && (log += `.url(${__args.nohost ? '' : origin}${msg})`)
-              const hidden = typ.indexOf(':hidden') > -1
+              const hidden = key.match(/^[\w#]*!:/)
               const matched = {
                 namespace,
                 pathname,
@@ -109,7 +109,7 @@ const searchFN = (typs, { url, method, browserName }) => {
           }
           tg && (log += c.red(`:${tg}`))
 
-          const hidden = key.match(/^\w*!:/)
+          const hidden = key.match(/^[\w#]*!:/)
           const matched = {
             contentType: obj[`${key}~contentType`],
             route: route[key],

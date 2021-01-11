@@ -1,5 +1,6 @@
 const c = require('ansi-colors')
 const _match = require('./match')
+const changeStatus = require('./change-status')
 const addReplaceBody = require('./add-replace-body')
 const { matched, searchFN } = _match
 
@@ -12,6 +13,7 @@ const jsResponse = async function (reqs, responseHandler, _3d) {
   if (match && !_skipByTag(match, 'js')) {
     const { response, hidden } = match.route
     responseHandler.push(resp => {
+      changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('javascript')) {
         if (__flag.js && !match.hidden && !hidden) {
