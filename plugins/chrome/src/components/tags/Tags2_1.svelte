@@ -162,7 +162,7 @@ summary.space1 {
 .spacex {
   padding-left: 30px;
   color: grey;
-  font-size: 13px;
+  font-size: 12px;
   font-family: monospace;
 }
 .spacex.slc {

@@ -147,6 +147,7 @@ function itemlist(rerender) {
         }
       }
     }
+    !ctyp.length && (ctyp = false)
     if (secs.find(x => /^(args|flag)/.test(x))) {
       urls3.push({url, secs, ctyp, tags})
     } else {

@@ -50,7 +50,7 @@ function q(key) {
   background: lightgrey;
 }
 .space1 {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bolder;
   color: blueviolet;
   padding-left: 3px;

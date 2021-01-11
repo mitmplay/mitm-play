@@ -1,15 +1,13 @@
 <script>
 export let item;
 
-// function ctype() {
-//   item.ctyp.length ? `[${item.ctyp.join(',')}]` : ''
-// }
+const list = (itm, gap=' ') => itm ? itm.join(gap) : ''
 </script>
 
 <div class="url {item.tags && item.tags.join(' ')}">
   * {item.url}
-  <span>{`{${item.secs ? item.secs.join(' ') : ''}}`}</span>
-  <span>{ item.ctyp.length ? `[${item.ctyp.join(',')}]` : ''}</span>
+  <span class="secs {list(item.secs)}">{`{${list(item.secs)}}`}</span>
+  <span class="ctyp {list(item.ctyp)}">{ item.ctyp ? `[${list(item.secs,',')}]` : ''}</span>
 </div>
 
 <style>
