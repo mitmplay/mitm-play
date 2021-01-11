@@ -60,10 +60,10 @@ module.exports = () => {
         const match = rules[_rule]
         const arr = _rule.match(rmethod)
         let url = _rule
-        if (arr && arr[3]) {
+        if (arr && arr[2]) { // check tag in URL
           url = noTagInRule(_rule)
           pure =false
-        } else if (match.tags) {
+        } else if (match.tags) { // check tags inside rule
           pure =false
         }
         if (sec==='flag' || sec==='args') {
