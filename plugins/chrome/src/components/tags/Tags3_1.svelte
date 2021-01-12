@@ -26,12 +26,15 @@ function q(key) {
     <Expand {st} q="{`.t3.${q(ns)}`}"></Expand>
     <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
   </div>
-  {#each xitems($tags) as path}
-    <div class="t3 {q(ns)}">
-      <div class="space1">{path}</div>
+  <div class="t3 {q(ns)}">
+    {#each xitems($tags) as path}
+    <details>
+      <summary class="space1">{path}</summary>
       <Tags32 items={items[path]} {path} {ns}/>
-    </div>
+    </details>
   {/each}
+
+  </div>
 </div>
 
 <style>
