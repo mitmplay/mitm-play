@@ -6,6 +6,7 @@ const route = {
   'mock:1.no-ads': {
     '#201:google.+.com': '',
     'doubleclick.net': '',
+    ':test:test.com': ''
   },
   mock: {
     '!:2.scenario~#404:/api/login': 'What you need is not here',

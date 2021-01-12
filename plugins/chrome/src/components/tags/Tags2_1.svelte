@@ -77,8 +77,12 @@ function urllist(tags, item) {
 }
 function spacex(tags, item, rule) {
   let klass = items[item] ? 'slc' : '';
-  const { rclass, isRuleOff } = window.mitm.fn;
+  const { rclass, isRuleOff, tagsIn__tag3 } = window.mitm.fn;
   isRuleOff(tags, ns, rule) && (klass += ' grey');
+  const tag = tagsIn__tag3(tags, ns, item, rule).join(' _')
+  if (tag) {
+    klass += ` _${tag}`
+  }
   return `${klass} _${item.split(':')[1].replace(rclass, '-')}`
 }
 function q(key) {

@@ -23,7 +23,7 @@ const sortTag = (a,b) => {
 }
 function noTagInRule(rule) {
   const arr = rule.match(rmethod) // feat: tags in url
-  return arr ? `${arr[1]}:${arr[3]}` : rule
+  return arr ? (arr[1] ? `${arr[1]}:${arr[3]}` : arr[3]) : rule
 }
 function isRuleOff(tags, ns, rule) {
   const node = tags.__tag3[ns][rule]
@@ -49,7 +49,15 @@ function isRuleOff(tags, ns, rule) {
   }
   return false
 }
-
+function tagsIn__tag3(tags, ns, sec, rule) {
+  const secs = tags.__tag3[ns][rule]
+  let arr = []
+  if (secs) {
+    arr = Object.keys(secs[sec.split(':')[0]])
+    arr = arr.map(x=>x.split(':').pop())
+  }
+  return arr
+}
 function resetRule2(tags, item, ns, tagx) {
   const typ1 = item.split(':')[1] || item;
   const [ group1, id1 ] = typ1.split('~');
@@ -130,6 +138,7 @@ function uniq(value, index, self) {
 }
 window.mitm.fn.rclass = rclass;
 window.mitm.fn.rmethod = rmethod;
+window.mitm.fn.tagsIn__tag3 = tagsIn__tag3
 window.mitm.fn.noTagInRule = noTagInRule
 window.mitm.fn.resetRule2 = resetRule2
 window.mitm.fn.resetRule3 = resetRule3
