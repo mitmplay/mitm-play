@@ -26,20 +26,27 @@ function noTagInRule(rule) {
 }
 function isRuleOff(tags, ns, rule) {
   const node = tags.__tag3[ns][rule]
-  let grey = false
   if (node) {
+    let id1 = []
+    let id2 = false
     for (const id in node) {
       if (typeof node[id]!=='string') {
         for (const tag in node[id]) {
-          if (node[id][tag]===false) {
-            grey = true
+          if (node[id][tag]) {
+            id1.push(id)
+          } else if (node[id][tag]===false) {
+            id2 = id
             break
           }
         }
       }
     }
+    // feat: rule off if URL in the same section
+    if ((id1.length===0 && id2) || id1.indexOf(id2)>-1) {
+      return true
+    }
   }
-  return grey
+  return false
 }
 
 function resetRule2(tags, item, ns, tagx) {
