@@ -71,6 +71,10 @@ details summary .tags {
 details summary .prop {
   color: #dddddd
 }
+summary.space1,
+summary.space2 {
+  margin-bottom: 2px;
+}
 .space2 {
   padding-left: 12px;
   font-weight: bolder;

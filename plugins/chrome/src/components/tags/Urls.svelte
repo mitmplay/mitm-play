@@ -2,10 +2,29 @@
 import { rerender } from './rerender.js';
 import { tags } from './stores.js';
 
+import Title1 from './Title-1.svelte';
+import Title2 from './Title-2.svelte';
+import TitleBtn from './Title-btn.svelte';
 import TitleUrl from './Title-url.svelte';
-const replace = (s,p1,p2,p3) => p3;
 
-let _urls, _cfgs
+
+const replace = (s,p1,p2,p3) => p3;
+let btn1 = {
+  response: true,
+  request: true,
+  cache: true,
+  mock: true,
+  html: true,
+  json: true,
+  css: true,
+  js: true,
+  log: true,
+}
+let btn2 = {
+  flag: true,
+  args: true,
+}
+let _urls, _cfgs, title1, title2
 function oneSite(ns) {
   const {toRegex} = window.mitm.fn;
   if ($tags.filterUrl) {
@@ -154,35 +173,44 @@ function itemlist(rerender) {
       urls2.push({url, secs, ctyp, tags})
     }
   }
+  title1 = {}
+  title2 = {}
   _urls = urls2
   _cfgs = urls3
+  for (const item of _urls) {
+    for (const sec of item.secs) {
+      title1[sec] = true
+    }
+  }
+  for (const item of _cfgs) {
+    for (const sec of item.secs) {
+      title2[sec] = true
+    }
+  }
   return ''
-}
-function title(item) {
-  const {url, secs} = item
-  const ctyp = item.ctyp ? `[${item.ctyp.join(',')}]` : '[]'
-  return `* ${url}{${secs ? secs.join(' ') : ''}}${ctyp==='[]' ? '' : ctyp}`
 }
 </script>
 
 {itemlist($rerender)}
 <table>
   <tr>
-    <th>URLs</th>
-    <th>Flag &  Args</th>
+    <th><Title1><TitleBtn _id="urls" items={title1} btn={btn1}/></Title1></th>
+    <th><Title2><TitleBtn _id="farg" items={title2} btn={btn2}/></Title2></th>
   </tr>
   <tr>
     <td>
-      <ul>
+      <style id="urls"></style>
+      <ul class="urls">
         {#each _urls as item}
-        <li><TitleUrl {item}/></li>
+        <li class="{item.secs.join(' ')}"><TitleUrl {item}/></li>
         {/each}
       </ul>      
     </td>
     <td>
-      <ul>
+      <style id="farg"></style>
+      <ul class="farg">
         {#each _cfgs as item}
-        <li><TitleUrl {item}/></li>
+        <li class="{item.secs.join(' ')}"><TitleUrl {item}/></li>
         {/each}
       </ul>      
     </td>
