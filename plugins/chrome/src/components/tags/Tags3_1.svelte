@@ -10,6 +10,7 @@ let st = {
   collapse: true,
   expand: false
 };
+
 function xitems(tags) {
   const {__tag3} = tags;
   const namespace = __tag3[ns];
@@ -17,6 +18,17 @@ function xitems(tags) {
 }
 function q(key) {
   return key.replace(/\./g, '-')
+}
+
+function btnExpand(e) {
+  const node = e.target.parentElement
+  setTimeout(() => {
+    const exp = node.getAttribute('open')
+    if (exp!==null) {
+      const nodes = document.querySelectorAll(`#${node.id} details`)
+      nodes.forEach(node => node.setAttribute('open', ''))
+    }
+  }, 0)
 }
 </script>
 
@@ -27,9 +39,9 @@ function q(key) {
     <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
   </div>
   <div class="t3 {q(ns)}">
-    {#each xitems($tags) as path}
-    <details>
-      <summary class="space1">{path}</summary>
+    {#each xitems($tags) as path, i}
+    <details id="path{i}">
+      <summary on:click="{btnExpand}" class="space1">{path}</summary>
       <Tags32 items={items[path]} {path} {ns}/>
     </details>
   {/each}
