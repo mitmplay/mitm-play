@@ -3,28 +3,28 @@ const css = `
   display: none !important;
 }`;
 const route = {
-  'mock:no-ads': {
+  'mock:1.no-ads': {
     '#201:google.+.com': '',
     'doubleclick.net': '',
   },
   mock: {
-    '!:scenario~#404:/api/login': 'What you need is not here',
-    ':scenario~1:/api/login': '...', 
-    ':scenario~2:/api/login': '...', 
+    '!:2.scenario~#404:/api/login': 'What you need is not here',
+    ':2.scenario~1:/api/login': '...', 
+    ':2.scenario~2:/api/login': '...', 
   },
   css: { 
-    'GET#202!:no-ads:/assets/[a-z0-9]+': `=>${css}`
+    'GET#202!:1.no-ads:/assets/[a-z0-9]+': `=>${css}`
   },
   cache: {
     '/': {
       contentType: ['json'],
-      tags: 'caching'
+      tags: '3.caching'
     }
   },
   log: {
     '/': {
       contentType: ['html'],
-      tags: 'logging'
+      tags: '4.logging'
     }
   },
 }

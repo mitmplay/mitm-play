@@ -79,7 +79,7 @@ function spacex(tags, item, rule) {
   let klass = items[item] ? 'slc' : '';
   const { rclass, isRuleOff } = window.mitm.fn;
   isRuleOff(tags, ns, rule) && (klass += ' grey');
-  return `${klass} ${item.split(':')[1].replace(rclass, '-')}`
+  return `${klass} _${item.split(':')[1].replace(rclass, '-')}`
 }
 function q(key) {
   return key.replace(/\./g, '-')

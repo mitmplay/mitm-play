@@ -42,9 +42,9 @@ function xtags(path) {
         pop().
         replace(rclass, '-')
       ).
-      join(' ')
+      join(' _')
     )
-  return klass.join(' ');
+  return `_${klass.join(' ')}`;
 }
 </script>
 

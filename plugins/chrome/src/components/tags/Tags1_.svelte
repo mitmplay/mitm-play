@@ -133,7 +133,7 @@ function enter(e) {
   if (node) {
     const {item} = e.target.dataset;
     const klass = item.replace(rclass, '-')
-    node.innerHTML = `._${klass}, .t2 .spacex.${klass}, .t3 summary.${klass} {background: yellow;}`
+    node.innerHTML = `._${klass}, .t2 .spacex._${klass}, .t3 summary._${klass} {background: yellow;}`
   }
 }
 function leave(e) {
