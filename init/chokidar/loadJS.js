@@ -85,7 +85,7 @@ function sort (obj, size=false, _typO) {
     if (_typO) {
       // Sort URL in rule
       for (rule in ns) {
-        if (_typO.indexOf(rule)>-1) {
+        if (_typO.indexOf(rule.split(':')[0])>-1) { // rule without tag
           ns[rule] = _sortLength(ns[rule])
         }
       }

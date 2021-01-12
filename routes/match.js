@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const { fn: { home, _nameSpace } } = global.mitm
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
+const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 function typTags (typ, namespace) {
   const { __tag4 } = global.mitm
@@ -83,8 +84,15 @@ const searchFN = (typs, { url, method, browserName }) => {
 
       for (const key in route) {
         let isTagsOk = true
-        if (tg3[key] && tg3[key][typ]) {
-          const nodes = tg3[key][typ]
+        let str = key
+        const arrTag = str.match(rmethod)
+        if (arrTag) {
+          const [, method,, path] = arrTag          // feat: tags in url
+          str = method ? `${method}:${path}` : path // remove from url
+        }
+        const typ3 = typ.split(':')[0]
+        if (tg3[str] && tg3[str][typ3]) {
+          const nodes = tg3[str][typ3]
           for (const tag in nodes) {
             if (nodes[tag] === false) {
               isTagsOk = false
