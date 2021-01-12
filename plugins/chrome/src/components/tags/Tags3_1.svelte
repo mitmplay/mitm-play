@@ -14,7 +14,8 @@ let st = {
 function xitems(tags) {
   const {__tag3} = tags;
   const namespace = __tag3[ns];
-  return Object.keys(namespace);
+  const arr = Object.keys(namespace).sort();
+  return arr;
 }
 function q(key) {
   return key.replace(/\./g, '-')
