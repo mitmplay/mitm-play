@@ -15,9 +15,16 @@ const route = {
   css: { 
     'GET#202!:no-ads:/assets/[a-z0-9]+': `=>${css}`
   },
+  cache: {
+    '/': {
+      contentType: ['json'],
+      tags: 'caching'
+    }
+  },
   log: {
     '/': {
-      contentType: ['html']
+      contentType: ['html'],
+      tags: 'logging'
     }
   },
 }

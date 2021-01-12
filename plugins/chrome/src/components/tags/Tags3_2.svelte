@@ -29,14 +29,8 @@ function xitems(tags) {
   arr = arr.filter(x=>x[0]!==':')
   return arr;
 }
-function xtags() {
-  let arr
-  for (const id in items) {
-    if (id.slice(0,1)!==':') {
-      arr = Object.keys( items[id])
-      break
-    }
-  }
+function xtags(tags, item) {
+  const arr = Object.keys(items[item])
   const map = arr.map(x => x.split(':').pop())
   return map.sort().join(' ')
 }
@@ -47,7 +41,7 @@ function xtags() {
     <summary class="space2 {active(item)}">
       {title(item)}
       <span class="prop">{items[`:${item}`]}</span>
-      <span class="tags">{`<${xtags($tags)}>`}</span>
+      <span class="tags">{`<${xtags($tags, item)}>`}</span>
     </summary>
     <Tags33 items={items[item]} {item} {path} {ns}/>
   </details>
