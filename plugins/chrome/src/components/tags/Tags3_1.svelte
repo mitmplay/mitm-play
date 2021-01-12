@@ -10,17 +10,11 @@ let st = {
   collapse: true,
   expand: false
 };
+let namespace;
 
-function xitems(tags) {
-  const {__tag3} = tags;
-  const namespace = __tag3[ns];
-  const arr = Object.keys(namespace).sort();
-  return arr;
-}
 function q(key) {
   return key.replace(/\./g, '-')
 }
-
 function btnExpand(e) {
   const node = e.target.parentElement
   setTimeout(() => {
@@ -30,6 +24,27 @@ function btnExpand(e) {
       nodes.forEach(node => node.setAttribute('open', ''))
     }
   }, 0)
+}
+function xitems(tags) {
+  const {__tag3} = tags;
+  namespace = __tag3[ns];
+  const arr = Object.keys(namespace).sort();
+  return arr;
+}
+function xtags(path) {
+  const { rclass } = window.mitm.fn;
+  const typs = namespace[path];
+  let arr = Object.keys(typs).filter(x=>x[0]!==':');
+  const klass = arr.map(x=>
+      Object.keys(typs[x]).
+      map(x=>x.
+        split(':').
+        pop().
+        replace(rclass, '-')
+      ).
+      join(' ')
+    )
+  return klass.join(' ');
 }
 </script>
 
@@ -42,7 +57,7 @@ function btnExpand(e) {
   <div class="t3 {q(ns)}">
     {#each xitems($tags) as path, i}
     <details id="path{i}">
-      <summary on:click="{btnExpand}" class="space1">{path}</summary>
+      <summary on:click="{btnExpand}" class="space1 {xtags(path)}">{path}</summary>
       <Tags32 items={items[path]} {path} {ns}/>
     </details>
   {/each}

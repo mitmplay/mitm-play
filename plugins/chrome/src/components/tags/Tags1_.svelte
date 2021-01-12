@@ -128,11 +128,12 @@ function listTags(tags) {
   return tgs;
 }
 function enter(e) {
-  const {item} = e.target.dataset;
+  const { rclass } = window.mitm.fn;
   const node = document.querySelector(`#urls`)
   if (node) {
-    // console.log(item.replace(/[.#~]/g, '-')) // feat: tags in url
-    node.innerHTML = `._${item.replace(/[.#~]/g, '-')} {background: yellow;}`
+    const {item} = e.target.dataset;
+    const klass = item.replace(rclass, '-')
+    node.innerHTML = `._${klass}, .t2 .spacex.${klass}, .t3 summary.${klass} {background: yellow;}`
   }
 }
 function leave(e) {

@@ -76,10 +76,10 @@ function urllist(tags, item) {
   return obj
 }
 function spacex(tags, item, rule) {
-  const { isRuleOff } = window.mitm.fn;
   let klass = items[item] ? 'slc' : '';
+  const { rclass, isRuleOff } = window.mitm.fn;
   isRuleOff(tags, ns, rule) && (klass += ' grey');
-  return klass
+  return `${klass} ${item.split(':')[1].replace(rclass, '-')}`
 }
 function q(key) {
   return key.replace(/\./g, '-')

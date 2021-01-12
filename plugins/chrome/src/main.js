@@ -1,6 +1,7 @@
 /* global chrome */
 import App from './App.svelte'
 const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
+const rclass = /[.#~/]/g
 
 console.log('Load MITM plugin')
 
@@ -127,6 +128,7 @@ function resetRule3(tags, item, _ns) {
 function uniq(value, index, self) {
   return self.indexOf(value) === index;
 }
+window.mitm.fn.rclass = rclass;
 window.mitm.fn.rmethod = rmethod;
 window.mitm.fn.noTagInRule = noTagInRule
 window.mitm.fn.resetRule2 = resetRule2

@@ -45,6 +45,7 @@ function itemlist(rerender) {
   let url3 = {}
 
   function addUrl2(sec, rule, tags) {
+    const { rclass } = window.mitm.fn;
     rule = rule.replace(rmethod, replace)
     sec = sec.split(':')[0]
     if (url2[rule]===undefined) {
@@ -56,7 +57,7 @@ function itemlist(rerender) {
     url2[rule][sec] = true
     if (tags && Array.isArray(tags)) {
       for (let tag of tags) {
-        tag = '_'+tag.split(':').pop().replace(/[.#~]/g, '-') // feat: tags in url
+        tag = '_'+tag.split(':').pop().replace(rclass, '-') // feat: tags in url
         if (url3[rule]===undefined) {
           url3[rule] = {}
         }
