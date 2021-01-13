@@ -20,19 +20,14 @@ module.exports = ({ match, reqs }) => {
     stamp2 = `${host}${at}/$${fpath}`
   }
   let _root
-  if (path) {
-    _root = filePath(path, match)
-  }
   if (typeof file === 'function') {
-    file = file(reqs, match)
+    file = file(match, reqs)
   }
   if (file) {
-    file = filePath(file, match, path)
-    if (_root === undefined) {
-      const apath = file.split('/')
-      file = apath.pop()
-      _root = apath.join('/')
-    }
+    file = filePath(match, path, file)
+    const apath = file.split('/')
+    file = apath.pop()
+    _root = apath.join('/')
   }
   if (_root === undefined) {
     _root = root(reqs, 'cache')

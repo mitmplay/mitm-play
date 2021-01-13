@@ -5,7 +5,7 @@ const css = `
 const route = {
   'mock:1.no-ads': {
     '/www.google-analytics.com/(analytics.js)': {
-      file: '/:1'
+      file: ':1'
     },
     '#201:google.+.com': '',
     'doubleclick.net': '',

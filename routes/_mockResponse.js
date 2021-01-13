@@ -46,16 +46,11 @@ const mockResponse = async function ({ reqs, route }, _3d) {
       if (file || js) {
         const { path } = match.route
         if (file) {
-          let _root
-          if (path) {
-            _root = filePath(path, match)
-          }
-          file = filePath(file, match, path)
-          if (_root === undefined) {
-            const apath = file.split('/')
-            file = apath.pop()
-            _root = apath.join('/')
-          }
+          file = filePath(match, path, file)
+          const apath = file.split('/')
+          file = apath.pop()
+          const _root = apath.join('/')
+
           let fileMethod, fpath1, fpath2
           const arr = file.match(/\.\w+$/)
           if (arr) {
