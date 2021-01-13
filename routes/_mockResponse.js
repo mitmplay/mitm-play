@@ -7,6 +7,7 @@ const changeStatus = require('./change-status')
 const resetCookies = require('./reset-cookies')
 const filePath = require('./filepath/file-path')
 
+const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const { matched, searchFN } = _match
 const { source } = inject
 
@@ -71,8 +72,10 @@ const mockResponse = async function ({ reqs, route }, _3d) {
             if (await fs.pathExists(fpath1)) {
               resp.body = await fs.readFile(fpath1)
             } else {
-              msg = c.redBright(`>>> ERROR: ${_root}/(${fileMethod} or ${file}) did not exists!`)
-              __args.fullog && console.log(msg) // feat: fullog
+              const b = browser[reqs.browserName]
+              msg = c.redBright(`${b} mock err ${_root}/(${fileMethod} or ${file}) did not exists!`)
+              // __args.fullog && console.log(msg) // feat: fullog
+              console.log(msg)
               route.continue()
               return false
             }

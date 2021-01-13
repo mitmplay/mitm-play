@@ -9,6 +9,7 @@ const filesave = require('./filesave/filesave')
 const metaResp = require('./filesave/meta-resp')
 const fpathcache = require('./filepath/fpath-cache')
 
+const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const { matched, searchFN } = _match
 
 const cacheResponse = async function (reqs, responseHandler, _3d) {
@@ -72,10 +73,13 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             resp2 && (resp = { ...resp, ...resp2 })
           }
         } catch (error) {
-          const msg1 = c.red(`>>> cache (${tilde(fpath1)})`)
-          const msg2 = c.red(`   Error in ${error}`)
-          msg = `${msg1}\n${msg2}`
-          __args.fullog && console.log(msg) // feat: fullog
+          const msg1 = c.red(`${b} cache er (${tilde(fpath1)})`)
+          if (__args.fullog) {
+            const msg2 = c.red(`    Error in ${error}`)
+            console.log(`${msg1}\n${msg2}`) // feat: fullog  
+          } else {
+            console.log(msg1)
+          }
           resp = {
             url,
             status: 500,
