@@ -44,34 +44,34 @@ function itemlist(rerender) {
   let url2 = {}
   let url3 = {}
 
-  function addUrl2(sec, rule, tags) {
+  function addUrl2(sec, path, tags) {
     const { rclass } = window.mitm.fn;
-    rule = rule.replace(rmethod, replace)
+    path = path.replace(rmethod, replace)
     sec = sec.split(':')[0]
-    if (url2[rule]===undefined) {
-      url2[rule] = {}
+    if (url2[path]===undefined) {
+      url2[path] = {}
     }
-    if (url2[rule][sec]===undefined) {
-      url2[rule][sec] = {}
+    if (url2[path][sec]===undefined) {
+      url2[path][sec] = {}
     }
-    url2[rule][sec] = true
+    url2[path][sec] = true
     if (tags && Array.isArray(tags)) {
       for (let tag of tags) {
         tag = '_'+tag.split(':').pop().replace(rclass, '-') // feat: tags in url
-        if (url3[rule]===undefined) {
-          url3[rule] = {}
+        if (url3[path]===undefined) {
+          url3[path] = {}
         }
-        if (url3[rule][tag]===undefined) {
-          url3[rule][tag] = {}
+        if (url3[path][tag]===undefined) {
+          url3[path][tag] = {}
         }
-        url3[rule][tag] = true
+        url3[path][tag] = true
       }
     }
   }
-  function addUrls(rule) {
-    rule = rule.replace(rmethod, replace)
-    urls[rule] = true
-    return rule
+  function addUrls(path) {
+    path = path.replace(rmethod, replace)
+    urls[path] = true
+    return path
   }
 
   for (const ns in __tag2) {
@@ -80,14 +80,14 @@ function itemlist(rerender) {
       for (const sec in secs) {
         if (secs[sec] && !sec.match(/(flag|args):/)) {
           if (sec.match('url:')) {
-            const rules =  __tag3[ns]
-            for (const rule in rules) {
-              if (!isRuleOff(window.mitm, ns, rule)) {
-                const _rule = addUrls(rule)
-                for (const sec in rules[rule]) {
-                  const tags = rules[rule][sec]
+            const paths =  __tag3[ns]
+            for (const path in paths) {
+              if (!isRuleOff(window.mitm, ns, path)) {
+                const _path = addUrls(path)
+                for (const sec in paths[path]) {
+                  const tags = paths[path][sec]
                   if (sec.slice(0, 1)!==':') {
-                    addUrl2(sec, _rule, Object.keys(tags))
+                    addUrl2(sec, _path, Object.keys(tags))
                     break
                   }
                 }
@@ -98,18 +98,18 @@ function itemlist(rerender) {
             let arr = routes[ns][sec]
             if (!Array.isArray(arr)) {
               for (const url in arr) {
-                const rule = noTagInRule(url)
-                if (!isRuleOff(window.mitm, ns, rule)) {
-                  const _rule = addUrls(url)
-                  addUrl2(sec, _rule, [tag])
+                const path = noTagInRule(url)
+                if (!isRuleOff(window.mitm, ns, path)) {
+                  const _path = addUrls(url)
+                  addUrl2(sec, _path, [tag])
                 }
               }
             } else {
               for (const url of arr) {
-                const rule = noTagInRule(url)
-                if (!isRuleOff(window.mitm, ns, rule)) {
-                  const _rule = addUrls(url)
-                  addUrl2(sec, _rule, [tag])
+                const path = noTagInRule(url)
+                if (!isRuleOff(window.mitm, ns, path)) {
+                  const _path = addUrls(url)
+                  addUrl2(sec, _path, [tag])
                 }
               }
             }
@@ -120,15 +120,15 @@ function itemlist(rerender) {
   }
   for (const ns in __tag3) {
     if (oneSite(ns)) {
-      const rules = __tag3[ns]
-      for (const rule in rules) {
-        if (!isRuleOff(window.mitm, ns, rule)) {
-          const _rule = addUrls(rule)
-          const secs = rules[rule]
+      const paths = __tag3[ns]
+      for (const path in paths) {
+        if (!isRuleOff(window.mitm, ns, path)) {
+          const _path = addUrls(path)
+          const secs = paths[path]
           for (const sec in secs) {
             const tags = secs[sec]
             if (sec.slice(0, 1)!==':') {
-              addUrl2(sec, _rule, Object.keys(tags))
+              addUrl2(sec, _path, Object.keys(tags))
             }
           }
         }
@@ -142,8 +142,8 @@ function itemlist(rerender) {
         const {pure, secs, tags} = _urls[url]
         if (pure) {
           for (const sec in secs) {
-            const _rule = addUrls(url)
-            addUrl2(sec, _rule, tags)
+            const _path = addUrls(url)
+            addUrl2(sec, _path, tags)
           }
         }
       }

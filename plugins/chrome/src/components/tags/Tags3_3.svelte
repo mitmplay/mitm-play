@@ -32,6 +32,7 @@ function clicked(e) {
 }
 
 function routetag(tags, item) {
+  const { rclass } = window.mitm.fn;
   let klas = items[item] ? 'rtag slc' : 'rtag';
   if (item.indexOf('url:')>-1) {
     klas += ' url'
@@ -39,7 +40,7 @@ function routetag(tags, item) {
     klas += tags.__tag2[ns][item] ? ' slc' : ''
     klas += ' r2'
   }
-  return klas
+  return `${klas} _${item.split(':').pop().replace(rclass, '-')}`
 }
 
 function title(item) {

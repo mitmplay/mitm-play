@@ -75,11 +75,11 @@ function urllist(tags, item) {
   obj = obj.map(noTagInRule).filter(uniq)
   return obj
 }
-function spacex(tags, item, rule) {
+function spacex(tags, item, path) {
   let klass = items[item] ? 'slc' : '';
   const { rclass, isRuleOff, tagsIn__tag3 } = window.mitm.fn;
-  isRuleOff(tags, ns, rule) && (klass += ' grey');
-  const tag = tagsIn__tag3(tags, ns, item, rule).join(' _')
+  isRuleOff(tags, ns, path) && (klass += ' grey');
+  const tag = tagsIn__tag3(tags, ns, path, item).join(' _')
   if (tag) {
     klass += ` _${tag}`
   }
@@ -110,8 +110,8 @@ function q(key) {
             <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
           </label> 
         </summary>
-        {#each urllist($tags, item) as rule}
-          <div class="spacex {spacex($tags, item, rule)}">{rule}</div>
+        {#each urllist($tags, item) as path}
+          <div class="spacex {spacex($tags, item, path)}">{path}</div>
         {/each}
       </details>
     {:else}

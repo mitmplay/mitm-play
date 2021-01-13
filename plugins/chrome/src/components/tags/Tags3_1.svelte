@@ -33,10 +33,10 @@ function xitems(tags) {
 }
 function xtags(path) {
   const { rclass } = window.mitm.fn;
-  const typs = namespace[path];
-  let arr = Object.keys(typs).filter(x=>x[0]!==':');
+  let secs = namespace[path];
+  let arr = Object.keys(secs).filter(x=>x[0]!==':');
   const klass = arr.map(x=>
-      Object.keys(typs[x]).
+      Object.keys(secs[x]).
       map(x=>x.
         split(':').
         pop().
@@ -44,7 +44,7 @@ function xtags(path) {
       ).
       join(' _')
     )
-  return `_${klass.join(' ')}`;
+  return `_${klass.join(' _')}`;
 }
 </script>
 

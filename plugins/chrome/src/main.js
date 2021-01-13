@@ -21,12 +21,12 @@ const sortTag = (a,b) => {
   if (a>b) return 1;
   return 0;
 }
-function noTagInRule(rule) {
-  const arr = rule.match(rmethod) // feat: tags in url
-  return arr ? (arr[1] ? `${arr[1]}:${arr[3]}` : arr[3]) : rule
+function noTagInRule(path) {
+  const arr = path.match(rmethod) // feat: tags in url
+  return arr ? (arr[1] ? `${arr[1]}:${arr[3]}` : arr[3]) : path
 }
-function isRuleOff(tags, ns, rule) {
-  const node = tags.__tag3[ns][rule]
+function isRuleOff(tags, ns, path) {
+  const node = tags.__tag3[ns][path]
   if (node) {
     let id1 = []
     let id2 = false
@@ -49,8 +49,8 @@ function isRuleOff(tags, ns, rule) {
   }
   return false
 }
-function tagsIn__tag3(tags, ns, sec, rule) {
-  const secs = tags.__tag3[ns][rule]
+function tagsIn__tag3(tags, ns, path, sec) {
+  const secs = tags.__tag3[ns][path]
   let arr = []
   if (secs) {
     arr = Object.keys(secs[sec.split(':')[0]])

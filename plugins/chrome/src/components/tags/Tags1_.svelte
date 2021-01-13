@@ -64,12 +64,11 @@ function routetag(item) {
   let itm = ''
   if ($tags.tgroup[item]) {
     for (const ns of browser.nss) {
-      const obj = $tags.__tag3[ns]
-      const urls = obj || []
+      const urls = $tags.__tag3[ns] || []
       for (const url in urls) {
-        const rules = urls[url]
-        for (const id in rules) {
-          const rule = rules[id]
+        const paths = urls[url]
+        for (const path in paths) {
+          const rule = paths[path]
           if (typeof rule!=='string') {
             for (const tag in rule) {
               if (item===tag.split(':').pop()) {
@@ -84,8 +83,7 @@ function routetag(item) {
   }
   let url = ''
   for (const ns of browser.nss) {
-    const obj = $tags.__tag3[ns]
-    const urls = obj || []
+    const urls = $tags.__tag3[ns] || []
     for (const _url in urls) {
       if (_url.match(`:${item}:`)) {
         url = 'url'
@@ -133,7 +131,13 @@ function enter(e) {
   if (node) {
     const {item} = e.target.dataset;
     const klass = item.replace(rclass, '-')
-    node.innerHTML = `._${klass}, .t2 .spacex._${klass}, .t3 summary._${klass} {background: yellow;}`
+    node.innerHTML = `
+    ._${klass},
+    .t2 .spacex._${klass},
+    .t3 summary._${klass},
+    .space3._${klass} {
+      background: yellow;
+    }`
   }
 }
 function leave(e) {
