@@ -53,8 +53,11 @@ function tagsIn__tag3(tags, ns, path, sec) {
   const secs = tags.__tag3[ns][path]
   let arr = []
   if (secs) {
-    arr = Object.keys(secs[sec.split(':')[0]])
-    arr = arr.map(x=>x.split(':').pop())
+    const _sec = sec.split(':')[0]
+    const tags = secs[_sec]
+    if (tags) {
+      arr = Object.keys(tags).map(x=>x.split(':').pop())
+    }
   }
   return arr
 }
