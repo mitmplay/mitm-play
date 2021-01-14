@@ -1,8 +1,11 @@
 <script>
 export let q;
-export let st;
+export let name;
+import { states } from './states.js';
 
 function btnOpen(e) {
+  const all = {...$states}
+  const st = all[name]
   st.expand = !st.expand
   const nodes = document.querySelectorAll(`${q} details`)
   if (st.expand) {
@@ -10,6 +13,7 @@ function btnOpen(e) {
   } else {
     nodes.forEach(node => node.removeAttribute('open'))
   }
+  states.set(all)
 }
 </script>
 

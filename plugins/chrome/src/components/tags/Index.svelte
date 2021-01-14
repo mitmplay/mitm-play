@@ -12,7 +12,7 @@ import Tags3 from './Tags3_.svelte';
 import Urls from './Urls.svelte';
 
 export let top = "23";
-let _resize = '[<<]';
+let _resize = '[>>]';
 let block = true;
 let cols = 3;
 

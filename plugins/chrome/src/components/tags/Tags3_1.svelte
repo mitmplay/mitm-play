@@ -6,10 +6,7 @@ import  Collapse from '../button/Collapse.svelte';
 
 export let items;
 export let ns;
-let st = {
-  collapse: true,
-  expand: false
-};
+
 let namespace;
 
 function q(key) {
@@ -50,8 +47,8 @@ function xtags(path) {
 
 <div class="border">
   <div class="space0">
-    <Collapse {st} q="{`.t3.${q(ns)}`}"></Collapse>
-    <Expand {st} q="{`.t3.${q(ns)}`}"></Expand>
+    <Collapse name="state3" q="{`.t3.${q(ns)}`}"></Collapse>
+    <Expand name="state3" q="{`.t3.${q(ns)}`}"></Expand>
     <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
   </div>
   <div class="t3 {q(ns)}">

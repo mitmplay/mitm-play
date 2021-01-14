@@ -5,10 +5,7 @@ import  Collapse from '../button/Collapse.svelte';
 
 export let items;
 export let ns;
-let st = {
-  collapse: true,
-  expand: false
-};
+
 function clicked(e) {
   const { resetRule2, resetRule3 } = window.mitm.fn;
   const {__tag1,__tag2,__tag3} = $tags;
@@ -93,8 +90,8 @@ function q(key) {
 {#if Object.keys(items).length}
 <div class="border">
   <div class="space0">
-    <Collapse {st} q="{`.t2.${q(ns)}`}"></Collapse>
-    <Expand {st} q="{`.t2.${q(ns)}`}"></Expand>
+    <Collapse name="state2" q="{`.t2.${q(ns)}`}"></Collapse>
+    <Expand name="state2" q="{`.t2.${q(ns)}`}"></Expand>
     <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
   </div>
   {#each itemlist(items) as item}

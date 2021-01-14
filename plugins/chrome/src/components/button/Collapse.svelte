@@ -1,12 +1,16 @@
 <script>
 export let q;
-export let st;
+export let name;
+import { states } from './states.js';
 
 function btnClose(e) {
+  const all = {...$states}
+  const st = all[name]
   st.expand = false
   st.collapse = true
   const nodes = document.querySelectorAll(`${q} details[open]`)
   nodes.forEach(node => node.removeAttribute('open'))
+  states.set(all)
 }
 </script>
 
