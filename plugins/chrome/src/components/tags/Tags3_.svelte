@@ -19,7 +19,7 @@ function istag(ns) {
 <td style="width:{_resize==='[<<]' ? 35 : 45}%; {cols===3 ? '' : 'display:none;'}">
 {#each Object.keys($tags.__tag3) as ns}
   {#if istag(ns)}
-    <Tags31 items={$tags.__tag3[ns]} {ns}/>
+    <Tags31 on:message items={$tags.__tag3[ns]} {ns}/>
   {/if}
 {/each}
 </td>

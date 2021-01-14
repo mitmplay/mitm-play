@@ -1,8 +1,8 @@
 <script>
 import { tags } from './stores.js';
 import Tags32 from './Tags3_2.svelte';
-import  Expand from '../button/Expand.svelte';
-import  Collapse from '../button/Collapse.svelte';
+import Expand from '../button/Expand.svelte';
+import Collapse from '../button/Collapse.svelte';
 
 export let items;
 export let ns;
@@ -47,8 +47,8 @@ function xtags(path) {
 
 <div class="border">
   <div class="space0">
-    <Collapse name="state3" q="{`.t3.${q(ns)}`}"></Collapse>
-    <Expand name="state3" q="{`.t3.${q(ns)}`}"></Expand>
+    <Collapse on:message name="state3" q="{`.t3.${q(ns)}`}"></Collapse>
+    <Expand on:message name="state3" q="{`.t3.${q(ns)}`}"></Expand>
     <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
   </div>
   <div class="t3 {q(ns)}">

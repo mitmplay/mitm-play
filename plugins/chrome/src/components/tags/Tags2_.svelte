@@ -1,8 +1,8 @@
 <script>
 export let cols;
-export let _resize;
 import { tags } from './stores.js';
 import Tags21 from './Tags2_1.svelte';
+import { states } from '../button/states.js';
 
 function oneSite(ns) {
   const {toRegex} = window.mitm.fn;
@@ -15,10 +15,10 @@ function oneSite(ns) {
 }
 </script>
 
-<td style="width:{_resize==='[<<]' ? 45 : 35}%; {cols>0 ? '' : 'display:none;'}">
+<td style="width:{$states.chevron==='[<<]' ? 45 : 35}%; {cols>0 ? '' : 'display:none;'}">
 {#each Object.keys($tags.__tag2) as ns}
   {#if oneSite(ns)}
-    <Tags21 items={$tags.__tag2[ns]} ns={ns}/>
+    <Tags21 on:message items={$tags.__tag2[ns]} ns={ns}/>
   {/if}
 {/each}
 </td>

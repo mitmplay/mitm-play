@@ -1,22 +1,19 @@
 <script>
-export let q;
-export let name;
+export let cols=3
 import { states } from './states.js';
-import { createEventDispatcher } from 'svelte';
 
-const dispatch = createEventDispatcher();
-
-function btnClose(e) {
+function resize(e) {
   const all = {...$states}
-  all[name] = false
-  const nodes = document.querySelectorAll(`${q} details[open]`)
-  nodes.forEach(node => node.removeAttribute('open'))
+  all.chevron = all.chevron==='[<<]' ? '[>>]' : '[<<]'
   states.set(all)
-  dispatch('message', {all, name})
 }
 </script>
 
-<button class="collapse" on:click="{btnClose}">[-]</button>
+<button
+class="f-right" 
+on:click="{resize}"
+style="{cols===3 ? '' : 'display:none;'}"
+>{$states.chevron}</button>
 
 <style>
 button {
@@ -31,5 +28,9 @@ button {
   font-family: Consolas, Lucida Console, Courier New, monospace;
   font-weight: 700;
   font-size: 10px;
+}
+.f-right {
+  float:right;
+  margin: 0;
 }
 </style>

@@ -2,22 +2,25 @@
 export let q;
 export let name;
 import { states } from './states.js';
+import { createEventDispatcher } from 'svelte';
+
+const dispatch = createEventDispatcher();
 
 function btnOpen(e) {
   const all = {...$states}
-  const st = all[name]
-  st.expand = !st.expand
+  all[name] = !all[name]
   const nodes = document.querySelectorAll(`${q} details`)
-  if (st.expand) {
+  if (all[name]) {
     nodes.forEach(node => node.setAttribute('open', ''))
   } else {
     nodes.forEach(node => node.removeAttribute('open'))
   }
   states.set(all)
+  dispatch('message', {all, name})
 }
 </script>
 
-<button class="expand" on:click="{btnOpen}">[<b>+</b>]</button>
+<button on:click class="expand" on:click="{btnOpen}">[<b>+</b>]</button>
 
 <style>
 button {

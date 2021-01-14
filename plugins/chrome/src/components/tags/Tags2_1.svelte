@@ -1,7 +1,7 @@
 <script>
 import { tags } from './stores.js';
-import  Expand from '../button/Expand.svelte';
-import  Collapse from '../button/Collapse.svelte';
+import Expand from '../button/Expand.svelte';
+import Collapse from '../button/Collapse.svelte';
 
 export let items;
 export let ns;
@@ -90,8 +90,8 @@ function q(key) {
 {#if Object.keys(items).length}
 <div class="border">
   <div class="space0">
-    <Collapse name="state2" q="{`.t2.${q(ns)}`}"></Collapse>
-    <Expand name="state2" q="{`.t2.${q(ns)}`}"></Expand>
+    <Collapse on:message name="state2" q="{`.t2.${q(ns)}`}"></Collapse>
+    <Expand on:message name="state2" q="{`.t2.${q(ns)}`}"></Expand>
     <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
   </div>
   {#each itemlist(items) as item}

@@ -1,7 +1,8 @@
 <script>
 import { onMount } from 'svelte';
 import { tags } from './stores.js';
-
+import { states } from '../button/states.js';
+import  Chevron from '../button/Chevron.svelte';
 import BStatic from '../box/BStatic.svelte';
 import BHeader from '../box/BHeader.svelte';
 import BTable from '../box/BTable.svelte';
@@ -12,7 +13,7 @@ import Tags3 from './Tags3_.svelte';
 import Urls from './Urls.svelte';
 
 export let top = "23";
-let _resize = '[>>]';
+
 let block = true;
 let cols = 3;
 
@@ -48,8 +49,21 @@ function oneClick(e) {
   const {_cols} = e.target.dataset;
   cols = +_cols;
 }
-function resize(e) {
-  _resize = _resize==='[<<]' ? '[>>]' : '[<<]'
+function handleMessage(event) {
+  const {all, name} = event.detail
+  let q
+  if (name==='state2') {
+    all.chevron = all.state2 ? '[<<]' : '[<<]'
+    all.state3 = false
+    q = '.t3'
+  } else if (name==='state3') {
+    all.chevron = !all.state3 ? '[>>]' : '[>>]'
+    all.state2 = false
+    q = '.t2'
+  }
+  const nodes = document.querySelectorAll(`${q} details[open]`)
+  nodes.forEach(node => node.removeAttribute('open'))  
+  states.set(all)
 }
 </script>
 
@@ -63,13 +77,13 @@ function resize(e) {
           <button data-_cols=3 on:click="{oneClick}">[full]</button>
           <button data-_cols=2 on:click="{oneClick}">[two]</button>
           <button data-_cols=1 on:click="{oneClick}">[one]</button>
-          <button class="f-right" on:click="{resize}" style="{cols===3 ? '' : 'display:none;'}">{_resize}</button>
+          <Chevron/>
         </BHeader>
         <BTable>
           <tr class="set-tags">
             <Tags1 {cols}/>
-            <Tags2 {cols} {_resize}/>
-            <Tags3 {cols} {_resize}/>
+            <Tags2 {cols} on:message={handleMessage}/>
+            <Tags3 {cols} on:message={handleMessage}/>
           </tr>
         </BTable>
       </BStatic>  
@@ -129,9 +143,5 @@ button {
   font-family: Consolas, Lucida Console, Courier New, monospace;
   font-weight: 700;
   font-size: 10px;
-}
-.f-right {
-  float:right;
-  margin: 0;
 }
 </style>
