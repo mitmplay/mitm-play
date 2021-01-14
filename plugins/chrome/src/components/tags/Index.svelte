@@ -12,6 +12,7 @@ import Tags3 from './Tags3_.svelte';
 import Urls from './Urls.svelte';
 
 export let top = "23";
+let _resize = '[<<]';
 let block = true;
 let cols = 3;
 
@@ -47,6 +48,9 @@ function oneClick(e) {
   const {_cols} = e.target.dataset;
   cols = +_cols;
 }
+function resize(e) {
+  _resize = _resize==='[<<]' ? '[>>]' : '[<<]'
+}
 </script>
 
 <Button/>
@@ -59,12 +63,13 @@ function oneClick(e) {
           <button data-_cols=3 on:click="{oneClick}">[full]</button>
           <button data-_cols=2 on:click="{oneClick}">[two]</button>
           <button data-_cols=1 on:click="{oneClick}">[one]</button>
+          <button class="f-right" on:click="{resize}" style="{cols===3 ? '' : 'display:none;'}">{_resize}</button>
         </BHeader>
         <BTable>
           <tr class="set-tags">
             <Tags1 {cols}/>
-            <Tags2 {cols}/>
-            <Tags3 {cols}/>
+            <Tags2 {cols} {_resize}/>
+            <Tags3 {cols} {_resize}/>
           </tr>
         </BTable>
       </BStatic>  
@@ -124,5 +129,9 @@ button {
   font-family: Consolas, Lucida Console, Courier New, monospace;
   font-weight: 700;
   font-size: 10px;
+}
+.f-right {
+  float:right;
+  margin: 0;
 }
 </style>

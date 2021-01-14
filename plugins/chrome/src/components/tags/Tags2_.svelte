@@ -1,5 +1,6 @@
 <script>
 export let cols;
+export let _resize;
 import { tags } from './stores.js';
 import Tags21 from './Tags2_1.svelte';
 
@@ -14,16 +15,10 @@ function oneSite(ns) {
 }
 </script>
 
-<td style="{cols>0 ? '' : 'display:none;'}">
+<td style="width:{_resize==='[<<]' ? 45 : 35}%; {cols>0 ? '' : 'display:none;'}">
 {#each Object.keys($tags.__tag2) as ns}
   {#if oneSite(ns)}
     <Tags21 items={$tags.__tag2[ns]} ns={ns}/>
   {/if}
 {/each}
 </td>
-
-<style>
-  td {
-    width: 45%;
-  }
-</style>
