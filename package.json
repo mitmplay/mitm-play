@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.8.221",
+  "version": "0.8.222",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "coverage": "jest --coverage",
-    "start": "node --inspect ./mitm-play.js",
+    "start": "node --max-http-header-size=81000 --inspect ./mitm-play.js",
     "client": "rollup -wc ws-client/rollup.js",
     "standard": "standard --verbose | snazzy",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand",
