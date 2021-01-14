@@ -53,7 +53,7 @@ module.exports = ({ reqs, resp, match }) => {
       parse && (jsonResp = parse(jsonResp))
       respBody = JSON.stringify(jsonResp, null, 2)
     } catch (error) {
-      console.log(c.redBright('>>> Error JSON.stringify'))
+      console.log(c.bgYellowBright.bold.red('>>> Error JSON.stringify'))
       console.log(error)
     }
   }

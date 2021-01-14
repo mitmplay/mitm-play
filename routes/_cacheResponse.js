@@ -73,12 +73,12 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             resp2 && (resp = { ...resp, ...resp2 })
           }
         } catch (error) {
-          const msg1 = c.red(`${b} cache er (${tilde(fpath1)})`)
+          const msg1 = `${b} cache er (${tilde(fpath1)})`
           if (__args.fullog) {
-            const msg2 = c.red(`    Error in ${error}`)
-            console.log(`${msg1}\n${msg2}`) // feat: fullog  
+            const msg2 = `    Error in ${error}`
+            console.log(c.bgYellowBright.bold.red(`${msg1}\n${msg2}`)) // feat: fullog  
           } else {
-            console.log(msg1)
+            console.log(c.bgYellowBright.bold.red(msg1))
           }
           resp = {
             url,

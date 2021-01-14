@@ -4,7 +4,11 @@ async function log(msg) {
   const bypass = !msg.match(' frame')
   const { argv, __flag } = global.mitm
   if (bypass || (argv.debug || __flag['page-load'])) {
-    console.log(c.red(`(*${msg}*)`))
+    if (msg.match('undefined')) {
+      const undef = c.red('undefined')
+      msg = msg.replace('undefined', undef)
+    }
+    console.log(c.gray(`(*${msg}*)`))
   }
 }
 
@@ -64,7 +68,7 @@ async function evalPage(page, _page, msg, ifrm=false) {
       grey(page, 'detached-1! frame')
     }
   } else if (page) {
-    await log(`${msg} ${_page} ${msg1}${msg2}`)
+    await log(`${msg} ${_page} ${c.blue(msg1)}${msg2}`)
     try {
       await page.waitForNavigation()
       await page.evaluate(pg => window['xplay-page'] = pg, _page)

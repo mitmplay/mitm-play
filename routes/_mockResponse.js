@@ -68,8 +68,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
               resp.body = await fs.readFile(fpath1)
             } else {
               const b = browser[reqs.browserName]
-              msg = c.redBright(`${b} mock err ${_root}/(${fileMethod} or ${file}) did not exists!`)
-              // __args.fullog && console.log(msg) // feat: fullog
+              msg = c.bgYellowBright.bold.red(`${b} mock err (${_root}/${fileMethod} or ${file}) did not exists!`)
               console.log(msg)
               route.continue()
               return false
