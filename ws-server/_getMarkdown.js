@@ -1,7 +1,7 @@
 // feat: markdown
 module.exports = () => {
   const { __args, path, fn } = global.mitm 
-  const { _sortLength } = fn
+  const { _sort } = fn
   const {app, route} = path
   const data = {_readme_: {}}
   global.mitm.files.markdown.forEach(fpath => {
@@ -25,8 +25,7 @@ module.exports = () => {
       // content
     }
   })
-  const sorted = _sortLength(data['<b>Mitm-play</b>'])
-  data['<b>Mitm-play</b>'] = sorted
+  data['<b>Mitm-play</b>'] = _sort(data['<b>Mitm-play</b>'])
   if (__args.verbose && __args.verbose.match('getMarkdown')) {
     console.log(data)
   }

@@ -4,7 +4,7 @@ const c = require('ansi-colors')
 const chokidar = require('chokidar')
 const clearModule = require('clear-module');
 
-const { _keyLength, _sortLength } = require('./fn/_key-length')
+const { _keyLength, _sortLength, _sort } = require('./fn/_key-length')
 const { _routeSet, toRegex } = require('./fn/_route-set')
 const { formToObj, objToForm } = require('./fn/form')
 const { _proxy, _noproxy } = require('./fn/_proxies')
@@ -46,6 +46,7 @@ module.exports = () => {
     _wsmitm,
     _proxy,
     _clear,
+    _sort,
     _tag4,
     formToObj,
     objToForm,

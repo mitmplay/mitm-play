@@ -9,10 +9,20 @@ function _sortLength(obj) {
   for (const str of arr) {
     sorted[str] = obj[str]
   }
+  return sorted
+}
+
+function _sort(obj) {
+  const sorted = {}
+  const arr = Object.keys(obj).sort()
+  for (const str of arr) {
+    sorted[str] = obj[str]
+  }
   return sorted  
 }
 
 module.exports = {
   _keyLength,
-  _sortLength
+  _sortLength,
+  _sort
 }
