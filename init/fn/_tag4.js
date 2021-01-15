@@ -36,7 +36,7 @@ const tags = function (_ns) {
     const node = tag4[namespace]
     for (const id in ns) {
       const [typ, tag] = id.split(':')
-      if (ns[id]) {
+      if (ns[id].state) { // feat: update __tag2
         if (tag) {
           if (node[typ] === undefined) {
             node[typ] = [typ]
