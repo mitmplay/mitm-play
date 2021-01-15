@@ -104,7 +104,7 @@ function _routeSet (r, namespace, print = false) {
           const arr = site.tags.split(/ +/)
           for (const tag of arr) {
             nsstag[tag] = true
-            tags[tag] = true
+            tags[tag] = {state: true} // feat: update __tag2
           }
         }
         // feat: tags in url
@@ -113,7 +113,7 @@ function _routeSet (r, namespace, print = false) {
           const tag = `url:${method[2].split(':')[0]}`
           nss[`:${typ}`] = ''
           nsstag[tag] = true
-          tags[tag] = true
+          tags[tag] = {state: true} // feat: update __tag2
         }
 
         if (site.contentType) {
