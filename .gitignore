@@ -3,6 +3,7 @@ log
 coverage
 .cjsescache
 chrome-profile
+user-route/_bak_
 _assets_
 
 # Dependency directories
