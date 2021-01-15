@@ -42,7 +42,7 @@ function _routeSet (r, namespace, print = false) {
   const _typlist = function (typs) {
     const typlist = Object.keys(r).filter(x => {
       if (x.startsWith(`${typs}:`)) {
-        tags[x] = true
+        tags[x] = {state: true} // feat: update __tag2
         return true
       }
     })
