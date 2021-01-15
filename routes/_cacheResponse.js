@@ -18,6 +18,10 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
   const { __args, __flag, fn: { _skipByTag, tilde } } = global.mitm
   let resp, resp2, msg
 
+  if (match && match.route.debug) {
+    debugger
+  }
+
   if (match && !_skipByTag(match, 'cache')) {
     const { url } = reqs
     const { route } = match
@@ -57,8 +61,11 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           }
           if (__flag.cache && !match.hidden && !hidden) {
             if (!__args.ommit.cache) {
+              const fname = fname1.split('/').pop()
               if (actyp && route.seq) {
-                msg += c.blueBright(`[${actyp}:${fname1.split('/').pop()}]`)
+                msg += c.blueBright(`[${actyp}:${fname}]`)
+              } else {
+                msg += `:${fname}`
               }
               msg = route.path ? c.green(msg) :  c.greenBright(msg)
               __args.fullog && console.log(msg) // feat: fullog
@@ -104,10 +111,13 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             __args.fullog && console.log(msg) // feat: fullog
           }
         } else if (ctype(match, resp)) {
+          const fname = fname1.split('/').pop()
           msg = c.magentaBright(msg)
           if (route.seq && actyp) {
             const color = {mix: 'magenta'}[actyp] || 'red'
-            msg += c[color](`[${actyp}:${fname1.split('/').pop()}]`)
+            msg += c[color](`[${actyp}:${fname}]`)
+          } else {
+            msg += `:${fname}`
           }
           if (__flag.cache && !match.hidden) {
             if (hidden !== 2) {

@@ -30,6 +30,10 @@ const mockResponse = async function ({ reqs, route }, _3d) {
   const match = _3d ? search('_global_') : matched(search, reqs)
   let resp, msg = ''
 
+  if (match && match.route.debug) {
+    debugger
+  }
+
   if (match && !_skipByTag(match, 'mock')) {
     const { response, hidden } = match.route
     resp = mock(reqs, match)

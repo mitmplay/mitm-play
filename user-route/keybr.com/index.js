@@ -5,9 +5,10 @@ const css = `
 const route = {
   'mock:1.no-ads': {
     '/www.google-analytics.com/(analytics.js)': {
-      file: ':1'
+      path: './dodol',
+      // file: ':1'
     },
-    '#201:google.+.com': '',
+    // '#201:google.+.com': '',
     'doubleclick.net': '',
     ':test:test.com': ''
   },
@@ -19,10 +20,14 @@ const route = {
   css: { 
     'GET#202!:1.no-ads:/assets/[a-z0-9]+': `=>${css}`
   },
+  workspace: '_assets_/',
   cache: {
-    '/': {
-      contentType: ['json'],
-      tags: '3.caching'
+    '/assets/(.+).css': {
+      contentType: ['css'],
+      path: '_assets_/',
+      file: ':1.css',
+      tags: '3.caching',
+      debug: true
     }
   },
   log: {
