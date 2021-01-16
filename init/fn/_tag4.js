@@ -74,11 +74,8 @@ const tags = function (_ns) {
       const urls = ns[id]
       for (url in urls) {
         const secs = urls[url]
-        if (typeof secs==='string') {
-          continue
-        }
-        for (tag in secs) {
-          if (secs[tag]===true) {
+        for (tag in secs.tags) {
+          if (secs.tags[tag]===true) { // feat: update __tag3
             tags[tag] = true
           }
         }
