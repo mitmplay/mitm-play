@@ -25,6 +25,9 @@ const route = {
       // debug: true
     }
   },
+  'log:select~1': {},
+  'log:select~2': {},
+  'log:select~3': {},
   log: {
     '/': {
       contentType: ['html'],
