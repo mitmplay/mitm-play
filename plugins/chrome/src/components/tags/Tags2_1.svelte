@@ -103,7 +103,7 @@ function q(key) {
             <input type="checkbox"
             data-item={item}
             on:click={clicked} 
-            bind:checked={items[item]}/>
+            bind:checked={items[item].state}/> <!-- feat: update __tag2 -->
             <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
           </label> 
         </summary>
@@ -117,7 +117,7 @@ function q(key) {
           <input type="checkbox"
           data-item={item}
           on:click={clicked} 
-          bind:checked={items[item]}/>
+          bind:checked={items[item].state}/> <!-- feat: update __tag2 -->
           <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
         </label>
       </div>
