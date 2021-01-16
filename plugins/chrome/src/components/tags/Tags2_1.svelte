@@ -43,9 +43,9 @@ function itemlist(items) {
 function routetag(item) {
   let klas
   if (item.match(':')) {
-    klas = items[item].state ? 'rtag slc' : 'rtag';
+    klas = items[item].state ? 'rtag slc' : 'rtag'; // feat: update __tag2
   } else {
-    klas = items[item].state ? 'stag slc' : '';
+    klas = items[item].state ? 'stag slc' : ''; // feat: update __tag2
   }
   if (item.match('url:')) {
     klas += ' url'
@@ -73,7 +73,7 @@ function urllist(tags, item) {
   return obj
 }
 function spacex(tags, item, path) {
-  let klass = items[item].state ? 'slc' : '';
+  let klass = items[item].state ? 'slc' : ''; // feat: update __tag2
   const { rclass, isRuleOff, tagsIn__tag3 } = window.mitm.fn;
   isRuleOff(tags, ns, path) && (klass += ' grey');
   const tag = tagsIn__tag3(tags, ns, path, item).join(' _')
@@ -103,7 +103,7 @@ function q(key) {
             <input type="checkbox"
             data-item={item}
             on:click={clicked} 
-            bind:checked={items[item].state}/> <!-- feat: update __tag2 -->
+            bind:checked={items[item].state}/> <!-- // feat: update __tag2 -->
             <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
           </label> 
         </summary>
@@ -117,7 +117,7 @@ function q(key) {
           <input type="checkbox"
           data-item={item}
           on:click={clicked} 
-          bind:checked={items[item].state}/> <!-- feat: update __tag2 -->
+          bind:checked={items[item].state}/> <!-- // feat: update __tag2 -->
           <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
         </label>
       </div>
