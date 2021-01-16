@@ -25,8 +25,17 @@ function routerSet (router, typ, method, str) {
 
 const fkeys = x => x !== 'tags' && x !== 'contentType'
 
-function _routeSet (r, namespace, print = false) {
+function _routeSet (_r, namespace, print = false) {
   const { routes, __mock } = global.mitm
+  const r = {}
+  for (let key in _r) {
+    const id = key.replace(/ +/, ' ').trim()
+    if (id===key) {
+      r[key] = _r[key]
+    } else {
+      r[id] = _r[key]
+    }
+  }
   routes[namespace] = r
   if (namespace === '_global_') {
     routes._global_.mock = {

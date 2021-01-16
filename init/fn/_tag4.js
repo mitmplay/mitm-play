@@ -8,7 +8,7 @@ const _setlogs = require('./_setlogs')
  * @param {namespace} _ns
  */
 const tags = function (_ns) {
-  const { router, __tag2 } = global.mitm
+  const { __tag1, __tag2, router } = global.mitm
   const tag4 = {}
   let routr = {}
   let tag2 = {}
@@ -42,10 +42,21 @@ const tags = function (_ns) {
             node[typ] = [typ]
           }
           node[typ].push(id)
-          tags[tag] = true
-        } else {
-          tags[typ] = true
+          const _tags = ns[id].tags
+          if (_tags && ns[id].state) {
+            let tagOk = true // feat: update __tag2
+            for (const id of _tags) {
+              if (__tag1[id]===false) {
+                tagOk = false
+                break
+              }
+            }
+            if (tagOk) {
+              node[typ].push(`${id} ${_tags.join(' ')}`)
+            }
+          }
         }
+        tags[typ] = true
       }
     }
     global.mitm.routes[namespace].jtags = Object.keys(tags).sort()

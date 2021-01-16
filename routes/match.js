@@ -58,6 +58,27 @@ const searchArr = ({ typ: typs, url, browserName }) => {
   }
 }
 
+function checkTags(tg3, typ, key) {
+  let isTagsOk = true
+  let str = key
+  const arrTag = str.match(rmethod)
+  if (arrTag) {
+    const [, method,, path] = arrTag          // feat: tags in url
+    str = method ? `${method}:${path}` : path // remove from url
+  }
+  const typ3 = typ.split(':')[0]
+  if (tg3[str] && tg3[str][typ3]) {
+    const nodes = tg3[str][typ3]
+    for (const tag in nodes) {
+      if (nodes[tag] === false) {
+        isTagsOk = false
+        break
+      }
+    }
+  }
+  return isTagsOk
+}
+
 const searchFN = (typs, { url, method, browserName }) => {
 // const {router,routes, data} = global.mitm;
   const { __args, __tag3, router, routes } = global.mitm
@@ -83,23 +104,8 @@ const searchFN = (typs, { url, method, browserName }) => {
       const tg3 = __tag3[namespace] || {}
 
       for (const key in route) {
-        let isTagsOk = true
-        let str = key
-        const arrTag = str.match(rmethod)
-        if (arrTag) {
-          const [, method,, path] = arrTag          // feat: tags in url
-          str = method ? `${method}:${path}` : path // remove from url
-        }
-        const typ3 = typ.split(':')[0]
-        if (tg3[str] && tg3[str][typ3]) {
-          const nodes = tg3[str][typ3]
-          for (const tag in nodes) {
-            if (nodes[tag] === false) {
-              isTagsOk = false
-              break
-            }
-          }
-        }
+        let isTagsOk = checkTags(tg3, typ, key)
+
         const arr = isTagsOk && url.match(obj[key])
         const _m = obj[`${key}~method`]
 
