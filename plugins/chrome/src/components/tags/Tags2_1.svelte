@@ -41,14 +41,23 @@ function itemlist(items) {
 }
 
 function routetag(item) {
+  const {__tag1, __tag2} = window.mitm
+  const tags = __tag2[ns][item].tags || [] // feat: update __tag2
+
   let klas
   if (item.match(':')) {
-    klas = items[item] ? 'rtag slc' : 'rtag';
+    klas = items[item].state ? 'rtag slc' : 'rtag'; // feat: update __tag2
   } else {
-    klas = items[item] ? 'stag slc' : '';
+    klas = items[item].state ? 'stag slc' : ''; // feat: update __tag2
   }
   if (item.match('url:')) {
     klas += ' url'
+  }
+  for (const tag of tags) {
+    if (__tag1[tag]===false) {
+      klas += ' grey'
+      break
+    }
   }
   return klas
 }
@@ -58,11 +67,20 @@ function show(item) {
   if (v===undefined) return k;
   return `${v}{${k}}`;
 }
-function isGroup(item) {
-  return window.mitm.routes[ns][item]
+function linkTags(item) {
+  const {tags} = window.mitm.__tag2[ns][item] // feat: update __tag2
+  const linkTags = tags && tags.length ? `[t:${tags.join(',')}]` : ''
+  return linkTags;
 }
-function urllist(tags, item) {
-  const { noTagInRule, uniq } = window.mitm.fn;
+function isGroup(item) {
+  return window.mitm.__tag2[ns][item] // feat: update __tag2
+}
+function urllist(_tags, item) {
+  const {__tag2, fn: { noTagInRule, uniq }} = window.mitm;
+  const {tags} = __tag2[ns][item] // feat: update __tag2
+  if (tags && tags.length) {
+    item = `${item} ${tags.join(' ')}`
+  }
   let obj = window.mitm.routes[ns][item]
   if (obj===undefined) {
     obj = []
@@ -73,7 +91,7 @@ function urllist(tags, item) {
   return obj
 }
 function spacex(tags, item, path) {
-  let klass = items[item] ? 'slc' : '';
+  let klass = items[item].state ? 'slc' : ''; // feat: update __tag2
   const { rclass, isRuleOff, tagsIn__tag3 } = window.mitm.fn;
   isRuleOff(tags, ns, path) && (klass += ' grey');
   const tag = tagsIn__tag3(tags, ns, path, item).join(' _')
@@ -103,8 +121,9 @@ function q(key) {
             <input type="checkbox"
             data-item={item}
             on:click={clicked} 
-            bind:checked={items[item]}/>
+            bind:checked={items[item].state}/> <!-- // feat: update __tag2 -->
             <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
+            <span class="link-tags">{linkTags(item)}</span>
           </label> 
         </summary>
         {#each urllist($tags, item) as path}
@@ -117,8 +136,9 @@ function q(key) {
           <input type="checkbox"
           data-item={item}
           on:click={clicked} 
-          bind:checked={items[item]}/>
+          bind:checked={items[item].state}/> <!-- // feat: update __tag2 -->
           <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
+          <span class="link-tags">{linkTags(item)}</span>
         </label>
       </div>
     {/if}
@@ -142,6 +162,10 @@ summary label {
 summary.space1 {
   padding-left: 5px;
 }
+.link-tags {
+  font-style: italic;
+  margin-left: -8px;
+}
 .space0 {
   line-height: 1.5;
   font-size: medium;
@@ -162,9 +186,12 @@ summary.space1 {
 }
 .spacex {
   padding-left: 30px;
-  color: grey;
+  color: #ecd7d7;
   font-size: 12px;
   font-family: monospace;
+}
+.space1.rtag.grey {
+  color: #d18a8a;
 }
 .spacex.slc {
   color: blueviolet;

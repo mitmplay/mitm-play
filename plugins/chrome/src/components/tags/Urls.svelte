@@ -37,7 +37,7 @@ function oneSite(ns) {
 
 function itemlist(rerender) {
   console.log('rerender...');
-  const { __tag2, __tag3, __urls } = window.mitm;
+  const { __tag1, __tag2, __tag3, __urls } = window.mitm;
   const { rmethod, noTagInRule, isRuleOff } = window.mitm.fn;
   const { routes } = window.mitm
   let urls = {}
@@ -77,8 +77,9 @@ function itemlist(rerender) {
   for (const ns in __tag2) {
     if (oneSite(ns)) {
       const secs =  __tag2[ns]
-      for (const sec in secs) {
-        if (secs[sec] && !sec.match(/(flag|args):/)) {
+      for (let sec in secs) {
+        const tag2 = secs[sec]
+        if (tag2.state && !sec.match(/(flag|args):/)) {
           if (sec.match('url:')) {
             const paths =  __tag3[ns]
             for (const path in paths) {
@@ -94,6 +95,20 @@ function itemlist(rerender) {
               }
             }
           } else if (sec.match(':')) {
+            let skip = false
+            const tags = tag2.tags || []
+            for (const tag of tags) {
+              if (__tag1[tag]===false) {
+                skip = true
+                break
+              }
+            }
+            if (skip) {
+              continue;
+            }
+            if (tags.length) {
+              sec = `${sec} ${tags.join(' ')}`
+            }
             const tag = sec.split(':')[1];
             let arr = routes[ns][sec]
             if (!Array.isArray(arr)) {

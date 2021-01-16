@@ -3,6 +3,7 @@ log
 coverage
 .cjsescache
 chrome-profile
+_assets_
 
 # Dependency directories
 node_modules/

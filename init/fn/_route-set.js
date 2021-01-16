@@ -25,8 +25,17 @@ function routerSet (router, typ, method, str) {
 
 const fkeys = x => x !== 'tags' && x !== 'contentType'
 
-function _routeSet (r, namespace, print = false) {
+function _routeSet (_r, namespace, print = false) {
   const { routes, __mock } = global.mitm
+  const r = {}
+  for (let key in _r) {
+    const id = key.replace(/ +/, ' ').trim()
+    if (id===key) {
+      r[key] = _r[key]
+    } else {
+      r[id] = _r[key]
+    }
+  }
   routes[namespace] = r
   if (namespace === '_global_') {
     routes._global_.mock = {
@@ -41,8 +50,17 @@ function _routeSet (r, namespace, print = false) {
 
   const _typlist = function (typs) {
     const typlist = Object.keys(r).filter(x => {
-      if (x.startsWith(`${typs}:`)) {
-        tags[x] = true
+      const [sec, _tags] = x.split(':') // ie: 'css:1.no-ads active': {...}
+      if (sec===typs) {
+        if (_tags) {
+          const arr = _tags.split(/ +/)
+          const tag = `${sec}:${arr.shift()}`
+          if (arr.length) {
+            tags[tag] = {state: true, tags: arr} // feat: update __tag2  
+          } else {
+            tags[x] = {state: true} // feat: update __tag2
+          }
+        }
         return true
       }
     })
@@ -104,7 +122,7 @@ function _routeSet (r, namespace, print = false) {
           const arr = site.tags.split(/ +/)
           for (const tag of arr) {
             nsstag[tag] = true
-            tags[tag] = true
+            tags[tag] = {state: true} // feat: update __tag2
           }
         }
         // feat: tags in url
@@ -113,7 +131,7 @@ function _routeSet (r, namespace, print = false) {
           const tag = `url:${method[2].split(':')[0]}`
           nss[`:${typ}`] = ''
           nsstag[tag] = true
-          tags[tag] = true
+          tags[tag] = {state: true} // feat: update __tag2
         }
 
         if (site.contentType) {

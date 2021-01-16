@@ -137,12 +137,12 @@ function routeSort (fn) { // feat: upadte tags
     for (const id in tag2) {
       const mainTag = id.split(':')
       tagX[mainTag[1] || id] = !flag
-      tag2[id] = !flag
+      tag2[id].state = !flag // feat: update __tag2
       if (flag) {
         // can be improve!!!
         for (const d of flag) {
           if (id === d || mainTag[1] === d) {
-            tag2[id] = true
+            tag2[id].state = true // feat: update __tag2
             tagX[d] = true
           }
         }
