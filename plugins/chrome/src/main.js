@@ -31,14 +31,13 @@ function isRuleOff(tags, ns, path) {
     let id1 = []
     let id2 = false
     for (const id in node) {
-      if (typeof node[id]!=='string') {
-        for (const tag in node[id]) {
-          if (node[id][tag]) {
-            id1.push(id)
-          } else if (node[id][tag]===false) {
-            id2 = id
-            break
-          }
+      const tags = node[id].tags // feat: update __tag3
+      for (const tag in tags) {
+        if (tags[tag]) {
+          id1.push(id)
+        } else if (tags[tag]===false) {
+          id2 = id
+          break
         }
       }
     }
@@ -103,22 +102,22 @@ function resetRule3(tags, item, _ns) {
     for (let url in urls) {
       const typs = urls[url];
       for (let typ in typs) {
-        const namespace3 = typs[typ];
-        for (let itm in namespace3) {
-          if (item===itm) {
-            namespace3[itm] = flag;
+        const tags = typs[typ].tags; // feat: update __tag3
+        for (let tag in tags) {
+          if (item===tag) {
+            tags[tag] = flag;
           }
-          const id = itm.split('url:').pop()
+          const id = tag.split('url:').pop()
           const [group2, id2] = id.split('~')
 
           if (group1===group2) {
             if (tag1) {
-              namespace3[itm] =  __tag1[id] || false;
+              tags[tag] =  __tag1[id] || false;
             } else {
               if (id2===undefined) {
-                namespace3[itm] = namespace2[item].state
+                tags[tag] = namespace2[item].state
               } else if (id1!==id2) {
-                namespace3[itm] = false;
+                tags[tag] = false;
               }
             }
           }

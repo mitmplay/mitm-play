@@ -14,13 +14,13 @@ function clicked(e) {
     const {item: i} = e.target.dataset;
     const [group1, id1] = i.split('url:').pop().split('~');
 
-    for (let itm in _item) {
+    for (let itm in _item.tags) { // feat: update __tag3
       const [group2, id2] = itm.split('url:').pop().split('~');
       if (group1===group2 && item!==itm) {
         if (id2===undefined) {
-          _item[itm] = _item[i]
+          _item.tags[itm] = _item.tags[i]
         } else if (id1!==undefined && id1!==id2) {
-          _item[itm] = false;
+          _item.tags[itm] = false;
         }
       }
     }
@@ -49,7 +49,7 @@ function title(item) {
 }
 function xitems(tags) {
   const {uniq, sortTag} = window.mitm.fn;
-  const arr = Object.keys(items)
+  const arr = Object.keys(items.tags) // feat: update __tag3
   if (tags.__tag2[ns][item]!==undefined) {
     arr.push(item)
   }
@@ -74,7 +74,7 @@ function check(item) {
         <input type="checkbox"
         data-item={item}
         on:click={clicked} 
-        bind:checked={items[item]}/>
+        bind:checked={items.tags[item]}/>
         <span>{title(item)}</span>      
       </label>
     {/if}

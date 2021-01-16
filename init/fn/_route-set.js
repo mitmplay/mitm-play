@@ -96,9 +96,9 @@ function _routeSet (_r, namespace, print = false) {
     }
     const nss = urls[str]
     if (nss[typ] === undefined) {
-      nss[typ] = {}
+      nss[typ] = {tags: {}, note: ''}
     }
-    return {nss, nsstag: nss[typ]}
+    return {tag3: nss[typ]} // feat: update __tag3
   }
   function addType (typ) {
     router[typ] = {}
@@ -111,26 +111,25 @@ function _routeSet (_r, namespace, print = false) {
           if (Array.isArray(site.tags)) {
             site.tags = site.tags.join(' ')
           }
-          const {nss, nsstag} = _nsstag(typ, str)
+          const {tag3} = _nsstag(typ, str) // feat: update __tag3
           const ctype = site.contentType ? `[${site.contentType.join(',')}]` : ''
           const keys = Object.keys(site).filter(fkeys).join(',')
-          nss[`:${typ}`] = `${ctype}<${keys}>`.replace('<>', '')
+          tag3.note = `${ctype}<${keys}>`.replace('<>', '') // feat: update __tag3
 
           if (site.tags.match(':')) {
             throw new Error('char ":" cannot be included in tags!')
           }
           const arr = site.tags.split(/ +/)
           for (const tag of arr) {
-            nsstag[tag] = true
+            tag3.tags[tag] = true // feat: update __tag3
             tags[tag] = {state: true} // feat: update __tag2
           }
         }
         // feat: tags in url
         if (str.match(tgInUrl) && method[2]!=='hidden:') {
-          const {nss, nsstag} = _nsstag(typ, str)
+          const {tag3} = _nsstag(typ, str)
           const tag = `url:${method[2].split(':')[0]}`
-          nss[`:${typ}`] = ''
-          nsstag[tag] = true
+          tag3.tags[tag] = true // feat: update __tag3
           tags[tag] = {state: true} // feat: update __tag2
         }
 
