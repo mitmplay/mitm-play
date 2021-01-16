@@ -26,11 +26,10 @@ function xitems(tags) {
   const namespace = __tag3[ns];
   const typs = namespace[path];
   let arr = Object.keys(typs);
-  arr = arr.filter(x=>x[0]!==':')
   return arr;
 }
 function xtags(tags, item) {
-  const arr = Object.keys(items[item])
+  const arr = Object.keys(items[item].tags) // feat: update __tag3
   const map = arr.map(x => x.split(':').pop())
   return map.sort().join(' ')
 }
@@ -40,7 +39,7 @@ function xtags(tags, item) {
   <details>
     <summary class="space2 {active(item)}">
       {title(item)}
-      <span class="prop">{items[`:${item}`]}</span>
+      <span class="prop">{items[item].note||''}</span>
       <span class="tags">{`<${xtags($tags, item)}>`}</span>
     </summary>
     <Tags33 items={items[item]} {item} {path} {ns}/>
@@ -63,7 +62,7 @@ details summary .tags {
   color: green;
 }
 details summary .prop {
-  color: #dddddd
+  color: #c59494
 }
 summary.space1,
 summary.space2 {

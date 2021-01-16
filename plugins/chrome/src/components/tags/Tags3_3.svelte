@@ -49,7 +49,7 @@ function title(item) {
 }
 function xitems(tags) {
   const {uniq, sortTag} = window.mitm.fn;
-  const arr = Object.keys(items)
+  const arr = Object.keys(items.tags) // feat: update __tag3
   if (tags.__tag2[ns][item]!==undefined) {
     arr.push(item)
   }
@@ -74,7 +74,7 @@ function check(item) {
         <input type="checkbox"
         data-item={item}
         on:click={clicked} 
-        bind:checked={items[item]}/>
+        bind:checked={items.tags[item]}/>
         <span>{title(item)}</span>      
       </label>
     {/if}

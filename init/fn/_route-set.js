@@ -129,7 +129,6 @@ function _routeSet (_r, namespace, print = false) {
         if (str.match(tgInUrl) && method[2]!=='hidden:') {
           const {tag3} = _nsstag(typ, str)
           const tag = `url:${method[2].split(':')[0]}`
-          // nss[`:${typ}`] = ''
           tag3.tags[tag] = true // feat: update __tag3
           tags[tag] = {state: true} // feat: update __tag2
         }

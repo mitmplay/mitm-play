@@ -32,8 +32,10 @@ const route = {
   //   }
   // },
   'html:active': {
-    '/': {
-      tags: 'in-html'}
-    }
+    'GET:dodol:/': {
+      tags: 'in-html',
+      widi: ''
+    },
   }
+}
 module.exports = route;

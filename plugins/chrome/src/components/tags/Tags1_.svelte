@@ -64,17 +64,15 @@ function routetag(item) {
   let itm = ''
   if ($tags.tgroup[item]) {
     for (const ns of browser.nss) {
-      const urls = $tags.__tag3[ns] || []
-      for (const url in urls) {
-        const paths = urls[url]
-        for (const path in paths) {
-          const rule = paths[path]
-          if (typeof rule!=='string') {
-            for (const tag in rule) {
-              if (item===tag.split(':').pop()) {
-                itm = 'itm'
-                break
-              }
+      const tag3 = $tags.__tag3[ns] || []
+      for (const id in tag3) {
+        const secs = tag3[id]
+        for (const sec in secs) {
+          const tags = secs[sec].tags // feat: update __tag3
+          for (const tag in tags) {
+            if (item===tag.split(':').pop()) {
+              itm = 'itm'
+              break
             }
           }
         }
@@ -83,9 +81,9 @@ function routetag(item) {
   }
   let url = ''
   for (const ns of browser.nss) {
-    const urls = $tags.__tag3[ns] || []
-    for (const _url in urls) {
-      if (_url.match(`:${item}:`)) {
+    const tag3 = $tags.__tag3[ns] || [] // feat: update __tag3
+    for (const id in tag3) {
+      if (id.match(`:${item}:`)) {
         url = 'url'
         break
       }
