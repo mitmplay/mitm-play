@@ -41,8 +41,17 @@ function _routeSet (r, namespace, print = false) {
 
   const _typlist = function (typs) {
     const typlist = Object.keys(r).filter(x => {
-      if (x.startsWith(`${typs}:`)) {
-        tags[x] = {state: true} // feat: update __tag2
+      const [sec, _tags] = x.split(':') // ie: 'css:1.no-ads active': {...}
+      if (sec===typs) {
+        if (_tags) {
+          const arr = _tags.split(/ +/)
+          const tag = `${sec}:${arr.shift()}`
+          if (arr.length) {
+            tags[tag] = {state: true, tags: arr} // feat: update __tag2  
+          } else {
+            tags[x] = {state: true} // feat: update __tag2
+          }
+        }
         return true
       }
     })
