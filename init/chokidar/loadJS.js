@@ -114,21 +114,22 @@ function routeSort (fn) { // feat: upadte tags
     const tag2 = global.mitm.__tag2[ns]
     const tag3 = global.mitm.__tag3[ns]
     for (const id in tag3) {
-      for (const url in tag3[id]) {
-        const typs = tag3[id][url]
-        for (const key in typs) {
-          if (typs[key] === true) {
-            typs[key] = false
+      const secs = tag3[id]
+      for (const sec in secs) {
+        const tags = secs[sec].tags
+        for (const tag in tags) {
+          if (tags[tag] === true) {
+            tags[tag] = false // feat: update __tag3
           }
         }
         if (flag) {
-          const arr = Object.keys(typs)
+          const arr = Object.keys(tags)
           for (const d of flag) {
             if (typs[d]===undefined) {
               const d2 = arr.filter(x => x.indexOf(d)>-1)[0] // tag url:tag-name
               d2 && (typs[d2] = true) // feat: upadte tags
             } else {
-              typs[d] = true // feat: upadte tags 
+              typs[d] = true // feat: update __tag2
             }
           }
         }
