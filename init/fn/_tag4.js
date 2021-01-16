@@ -8,16 +8,19 @@ const _setlogs = require('./_setlogs')
  * @param {namespace} _ns
  */
 const tags = function (_ns) {
-  const { __tag1, __tag2, router } = global.mitm
+  const { __tag1, __tag2, __tag3, router } = global.mitm
   const tag4 = {}
   let routr = {}
   let tag2 = {}
+  let tag3 = {}
   if (_ns) {
     routr[_ns] = router[_ns]
     tag2[_ns] = __tag2[_ns]
+    tag3[_ns] = __tag3[_ns]
   } else {
     routr = { ...router }
     tag2 = { ...__tag2 }
+    tag3 = { ...__tag3 }
   }
   for (const namespace in routr) {
     tag4[namespace] = {}
@@ -30,6 +33,7 @@ const tags = function (_ns) {
       node[id].push(id)
     }
   }
+  const atags = {}
   for (const namespace in tag2) {
     const tags = {}
     const ns = tag2[namespace]
@@ -61,7 +65,33 @@ const tags = function (_ns) {
         }
       }
     }
-    global.mitm.routes[namespace].jtags = Object.keys(tags).sort()
+    atags[namespace] = tags
+  }
+  for (const namespace in tag3) {
+    const tags = {}
+    const ns = tag3[namespace]
+    for (const id in ns) {
+      const urls = ns[id]
+      for (url in urls) {
+        const secs = urls[url]
+        if (typeof secs==='string') {
+          continue
+        }
+        for (tag in secs) {
+          if (secs[tag]===true) {
+            tags[tag] = true
+          }
+        }
+      }
+    }
+    if (!atags[namespace]) {
+      atags[namespace] = tags
+    } else {
+      atags[namespace] = {...atags[namespace], ...tags}
+    }
+  }
+  for (const ns in atags) {
+    global.mitm.routes[ns].jtags = Object.keys(atags[ns]).sort()
   }
   if (_ns) {
     if (tag4[_ns]) {
