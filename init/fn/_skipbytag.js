@@ -10,7 +10,7 @@ function _skipByTag (match, typ) {
     //__tag3[namespace][key] - key match to rule without tag
     key = method ? `${method}:${path}` : path
   }
-  let tag3
+  let tag3 = {}
   // const tag = typ.split(':')[0]
   if (__tag3._global_ && __tag3._global_[key]) {
     tag3 = __tag3._global_[key][typ]
