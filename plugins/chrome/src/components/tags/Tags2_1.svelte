@@ -43,9 +43,9 @@ function itemlist(items) {
 function routetag(item) {
   let klas
   if (item.match(':')) {
-    klas = items[item] ? 'rtag slc' : 'rtag';
+    klas = items[item].state ? 'rtag slc' : 'rtag';
   } else {
-    klas = items[item] ? 'stag slc' : '';
+    klas = items[item].state ? 'stag slc' : '';
   }
   if (item.match('url:')) {
     klas += ' url'
@@ -73,7 +73,7 @@ function urllist(tags, item) {
   return obj
 }
 function spacex(tags, item, path) {
-  let klass = items[item] ? 'slc' : '';
+  let klass = items[item].state ? 'slc' : '';
   const { rclass, isRuleOff, tagsIn__tag3 } = window.mitm.fn;
   isRuleOff(tags, ns, path) && (klass += ' grey');
   const tag = tagsIn__tag3(tags, ns, path, item).join(' _')
@@ -162,7 +162,7 @@ summary.space1 {
 }
 .spacex {
   padding-left: 30px;
-  color: grey;
+  color: #ecd7d7;
   font-size: 12px;
   font-family: monospace;
 }
