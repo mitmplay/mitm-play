@@ -3,16 +3,10 @@ const css = `
   display: none !important;
 }`;
 const route = {
-  // 'mock:1.no-ads': {
-  //   '/www.google-analytics.com/(analytics.js)': {
-  //     path: './dodol',
-  //     tags: 'gople',
-  //     // file: ':1'
-  //   },
-  //   // '#201:google.+.com': '',
-  //   'doubleclick.net': '',
-  //   ':test:test.com': ''
-  // },
+  'mock:1.no-ads': {
+    '#201:google.+.com': '',
+    'doubleclick.net': '',
+  },
   // mock: {
   //   '!:2.scenario~#404:/api/login': 'What you need is not here',
   //   ':2.scenario~1:/api/login': '...', 
@@ -38,7 +32,7 @@ const route = {
   //   }
   // },
   'html:active': {
-    '/wow': {
+    '/test-htm': {
       tags: 'in-html'}
     }
   }
