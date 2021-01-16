@@ -55,8 +55,10 @@ const tags = function (_ns) {
               node[typ].push(`${id} ${_tags.join(' ')}`)
             }
           }
+          tags[tag] = true
+        } else {
+          tags[typ] = true
         }
-        tags[typ] = true
       }
     }
     global.mitm.routes[namespace].jtags = Object.keys(tags).sort()
