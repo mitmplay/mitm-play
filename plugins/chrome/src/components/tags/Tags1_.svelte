@@ -32,14 +32,14 @@ function clicked(e) {
     }
 
     for (let ns in __tag2) {
-      const namespace = __tag2[ns];
-      for (let itm in namespace) {
+      const namespace2 = __tag2[ns];
+      for (let itm in namespace2) {
         const typ2 = itm.split(':')[1] || itm;
         if (item===typ2) {
-          namespace[itm] = flag;
+          namespace2[itm].state = flag; // feat: update __tag2
         } 
         if (group1===typ2.split('~')[0]) {
-          namespace[itm] = __tag1[typ2] || false;
+          namespace2[itm].state = __tag1[typ2] || false; // feat: update __tag2
         }
       }
     }

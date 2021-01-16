@@ -18,7 +18,7 @@ const route = {
   //   ':2.scenario~2:/api/login': '...', 
   // },
   'css:1.no-ads': { 
-    'GET#202:cssss:/assets/[a-z0-9]+': `=>${css}`
+    'GET#202:1.no-ads:/assets/[a-z0-9]+': `=>${css}`
   },
   workspace: '_assets_/',
   cache: {

@@ -64,17 +64,17 @@ function tagsIn__tag3(tags, ns, path, sec) {
 function resetRule2(tags, item, ns, tagx) {
   const typ1 = item.split(':')[1] || item;
   const [ group1, id1 ] = typ1.split('~');
-  const namespace = tags.__tag2[ns];
-  const flag = namespace[item];
+  const namespace2 = tags.__tag2[ns];
+  const { state } = namespace2[item]; // feat: update __tag2
   if (id1) {
-    for (let itm in namespace) {
+    for (let itm in namespace2) {
       const typ2 = itm.split(':')[1] || itm;
       const [group2, id2] = typ2.split('~');
       if (group1===group2) {
         if (id2===undefined) {
-          namespace[itm] = namespace[item]
+          namespace2[itm].state = state; // feat: update __tag2
         } else if (id1!==id2) {
-          namespace[itm] = false;
+          namespace2[itm].state = false; // feat: update __tag2
         }
       }
     }
@@ -90,14 +90,14 @@ function resetRule3(tags, item, _ns) {
   let tag1 = !_ns
 
   function update(ns) {
-    const namespace = __tag2[ns];
+    const namespace2 = __tag2[ns];
     const urls = __tag3[ns];
 
     let flag
     if (tag1) {
       flag = __tag1[t1]
     } else {
-      flag = namespace[item]
+      flag = namespace2[item].state
     }
 
     for (let url in urls) {
@@ -116,7 +116,7 @@ function resetRule3(tags, item, _ns) {
               namespace3[itm] =  __tag1[id] || false;
             } else {
               if (id2===undefined) {
-                namespace3[itm] = namespace[item]
+                namespace3[itm] = namespace2[item].state
               } else if (id1!==id2) {
                 namespace3[itm] = false;
               }
