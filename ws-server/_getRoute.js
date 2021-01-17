@@ -52,7 +52,6 @@ module.exports = () => {
 
     const urls = {}
     for (const sec in _secs) {
-      let pure = true
       if (typO.indexOf(sec)===-1||sec.indexOf(':')!==-1) {
         continue
       }
@@ -61,6 +60,7 @@ module.exports = () => {
         const match = rules[_rule]
         const arr = _rule.match(rmethod)
         let url = _rule
+        let pure = true // notag in Effected URL
         if (arr && arr[2]) { // check tag in URL
           url = noTagInRule(_rule)
           pure =false
