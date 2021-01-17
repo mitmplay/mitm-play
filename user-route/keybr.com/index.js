@@ -1,7 +1,8 @@
 const css = `
 .Body-header,.Body-aside {
   display: none !important;
-}`;
+}`
+;
 const route = {
   url: 'https://keybr.com/',
   'mock:1.no-ads': {

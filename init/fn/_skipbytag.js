@@ -1,13 +1,13 @@
 const c = require('ansi-colors')
-const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 function _skipByTag (match, typ) {
-  const { __args, __tag3 } = global.mitm
+  const { __args, __tag3, fn: { rmethod } } = global.mitm
   let { namespace, key, url } = match
+  // feat: remove tag from url/rule for __tag3
   let arrTag = key.match(rmethod)
   if (arrTag) {
     const [, method,, path] = arrTag
-    key = method ? `${method}:${path}` : path
+    key = method ? `${method}:${path}` : path // remove from url
   }
   let tag3
   if (__tag3._global_ && __tag3._global_[key]) {
