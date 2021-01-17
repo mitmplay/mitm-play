@@ -25,7 +25,7 @@ function routerSet (router, typ, method, str) {
 
 const fkeys = x => x !== 'tags' && x !== 'contentType'
 
-function _routeSet (_r, namespace, print = false) {
+function _routeSet (_r, namespace) {
   const { routes, __mock } = global.mitm
   const r = {}
   for (let key in _r) {
@@ -98,20 +98,22 @@ function _routeSet (_r, namespace, print = false) {
     if (nss[typ] === undefined) {
       nss[typ] = {tags: {}, note: ''}
     }
-    return {tag3: nss[typ]} // feat: update __tag3
+    return nss[typ] // feat: update __tag3
   }
   function addType (typ) {
     router[typ] = {}
+    const [ptyp, ptags] = typ.split(':')
     for (const str in r[typ]) {
       const method = str.match(rmethod)
       routerSet(router, typ, method, str)
       const site = r[typ][str]
       if (site!==undefined) { // fix:empty-string{'GET:/google': ''}
+        let tag3
         if (site.tags) {
           if (Array.isArray(site.tags)) {
             site.tags = site.tags.join(' ')
           }
-          const {tag3} = _nsstag(typ, str) // feat: update __tag3
+          tag3 = _nsstag(typ, str) // feat: update __tag3
           const ctype = site.contentType ? `[${site.contentType.join(',')}]` : ''
           const keys = Object.keys(site).filter(fkeys).join(',')
           tag3.note = `${ctype}<${keys}>`.replace('<>', '') // feat: update __tag3
@@ -127,10 +129,17 @@ function _routeSet (_r, namespace, print = false) {
         }
         // feat: tags in url
         if (str.match(tgInUrl) && method[2]!=='hidden:') {
-          const {tag3} = _nsstag(typ, str)
+          tag3 = _nsstag(typ, str)
           const tag = `url:${method[2].split(':')[0]}`
           tag3.tags[tag] = true // feat: update __tag3
           tags[tag] = {state: true} // feat: update __tag2
+        }
+        if (tag3 && ptags) {
+          const arr = ptags.split(/ +/)
+          const tag2 = arr.shift()
+          tag3.ptyp = ptyp
+          tag3.tag1 = arr
+          tag3.tag2 = `${ptyp}:${tag2}`
         }
 
         if (site.contentType) {

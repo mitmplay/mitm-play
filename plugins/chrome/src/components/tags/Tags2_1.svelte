@@ -69,7 +69,7 @@ function show(item) {
 }
 function linkTags(item) {
   const {tags} = window.mitm.__tag2[ns][item] // feat: update __tag2
-  const linkTags = tags && tags.length ? `[t:${tags.join(',')}]` : ''
+  const linkTags = tags && tags.length ? `[${tags.join(',')}]` : ''
   return linkTags;
 }
 function isGroup(item) {
@@ -165,6 +165,13 @@ summary.space1 {
 .link-tags {
   font-style: italic;
   margin-left: -8px;
+  font-size: 10px;
+  vertical-align: 31%;
+  color: darkmagenta;
+}
+.grey .link-tags {
+  color: gray;
+  font-weight: 100;
 }
 .space0 {
   line-height: 1.5;

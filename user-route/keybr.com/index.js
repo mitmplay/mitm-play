@@ -9,10 +9,10 @@ const route = {
     '#201:google.+.com': '',
     'doubleclick.net': '',
   },
-  mock: {
-    '!:2.scenario~#404:/api/login': 'What you need is not here',
-    ':2.scenario~1:/api/login': '...', 
-    ':2.scenario~2:/api/login': '...', 
+  'mock:2.scenario 1.no-ads': {
+    '!:2.scenario-#404:/api/login': 'What you need is not here',
+    ':2.scenario-1:/api/login': '...',
+    ':2.scenario-2:/api/login': '...',
   },
   'css:1.no-ads    active': { 
     'GET#202:/assets/[a-z0-9]+': `=>${css}`

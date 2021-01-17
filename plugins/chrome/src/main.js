@@ -26,17 +26,31 @@ function noTagInRule(path) {
   return arr ? (arr[1] ? `${arr[1]}:${arr[3]}` : arr[3]) : path
 }
 function isRuleOff(tags, ns, path) {
-  const node = tags.__tag3[ns][path]
-  if (node) {
+  const secs = tags.__tag3[ns][path]
+  const tag2 = tags.__tag2[ns]
+  const tag1 = tags.__tag1
+  if (secs) {
     let id1 = []
     let id2 = false
-    for (const id in node) {
-      const tags = node[id].tags // feat: update __tag3
+    for (const sec in secs) {
+      const node = secs[sec]
+      if (node.tag2) {
+        if (tag2[node.tag2].state===false) {
+          return true
+        } else {
+          for (const tag of node.tag1) {
+            if (tag1[tag]===false) {
+              return true
+            }
+          }
+        }
+      }
+      const tags = node.tags // feat: update __tag3
       for (const tag in tags) {
         if (tags[tag]) {
-          id1.push(id)
+          id1.push(sec)
         } else if (tags[tag]===false) {
-          id2 = id
+          id2 = sec
           break
         }
       }
