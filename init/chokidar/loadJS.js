@@ -123,13 +123,13 @@ function routeSort (fn) { // feat: upadte tags
           }
         }
         if (flag) { // restore tags from json
-          const arr = Object.keys(tags)
-          for (const d of flag) {
-            if (tags[d]===undefined) {
-              const d2 = arr.filter(x => x.indexOf(d)>-1)[0] // tag url:tag-name
-              d2 && (tags[d2] = true) // feat: upadte tags
+          const _tags = Object.keys(tags)
+          for (let tag of flag) {
+            if (tags[tag]===undefined) {
+              tag = _tags.filter(x => x.indexOf(tag)>-1)[0] // tag url:tag-name
+              tag && (tags[tag] = true) // feat: upadte tags
             } else {
-              tags[d] = true // feat: update __tag2
+              tags[tag] = true // feat: update __tag2
             }
           }
         }
