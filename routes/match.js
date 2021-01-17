@@ -1,7 +1,6 @@
 const c = require('ansi-colors')
 const { fn: { home, _nameSpace } } = global.mitm
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
-const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 function typTags (typ, namespace) {
   const { __tag4 } = global.mitm
@@ -59,6 +58,7 @@ const searchArr = ({ typ: typs, url, browserName }) => {
 }
 
 function checkTags(tg3, typ, key) {
+  const { rmethod } = global.mitm.fn
   let isTagsOk = true
   let str = key
   const arrTag = str.match(rmethod)

@@ -1,7 +1,7 @@
 const {typC, typA, typO} = require('../init/fn/_typs')
-const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 function noTagInRule(rule) {
+  const { rmethod } = global.mitm.fn
   const arr = rule.match(rmethod) // feat: tags in url
   return arr ? `${arr[1]}:${arr[3]}` : rule
 }
@@ -11,6 +11,8 @@ function uniq(value, index, self) {
 }
 
 module.exports = () => {
+  const {source:s, routes: r, fn } = global.mitm
+  const { rmethod } = fn
   const __urls = {}
   const files = {}
   const {
@@ -31,7 +33,6 @@ module.exports = () => {
       __urls
     }
   }
-  const {source:s, routes: r} = global.mitm
   for (const ns in r) {
     const _secs = r[ns]
     const fpath = _secs.path

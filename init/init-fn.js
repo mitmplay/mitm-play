@@ -5,7 +5,7 @@ const chokidar = require('chokidar')
 const clearModule = require('clear-module');
 
 const { _keyLength, _sortLength, _sort } = require('./fn/_key-length')
-const { _routeSet, toRegex } = require('./fn/_route-set')
+const { _routeSet, toRegex, rmethod } = require('./fn/_route-set')
 const { formToObj, objToForm } = require('./fn/form')
 const { _proxy, _noproxy } = require('./fn/_proxies')
 const { exec, execFile } = require('./fn/_exec-file')
@@ -51,6 +51,7 @@ module.exports = () => {
     formToObj,
     objToForm,
     relaxCSP,
+    rmethod,
     toRegex,
     flist,
     tilde,

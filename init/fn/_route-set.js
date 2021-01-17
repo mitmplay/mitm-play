@@ -181,5 +181,6 @@ function _routeSet (_r, namespace, print = false) {
 
 module.exports = {
   _routeSet,
-  toRegex
+  toRegex,
+  rmethod
 }
