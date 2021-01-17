@@ -38,18 +38,23 @@ module.exports = () => {
         if (fs.existsSync(path)) {
           global = (fs.readFileSync(path) + '').replace(/\n/, '\n  ')
         }
-        resp.body = `
+        resp.body = 
+`if (window._ws_connect===undefined) {
+  window._ws_connect = {}
+}\n
 window.mitm.fn.autoclick = ${autoclick + ''};\n
 window.mitm.fn.hotKeys = ${hotKeys + ''};\n
 window.mitm._macros_ = () => {
   window.mitm.macrokeys = {};
   ${global}
-};
+};\n
+window._ws_connect.macrosOnMount = data =>
+console.log('macros code executed after ws open', data)
 ${body}`
         resp.headers['content-type'] = 'application/javascript'
       }
     },
-    '!:hidden:/mitm-play/websocket.js': {
+    '!:hidden:/mitm-play/ws-client.js': {
       response: resp => {
         resp.body = global.mitm.fn._wsclient()
         resp.headers['content-type'] = 'application/javascript'
@@ -85,7 +90,7 @@ ${body}`
         '!:hidden:/mitm-play/mitm.js': new RegExp('\\/mitm-play\\/mitm\\.js'),
         '!:hidden:/mitm-play/chance.js': new RegExp('\\/mitm-play\\/chance\\.js'),
         '!:hidden:/mitm-play/macros.js': new RegExp('\\/mitm-play\\/macros\\.js'),
-        '!:hidden:/mitm-play/websocket.js': new RegExp('\\/mitm-play\\/websocket\\.js')
+        '!:hidden:/mitm-play/ws-client.js': new RegExp('\\/mitm-play\\/ws-client\\.js')
       },
       config: {
         logs: {},

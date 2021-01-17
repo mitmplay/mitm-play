@@ -16,3 +16,4 @@ module.exports = () => {
   _ws_general()
   _ws_cspErr()
 }
+console.log('ws-client loaded...')

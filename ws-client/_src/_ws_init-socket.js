@@ -5,20 +5,36 @@ const _ws_inIframe = require('./_ws_in-iframe')
 
 module.exports = () => {
   window._ws_queue = {}
-  window._ws_connect = {}
   window._ws_connected = false
   const { __flag } = window.mitm
 
+  if (window._ws_connect===undefined) {
+    window._ws_connect = {}
+  }
+
   const onopen = data => {
+    function ws_send() {
+      for (const key in window._ws_connect) {
+        window._ws_connected_send = true
+        console.warn(window._ws_connect[key] + '')
+        window._ws_connect[key](data)
+      }
+    }
+
     if (__flag['ws-connect']) {
       console.log('ws: open connection')
     }
-    console.timeEnd('ws:')
+
+    console.timeEnd('ws')
     window._ws_connected = true
-    for (const key in window._ws_connect) {
-      console.warn(window._ws_connect[key] + '')
-      window._ws_connect[key](data)
-    }
+
+    setTimeout(ws_send, 1) // minimize intermitten
+    setTimeout(() => {
+      if (!window._ws_connected_send) {
+        console.error('RETRY..........')
+        ws_send()
+      }
+    }, 10) // minimize intermitten     
   }
 
   const onclose = function () {
@@ -36,15 +52,13 @@ module.exports = () => {
 
   const url = `wss://localhost:3001/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
   const ws = new WebSocket(url)
-  console.time('ws:')
+  console.time('ws')
   window._ws = ws
 
-  setTimeout(() => {
-    ws.onopen = onopen
-    ws.onclose = onclose
-    ws.onmessage = onmessage
-    if (__flag['ws-connect']) {
-      console.log('ws: init connection')
-    }
-  }, 1) // minimize intermitten
+  ws.onopen = onopen
+  ws.onclose = onclose
+  ws.onmessage = onmessage
+  if (__flag['ws-connect']) {
+    console.log('ws: init connection')
+  }
 }

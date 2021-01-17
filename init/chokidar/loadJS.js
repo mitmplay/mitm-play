@@ -122,14 +122,14 @@ function routeSort (fn) { // feat: upadte tags
             tags[tag] = false // feat: update __tag3
           }
         }
-        if (flag) {
+        if (flag) { // restore tags from json
           const arr = Object.keys(tags)
           for (const d of flag) {
-            if (typs[d]===undefined) {
+            if (tags[d]===undefined) {
               const d2 = arr.filter(x => x.indexOf(d)>-1)[0] // tag url:tag-name
-              d2 && (typs[d2] = true) // feat: upadte tags
+              d2 && (tags[d2] = true) // feat: upadte tags
             } else {
-              typs[d] = true // feat: update __tag2
+              tags[d] = true // feat: update __tag2
             }
           }
         }
