@@ -86,7 +86,7 @@ function itemlist(rerender) {
               if (!isRuleOff(window.mitm, ns, path)) {
                 const _path = addUrls(path)
                 for (const sec in paths[path]) {
-                  const tags = paths[path][sec]
+                  const tags = paths[path][sec].tags // tags3
                   if (sec.slice(0, 1)!==':') {
                     addUrl2(sec, _path, Object.keys(tags))
                     break
@@ -141,7 +141,7 @@ function itemlist(rerender) {
           const _path = addUrls(path)
           const secs = paths[path]
           for (const sec in secs) {
-            const tags = secs[sec]
+            const tags = secs[sec].tags // tags3
             if (sec.slice(0, 1)!==':') {
               addUrl2(sec, _path, Object.keys(tags))
             }
