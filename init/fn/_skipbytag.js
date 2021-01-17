@@ -2,7 +2,7 @@ const c = require('ansi-colors')
 const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
 
 function _skipByTag (match, typ) {
-  const { __tag3 } = global.mitm
+  const { __args, __tag3 } = global.mitm
   let { namespace, key, url } = match
   let arrTag = key.match(rmethod)
   if (arrTag) {
@@ -21,9 +21,11 @@ function _skipByTag (match, typ) {
   if (tags) {
     for (const tag in tags) {
       if (tags[tag] === false) {
-        const { origin, pathname } = new URL(url)
-        const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
-        console.log(c.magentaBright(`>>> tags (${tag}).match(${match.key}) ${origin}${msg}`))
+        if (__args.verbose) {
+          const { origin, pathname } = new URL(url)
+          const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
+          console.log(c.magentaBright(`>>> tags (${tag}).match(${match.key}) ${origin}${msg}`))
+        }
         return true
       }
     }
