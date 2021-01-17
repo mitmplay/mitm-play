@@ -3,6 +3,7 @@ const css = `
   display: none !important;
 }`;
 const route = {
+  url: 'https://keybr.com/',
   'mock:1.no-ads': {
     '#201:google.+.com': '',
     'doubleclick.net': '',
