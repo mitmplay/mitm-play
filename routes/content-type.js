@@ -9,6 +9,7 @@ function ctype (match, resp) {
     return false
   } else if (atype.length && ctype) {
     return atype.find(t => {
+      t==='js' && (t='javascript')
       const rgx = match.contentType[t]
       const rtn = ctype.match(rgx)
       return rtn

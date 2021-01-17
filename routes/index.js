@@ -97,14 +97,13 @@ module.exports = async ({ route, request, browserName }) => {
     await Events(responseHandler, resp, reqs, route)
   } else {
     if (responseHandler.length) { // fetch from remote server
+      if (proxy && await _proxyRequest(reqs, _3ds)) {
+        reqs.proxy = proxy
+      }
       fetch(route, browserName, reqs, async function (resp) {
         await Events(responseHandler, resp, reqs, route)
       })
     } else { // not handle
-      if (proxy && await _proxyRequest(reqs, _3ds)) {
-        reqs.proxy = proxy
-      }
-
       const { origin, pathname } = new URL(url)
       if (!rqs2 && __flag) {
         const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
