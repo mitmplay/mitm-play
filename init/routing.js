@@ -38,13 +38,18 @@ module.exports = () => {
         if (fs.existsSync(path)) {
           global = (fs.readFileSync(path) + '').replace(/\n/, '\n  ')
         }
-        resp.body = `
+        resp.body = 
+`if (window._ws_connect===undefined) {
+  window._ws_connect = {}
+}\n
 window.mitm.fn.autoclick = ${autoclick + ''};\n
 window.mitm.fn.hotKeys = ${hotKeys + ''};\n
 window.mitm._macros_ = () => {
   window.mitm.macrokeys = {};
   ${global}
-};
+};\n
+window._ws_connect.macrosOnMount = data =>
+console.log('macros code executed after ws open', data)
 ${body}`
         resp.headers['content-type'] = 'application/javascript'
       }

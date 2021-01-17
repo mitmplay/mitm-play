@@ -5,9 +5,12 @@ const _ws_inIframe = require('./_ws_in-iframe')
 
 module.exports = () => {
   window._ws_queue = {}
-  window._ws_connect = {}
   window._ws_connected = false
   const { __flag } = window.mitm
+
+  if (window._ws_connect===undefined) {
+    window._ws_connect = {}
+  }
 
   const onopen = data => {
     function ws_send() {
@@ -22,7 +25,7 @@ module.exports = () => {
       console.log('ws: open connection')
     }
 
-    console.timeEnd('ws:')
+    console.timeEnd('ws')
     window._ws_connected = true
 
     setTimeout(() => {
@@ -52,7 +55,7 @@ module.exports = () => {
 
   const url = `wss://localhost:3001/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
   const ws = new WebSocket(url)
-  console.time('ws:')
+  console.time('ws')
   window._ws = ws
 
   ws.onopen = onopen
