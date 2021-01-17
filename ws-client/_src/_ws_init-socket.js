@@ -28,10 +28,7 @@ module.exports = () => {
     console.timeEnd('ws')
     window._ws_connected = true
 
-    setTimeout(() => {
-      ws_send()
-    }, 1) // minimize intermitten
-
+    setTimeout(ws_send, 1) // minimize intermitten
     setTimeout(() => {
       if (!window._ws_connected_send) {
         console.error('RETRY..........')
