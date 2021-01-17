@@ -4,7 +4,7 @@ const routes = {
   _global_: {
     _regex_: /_global_/,
     mock: {
-      // '/mitm-play/websocket.js': {
+      // '/mitm-play/ws-client.js': {
       //   resp() {return {}},
       // },
     }

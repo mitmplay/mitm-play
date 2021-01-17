@@ -49,7 +49,7 @@ ${body}`
         resp.headers['content-type'] = 'application/javascript'
       }
     },
-    '!:hidden:/mitm-play/websocket.js': {
+    '!:hidden:/mitm-play/ws-client.js': {
       response: resp => {
         resp.body = global.mitm.fn._wsclient()
         resp.headers['content-type'] = 'application/javascript'
@@ -85,7 +85,7 @@ ${body}`
         '!:hidden:/mitm-play/mitm.js': new RegExp('\\/mitm-play\\/mitm\\.js'),
         '!:hidden:/mitm-play/chance.js': new RegExp('\\/mitm-play\\/chance\\.js'),
         '!:hidden:/mitm-play/macros.js': new RegExp('\\/mitm-play\\/macros\\.js'),
-        '!:hidden:/mitm-play/websocket.js': new RegExp('\\/mitm-play\\/websocket\\.js')
+        '!:hidden:/mitm-play/ws-client.js': new RegExp('\\/mitm-play\\/ws-client\\.js')
       },
       config: {
         logs: {},

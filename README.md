@@ -858,7 +858,7 @@ $ mitm-play -a='play:activity'
 </details>
 <details><summary><b>-c --relaxcsp</b></summary>
 
-Update CSP header on Html Page injected with websocket.js to unblock Websocket communication
+Update CSP header on Html Page injected with wws-client.js to unblock Websocket communication
 
 ```bash
 $ mitm-play -c  <OR>

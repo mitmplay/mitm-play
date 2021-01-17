@@ -14,7 +14,7 @@ module.exports = () => {
     res.send(_body)
   })
 
-  app.get('/mitm-play/websocket.js', (req, res) => {
+  app.get('/mitm-play/ws-client.js', (req, res) => {
     const _body = _wsclient()
     res.type('.js')
     res.send(_body)

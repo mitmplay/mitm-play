@@ -84,7 +84,7 @@ function injectWS (resp, url, jsLib) {
   if (_nameSpace(_tldomain(url))) {
     js.push('/mitm-play/macros.js')
   }
-  js.push('/mitm-play/websocket.js')
+  js.push('/mitm-play/ws-client.js')
   js.push('/mitm-play/jslib/selector.js')
   if (jsLib) {
     js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
