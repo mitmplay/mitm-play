@@ -20,14 +20,19 @@ const route = {
   workspace: '_assets_/',
   cache: {
     '/assets/(.+).css': {
-      contentType: ['css'],
+      contentType: ['css', 'image'],
       path: '_assets_/',
       file: '    :1.css ',
       // tags: '3.caching',
       // debug: true
     }
   },
-  'log:select~1': { '.(pn|sv)g$': {}},
+  'cache:select~1': { 
+    '.(pn|sv)g$': {
+      contentType: ['image'],
+      tags: 'image'
+    }
+  },
   'log:select~2': {},
   'log:select~3': {},
   log: {

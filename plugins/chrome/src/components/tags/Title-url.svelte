@@ -27,4 +27,7 @@ const list = (itm, gap=' ') => itm ? itm.join(gap) : ''
     font-size: smaller;
     font-weight: 300;
   }
+  .url span.image {
+    display: inline;
+  }
   </style>
