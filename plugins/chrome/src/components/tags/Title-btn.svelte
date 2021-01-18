@@ -6,12 +6,21 @@ export let btn = {}
 export let _id = ''
 
 let all = true
+let def = true
 let arr = []
 
 function allcheck() {
   setTimeout(() => {
+    def = all
     for (const id in btn) {
       btn[id] = all
+    }
+  }, 1)
+}
+function defcheck() {
+  setTimeout(() => {
+    for (const id in btn) {
+      btn._notag = def
     }
   }, 1)
 }
@@ -31,6 +40,13 @@ function itemArray(i) {
       on:click="{allcheck}"
       bind:checked={all}/>
       all
+    </label>
+    <label class="checker">
+      <input
+      type="checkbox"
+      on:click="{defcheck}"
+      bind:checked={def}/>
+      def
     </label>
   {/if}
   {#each arr as item}

@@ -27,7 +27,7 @@ const route = {
       // debug: true
     }
   },
-  'log:select~1': {},
+  'log:select~1': { '.(pn|sv)g$': {}},
   'log:select~2': {},
   'log:select~3': {},
   log: {
