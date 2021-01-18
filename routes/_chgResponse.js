@@ -13,10 +13,6 @@ const allRequest = async function (reqs, responseHandler, _3d) {
 
   if (match && !_skipByTag(match, 'response')) {
     const { response, contentType, hidden } = match.route
-    if (__flag.response && !match.hidden && !hidden) {
-      msg = c.cyanBright(match.log)
-      __args.fullog && console.log(msg) // feat: fullog
-    }
     responseHandler.push(resp => {
       changeStatus(match, resp)
       if (response) {
@@ -26,6 +22,12 @@ const allRequest = async function (reqs, responseHandler, _3d) {
             ...resp,
             ...resp2
           })
+        }
+        if (!__flag.response || match.hidden || hidden) {
+          msg = ''
+        } else {
+         msg = c.cyanBright(match.log)
+          __args.fullog && console.log(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'response'} : undefined // feat: fullog

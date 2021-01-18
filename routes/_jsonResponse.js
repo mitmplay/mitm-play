@@ -16,10 +16,6 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
       changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('application/json')) {
-        if (__flag.json && !match.hidden && !hidden) {
-          msg = c.yellowBright(match.log)
-          __args.fullog && console.log(msg) // feat: fullog
-        }
         if (typeof (match.route) === 'string') {
           resp.body = match.route
         } else {
@@ -27,6 +23,12 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
             const resp2 = response(resp, reqs, match)
             resp2 && (resp = { ...resp, ...resp2 })
           }
+        }
+        if (!__flag.json || match.hidden || hidden) {
+          msg = ''
+        } else {
+          msg = c.yellowBright(match.log)
+          __args.fullog && console.log(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'json'} : undefined // feat: fullog

@@ -33,10 +33,6 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
           }
         }
         let { fpath1, fpath2 } = fpathflat({ match, reqs, stamp })
-        if (__flag.log && !match.hidden && !hidden) {
-          msg = c.bold.blueBright(match.log)
-          __args.fullog && console.log(msg) // feat: fullog
-        }
         if (log) {
           // complete r/resp json log
           fpath1 = `${fpath1}.json`
@@ -49,6 +45,12 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
         if (response) {
           const resp2 = response(resp, reqs, match)
           resp2 && (resp = { ...resp, ...resp2 })
+        }
+        if (!__flag.log || match.hidden || hidden) {
+          msg = ''
+        } else {
+          msg = c.bold.blueBright(match.log)
+          __args.fullog && console.log(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'log'} : undefined // feat: fullog

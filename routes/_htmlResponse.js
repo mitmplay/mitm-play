@@ -19,8 +19,8 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
       changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/html')) {
+        const { el, js, src, ws, response, hidden} = match.route
         msg = c.yellowBright(match.log)
-        const len = match.log.length
         // feat: activity
         if (__args.activity) {
           const [actyp, actag] = __args.activity.split(':')
@@ -30,14 +30,9 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
             msg +=  c[color]( `[${actyp}:${actag}]`)
           }
         }
-        if (__flag.html && !match.hidden && !match.route.hidden) {
-          console.log(`${'-'.repeat(len)}`)
-          __args.fullog && console.log(msg) // feat: fullog
-        }
         if (typeof (match.route) === 'string') {
           resp.body = match.route
         } else {
-          const { el, js, src, response, ws } = match.route
           if (js) {
             const inject = _inject[el] || e_head
             resp.body = inject(resp.body, js)
@@ -54,6 +49,13 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
             const jsLib = matched(searchKey('jsLib'), reqs)
             injectWS(resp, reqs.url, jsLib)
           }
+        }
+        if (!__flag.html || match.hidden || hidden) {
+          msg = ''
+        } else {
+          const len = match.log.length
+          msg = `${'-'.repeat(len)}\n${msg}`
+          __args.fullog && console.log(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'html'} : undefined // feat: fullog

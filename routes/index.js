@@ -152,11 +152,11 @@ async function Events (responseHandler, resp, reqs, route) {
       resp = rsp2
     }
   }
-  if (!__args.fullog) { // feat: fullog
+  if (msg && !__args.fullog) { // feat: fullog
     if (mtyp.length) {
       msg += `[${mtyp.join(',')}]`
     }
-    msg && console.log(msg)  
+    console.log(msg)  
   }
   routeCall(route, 'fulfill', resp)
 }

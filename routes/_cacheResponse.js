@@ -104,12 +104,10 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         // feat: activity
         const fname1 = `${fpath1}.${_ext(resp)}`
         if (!route.seq && fname1.match(/~\w+_\d+_/)) { // feat: seq
-          if (__flag.cache && !match.hidden) {
             msg = c.grey(msg)
             const msg2 = `[${actyp}:${fname1.split('/').pop()}]`
             msg += actyp==='play' ? c.red(msg2) : c.cyan(msg2)
             __args.fullog && console.log(msg) // feat: fullog
-          }
         } else if (ctype(match, resp)) {
           const fname = fname1.split('/').pop()
           msg = c.magentaBright(msg)
@@ -131,9 +129,12 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             resp2 = response(resp, reqs, match)
             resp2 && (resp = { ...resp, ...resp2 })
           }
-          resp.log = msg ? {msg, mtyp: 'cache'} : undefined // feat: fullog
-          return resp // back to events loop call in fetch
         }
+        if (!__flag.cache || match.hidden || hidden) {
+          msg = ''
+        }
+        resp.log = msg ? {msg, mtyp: 'cache'} : undefined // feat: fullog
+        return resp // back to events loop call in fetch
       })
       resp = undefined
     }

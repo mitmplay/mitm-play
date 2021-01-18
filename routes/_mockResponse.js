@@ -115,7 +115,9 @@ const mockResponse = async function ({ reqs, route }, _3d) {
         resp2 && (resp = { ...resp, ...resp2 })
       }
     }
-    if (__flag.mock && !match.hidden && !hidden) {
+    if (!__flag.mock || match.hidden || hidden) {
+      msg = ''
+    } else {
       msg = c.cyanBright(match.log) + msg
       __args.fullog && console.log(msg) // feat: fullog
     }

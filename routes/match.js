@@ -121,7 +121,7 @@ const searchFN = (typs, { url, method, browserName }) => {
             log += `(${key})`
             !__args.nourl && (log += `.url(${__args.nohost ? '' : origin}${msg})`)
           }
-          tg && (log += c.red(`:${tg}`))
+          tg && (log += `:${tg}`)
 
           const hidden = key.match(/^[\w#]*!:/)
           const matched = {
