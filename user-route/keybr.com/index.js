@@ -22,7 +22,7 @@ const route = {
     '/assets/(.+).css': {
       contentType: ['css'],
       path: '_assets_/',
-      file: ':1.css',
+      file: '    :1.css ',
       // tags: '3.caching',
       // debug: true
     }

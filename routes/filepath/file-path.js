@@ -7,6 +7,7 @@ function detectHome(match, file) {
   const { fn: { home }, __args, routes } = global.mitm
   let fmatch, fpath
 
+  file = file.trim()
   fmatch = file.match(_root)
   if (fmatch) {
     fpath = fmatch[1] ? `/${fmatch[1]}` : '/'
@@ -39,7 +40,7 @@ function filePath (match, path, file) {
 
   if (path) {
     fpath += detectHome(match, path)
-    fpath += file
+    fpath += file.trim()
   } else {
     fpath += detectHome(match, file)
   }
