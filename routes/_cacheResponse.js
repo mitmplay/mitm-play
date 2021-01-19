@@ -59,18 +59,6 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           if (setCookie && __args.cookie) {
             headers['set-cookie'] = resetCookies(setCookie)
           }
-          if (__flag.cache && !match.hidden && !hidden) {
-            if (!__args.ommit.cache) {
-              const fname = fname1.split('/').pop()
-              if (actyp && route.seq) {
-                msg += c.blueBright(`[${actyp}:${fname}]`)
-              } else {
-                msg += `:${fname}`
-              }
-              msg = route.path ? c.green(msg) :  c.greenBright(msg)
-              __args.fullog && console.log(msg) // feat: fullog
-            }
-          }
           remote = false
           const body = await fs.readFile(fname1)
           resp = { url, status, headers, body }
@@ -78,6 +66,12 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           if (response) {
             resp2 = response(resp, reqs, match)
             resp2 && (resp = { ...resp, ...resp2 })
+          }
+          const fname = fname1.split('/').pop()
+          if (actyp && route.seq) {
+            msg += c.blueBright(`[${actyp}:${fname}]`)
+          } else {
+            msg += `:${fname}`
           }
         } catch (error) {
           const msg1 = `${b} cache er (${tilde(fpath1)})`
@@ -93,6 +87,12 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             headers: {'content-type': 'text/plain'},
             body: `Mitm-play - Cache error!\n\nError in ${error}`.replace(', ','\n')
           }
+        }
+        if (!__flag.cache || match.hidden || hidden) {
+          msg = ''
+        } else {
+          msg = route.path ? c.green(msg) :  c.greenBright(msg)
+          __args.fullog && console.log(msg) // feat: fullog  
         }
         resp.log = msg ? {msg, mtyp: 'cache'} : undefined
       }

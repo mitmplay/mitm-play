@@ -19,7 +19,7 @@ const route = {
   },
   workspace: '_assets_/',
   cache: {
-    '/assets/(.+).css': {
+    '!:/assets/(.+).css': {
       contentType: ['css', 'image'],
       path: '_assets_/',
       file: '    :1.css ',
