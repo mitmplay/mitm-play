@@ -23,7 +23,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
   }
 
   if (match && !_skipByTag(match, 'cache')) {
-    const { url } = reqs
+    const { url, browserName } = reqs
     const { route } = match
     const { response, hidden } = route
 
@@ -74,7 +74,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             msg += `:${fname}`
           }
         } catch (error) {
-          const msg1 = `${b} cache er (${tilde(fpath1)})`
+          const msg1 = `${browser[browserName]} cache er (${tilde(fpath1)})`
           if (__args.fullog) {
             const msg2 = `    Error in ${error}`
             console.log(c.bgYellowBright.bold.red(`${msg1}\n${msg2}`)) // feat: fullog  
