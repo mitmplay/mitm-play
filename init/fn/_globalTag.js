@@ -69,6 +69,11 @@ function _globalTag() {
       console.log(c.red(`Warning: overwritten flag.${key}`))
     }
   }
+  // halt if it having incorrect args 
+  if (typeof obj.args.activity!=='string') {
+    console.log(c.red(`args.${c.yellow('activity')} must be a string!!!`))
+    process.exit()
+  }
   return obj
 }
 
