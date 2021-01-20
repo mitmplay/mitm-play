@@ -30,7 +30,7 @@ function _globalTag() {
   let {args, logs: flag}  = _global_.config
 
   for (const [key, value] of Object.entries(__tag2._global_)) {
-    if (value) {
+    if (value.state) { // feat: reset __args
       if (key.split(':')[0]==='config') {
         // ie: _global_['config:test'].args
         // ie: _global_['config:test'].flag
@@ -49,7 +49,7 @@ function _globalTag() {
   const _flag = {...flag}
 
   for (const [key, value] of Object.entries(__tag2._global_)) {
-    if (value) {
+    if (value.state) { // feat: reset __args
       const [id] = key.split(':')
       if (id==='args' || id==='flag') {
         // ie: _global_['args:test'].args
