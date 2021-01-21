@@ -19,10 +19,12 @@ let btn1 = {
   css: true,
   js: true,
   log: true,
+  def: true,
 }
 let btn2 = {
   flag: true,
   args: true,
+  def: true
 }
 let _urls, _cfgs, title1, title2
 function oneSite(ns) {
@@ -194,11 +196,17 @@ function itemlist(rerender) {
   _urls = urls2
   _cfgs = urls3
   for (const item of _urls) {
+    if (item.tags.indexOf('_notag')) {
+      title1.def = true
+    }
     for (const sec of item.secs) {
       title1[sec] = true
     }
   }
   for (const item of _cfgs) {
+    if (item.tags.indexOf('_notag')) {
+      title2.def = true
+    }
     for (const sec of item.secs) {
       title2[sec] = true
     }

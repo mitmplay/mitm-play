@@ -3,6 +3,8 @@
   "tags": [
     "1.no-ads",
     "2.scenario",
-    "active"
+    "active",
+    "select~3",
+    "url:2.scenario-#404"
   ]
 }

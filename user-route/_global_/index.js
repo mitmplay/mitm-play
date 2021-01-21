@@ -6,7 +6,7 @@ const route = {
     'ws-message': true,
   },
   args: {
-    activity: true
+    activity: ''
   }
 }
 module.exports = route;
