@@ -70,7 +70,7 @@ function _globalTag() {
     }
   }
   // halt if it having incorrect args 
-  if (typeof obj.args.activity!=='string') {
+  if (obj.args.activity!==undefined && typeof obj.args.activity!=='string') {
     console.log(c.red(`args.${c.yellow('activity')} must be a string!!!`))
     process.exit()
   }
