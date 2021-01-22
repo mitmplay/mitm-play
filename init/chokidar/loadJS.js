@@ -12,19 +12,21 @@ function loadJS (path, msg, fn) {
   const { _routeSet } = global.mitm.fn
   msg && console.log(msg)
   try {
-    const domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1]
+    const arr = path.match(/([\w~.-]+)[\\/]([@\w.-]+)$/)
+    const file = arr[2].split('/').pop()
+    const domain = arr[1]
     const route = { path, ...load(path) }
     /**
      * populate: __tag2, __tag3 on each namespace
      */
-    _routeSet(route, domain, true)
+    const r = _routeSet(route, domain, file)
     fs.readFile(path, 'utf8', function (err, data) {
       if (err) {
         console.log(c.redBright('Error read source file'), err)
       } else {
-        global.mitm.source[domain] = data
+        global.mitm.source[`${domain}${r ? '' : '/'+file}`] = data
       }
-    })
+    })  
     resort(fn) // feat: upadte tags
   } catch (error) {
     console.log(c.redBright('Failed load route'), error)
@@ -98,7 +100,7 @@ function sort (obj, size=false, _typO) {
 function routeSort (fn) { // feat: upadte tags
   const { routes: { _global_ } } = global.mitm
   const { _routeSet } = global.mitm.fn
-  _routeSet(_global_, '_global_')
+  _routeSet(_global_, '_global_', '')
   console.log(c.red('(*reset routes*)'))
   global.mitm.routes = sort(global.mitm.routes, true, typs.typO)
   global.mitm.router = sort(global.mitm.router, true, typs.typO)

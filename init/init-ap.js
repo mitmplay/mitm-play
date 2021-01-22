@@ -50,6 +50,7 @@ global.mitm = {
   activity: {}, // feat: activity
   routes: { _global_: { config: {} } },
   router: { _global_: { config: {} } },
+  routex: {},
   source: {},
   __args: {},
   __flag: {},

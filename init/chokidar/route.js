@@ -31,7 +31,11 @@ module.exports = () => {
   // Initialize watcher.
   const msg = tilde(userroute)
   console.log(c.magentaBright(`watcher(route): ${msg}`))
-  const urouteWatcher = chokidar.watch(userroute, {
+  const paths = [
+    userroute,
+    userroute.replace('index.js', '*@index.js')
+  ]
+  const urouteWatcher = chokidar.watch(paths, {
     ignored: /(^|[/\\])\../, // ignore dotfiles
     persistent: true
   })
