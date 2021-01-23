@@ -4,8 +4,8 @@
     "1.no-ads",
     "active",
     "css:1.no-ads",
+    "html:active",
     "image",
-    "mock:1.no-ads",
-    "tag3:image"
+    "mock:1.no-ads"
   ]
 }

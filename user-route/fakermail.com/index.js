@@ -9,7 +9,7 @@ h1,nav,span.text-gray-500,.py-12.bg-white,.absolute.inset-0,
 }`;
 const route = {
   url: 'https://fakermail.com/',
-  tags: ['clean'],
+  tags: [],
   mock: {':clean:google.+.com': ''},
   css:  {':clean:/css/app.css': `=>${css}`},
 }

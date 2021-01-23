@@ -14,7 +14,7 @@ const route = {
     selector: '[type=button],[type=submit],button,a',
   },
   // workspace: '/_cache_',
-  tags: ['remove-ads'],
+  tags: [],
   'cache:_test~01': {
     '/css/_.+': {
       contentType: ['css'],
