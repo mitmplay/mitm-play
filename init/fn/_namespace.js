@@ -1,8 +1,11 @@
 module.exports = nspace => {
   const { router, routes } = global.mitm
-  for (const id in routes) {
+  for (let id in routes) {
     if (nspace.match(router[id]._namespace_)) {
-      return id
+      const {_subns} = routes[id]
+      const ns = _subns || id
+      // console.log('R:',nspace, ns)
+      return ns
     }
   }
 }

@@ -16,6 +16,9 @@ function childns(_ns) {
     return []
   }
 }
+function setSubns(e) {
+// reset _subns string!
+}
 </script>
 
 <div class="space0">
@@ -27,6 +30,7 @@ function childns(_ns) {
       <input
       type="checkbox"
       data-item={item}
+      on:click="{setSubns}"
       bind:checked={_childns[`${item}@${ns}`]}/>
       {item}
     </label>

@@ -43,7 +43,7 @@ function load (path) {
   const _jpath = rpath.replace(/\.js/, '.json')
   reslt._jpath = _jpath.replace(/\\/g, '/')
 
-  if (fs.existsSync(_jpath)) {
+  if (fs.existsSync(_jpath)) { // restore tags
     try {
       const jsn = fs.readJsonSync(_jpath)
       if (jsn.tags) {
@@ -51,6 +51,7 @@ function load (path) {
       }
       if (jsn._subns) {
         reslt._subns = jsn._subns
+        // reslt._childns[jsn._subns] = true  // not created yet!
       }
     } catch (error) {
       console.log('invalid json', _jpath)
@@ -157,6 +158,12 @@ function routeSort (fn) { // feat: upadte tags
             tag2[id].state = true // feat: update __tag2
           }
         }
+      }
+    }
+    for (const _ns in global.mitm.routes) {
+      const ns = global.mitm.routes[_ns]
+      if (ns._subns) {
+        ns._childns[ns._subns] = true // restore tags
       }
     }
   }

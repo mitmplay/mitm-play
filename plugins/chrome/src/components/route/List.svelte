@@ -18,6 +18,14 @@ onMount(async () => {
 const routeHandler = obj => {
   console.warn('ws__send(getRoute)', obj);
   window.mitm.routes = obj.routes
+  const {routes} = window.mitm
+  for (const id in obj.routes) {
+    const [sub, nspace] = id.split('@')
+    if (nspace) {
+      routes[id]._childns = routes[nspace]._childns || {}
+      routes[id]._subns = routes[nspace]._subns || ''
+    }     
+  }
   if (obj._tags_) {
     window.mitm.__tag1 = obj._tags_.__tag1;
     window.mitm.__tag2 = obj._tags_.__tag2;
