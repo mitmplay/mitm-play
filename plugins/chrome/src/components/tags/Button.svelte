@@ -10,8 +10,13 @@ function btnReset(e) {
 }
 
 function btnSave(e) {
-  const {__tag1, __tag2, __tag3} = window.mitm;
+  const {__tag1, __tag2, __tag3, routes} = window.mitm;
+  const _childns = {}
+  for (const ns in routes) {
+    _childns[ns] = routes[ns]._childns
+  }
   const tags = {
+    _childns,
     __tag1,
     __tag2,
     __tag3,

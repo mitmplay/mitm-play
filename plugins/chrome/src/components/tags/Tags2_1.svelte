@@ -1,7 +1,6 @@
 <script>
 import { tags } from './stores.js';
-import Expand from '../button/Expand.svelte';
-import Collapse from '../button/Collapse.svelte';
+import Tags2Title from './Tags2_Title.svelte';
 
 export let items;
 export let ns;
@@ -107,11 +106,7 @@ function q(key) {
 
 {#if Object.keys(items).length}
 <div class="border">
-  <div class="space0">
-    <Collapse on:message name="state2" q="{`.t2.${q(ns)}`}"></Collapse>
-    <Expand on:message name="state2" q="{`.t2.${q(ns)}`}"></Expand>
-    <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
-  </div>
+  <Tags2Title {ns}/>
   {#each itemlist(items) as item}
     <div class="t2 {q(ns)}">
     {#if isGroup(item)}
@@ -172,13 +167,6 @@ summary.space1 {
 .grey .link-tags {
   color: gray;
   font-weight: 100;
-}
-.space0 {
-  line-height: 1.5;
-  font-size: medium;
-  font-weight: bolder;
-  color: darkblue;
-  background: lightgrey;
 }
 .space1 {
   color: grey;

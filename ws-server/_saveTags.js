@@ -11,12 +11,22 @@ module.exports = ({ data }) => {
   global.mitm.fn._tag4()
 
   const {routes} = global.mitm
-  for (namespace in routes) {
-    const ns = routes[namespace]
+  for (_ns in routes) {
+    const ns = routes[_ns]
+    ns._childns = data._childns[_ns] || {}
+    let _subns = ''
+    for (const id in ns._childns) {
+      if (ns._childns[id]) {
+        ns._subns = id
+        _subns = id
+        break
+      }
+    }
     if (ns._jpath && ns._jtags) {
       const json = {
         _: 'auto-generated during saveTags!',
-        tags: ns._jtags
+        tags: ns._jtags,
+        _subns
       }
       fs.writeJson(ns._jpath, json, {spaces: '  '}, err => {
         err && console.error(ns._jpath, {err})

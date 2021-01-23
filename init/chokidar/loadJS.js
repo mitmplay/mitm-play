@@ -44,9 +44,16 @@ function load (path) {
   reslt._jpath = _jpath.replace(/\\/g, '/')
 
   if (fs.existsSync(_jpath)) {
-    const jsn = fs.readJsonSync(_jpath)
-    if (jsn.tags) {
-      reslt.tags = jsn.tags
+    try {
+      const jsn = fs.readJsonSync(_jpath)
+      if (jsn.tags) {
+        reslt.tags = jsn.tags
+      }
+      if (jsn._subns) {
+        reslt._subns = jsn._subns
+      }
+    } catch (error) {
+      console.log('invalid json', _jpath)
     }
   }
   return reslt
