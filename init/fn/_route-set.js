@@ -48,8 +48,13 @@ function _routeSet (_r, namespace, file) {
     }
     routex[namespace][sub] = r
     if (index) {
-      r = {...routes[namespace], ...r} // feat: nested routes
+      const ns = routes[namespace]
       namespace = `${sub}@${namespace}`
+      if (ns._childns===undefined) {
+        ns._childns = {}
+      }
+      ns._childns[namespace] = false
+      r = {...ns, ...r} // feat: nested routes
     }
   }
   routes[namespace] = r

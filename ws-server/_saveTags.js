@@ -13,13 +13,13 @@ module.exports = ({ data }) => {
   const {routes} = global.mitm
   for (namespace in routes) {
     const ns = routes[namespace]
-    if (ns.jpath && ns.jtags) {
+    if (ns._jpath && ns._jtags) {
       const json = {
         _: 'auto-generated during saveTags!',
-        tags: ns.jtags
+        tags: ns._jtags
       }
-      fs.writeJson(ns.jpath, json, {spaces: '  '}, err => {
-        err && console.error(ns.jpath, {err})
+      fs.writeJson(ns._jpath, json, {spaces: '  '}, err => {
+        err && console.error(ns._jpath, {err})
       })
     }  
   }

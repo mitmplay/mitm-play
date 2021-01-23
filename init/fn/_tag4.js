@@ -97,7 +97,7 @@ const tags = function (_ns) {
     }
   }
   for (const ns in atags) {
-    global.mitm.routes[ns].jtags = Object.keys(atags[ns]).sort()
+    global.mitm.routes[ns]._jtags = Object.keys(atags[ns]).sort()
   }
   if (_ns) {
     if (tag4[_ns]) {

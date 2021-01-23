@@ -40,11 +40,11 @@ function load (path) {
     delete require.cache[rpath]
   }
   const reslt = require(path)
-  const jpath = rpath.replace(/\.js/, '.json')
-  reslt.jpath = jpath.replace(/\\/g, '/')
+  const _jpath = rpath.replace(/\.js/, '.json')
+  reslt._jpath = _jpath.replace(/\\/g, '/')
 
-  if (fs.existsSync(jpath)) {
-    const jsn = fs.readJsonSync(jpath)
+  if (fs.existsSync(_jpath)) {
+    const jsn = fs.readJsonSync(_jpath)
     if (jsn.tags) {
       reslt.tags = jsn.tags
     }
