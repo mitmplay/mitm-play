@@ -43,6 +43,9 @@ const tags = function (_ns) {
     const node = tag4[namespace]
     for (const id in ns) {
       const [typ, tag] = id.split(':')
+      if (tag1[tag]) {
+        tags[tag] = true
+      }
       if (ns[id].state) { // feat: update __tag2
         if (tag) {
           if (node[typ] === undefined) {
@@ -63,9 +66,6 @@ const tags = function (_ns) {
             }
           }
           tags[id] = true
-          if (tag1[tag]) {
-            tags[tag] = true
-          }
         } else {
           tags[typ] = true
         }
@@ -81,11 +81,11 @@ const tags = function (_ns) {
       for (url in urls) {
         const secs = urls[url]
         for (tag in secs.tags) {
+          if (tag1[tag]) {
+            tags[tag] = true
+          }
           if (secs.tags[tag]===true) { // feat: update __tag3
             tags[`tag3:${tag}`] = true
-            if (tag1[tag]) {
-              tags[tag] = true
-            }
           }
         }
       }

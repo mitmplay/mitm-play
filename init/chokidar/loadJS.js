@@ -107,11 +107,13 @@ function routeSort (fn) { // feat: upadte tags
   global.mitm.__tag2 = sort(global.mitm.__tag2, true)
   global.mitm.__tag3 = sort(global.mitm.__tag3, true)
   let tag1 = {}
+  const m3 = x=>x.split(':').pop()
+  const f3 = x=>x.slice(0,4)==='tag3'
   for (const ns in global.mitm.__tag2) {
     // if (ns === '_global_') {
     //   debugger
     // }
-    const tagX = {}
+    // const tagX = {}
     const flag = global.mitm.routes[ns].tags
     const tag2 = global.mitm.__tag2[ns]
     const tag3 = global.mitm.__tag3[ns]
@@ -125,13 +127,17 @@ function routeSort (fn) { // feat: upadte tags
           }
         }
         if (flag) { // restore tags from json
+          const _tag3 = flag.filter(f3).map(m3)
           const _tags = Object.keys(tags)
-          for (let tag of flag) {
+          for (let tag of _tag3) {
             if (tags[tag]===undefined) {
               tag = _tags.filter(x => x.indexOf(tag)>-1)[0] // tag url:tag-name
               tag && (tags[tag] = true) // feat: upadte tags
             } else {
               tags[tag] = true // feat: update __tag2
+            }
+            if (tags[tag]) {
+              tag1[tag] = true
             }
           }
         }
@@ -139,22 +145,23 @@ function routeSort (fn) { // feat: upadte tags
     }
     for (const id in tag2) {
       const mainTag = id.split(':')
-      tagX[mainTag[1] || id] = !flag
+      // tagX[mainTag[1] || id] = !flag
       tag2[id].state = !flag // feat: update __tag2
       if (flag) {
         // can be improve!!!
         for (const d of flag) {
-          if (id === d || mainTag[1] === d) {
+          if (id===d) { //|| mainTag[1] === d
+            tag1[mainTag.pop()] = true
             tag2[id].state = true // feat: update __tag2
-            tagX[d] = true
+            // tagX[d] = true
           }
         }
       }
     }
-    tag1 = {
-      ...tag1,
-      ...tagX
-    }
+    // tag1 = {
+    //   ...tag1,
+    //   ...tagX
+    // }
   }
   global.mitm.__tag1 = sort(tag1)
   global.mitm.fn._clear()
