@@ -11,14 +11,17 @@ const tags = function (_ns) {
   const { __tag1, __tag2, __tag3, router } = global.mitm
   const tag4 = {}
   let routr = {}
+  let tag1 = {}
   let tag2 = {}
   let tag3 = {}
   if (_ns) {
     routr[_ns] = router[_ns]
+    tag1[_ns] = __tag1[_ns]
     tag2[_ns] = __tag2[_ns]
     tag3[_ns] = __tag3[_ns]
   } else {
     routr = { ...router }
+    tag1 = { ...__tag1 }
     tag2 = { ...__tag2 }
     tag3 = { ...__tag3 }
   }
@@ -59,7 +62,10 @@ const tags = function (_ns) {
               node[typ].push(`${id} ${_tags.join(' ')}`)
             }
           }
-          tags[tag] = true
+          tags[id] = true
+          if (tag1[tag]) {
+            tags[tag] = true
+          }
         } else {
           tags[typ] = true
         }
@@ -76,7 +82,10 @@ const tags = function (_ns) {
         const secs = urls[url]
         for (tag in secs.tags) {
           if (secs.tags[tag]===true) { // feat: update __tag3
-            tags[tag] = true
+            tags[`tag3:${tag}`] = true
+            if (tag1[tag]) {
+              tags[tag] = true
+            }
           }
         }
       }
