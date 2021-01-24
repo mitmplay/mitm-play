@@ -12,12 +12,12 @@ module.exports = ({ data }) => {
 
   const {routes} = global.mitm
   for (_ns in routes) {
-    const ns = routes[_ns]
-    ns._childns = data._childns[_ns] || {}
     let _subns = ''
-    for (const id in ns._childns) {
-      if (ns._childns[id]) {
-        ns._subns = id
+    const ns = routes[_ns]
+    ns._childns = data._childns[_ns] || {list: {}, _subns: ''}
+    for (const id in ns._childns.list) {
+      if (ns._childns.list[id]) {
+        ns._childns._subns = id
         _subns = id
         break
       }

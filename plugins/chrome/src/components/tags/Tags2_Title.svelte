@@ -10,13 +10,23 @@ function q(key) {
 }
 function childns(_ns) {
   const {_childns} = window.mitm.routes[ns]
-  if (_childns!==undefined) {
-    return Object.keys(_childns).map(x=>x.split('@')[0])
+  if (_childns && _childns.list!==undefined) {
+    return Object.keys(_childns.list).map(x=>x.split('@')[0])
   } else {
     return []
   }
 }
 function setSubns(e) {
+  setTimeout(() => {
+    const {_childns} = window.mitm.routes[ns]
+    for (const id in _childns.list) {
+      if (_childns.list[id]) {
+        _childns._subns = id
+        return
+      }
+    }
+    _childns._subns = ''
+  }, 1);
 // reset _subns string!
 }
 </script>
@@ -31,7 +41,7 @@ function setSubns(e) {
       type="checkbox"
       data-item={item}
       on:click="{setSubns}"
-      bind:checked={_childns[`${item}@${ns}`]}/>
+      bind:checked={_childns.list[`${item}@${ns}`]}/>
       {item}
     </label>
   {/each}

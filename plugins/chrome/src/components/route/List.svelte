@@ -22,8 +22,8 @@ const routeHandler = obj => {
   for (const id in obj.routes) {
     const [sub, nspace] = id.split('@')
     if (nspace) {
-      routes[id]._childns = routes[nspace]._childns || {}
-      routes[id]._subns = routes[nspace]._subns || ''
+      routes[id]._childns = routes[nspace]._childns || {list: {}, _subns: ''}
+      // routes[id]._subns = routes[nspace]._subns || ''
     }     
   }
   if (obj._tags_) {

@@ -50,8 +50,8 @@ function load (path) {
         reslt.tags = jsn.tags
       }
       if (jsn._subns) {
-        reslt._subns = jsn._subns
-        // reslt._childns[jsn._subns] = true  // not created yet!
+        reslt._chilsn._subns = jsn._subns
+        // reslt._childns.list[jsn._subns] = true  // not created yet!
       }
     } catch (error) {
       console.log('invalid json', _jpath)
@@ -161,9 +161,9 @@ function routeSort (fn) { // feat: upadte tags
       }
     }
     for (const _ns in global.mitm.routes) {
-      const ns = global.mitm.routes[_ns]
-      if (ns._subns) {
-        ns._childns[ns._subns] = true // restore tags
+      const {_childsn} = global.mitm.routes[_ns]
+      if (_childsn && _childsn._subns) {
+        _childns.list[_childsn._subns] = true // restore tags
       }
     }
   }
