@@ -153,15 +153,17 @@ function q(key) {
 summary label {
   display: inline;
   margin-left: -2px;
+  vertical-align: middle;
 }
 summary.space1 {
   padding-left: 5px;
 }
-.link-tags {
-  font-style: italic;
-  margin-left: -8px;
-  font-size: 10px;
-  vertical-align: 31%;
+summary.space1 .link-tags {
+  /* vertical-align: 25%; */
+  /* font-style: italic; */
+  margin-left: -6px;
+  font-size: 9px;
+  font-family: roboto;
   color: darkmagenta;
 }
 .grey .link-tags {
@@ -174,7 +176,7 @@ summary.space1 {
 }
 .space1 span {
   font-size: 13px;
-  vertical-align: 15%;
+  vertical-align: 2px;
 }
 .space1 .big {
   margin-left: -2px;
