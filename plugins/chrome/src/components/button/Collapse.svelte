@@ -23,11 +23,11 @@ button {
   border: 0;
   cursor: pointer;
   color: #002aff;
-  margin-top: -5px;
+  margin-top: -1px;
   margin-right: -5px;
   vertical-align: middle;
   background: transparent;
-  padding: 2px 1px 1px 1px;
+  padding: 1px 1px 2px 1px;
   font-family: Consolas, Lucida Console, Courier New, monospace;
   font-weight: 700;
   font-size: 10px;
