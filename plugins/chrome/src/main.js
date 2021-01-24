@@ -152,6 +152,17 @@ function resetRule3(tags, item, _ns) {
 function uniq(value, index, self) {
   return self.indexOf(value) === index;
 }
+function oneSite(tags, ns) {
+  const {toRegex} = window.mitm.fn;
+  if (ns.match('@')) {
+    return false
+  } else if (tags.filterUrl) {
+    const rgx = toRegex(ns.replace(/~/,'[^.]*'));
+    return mitm.browser.activeUrl.match(rgx) || ns==='_global_';
+  } else {
+    return true;
+  }
+}
 window.mitm.fn.rclass = rclass;
 window.mitm.fn.rmethod = rmethod;
 window.mitm.fn.tagsIn__tag3 = tagsIn__tag3
@@ -159,6 +170,7 @@ window.mitm.fn.noTagInRule = noTagInRule
 window.mitm.fn.resetRule2 = resetRule2
 window.mitm.fn.resetRule3 = resetRule3
 window.mitm.fn.isRuleOff = isRuleOff
+window.mitm.fn.oneSite = oneSite
 window.mitm.fn.toRegex = toRegex
 window.mitm.fn.sortTag = sortTag
 window.mitm.fn.uniq = uniq

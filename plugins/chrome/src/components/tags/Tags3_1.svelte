@@ -49,7 +49,7 @@ function xtags(path) {
   <div class="space0">
     <Collapse on:message name="state3" q="{`.t3.${q(ns)}`}"></Collapse>
     <Expand on:message name="state3" q="{`.t3.${q(ns)}`}"></Expand>
-    <span class="ns">[{ns==='_global_' ? ' * ' : ns}]</span>
+    <span class="ns">[{ns==='_global_' ? ' * ' : ns.split('@').pop()}]</span>
   </div>
   <div class="t3 {q(ns)}">
     {#each xitems($tags) as path, i}

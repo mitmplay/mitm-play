@@ -27,20 +27,10 @@ let btn2 = {
   def: true
 }
 let _urls, _cfgs, title1, title2
-function oneSite(ns) {
-  const {toRegex} = window.mitm.fn;
-  if ($tags.filterUrl) {
-    const rgx = toRegex(ns.replace(/~/,'[^.]*'));
-    return mitm.browser.activeUrl.match(rgx) || ns==='_global_';
-  } else {
-    return true;
-  }
-}
-
-function itemlist(rerender) {
+function itemlist(tagsStore, rerender) {
   console.log('rerender...');
   const { __tag1, __tag2, __tag3, __urls } = window.mitm;
-  const { rmethod, noTagInRule, isRuleOff } = window.mitm.fn;
+  const { rmethod, noTagInRule, isRuleOff, oneSite } = window.mitm.fn;
   const { routes } = window.mitm
   let urls = {}
   let url2 = {}
@@ -77,7 +67,7 @@ function itemlist(rerender) {
   }
 
   for (const ns in __tag2) {
-    if (oneSite(ns)) {
+    if (oneSite(tagsStore, ns)) {
       const secs =  __tag2[ns]
       for (let sec in secs) {
         const tag2 = secs[sec]
@@ -136,7 +126,7 @@ function itemlist(rerender) {
     }
   }
   for (const ns in __tag3) {
-    if (oneSite(ns)) {
+    if (oneSite(tagsStore, ns)) {
       const paths = __tag3[ns]
       for (const path in paths) {
         if (!isRuleOff(window.mitm, ns, path)) {
@@ -153,7 +143,7 @@ function itemlist(rerender) {
     }
   }
   for (const ns in __urls) {
-    if (oneSite(ns)) {
+    if (oneSite(tagsStore, ns)) {
       const _urls = __urls[ns] || []
       for (const url in _urls) {
         const {pure, secs, tags} = _urls[url]
@@ -174,7 +164,7 @@ function itemlist(rerender) {
     const tags = Object.keys(url3[url])
     let ctyp = []
     for (const ns in __urls) {
-      if (oneSite(ns)) {
+      if (oneSite(tagsStore, ns)) {
         const _urls = __urls[ns] || []
         for (const _url in _urls) {
           if (url===_url) {
@@ -215,7 +205,7 @@ function itemlist(rerender) {
 }
 </script>
 
-{itemlist($rerender)}
+{itemlist($tags, $rerender)}
 <table>
   <tr>
     <th><Title1><TitleBtn _id="urls" items={title1} btn={btn1}/></Title1></th>

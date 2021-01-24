@@ -14,12 +14,21 @@ function istag(ns) {
   }
   return ok;
 }
+function nspace(_ns) {
+  let result = _ns
+  const ns = window.mitm.routes[_ns]
+  if (ns._childns && ns._childns._subns) {
+    result = ns._childns._subns
+  }
+  console.log('result', result)
+  return result
+}
 </script>
 
 <td style="width:{_resize==='[<<]' ? 35 : 45}%; {cols===3 ? '' : 'display:none;'}">
 {#each Object.keys($tags.__tag3) as ns}
   {#if istag(ns)}
-    <Tags31 on:message items={$tags.__tag3[ns]} {ns}/>
+    <Tags31 on:message items={$tags.__tag3[nspace(ns)]} ns={nspace(ns)}/>
   {/if}
 {/each}
 </td>
