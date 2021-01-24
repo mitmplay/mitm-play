@@ -10,7 +10,7 @@ export let ns;
 let namespace;
 
 function q(key) {
-  return key.replace(/\./g, '-')
+  return key.replace(/[@.]/g, '-')
 }
 function btnExpand(e) {
   const node = e.target.parentElement

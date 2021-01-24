@@ -100,7 +100,7 @@ function spacex(tags, item, path) {
   return `${klass} _${item.split(':')[1].replace(rclass, '-')}`
 }
 function q(key) {
-  return key.replace(/\./g, '-')
+  return key.replace(/[@.]/g, '-')
 }
 </script>
 
