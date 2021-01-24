@@ -118,7 +118,7 @@ function routeSort (fn) { // feat: upadte tags
   const m3 = x=>x.split(':').pop()
   const f3 = x=>x.slice(0,4)==='tag3'
   for (const ns in global.mitm.__tag2) {
-
+    const _tags = {}
     const flag = global.mitm.routes[ns].tags
     const tag2 = global.mitm.__tag2[ns]
     const tag3 = global.mitm.__tag3[ns]
@@ -128,6 +128,7 @@ function routeSort (fn) { // feat: upadte tags
         const tags = secs[sec].tags
         for (const tag in tags) {
           if (tags[tag] === true) {
+            _tags[tag.split(':').pop()] = false
             tags[tag] = false // feat: update __tag3
           }
         }
@@ -149,6 +150,7 @@ function routeSort (fn) { // feat: upadte tags
       }
     }
     for (const id in tag2) {
+      _tags[id.split(':').pop()] = false
       const mainTag = id.split(':')
       tag2[id].state = !flag // feat: update __tag2
       if (flag) {
@@ -161,11 +163,18 @@ function routeSort (fn) { // feat: upadte tags
       }
     }
     for (const _ns in global.mitm.routes) {
+      const {tags} = global.mitm.routes[ns]
+      for (const id of tags) {
+        if (!id.match(':')) {
+          tag1[id] = true
+        }
+      }
       const {_childsn} = global.mitm.routes[_ns]
       if (_childsn && _childsn._subns) {
         _childns.list[_childsn._subns] = true // restore tags
       }
     }
+    tag1 = {..._tags, ...tag1}
   }
   global.mitm.__tag1 = sort(tag1)
   global.mitm.fn._clear()
