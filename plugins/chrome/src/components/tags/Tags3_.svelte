@@ -8,7 +8,9 @@ function istag(ns) {
   const {toRegex} = window.mitm.fn;
   const arr = Object.keys($tags.__tag2[ns]);
   let ok = arr.filter(x=> x.match('url:') || !x.match(':')).length;
-  if ($tags.filterUrl) {
+  if (ns.match('@')) {
+    ok = false
+  } else  if ($tags.filterUrl) {
     const rgx = toRegex(ns.replace(/~/,'[^.]*'));
     ok = ok && mitm.browser.activeUrl.match(rgx) || ns==='_global_';
   }

@@ -42,6 +42,9 @@ function _routeSet (_r, namespace, file) {
       ...__mock
     }
   } else {
+    if (r._childns===undefined) {
+      r._childns = {list: {}, _subns: ''}
+    }
     const [sub, index] = file.split('@')
     if (routex[namespace]===undefined) {
       routex[namespace] = {}
@@ -50,9 +53,6 @@ function _routeSet (_r, namespace, file) {
     if (index) {
       const ns = routes[namespace]
       namespace = `${sub}@${namespace}`
-      if (ns._childns===undefined) {
-        ns._childns = {list: {}, _subns: ''}
-      }
       ns._childns.list[namespace] = false
       r = {...ns, ...r} // feat: nested routes
     }
