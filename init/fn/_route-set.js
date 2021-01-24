@@ -36,15 +36,15 @@ function _routeSet (_r, namespace, file) {
       r[id] = _r[key]
     }
   }
+  if (r._childns===undefined) {
+    r._childns = {list: {}, _subns: ''}
+  }
   if (namespace === '_global_') {
     routes._global_.mock = {
       ...routes._global_.mock,
       ...__mock
     }
   } else {
-    if (r._childns===undefined) {
-      r._childns = {list: {}, _subns: ''}
-    }
     const [sub, index] = file.split('@')
     if (routex[namespace]===undefined) {
       routex[namespace] = {}

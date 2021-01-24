@@ -163,7 +163,7 @@ function routeSort (fn) { // feat: upadte tags
       }
     }
     for (const _ns in global.mitm.routes) {
-      const {tags} = global.mitm.routes[ns]
+      const tags = global.mitm.routes[ns].tags || []
       for (const id of tags) {
         if (!id.match(':')) {
           tag1[id] = true
