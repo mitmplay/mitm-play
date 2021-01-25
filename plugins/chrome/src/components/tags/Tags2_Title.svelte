@@ -51,12 +51,13 @@ function setSubns(e) {
 .space0 {
   line-height: 1.5;
   font-size: 14px;
+  font-family: serif;
   font-weight: bolder;
   color: darkblue;
   background: lightgrey;
 }
 span.ns {
-  margin: 0 -4px;
+  margin: 0;
 }
 label {
   display: contents !important;
@@ -64,7 +65,7 @@ label {
   color: brown;
 }
 label input {
-  margin: 0 -4px;
+  margin: 0 -2px;
   vertical-align: middle;
 }
 </style>

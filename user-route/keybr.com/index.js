@@ -41,6 +41,7 @@ const route = {
       tags: '4.logging'
     }
   },
+  'response:active': {},
   'html:active': {
     'GET:dodol:/': {
       tags: 'in-html',

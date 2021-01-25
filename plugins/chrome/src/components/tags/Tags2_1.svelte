@@ -62,9 +62,10 @@ function routetag(item) {
 }
 
 function show(item) {
+  const short = {request: 'reqs', response: 'resp'}
   const [k,v] = item.split(':');
   if (v===undefined) return k;
-  return `${v}{${k}}`;
+  return `${v}{${short[k] || k}}`;
 }
 function linkTags(item) {
   const {tags} = window.mitm.__tag2[ns][item] // feat: update __tag2
