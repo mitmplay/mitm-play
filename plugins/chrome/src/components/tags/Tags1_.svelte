@@ -8,8 +8,10 @@ export let cols;
 ***/
 let tgs = [];
 function clicked(e) {
-  const { resetRule3 } = window.mitm.fn;
+  const { routes, fn } = window.mitm;
+  const { resetRule3, oneSite } = fn;
   const {__tag1: {...tagx}} = $tags;
+  const tagsStore = $tags;
   setTimeout(()=>{
     const {__tag1,__tag2,__tag3} = $tags;
     const {item} = e.target.dataset; // item = remove-ads~2
@@ -32,14 +34,17 @@ function clicked(e) {
     }
 
     for (let ns in __tag2) {
-      const namespace2 = __tag2[ns];
-      for (let itm in namespace2) {
-        const typ2 = itm.split(':')[1] || itm;
-        if (item===typ2) {
-          namespace2[itm].state = flag; // feat: update __tag2
-        } 
-        if (group1===typ2.split('~')[0]) {
-          namespace2[itm].state = __tag1[typ2] || false; // feat: update __tag2
+      if (oneSite(tagsStore, ns)) {
+        ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
+        const namespace2 = __tag2[ns];
+        for (let itm in namespace2) {
+          const typ2 = itm.split(':')[1] || itm;
+          if (item===typ2) {
+            namespace2[itm].state = flag; // feat: update __tag2
+          } 
+          if (group1===typ2.split('~')[0]) {
+            namespace2[itm].state = __tag1[typ2] || false; // feat: update __tag2
+          }
         }
       }
     }
@@ -99,7 +104,7 @@ function listTags(tags) {
 
   function add(ns) {
     const {_subns} = routes[ns]._childns
-    for (let id in tags.__tag2[_subns || ns]) {
+    for (let id in tags.__tag2[_subns || ns]) { // feat: chg to child namespace
       const [k,v] = id.split(':');
       list[v||k] = true;
     }

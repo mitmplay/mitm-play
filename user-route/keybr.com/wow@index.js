@@ -9,8 +9,8 @@ const route = {
     }
   },
   'html:wow': {
-    'GET:dodol:/': {
-      tags: 'in-html',
+    'GET:/url': {
+      // tags: 'in-html',
       widi: ''
     },
   }  

@@ -3,7 +3,7 @@ module.exports = nspace => {
   for (let id in routes) {
     if (nspace.match(router[id]._namespace_)) {
       const {_childns: c} = routes[id]
-      const _subns = c ? c._subns : ''
+      const _subns = c ? c._subns : '' // feat: chg to child namespace
       const ns = _subns || id
       return ns
     }

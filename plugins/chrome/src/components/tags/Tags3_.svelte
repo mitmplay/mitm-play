@@ -16,14 +16,9 @@ function istag(ns) {
   }
   return ok;
 }
-function nspace(_ns) {
-  let result = _ns
-  const ns = window.mitm.routes[_ns]
-  if (ns._childns && ns._childns._subns) {
-    result = ns._childns._subns
-  }
-  console.log('result', result)
-  return result
+function nspace(ns) {
+  const {_subns} = window.mitm.routes[ns]._childns
+  return _subns || ns // feat: chg to child namespace
 }
 </script>
 

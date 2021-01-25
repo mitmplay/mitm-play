@@ -95,6 +95,7 @@ function resetRule2(tags, item, ns, tagx) {
 }
 
 function resetRule3(tags, item, _ns) {
+  const { routes } = window.mitm;
   const {__tag1,__tag2,__tag3} = tags;
   const t1 = item.split('url:').pop();
   const typ1 = item.split(':')[1] || item;
@@ -145,7 +146,10 @@ function resetRule3(tags, item, _ns) {
   } else {
     const nss =  tags.__tag2
     for (let ns in nss) {
-      update(ns)
+      if (oneSite(tags, ns)) {
+        ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
+        update(ns)
+      }
     }
   }
 }

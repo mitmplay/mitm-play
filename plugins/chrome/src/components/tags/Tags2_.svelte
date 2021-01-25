@@ -4,14 +4,9 @@ import { tags } from './stores.js';
 import Tags21 from './Tags2_1.svelte';
 import { states } from '../button/states.js';
 
-function nspace(_ns) {
-  let result = _ns
-  const ns = window.mitm.routes[_ns]
-  if (ns._childns && ns._childns._subns) {
-    result = ns._childns._subns
-  }
-  console.log('result', result)
-  return result
+function nspace(ns) {
+  const {_subns} = window.mitm.routes[ns]._childns
+  return _subns || ns // feat: chg to child namespace
 }
 </script>
 

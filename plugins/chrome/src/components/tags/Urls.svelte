@@ -29,9 +29,8 @@ let btn2 = {
 let _urls, _cfgs, title1, title2
 function itemlist(tagsStore, rerender) {
   console.log('rerender...');
-  const { __tag1, __tag2, __tag3, __urls } = window.mitm;
-  const { rmethod, noTagInRule, isRuleOff, oneSite } = window.mitm.fn;
-  const { routes } = window.mitm
+  const { __tag1, __tag2, __tag3, __urls, routes, fn } = window.mitm;
+  const { rmethod, noTagInRule, isRuleOff, oneSite } = fn;
   let urls = {}
   let url2 = {}
   let url3 = {}
@@ -66,8 +65,9 @@ function itemlist(tagsStore, rerender) {
     return path
   }
 
-  for (const ns in __tag2) {
+  for (let ns in __tag2) {
     if (oneSite(tagsStore, ns)) {
+      ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
       const secs =  __tag2[ns]
       for (let sec in secs) {
         const tag2 = secs[sec]
@@ -125,8 +125,9 @@ function itemlist(tagsStore, rerender) {
       }
     }
   }
-  for (const ns in __tag3) {
+  for (let ns in __tag3) {
     if (oneSite(tagsStore, ns)) {
+      ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
       const paths = __tag3[ns]
       for (const path in paths) {
         if (!isRuleOff(window.mitm, ns, path)) {
@@ -142,8 +143,9 @@ function itemlist(tagsStore, rerender) {
       }
     }
   }
-  for (const ns in __urls) {
+  for (let ns in __urls) {
     if (oneSite(tagsStore, ns)) {
+      ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
       const _urls = __urls[ns] || []
       for (const url in _urls) {
         const {pure, secs, tags} = _urls[url]
@@ -163,8 +165,9 @@ function itemlist(tagsStore, rerender) {
     const secs = Object.keys(url2[url])
     const tags = Object.keys(url3[url])
     let ctyp = []
-    for (const ns in __urls) {
+    for (let ns in __urls) {
       if (oneSite(tagsStore, ns)) {
+        ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
         const _urls = __urls[ns] || []
         for (const _url in _urls) {
           if (url===_url) {
