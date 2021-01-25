@@ -21,10 +21,12 @@ const sortTag = (a,b) => {
   if (a>b) return 1;
   return 0;
 }
+
 function noTagInRule(path) {
   const arr = path.match(rmethod) // feat: tags in url
   return arr ? (arr[1] ? `${arr[1]}:${arr[3]}` : arr[3]) : path
 }
+
 function isRuleOff(tags, ns, path) {
   const secs = tags.__tag3[ns][path]
   const tag2 = tags.__tag2[ns]
@@ -62,6 +64,7 @@ function isRuleOff(tags, ns, path) {
   }
   return false
 }
+
 function tagsIn__tag3(tags, ns, path, sec) {
   const secs = tags.__tag3[ns][path]
   let arr = []
@@ -74,6 +77,7 @@ function tagsIn__tag3(tags, ns, path, sec) {
   }
   return arr
 }
+
 function resetRule2(tags, item, ns, tagx) {
   const typ1 = item.split(':')[1] || item;
   const [ group1, id1 ] = typ1.split('~');
@@ -140,7 +144,6 @@ function resetRule3(tags, item, _ns) {
       }
     }  
   }
-
   if (_ns) {
     update(_ns)
   } else {
@@ -153,9 +156,11 @@ function resetRule3(tags, item, _ns) {
     }
   }
 }
+
 function uniq(value, index, self) {
   return self.indexOf(value) === index;
 }
+
 function oneSite(tags, ns) {
   const {toRegex} = window.mitm.fn;
   if (ns.match('@')) {
@@ -167,17 +172,19 @@ function oneSite(tags, ns) {
     return true;
   }
 }
-window.mitm.fn.rclass = rclass;
-window.mitm.fn.rmethod = rmethod;
-window.mitm.fn.tagsIn__tag3 = tagsIn__tag3
-window.mitm.fn.noTagInRule = noTagInRule
-window.mitm.fn.resetRule2 = resetRule2
-window.mitm.fn.resetRule3 = resetRule3
-window.mitm.fn.isRuleOff = isRuleOff
-window.mitm.fn.oneSite = oneSite
-window.mitm.fn.toRegex = toRegex
-window.mitm.fn.sortTag = sortTag
-window.mitm.fn.uniq = uniq
+
+const {fn} = window.mitm
+fn.rmethod = rmethod;
+fn.rclass = rclass;
+fn.tagsIn__tag3 = tagsIn__tag3
+fn.noTagInRule = noTagInRule
+fn.resetRule2 = resetRule2
+fn.resetRule3 = resetRule3
+fn.isRuleOff = isRuleOff
+fn.sortTag = sortTag
+fn.oneSite = oneSite
+fn.toRegex = toRegex
+fn.uniq = uniq
 window.mitm.editor = {};
 window.mitm.browser = {
   chgUrl_events: {},
@@ -232,7 +239,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
       debounce = undefined
     }
     debounce = setTimeout(() => {
-      // console.log('Tab Update!!!', tab.url);
       debounce = undefined
       chgUrl(tab.url)
     }, 1000)
@@ -245,7 +251,6 @@ chrome.tabs.onActivated.addListener(function (activeInfo) {
     console.log('first run chrome.tabs.onActivated')
     firstRunTabsOnActivated = 0
   }
-  // console.log('Tab Change!!!', activeInfo);
   getUrl()
 })
 
@@ -254,26 +259,3 @@ console.log('Start plugin')
 getUrl()
 
 export default app
-
-// let inprocess = false;
-// const replay = ()=>{
-//   setTimeout(() => {
-//     inprocess = false;
-//   },500);
-// }
-// function reportWindowSize() {
-//   if (!inprocess) {
-//     inprocess = true;
-//     const {innerWidth, innerHeight: height, ws__send} = window;
-//     chrome.windows.get(-2, {}, data => {
-//       const {width:_w} = data;
-//       const width = _w - innerWidth;
-//       console.log({width, height, _w});
-//       ws__send('setViewport', {width, height, _w}, replay);
-//     })
-//   }
-// }
-// window.addEventListener("resize", reportWindowSize);
-// window.addEventListener('message', event => {
-//   console.log({event});
-// });
