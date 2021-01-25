@@ -73,7 +73,9 @@ function linkTags(item) {
   return linkTags;
 }
 function isGroup(item) {
-  return window.mitm.__tag2[ns][item] // feat: update __tag2
+  const [sec, tag] = item.split(':')
+  return tag && sec!=='url'
+  // return window.mitm.__tag2[ns][item] // feat: update __tag2
 }
 function urllist(_tags, item) {
   const {__tag2, fn: { noTagInRule, uniq }} = window.mitm;
@@ -173,7 +175,7 @@ summary.space1 .link-tags {
 }
 .space1 {
   color: grey;
-  padding-left: 17px;
+  padding-left: 16px;
 }
 .space1 span {
   font-size: 13px;
