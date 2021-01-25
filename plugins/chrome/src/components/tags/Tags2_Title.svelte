@@ -2,6 +2,7 @@
 import { tags } from './stores.js';
 import Expand from '../button/Expand.svelte';
 import Collapse from '../button/Collapse.svelte';
+import { dataset_dev } from 'svelte/internal';
 
 export let ns;
 const list = window.mitm.routes[ns]._childns.list
@@ -18,13 +19,17 @@ function childns(_ns) {
   }
 }
 function setSubns(e) {
+  const {checked, dataset} = e.target
   setTimeout(() => {
     const {_childns} = window.mitm.routes[ns]
-    _childns._subns = ''
-    for (const id in _childns.list) {
-      if (_childns.list[id]) {
-        _childns._subns = id
-        break
+    const {list} = _childns
+    const {item} = dataset
+    _childns._subns = list[item] ? item : ''
+    if (checked) {
+      for (const id in list) {
+        if (id!==item) {
+          list[id] = false
+        }
       }
     }
     tags.set({...$tags})
@@ -40,6 +45,7 @@ function setSubns(e) {
     <label class="checker">
       <input
       type="checkbox"
+      data-item="{item}"
       on:click="{setSubns}"
       bind:checked={list[item]}/>
       {item.split('@')[0]}
