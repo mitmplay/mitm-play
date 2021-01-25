@@ -94,11 +94,12 @@ function routetag(item) {
 
 function listTags(tags) {
   console.log('rerender...');
-  const {browser, fn: {toRegex}} = window.mitm;
+  const {browser, routes, fn: {toRegex}} = window.mitm;
   const list = {};
 
   function add(ns) {
-    for (let id in tags.__tag2[ns]) {
+    const {_subns} = routes[ns]._childns
+    for (let id in tags.__tag2[_subns || ns]) {
       const [k,v] = id.split(':');
       list[v||k] = true;
     }
