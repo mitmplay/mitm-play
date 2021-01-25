@@ -181,6 +181,7 @@ summary.space1 .link-tags {
 }
 .space1 .big {
   margin-left: -2px;
+  font-family: serif;
 }
 .spacex {
   padding-left: 30px;

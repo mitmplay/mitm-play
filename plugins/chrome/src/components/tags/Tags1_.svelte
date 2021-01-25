@@ -186,6 +186,7 @@ function leave(e) {
 }
 .space0 .big {
   margin-left: -4px;
+  font-family: serif;
 }
 .space0>label {
   padding-left: 6px;
