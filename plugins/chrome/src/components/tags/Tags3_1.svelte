@@ -65,17 +65,17 @@ function xtags(path) {
 <style>
 .ns {
   margin-left: -3px;
-  font-size: 15px;
+  /* font-size: 15px; */
 }
 .border {
   border: 1px solid;
 }
 .space0 {
   line-height: 1.5;
-  font-size: medium;
+  font-size: 14px;
   font-weight: bolder;
-  color: darkblue;
   background: lightgrey;
+  color: darkblue;
 }
 .space1 {
   font-size: 13px;

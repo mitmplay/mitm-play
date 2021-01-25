@@ -162,7 +162,7 @@ summary.space1 .link-tags {
   /* vertical-align: 25%; */
   /* font-style: italic; */
   margin-left: -6px;
-  font-size: 9px;
+  font-size: 10px;
   font-family: roboto;
   color: darkmagenta;
 }

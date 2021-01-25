@@ -50,7 +50,7 @@ function setSubns(e) {
 <style>
 .space0 {
   line-height: 1.5;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bolder;
   color: darkblue;
   background: lightgrey;

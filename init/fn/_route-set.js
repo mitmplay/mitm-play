@@ -53,8 +53,21 @@ function _routeSet (_r, namespace, file) {
     if (index) {
       const ns = routes[namespace]
       namespace = `${sub}@${namespace}`
-      ns._childns.list[namespace] = false
-      r = {...ns, ...r} // feat: nested routes
+      if ( ns._childns.list[namespace]===undefined) {
+        ns._childns.list[namespace] = false
+      }
+      for (const key in r) { // feat: nested routes
+        const tgt = r[key]
+        const src = ns[key]
+        if(src && typeof src==='object' && !Array.isArray(src)) {
+          r[key] = {...src, ...tgt}
+        }
+      }
+      for (const key in ns) { // feat: nested routes
+        if(r[key]===undefined) {
+          r[key] = ns[key]
+        }
+      }
     }
   }
   routes[namespace] = r

@@ -50,8 +50,11 @@ function load (path) {
         reslt.tags = jsn.tags
       }
       if (jsn._subns) {
-        reslt._chilsn._subns = jsn._subns
-        // reslt._childns.list[jsn._subns] = true  // not created yet!
+        if (reslt._childns===undefined) { // not created yet!
+          reslt._childns = {list: {}, _subns: ''}
+        }
+        reslt._childns._subns = jsn._subns
+        reslt._childns.list[jsn._subns] = true
       }
     } catch (error) {
       console.log('invalid json', _jpath)
