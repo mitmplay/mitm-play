@@ -18,15 +18,6 @@ const route = {
     'GET#202:/assets/[a-z0-9]+': `=>${css}`
   },
   workspace: '_assets_/',
-  cache: {
-    '!:/assets/(.+).css': {
-      contentType: ['css', 'image'],
-      path: '_assets_/',
-      file: '    :1.css ',
-      // tags: '3.caching',
-      // debug: true
-    }
-  },
   'cache:select~1': { 
     '.(pn|sv)g$': {
       contentType: ['image'],

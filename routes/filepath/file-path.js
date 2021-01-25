@@ -21,7 +21,8 @@ function detectHome(match, file) {
         fpath = `${__args.route}/${fmatch[1]}`
       } else {
         fmatch = file.match(_nmspace)
-        const nspath = `${__args.route}/${match.namespace}`
+        const nspace = match.namespace.split('@').pop()
+        const nspath = `${__args.route}/${nspace}`
         if (fmatch) {
           fpath = `${nspath}/${fmatch[1]}`
         } else {
