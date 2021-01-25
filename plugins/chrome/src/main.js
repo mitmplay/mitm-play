@@ -41,7 +41,7 @@ function isRuleOff(tags, ns, path) {
           return true
         } else {
           for (const tag of node.tag1) {
-            if (tag1[tag]===false) {
+            if (tag1[ns][tag]===false) {
               return true
             }
           }
@@ -113,7 +113,12 @@ function resetRule3(tags, item, _ns) {
 
     let flag
     if (tag1) {
-      flag = __tag1[t1]
+      flag = __tag1[ns]
+      if (flag===undefined) {
+        flag = false
+      } else {
+        flag = flag[t1]
+      }
     } else {
       flag = namespace2[item].state
     }
@@ -131,7 +136,7 @@ function resetRule3(tags, item, _ns) {
 
           if (group1===group2) {
             if (tag1) {
-              tags[tag] =  __tag1[id] || false;
+              tags[tag] =  __tag1[ns][id] || false;
             } else {
               if (id2===undefined) {
                 tags[tag] = namespace2[item].state

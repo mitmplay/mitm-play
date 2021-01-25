@@ -5,7 +5,7 @@ const route = {
     'ws-connect': true,
     'ws-message': true,
   },
-  args: {
+  'args:1.no-ads': {
     activity: ''
   }
 }

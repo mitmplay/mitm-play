@@ -3,32 +3,36 @@ import { tags } from './stores.js';
 export let cols;
 /***
 * ex:
-* __tag1[remove-ads~1] = true
-* __tag1[remove-ads~2] = false
+* __tag1[ns][remove-ads~1] = true
+* __tag1[ns][remove-ads~2] = false
 ***/
 let tgs = [];
+let list = {};
+
 function clicked(e) {
   const { routes, fn } = window.mitm;
   const { resetRule3, oneSite } = fn;
-  const {__tag1: {...tagx}} = $tags;
   const tagsStore = $tags;
   setTimeout(()=>{
     const {__tag1,__tag2,__tag3} = $tags;
-    const {item} = e.target.dataset; // item = remove-ads~2
-    const flag = __tag1[item];       // flag = true ~> already changed
-    console.log('e', $tags);
+    const {dataset, checked} = e.target;
+    const {item: tag} = dataset;
+    const [group1, id1] = tag.split('~');
 
-    const [group1, id1] = item.split('~');
-    if (id1) {
-      for (let ns in __tag1) {
-        const [group2, id2] = ns.split('~');
-        if (!tagx[item] && group1===group2 && id1!==id2) {
-          if (__tag1[group1]!==undefined) {
-            __tag1[group1] = flag;
+    for (let ns in __tag1) {
+      if (oneSite(tagsStore, ns)) {
+        ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
+        __tag1[ns][tag] = checked
+        if (id1 && checked) {
+          for (let tg in list) {
+            const [group2, id2] = tg.split('~');
+            if (group1===group2 && id1!==id2) {
+              if (__tag1[ns][group1]!==undefined) {
+                __tag1[ns][group1] = true;
+              }
+              __tag1[ns][tg] = false;
+            }
           }
-          __tag1[ns] = !flag;
-        } else if (__tag1[group1]!==undefined) {
-          __tag1[group1] = flag;
         }
       }
     }
@@ -36,20 +40,20 @@ function clicked(e) {
     for (let ns in __tag2) {
       if (oneSite(tagsStore, ns)) {
         ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
-        const namespace2 = __tag2[ns];
-        for (let itm in namespace2) {
-          const typ2 = itm.split(':')[1] || itm;
-          if (item===typ2) {
-            namespace2[itm].state = flag; // feat: update __tag2
+        const tags = __tag2[ns];
+        for (let tg in tags) {
+          const typ2 = tg.split(':')[1] || tg;
+          if (tag===typ2) {
+            tags[tg].state = checked; // feat: update __tag2
           } 
           if (group1===typ2.split('~')[0]) {
-            namespace2[itm].state = __tag1[typ2] || false; // feat: update __tag2
+            tags[tg].state = __tag1[ns][typ2] || false; // feat: update __tag2
           }
         }
       }
     }
 
-    resetRule3($tags, item)
+    resetRule3($tags, tag)
     const {filterUrl, tgroup, uniq} = $tags;
     tags.set({
       filterUrl,
@@ -99,34 +103,23 @@ function routetag(item) {
 
 function listTags(tags) {
   console.log('rerender...');
-  const {browser, routes, fn: {toRegex}} = window.mitm;
-  const list = {};
-
-  function add(ns) {
-    const {_subns} = routes[ns]._childns
-    for (let id in tags.__tag2[_subns || ns]) { // feat: chg to child namespace
-      const [k,v] = id.split(':');
-      list[v||k] = true;
-    }
-  }
-
-  tgs = [];
-  if (tags.filterUrl) {
-    const nss = []
-    for (let ns in tags.__tag2) {
-      const rgx = toRegex(ns.replace(/~/,'[^.]*'));
-      if (browser.activeUrl.match(rgx)) {
-        nss.push(ns)
-        add(ns);
+  const {browser, routes, fn: {oneSite}} = window.mitm;
+  list = {}
+  const nss = []
+  for (let ns in tags.__tag1) {
+    nss.push(ns)
+    if (oneSite(tags, ns)) {
+      ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
+      const tag1 = tags.__tag1[ns]
+      for (const id in tag1) {
+        if (list[id]===undefined || tag1[id]) {
+          list[id] = tag1[id]
+        }
       }
     }
-    add('_global_');
-    browser.nss = nss;
-    tgs = Object.keys(list).sort();
-  } else {
-    browser.nss = Object.keys(tags.__tag2)
-    tgs = Object.keys(tags.__tag1);
   }
+  browser.nss = nss;
+  tgs = Object.keys(list).sort();
   return tgs;
 }
 function enter(e) {
@@ -166,7 +159,7 @@ function leave(e) {
         <input type="checkbox"
         data-item={item}
         on:click={clicked}
-        bind:checked={$tags.__tag1[item]}/>
+        bind:checked={list[item]}/>
         <span class="big">{item}</span>
       </label>
     </div>

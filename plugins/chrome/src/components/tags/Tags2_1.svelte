@@ -53,7 +53,7 @@ function routetag(item) {
     klas += ' url'
   }
   for (const tag of tags) {
-    if (__tag1[tag]===false) {
+    if (__tag1[ns][tag]===false) {
       klas += ' grey'
       break
     }

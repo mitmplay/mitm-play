@@ -90,7 +90,7 @@ function itemlist(tagsStore, rerender) {
             let skip = false
             const tags = tag2.tags || []
             for (const tag of tags) {
-              if (__tag1[tag]===false) {
+              if (__tag1[ns][tag]===false) {
                 skip = true
                 break
               }
