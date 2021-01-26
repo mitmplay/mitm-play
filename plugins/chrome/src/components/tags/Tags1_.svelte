@@ -128,16 +128,16 @@ function enter(e) {
   if (node) {
     const {item} = e.target.dataset;
     const klass = item.replace(rclass, '-')
-    node.innerHTML = `
-    ._${klass},
+    const css = `
     .t2 .spacex._${klass},
-    .t3 summary._${klass},
-    .space3._${klass} {
+    .t3 .space3._${klass} {
       background: yellow;
     }
-    .t2 .space1._${klass} {
-      background: #dbf601;;
+    .t2 .space1._${klass},
+    .t3 .space1._${klass} {
+      background: #dbf601;
     }`
+    node.innerHTML = css
   }
 }
 function leave(e) {

@@ -27,7 +27,7 @@ const route = {
   'log:select~2': {},
   'log:select~3': {},
   log: {
-    '/': {
+    '/lol': {
       contentType: ['html'],
       tags: '4.logging'
     }

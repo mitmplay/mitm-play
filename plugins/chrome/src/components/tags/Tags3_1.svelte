@@ -32,16 +32,21 @@ function xtags(path) {
   const { rclass } = window.mitm.fn;
   let secs = namespace[path];
   let arr = Object.keys(secs).filter(x=>x[0]!==':');
-  const klass = arr.map(x=>
-      Object.keys(secs[x]).
-      map(x=>x.
+  let tag1 = {}
+  const klass = arr.map(x=> {
+    const arr = Object.keys(secs[x]);
+    if (secs[x].tags) {
+      tag1 = {...tag1, ...secs[x].tags}
+    }
+    return arr.map(x=>x.
         split(':').
         pop().
         replace(rclass, '-')
-      ).
-      join(' _')
-    )
-  return `_${klass.join(' _')}`;
+    ).join(' _')
+  })
+  tag1 = Object.keys(tag1)
+  tag1 = tag1.length ? `_${tag1.join(' _').replace(/url:/g, '').replace(rclass, '-')}` : ''
+  return `${tag1} _${klass.join(' _')}`;
 }
 </script>
 
