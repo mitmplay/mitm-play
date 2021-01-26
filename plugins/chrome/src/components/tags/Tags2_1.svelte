@@ -39,9 +39,9 @@ function itemlist(items) {
   return arr.sort(sortTag);
 }
 
-function routetag(item) {
-  const {__tag1, __tag2} = window.mitm
-  const tags = __tag2[ns][item].tags || [] // feat: update __tag2
+function routetag(tags, item) {
+  const {__tag1, __tag2, fn: {rclass}} = window.mitm
+  const _tags = __tag2[ns][item].tags || [] // feat: update __tag2
 
   let klas
   if (item.match(':')) {
@@ -52,13 +52,13 @@ function routetag(item) {
   if (item.match('url:')) {
     klas += ' url'
   }
-  for (const tag of tags) {
+  for (const tag of _tags) {
     if (__tag1[ns][tag]===false) {
       klas += ' grey'
       break
     }
   }
-  return klas
+  return klas + ` _${item.split(':')[1].replace(rclass, '-')}`
 }
 
 function show(item) {
@@ -92,14 +92,16 @@ function urllist(_tags, item) {
   obj = obj.map(noTagInRule).filter(uniq)
   return obj
 }
+function alltags(tags, item, path) {
+  const { tagsIn__tag3 } = window.mitm.fn;
+  return tagsIn__tag3(tags, ns, path, item)
+}
 function spacex(tags, item, path) {
   let klass = items[item].state ? 'slc' : ''; // feat: update __tag2
-  const { rclass, isRuleOff, tagsIn__tag3 } = window.mitm.fn;
+  const { rclass, isRuleOff } = window.mitm.fn;
   isRuleOff(tags, ns, path) && (klass += ' grey');
-  const tag = tagsIn__tag3(tags, ns, path, item).join(' _')
-  if (tag) {
-    klass += ` _${tag}`
-  }
+  const _tags = alltags(tags, item, path)
+  _tags.length && (klass += ` _${_tags.join(' _')}`)
   return `${klass} _${item.split(':')[1].replace(rclass, '-')}`
 }
 function q(key) {
@@ -114,7 +116,7 @@ function q(key) {
     <div class="t2 {q(ns)}">
     {#if isGroup(item)}
       <details>
-        <summary class="space1 {routetag(item)}">
+        <summary class="space1 {routetag($tags, item)}">
           <label>
             <input type="checkbox"
             data-item={item}

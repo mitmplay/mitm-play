@@ -134,6 +134,9 @@ function enter(e) {
     .t3 summary._${klass},
     .space3._${klass} {
       background: yellow;
+    }
+    .t2 .space1._${klass} {
+      background: #dbf601;;
     }`
   }
 }
