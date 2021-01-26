@@ -10,13 +10,12 @@ function hideBtn(b) {
     } else if (x==='def') {
       return `.${_id}>li>._notag`
     } else {
-      return `.${_id} li.${x}`
+      return `.${_id} li.${x} div`
     }
   })
-  console.log('render url style...')
-  const content =  `<style>${hide.join(',')} {
-    display: none;
-  }<style>`
+  const s1 = `${hide.join(',')} {display: none;}`
+  const b2 = b.def ? `.${_id}>li>._notag {display: block !important;}` : ''
+  const content =  `<style>${s1}\n${b2}<style>`
   return content
 }
 // to be rerendered func need to be pass in
