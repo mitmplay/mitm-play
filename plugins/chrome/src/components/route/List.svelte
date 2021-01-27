@@ -63,8 +63,41 @@ window.mitm.files.route_events.routeTable = () => {
   console.log('routeTable getting called!!!');
   window.ws__send('getRoute', '', routeHandler);
 }
+
+function xlist(all) {
+  return Object.keys(_data).filter(x => !x.match('@'))
+}
+
+function childs(item) {
+  const route = window.mitm.routes[item]
+  return Object.keys(route._childns.list)
+}
+
+function isGroup(item) {
+  const route = window.mitm.routes[item]
+  const arr = Object.keys(route._childns.list)
+  return arr.length
+}
 </script>
 
-{#each Object.keys(_data) as item}
-  <Item item={{element: item, ..._data[item]}} {onChange}/>
+{#each xlist(_data) as item}
+  {#if isGroup(item)}
+  <details>
+    <summary class="space1">
+    <Item item={{element: item, ..._data[item]}} {onChange} group="group"/>
+    </summary>
+    {#each childs(item) as item2}
+      <Item item={{element: item2, ..._data[item2]}} {onChange} group="child"/>
+    {/each}
+  </details>
+  {:else}
+    <Item item={{element: item, ..._data[item]}} {onChange}/>
+  {/if}
 {/each}
+
+<style>
+summary {
+  border-bottom: 3px solid #c0d8cca1;
+  padding-left: 2px;
+}
+</style>

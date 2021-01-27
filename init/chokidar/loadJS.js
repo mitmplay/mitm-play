@@ -24,7 +24,12 @@ function loadJS (path, msg, fn) {
       if (err) {
         console.log(c.redBright('Error read source file'), err)
       } else {
-        global.mitm.source[`${domain}${r ? '' : '/'+file}`] = data
+        const [sub, index] = file.split('@')
+        if (index) {
+          global.mitm.source[`${sub}@${domain}`] = data
+        } else {
+          global.mitm.source[`${domain}${r ? '' : '/'+file}`] = data
+        }
       }
     })  
     resort(fn) // feat: upadte tags

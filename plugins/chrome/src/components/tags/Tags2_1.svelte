@@ -75,7 +75,6 @@ function linkTags(item) {
 function isGroup(item) {
   const [sec, tag] = item.split(':')
   return tag && sec!=='url'
-  // return window.mitm.__tag2[ns][item] // feat: update __tag2
 }
 function urllist(_tags, item) {
   const {__tag2, fn: { noTagInRule, uniq }} = window.mitm;

@@ -2,14 +2,17 @@
 import { source } from './stores.js';
 
 export let item;
+export let group = '';
 export let onChange;
 
 function clickHandler(e) {
-  let {item} = e.target.dataset;
+  e.preventDefault()
+  e.stopPropagation()
+  let {element} = e.target.dataset;
   const { editor: { _route, _routeEdit }, files } = mitm;
-  const url = mitm.routes[item].url;
-  const obj = files.route[item];
-  console.log(item, obj);
+  const url = mitm.routes[element].url;
+  const obj = files.route[element];
+  console.log(item, element, obj);
 
   if (_route===undefined) {
     _routeEdit(obj.content)
@@ -27,15 +30,15 @@ function clickHandler(e) {
         content: obj.content,
         fpath: obj.fpath,
         path: obj.path,
-        item,
+        item: element,
       }
     }, 1);
   })
 }
 </script>
 
-<div class="td-item {$source.path===item.path}"
-  data-item={item.element}
+<div class="td-item {group} {$source.fpath===item.fpath}"
+  data-element={item.element}
   on:click="{clickHandler}"
 >{item.title}</div>
 
@@ -44,12 +47,23 @@ function clickHandler(e) {
   cursor: pointer;
   padding: 0.1rem;
   line-height: 15px;
-  padding-left: 5px;
+  padding-left: 10px;
   border-bottom: 3px solid #c0d8cca1;
 }
 .td-item.true {
   color: blue;
   font-weight: bolder;
   background: greenyellow;
+  border-bottom: 1px solid #3638bfa1;
+}
+div.child {
+  border: none;
+  padding-left: 12px;
+}
+div.group {
+  border: none;
+  padding: 0;
+  margin-left: 9px;
+  margin-top: -17px;
 }
 </style>
