@@ -13,6 +13,7 @@ function nspace(ns) {
 <td style="width:{$states.chevron==='[<<]' ? 45 : 35}%; {cols>0 ? '' : 'display:none;'}">
 {#each Object.keys($tags.__tag2) as ns}
   {#if window.mitm.fn.oneSite($tags, ns)}
+    <!-- feat: auto collapsed between tag2 & tag3 -->
     <Tags21 on:message items={$tags.__tag2[nspace(ns)]} ns={nspace(ns)}/>
   {/if}
 {/each}

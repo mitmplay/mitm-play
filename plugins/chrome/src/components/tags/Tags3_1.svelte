@@ -52,6 +52,7 @@ function xtags(path) {
 
 <div class="border">
   <div class="space0">
+    <!-- feat: auto collapsed between tag2 & tag3 -->
     <Collapse on:message name="state3" q="{`.t3.${q(ns)}`}"></Collapse>
     <Expand on:message name="state3" q="{`.t3.${q(ns)}`}"></Expand>
     <span class="ns">[{ns==='_global_' ? ' * ' : ns.split('@').pop()}]</span>

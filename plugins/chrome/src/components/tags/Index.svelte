@@ -54,11 +54,11 @@ function handleMessage(event) {
   let q
   if (name==='state2') {
     all.chevron = all.state2 ? '[<<]' : '[<<]'
-    all.state3 = false
+    all.state3 = {} // feat: auto collapsed between tag2 & tag3
     q = '.t3'
   } else if (name==='state3') {
     all.chevron = !all.state3 ? '[>>]' : '[>>]'
-    all.state2 = false
+    all.state2 = {} // feat: auto collapsed between tag2 & tag3
     q = '.t2'
   }
   const nodes = document.querySelectorAll(`${q} details[open]`)

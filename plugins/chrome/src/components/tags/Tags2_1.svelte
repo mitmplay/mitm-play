@@ -111,7 +111,8 @@ function q(key) {
 
 {#if Object.keys(items).length}
 <div class="border">
-  <Tags2Title {ns}/>
+  <!-- feat: auto collapsed between tag2 & tag3 -->
+  <Tags2Title on:message {ns}/>
   {#each itemlist(items) as item}
     <div class="t2 {q(ns)}">
     {#if isGroup(item)}

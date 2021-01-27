@@ -8,15 +8,15 @@ const dispatch = createEventDispatcher();
 
 function btnOpen(e) {
   const all = {...$states}
-  all[name] = !all[name]
+  all[name][q] = !all[name][q]
   const nodes = document.querySelectorAll(`${q} details`)
-  if (all[name]) {
+  if (all[name][q]) {
     nodes.forEach(node => node.setAttribute('open', ''))
   } else {
     nodes.forEach(node => node.removeAttribute('open'))
   }
   states.set(all)
-  dispatch('message', {all, name})
+  dispatch('message', {all, name}) // feat: auto collapsed between tag2 & tag3
 }
 </script>
 

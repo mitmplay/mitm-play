@@ -8,11 +8,12 @@ const dispatch = createEventDispatcher();
 
 function btnClose(e) {
   const all = {...$states}
-  all[name] = false
+  all[name][q] = false
   const nodes = document.querySelectorAll(`${q} details[open]`)
   nodes.forEach(node => node.removeAttribute('open'))
   states.set(all)
-  dispatch('message', {all, name})
+  dispatch('message', {all, name}) // feat: auto collapsed between tag2 & tag3
+
 }
 </script>
 

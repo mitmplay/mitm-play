@@ -25,6 +25,7 @@ function nspace(ns) {
 <td style="width:{_resize==='[<<]' ? 35 : 45}%; {cols===3 ? '' : 'display:none;'}">
 {#each Object.keys($tags.__tag3) as ns}
   {#if istag(ns)}
+    <!-- feat: auto collapsed between tag2 & tag3 -->
     <Tags31 on:message items={$tags.__tag3[nspace(ns)]} ns={nspace(ns)}/>
   {/if}
 {/each}
