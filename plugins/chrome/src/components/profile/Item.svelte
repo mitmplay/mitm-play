@@ -45,7 +45,7 @@ function clickHandler(e) {
   padding: 0.1rem;
   line-height: 15px;
   padding-left: 5px;
-  border-bottom: 3px solid #c0d8cca1;
+  border-bottom: 1px solid #c0d8cca1;
 }
 .td-item.true {
   color: blue;
