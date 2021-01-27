@@ -48,7 +48,7 @@ function clickHandler(e) {
   padding: 0.1rem;
   line-height: 15px;
   padding-left: 10px;
-  border-bottom: 3px solid #c0d8cca1;
+  border-bottom: 1px solid #c0d8cca1;
 }
 .td-item.true {
   color: blue;
@@ -59,11 +59,12 @@ function clickHandler(e) {
 div.child {
   border: none;
   padding-left: 12px;
+  background: beige;
 }
 div.group {
   border: none;
   padding: 0;
   margin-left: 9px;
-  margin-top: -17px;
+  margin-top: -15px;
 }
 </style>

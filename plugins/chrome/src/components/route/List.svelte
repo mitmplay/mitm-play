@@ -97,7 +97,7 @@ function isGroup(item) {
 
 <style>
 summary {
-  border-bottom: 3px solid #c0d8cca1;
+  border-bottom: 1px solid #c0d8cca1;
   padding-left: 2px;
 }
 </style>
