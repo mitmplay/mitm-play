@@ -42,9 +42,10 @@ function itemlist(items) {
 function routetag(tags, item) {
   const {__tag1, __tag2, fn: {rclass}} = window.mitm
   const _tags = __tag2[ns][item].tags || [] // feat: update __tag2
+  const tag2 = item.split(':')
 
   let klas
-  if (item.match(':')) {
+  if (tag2[1]) {
     klas = items[item].state ? 'rtag slc' : 'rtag'; // feat: update __tag2
   } else {
     klas = items[item].state ? 'stag slc' : ''; // feat: update __tag2
@@ -58,7 +59,7 @@ function routetag(tags, item) {
       break
     }
   }
-  return klas + ` _${item.split(':')[1].replace(rclass, '-')}`
+  return klas + ` _${tag2.pop().replace(rclass, '-')}`
 }
 
 function show(item) {
@@ -130,7 +131,7 @@ function q(key) {
         {/each}
       </details>
     {:else}
-      <div class="space1 {routetag(item)}">
+      <div class="space1 {routetag($tags, item)}">
         <label>
           <input type="checkbox"
           data-item={item}

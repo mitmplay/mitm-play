@@ -129,12 +129,12 @@ function enter(e) {
     const {item} = e.target.dataset;
     const klass = item.replace(rclass, '-')
     const css = `
-    .t2 .spacex._${klass},
-    .t3 .space3._${klass},
     .urls ._${klass},
-    .farg ._${klass} {background: yellow;}
+    .farg ._${klass},
+    .t2 .spacex._${klass},
+    .t3 .space3._${klass} {background: yellow;}
     .t2 .space1._${klass},
-    .t3 .space1._${klass} {background: #dbf601;}`
+    .t3 .space1._${klass} {background: #dbf601 !important;}`
     node.innerHTML = css
   }
 }
