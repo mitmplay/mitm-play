@@ -18,8 +18,11 @@ function klass(store) {
 </summary>
 
 <style>
-  summary.chk {
-    font-weight: 700;
-    background: #e6f7d9;
-  }
+summary {
+  padding-left: 2px;
+}
+summary.chk {
+  font-weight: 700;
+  background: #e6f7d9;
+}
 </style>

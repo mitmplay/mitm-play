@@ -8,7 +8,6 @@
     "2.scenario-2",
     "4.logging",
     "active",
-    "cache:select~1",
     "css:1.no-ads",
     "dodol",
     "html:active",
@@ -30,5 +29,5 @@
     "url:2.scenario-2",
     "url:dodol"
   ],
-  "_subns": "wow@keybr.com"
+  "_subns": ""
 }

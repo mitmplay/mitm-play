@@ -137,7 +137,7 @@ button {
   color: #002aff;
   margin-top: -5px;
   margin-right: -5px;
-  vertical-align: middle;
+  vertical-align: 0.6px;
   background: transparent;
   padding: 2px 1px 1px 1px;
   font-family: Consolas, Lucida Console, Courier New, monospace;

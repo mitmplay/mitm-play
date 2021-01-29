@@ -93,6 +93,9 @@ onMount(() => {
 .btn-container button:disabled {
   cursor: auto;
 }
+.btn-container input {
+  vertical-align: -2px;
+}
 .tlb {
   border: none;
 }

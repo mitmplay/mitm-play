@@ -157,9 +157,12 @@ function q(key) {
   border: 1px grey solid;
 }
 summary label {
-  display: inline;
-  margin-left: -2px;
+  margin-left: 11px;
+  margin-top: -15px;
   vertical-align: middle;
+}
+summary label input {
+  vertical-align: -0.6px;
 }
 summary.space1 {
   padding-left: 5px;

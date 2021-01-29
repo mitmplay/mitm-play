@@ -192,6 +192,9 @@ function leave(e) {
 .space0>label {
   padding-left: 6px;
 }
+.space0>label input {
+  vertical-align: -0.6px;
+}
 .rtag {
   color: grey;
 }

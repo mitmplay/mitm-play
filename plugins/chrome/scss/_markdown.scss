@@ -9,6 +9,9 @@
     font-family: "Roboto";
     details {
       display: block;
+      summary {
+        padding-left: 2px;
+      }
     }
     hr {
       margin: 4px 0;
