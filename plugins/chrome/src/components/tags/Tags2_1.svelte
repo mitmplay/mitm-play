@@ -123,7 +123,7 @@ function q(key) {
             data-item={item}
             on:click={clicked} 
             bind:checked={items[item].state}/> <!-- // feat: update __tag2 -->
-            <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
+            <span class="itm {item.match(':') ? 'big' : ''}">{show(item)}</span>
             <span class="link-tags">{linkTags(item)}</span>
           </label> 
         </summary>
@@ -138,7 +138,7 @@ function q(key) {
           data-item={item}
           on:click={clicked} 
           bind:checked={items[item].state}/> <!-- // feat: update __tag2 -->
-          <span class="{item.match(':') ? 'big' : ''}">{show(item)}</span>
+          <span class="itm {item.match(':') ? 'big' : ''}">{show(item)}</span>
           <span class="link-tags">{linkTags(item)}</span>
         </label>
       </div>
@@ -187,7 +187,7 @@ summary.space1 .link-tags {
   font-size: 13px;
   vertical-align: 2px;
 }
-.space1 .big {
+.space1 .itm {
   margin-left: -2px;
   font-family: serif;
 }

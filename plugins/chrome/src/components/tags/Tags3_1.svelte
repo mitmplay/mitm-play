@@ -55,7 +55,13 @@ function xtags(path) {
     <!-- feat: auto collapsed between tag2 & tag3 -->
     <Collapse on:message name="state3" q="{`.t3.${q(ns)}`}"></Collapse>
     <Expand on:message name="state3" q="{`.t3.${q(ns)}`}"></Expand>
-    <span class="ns">[{ns==='_global_' ? ' * ' : ns.split('@').pop()}]</span>
+    <span class="ns">
+      {#if ns==='_global_'}
+        [<span>{' * '}</span>]
+      {:else}
+        {ns.split('@').pop()}
+      {/if}
+    </span>
   </div>
   <div class="t3 {q(ns)}">
     {#each xitems($tags) as path, i}
@@ -85,5 +91,10 @@ function xtags(path) {
   font-weight: bolder;
   color: blueviolet;
   padding-left: 3px;
+}
+span.ns span {
+  vertical-align: -5px;
+  line-height: 0.8;
+  font-size: 18px;
 }
 </style>

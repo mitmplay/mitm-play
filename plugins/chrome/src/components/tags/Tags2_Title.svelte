@@ -41,7 +41,13 @@ function setSubns(e) {
   <!-- feat: auto collapsed between tag2 & tag3 -->
   <Collapse on:message name="state2" q="{`.t2.${q(ns)}`}"></Collapse>
   <Expand on:message name="state2" q="{`.t2.${q(ns)}`}"></Expand>
-  <span class="ns">[{ns==='_global_' ? ' * ' : ns.split('@').pop()}]</span>
+  <span class="ns">
+    {#if ns==='_global_'}
+      [<span>{' * '}</span>]
+    {:else}
+      {ns.split('@').pop()}
+    {/if}
+  </span>
   {#each childns(ns) as item}
     <label class="checker">
       <input
@@ -65,6 +71,11 @@ function setSubns(e) {
 }
 span.ns {
   margin: 0;
+}
+span.ns span {
+  vertical-align: -5px;
+  line-height: 0.8;
+  font-size: 18px;
 }
 label {
   display: contents !important;
