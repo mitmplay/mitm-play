@@ -7,6 +7,6 @@ const route = {
       // tags: 'in-html',
       amir: ''
     },
-  }  
+  }
 }
 module.exports = route;
