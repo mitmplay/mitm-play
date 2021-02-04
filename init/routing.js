@@ -48,8 +48,9 @@ window.mitm._macros_ = () => {
   window.mitm.macrokeys = {};
   ${global}
 };\n
-window._ws_connect.macrosOnMount = data =>
-console.log('macros code executed after ws open', data)
+window._ws_connect.macrosOnMount = data => {
+  console.log('macros code executed after ws open', data)
+}
 ${body}`
         resp.headers['content-type'] = 'application/javascript'
       }
