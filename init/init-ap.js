@@ -50,6 +50,8 @@ global.mitm = {
   activity: {}, // feat: activity
   routes: { _global_: { config: {} } },
   router: { _global_: { config: {} } },
+  __mocks: {}, // feat: __mocks
+  __mockr: {},
   routex: {},
   source: {},
   __args: {},
@@ -58,7 +60,6 @@ global.mitm = {
   __tag2: {},
   __tag3: {},
   __tag4: {},
-  __mock: {},
   __page: {},
   wscmd: {},
   cdp: {}
