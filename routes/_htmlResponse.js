@@ -23,11 +23,15 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
         msg = c.yellowBright(match.log)
         // feat: activity
         if (__args.activity) {
-          const [actyp, actag] = __args.activity.split(':')
-          if (actag && match.route.tags.match(`(^| )${actag}( |$)`)) {
-            global.mitm.activity = {} // init rec/play sequences
-            const color = {rec: 'red', mix: 'magenta'}[actyp] || 'blueBright'
-            msg +=  c[color]( `[${actyp}:${actag}]`)
+          if (!match.route.tags) {
+            msg += c.red(' activity but no tags!')
+          } else {
+            const [actyp, actag] = __args.activity.split(':')
+            if (actag && match.route.tags.match(`(^| )${actag}( |$)`)) {
+              global.mitm.activity = {} // init rec/play sequences
+              const color = {rec: 'red', mix: 'magenta'}[actyp] || 'blueBright'
+              msg +=  c[color]( `[${actyp}:${actag}]`)
+            }
           }
         }
         if (typeof (match.route) === 'string') {
