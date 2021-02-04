@@ -39,38 +39,36 @@ function _routeSet (_r, namespace, file) {
   if (r._childns===undefined) {
     r._childns = {list: {}, _subns: ''}
   }
+  const [sub, index] = file.split('@')
+  if (routex[namespace]===undefined) {
+    routex[namespace] = {}
+  }
+  routex[namespace][sub] = r // need before logic below
+  if (index) {
+    const ns = routes[namespace]
+    namespace = `${sub}@${namespace}`
+    if ( ns._childns.list[namespace]===undefined) {
+      ns._childns.list[namespace] = false
+    }
+    for (const key in r) { // feat: nested routes
+      const tgt = r[key]
+      const src = ns[key]
+      if(src && typeof src==='object' && !Array.isArray(src)) {
+        r[key] = {...src, ...tgt}
+      }
+    }
+    for (const key in ns) { // feat: nested routes
+      if(r[key]===undefined) {
+        r[key] = ns[key]
+      }
+    }
+  }
+  routes[namespace] = r // need logic above & below
   if (namespace === '_global_') {
-    routes[namespace] = r // need logic below
     routes._global_.mock = {
       ...routes._global_.mock,
       ...__mocks // feat: __mocks
     }
-  } else {
-    const [sub, index] = file.split('@')
-    if (routex[namespace]===undefined) {
-      routex[namespace] = {}
-    }
-    routex[namespace][sub] = r
-    if (index) {
-      const ns = routes[namespace]
-      namespace = `${sub}@${namespace}`
-      if ( ns._childns.list[namespace]===undefined) {
-        ns._childns.list[namespace] = false
-      }
-      for (const key in r) { // feat: nested routes
-        const tgt = r[key]
-        const src = ns[key]
-        if(src && typeof src==='object' && !Array.isArray(src)) {
-          r[key] = {...src, ...tgt}
-        }
-      }
-      for (const key in ns) { // feat: nested routes
-        if(r[key]===undefined) {
-          r[key] = ns[key]
-        }
-      }
-    }
-    routes[namespace] = r // need logic above
   }
   const tags = {}
   const urls = {}
