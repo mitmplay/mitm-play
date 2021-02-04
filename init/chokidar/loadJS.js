@@ -116,7 +116,9 @@ function sort (obj, size=false, _typO) {
 function routeSort (fn) { // feat: upadte tags
   const { routes: { _global_ } } = global.mitm
   const { _routeSet } = global.mitm.fn
-  _routeSet(_global_, '_global_', '')
+  if (_global_._childns===undefined) {
+    _routeSet(_global_, '_global_', '')
+  }
   console.log(c.red('(*reset routes*)'))
   global.mitm.routes = sort(global.mitm.routes, true, typs.typO)
   global.mitm.router = sort(global.mitm.router, true, typs.typO)
