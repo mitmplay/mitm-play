@@ -4,7 +4,9 @@ const css = `
 }`
 ;
 const route = {
-  url: 'https://keybr.com/',
+  urls: {
+    keybr: 'https://keybr.com/',
+  },
   'mock:1.no-ads': {
     '#201:google.+.com': '',
     'doubleclick.net': '',
@@ -36,7 +38,7 @@ const route = {
   'html:active': {
     'GET:dodol:/': {
       tags: 'in-html',
-      widi: ''
+      ws: true
     },
   }
 }

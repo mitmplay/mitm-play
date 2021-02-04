@@ -6,7 +6,7 @@ const route = {
     'ws-message': true,
   },
   'args:1.no-ads': {
-    activity: ''
+    activity: '123:lol'
   }
 }
 module.exports = route;

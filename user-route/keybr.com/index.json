@@ -11,14 +11,12 @@
     "dodol",
     "html:active",
     "image",
-    "in-html",
     "mock:1.no-ads",
     "mock:2.scenario",
     "response:active",
     "select~1",
     "tag3:4.logging",
     "tag3:image",
-    "tag3:in-html",
     "tag3:url:2.scenario-#404",
     "tag3:url:2.scenario-2",
     "tag3:url:dodol",
@@ -26,5 +24,5 @@
     "url:2.scenario-2",
     "url:dodol"
   ],
-  "_subns": ""
+  "_subns": "hi@keybr.com"
 }
