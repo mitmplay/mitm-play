@@ -56,7 +56,7 @@ onMount(() => {
     <input
     type="checkbox"
     bind:checked={$tags.list}/>
-    list
+    routes
   </label>
   <label class="checker">
     <input
@@ -64,13 +64,13 @@ onMount(() => {
     bind:checked={$tags.uniq}/>
     fit
   </label>
-  <label class="checker">
+  <!-- <label class="checker">
     <input 
     type="checkbox"
     on:click="{urls}"
     bind:checked={$tags.filterUrl}/>
     current-tab
-  </label>
+  </label> -->
   <button class="tlb btn-go" on:click="{btnReset}" disabled={autoSave}>Reset</button>
   <button class="tlb btn-go" on:click="{btnSave}"  disabled={autoSave}>Save</button>
   <label class="checker">

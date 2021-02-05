@@ -9,7 +9,7 @@ import List from './List.svelte';
 
 let left = 165;
 const top = '47';
-const title = '-List-' 
+const title = '-Route(s)-' 
 const id = 'routeLeft';
 
 onMount(async () => {
