@@ -6,13 +6,13 @@ import  Chevron from '../button/Chevron.svelte';
 import BStatic from '../box/BStatic.svelte';
 import BHeader from '../box/BHeader.svelte';
 import BTable from '../box/BTable.svelte';
-import Button from './Button.svelte';
 import Tags1 from './Tags1_.svelte'; 
 import Tags2 from './Tags2_.svelte'; 
 import Tags3 from './Tags3_.svelte'; 
 import Urls from './Urls.svelte';
 
 export let top = "23";
+export let left;
 
 let block = true;
 let cols = 3;
@@ -67,13 +67,12 @@ function handleMessage(event) {
 }
 </script>
 
-<Button/>
 <div class="vbox">
   <details open="true">
     <summary>Enable / Disable Tags</summary>
     <div class="vbox-1">
       <BStatic {top} {block}>
-        <BHeader>-Tags-
+        <BHeader {left}>-Tags-
           <button data-_cols=3 on:click="{oneClick}">[full]</button>
           <button data-_cols=2 on:click="{oneClick}">[two]</button>
           <button data-_cols=1 on:click="{oneClick}">[one]</button>
@@ -103,6 +102,7 @@ function handleMessage(event) {
   position: relative;
   flex-direction: column;
   height: calc(100vh - 23px);
+  background-color: white;
 }
 .vbox-1 {
   margin-bottom: 10px;

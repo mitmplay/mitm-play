@@ -5,5 +5,6 @@ export const tags = writable({
   __tag1: {},
   __tag2: {},
   __tag3: {},
-  uniq: true
+  uniq: true,
+  list: false
 })
