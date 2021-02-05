@@ -22,6 +22,6 @@ const profileHandler = obj => {
 // }
 </script>
 
-{#each Object.keys(_data) as item}
-  <Item item={{element: item, ..._data[item]}} {onChange}/>
+{#each window.mitm.routez as route}
+  <Item item={{route, ..._data[route]}} {onChange}/>
 {/each}

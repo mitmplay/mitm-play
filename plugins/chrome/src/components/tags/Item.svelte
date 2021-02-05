@@ -1,18 +1,22 @@
 <script> // feat: profile
-// import { source } from './stores.js';
+import { tags } from './stores.js';
 
 export let item;
 export let onChange;
 
 function clickHandler(e) {
-
+  let {route} = e.target.dataset;
+  if (route===$tags.route) {
+    route = ''
+  }
+  tags.set({...$tags, route})
 }
 </script>
 
-<div class="td-item {$source.fpath===item.fpath}"
-  data-item={item.element}
+<div class="td-item {item.route===$tags.route}"
+  data-route={item.route}
   on:click="{clickHandler}"
->{item.title}</div>
+>{item.route}</div>
 
 <style>
 .td-item {
