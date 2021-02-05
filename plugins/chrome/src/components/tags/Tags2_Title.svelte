@@ -42,7 +42,7 @@ function setSubns(e) {
   <Collapse on:message name="state2" q="{`.t2.${q(ns)}`}"></Collapse>
   <Expand on:message name="state2" q="{`.t2.${q(ns)}`}"></Expand>
   <span class="ns">
-    {#if ns==='_global_'}
+    {#if ns.match('_global_')}
       [<span>{' * '}</span>]
     {:else}
       {ns.split('@').pop()}

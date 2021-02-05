@@ -56,7 +56,7 @@ function xtags(path) {
     <Collapse on:message name="state3" q="{`.t3.${q(ns)}`}"></Collapse>
     <Expand on:message name="state3" q="{`.t3.${q(ns)}`}"></Expand>
     <span class="ns">
-      {#if ns==='_global_'}
+      {#if ns.match('_global_')}
         [<span>{' * '}</span>]
       {:else}
         {ns.split('@').pop()}
