@@ -1,5 +1,4 @@
 <script>
-import { onMount } from 'svelte';
 import { tags } from './stores.js';
 import Button from './Button.svelte';
 
@@ -12,24 +11,16 @@ const top = '47';
 const title = '-Route(s)-' 
 const id = 'routeLeft';
 
-onMount(async () => {
-
-});
-
 function dragend({detail}) {
   left = detail.left
-}
-
-function onChange(e) {
-
 }
 </script>
 
 <Button/>
 {#if $tags.list}
-  <VBox2 {title} {top} {left} {dragend} {List} props={{onChange}}>
-    <Content {left} {onChange}/>
+  <VBox2 {title} {top} {left} {dragend} {List}>
+    <Content {left}/>
   </VBox2>
 {:else}  
-  <Content {onChange}/>
+  <Content/>
 {/if}

@@ -2,7 +2,6 @@
 import { tags } from './stores.js';
 
 export let item;
-export let onChange;
 
 function clickHandler(e) {
   let {route} = e.target.dataset;

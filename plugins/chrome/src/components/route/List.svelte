@@ -2,6 +2,7 @@
 export let onChange;
 
 import { urls } from '../tags/url-debounce';
+import { list } from '../tags/stores';
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
 
@@ -19,6 +20,10 @@ const routeHandler = obj => {
   console.warn('ws__send(getRoute)', obj);
   window.mitm.routes = obj.routes
   window.mitm.routez = obj.routez
+  list.set({
+    ...$list,
+    routez: obj.routez
+  })
   const {routes} = window.mitm
   for (const id in obj.routes) {
     const [sub, nspace] = id.split('@')
