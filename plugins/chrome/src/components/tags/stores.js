@@ -1,9 +1,19 @@
 import { writable } from 'svelte/store'
 
+export const list = writable({
+  routez: []
+})
+
 export const tags = writable({
   filterUrl: true,
   __tag1: {},
   __tag2: {},
   __tag3: {},
-  uniq: true
+  route: '',
+  uniq: true,
+  list: true
+})
+
+export const eurls = writable({
+  expanded: false
 })

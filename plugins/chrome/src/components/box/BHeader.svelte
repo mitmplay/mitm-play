@@ -1,4 +1,16 @@
-<table class="table-header">
+<script>
+export let left = 0;
+
+function resize() {
+  let css = ''
+  if (left) {
+    css += `width: calc(100vw - ${left}px);`
+  }
+  return css;
+}
+</script>
+
+<table class="table-header" style="{resize(left)}">
   <tr>
     <td>
       <div class="td-header">

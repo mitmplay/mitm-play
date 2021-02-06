@@ -168,9 +168,12 @@ function uniq(value, index, self) {
 
 function oneSite(tags, ns) {
   const {toRegex} = window.mitm.fn;
+  const {list, route, filterUrl} = tags
   if (ns.match('@')) {
     return false
-  } else if (tags.filterUrl) {
+  } else if (list && route) {
+    return route===ns
+  } else if (filterUrl) {
     const rgx = toRegex(ns.replace(/~/,'[^.]*'));
     return mitm.browser.activeUrl.match(rgx) || ns==='_global_';
   } else {

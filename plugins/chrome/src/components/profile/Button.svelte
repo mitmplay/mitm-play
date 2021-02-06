@@ -84,6 +84,7 @@ Path:{$source.path}
   font-family: auto;
   font-size: 0.9em;
   color: blue;
+  padding-left: 5px;
 }
 .btn-container {
   position: absolute;

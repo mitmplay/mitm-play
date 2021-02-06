@@ -18,14 +18,11 @@ function clicked(e) {
     console.log('e', {__tag2,__tag3});
     resetRule2($tags, item, ns, tagx)
     resetRule3($tags, item, ns)
-    const {filterUrl, tgroup, uniq} = $tags;
     tags.set({
-      filterUrl,
+      ...$tags,
       __tag1,
       __tag2,
       __tag3,
-      tgroup,
-      uniq
     })
   }, 10);
 }

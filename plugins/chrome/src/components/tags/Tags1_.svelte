@@ -54,15 +54,12 @@ function clicked(e) {
     }
 
     resetRule3($tags, tag)
-    const {filterUrl, tgroup, uniq} = $tags;
     tags.set({
-      filterUrl,
+      ...$tags,
       __tag1,
       __tag2,
       __tag3,
-      tgroup,
-      uniq
-    })
+    }) 
   }, 10);
 }
 

@@ -11,19 +11,22 @@ function uniq(value, index, self) {
 }
 
 module.exports = () => {
-  const {source:s, routes: r, fn } = global.mitm
+  const {routes: r, fn } = global.mitm
   const { rmethod } = fn
   const __urls = {}
   const files = {}
   const {
+    source:s,
     routes,
     __tag1,
     __tag2,
     __tag3,
     __tag4
   } = global.mitm
+  const routez = Object.keys(r).filter(x=>!x.match('@'))
   const data = {
     routes,
+    routez,
     files,
     _tags_: {
       __tag1,
