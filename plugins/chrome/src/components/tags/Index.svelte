@@ -7,7 +7,7 @@ import Content from './Content.svelte';
 import List from './List.svelte';
 
 let left = 165;
-const top = '47';
+const top = '0';
 const title = '-Route(s)-' 
 const id = 'routeLeft';
 
