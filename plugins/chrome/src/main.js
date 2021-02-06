@@ -174,10 +174,11 @@ function oneSite(tags, ns) {
   } else if (list && route) {
     return route===ns
   } else if (filterUrl) {
-    const rgx = toRegex(ns.replace(/~/,'[^.]*'));
-    return mitm.browser.activeUrl.match(rgx) || ns==='_global_';
+    const rgx = toRegex(ns.replace(/~/,'[^.]*'))
+    const {origin} = new URL(mitm.browser.activeUrl)
+    return origin.match(rgx) || ns==='_global_'
   } else {
-    return true;
+    return true
   }
 }
 
