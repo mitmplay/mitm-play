@@ -9,7 +9,7 @@ import BTable from '../box/BTable.svelte';
 import Tags1 from './Tags1_.svelte'; 
 import Tags2 from './Tags2_.svelte'; 
 import Tags3 from './Tags3_.svelte'; 
-import Urls from './Urls.svelte';
+import Effected from './Effected.svelte';
 
 export let top = "23";
 export let left;
@@ -23,9 +23,8 @@ onMount(async () => {
 
 window.mitm.files.getRoute_events.tagsTable = () => {
   // window.ws__send('getRoute', '', routeHandler);
-  console.log('events.tagsTable...');
   const {__tag1, __tag2, __tag3} = window.mitm;
-  const {filterUrl, uniq} = $tags;
+  console.log('events.tagsTable...');
   const tgroup = {};
   for (let ns in __tag2) {
     const tsks = __tag2[ns]
@@ -37,12 +36,11 @@ window.mitm.files.getRoute_events.tagsTable = () => {
     }
   } 
   tags.set({
-    filterUrl,
+    ...$tags,
     __tag1,
     __tag2,
     __tag3,
     tgroup,
-    uniq
   })
 }
 function oneClick(e) {
@@ -72,7 +70,7 @@ function handleMessage(event) {
     <summary>Enable / Disable Tags</summary>
     <div class="vbox-1">
       <BStatic {top} {block}>
-        <BHeader {left}>-Tags-
+        <BHeader {left}>
           <button data-_cols=3 on:click="{oneClick}">[full]</button>
           <button data-_cols=2 on:click="{oneClick}">[two]</button>
           <button data-_cols=1 on:click="{oneClick}">[one]</button>
@@ -88,11 +86,7 @@ function handleMessage(event) {
       </BStatic>  
     </div>
   </details>
-  <details class="urls">
-    {@html '<style id="urls"></style>'}
-    <summary>Effected Url(s)</summary>
-    <Urls/>
-  </details>
+  <Effected/>
 </div>
 
 <style>
@@ -116,20 +110,6 @@ summary {
   font-size: 13px;
   padding-left: 5px;
   background: #fdaaaa;
-}
-.urls summary:hover {
-  background-color: #f1f6fbbd;
-}
-.urls {
-  height: 100%;
-  display: flex;
-  overflow: auto;
-  flex-direction: column;
-}
-.urls summary {
-  position: sticky;
-  background: white;
-  top: 0px;
 }
 button {
   border: 0;

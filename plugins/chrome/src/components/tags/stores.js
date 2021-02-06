@@ -9,3 +9,7 @@ export const tags = writable({
   uniq: true,
   list: false
 })
+
+export const eurls = writable({
+  expanded: false
+})

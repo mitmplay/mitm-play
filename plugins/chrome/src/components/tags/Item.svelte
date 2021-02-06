@@ -9,7 +9,10 @@ function clickHandler(e) {
   if (route===$tags.route) {
     route = ''
   }
-  tags.set({...$tags, route})
+  tags.set({
+    ...$tags,
+    route
+  })
 }
 </script>
 
