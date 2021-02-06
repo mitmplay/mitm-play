@@ -40,6 +40,32 @@ const route = {
       tags: 'in-html',
       ws: true
     },
+  },
+  preset: {
+    default: [
+      '1.no-ads',
+      // '2.scenario',
+      // '2.scenario-#404',
+      // '2.scenario-2',
+      // '4.logging',
+      // 'active',
+      // 'css:1.no-ads',
+      // 'dodol',
+      // 'html:active',
+      // 'image',
+      // 'mock:1.no-ads',
+      // 'mock:2.scenario',
+      // 'response:active',
+      // 'select~1',
+      // 'tag3:4.logging',
+      // 'tag3:image',
+      // 'tag3:url:2.scenario-#404',
+      // 'tag3:url:2.scenario-2',
+      // 'tag3:url:dodol',
+      // 'url:2.scenario-#404',
+      // 'url:2.scenario-2',
+      // 'url:dodol'
+    ]
   }
 }
 module.exports = route;

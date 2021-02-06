@@ -6,6 +6,7 @@ import  Chevron from '../button/Chevron.svelte';
 import BStatic from '../box/BStatic.svelte';
 import BHeader from '../box/BHeader.svelte';
 import BTable from '../box/BTable.svelte';
+import Preset from './Preset.svelte';
 import Tags1 from './Tags1_.svelte'; 
 import Tags2 from './Tags2_.svelte'; 
 import Tags3 from './Tags3_.svelte'; 
@@ -67,7 +68,7 @@ function handleMessage(event) {
 
 <div class="vbox">
   <details open="true">
-    <summary>Enable / Disable Tags</summary>
+    <summary>Enable / Disable Tags <Preset /></summary>
     <div class="vbox-1">
       <BStatic {top} {block}>
         <BHeader {left}>

@@ -174,8 +174,9 @@ function oneSite(tags, ns) {
   } else if (list && route) {
     return route===ns
   } else if (filterUrl) {
+    const {activeUrl} = mitm.browser
     const rgx = toRegex(ns.replace(/~/,'[^.]*'))
-    const {origin} = new URL(mitm.browser.activeUrl)
+    const {origin} = activeUrl ? new URL(activeUrl) : {origin: ''}
     return origin.match(rgx) || ns==='_global_'
   } else {
     return true

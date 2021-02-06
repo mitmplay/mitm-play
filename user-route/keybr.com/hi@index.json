@@ -2,16 +2,29 @@
   "_": "auto-generated during saveTags!",
   "tags": [
     "1.no-ads",
+    "2.scenario",
+    "2.scenario-#404",
+    "2.scenario-1",
+    "2.scenario-2",
+    "4.logging",
     "active",
     "css:1.no-ads",
     "dodol",
     "html:active",
     "in-html",
     "mock:1.no-ads",
+    "mock:2.scenario",
     "response:active",
+    "tag3:4.logging",
     "tag3:in-html",
+    "tag3:url:2.scenario-#404",
+    "tag3:url:2.scenario-1",
+    "tag3:url:2.scenario-2",
     "tag3:url:dodol",
+    "url:2.scenario-#404",
+    "url:2.scenario-1",
+    "url:2.scenario-2",
     "url:dodol"
   ],
-  "_subns": "hi@keybr.com"
+  "_subns": ""
 }
