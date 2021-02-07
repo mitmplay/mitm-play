@@ -2,24 +2,11 @@
 import { urls } from './url-debounce';
 import { tags } from './stores.js';
 
-function items(tags) {
-  const arr = []
-  const {routes, fn: {oneSite}} = window.mitm
-  for (const ns in routes) {
-    const {preset} = routes[ns]
-    if (oneSite(tags, ns) && preset) {
-      for (const id in preset) {
-        arr.push({ns, id})
-      }
-    }
-  }
-  return arr
-}
 function clicked(e) {
   const {routes} = window.mitm
   const {ns, id} = e.target.dataset
   const {__tag1, __tag2, __tag3} = window.mitm
-  const [...preset] = window.mitm.routes[ns].preset[id]
+  const [...preset] = window.mitm.routes[ns].preset[id].tags
   for (const path in __tag3[ns]) {
     const secs = __tag3[ns][path]
     for (const sec in secs) {
@@ -54,6 +41,23 @@ function clicked(e) {
     urls()
   }, 1)
 }
+function items(tags) {
+  const arr = []
+  const {routes, fn: {oneSite}} = window.mitm
+  for (const ns in routes) {
+    const {preset} = routes[ns]
+    if (preset && oneSite(tags, ns)) {
+      for (const id in preset) {
+        arr.push({ns, id})
+      }
+    }
+  }
+  return arr
+}
+function title(item) {
+  const {ns, id} = item
+  return window.mitm.routes[ns].preset[id].title
+}
 </script>
 
 <span class="button-container">
@@ -63,6 +67,7 @@ function clicked(e) {
     data-ns="{item.ns}"
     data-id="{item.id}"
     on:click="{clicked}"
+    title="{title(item)}"
     >[{item.id}]</button>
   {/each}
 </span>

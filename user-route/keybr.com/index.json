@@ -1,5 +1,16 @@
 {
   "_": "auto-generated during saveTags!",
-  "tags": [],
+  "tags": [
+    "1.no-ads",
+    "2.scenario",
+    "2.scenario-#404",
+    "active",
+    "css:1.no-ads",
+    "image",
+    "mock:1.no-ads",
+    "mock:2.scenario",
+    "tag3:image",
+    "tag3:url:2.scenario-#404"
+  ],
   "_subns": ""
 }
