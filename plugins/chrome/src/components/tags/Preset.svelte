@@ -18,45 +18,38 @@ function items(tags) {
 function clicked(e) {
   const {routes} = window.mitm
   const {ns, id} = e.target.dataset
-  const {__tag1, __tag2, __tag3} = $tags
+  const {__tag1, __tag2, __tag3} = window.mitm
   const preset = window.mitm.routes[ns].preset[id]
   for (const key in __tag1[ns]) {
-    __tag1[ns][key] = !!preset[key]
+    __tag1[ns][key] = preset.indexOf(key)>-1
   }
   for (const key in __tag2[ns]) {
-    __tag2[ns][key].state = !!preset[key]
+    __tag2[ns][key].state = preset.indexOf(key)>-1
   }
   for (const path in __tag3[ns]) {
     const secs = __tag3[ns][path]
     for (const sec in secs) {
       const {tags} = secs[sec]
       for (const tag in tags) {
-        tags[tag] = !!preset[tag]
+        tags[tag] = preset.indexOf(tag)>-1
       }
     }
   }
-  window.mitm.__tag1 =  __tag1
-  window.mitm.__tag2 =  __tag2
-  window.mitm.__tag3 =  __tag3
-  tags.set({
-    ...$tags,
-    __tag1,
-    __tag2,
-    __tag3
-  })
   const _childns = {}
   for (const ns in routes) {
     _childns[ns] = routes[ns]._childns
   }
-  const svtags = {
-    _childns,
+  const _tags = {
     __tag1,
     __tag2,
-    __tag3,
-  };  
-  console.log({ns, id, preset})
-  ws__send('saveTags', svtags)
-  urls()
+    __tag3
+  }
+  setTimeout(()=>{
+    const sv = {_childns, ..._tags}
+    tags.set({...$tags, ..._tags})
+    ws__send('saveTags', sv)
+    urls()
+  }, 1)
 }
 </script>
 
