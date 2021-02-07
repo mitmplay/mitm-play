@@ -2,28 +2,34 @@
 import { urls } from './url-debounce';
 import { tags } from './stores.js';
 
+let _items = []
 function clicked(e) {
   const {routes} = window.mitm
-  const {ns, id} = e.target.dataset
+  const {ns: _ns, id} = e.target.dataset
   const {__tag1, __tag2, __tag3} = window.mitm
-  const [...preset] = window.mitm.routes[ns].preset[id].tags
-  for (const path in __tag3[ns]) {
-    const secs = __tag3[ns][path]
-    for (const sec in secs) {
-      const {tags} = secs[sec]
-      for (const tag in tags) {
-        tags[tag] =  preset.indexOf(`tag3:${tag}`)>-1
-        tags[tag] && preset.push(tag.split(':').pop())
+  const nss = _ns.split(',')
+  for (const ns of nss) {
+    const [...preset] = routes[ns].preset[id].tags
+    const paths = __tag3[ns]
+    for (const path in paths) {
+      const secs = paths[path]
+      for (const sec in secs) {
+        const {tags} = secs[sec]
+        for (const tag in tags) {
+          tags[tag] =  preset.indexOf(`tag3:${tag}`)>-1
+          tags[tag] && preset.push(tag.split(':').pop())
+        }
       }
     }
-  }
-  for (const tag in __tag2[ns]) {
-    const _tg = __tag2[ns][tag]
-    _tg.state =  preset.indexOf(tag)>-1
-    _tg.state && preset.push(tag.split(':').pop())
-  }
-  for (const tag in __tag1[ns]) {
-    __tag1[ns][tag] = preset.indexOf(tag)>-1
+    const tags = __tag2[ns]
+    for (const tag in tags) {
+      const _tg = tags[tag]
+      _tg.state =  preset.indexOf(tag)>-1
+      _tg.state && preset.push(tag.split(':').pop())
+    }
+    for (const tag in __tag1[ns]) {
+      __tag1[ns][tag] = preset.indexOf(tag)>-1
+    }
   }
   const _childns = {}
   for (const ns in routes) {
@@ -42,34 +48,51 @@ function clicked(e) {
   }, 1)
 }
 function items(tags) {
-  const arr = []
+  const _preset = {}
   const {routes, fn: {oneSite}} = window.mitm
   for (const ns in routes) {
     const {preset} = routes[ns]
     if (preset && oneSite(tags, ns)) {
       for (const id in preset) {
-        arr.push({ns, id})
+        if (_preset[id]===undefined) {
+          _preset[id] = {ns: [], id}
+        }
+        _preset[id].ns.push(ns)
       }
     }
   }
-  return arr
+  const arr = []
+  for (const item in _preset) {
+    arr.push(_preset[item])
+  }
+  _items = arr
+  return ''
 }
 function title(item) {
-  const {ns, id} = item
-  return window.mitm.routes[ns].preset[id].title
+  const {routes} = window.mitm
+  const {ns: nss, id} = item 
+  const arr = []
+  for (const ns of nss) {
+    const {title} = routes[ns].preset[id]
+    title && arr.push(`${title} ${ns}`)
+  }
+  return arr.join(',\n')
 }
 </script>
 
+{items($tags)}
 <span class="button-container">
-  Preset:
-  {#each items($tags) as item}
-    <button 
-    data-ns="{item.ns}"
-    data-id="{item.id}"
-    on:click="{clicked}"
-    title="{title(item)}"
-    >[{item.id}]</button>
-  {/each}
+  {#if _items.length}
+    Preset:
+    {#each _items as item}
+      <button 
+      data-ns="{item.ns.join(',')}"
+      data-id="{item.id}"
+      on:click="{clicked}"
+      title="{title(item)}"
+      >[{item.id}]</button>
+    {/each}
+  {/if}
 </span>
 
 <style>

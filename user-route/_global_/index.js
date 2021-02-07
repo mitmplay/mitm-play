@@ -7,6 +7,12 @@ const route = {
   },
   'args:1.no-ads': {
     activity: '123:lol'
+  },
+  preset: {
+    clear: {
+      title: 'clear tags',
+      tags: []
+    }
   }
 }
 module.exports = route;
