@@ -19,21 +19,24 @@ function clicked(e) {
   const {routes} = window.mitm
   const {ns, id} = e.target.dataset
   const {__tag1, __tag2, __tag3} = window.mitm
-  const preset = window.mitm.routes[ns].preset[id]
-  for (const key in __tag1[ns]) {
-    __tag1[ns][key] = preset.indexOf(key)>-1
-  }
-  for (const key in __tag2[ns]) {
-    __tag2[ns][key].state = preset.indexOf(key)>-1
-  }
+  const [...preset] = window.mitm.routes[ns].preset[id]
   for (const path in __tag3[ns]) {
     const secs = __tag3[ns][path]
     for (const sec in secs) {
       const {tags} = secs[sec]
       for (const tag in tags) {
-        tags[tag] = preset.indexOf(tag)>-1
+        tags[tag] =  preset.indexOf(`tag3:${tag}`)>-1
+        tags[tag] && preset.push(tag.split(':').pop())
       }
     }
+  }
+  for (const tag in __tag2[ns]) {
+    const _tg = __tag2[ns][tag]
+    _tg.state =  preset.indexOf(tag)>-1
+    _tg.state && preset.push(tag.split(':').pop())
+  }
+  for (const tag in __tag1[ns]) {
+    __tag1[ns][tag] = preset.indexOf(tag)>-1
   }
   const _childns = {}
   for (const ns in routes) {
