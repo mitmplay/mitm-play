@@ -39,7 +39,8 @@ module.exports = () => {
           global = (fs.readFileSync(path) + '').replace(/\n/, '\n  ')
         }
         resp.body = 
-`if (window._ws_connect===undefined) {
+`// [Ctrl]+[Shift] => Hide/Show Buttons
+if (window._ws_connect===undefined) {
   window._ws_connect = {}
 }\n
 window.mitm.fn.autoclick = ${autoclick + ''};\n
