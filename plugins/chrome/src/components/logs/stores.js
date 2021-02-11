@@ -10,3 +10,8 @@ export const logstore = writable({
   url: '',
   ext: ''
 })
+
+export const tabstore = writable({
+  editor: {},
+  tab: 0
+})

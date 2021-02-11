@@ -1,7 +1,7 @@
 <script>
+import { Tabs } from 'svelma';
 import { onMount } from 'svelte';
-import { Tabs, Tab } from 'svelma';
-import { tabstore } from './tab.js';
+import { tabstore } from './stores.js';
 import BaseTab from './BaseTab.svelte';
 
 onMount(() => {

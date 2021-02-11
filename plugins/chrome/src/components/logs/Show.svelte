@@ -9,7 +9,7 @@ import Js from './Js.svelte';
 
 <div class="item-show">
   {#if $logstore.title.match('.png')}
-    <img src="{$logstore.url}" alt="image"/>
+    <img src="{$logstore.url}" alt="screenshot"/>
   {:else if $logstore.ext==='json'}
     <Json/>
   {:else if $logstore.ext==='html'}

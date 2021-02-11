@@ -1,6 +1,5 @@
 <script>
-import { tabstore } from './tab.js';
-import { logstore } from './stores.js';
+import { logstore, tabstore } from './stores.js';
 
 function btnMin() {
   const {tab, editor} = $tabstore;

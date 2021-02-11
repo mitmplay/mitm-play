@@ -1,7 +1,6 @@
 <script>
+import { logstore, tabstore } from './stores.js';
 import { cfg, resize } from '../monaco/init';
-import { logstore } from './stores.js';
-import { tabstore } from './tab.js';
 import { onMount } from 'svelte';
 import { Tab } from 'svelma';
 
