@@ -24,25 +24,28 @@ function loadJS (path, msg, fn) {
       if (err) {
         console.log(c.redBright('Error read source file'), err)
       } else {
+        let key = ''
         const [sub, index] = file.split('@')
         if (index) {
-          global.mitm.source[`${sub}@${domain}`] = data
+          key = `${sub}@${domain}`
         } else {
-          global.mitm.source[`${domain}${r ? '' : '/'+file}`] = data
+          key = `${domain}${r ? '' : '/'+file}`
         }
-        const macros = path.replace('index.js', 'macros.js')
-        fs.access(macros, fs.F_OK, (err) => {
-          if (!err) {
-            fs.readFile(macros, 'utf8', function (err, data) {
-              if (err) {
-                console.log(c.redBright('Error read macros file'), err)
-              } else {
-                const mfile = file.replace('index.js', 'macros')
-                global.mitm.source[mfile] = data
-              }
-            })
-          }
-        })
+        global.mitm.source[key] = data
+        if (r) {
+          const macros = path.replace('index.js', 'macros.js')
+          fs.access(macros, fs.F_OK, (err) => {
+            if (!err) {
+              fs.readFile(macros, 'utf8', function (err, data) {
+                if (err) {
+                  console.log(c.redBright('Error read macros file'), err)
+                } else {
+                  global.mitm.source[`${key}/macros`] = data
+                }
+              })
+            }
+          })  
+        }
       }
     })  
     resort(fn) // feat: upadte tags
