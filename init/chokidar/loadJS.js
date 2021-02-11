@@ -44,7 +44,7 @@ function loadJS (path, msg, fn) {
                 }
               })
             }
-          })  
+          })
         }
       }
     })  
