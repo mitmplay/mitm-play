@@ -30,6 +30,19 @@ function loadJS (path, msg, fn) {
         } else {
           global.mitm.source[`${domain}${r ? '' : '/'+file}`] = data
         }
+        const macros = path.replace('index.js', 'macros.js')
+        fs.access(macros, fs.F_OK, (err) => {
+          if (!err) {
+            fs.readFile(macros, 'utf8', function (err, data) {
+              if (err) {
+                console.log(c.redBright('Error read macros file'), err)
+              } else {
+                const mfile = file.replace('index.js', 'macros')
+                global.mitm.source[mfile] = data
+              }
+            })
+          }
+        })
       }
     })  
     resort(fn) // feat: upadte tags
