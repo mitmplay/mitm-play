@@ -1,5 +1,5 @@
 <script>
-import { source } from './stores.js';
+import { source, tabstore } from './stores.js';
 
 export let item;
 export let group = '';

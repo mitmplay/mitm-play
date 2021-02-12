@@ -8,3 +8,8 @@ export const source = writable({
   fpath: '',
   path: ''
 })
+
+export const tabstore = writable({
+  editor: {},
+  tab: 0
+})

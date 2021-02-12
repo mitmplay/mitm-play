@@ -38,18 +38,30 @@ module.exports = () => {
   }
   for (const ns in r) {
     const _secs = r[ns]
-    const fpath = _secs.path
+    let fpath = _secs.path
     if (fpath) {
       const arr = fpath.split('/')
       arr.pop()
       const path = arr.join('/')
-      const content = s[ns]
-      const title = ns
+      let content = s[ns]
+      let title = ns
       files[ns] = {
         path,
         title,
         fpath,
         content
+      }
+      const macros = `${ns}/macros`
+      if (s[macros]) {
+        title = macros
+        content = s[macros]
+        fpath = fpath.replace('index.js', 'macros.js')
+        files[macros] = {
+          path,
+          title,
+          fpath,
+          content
+        }
       }
     }
 
