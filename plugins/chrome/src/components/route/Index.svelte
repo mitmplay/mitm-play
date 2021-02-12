@@ -54,5 +54,5 @@ function onChange(e) {
 
 <Button/>
 <VBox2 {title} {top} {left} {dragend} {List} props={{onChange}}>
-  <Editor {onChange}/>
+  <Editor {onChange} item={$source.item}/>
 </VBox2>

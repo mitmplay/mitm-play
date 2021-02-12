@@ -29,8 +29,7 @@ const routeHandler = obj => {
     const [sub, nspace] = id.split('@')
     if (nspace) {
       routes[id]._childns = routes[nspace]._childns || {list: {}, _subns: ''}
-      // routes[id]._subns = routes[nspace]._subns || ''
-    }     
+    }
   }
   if (obj._tags_) {
     window.mitm.__tag1 = obj._tags_.__tag1;
@@ -71,7 +70,7 @@ window.mitm.files.route_events.routeTable = () => {
 }
 
 function xlist(all) {
-  return Object.keys(_data).filter(x => !x.match('@'))
+  return Object.keys(_data).filter(x => !x.match(/(@|\/macros)/))
 }
 
 function childs(item) {

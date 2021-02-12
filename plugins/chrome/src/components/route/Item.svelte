@@ -9,17 +9,11 @@ function clickHandler(e) {
   e.preventDefault()
   e.stopPropagation()
   let {element} = e.target.dataset;
-  const { editor: { _route, _routeEdit }, files } = mitm;
-  const url = mitm.routes[element].url;
+  const { routes, files } = mitm;
+  const url = routes[element].url;
   const obj = files.route[element];
   console.log(item, element, obj);
 
-  if (_route===undefined) {
-    _routeEdit(obj.content)
-  } else {
-    _route.setValue(obj.content || '');
-    _route.revealLine(1);
-  }
   setTimeout(() => {
     onChange(false);
 
@@ -31,6 +25,7 @@ function clickHandler(e) {
         fpath: obj.fpath,
         path: obj.path,
         item: element,
+        macro: files.route[`${element}/macros`]!==undefined
       }
     }, 1);
   })

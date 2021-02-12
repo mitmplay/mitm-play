@@ -75,7 +75,7 @@ onMount(async () => {
   height: calc(100vh - 50px);
 }
 #_route1,
-#_route1 {
+#_route2 {
   position: absolute;
   top: 0;
   left: 0;
