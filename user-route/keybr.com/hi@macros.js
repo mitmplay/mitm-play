@@ -1,4 +1,4 @@
-const hello = 'world'
+const hello = 'hi macros'
 
 const wow = {
     one: '1',

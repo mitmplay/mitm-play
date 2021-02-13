@@ -27,10 +27,12 @@ function dragend({detail}) {
 }
 
 let _timeout = null;
-function onChange(editor) {
+function onChange() {
   let saveDisabled;
   _timeout && clearTimeout(_timeout);
   _timeout = setTimeout(() => {
+    const { tab } = $source;
+    const editor = window.mitm.editor[`_route${tab+1}`]
     if (editor){
       saveDisabled = (editor.getValue()===$source.content)
       source.update(n => {return {

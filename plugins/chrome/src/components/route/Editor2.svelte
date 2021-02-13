@@ -13,9 +13,6 @@ let node2;
 let edit1;
 let edit2;
 
-function onChange1() {onChange(edit1, ...arguments)}
-function onChange2() {onChange(edit2, ...arguments)}
-
 onMount(async () => {
   window.mitm.monaco.router2 = monacoNS => {
     node1 = window.document.getElementById('_route1');
@@ -23,8 +20,8 @@ onMount(async () => {
     
     edit1 =  window.monaco.editor.create(node1, cfg);
     edit2 =  window.monaco.editor.create(node2, cfg);
-    edit1.onDidChangeModelContent(onChange1);
-    edit2.onDidChangeModelContent(onChange2);
+    edit1.onDidChangeModelContent(onChange);
+    edit2.onDidChangeModelContent(onChange);
     window.mitm.editor._route1 = edit1;
     window.mitm.editor._route2 = edit2;
 
@@ -38,10 +35,20 @@ onMount(async () => {
     const nodes = document.querySelectorAll('.tab-route a');
     for (let [i,node] of nodes.entries()) {
       node.onclick = function(e) {
+        const id = i===0 ? item : `${item}/macros`;
+        const { routes, files } = mitm;
+        const url = routes[item].url;
+        const obj = files.route[id];
         source.set({
           ...$source,
+          goDisabled: (url===undefined),
+          content: obj.content,
+          fpath: obj.fpath,
+          path: obj.path,
+          item,
           tab: i,
         });
+        setTimeout(onChange,1)
       }
     }
   }
