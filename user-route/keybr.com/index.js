@@ -36,7 +36,7 @@ const route = {
   },
   'response:active': {},
   'html:active': {
-    'GET:dodol:/': {
+    'GET:dodol:/$': {
       tags: 'in-html',
       ws: true
     },

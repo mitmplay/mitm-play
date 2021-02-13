@@ -26,15 +26,33 @@ module.exports = () => {
     },
     '!:hidden:/mitm-play/macros.js': {
       response: resp => {
-        let global = ''; let body = ''
+        let global = ''; let body = ''; let path;
         const namespace = _nameSpace(_tldomain(resp.url))
         if (namespace) {
-          const path = `${argv.route}/${namespace}/macros.js`
+          const [app, domain] = namespace.split('@')
+          path = `${argv.route}/${domain||app}/macros.js`
           if (fs.existsSync(path)) {
-            body = fs.readFileSync(path)
+            body = `${fs.readFileSync(path)}`
+          }
+          if (domain) {
+            path = `${argv.route}/${domain}/${app}@macros.js`
+            if (fs.existsSync(path)) {
+              const body2 = `${fs.readFileSync(path)}`
+              body = `(function() {
+  ${body.replace(/\n/g, '\n  ')}
+  const {macros} = window.mitm
+  ${body2.replace(/\n/g, '\n  ')}
+  window.mitm.macros = {
+    ...macros,
+    ...window.mitm.macros,
+  }
+})()`
+            }
+          } else {
+            body = `(function() {\n  ${body.replace(/\n/g, '\n  ')}\n})()`
           }
         }
-        const path = `${argv.route}/_global_/macros.js`
+        path = `${argv.route}/_global_/macros.js`
         if (fs.existsSync(path)) {
           global = (fs.readFileSync(path) + '').replace(/\n/, '\n  ')
         }
@@ -42,7 +60,7 @@ module.exports = () => {
 `// [Ctrl]+[Shift] => Hide/Show Buttons
 if (window._ws_connect===undefined) {
   window._ws_connect = {}
-}\n
+};\n
 window.mitm.fn.autoclick = ${autoclick + ''};\n
 window.mitm.fn.hotKeys = ${hotKeys + ''};\n
 window.mitm._macros_ = () => {
@@ -51,8 +69,8 @@ window.mitm._macros_ = () => {
 };\n
 window._ws_connect.macrosOnMount = data => {
   console.log('macros code executed after ws open', data)
-}
-${body}`
+};\n
+${body};\n`
         resp.headers['content-type'] = 'application/javascript'
       }
     },

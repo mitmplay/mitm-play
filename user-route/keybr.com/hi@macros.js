@@ -1,6 +1,6 @@
-const hello = 'hi macros'
+var hello = 'hi macros'
 
-const wow = {
+window.mitm.macros = {
     one: '1',
     two: '2'
 }

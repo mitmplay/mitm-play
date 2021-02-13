@@ -1,6 +1,3 @@
-const hello = 'world'
+var hello = 'world'
 
-const wow = {
-    one: '1',
-    two: '2'
-}
+window.mitm.macros = {zero: '0'}
