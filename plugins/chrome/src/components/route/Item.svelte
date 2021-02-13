@@ -12,7 +12,7 @@ function clickHandler(e) {
   const { routes, files } = mitm;
   const url = routes[element].url;
   const obj = files.route[element];
-  console.log(item, element, obj);
+  // console.log(item, element, obj);
 
   setTimeout(() => {
     onChange(false);

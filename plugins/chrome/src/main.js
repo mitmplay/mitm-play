@@ -195,6 +195,7 @@ fn.sortTag = sortTag
 fn.oneSite = oneSite
 fn.toRegex = toRegex
 fn.uniq = uniq
+window.mitm.monaco = {};
 window.mitm.editor = {};
 window.mitm.browser = {
   chgUrl_events: {},

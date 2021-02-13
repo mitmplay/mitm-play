@@ -3,8 +3,9 @@ import { onMount } from 'svelte';
 import { source } from './stores.js';
 
 import VBox2 from '../box/VBox2.svelte';
+import Editor1 from './Editor1.svelte';
+import Editor2 from './Editor2.svelte';
 import Button from './Button.svelte';
-import Editor from './Editor.svelte';
 import List from './List.svelte';
 
 let left = 165;
@@ -54,5 +55,6 @@ function onChange(e) {
 
 <Button/>
 <VBox2 {title} {top} {left} {dragend} {List} props={{onChange}}>
-  <Editor {onChange} item={$source.item}/>
+  <Editor1 {onChange} item={$source.item}/>
+  <Editor2 item={$source.item}/>
 </VBox2>
