@@ -1,9 +1,8 @@
 <script>
 import { onMount } from 'svelte';
-import { source } from './stores.js';
+import { source, tabstore } from './stores.js';
 
 import VBox2 from '../box/VBox2.svelte';
-import Editor1 from './Editor1.svelte';
 import Editor2 from './Editor2.svelte';
 import Button from './Button.svelte';
 import List from './List.svelte';
@@ -28,33 +27,22 @@ function dragend({detail}) {
 }
 
 let _timeout = null;
-function onChange(e) {
-  const { editor: { _route }} = window.mitm;
+function onChange(editor) {
   let saveDisabled;
-  if (e===false) {
-    saveDisabled = true;
-    source.update(n => {return {
-      ...n,
-      saveDisabled: true,
-      editbuffer: _route.getValue()
-    }})
-  }
   _timeout && clearTimeout(_timeout);
   _timeout = setTimeout(() => {
-    if (_route){
-      saveDisabled = (_route.getValue()===$source.editbuffer)
+    if (editor){
+      saveDisabled = (editor.getValue()===$source.content)
       source.update(n => {return {
         ...n,
         saveDisabled
       }});
-      console.log(e);
     }
-  }, 500)  
+  }, 1)  
 }
 </script>
 
 <Button/>
 <VBox2 {title} {top} {left} {dragend} {List} props={{onChange}}>
-  <Editor1 {onChange} item={$source.item}/>
-  <Editor2 item={$source.item}/>
+  <Editor2 {onChange}  item={$source.item}/>
 </VBox2>

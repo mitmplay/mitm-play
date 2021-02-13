@@ -7,17 +7,14 @@ import { onMount } from 'svelte';
 export let onChange;
 export let item;
 
-const option = {
-  ...cfg,
-  readOnly: true,
-  contextmenu: false,
-}
-
 let node1;
 let node2;
 
 let edit1;
 let edit2;
+
+function onChange1() {onChange(edit1, ...arguments)}
+function onChange2() {onChange(edit2, ...arguments)}
 
 onMount(async () => {
   window.mitm.monaco.router2 = monacoNS => {
@@ -26,6 +23,8 @@ onMount(async () => {
     
     edit1 =  window.monaco.editor.create(node1, cfg);
     edit2 =  window.monaco.editor.create(node2, cfg);
+    edit1.onDidChangeModelContent(onChange1);
+    edit2.onDidChangeModelContent(onChange2);
 
     const ro1 = new ResizeObserver(resize(edit1));
     const ro2 = new ResizeObserver(resize(edit2));
@@ -42,41 +41,48 @@ onMount(async () => {
         },
     })
     console.log('monaco route2 initilized!')
+    const nodes = document.querySelectorAll('.tab-route a');
+    for (let [i,node] of nodes.entries()) {
+      node.onclick = function(e) {
+        source.set({
+          ...$source,
+          tab: i+1,
+        });
+      }
+    }
   }
 });
 
 function reload(item) {
+  if (edit1) {
+    console.log('Editor2', item)
     const { route } = mitm.files;
+    edit1.setValue(route[item].content);
+    edit1.revealLine(1);
     if (route[`${item}/macros`]) {
-      console.log('Editor2', item)
-      edit1.setValue(route[item].content);
       edit2.setValue(route[`${item}/macros`].content);
-      edit1.revealLine(1);
       edit2.revealLine(1);
     }
-    return ''
   }
+  return ''
+}
 </script>
 
-<div class="{$source.macro ? 'show' : 'hide'}">
-  <Tabs value={$tabstore.tab} style="is-boxed tab-html" size="is-small">
-    <Tab label="Route">
-      <div class="view-container">
-        <div id="_route1">
-        </div>
+<Tabs value={$tabstore.tab} style="is-boxed tab-route" size="is-small">
+  <Tab label="Route">
+    <div class="view-container">
+      <div id="_route1">
       </div>
-    </Tab>
-    <Tab label="Macros">
-      <div class="view-container">
-        <div id="_route2">
-        </div>
+    </div>
+  </Tab>
+  <Tab label="Macros">
+    <div class="view-container {$source.macro ? 'show' : 'hide'}">
+      <div id="_route2">
       </div>
-    </Tab>
-  </Tabs>
-</div>
-{#if $source.macro}
+    </div>
+  </Tab>
+</Tabs>
 {reload(item)}
-{/if}
 
 <style>
 .hide {

@@ -12,11 +12,9 @@ function clickHandler(e) {
   const { routes, files } = mitm;
   const url = routes[element].url;
   const obj = files.route[element];
-  // console.log(item, element, obj);
+  const edit1 = $tabstore.editor.edit1;
 
   setTimeout(() => {
-    onChange(false);
-
     source.update(n => {
       return {
         ...n,
