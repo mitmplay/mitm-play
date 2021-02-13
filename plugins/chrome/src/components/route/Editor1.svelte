@@ -1,7 +1,7 @@
 <script>
 import { onMount } from 'svelte';
 import { cfg, resize } from '../monaco/init';
-import { source, tabstore } from './stores.js';
+import { source } from './stores.js';
 
 export let onChange;
 export let item;

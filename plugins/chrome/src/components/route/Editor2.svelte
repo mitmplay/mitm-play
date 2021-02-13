@@ -1,5 +1,5 @@
 <script>
-import { source, tabstore } from './stores.js';
+import { source } from './stores.js';
 import { cfg, resize } from '../monaco/init';
 import { Tabs, Tab } from 'svelma';
 import { onMount } from 'svelte';
@@ -25,6 +25,8 @@ onMount(async () => {
     edit2 =  window.monaco.editor.create(node2, cfg);
     edit1.onDidChangeModelContent(onChange1);
     edit2.onDidChangeModelContent(onChange2);
+    window.mitm.editor._route1 = edit1;
+    window.mitm.editor._route2 = edit2;
 
     const ro1 = new ResizeObserver(resize(edit1));
     const ro2 = new ResizeObserver(resize(edit2));
@@ -32,21 +34,13 @@ onMount(async () => {
     ro1.observe(node1);
     ro2.observe(node2);
 
-    tabstore.set({
-      ...$tabstore,
-        editor: {
-          ...$tabstore.editor,
-          edit1,
-          edit2,
-        },
-    })
     console.log('monaco route2 initilized!')
     const nodes = document.querySelectorAll('.tab-route a');
     for (let [i,node] of nodes.entries()) {
       node.onclick = function(e) {
         source.set({
           ...$source,
-          tab: i+1,
+          tab: i,
         });
       }
     }
@@ -68,7 +62,7 @@ function reload(item) {
 }
 </script>
 
-<Tabs value={$tabstore.tab} style="is-boxed tab-route" size="is-small">
+<Tabs value={$source.tab} style="is-boxed tab-route" size="is-small">
   <Tab label="Route">
     <div class="view-container">
       <div id="_route1">

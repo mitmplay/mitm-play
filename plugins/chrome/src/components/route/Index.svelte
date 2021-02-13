@@ -1,6 +1,6 @@
 <script>
 import { onMount } from 'svelte';
-import { source, tabstore } from './stores.js';
+import { source } from './stores.js';
 
 import VBox2 from '../box/VBox2.svelte';
 import Editor2 from './Editor2.svelte';

@@ -6,10 +6,6 @@ export const source = writable({
   goDisabled: true,
   content: '',
   fpath: '',
-  path: ''
-})
-
-export const tabstore = writable({
-  editor: {},
+  path: '',
   tab: 0
 })

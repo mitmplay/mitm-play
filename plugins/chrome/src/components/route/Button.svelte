@@ -3,9 +3,10 @@ import { source } from './stores.js';
 import Exbutton from '../monaco/Exbutton.svelte';
 
 function btnSave(e) {
-  const { editor: { _route }} = window.mitm;
-  if (_route) {
-    const content = _route.getValue()
+  const { tab } = $source;
+  const editor = window.mitm.editor[`_route${tab+1}`]
+  if (editor) {
+    const content = editor.getValue()
     source.update(n => {
       return {
         ...n,
@@ -65,7 +66,7 @@ function btnGo(e) {
 Path:{$source.path}
 {#if $source.path}
 	<div class="btn-container">
-  <Exbutton source={$source} editor="_route"/>
+  <Exbutton source={$source} editor="_route{$source.tab+1}"/>
   <button class="tlb btn-save" disabled={$source.saveDisabled} on:click="{btnSave}">Save</button>
   </div>
 {/if}
