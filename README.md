@@ -1138,6 +1138,12 @@ list of `key.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEv
 // macros.js
 window.mitm.macros = {
   '^/signin/v2/identifier?'() {
+    window.mitm.macrokeys = {
+      'KeyA'() {
+        alert('Alert KeyA')
+      }
+    }
+    // -- OR --
     window.mitm.fn.hotKeys({
       'KeyP'() {
         // chance is a javascript faker defined in jsLib
