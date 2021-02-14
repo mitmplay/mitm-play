@@ -1,4 +1,4 @@
-var hello = 'hi macros'
+const hello = 'hi macros'
 
 window.mitm.macros = {
     one: '1',

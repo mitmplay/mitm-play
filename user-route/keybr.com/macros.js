@@ -1,3 +1,8 @@
-var hello = 'world'
+const hello = 'world'
 
-window.mitm.macros = {zero: '0'}
+window.mitm.macros = {
+  '/'() {
+    console.log('olah')
+  },
+  zero: '0'
+}

@@ -38,18 +38,28 @@ module.exports = () => {
             path = `${argv.route}/${domain}/${app}@macros.js`
             if (fs.existsSync(path)) {
               const body2 = `${fs.readFileSync(path)}`
-              body = `(function() {
-  ${body.replace(/\n/g, '\n  ')}
-  const {macros} = window.mitm
+              body = `(function(macro1) {
+  // file: ${app}@macros.js
   ${body2.replace(/\n/g, '\n  ')}
+  // macros.js + ${app}@macros.js
+  const {macros: macro2} = window.mitm
   window.mitm.macros = {
-    ...macros,
-    ...window.mitm.macros,
+    ...macro1,
+    ...macro2,
   }
-})()`
+  console.log('all macros...');
+})((function() {
+  // file: macros.js
+  ${body.replace(/\n/g, '\n  ')}
+  // pass to other function
+  return window.mitm.macros
+})())`
             }
           } else {
-            body = `(function() {\n  ${body.replace(/\n/g, '\n  ')}\n})()`
+            body = `(function() {
+  // file: macros.js
+  ${body.replace(/\n/g, '\n  ')}
+})()`
           }
         }
         path = `${argv.route}/_global_/macros.js`
@@ -65,7 +75,8 @@ window.mitm.fn.autoclick = ${autoclick + ''};\n
 window.mitm.fn.hotKeys = ${hotKeys + ''};\n
 window.mitm._macros_ = () => {
   window.mitm.macrokeys = {};
-  ${global}
+  // file: _global_/macros.js
+  ${global.replace(/\n/g, '\n  ')}
 };\n
 window._ws_connect.macrosOnMount = data => {
   console.log('macros code executed after ws open', data)
