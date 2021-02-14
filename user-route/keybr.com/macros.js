@@ -8,6 +8,14 @@ window.mitm.macros = {
         alert('Alert KeyA')
       }
     }
+    window.mitm.autobuttons = {
+      'one|yellow'() {
+        console.log('one')
+        return [
+          'input[type="password"] => password'
+        ]
+      },
+    }
   },
   zero: '0'
 }

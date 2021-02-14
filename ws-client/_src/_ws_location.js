@@ -27,7 +27,11 @@ module.exports = () => {
           const btn = document.createElement('button')
           const br = document.createElement('span')
           const [caption, color] = key.split('|')
-          btn.onclick = autobuttons[key]
+          const ev = autobuttons[key]
+          btn.onclick = e => {
+            const arr = ev(e)
+            Array.isArray(arr) && play(arr)
+          }
           btn.innerText = caption
           buttons.appendChild(btn)
           buttons.appendChild(br)
