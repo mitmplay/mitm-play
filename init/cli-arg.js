@@ -114,7 +114,8 @@ module.exports = () => {
       }
     } = saveArgs
     browser = b
-    if (argv._.length === 0) {
+    console.log('*argv._*', JSON.stringify(argv._, null, 2))
+    if (rest._ && argv._.length===0) {
       delete argv._
     }
     global.mitm.argv = { ...rest, ...argv }

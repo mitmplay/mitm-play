@@ -93,7 +93,7 @@ module.exports = () => {
       argv.urls = [argv.url]
     }
   } else {
-    let argv0 = argv._[0]+''
+    let argv0 = argv._[0]
     const _urls = []
     if (argv0) {
       // on window comma change to space
@@ -126,7 +126,7 @@ module.exports = () => {
       } else {
         argv.urls = ['https://keybr.com/']
       }
-    } else {
+    } else if (!argv.urls || argv.urls.length===0) {
       const { routes } = global.mitm
       for (const key in routes) {
         if (key === '_global_') {
