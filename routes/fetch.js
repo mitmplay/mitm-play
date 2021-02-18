@@ -31,6 +31,9 @@ function fetch (route, browserName, { url, proxy, ...reqs }, handler) {
       const _proxy = fn._proxy()
       _proxy && (opts.proxy = _proxy)
     } else {
+      if (!proxy.match(/^https?:\/\//)) {
+        proxy = `http://${proxy}`
+      }
       opts.proxy = proxy
     }
     opts.proxy && (opts.noProxy = fn._noproxy())
