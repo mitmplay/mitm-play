@@ -7,6 +7,7 @@ const route = {
   urls: {
     keybr: 'https://keybr.com/',
   },
+  proxy: ['keybr.com'],
   'mock:1.no-ads': {
     '#201:google.+.com': '',
     'doubleclick.net': '',

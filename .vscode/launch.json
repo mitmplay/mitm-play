@@ -2,6 +2,7 @@
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // "args": ["kybr", "-srG", "--proxy='w:h@main.com:80'"]
     "version": "0.2.0",
     "configurations": [
         {
@@ -14,8 +15,8 @@
             ],
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/mitm-play.js",
-            "runtimeArgs": ["--max-http-header-size=80000"],
-            "args": ["kybr", "-nrG"]
+            "runtimeArgs": ["--max-http-header-size=80000"]
+            // "args": ["kybr", "-srG", "--proxy='w:h@main.com:80'"]
         }
     ]
 }
