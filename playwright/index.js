@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const playwright = require('playwright')
 const _options = require('./options')
+const cleanX = require('./clean-x')
 const routes = require('../routes')
 const attach = require('./attach')
 
@@ -152,6 +153,7 @@ module.exports = () => {
         count += 1
       }
       page.on('close', () => {
+        setTimeout(()=> cleanX, 1000)
         process.exit()
       })
     }
