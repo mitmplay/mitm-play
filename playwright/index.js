@@ -89,6 +89,9 @@ module.exports = () => {
           }
           console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxy ${msg}`))
         }
+        options.ignoreDefaultArgs = ["--enable-automation"],
+        // options.excludeSwitches = ['--enable-automation']
+        // options.useAutomationExtension = false
         options.viewport = null
         options.args = args
       }
