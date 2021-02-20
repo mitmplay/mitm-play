@@ -1,6 +1,7 @@
 // https://stackoverflow.com/questions/21177387/caution-provisional-headers-are-shown-in-chrome-debugger/55865689#55865689
 // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#setting-up-chrome-linux-sandbox
 // https://peter.sh/experiments/chromium-command-line-switches/#enable-automation
+// https://github.com/seleniumhq/selenium/issues/8739
 // https://chromedriver.chromium.org/capabilities
 // https://usefyi.com/chrome-flags/
 // page.setViewportSize({width:0, height:0});
