@@ -32,6 +32,7 @@ function currentTab (browser) {
 }
 
 module.exports = () => {
+  cleanX()
   const {
     argv,
     fn: { home }
@@ -153,7 +154,6 @@ module.exports = () => {
         count += 1
       }
       page.on('close', () => {
-        setTimeout(()=> cleanX, 1000)
         process.exit()
       })
     }

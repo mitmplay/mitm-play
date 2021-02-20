@@ -1,11 +1,14 @@
 const fs = require('fs-extra')
 
-const profile = `/_profiles_/chromium/Local State`
-const state = '"exited_cleanly":'
+const profile = `/_profiles_/chromium/Default/Preferences`
+const exited = '"exited_cleanly":'
+const exityp = '"exit_type":"'
 
 module.exports = () => {
   const {home} = global.mitm.path
-  const oldstate = fs.readFileSync(`${home}${profile}`)
-  const newstate = `${oldstate}`.replace(`${state}false`, `${state}true`)
-  fs.writeFileSync(`${home}${profile}`, newstate)
+  const path = `${home}${profile}`
+  const oldstate1 = fs.readFileSync(path)
+  const newstate1 = `${oldstate1}`.replace(`${exited}false`  , `${exited}true`)
+  const newstate2 = `${newstate1}`.replace(`${exityp}Crashed`, `${exityp}none`)
+  fs.writeFileSync(path, newstate2)
 }
