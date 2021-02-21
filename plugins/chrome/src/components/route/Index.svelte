@@ -3,13 +3,13 @@ import { onMount } from 'svelte';
 import { source } from './stores.js';
 
 import VBox2 from '../box/VBox2.svelte';
+import title from './Title.svelte';
 import Editor2 from './Editor2.svelte';
 import Button from './Button.svelte';
 import List from './List.svelte';
 
 let left = 165;
 const top = '47';
-const title = '-Route(s)-' 
 const id = 'routeLeft';
 
 onMount(async () => {
