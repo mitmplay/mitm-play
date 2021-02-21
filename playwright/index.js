@@ -31,12 +31,63 @@ function currentTab (browser) {
   }
 }
 
+function initBrowserMsg(browserName) {
+  const msg = `Init Browser: [${browserName}]`
+  console.log(c.yellowBright('='.repeat(msg.length)))
+  console.log(c.whiteBright(msg))
+}
+
+function chromePlugins(args) {
+  const { fn: { flist, tilde }, path: { userroute } } = global.mitm
+  const ppath = userroute.split('*')[0] + '_plugins_'
+  const plugins = flist(ppath)
+  const p = `${global.__app}/plugins`
+  let path = `${process.cwd()}/`
+  if (plugins.length) {
+    path = `${p}/chrome,${ppath}/`
+    path += plugins.join(`,${path}`)
+  } else {
+    path = `${p}/chrome`
+  }
+  path = path.replace(/\\/g, '/')
+  console.log('>>> Plugins:', tilde(path).split(','))
+  args.push(`--disable-extensions-except=${path}`)
+  args.push(`--load-extension=${path}`)
+}
+
+function chromeProxy(args) {
+  const {proxypac, proxy} = global.mitm.argv
+  if (proxypac) {
+    console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxypac ${proxypac}`))
+    args.push(`--proxy-pac-url=${proxypac}`)
+  } else if (typeof proxy === 'string') {
+    let msg = proxy
+    const arr = msg.match(/([^:]+:[^@]+)@\w+/)
+    if (arr) {
+      // feat: hide password
+      msg = msg.replace(arr[1], '******:******')
+    }
+    console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxy ${msg}`))
+  }
+}
+
+function browserProxy() {
+  const {proxy} = global.mitm.argv
+  if (proxy === true) {
+    console.log(c.red.bgYellowBright('>>> mitm-play will use --proxy but browser will not!'))
+  }
+}
+
 module.exports = () => {
   cleanX()
   const {
     argv,
     fn: { home }
   } = global.mitm
+  global.mitm.pages = pages
+  global.mitm.browsers = browsers
+  global.mitm.bcontexts = bcontexts
+
   const args = require('./args-c')(argv);
 
   // process.on('unhandledRejection', (err, p) => {
@@ -49,118 +100,102 @@ module.exports = () => {
   //     console.log(c.red('(*execution context was destroyed*)'))
   //   }
   // });
-  (async () => {
-    global.mitm.pages = pages
-    global.mitm.browsers = browsers
-    console.log(c.whiteBright('RUN PLAYWRIGHT'))
-    for (const browserName in argv.browser) {
-      const msg = `Init Browser: [${browserName}]`
-      console.log(c.yellowBright('='.repeat(msg.length)))
-      console.log(c.whiteBright(msg))
-      const options = _options()
-      let page, browser, bcontext
 
-      if (browserName === 'chromium') {
-        const { fn: { flist, tilde }, path: { userroute } } = global.mitm
-        const ppath = userroute.split('*')[0] + '_plugins_'
-        options.excludeSwitches = ['enable-automation']
-        const plugins = flist(ppath)
-        const p = `${global.__app}/plugins`
-        let path = `${process.cwd()}/`
-        if (plugins.length) {
-          path = `${p}/chrome,${ppath}/`
-          path += plugins.join(`,${path}`)
-        } else {
-          path = `${p}/chrome`
-        }
-        path = path.replace(/\\/g, '/')
-        console.log('>>> Plugins:', tilde(path).split(','))
-        args.push(`--disable-extensions-except=${path}`)
-        args.push(`--load-extension=${path}`)
-        if (argv.proxypac) {
-          console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxypac ${argv.proxypac}`))
-          args.push(`--proxy-pac-url=${argv.proxypac}`)
-        } else if (typeof argv.proxy === 'string') {
-          let msg = argv.proxy
-          const arr = msg.match(/([^:]+:[^@]+)@\w+/)
-          if (arr) {
-            // feat: hide password
-            msg = msg.replace(arr[1], '******:******')
-          }
-          console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxy ${msg}`))
-        }
-        options.ignoreDefaultArgs = ["--enable-automation"],
-        // options.excludeSwitches = ['--enable-automation']
-        // options.useAutomationExtension = false
-        options.viewport = null
-        options.args = args
-      }
-      if (argv.proxy === true) {
-        console.log(c.red.bgYellowBright('>>> mitm-play will use --proxy but browser will not!'))
-      }
-      let execPath = argv.browser[browserName]
-      if (typeof (execPath) === 'string') {
-        execPath = execPath.replace(/\\/g, '/')
-        if (browserName !== 'chromium') {
-          console.log(c.redBright('executablePath is unsupported for non Chrome!'))
-        } else if (process.platform === 'darwin') {
-          execPath += '/Contents/MacOS/Google Chrome'
-        }
-        options.executablePath = home(execPath)
-      } else {
-        const _browser = require('playwright')[browserName]
-        execPath = _browser.executablePath().replace(/\\/g, '/')
-      }
+  function browserPath(browserName) {
+    let execPath = argv.browser[browserName]
+    if (typeof (execPath) === 'string') {
+      execPath = execPath.replace(/\\/g, '/')
       if (browserName !== 'chromium') {
-        console.log(c.yellow(`>>> executablePath: ${execPath}`))
+        console.log(c.redBright('executablePath is unsupported for non Chrome!'))
+      } else if (process.platform === 'darwin') {
+        execPath += '/Contents/MacOS/Google Chrome'
       }
-      const playBrowser = playwright[browserName]
-      if (argv.pristine) {
-        // buggy route will not work :(
-        const { fn: { tilde } } = global.mitm
-        const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
-        console.log('>>> Browser profile', tilde(bprofile))
-        browser = await playBrowser.launchPersistentContext(bprofile, options)
-        page = await browser.pages()[0]
-        bcontext = page.context()
-      } else {
-        console.log('>>> Browser option', options)
-        browser = await playBrowser.launch(options)
-        // const context = await browser.newContext({viewport: { height: 734, width: 800 }});
-        const context = await browser.newContext({ viewport: null })
-        page = await context.newPage()
-        bcontext = context
-      }
-      currentTab(browser)
-      if (browserName === 'chromium') {
-        const cdp = await page.context().newCDPSession(page)
-        global.mitm.cdp = cdp
-      } else {
-        await sleep(300)
-      }
-      bcontexts[browserName] = bcontext
-      browsers[browserName] = browser
-      pages[browserName] = page
-      if (browserName === 'chromium' && argv.pristine === undefined) {
+      options.executablePath = home(execPath)
+    } else {
+      const _browser = require('playwright')[browserName]
+      execPath = _browser.executablePath().replace(/\\/g, '/')
+    }
+    if (browserName !== 'chromium') {
+      console.log(c.yellow(`>>> executablePath: ${execPath}`))
+    }
+  }
+
+  async function setup(browserName, options) {
+    let page, browser, bcontext
+    const playBrowser = playwright[browserName]
+    if (argv.pristine) {
+      // buggy route will not work :(
+      const { fn: { tilde } } = global.mitm
+      const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
+      console.log('>>> Browser profile', tilde(bprofile))
+      browser = await playBrowser.launchPersistentContext(bprofile, options)
+      page = await browser.pages()[0]
+      bcontext = page.context()
+    } else {
+      console.log('>>> Browser option', options)
+      browser = await playBrowser.launch(options)
+      // const context = await browser.newContext({viewport: { height: 734, width: 800 }});
+      const context = await browser.newContext({ viewport: null })
+      page = await context.newPage()
+      bcontext = context
+    }
+    currentTab(browser)
+    if (browserName === 'chromium') {
+      const cdp = await page.context().newCDPSession(page)
+      global.mitm.cdp = cdp
+      if (argv.pristine === undefined) {
         await page.goto('chrome://extensions/')
         await page.click('#detailsButton')
         await page.click('#crToggle')
       }
-      console.log(c.whiteBright(`MITM Hooked [${browserName}]`))
-      bcontext.route(/.*/, (route, request) => {
-        routes({ route, request, bcontext, browserName })
-      })
-      bcontext.on('page', attach)
-      let count = 0
-      for (const url of argv.urls) {
-        newPage(browser, page, url, count)
-        count += 1
-      }
-      page.on('close', () => {
+    } else {
+      await sleep(300)
+    }
+    pages[browserName] = page
+    browsers[browserName] = browser
+    bcontexts[browserName] = bcontext
+    return {page, browser, bcontext}
+  }
+
+  async function play(browserName) {
+    const options = _options()
+    initBrowserMsg(browserName)
+    if (browserName === 'chromium') {
+      chromePlugins(args)
+      chromeProxy(args)
+      options.ignoreDefaultArgs = ["--enable-automation"],
+      // options.excludeSwitches = ['--enable-automation']
+      // options.useAutomationExtension = false
+      options.viewport = null
+      options.args = args
+    }
+    browserProxy()
+    browserPath(browserName)
+    const {page, browser, bcontext} = await setup(browserName, options)
+    console.log(c.whiteBright(`MITM Hooked [${browserName}]`))
+    bcontext.route(/.*/, (route, request) => {
+      routes({ route, request, browserName, bcontext })
+    })
+    bcontext.on('page', attach)
+    let count = 0
+    for (const url of argv.urls) {
+      newPage(browser, page, url, count)
+      count += 1
+    }
+    page.on('close', () => {
+      if (!global.mitm.restart) {
         process.exit()
-      })
+      }
+    })
+  }
+
+  (async () => {
+    console.log(c.whiteBright('RUN PLAYWRIGHT'))
+    for (const browserName in argv.browser) {
+      await play(browserName)
     }
   })()
+  global.mitm.play = play
 }
 
 async function goto (page, url) {

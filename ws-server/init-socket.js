@@ -6,6 +6,12 @@ const website = require('./website')
 const msgParser = require('./msg-parser')
 const path = `${global.__app}/cert`
 
+function noop() {}
+function heartbeat() {
+  console.log('pong:', this._page)
+  this.isAlive = true;
+}
+
 module.exports = () => {
   const servers = https.createServer({
     cert: fs.readFileSync(`${path}/selfsigned.crt`),
@@ -16,11 +22,41 @@ module.exports = () => {
   wss.on('connection', connection)
   console.log('Listen:3001')
   global.wsservers = wss
-  servers.listen(3001)  
+  servers.listen(3001)
 
-  function connection (client, request) {
+  wss.isAlive = function(fn, ms=500) {
+    // console.log('PING!!!')
+    const arr = []
+    wss.clients.forEach(function each(ws) {
+      // console.log('init:', ws._page)
+      ws.isAlive = false;
+      arr.push(ws)
+    });  
+    setTimeout(() => {
+      arr.forEach(function each(ws) {
+        console.log(c.blueBright(`ping: ${ws._page}`))
+        ws.ping(noop);
+      });  
+      setTimeout(() => {
+        // console.log('Check status!!!')
+        arr.forEach(function each(ws) {
+          if (ws.isAlive === false) {
+            console.log(c.redBright(`noresp: ${ws._page}`))
+            ws.terminate()
+          };
+        });
+        fn && fn(arr)
+      }, 100)
+    }, ms)
+  }
+
+  function connection (wsclient, request) {
     const { origin, host } = request.headers
     const { __flag } = global.mitm
+
+    wsclient.isAlive = true;
+    wsclient.on('pong', heartbeat);
+
     if (__flag['ws-connect']) {
       console.log(c.red('>>> ws-connect:'), `${host}${request.url}`)
     }
@@ -35,13 +71,13 @@ module.exports = () => {
       console.log(c.redBright('>>> Error init Socket'), error)
     }
     const page = request.url.match(/page=(\w+)/)[1]
-    client._page = `${_host}:${page}`
+    wsclient._page = `${_host}:${page}`
 
     function incoming (data) {
-      msgParser(client, data)
+      msgParser(wsclient, data)
     }
 
-    client.on('message', incoming)
-    client.send('connected')
+    wsclient.on('message', incoming)
+    wsclient.send('connected')
   }
 }
