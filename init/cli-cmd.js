@@ -31,8 +31,9 @@ module.exports = () => {
     }
   })
 
-  let { route } = argv
   const { cwd } = path
+  let { route } = argv
+  let userroute
   if (!route) {
     route = home('~/user-route')
   } else {
@@ -69,12 +70,16 @@ module.exports = () => {
   }
 
   route = route.replace(/\\/g, '/')
+  userroute = `${route}/*/index.js`
   _argv.route = route
   argv.route = route
 
   path.route = route
-  path.userroute = `${route}/*/index.js`
-  const files = fg.sync([path.userroute])
+  path.userroute = userroute
+  const file1 = fg.sync([userroute])
+  const file2 = fg.sync([userroute.replace('index.js', '*@index.js')])
+  const files = file1.concat(file2)
+  console.log({files})
   if (!files.length) {
     console.log(c.red('Routes path is incorrect'), argv.route)
     console.log(c.yellow('Please pass option: -r=\'...\' / --route=\'your routing path\''))
