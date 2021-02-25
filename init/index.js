@@ -17,7 +17,10 @@ module.exports = () => {
   if (global.mitm.argv.insecure) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
   }
-  process.env.PWDEBUG = '1'
+
+  if (global.mitm.argv.inspect) {
+    process.env.PWDEBUG = '1'
+  }
 
   let msg = JSON.stringify(global.mitm.argv, null, 2)
   const arr = msg.match(/"proxy": "([^:]+:[^@]+)@\w+/)

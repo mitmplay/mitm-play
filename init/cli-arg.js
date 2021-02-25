@@ -67,6 +67,7 @@ module.exports = () => {
   argsChg('D', 'debug'     )
   argsChg('G', 'nogpu'     )
   argsChg('H', 'nohost'    ) // feat: _global_.args
+  argsChg('I', 'inspect'   )
   argsChg('R', 'redirect'  )
   argsChg('U', 'nourl'     ) // feat: _global_.args
   argsChg('V', 'verbose'   )
