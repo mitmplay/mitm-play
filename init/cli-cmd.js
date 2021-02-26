@@ -99,11 +99,11 @@ module.exports = () => {
     }
   } else {
     let argv0 = argv._[0]
-    const _urls = []
     if (argv0) {
       // on window comma change to space
       argv0 = argv0.trim().split(/[, ]+/)
       const { routes } = global.mitm
+      const _urls = {}
       for (const namespace in routes) {
         const { url, urls } = routes[namespace]
         for (const key of argv0) {
@@ -113,7 +113,7 @@ module.exports = () => {
           if (urls) {
             for (const loc in urls) {
               if (loc.match(rgx)) {
-                _urls.push(urls[loc])
+                _urls[loc] = urls[loc]
                 urlsSet = true // found
               }
             }
@@ -122,12 +122,13 @@ module.exports = () => {
            * find on url if urls cannot be found
            */
           if (!urlsSet && url && url.match(rgx)) {
-            _urls.push(url)
+            _urls.def = url
           }
         }
       }
-      if (_urls.length) {
-        argv.urls = _urls
+      const urls = Object.values(_urls)
+      if (urls.length) {
+        argv.urls = urls
       } else {
         argv.urls = ['https://keybr.com/']
       }
