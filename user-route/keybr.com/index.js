@@ -30,14 +30,14 @@ const route = {
   'log:select~2': {},
   'log:select~3': {},
   log: {
-    '/lol': {
+    'POST:/lol': {
       contentType: ['html'],
       tags: '4.logging'
     }
   },
   'response:active': {},
   'html:active': {
-    'GET:dodol:/$': {
+    'GET:dodol:/z$': {
       tags: 'in-html',
       ws: true
     },

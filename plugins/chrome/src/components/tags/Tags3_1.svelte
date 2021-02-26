@@ -8,6 +8,7 @@ export let items;
 export let ns;
 
 let namespace;
+const method = /^(GET|PUT|POST|DELETE):/
 
 function q(key) {
   return key.replace(/[@.]/g, '-')
@@ -25,7 +26,11 @@ function btnExpand(e) {
 function xitems(tags) {
   const {__tag3} = tags;
   namespace = __tag3[ns];
-  const arr = Object.keys(namespace).sort();
+  const arr = Object.keys(namespace).sort((a,b)=> {
+    a = a.match(method) ? `z${a.replace(method,'')}` : a;
+    b = b.match(method) ? `z${b.replace(method,'')}` : b;
+    return a<b ? -1 : (a>b ? 1 : 0);
+  });
   return arr;
 }
 function xtags(path) {
@@ -48,6 +53,10 @@ function xtags(path) {
   tag1 = tag1.length ? `_${tag1.join(' _').replace(/url:/g, '').replace(rclass, '-')}` : ''
   return `${tag1} _${klass.join(' _')}`;
 }
+
+function mth(path) {
+  return path.match(/^(GET|PUT|POST|DELETE):/);
+}
 </script>
 
 <div class="border">
@@ -66,7 +75,17 @@ function xtags(path) {
   <div class="t3 {q(ns)}">
     {#each xitems($tags) as path, i}
     <details id="path{i}">
-      <summary on:click="{btnExpand}" class="space1 {xtags(path)}">{path}</summary>
+      <summary on:click="{btnExpand}" class="space1 {xtags(path)}">
+        {#if mth(path)}
+          {#if !$tags.mth}
+            <span class="no-method" title="{path}">{path.replace(method, '')}</span>
+          {:else }
+            {path.replace(method, '')}<span class="with-method">[{mth(path)[1]}]</span>
+          {/if}
+        {:else}
+          {path}
+        {/if}
+      </summary>
       <Tags32 items={items[path]} {path} {ns}/>
     </details>
   {/each}
@@ -96,5 +115,12 @@ span.ns span {
   vertical-align: -5px;
   line-height: 0.8;
   font-size: 18px;
+}
+span.no-method {
+  color: red
+}
+span.with-method {
+  color: coral;
+  font-size: 9px;
 }
 </style>

@@ -64,6 +64,12 @@ onMount(() => {
     bind:checked={$tags.uniq}/>
     fit
   </label>
+  <label class="checker mth">
+    <input
+    type="checkbox"
+    bind:checked={$tags.mth}/>
+    mth
+  </label>
   <!-- <label class="checker">
     <input 
     type="checkbox"
@@ -109,5 +115,9 @@ onMount(() => {
   color: chocolate;
   font-weight: 600;
   font-size: 12px;
+}
+.checker.mth {
+  color: red;
+  font-weight: 700;
 }
 </style>

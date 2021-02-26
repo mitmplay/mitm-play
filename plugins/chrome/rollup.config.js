@@ -24,7 +24,8 @@ export default {
     css({ output: 'bundle.css' }),   
 		resolve({
 			browser: true,
-			dedupe: ['svelte']
+			dedupe: ['svelte'],
+      preferBuiltins: false
 		}),
     commonjs(),
   ],
