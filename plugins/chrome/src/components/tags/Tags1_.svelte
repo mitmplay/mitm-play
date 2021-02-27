@@ -22,15 +22,24 @@ function clicked(e) {
     for (let ns in __tag1) {
       if (oneSite(tagsStore, ns)) {
         ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
-        __tag1[ns][tag] = checked
-        if (id1 && checked) {
-          for (let tg in list) {
-            const [group2, id2] = tg.split('~');
-            if (group1===group2 && id1!==id2) {
-              if (__tag1[ns][group1]!==undefined) {
-                __tag1[ns][group1] = true;
+        console.log($tags, ns, checked)
+        const _global_ = ns.match('_global_')
+        let arr = []
+        if (_global_) {
+          // set global only if match with tag in _global_.tag2
+          arr = Object.keys(__tag2._global_).filter(x=>x.match(tag))
+        }
+        if (!_global_ || arr.length) {
+          __tag1[ns][tag] = checked
+          if (id1 && checked) {
+            for (let tg in list) {
+              const [group2, id2] = tg.split('~');
+              if (group1===group2 && id1!==id2) {
+                if (__tag1[ns][group1]!==undefined) {
+                  __tag1[ns][group1] = true;
+                }
+                __tag1[ns][tg] = false;
               }
-              __tag1[ns][tg] = false;
             }
           }
         }
@@ -110,7 +119,8 @@ function listTags(tags) {
       const tag1 = tags.__tag1[ns]
       for (const id in tag1) {
         if (list[id]===undefined || tag1[id]) {
-          list[id] = tag1[id]
+          // console.log(id, list)
+          list[id] = tag1[id] 
         }
       }
     }
