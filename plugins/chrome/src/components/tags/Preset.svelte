@@ -8,6 +8,16 @@ function clicked(e) {
   const {ns: _ns, id} = e.target.dataset
   const {__tag1, __tag2, __tag3} = window.mitm
   const nss = _ns.split(',')
+  for (let i = 0; i < nss.length; ++i) {
+    const ns = nss[i]
+    const {list} = routes[ns]._childns
+    for (const ns2 in list) {
+      if (list[ns2]) {
+        nss[i] = ns2; 
+        break
+      }
+    }
+  }
   for (const ns of nss) {
     const [...preset] = routes[ns].preset[id].tags
     const paths = __tag3[ns]

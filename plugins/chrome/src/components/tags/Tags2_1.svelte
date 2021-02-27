@@ -90,7 +90,7 @@ function urllist(_tags, item) {
   } else if (!Array.isArray(obj)) {
     obj = Object.keys(obj)
   }
-  obj = obj.map(x=>noTagInRule(x,_tags.mth)).filter(uniq)
+  obj = obj.map(x=>noTagInRule(x,_tags.mth)).filter(uniq).sort()
   return obj
 }
 
