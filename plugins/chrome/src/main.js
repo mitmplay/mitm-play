@@ -1,9 +1,18 @@
 /* global chrome */
 import App from './App.svelte'
 const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
+const tmethod = /^(GET|PUT|POST|DELETE):/
 const rclass = /[.#~/]+/g
 
 console.log('Load MITM plugin')
+
+function machMethod(path) {
+  return path.match(tmethod);
+}
+
+function removeMethod(path) {
+  return path.replace(tmethod, '');
+}
 
 function toRegex (str, flags = '') {
   return new RegExp(str
@@ -22,9 +31,15 @@ const sortTag = (a,b) => {
   return 0;
 }
 
-function noTagInRule(path) {
+function noTagInRule(path, method=true) {
   const arr = path.match(rmethod) // feat: tags in url
-  return arr ? (arr[1] ? `${arr[1]}:${arr[3]}` : arr[3]) : path
+  if (!arr) {
+    return path
+  } else if (method && arr[1]) {
+    return `${arr[1]}:${arr[3]}`
+  }
+  return arr[3]
+  // return arr ? (arr[1] ? `${arr[1]}:${arr[3]}` : arr[3]) : path
 }
 
 function isRuleOff(tags, ns, path) {
@@ -184,8 +199,11 @@ function oneSite(tags, ns) {
 }
 
 const {fn} = window.mitm
+fn.tmethod = tmethod;
 fn.rmethod = rmethod;
 fn.rclass = rclass;
+fn.machMethod = machMethod
+fn.removeMethod = removeMethod
 fn.tagsIn__tag3 = tagsIn__tag3
 fn.noTagInRule = noTagInRule
 fn.resetRule2 = resetRule2

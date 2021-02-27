@@ -1,6 +1,7 @@
 <script>
 import { tags } from './stores.js';
 import Tags2Title from './Tags2_Title.svelte';
+const {machMethod, removeMethod} = window.mitm.fn;
 
 export let items;
 export let ns;
@@ -65,15 +66,18 @@ function show(item) {
   if (v===undefined) return k;
   return `${v}{${short[k] || k}}`;
 }
+
 function linkTags(item) {
   const {tags} = window.mitm.__tag2[ns][item] // feat: update __tag2
   const linkTags = tags && tags.length ? `[${tags.join(',')}]` : ''
   return linkTags;
 }
+
 function isGroup(item) {
   const [sec, tag] = item.split(':')
   return tag && sec!=='url'
 }
+
 function urllist(_tags, item) {
   const {__tag2, fn: { noTagInRule, uniq }} = window.mitm;
   const {tags} = __tag2[ns][item] // feat: update __tag2
@@ -86,13 +90,15 @@ function urllist(_tags, item) {
   } else if (!Array.isArray(obj)) {
     obj = Object.keys(obj)
   }
-  obj = obj.map(noTagInRule).filter(uniq)
+  obj = obj.map(x=>noTagInRule(x,_tags.mth)).filter(uniq)
   return obj
 }
+
 function alltags(tags, item, path) {
   const { tagsIn__tag3 } = window.mitm.fn;
   return tagsIn__tag3(tags, ns, path, item)
 }
+
 function spacex(tags, item, path) {
   let klass = items[item].state ? 'slc' : ''; // feat: update __tag2
   const { rclass, isRuleOff } = window.mitm.fn;
@@ -101,6 +107,7 @@ function spacex(tags, item, path) {
   _tags.length && (klass += ` _${_tags.join(' _')}`)
   return `${klass} _${item.split(':')[1].replace(rclass, '-')}`
 }
+
 function q(key) {
   return key.replace(/[@.]/g, '-')
 }
@@ -125,7 +132,13 @@ function q(key) {
           </label> 
         </summary>
         {#each urllist($tags, item) as path}
-          <div class="spacex {spacex($tags, item, path)}">{path}</div>
+          <div class="spacex {spacex($tags, item, path)}">
+            {#if $tags.mth && machMethod(path)}
+              {removeMethod(path)}<span class="with-method">[{machMethod(path)[1]}]</span>
+            {:else}
+              {path}
+            {/if}
+          </div>
         {/each}
       </details>
     {:else}
@@ -222,5 +235,9 @@ summary.space1 .link-tags {
 .stag.slc {
   color: green;
   font-weight: bolder;
+}
+span.with-method {
+  color: coral;
+  font-size: 9px;
 }
 </style>

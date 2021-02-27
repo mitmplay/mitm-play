@@ -3,12 +3,12 @@ import { tags } from './stores.js';
 import Tags32 from './Tags3_2.svelte';
 import Expand from '../button/Expand.svelte';
 import Collapse from '../button/Collapse.svelte';
+const {machMethod, removeMethod} = window.mitm.fn;
 
 export let items;
 export let ns;
 
 let namespace;
-const method = /^(GET|PUT|POST|DELETE):/
 
 function q(key) {
   return key.replace(/[@.]/g, '-')
@@ -26,9 +26,10 @@ function btnExpand(e) {
 function xitems(tags) {
   const {__tag3} = tags;
   namespace = __tag3[ns];
+  const { tmethod } = window.mitm.fn;
   const arr = Object.keys(namespace).sort((a,b)=> {
-    a = a.match(method) ? `z${a.replace(method,'')}` : a;
-    b = b.match(method) ? `z${b.replace(method,'')}` : b;
+    a = a.match(tmethod) ? a.replace(tmethod,'') : a;
+    b = b.match(tmethod) ? b.replace(tmethod,'') : b;
     return a<b ? -1 : (a>b ? 1 : 0);
   });
   return arr;
@@ -54,9 +55,6 @@ function xtags(path) {
   return `${tag1} _${klass.join(' _')}`;
 }
 
-function mth(path) {
-  return path.match(/^(GET|PUT|POST|DELETE):/);
-}
 </script>
 
 <div class="border">
@@ -76,11 +74,11 @@ function mth(path) {
     {#each xitems($tags) as path, i}
     <details id="path{i}">
       <summary on:click="{btnExpand}" class="space1 {xtags(path)}">
-        {#if mth(path)}
+        {#if machMethod(path)}
           {#if !$tags.mth}
-            <span class="no-method" title="{path}">{path.replace(method, '')}</span>
+            <span class="no-method" title="{path}">{removeMethod(path)}</span>
           {:else }
-            {path.replace(method, '')}<span class="with-method">[{mth(path)[1]}]</span>
+            {removeMethod(path)}<span class="with-method">[{machMethod(path)[1]}]</span>
           {/if}
         {:else}
           {path}
