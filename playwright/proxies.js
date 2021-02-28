@@ -1,3 +1,5 @@
+const c = require('ansi-colors')
+
 function chromeProxy(args) {
   const {proxypac, proxy} = global.mitm.argv
   if (proxypac) {
