@@ -3,11 +3,12 @@
 import { onMount } from 'svelte';
 
 import { Tabs, Tab } from 'svelma';
-import Route from './components/route/Index.svelte';
+import PluginsTab from './components/plugins/Index.svelte';
 import Profile from './components/profile/Index.svelte'; // feat: profile
 import LogsTab from './components/logs/Index.svelte';
 import TagsTab from './components/tags/Index.svelte';
 import Other from './components/other/Index.svelte';
+import Route from './components/route/Index.svelte';
 import Help from './components/help/Index.svelte';
 
 onMount(async () => {
@@ -27,6 +28,9 @@ onMount(async () => {
   <Tab label="Profile"><Profile/></Tab>
   <Tab label="Logs"><LogsTab/></Tab>
   <Tab label="Tags"><TagsTab/></Tab>
+  {#if Object.keys(window.mitm.plugins).length}
+    <Tab label="Plugins"><PluginsTab/></Tab>    
+  {/if}
   <!-- <Tab label="Other"><Other/></Tab> -->
   <Tab label="Help"><Help/></Tab>
 </Tabs>

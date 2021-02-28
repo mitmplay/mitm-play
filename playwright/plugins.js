@@ -12,30 +12,29 @@ function chromePlugins(args) {
       const path = `${ppath}/${fn}`
       const manifest = fs.readJSONSync(`${path}/manifest.json`)
       readAll[manifest.name] = {
+        version: manifest.version,
         name: manifest.name,
         enabled,
         path
       }
     }
+    const arr = []
     let allPlugins = readAll
     const exist = fs.existsSync(`${ppath}/index.json`)
     if (exist) {
       const cfg = fs.readJSONSync(`${ppath}/index.json`)
-      allPlugins = {
-        ...readAll,
-        ...cfg
+      for (const name in allPlugins) {
+        const json1 = allPlugins[name]
+        const json2 = cfg[name]
+        if (json2 && json2.enabled) {
+          arr.push(json1.path)
+          json1.enabled = true
+        }
       }
     } else {
       fs.writeJSONSync(`${ppath}/index.json`, allPlugins)
     }
     global.mitm.plugins = allPlugins
-    const arr = []
-    for (const name in allPlugins) {
-      const json = allPlugins[name]
-      if (json.enabled) {
-        arr.push(json.path)
-      }
-    }
     let path = `${global.__app}/plugins/chrome`
     if (arr.length) {
       path += `,${arr.join(',')}`

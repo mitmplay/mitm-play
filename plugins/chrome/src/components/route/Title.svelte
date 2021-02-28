@@ -1,6 +1,6 @@
 <script>
 function btnRestart(e) {
-  ws__send('restart', '')
+  ws__send('restart', null)
 };
 </script>
 
@@ -20,6 +20,7 @@ function btnRestart(e) {
   cursor: pointer;
   padding: 2px;
   border: 0;
+  color: red;
 }
 .btn-container button:disabled {
   cursor: auto;
