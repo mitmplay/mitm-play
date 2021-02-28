@@ -1,0 +1,7 @@
+{
+  "Hello World": {
+    "name": "Hello World",
+    "enabled": true,
+    "path": "D:/Projects/mitm-play/user-route/_plugins_/hello-world"
+  }
+}

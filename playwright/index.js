@@ -1,6 +1,8 @@
 const c = require('ansi-colors')
 const playwright = require('playwright')
 const _options = require('./options')
+const plugins = require('./plugins')
+const proxies = require('./proxies')
 const cleanX = require('./clean-x')
 const routes = require('../routes')
 const attach = require('./attach')
@@ -35,40 +37,6 @@ function initBrowserMsg(browserName) {
   const msg = `Init Browser: [${browserName}]`
   console.log(c.yellowBright('='.repeat(msg.length)))
   console.log(c.whiteBright(msg))
-}
-
-function chromePlugins(args) {
-  const { fn: { flist, tilde }, path: { userroute } } = global.mitm
-  const ppath = userroute.split('*')[0] + '_plugins_'
-  const plugins = flist(ppath)
-  const p = `${global.__app}/plugins`
-  let path = `${process.cwd()}/`
-  if (plugins.length) {
-    path = `${p}/chrome,${ppath}/`
-    path += plugins.join(`,${path}`)
-  } else {
-    path = `${p}/chrome`
-  }
-  path = path.replace(/\\/g, '/')
-  console.log('>>> Plugins:', tilde(path).split(','))
-  args.push(`--disable-extensions-except=${path}`)
-  args.push(`--load-extension=${path}`)
-}
-
-function chromeProxy(args) {
-  const {proxypac, proxy} = global.mitm.argv
-  if (proxypac) {
-    console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxypac ${proxypac}`))
-    args.push(`--proxy-pac-url=${proxypac}`)
-  } else if (typeof proxy === 'string') {
-    let msg = proxy
-    const arr = msg.match(/([^:]+:[^@]+)@\w+/)
-    if (arr) {
-      // feat: hide password
-      msg = msg.replace(arr[1], '******:******')
-    }
-    console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxy ${msg}`))
-  }
 }
 
 function browserProxy() {
@@ -161,8 +129,8 @@ module.exports = () => {
     const options = _options()
     initBrowserMsg(browserName)
     if (browserName === 'chromium') {
-      chromePlugins(args)
-      chromeProxy(args)
+      plugins(args)
+      proxies(args)
       options.ignoreDefaultArgs = ["--enable-automation"],
       // options.excludeSwitches = ['--enable-automation']
       // options.useAutomationExtension = false

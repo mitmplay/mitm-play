@@ -1,7 +1,18 @@
 module.exports = function ({ url }) {
-  const { __args, __flag, argv, path, client, version, fn: { _nameSpace } } = global.mitm
+  const {
+    argv,
+    path,
+    __args,
+    __flag,
+    client,
+    routes,
+    plugins,
+    version,
+    fn: {
+      _nameSpace
+    }
+  } = global.mitm
   const namespace = _nameSpace(url)
-  const { routes } = global.mitm
   let macros = []
   if (namespace && routes[namespace].macros) {
     const m = { ...routes[namespace].macros }
@@ -17,6 +28,7 @@ module.exports = function ({ url }) {
     path,
     client,
     routes,
+    plugins,
     files: {
       log_events: {},
       cache_events: {},
