@@ -31,7 +31,7 @@ function chromePlugins(args) {
           json1.enabled = true
         }
       }
-    } else {
+    } else if (plugins.length) {
       fs.writeJSONSync(`${ppath}/index.json`, allPlugins)
     }
     global.mitm.plugins = allPlugins
