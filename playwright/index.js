@@ -123,8 +123,12 @@ module.exports = () => {
       global.mitm.cdp = cdp
       if (!argv.pristine) {
         await page.goto('chrome://extensions/')
-        await page.click('#detailsButton')
-        await page.click('#crToggle')
+        const nodes = await page.$$('#detailsButton')
+        for (const node of nodes) {
+          await node.click()
+          await page.click('#crToggle')
+          await page.click('#closeButton')
+        }
       }
     } else {
       await sleep(300)
