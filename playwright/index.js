@@ -69,7 +69,7 @@ module.exports = () => {
   //   }
   // });
 
-  function browserPath(browserName) {
+  function browserPath(browserName, options) {
     let execPath = argv.browser[browserName]
     if (typeof (execPath) === 'string') {
       execPath = execPath.replace(/\\/g, '/')
@@ -148,7 +148,7 @@ module.exports = () => {
       options.args = args
     }
     browserProxy()
-    browserPath(browserName)
+    browserPath(browserName, options)
     const {page, browser, bcontext} = await setup(browserName, options)
     console.log(c.whiteBright(`MITM Hooked [${browserName}]`))
     bcontext.route(/.*/, (route, request) => {
@@ -177,7 +177,7 @@ module.exports = () => {
 }
 
 async function goto (page, url) {
-  await attach(page)
+  attach(page)
   await page.goto(url)
 }
 
