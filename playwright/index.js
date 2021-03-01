@@ -91,6 +91,16 @@ module.exports = () => {
   async function setup(browserName, options) {
     let page, browser, bcontext
     const playBrowser = playwright[browserName]
+    if (bcontexts[browserName]!==undefined) {
+      const context = bcontexts[browserName]
+      await context.close()
+      bcontexts[browserName] = undefined
+    }
+    if (browsers[browserName]!==undefined) {
+      const browser = browsers[browserName]
+      await browser.close()
+      browsers[browserName] = undefined
+    }
     if (argv.pristine) {
       // buggy route will not work :(
       const { fn: { tilde } } = global.mitm

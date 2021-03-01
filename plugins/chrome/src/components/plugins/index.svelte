@@ -22,7 +22,7 @@ function btnRestart(e) {
     <th>Path</th>
   </tr>
   {#each plugins() as item}
-  <tr>
+  <tr class="items">
     <td>
       <label data-item={item.name}>
         <input type="checkbox"
@@ -46,6 +46,9 @@ table {
   font-family: Consolas, Lucida Console, Courier New, monospace;
   font-size: 12px;
   margin: 2px;
+}
+tr.items:hover {
+  background: cornsilk;
 }
 th,td {
   border: 1px solid;
