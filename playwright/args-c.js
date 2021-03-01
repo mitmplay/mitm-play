@@ -6,18 +6,24 @@
 // https://usefyi.com/chrome-flags/
 // page.setViewportSize({width:0, height:0});
 
+//chrome-extension://fienfdmpabiljbljecpclbnpgnfmmmjj/html/help.html
 module.exports = argv => {
   const args = [
+    // '--disable-features=IsolateOrigins,site-per-process,ssl-committed-interstitials,SupervisedUserCommittedInterstitials',
+    // '--unsafely-treat-insecure-origin-as-secure=chrome-extension',
+    // '--enable-features=NetworkService,NetworkServiceInProcess',
     '--disable-features=site-per-process', // exclude:IsolateOrigins or plugins will failed!
-    '--disable-site-isolation-trials=1',
     '--disable-session-crashed-bubble',
+    '--disable-site-isolation-trials',
     '--ignore-certificate-errors',
-    '--disable-site-isolation=1',
-    // '--disable-web-security=1', // some plugins still failed!
+    '--disable-site-isolation',
     '--disable-notifications',
+    // '--enable-web-security', // some plugins still failed!
+    '--disable-hang-monitor',
     '--disable-infobars',
     '--force-dark-mode',
-    '--test-type'
+    '--no-sandbox',
+    '--test-type',
   ]
 
   if (argv.nogpu) {
