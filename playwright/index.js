@@ -177,7 +177,7 @@ module.exports = () => {
 }
 
 async function goto (page, url) {
-  attach(page)
+  await attach(page)
   await page.goto(url)
 }
 

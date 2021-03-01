@@ -95,8 +95,6 @@ module.exports = async function(page) {
   page._page = _page
   global.mitm.__page[_page] = { session: {} }
 
-  await page.setExtraHTTPHeaders({ 'xplay-page': _page })
-
   page.on('worker', worker => {
     log(`xplay-page worker ${_page}`)
     worker.on('close', worker => log('Worker destroyed: ' + worker.url()))
@@ -116,5 +114,6 @@ module.exports = async function(page) {
     }
   })
 
+  await page.setExtraHTTPHeaders({ 'xplay-page': _page })
   await evalPage(page, _page, 'xplay-page init ')
 }
