@@ -121,7 +121,7 @@ module.exports = () => {
     if (browserName === 'chromium') {
       const cdp = await page.context().newCDPSession(page)
       global.mitm.cdp = cdp
-      if (argv.pristine === undefined) {
+      if (!argv.pristine) {
         await page.goto('chrome://extensions/')
         await page.click('#detailsButton')
         await page.click('#crToggle')
