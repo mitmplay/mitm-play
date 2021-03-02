@@ -1,8 +1,9 @@
 const c = require('ansi-colors')
 
 const {NODE_OPTIONS: opt} = process.env
+const argv = process.argv.map(x=>x.replace(/\\/g, '/'))
 // process.argv.splice(1,0,'--max-http-header-size=80001')
-console.log(c.yellow(`>>> argv`), process.argv)
+console.log(c.yellow(`>>> argv`), argv)
 if (opt) {
   if (opt.match(/--max-http-header-size/)) {
     console.log(c.red('Please check your NODE_OPTIONS: --max-http-header-size atleast 40960'))

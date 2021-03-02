@@ -3,7 +3,7 @@ const { platform, env: { HOME, HOMEPATH } } = process
 if (platform === 'win32') {
   _home = HOMEPATH.replace(/\\/g, '/')
   if (!_home.match(/^[^:]:/)) {
-    _home = `${process.cwd().match(/^[^:]/)[0].toUpperCase()}:${_home}`
+    _home = `${process.env.HOMEDRIVE}${_home}`
   }
 } else {
   _home = HOME
