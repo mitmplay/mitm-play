@@ -4,25 +4,20 @@
 // https://github.com/seleniumhq/selenium/issues/8739
 // https://chromedriver.chromium.org/capabilities
 // https://usefyi.com/chrome-flags/
-// page.setViewportSize({width:0, height:0});
+// chrome://chrome-urls/
+// chrome://version
 
-//chrome-extension://fienfdmpabiljbljecpclbnpgnfmmmjj/html/help.html
 module.exports = argv => {
   const args = [
-    // '--disable-features=IsolateOrigins,site-per-process,ssl-committed-interstitials,SupervisedUserCommittedInterstitials',
-    // '--unsafely-treat-insecure-origin-as-secure=chrome-extension',
-    // '--enable-features=NetworkService,NetworkServiceInProcess',
-    '--disable-features=site-per-process', // exclude:IsolateOrigins or plugins will failed!
+    '--disable-features=site-per-process,isolate-origins',
     '--disable-session-crashed-bubble',
     '--disable-site-isolation-trials',
     '--ignore-certificate-errors',
     '--disable-site-isolation',
     '--disable-notifications',
-    // '--enable-web-security', // some plugins still failed!
-    '--disable-hang-monitor',
     '--disable-infobars',
     '--force-dark-mode',
-    '--no-sandbox',
+    '--no-experiments',
     '--test-type',
   ]
 
@@ -43,3 +38,36 @@ module.exports = argv => {
   }
   return args
 }
+
+/** 
+default:
+--disable-background-networking 
+--enable-features=NetworkService,NetworkServiceInProcess 
+--disable-background-timer-throttling 
+--disable-backgrounding-occluded-windows 
+--disable-breakpad 
+--disable-client-side-phishing-detection 
+--disable-component-extensions-with-background-pages 
+--disable-default-apps 
+--disable-dev-shm-usage 
+--disable-features=TranslateUI,BlinkGenPropertyTrees,ImprovedCookieControls,SameSiteByDefaultCookies,LazyFrameLoading 
+--disable-hang-monitor 
+--disable-ipc-flooding-protection 
+--disable-popup-blocking 
+--disable-prompt-on-repost 
+--disable-renderer-backgrounding 
+--disable-sync 
+--force-color-profile=srgb 
+--metrics-recording-only 
+--no-first-run 
+--password-store=basic 
+--use-mock-keychain 
+--user-data-dir=D:/Projects/chrome 
+--remote-debugging-pipe 
+--no-sandbox 
+--load-extension=... 
+--flag-switches-begin 
+--flag-switches-end 
+--file-url-path-alias="..."
+about:blank
+*/

@@ -145,9 +145,11 @@ module.exports = () => {
     if (browserName === 'chromium') {
       plugins(args)
       proxies(args)
-      options.ignoreDefaultArgs = ["--enable-automation"],
-      // options.excludeSwitches = ['--enable-automation']
-      // options.useAutomationExtension = false
+      options.ignoreDefaultArgs = [
+        // '--origin-trial-disabled-features=SecurePaymentConfirmation',
+        '--disable-extensions',
+        '--enable-automation'
+      ],
       options.viewport = null
       options.args = args
     }
@@ -155,10 +157,10 @@ module.exports = () => {
     browserPath(browserName, options)
     const {page, browser, bcontext} = await setup(browserName, options)
     console.log(c.whiteBright(`MITM Hooked [${browserName}]`))
-    bcontext.route(/.*/, (route, request) => {
+    bcontext.on('page', attach)
+    await bcontext.route(/.*/, (route, request) => {
       routes({ route, request, browserName, bcontext })
     })
-    bcontext.on('page', attach)
     let count = 0
     for (const url of argv.urls) {
       newPage(browser, page, url, count)

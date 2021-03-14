@@ -34,14 +34,14 @@ function chromePlugins(args) {
     } else if (plugins.length) {
       fs.writeJSONSync(`${ppath}/index.json`, allPlugins)
     }
-    global.mitm.plugins = allPlugins
-    let path = `${global.__app}/plugins/chrome`
+    let path = ''
     if (arr.length) {
-      path += `,${arr.join(',')}`
+      path = arr.join(',')
     }
+    path = `${global.__app}/plugins/chrome,${path}`
     path = path.replace(/\\/g, '/')
+    global.mitm.plugins = allPlugins
     console.log('>>> Plugins:', tilde(path).split(','))
-    args.push(`--disable-extensions-except=${path}`)
     args.push(`--load-extension=${path}`)
   } catch (err) {
     console.error('Error loading Chrome-extentions', err)

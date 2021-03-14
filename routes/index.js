@@ -38,7 +38,8 @@ module.exports = async ({ route, request, browserName }) => {
   // catch unknown url scheme & handle by browser
   const { url } = reqs
   if (url.match(noURL) || url.match(wNull)) {
-    routeCall(route, 'fulfill', response)
+    // fix: Uncaught (in promise) TypeError: Failed to fetch dynamically imported module: chrome-extension
+    route.continue(); // Needed by Chrome Plugins
     return
   } else if (url.match(wBlob)) {
     routeCall(route, 'continue')
