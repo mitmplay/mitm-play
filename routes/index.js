@@ -71,7 +71,8 @@ module.exports = async ({ route, request, browserName }) => {
   if (mock) {
     const { match, resp } = mock
     if (match.route.log) {
-      await _logResponse(reqs, responseHandler, _3ds, match)
+      // remove match as no contentType 
+      await _logResponse(reqs, responseHandler, _3ds)
     }
     await Events(responseHandler, resp, reqs, route)
     return
