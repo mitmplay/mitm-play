@@ -13,6 +13,11 @@ function toRegex (str, flags = '') {
 }
 
 function routerSet (router, typ, method, str) {
+  if (method && method[3][0]==='!') {
+    console.log(c.red.bgYellowBright(`Error route: ${ method[0]}`))
+    console.log({typ, method})
+    process.exit()
+  }
   let regex // feat: url start with method: ie: GET:/api/login
   if (method) {
     router[typ][`${str}~method`] = method[1]
