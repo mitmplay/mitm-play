@@ -7,7 +7,7 @@ const list = (itm, gap=' ') => itm ? itm.join(gap) : ''
 <div class="url {item.tags && item.tags.join(' ')}">
   * {item.url}
   <span class="secs {list(item.secs)}">{`{${list(item.secs)}}`}</span>
-  <span class="ctyp {list(item.ctyp)}">{ item.ctyp ? `[${list(item.secs,',')}]` : ''}</span>
+  <span class="ctyp {list(item.ctyp)}">{ item.ctyp ? `[${list(item.ctyp,',')}]` : ''}</span>
 </div>
 
 <style>
@@ -29,5 +29,11 @@ const list = (itm, gap=' ') => itm ? itm.join(gap) : ''
   }
   .url span.image {
     display: inline;
+  }
+  .url .secs {
+    color: blueviolet;
+  }
+  .url .ctyp {
+    color: seagreen;
   }
   </style>
