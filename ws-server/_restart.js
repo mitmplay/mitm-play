@@ -9,7 +9,7 @@ module.exports = async ({data}) => {
   const pages = mitm.browsers.chromium.pages().map(x => x.url())
 
   if (data!==null) {
-    fs.writeJSONSync(`${ppath}/index.json`, data)
+    fs.writeFileSync(`${ppath}/index.json`, JSON.stringify(data, null, 2))
   }
 
   global.mitm.restart = true

@@ -1,18 +1,45 @@
 <script>
 import Item from "../profile/Item.svelte";
+import { onMount } from 'svelte';
 
-function plugins() {
-  const {plugins} = window.mitm
-  const arr = []
-  for (const name in plugins) {
-    arr.push(plugins[name])
-  }
-  return arr
+let data = {};
+$: _data = data;
+let rerender = 0;
+
+onMount(() => {
+  data = window.mitm.plugins
+});
+
+function keys(dt, render) {
+  return Object.keys(dt)
 }
+
 function btnRestart(e) {
   const {plugins} = window.mitm
   ws__send('restart', plugins)
-};
+}
+
+function clicked(e) {
+  const {dataset, checked} = e.target;
+  setTimeout(()=>{
+    const {item, path} = dataset;
+    const [group1, id1] = path.split('~');
+    console.log({checked, item, path})
+    if (checked) {
+      for (const pth in _data) {
+        const obj = data[pth]
+        if (obj.path!==path) {
+          const [group2, id2] = obj.path.split('~');
+          if (group1===group2 & obj.enabled) {
+            console.log('*', obj)
+            obj.enabled = false
+            rerender++
+          }
+        }
+      }
+    }
+  }, 10)
+}
 </script>
 
 <table>
@@ -21,18 +48,20 @@ function btnRestart(e) {
     <th>Version</th>
     <th>Path</th>
   </tr>
-  {#each plugins() as item}
+  {#each keys(_data, rerender) as pth}
   <tr class="items">
     <td>
-      <label data-item={item.name}>
+      <label data-item={_data[pth].name}>
         <input type="checkbox"
-        data-item={item.name}
-        bind:checked={item.enabled}/>
-        <span class="big">{item.name}</span>
+        data-item={_data[pth].name}
+        data-path={_data[pth].path}
+        on:click={clicked}
+        bind:checked={_data[pth].enabled}/>
+        <span class="big">{_data[pth].name}</span>
       </label>
     </td>
-    <td>{item.version}</td>
-    <td>{item.path}</td>
+    <td>{_data[pth].version}</td>
+    <td>{_data[pth].path}</td>
   </tr>    
   {/each}
 </table>

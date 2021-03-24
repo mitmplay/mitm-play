@@ -11,7 +11,7 @@ function chromePlugins(args) {
     for (const fn of plugins) {
       const path = `${ppath}/${fn}`
       const manifest = fs.readJSONSync(`${path}/manifest.json`)
-      readAll[manifest.name] = {
+      readAll[path] = {
         version: manifest.version,
         name: manifest.name,
         enabled,
@@ -23,16 +23,16 @@ function chromePlugins(args) {
     const exist = fs.existsSync(`${ppath}/index.json`)
     if (exist) {
       const cfg = fs.readJSONSync(`${ppath}/index.json`)
-      for (const name in allPlugins) {
-        const json1 = allPlugins[name]
-        const json2 = cfg[name]
+      for (const path in allPlugins) {
+        const json1 = allPlugins[path]
+        const json2 = cfg[path]
         if (json2 && json2.enabled) {
           arr.push(json1.path)
           json1.enabled = true
         }
       }
     } else if (plugins.length) {
-      fs.writeJSONSync(`${ppath}/index.json`, allPlugins)
+      fs.writeFileSync(`${ppath}/index.json`, JSON.stringify(allPlugins, null, 2))
     }
     let path = ''
     if (arr.length) {

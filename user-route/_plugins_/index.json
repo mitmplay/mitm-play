@@ -1,1 +1,20 @@
-{"axe - Web Accessibility Testing":{"version":"4.8.4","name":"axe - Web Accessibility Testing","enabled":false,"path":"D:/Projects/mitm-play/user-route/_plugins_/axe"},"Hello World":{"version":"1.0","name":"Hello World","enabled":false,"path":"D:/Projects/mitm-play/user-route/_plugins_/hello-world"}}
+{
+  "D:/Projects/mitm-play/user-route/_plugins_/axe~1": {
+    "version": "4.8.4",
+    "name": "axe - Web Accessibility Testing",
+    "enabled": true,
+    "path": "D:/Projects/mitm-play/user-route/_plugins_/axe~1"
+  },
+  "D:/Projects/mitm-play/user-route/_plugins_/axe~2": {
+    "version": "4.8.6",
+    "name": "axe DevTools - Web Accessibility Testing",
+    "enabled": false,
+    "path": "D:/Projects/mitm-play/user-route/_plugins_/axe~2"
+  },
+  "D:/Projects/mitm-play/user-route/_plugins_/hello-world": {
+    "version": "1.0",
+    "name": "Hello World",
+    "enabled": true,
+    "path": "D:/Projects/mitm-play/user-route/_plugins_/hello-world"
+  }
+}
