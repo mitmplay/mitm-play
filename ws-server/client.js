@@ -77,15 +77,17 @@ On browser console type "ws"`
   }
 
   async function _screenshot (data, { path, page }) {
+    path = path.replace(/(\/\.)([a-z]{3})$/, (s,s1,s2) => `.${s2}`)
     const err = await fs.ensureFile(path)
     if (err) {
       console.log(c.redBright('(*error saving screenshot*)'), path)
     } else {
       try {
+        // await page.waitFor('body');
         console.log(c.green('(*screenshot*)'))
         await page.screenshot({ path })
       } catch (error) {
-        console.log(c.redBright('(*error screenshot*)'), error)
+        console.log(c.redBright('(*error screenshot*)'), error, path)
       }
     }
   }
