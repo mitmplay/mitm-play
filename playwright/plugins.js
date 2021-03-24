@@ -15,7 +15,6 @@ function chromePlugins(args) {
         version: manifest.version,
         name: manifest.name,
         enabled,
-        path
       }
     }
     const arr = []
@@ -27,8 +26,8 @@ function chromePlugins(args) {
         const json1 = allPlugins[path]
         const json2 = cfg[path]
         if (json2 && json2.enabled) {
-          arr.push(json1.path)
           json1.enabled = true
+          arr.push(path)
         }
       }
     } else if (plugins.length) {

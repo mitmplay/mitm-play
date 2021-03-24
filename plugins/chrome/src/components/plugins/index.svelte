@@ -19,6 +19,13 @@ function btnRestart(e) {
   ws__send('restart', plugins)
 }
 
+function btnOpen(e) {
+  const {path} = e.target.dataset;
+  ws__send('openFolder', {path}, data => {
+    console.log('Done Open!');
+  });
+}
+
 function clicked(e) {
   const {dataset, checked} = e.target;
   setTimeout(()=>{
@@ -28,8 +35,8 @@ function clicked(e) {
     if (checked) {
       for (const pth in _data) {
         const obj = data[pth]
-        if (obj.path!==path) {
-          const [group2, id2] = obj.path.split('~');
+        if (pth!==path) {
+          const [group2, id2] = pth.split('~');
           if (group1===group2 & obj.enabled) {
             console.log('*', obj)
             obj.enabled = false
@@ -45,8 +52,8 @@ function clicked(e) {
 <table>
   <tr>
     <th>Name</th>
-    <th>Version</th>
     <th>Path</th>
+    <th>Version</th>
   </tr>
   {#each keys(_data, rerender) as pth}
   <tr class="items">
@@ -54,14 +61,21 @@ function clicked(e) {
       <label data-item={_data[pth].name}>
         <input type="checkbox"
         data-item={_data[pth].name}
-        data-path={_data[pth].path}
+        data-path={pth}
         on:click={clicked}
         bind:checked={_data[pth].enabled}/>
         <span class="big">{_data[pth].name}</span>
       </label>
     </td>
+    <td>
+      <span
+        class="path"
+        data-path={pth}
+        on:click={btnOpen}>
+        {pth}
+      </span>
+    </td>
     <td>{_data[pth].version}</td>
-    <td>{_data[pth].path}</td>
   </tr>    
   {/each}
 </table>
@@ -76,6 +90,9 @@ table {
   font-size: 12px;
   margin: 2px;
 }
+th {
+  background: lightgray;
+}
 tr.items:hover {
   background: cornsilk;
 }
@@ -86,11 +103,15 @@ th,td {
 label span {
   vertical-align: 3px;
 }
+span.big:hover,
+span.path:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
 .btn-container button {
   background: transparent;
   font-weight: 700;
   font-size: 10px;
-  cursor: pointer;
   padding: 2px;
   border: 0;
   color: red;
