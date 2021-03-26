@@ -12,6 +12,6 @@
   "D:/Projects/mitm-play/user-route/_plugins_/hello-world": {
     "version": "1.0",
     "name": "Hello World",
-    "enabled": false
+    "enabled": true
   }
 }
