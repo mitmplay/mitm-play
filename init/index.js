@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 
 module.exports = () => {
+  console.log(c.red('\n[init/index.js]'))
   const pkg = require('../package.json')
 
   require('./init-ap')
@@ -29,9 +30,9 @@ module.exports = () => {
     msg = msg.replace(arr[1], '******:******')
   }
   const { tilde } = global.mitm.fn
-  console.log(c.greenBright(tilde(msg)))
+  console.log(c.redBright('Profile Combine:'), c.greenBright(tilde(msg)))
   console.log(c.green(`\nv${pkg.version}\n`))
-  console.log(c.whiteBright('FILE WATCHER!'))
+  console.log(c.red('\n[init/chokidar/*.js]'))
   // must be last or other watcher wont work
   require('./chokidar/profile')() // file watcher for profile // feat: profile
   require('./chokidar/route')() // file watcher for routes

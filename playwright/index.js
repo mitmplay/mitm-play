@@ -33,10 +33,10 @@ function currentTab (browser) {
   }
 }
 
-function initBrowserMsg(browserName) {
+function initBrowserMsg(browserName, opt) {
   const msg = `Init Browser: [${browserName}]`
-  console.log(c.yellowBright('='.repeat(msg.length)))
-  console.log(c.whiteBright(msg))
+  console.log(c.redBright('='.repeat(msg.length + 2)))
+  console.log(c.yellow(`${msg} ${JSON.stringify(opt, null, 2)}`))
 }
 
 function browserProxy() {
@@ -47,6 +47,7 @@ function browserProxy() {
 }
 
 module.exports = () => {
+  console.log(c.red('\n[playwright/index.js]'))
   cleanX()
   const {
     argv,
@@ -84,7 +85,7 @@ module.exports = () => {
       execPath = _browser.executablePath().replace(/\\/g, '/')
     }
     if (browserName !== 'chromium') {
-      console.log(c.yellow(`>>> executablePath: ${execPath}`))
+      console.log(c.yellow(`Exec. path: ${execPath}`))
     }
   }
 
@@ -105,7 +106,7 @@ module.exports = () => {
       // buggy route will not work :(
       const { fn: { tilde } } = global.mitm
       const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
-      console.log('>>> Browser profile', tilde(bprofile))
+      console.log(c.yellow(`Browser profile ${tilde(bprofile)}`))
       browser = await playBrowser.launchPersistentContext(bprofile, options)
       page = await browser.pages()[0]
       bcontext = page.context()
@@ -140,8 +141,8 @@ module.exports = () => {
   }
 
   async function play(browserName) {
-    const options = _options()
-    initBrowserMsg(browserName)
+    const {options, logs} = _options()
+    initBrowserMsg(browserName, logs)
     if (browserName === 'chromium') {
       plugins(args)
       proxies(args)
@@ -156,7 +157,7 @@ module.exports = () => {
     browserProxy()
     browserPath(browserName, options)
     const {page, browser, bcontext} = await setup(browserName, options)
-    console.log(c.whiteBright(`MITM Hooked [${browserName}]`))
+    console.log(c.redBright(`MITM Hooked [${browserName}]`))
     bcontext.on('page', attach)
     await bcontext.route(/.*/, (route, request) => {
       routes({ route, request, browserName, bcontext })
@@ -174,10 +175,11 @@ module.exports = () => {
   }
 
   (async () => {
-    console.log(c.whiteBright('RUN PLAYWRIGHT'))
+    console.log(c.redBright('START: RUN PLAYWRIGHT'))
     for (const browserName in argv.browser) {
       await play(browserName)
     }
+    console.log(c.redBright('END: RUN PLAYWRIGHT'))
   })()
   global.mitm.play = play
 }

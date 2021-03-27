@@ -1,3 +1,5 @@
+const c = require('ansi-colors')
+
 module.exports = () => {
   const { fn, argv: { proxy } } = global.mitm
   const options = { headless: false }
@@ -38,6 +40,5 @@ module.exports = () => {
       logs.proxy.server = logs.proxy.server.replace(/^[^@]+/g, '******:******')
     }
   }
-  console.log('options', logs)
-  return options
+  return {options, logs}
 }

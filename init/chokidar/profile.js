@@ -46,7 +46,7 @@ module.exports = () => {
 
   // Initialize watcher.
   const msg = global.mitm.fn.tilde(glob)
-  console.log(c.magentaBright(`watcher(profile): ${msg}`))
+  console.log(c.magentaBright(`>>> Profile watcher:`), [msg])
   const profileWatcher = chokidar.watch(glob, {
     ignored: /\/\$\//, // ignore /$/
     persistent: true

@@ -67,8 +67,7 @@ module.exports = () => {
   const glob = Array(glob1, glob2).flat()
 
   // Initialize watcher.
-  const msg = global.mitm.fn.tilde(typeof glob === 'string' ? glob : JSON.stringify(glob))
-  console.log(c.magentaBright(`watcher(log): ${msg}`))
+  console.log(c.magentaBright(`>>> Log watcher:`), glob)
   const logWatcher = chokidar.watch(glob, {
     ignored: /\/(\$\/|\.DS_)/, // ignore /$/ -OR- /.DS_
     persistent: true

@@ -20,7 +20,7 @@ module.exports = () => {
 
   const wss = new WebSocket.Server({ server: servers, path: '/ws' })
   wss.on('connection', connection)
-  console.log('Listen:3001')
+  console.log(c.yellow('Listen:3001'))
   global.wsservers = wss
   servers.listen(3001)
 

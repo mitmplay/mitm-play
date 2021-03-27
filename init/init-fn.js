@@ -16,6 +16,7 @@ const _nameSpace = require('./fn/_namespace')
 const _tldomain = require('./fn/_tldomain')
 const _wsclient = require('./fn/_wsclient')
 const _debounce = require('./fn/_debounce')
+const stringify = require('./fn/stringify')
 const relaxCSP = require('./fn/relaxCSP')
 const _wsmitm = require('./fn/_wsmitm')
 const _clear = require('./fn/_clear')
@@ -50,6 +51,7 @@ module.exports = () => {
     _tag4,
     formToObj,
     objToForm,
+    stringify,
     relaxCSP,
     rmethod,
     toRegex,

@@ -79,7 +79,7 @@ module.exports = () => {
   const file1 = fg.sync([userroute])
   const file2 = fg.sync([userroute.replace('index.js', '*@index.js')])
   const files = file1.concat(file2)
-  console.log({files})
+  console.log(c.redBright('INIT Route'), files)
   if (!files.length) {
     console.log(c.red('Routes path is incorrect'), argv.route)
     console.log(c.yellow('Please pass option: -r=\'...\' / --route=\'your routing path\''))

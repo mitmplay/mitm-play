@@ -30,7 +30,7 @@ module.exports = () => {
 
   // Initialize watcher.
   const msg = tilde(userroute)
-  console.log(c.magentaBright(`watcher(route): ${msg}`))
+  console.log(c.magentaBright(`>>> Route watcher:`), [msg])
   const paths = [
     userroute,
     userroute.replace('index.js', '*@index.js')

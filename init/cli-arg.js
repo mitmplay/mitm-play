@@ -115,7 +115,7 @@ module.exports = () => {
       }
     } = saveArgs
     browser = b
-    console.log('*argv._*', JSON.stringify(argv._, null, 2))
+    console.log(c.green('>>> Profile argv._'), argv._)
     if (rest._ && argv._.length===0) {
       delete argv._
     }
