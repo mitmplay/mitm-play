@@ -175,11 +175,11 @@ module.exports = () => {
   }
 
   (async () => {
-    console.log(c.redBright('START: RUN PLAYWRIGHT'))
+    console.log(c.redBright('START: INIT *PLAYWRIGHT*'))
     for (const browserName in argv.browser) {
       await play(browserName)
     }
-    console.log(c.redBright('END: RUN PLAYWRIGHT'))
+    console.log(c.redBright('END: INIT *PLAYWRIGHT*'))
   })()
   global.mitm.play = play
 }
