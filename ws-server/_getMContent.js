@@ -3,13 +3,12 @@ const hj = require('highlight.js');
 const md = require('markdown-it')({
   html: true,
   linkify: true,
-  highlight: function (str, lang) {
-    if (lang && hj.getLanguage(lang)) {
+  highlight: function (code, language) {
+    if (language && hj.getLanguage(language)) {
       try {
-        return hj.highlight(lang, str).value;
+        return hj.highlight(code, {language, ignoreIllegals: true }).value
       } catch (__) {}
     }
- 
     return ''; // use external default escaping
   }
 });
@@ -53,7 +52,10 @@ const regx = /(!\[\w+\]\()(\.)\//
 module.exports = ({data: {fpath}}) => {
   let md1 = `${fs.readFileSync(fpath)}`
   const {route, app} = mitm.path
-  console.log('>>> help ', fpath)
+
+  if (!global.mitm.__flag['ws-message']) {
+    console.log('>>> help ', fpath)
+  }
 
   if (fpath.match(app)) {
     md1 = updateUrl(md1, fpath, app, 'mitm-app')
