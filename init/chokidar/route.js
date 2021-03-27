@@ -43,8 +43,8 @@ module.exports = () => {
   // Something to use when events are received.
   const log = console.log.bind(console)
   urouteWatcher // Add event listeners.
-    .on('add', p => {    p = slash(p); updateJS(p, c.greenBright(`>>> add route ${tilde(p)}`)) })
-    .on('change', p => { p = slash(p); updateJS(p, c.cyanBright( `>>> chg route ${tilde(p)}`)) })
-    .on('unlink', p => { p = slash(p); remove(  p, c.redBright(  `>>> del route ${tilde(p)}`)) })
+    .on('add',    p => { p = slash(p); updateJS(p, c.blueBright(`>>> add route ${tilde(p)}`)) })
+    .on('change', p => { p = slash(p); updateJS(p, c.blueBright(`>>> chg route ${tilde(p)}`)) })
+    .on('unlink', p => { p = slash(p); remove(  p, c.blueBright(`>>> del route ${tilde(p)}`)) })
   global.mitm.watcher.urouteWatcher = urouteWatcher
 }
