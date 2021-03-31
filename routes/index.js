@@ -15,7 +15,8 @@ const _addWebSocket = require('./_addWebSocket')
 const _cacheResponse = require('./_cacheResponse')
 
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
-const noURL = /(brave|edge|chrome-extension):\/\//
+const noURL = /^(brave|edge):\/\//
+const brExt = /^chrome-\w+:\/\//
 const wBlob = /^blob:http/
 const wNull = /\/null$/
 const response = {
@@ -38,6 +39,8 @@ module.exports = async ({ route, request, browserName }) => {
   // catch unknown url scheme & handle by browser
   const { url } = reqs
   if (url.match(noURL) || url.match(wNull)) {
+    routeCall(route, 'fulfill', response)
+  } else if (url.match(brExt)) {
     // fix: Uncaught (in promise) TypeError: Failed to fetch dynamically imported module: chrome-extension
     route.continue(); // Needed by Chrome Plugins
     return

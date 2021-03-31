@@ -4,20 +4,24 @@ const { cookieToObj, objToCookie } = require('./filesave/cookier')
 
 async function extract ({ request: r, browserName }) {
   const headers = r.headers()
+  const { origin, referer } = headers
+  const oriRef = global.mitm.fn._tldomain(origin||referer)
   cookieToObj(headers) // feat: cookie autoconvert
   let page
   if (headers['xplay-page']) {
     const { browsers } = global.mitm
     page = await browsers[browserName].currentTab(headers['xplay-page'])
   }
-  return {
+  const result = {
     method: r.method(),
     body: r.postData(),
     url: r.url(),
     browserName,
     headers,
+    oriRef,
     page
   }
+  return result
 }
 
 function fetch (route, browserName, { url, proxy, ...reqs }, handler) {

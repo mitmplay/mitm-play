@@ -165,20 +165,16 @@ const searchKey = key => {
   }
 }
 
-const matched = (search, { url, headers }) => {
+const matched = (search, { url, oriRef }) => {
   // match to domain|origin|referer|_global_
-  const { _tldomain } = global.mitm.fn
-  const { origin, referer } = headers
+  const domain = global.mitm.fn._tldomain(url) 
+  let match = search(domain) // match to domain
 
-  const domain = _tldomain(url)
-  let match = search(domain)
-
-  if (!match && (origin || referer)) {
-    const orref = _tldomain(origin || referer)
-    match = search(orref)
+  if (!match && oriRef) {
+    match = search(oriRef) // to origin|referer
   }
   if (!match) {
-    match = search('_global_')
+    match = search('_global_') // to global
   }
   // console.log('>>> Match', tld, !!match)
   return match
