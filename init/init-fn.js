@@ -18,6 +18,7 @@ const _wsclient = require('./fn/_wsclient')
 const _debounce = require('./fn/_debounce')
 const stringify = require('./fn/stringify')
 const relaxCSP = require('./fn/relaxCSP')
+const watcher = require('./fn/watcher')
 const _wsmitm = require('./fn/_wsmitm')
 const _clear = require('./fn/_clear')
 const _tag4 = require('./fn/_tag4')
@@ -55,6 +56,7 @@ module.exports = () => {
     relaxCSP,
     rmethod,
     toRegex,
+    watcher,
     flist,
     tilde,
     home
