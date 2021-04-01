@@ -17,8 +17,11 @@ function removeMethod(path) {
 function toRegex (str, flags = '') {
   return new RegExp(str
     .replace(/\//g, '\\/')
-    .replace(/\./g, '\\.')
-    .replace(/\?/g, '\\?'), flags)
+    .replace(/\?/g, '\\?')
+    .replace(/\.([^*+]|$)/g, (m,p1) => `\\.${p1}`)
+    .replace(/(\[.*)(\\\/)(.*\])/g, (m,p1,p2,p3) => `${p1}/${p3}`)
+    .replace(/(\[.*)(\\\?)(.*\])/g, (m,p1,p2,p3) => `${p1}?${p3}`)
+    .replace(/(\[.*)(\\\.)(.*\])/g, (m,p1,p2,p3) => `${p1}.${p3}`), flags)
 }
 
 const sortTag = (a,b) => {

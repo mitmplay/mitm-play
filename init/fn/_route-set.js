@@ -8,8 +8,11 @@ const tgInUrl = /:[\w.#~-]+:/ // feat: tags in url
 function toRegex (str, flags = '') {
   return new RegExp(str
     .replace(/\//g, '\\/')
-    .replace(/\.([^*+]|$)/g, (m, p1) => `\\.${p1}`)
-    .replace(/\?/g, '\\?'), flags)
+    .replace(/\?/g, '\\?')
+    .replace(/\.([^*+]|$)/g, (m,p1) => `\\.${p1}`)
+    .replace(/(\[.*)(\\\/)(.*\])/g, (m,p1,p2,p3) => `${p1}/${p3}`)
+    .replace(/(\[.*)(\\\?)(.*\])/g, (m,p1,p2,p3) => `${p1}?${p3}`)
+    .replace(/(\[.*)(\\\.)(.*\])/g, (m,p1,p2,p3) => `${p1}.${p3}`), flags)
 }
 
 function routerSet (router, typ, method, str) {

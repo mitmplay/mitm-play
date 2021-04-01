@@ -43,6 +43,8 @@ label {
       display: block; }
       .show-container #markdown details summary {
         padding-left: 2px; }
+        .show-container #markdown details summary:hover {
+          background-color: antiquewhite; }
     .show-container #markdown hr {
       margin: 4px 0; }
     .show-container #markdown p {
@@ -79,6 +81,7 @@ label {
       margin-bottom: 5px; }
     .show-container #markdown h1 {
       font-size: 1.6em;
+      font-weight: 600;
       line-height: 1.2;
       padding-bottom: .3em;
       letter-spacing: -0.8px;
@@ -122,8 +125,9 @@ label {
         margin-bottom: 6px;
         font-size: 1em; }
     .show-container #markdown a.up {
-      font-size: 16px;
-      vertical-align: middle; }
+      font-size: .9em;
+      font-weight: bolder;
+      vertical-align: text-top; }
 
 li.version {
   font-size: 10px;
