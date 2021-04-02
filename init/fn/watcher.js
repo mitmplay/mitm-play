@@ -1,20 +1,22 @@
+const stackTrace = require('stack-trace');
 const chokidar = require('chokidar')
 const c = require('ansi-colors')
 const fs = require('fs-extra')
 
 let timeout = undefined;
 let doubleCall = -1
-function watcher(_p, arrayModule) {
-  const cid = `${_p}/${arrayModule[0]}`
-  if (global.mitm.watcher[cid]===undefined) {
-    const mapPath = {}
-    let arrayPath = arrayModule.map(p => {
-      const _ = `${_p}/${p}`.replace(/\\/g, '/')
-      mapPath[_] = p
-      return _
+function watcher(arrayModule) {
+  const trace = stackTrace.get()
+  const pwd = trace[1].getFileName().replace(/\\/g, '/')
+  if (global.mitm.watcher[pwd]===undefined) {
+    const [_path] = pwd.split(/\/(?=[^\/]+$)/)
+    const arrpath = arrayModule.map(mod => {
+      mod = mod.replace(/^\.\//, '')
+      const js = mod.match(/\.js$/) ? mod : `${mod}.js`
+      return `${_path}/${js}`.replace(/\\/g, '/')
     })
-    const watch = chokidar.watch(arrayPath.slice(1))
-    global.mitm.watcher[cid] = watch
+    const watch = chokidar.watch(arrpath)
+    global.mitm.watcher[pwd] = watch
 
     watch.on('change', p => {
       clearTimeout(timeout)
@@ -26,13 +28,13 @@ function watcher(_p, arrayModule) {
       if (doubleCall) {
         return
       }
-      // console.log('WATCHER', p, arrayPath)
+      // console.log('WATCHER', pwd, arrpath)
       delete require.cache[require.resolve(p)]
       try {
         const time = new Date();
-        fs.utimesSync(arrayPath[0], time, time);
+        fs.utimesSync(pwd, time, time);
       } catch (err) {
-        fs.closeSync(fs.openSync(arrayPath[0], 'w'));
+        fs.closeSync(fs.openSync(pwd, 'w'));
       }
     })
   }

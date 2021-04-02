@@ -1,6 +1,6 @@
 const {watcher} = global.mitm.fn
-watcher(__dirname, ['hi@index.js', 'reload.js'])
-const lol = require('./reload.js')
+watcher(['./reload'])
+const lol = require('./reload')
 
 lol()
 
