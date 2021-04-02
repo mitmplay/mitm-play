@@ -800,7 +800,6 @@
   dependencies:
     "anymatch" "~3.1.1"
     "braces" "~3.0.2"
-    "fsevents" "~2.1.2"
     "glob-parent" "~5.1.0"
     "is-binary-path" "~2.1.0"
     "is-glob" "~4.0.1"
@@ -2616,7 +2615,7 @@
   dependencies:
     "yallist" "^4.0.0"
 
-"magic-string@^0.25.3", "magic-string@^0.25.7":
+"magic-string@^0.25.7":
   "integrity" "sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA=="
   "resolved" "https://registry.npmjs.org/magic-string/-/magic-string-0.25.7.tgz"
   "version" "0.25.7"
@@ -2814,10 +2813,10 @@
   "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   "version" "1.0.4"
 
-"monaco-editor@^0.20.0":
-  "integrity" "sha512-hkvf4EtPJRMQlPC3UbMoRs0vTAFAYdzFQ+gpMb8A+9znae1c43q8Mab9iVsgTcg/4PNiLGGn3SlDIa8uvK1FIQ=="
-  "resolved" "https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.20.0.tgz"
-  "version" "0.20.0"
+"monaco-editor@^0.23.0":
+  "integrity" "sha512-q+CP5zMR/aFiMTE9QlIavGyGicKnG2v/H8qVvybLzeFsARM8f6G9fL0sMST2tyVYCwDKkGamZUI6647A0jR/Lg=="
+  "resolved" "https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.23.0.tgz"
+  "version" "0.23.0"
 
 "ms@^2.1.1", "ms@2.1.2":
   "integrity" "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
@@ -4156,7 +4155,7 @@
     "serialize-javascript" "^4.0.0"
     "terser" "^5.0.0"
 
-"rollup-pluginutils@^2.8.1", "rollup-pluginutils@^2.8.2":
+"rollup-pluginutils@^2.8.2":
   "integrity" "sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ=="
   "resolved" "https://registry.npmjs.org/rollup-pluginutils/-/rollup-pluginutils-2.8.2.tgz"
   "version" "2.8.2"
@@ -4167,8 +4166,6 @@
   "integrity" "sha512-RpayhPTe4Gu/uFGCmk7Gp5Z9Qic2VsqZ040G+KZZvsZYdcuWaJg678JeDJJvJeEQXminu24a2au+y92CUWVd+w=="
   "resolved" "https://registry.npmjs.org/rollup/-/rollup-2.33.3.tgz"
   "version" "2.33.3"
-  dependencies:
-    "fsevents" "~2.1.2"
   optionalDependencies:
     "fsevents" "~2.1.2"
 
