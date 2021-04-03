@@ -1,6 +1,5 @@
-const {watcher} = global.mitm.fn
-watcher(['./reload'])
-const lol = require('./reload')
+const {requires} = global.mitm.fn
+const [lol] = requires('./reload')
 
 lol()
 

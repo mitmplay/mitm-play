@@ -7,6 +7,7 @@ const clearModule = require('clear-module');
 const { _keyLength, _sortLength, _sort } = require('./fn/_key-length')
 const { _routeSet, toRegex, rmethod } = require('./fn/_route-set')
 const { formToObj, objToForm } = require('./fn/form')
+const { watcher, requires } = require('./fn/watcher')
 const { _proxy, _noproxy } = require('./fn/_proxies')
 const { exec, execFile } = require('./fn/_exec-file')
 const { tilde, home } = require('./fn/tildehome')
@@ -18,7 +19,6 @@ const _wsclient = require('./fn/_wsclient')
 const _debounce = require('./fn/_debounce')
 const stringify = require('./fn/stringify')
 const relaxCSP = require('./fn/relaxCSP')
-const watcher = require('./fn/watcher')
 const _wsmitm = require('./fn/_wsmitm')
 const _clear = require('./fn/_clear')
 const _tag4 = require('./fn/_tag4')
@@ -54,6 +54,7 @@ module.exports = () => {
     objToForm,
     stringify,
     relaxCSP,
+    requires,
     rmethod,
     toRegex,
     watcher,

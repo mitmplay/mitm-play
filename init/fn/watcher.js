@@ -5,9 +5,11 @@ const fs = require('fs-extra')
 
 let timeout = undefined;
 let doubleCall = -1
-function watcher(arrayModule) {
-  const trace = stackTrace.get()
-  const pwd = trace[1].getFileName().replace(/\\/g, '/')
+function watcher(arrayModule, pwd) {
+  if (pwd===undefined) {
+    const trace = stackTrace.get()
+    pwd = trace[1].getFileName().replace(/\\/g, '/')
+  }
   if (global.mitm.watcher[pwd]===undefined) {
     const [_path] = pwd.split(/\/(?=[^\/]+$)/)
     const arrpath = arrayModule.map(mod => {
@@ -40,4 +42,19 @@ function watcher(arrayModule) {
   }
 }
 
-module.exports = watcher
+function requires() {
+  const trace = stackTrace.get()
+  const pwd = trace[1].getFileName().replace(/\\/g, '/')
+  const [path] = pwd.split(/\/(?=[^\/]+$)/)
+  const args = [].slice.call(arguments)
+  watcher(args, pwd)
+  return args.map(r=>{
+    const p = `${path}/${r}`
+    return require(p)
+  })
+}
+
+module.exports = {
+  requires,
+  watcher
+}
