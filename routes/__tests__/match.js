@@ -18,8 +18,8 @@ global.mitm = {
   }
 }
 const { routes } = global.mitm
-_routeSet(routes._global_, '_global_', true)
-_routeSet(routes['google.com'], 'google.com', true)
+_routeSet(routes._global_, '_global_', 'index.js')
+_routeSet(routes['google.com'], 'google.com', 'index.js')
 routeSort()
 
 const {
@@ -76,6 +76,7 @@ describe('match.js - matched', () => {
   test('return matched origin/referer', () => {
     const req = {
       url: 'https://www.gtm.com/search?q=github+playwright',
+      oriRef: 'google.com',
       headers: {
         'content-type': 'text/html',
         origin: 'https://google.com'

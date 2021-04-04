@@ -176,6 +176,7 @@ Detail structure of `Object` and `Function` shared accros **Section**
  *   url        : '',
  *   method     : 'GET',/PUT/POST/DELETE 
  *   headers    : {}, 
+ *   oriRef     : '',
  *   body       : '',/null,
  *   browserName: 'chromium',/webkit/firefox
  * }

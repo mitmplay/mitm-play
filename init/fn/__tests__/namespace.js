@@ -3,6 +3,9 @@ global.mitm = {
   __tag3: {},
   __tag4: {},
   routes: require('../__fixture__/routes'),
+  routex: {
+    _global_: {}
+  },
   router: {
     _global_: {
       config: {}
@@ -15,8 +18,8 @@ global.mitm = {
   }
 }
 
-global.mitm.fn._routeSet(global.mitm.routes._global_, '_global_', true)
-global.mitm.fn._routeSet(global.mitm.routes['google.com'], 'google.com', true)
+global.mitm.fn._routeSet(global.mitm.routes._global_, '_global_', 'index.js')
+global.mitm.fn._routeSet(global.mitm.routes['google.com'], 'google.com', 'index.js')
 
 const _namespace = require('../_namespace')
 

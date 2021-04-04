@@ -1,8 +1,10 @@
 const { _proxy, _noproxy } = require('../../init/fn/_proxies')
+const _tldomain = require('../../init/fn/_tldomain')
 global.mitm = {
   fn: {
     _proxy,
-    _noproxy
+    _noproxy,
+    _tldomain
   },
   argv: {
     verbose: true,
@@ -31,7 +33,7 @@ describe('fetch.js - extract', () => {
     }
     const route = {}
     return extract({ route, request, browserName: 'chromium' }).then(function (result) {
-      expect(Object.keys(result).join(',')).toBe('method,body,url,browserName,headers,page')
+      expect(Object.keys(result).join(',')).toBe('method,body,url,browserName,headers,oriRef,page')
     });
   })
 })

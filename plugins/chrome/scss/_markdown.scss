@@ -116,9 +116,16 @@
       }
     }
     a.up {
+      padding: 0 2px;
       font-size: .9em;
       font-weight: bolder;
       vertical-align: text-top;
+      border: 1px dashed white;
+      border-radius: 2px;
+      &:hover {
+        background: yellow;
+        border: 1px solid red;
+      }
     }
   } 
 }
