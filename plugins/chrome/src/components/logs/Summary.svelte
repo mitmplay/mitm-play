@@ -4,8 +4,6 @@ export let key;
 
 import { logstore } from './stores.js';
 
-let _checked = false;
-
 function data(i) {
   const id = Object.keys(i)[0]
   const arr = i[id].path.split('/')
@@ -15,14 +13,18 @@ function data(i) {
 
 function clickHandler(e) {
   const node = e.currentTarget;
-  let {path} = node.parentElement.dataset;
-  _checked = node.checked;
+  const {parentNode:p} = node
+  const {checked} = node;
+  setTimeout(()=>{
+    p.classList.remove(!checked)
+    p.classList.add(checked)
+  }, 0)
 }
 
 function klass(store) {
   for (const itm in item) {
     if (itm===store.logid) {
-      return ' chk'
+      return 'chk'
     }
   }
   return ''
@@ -31,9 +33,9 @@ function klass(store) {
 
 <summary
   data-path={data(item)}
-  class="{_checked}{klass($logstore)}"
+  class="{klass($logstore)}"
 >
-  <input on:click="{clickHandler}" type="checkbox" />
+  <input on:click="{clickHandler}" type="checkbox" class="log-grp"/>
   {@html key}
 </summary>
 

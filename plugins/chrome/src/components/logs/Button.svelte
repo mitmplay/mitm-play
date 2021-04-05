@@ -7,6 +7,20 @@ let st = {
   expand: false
 };
 
+function btnAll(e) {
+  const {checked} = e.currentTarget;
+  const chk = !checked ? ':checked' : ':not(:checked)'
+  setTimeout(() => {
+    const nodes = document.querySelectorAll(`.log-grp${chk}`)
+    nodes.forEach(node => {
+      const {parentNode:p} = node
+      p.classList.remove(!checked)
+      p.classList.add(checked)
+      node.checked = checked
+    })
+  }, 0)
+}
+
 function btnClear(e) {
   const data = {}
   const arr = document.querySelectorAll('summary.true');
@@ -18,6 +32,7 @@ function btnClear(e) {
     data.folders = folders
   }
   ws__send('clearLogs', data, data => {
+    document.querySelector('#check-all').checked = false
     // logs view will be close when .log_events.LogsTable
     // logstore.set() to empty on Table.svelte 
     window.mitm.client.clear = true;
@@ -57,9 +72,12 @@ function argsflag() {
 </script>
 
 <div class="btn-container" style="top: 1px;">
+  <label class="checkbox">
+    <input type="checkbox" on:click={btnAll} id="check-all"> logs
+  </label>
   <input class="stop" on:click="{btnClear}" type="image" src="images/stop.svg" alt=""/>
-  <Collapse {st} q="#list-logs"></Collapse>
-  <Expand {st} q="#list-logs"></Expand>
+  <Collapse {st} name="logs" q="#list-logs"></Collapse>
+  <Expand {st} name="logs" q="#list-logs"></Expand>
   <label class="checkbox">
     <input type="checkbox" on:click={btnHostswch} checked={hostflag()}>host
   </label>
@@ -72,7 +90,7 @@ function argsflag() {
 .btn-container {
   position: absolute;
   margin-top: -1px;
-  left: 48px;
+  left: 10.5px;
   top: -3px;
 }
 .checkbox {
@@ -86,8 +104,8 @@ function argsflag() {
 }
 input.stop {
   position: relative;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   top: 1.5px;
-  left: 10px;
+  /* left: 10px; */
 }
 </style>

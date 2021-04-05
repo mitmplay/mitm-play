@@ -2,5 +2,5 @@
 import Button from './Button.svelte';
 </script>
 
--Logs-
+&nbsp;
 <Button/>
