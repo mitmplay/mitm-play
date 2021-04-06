@@ -21,7 +21,8 @@ function grey(page, msg) {
     let msg2 = ''
     const { origin, pathname } = new URL(url)
     msg2 = origin!=='null' ? `${origin}${pathname}` : `${url}`
-    console.log(c.gray(`(*${msg} url: ${msg2}*)`))
+    msg2 = `${msg} url: ${msg2}`.trim()
+    console.log(c.gray(`(*${msg2}*)`))
   } else {
     let name = '.'
     if (typeof page.name==='function') {
@@ -36,8 +37,12 @@ function grey(page, msg) {
 
 async function evalPage(page, _page, msg, ifrm=false) {
   const { argv, __flag } = global.mitm
-  let name = '.'
-  let url = page.url()
+  const url = page.url()
+
+  if (url==='about:blank') {
+    grey(page, '')
+    return
+  }
 
   if (ifrm) {
     await page.waitForTimeout(2000)
@@ -49,6 +54,7 @@ async function evalPage(page, _page, msg, ifrm=false) {
     msg1 = Object.keys(_pg.session).pop()+' '
   }
 
+  let name = '.'
   let msg2 = ''
   if (url) {
     const { origin, pathname } = new URL(url)
