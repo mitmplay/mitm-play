@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const { fn: { home, _nameSpace } } = global.mitm
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
+const mmethod = /^(GET|PUT|POST|DELETE):/
 
 function typTags (typ, namespace) {
   const { __tag4 } = global.mitm
@@ -31,7 +32,12 @@ const searchArr = ({ typ: typs, url, browserName }) => {
           if (obj) {
             const arr = url.match(obj[key])
             if (arr) {
-              let log = `${browser[browserName]} ${typ} (${key})`
+              let log
+              if (key.match(mmethod)) {
+                log = `${browser[browserName]} ${typ} (${key})`
+              } else {
+                log = `${browser[browserName]} ${typ} (${c.gray(method+':')}${key})`
+              }
               const { host, origin, pathname, search } = new URL(url)
               const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
               !__args.nourl && (log += `.url(${__args.nohost ? '' : origin}${msg})`)
@@ -118,7 +124,11 @@ const searchFN = (typs, { url, method, browserName }) => {
           if (__args.nourl && __args.nourl==='url') {
             log += `${__args.nohost ? '' : origin}${msg}`
           } else {
-            log += `(${key})`
+            if (key.match(mmethod)) {
+              log += `(${key})`
+            } else {
+              log += `(${c.gray(method+':')}${key})`
+            }
             !__args.nourl && (log += `.url(${__args.nohost ? '' : origin}${msg})`)
           }
           tg && (log += `:${tg}`)

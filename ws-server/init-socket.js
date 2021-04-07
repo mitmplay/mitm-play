@@ -58,7 +58,7 @@ module.exports = () => {
     wsclient.on('pong', heartbeat);
 
     if (__flag['ws-connect']) {
-      console.log(c.red('>>> ws-connect:'), `${host}${request.url}`)
+      console.log(c.red('>>> ws-connect:'), `${c.redBright(host)}${c.blueBright(request.url)}`)
     }
     let _host
     try {
