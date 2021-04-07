@@ -15,7 +15,7 @@ function typTags (typ, namespace) {
   }
 }
 
-const searchArr = ({ typ: typs, url, browserName }) => {
+const searchArr = ({url, method, browserName, typ: typs}) => {
   const { __args, router, routes } = global.mitm
 
   return function (nspace) {
