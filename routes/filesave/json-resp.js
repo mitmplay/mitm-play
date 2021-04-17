@@ -4,8 +4,7 @@ const searchParams = require('./search-params')
 const { xjson } = searchParams
 
 module.exports = ({ reqs, resp, match }) => {
-  let _resp, respBody
-  respBody = `${resp.body}`
+  let _resp, respBody = `${resp.body}`.trim()
   const { log, parse } = match.route
   if (_ext(resp) === 'json' || log) {
     let { method, body: reqsBody, headers: reqsHeader } = reqs
@@ -16,16 +15,21 @@ module.exports = ({ reqs, resp, match }) => {
       } else {
         if (typeof (log) === 'function') {
           _resp = log(resp)
-          _resp.body && (respBody = `${_resp.body}`)
+          _resp.body && (respBody = `${_resp.body}`.trim())
           _resp.headers && (respHeader = _resp.headers)
         }
       }
       const urlParams = searchParams(url)
       if (respBody && respBody.match(xjson)) {
-        respBody = JSON.parse(`${respBody}`)
+        try {
+          respBody = JSON.parse(respBody)          
+        } catch (error) {
+          console.log({error, respBody})
+          process.exit()
+        }
       }
       if (reqsBody) {
-        reqsBody = `${reqsBody}`
+        reqsBody = `${reqsBody}`.trim()
         if (reqsBody.match(xjson)) {
           reqsBody = JSON.parse(reqsBody)
         } else if (reqsBody.match(/[\n ]*(\w+=).+(&)/)) {
