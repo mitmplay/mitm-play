@@ -1,4 +1,4 @@
-const xjson = /^[\n\t[ ]*({[\n\t ]*"\w+" *:)/g
+const xjson = /^[\n\t\r[ ]*({[\n\t\r ]*"\w+" *:)/g
 
 function searchParams (url) {
   const urlParams = {}
