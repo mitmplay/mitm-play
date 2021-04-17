@@ -13,11 +13,14 @@ const allRequest = async function (reqs, responseHandler, _3d) {
 
   if (match && !_skipByTag(match, 'response')) {
     const { response, contentType, hidden } = match.route
-    responseHandler.push(resp => {
+    responseHandler.push(async resp => {
       changeStatus(match, resp)
       if (response) {
         if (contentType === undefined || ctype(match, resp)) {
-          const resp2 = response(resp, reqs, match)
+          let resp2 = response(resp, reqs, match)
+          if (typeof resp2 === 'object' && 'then' in resp2) {
+            resp2 = await resp2
+          }
           resp2 && (resp = {
             ...resp,
             ...resp2
