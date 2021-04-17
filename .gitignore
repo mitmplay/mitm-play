@@ -7,3 +7,5 @@ _assets_
 
 # Dependency directories
 node_modules/
+
+user-route/*.commonspaces
