@@ -1,7 +1,11 @@
 module.exports = respHeader => {
   if (respHeader['set-cookie']) {
     const setCookie = []
-    for (const cookie of respHeader['set-cookie']) {
+    let cookies = respHeader['set-cookie']
+    if (typeof cookies === 'string') {
+      cookies = [cookies]
+    }
+    for (const cookie of cookies) {
       const arr = cookie.split(/; */)
       const items = {}
       for (const itm of arr) {
