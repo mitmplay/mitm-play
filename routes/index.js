@@ -24,6 +24,7 @@ const response = {
   headers: {},
   body: ''
 }
+const nohttp = /https?:\/\//
 
 module.exports = async ({ route, request, browserName }) => {
   const {
@@ -110,15 +111,16 @@ module.exports = async ({ route, request, browserName }) => {
       })
     } else { // not handle
       const { origin, pathname } = new URL(url)
+      const host = origin.replace(nohttp,'')
       if (!rqs2 && __flag) {
         const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
         if (_3ds) {
           if (__flag['no-namespace']) {
-            console.log(c.redBright(`${browser[browserName]} no-namespace (${origin}${msg})`))
+            console.log(c.redBright(`${browser[browserName]} no-namespace (${host}${msg})`))
           }
         } else {
           if (__flag['referer-reqs']) {
-            console.log(c.redBright.italic(`${browser[browserName]} referer-reqs (${origin}${msg})`))
+            console.log(c.redBright.italic(`${browser[browserName]} referer-reqs (${host}${msg})`))
           }
         }
       }
