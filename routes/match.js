@@ -2,6 +2,24 @@ const c = require('ansi-colors')
 const { fn: { home, _nameSpace } } = global.mitm
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const mmethod = /^(GET|PUT|POST|DELETE):/
+const nohttp = /https?:\/\//
+
+function mth(m) {
+  return {
+    GET:    'gt:',
+    PUT:    'pt:',
+    POST:   'ps:',
+    DELETE: 'dl:'
+  }[m] || m
+}
+
+function bloc(params) {
+  return `${c.red('[')}${params}${c.red(']')}`
+}
+
+function _url(params) {
+  return `${c.red('(')}${params}${c.red(')')}`
+}
 
 function typTags (typ, namespace) {
   const { __tag4 } = global.mitm
@@ -34,13 +52,13 @@ const searchArr = ({url, method, browserName, typ: typs}) => {
             if (arr) {
               let log
               if (key.match(mmethod)) {
-                log = `${browser[browserName]} ${typ} (${key})`
+                log = `${browser[browserName]} ${typ} ${bloc(key)}`
               } else {
-                log = `${browser[browserName]} ${typ} (${c.gray(method+':')}${key})`
+                log = `${browser[browserName]} ${typ} ${bloc(c.gray(mth(method))+key)}`
               }
               const { host, origin, pathname, search } = new URL(url)
               const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
-              !__args.nourl && (log += `.url(${__args.nohost ? '' : origin}${msg})`)
+              !__args.nourl && (log += `${_url((__args.nohost ? '' : origin.replace(nohttp,''))+msg)}`)
               const hidden = key.match(/^[\w#]*!:/)
               const matched = {
                 namespace,
@@ -125,11 +143,11 @@ const searchFN = (typs, { url, method, browserName }) => {
             log += `${__args.nohost ? '' : origin}${msg}`
           } else {
             if (key.match(mmethod)) {
-              log += `(${key})`
+              log += `${bloc(key)}`
             } else {
-              log += `(${c.gray(method+':')}${key})`
+              log += `${bloc(c.gray(mth(method))+key)}`
             }
-            !__args.nourl && (log += `.url(${__args.nohost ? '' : origin}${msg})`)
+            !__args.nourl && (log += `${_url((__args.nohost ? '' : origin.replace(nohttp,''))+msg)}`)
           }
           tg && (log += `:${tg}`)
 
