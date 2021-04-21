@@ -3,6 +3,7 @@
 const _ws_namespace = require('./_ws_namespace')
 const _ws_debounce = require('./_ws_debounce')
 const _ws_vendor = require('./_ws_vendor')
+const _ws_route = require('./_ws_route')
 
 module.exports = () => {
   const { hostname: host } = location
@@ -10,7 +11,7 @@ module.exports = () => {
   const browser = _ws_vendor()
   const sshot = {}; const nodes = {}
 
-  const route = window.mitm.routes[namespace]
+  const route = _ws_route()
   if (route && route.screenshot) {
     const { observer: ob } = route.screenshot
     for (const id in ob) {
@@ -38,6 +39,7 @@ module.exports = () => {
 
   let fname
   const callback = _ws_debounce(function () {
+    const { observer: ob } = route.screenshot
     const _page = window['xplay-page']
     for (const id in nodes) {
       const el = document.body.querySelectorAll(id)
@@ -47,6 +49,9 @@ module.exports = () => {
           if (nodes[id].remove !== undefined) {
             nodes[id].remove = false
           }
+          if (typeof ob[id]==='function') {
+            ob[id](el[0] || el)
+          } 
           if (sshot[id].insert) {
             fname = location.pathname.replace(/^\//, '').replace(/\//g, '-')
             fname = `${fname}-${sshot[id].title}-insert`

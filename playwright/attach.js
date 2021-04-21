@@ -74,9 +74,10 @@ async function evalPage(page, _page, msg, ifrm=false) {
       grey(page, 'detached-1! frame')
     }
   } else if (page) {
-    await log(`${msg} ${_page} ${c.blue(msg1)}${msg2}`)
     try {
-      await page.waitForNavigation()
+      const state = {state: 'attached'}
+      await page.waitForSelector('html', state)
+      await log(`${msg} ${_page} ${c.blue(msg1)}${msg2}`)
       await page.evaluate(pg => window['xplay-page'] = pg, _page)
     } catch (error) {
       const { message } = error
