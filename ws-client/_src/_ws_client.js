@@ -23,7 +23,13 @@ module.exports = () => {
       )
     },
     // ex: ws__
-    _files ({ typ, data }) {
+    _saveTags ({ routes }) {
+      if (!location.origin.match('chrome-extension')) {
+        window.mitm.routes = routes
+      }
+    },
+    // ex: ws__
+    _files ({ data, typ }) {
       const { files } = window.mitm
       console.warn(`receive brodcast ${typ}`)
       /**

@@ -12,11 +12,8 @@ const route = {
   url: 'https://www.speedtypingonline.com/typing-test',
   screenshot: {
     selector: '[type=button],[type=submit],button,a',
-    observer: {
-      iframe: 0
-    }
   },
-  // workspace: '/_cache_',
+  // workspace: '/_cache_', 
   tags: [],
   'cache:_test~01': {
     '/css/_.+': {

@@ -6,12 +6,14 @@ const _ws_vendor = require('./_ws_vendor')
 const _ws_route = require('./_ws_route')
 
 module.exports = () => {
+  if (location.origin.match('chrome-extension')) {
+    return
+  }
   const { hostname: host } = location
-  const namespace = _ws_namespace()
-  const browser = _ws_vendor()
-  const sshot = {}; const nodes = {}
+  const sshot = {}
+  const nodes = {}
 
-  const route = _ws_route()
+  let route = _ws_route()
   if (route && route.screenshot) {
     const { observer: ob } = route.screenshot
     for (const id in ob) {
@@ -44,7 +46,9 @@ module.exports = () => {
   }
 
   let fname
-  const callback = _ws_debounce(function () {
+  const namespace = _ws_namespace()
+  const browser = _ws_vendor()
+  const callback = function () {
     const { observer: ob } = route.screenshot
     const _page = window['xplay-page']
     for (const id in nodes) {
@@ -83,14 +87,14 @@ module.exports = () => {
         }
       }
     }
-  }, 100)
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const observer = new MutationObserver(callback)
+    const observer = new MutationObserver(_ws_debounce(callback, 100))
     observer.observe(document.body, {
       attributes: true,
       childList: true,
       subtree: true
     })
-  })
+  })  
 }

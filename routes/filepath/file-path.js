@@ -41,7 +41,7 @@ function filePath (match, path, file) {
 
   if (path) {
     fpath += detectHome(match, path)
-    fpath += file.trim()
+    fpath += `/${file.trim()}`
   } else {
     fpath += detectHome(match, file)
   }

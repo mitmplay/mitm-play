@@ -31,8 +31,10 @@ module.exports = ({ data }) => {
       fs.writeJson(ns._jpath, json, {spaces: '  '}, err => {
         err && console.error(ns._jpath, {err})
       })
-    }  
+    }
   }
+  const serial = JSON.stringify({routes})
+  global.broadcast({ data: `_saveTags${serial}` })
 
   return 'OK'
 }
