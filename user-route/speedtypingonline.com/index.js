@@ -13,7 +13,7 @@ const route = {
   screenshot: {
     selector: '[type=button],[type=submit],button,a',
     observer: {
-      iframe: true
+      iframe: 0
     }
   },
   // workspace: '/_cache_',

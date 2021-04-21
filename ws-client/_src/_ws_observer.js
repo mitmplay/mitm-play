@@ -22,6 +22,12 @@ module.exports = () => {
           insert: true,
           remove: true
         }
+      } if (typeof ob[id] !== 'string') {
+        el = {
+          title: 'nocapture',
+          insert: false,
+          remove: false
+        }
       } else {
         const arr = ob[id].split(':')
         arr[1].split(',').map(e => {
@@ -50,7 +56,14 @@ module.exports = () => {
             nodes[id].remove = false
           }
           if (typeof ob[id]==='function') {
-            ob[id](el[0] || el)
+            const nod = el[0] || el
+            if (nod._ws_count===undefined) {
+              nod._ws_count = 0
+            }
+            nod._ws_count += 1
+            if (nod._ws_count<2) {
+              ob[id](nod)
+            }
           } 
           if (sshot[id].insert) {
             fname = location.pathname.replace(/^\//, '').replace(/\//g, '-')
