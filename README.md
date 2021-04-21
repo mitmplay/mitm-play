@@ -26,7 +26,7 @@
 ```bash
 npm install -g mitm-play
 ```
-Execute mitm-play command with demo route route included:
+Execute mitm-play command with demo route:
 ```bash
 mitm-play -rG
 ```
