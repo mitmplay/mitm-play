@@ -17,7 +17,12 @@ module.exports = () => {
       }
     })
     if (__flag['ws-broadcast']) {
-      console.log(c.blue('>>> ws-broadcast:'), data, pages)
+      const msg = JSON.stringify(data)
+      if (msg.length > 97) {
+        console.log(c.blue('>>> ws-broadcast: `%s...`'), msg.slice(0, 97))
+      } else {
+        console.log(c.blue('>>> ws-broadcast: `%s`'), msg)
+      }
     }
   }
 

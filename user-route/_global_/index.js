@@ -2,6 +2,7 @@ const route = {
   flag: {
     'referer-reqs': true,
     'no-namespace': true,
+    'ws-broadcast': true,
     'ws-connect': true,
     'ws-message': true,
     'page-load': true
