@@ -45,11 +45,14 @@ module.exports = () => {
     }
   }
 
+  let ob
   let fname
   const namespace = _ws_namespace()
   const browser = _ws_vendor()
   const callback = function () {
-    const { observer: ob } = route.screenshot
+    if (route && route.screenshot) {
+      ob = route.screenshot.observer
+    }
     const _page = window['xplay-page']
     for (const id in nodes) {
       const el = document.body.querySelectorAll(id)
@@ -59,7 +62,7 @@ module.exports = () => {
           if (nodes[id].remove !== undefined) {
             nodes[id].remove = false
           }
-          if (typeof ob[id]==='function') {
+          if (ob && typeof ob[id]==='function') {
             const nod = el[0] || el
             if (nod._ws_count===undefined) {
               nod._ws_count = 0

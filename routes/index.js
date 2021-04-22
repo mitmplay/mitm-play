@@ -113,14 +113,18 @@ module.exports = async ({ route, request, browserName }) => {
       const { origin, pathname } = new URL(url)
       const host = origin.replace(nohttp,'')
       if (!rqs2 && __flag) {
-        const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
+        let msg = `${host}${pathname}`
+        if (msg.length > 95) {
+          msg = `${msg.slice(0, 95)}...`
+        }
+        msg = `${c.red('(')}${c.grey(msg)}${c.red(')')}`
         if (_3ds) {
           if (__flag['no-namespace']) {
-            console.log(c.redBright(`${browser[browserName]} no-namespace (${host}${msg})`))
+            console.log(c.redBright(`${browser[browserName]} no-namespace %s`), msg)
           }
         } else {
           if (__flag['referer-reqs']) {
-            console.log(c.redBright.italic(`${browser[browserName]} referer-reqs (${host}${msg})`))
+            console.log(c.redBright.italic(`${browser[browserName]} referer-reqs %s`), msg)
           }
         }
       }

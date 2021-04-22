@@ -13,12 +13,13 @@ function mth(m) {
   }[m] || m
 }
 
-function bloc(params) {
-  return `${c.red('[')}${params}${c.red(']')}`
+function bloc(s) {
+  return `${c.red('[')}${s}${c.red(']')}`
 }
 
-function _url(params) {
-  return `${c.red('(')}${params}${c.red(')')}`
+function _url(s, other='') {
+  const length = s.length + other.length
+  return `${c.red('(')}${length>95 ? s.slice(0,92)+'...' : s}${c.red(')')}`
 }
 
 function typTags (typ, namespace) {
@@ -56,9 +57,9 @@ const searchArr = ({url, method, browserName, typ: typs}) => {
               } else {
                 log = `${browser[browserName]} ${typ} ${bloc(c.gray(mth(method))+key)}`
               }
-              const { host, origin, pathname, search } = new URL(url)
-              const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
-              !__args.nourl && (log += `${_url((__args.nohost ? '' : origin.replace(nohttp,''))+msg)}`)
+              const { host, origin: o, pathname, search } = new URL(url)
+              let msg = (__args.nohost ? '' : o.replace(nohttp,''))+pathname
+              !__args.nourl && (log += _url(msg, method+key))
               const hidden = key.match(/^[\w#]*!:/)
               const matched = {
                 namespace,
@@ -134,22 +135,25 @@ const searchFN = (typs, { url, method, browserName }) => {
         const _m = obj[`${key}~method`]
 
         if (arr && (!_m ||_m===method)) {
-          const { host, origin, pathname, search } = new URL(url)
-          const msg = pathname.length <= 100 ? pathname : pathname.slice(0, 100) + '...'
+          const { host, origin: o, pathname, search } = new URL(url)
+          let msg = (__args.nohost ? '' : o.replace(nohttp,''))+pathname
 
-          const [ty, tg] = typ.split(':')
+          let [ty, tg] = typ.split(':')
+          tg = tg ?  `:${tg}` : ''
           let log = `${browser[browserName]} ${ty.padEnd(8, ' ')} `
           if (__args.nourl && __args.nourl==='url') {
-            log += `${__args.nohost ? '' : origin}${msg}`
+            log += _url(msg, tg)
           } else {
+            let other = key+tg
             if (key.match(mmethod)) {
               log += `${bloc(key)}`
             } else {
+              other += method
               log += `${bloc(c.gray(mth(method))+key)}`
             }
-            !__args.nourl && (log += `${_url((__args.nohost ? '' : origin.replace(nohttp,''))+msg)}`)
+            !__args.nourl && (log += _url(msg, other))
           }
-          tg && (log += `:${tg}`)
+          tg && (log += tg)
 
           const hidden = key.match(/^[\w#]*!:/)
           const matched = {
