@@ -135,11 +135,6 @@ module.exports = () => {
   if (!chrome.tabs) {
     document.querySelector('html').addEventListener('keydown', keybCtrl)
     window.addEventListener('urlchanged', urlChange)
-    const fn = history.pushState
-    history.pushState = function () {
-      fn.apply(history, arguments)
-      window.dispatchEvent(event)
-    }
 
     window.addEventListener('DOMContentLoaded', () => {
       const node = document.querySelector('html')
@@ -159,7 +154,20 @@ module.exports = () => {
         button.onclick = btnclick
         button.style = `${buttonStyle}background-color: azure;`
         urlChange(event)
-      }, 1)
+        observed()
+      }, 0)
     })
+  }
+  const {location} = document
+  let oldHref = location.href
+  function observed() {
+    const bodyList = document.querySelector("body")
+    const observer = new MutationObserver(() => {
+      if (oldHref != location.href) {
+        window.dispatchEvent(event)
+        oldHref = location.href
+      }
+    });
+    observer.observe(bodyList, {childList: true, subtree: true})
   }
 }
