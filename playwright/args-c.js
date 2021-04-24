@@ -15,6 +15,7 @@ module.exports = argv => {
     '--ignore-certificate-errors',
     '--disable-site-isolation',
     '--disable-notifications',
+    '--disable-dev-shm-usage', //https://github.com/puppeteer/puppeteer/issues/1834
     '--disable-infobars',
     '--force-dark-mode',
     '--no-experiments',

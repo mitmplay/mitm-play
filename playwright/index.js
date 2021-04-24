@@ -10,13 +10,15 @@ const attach = require('./attach')
 const pages = {}
 const browsers = {}
 const bcontexts = {}
+const browserServer = {}
+global.browserServer = browserServer
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 function currentTab (browser) {
-  browser.currentTab = async function (_page) {
+  browser.currentTab = async function (_page, _frame) {
     let pages
     if (browser.pages) {
       pages = await browser.pages()
@@ -24,7 +26,9 @@ function currentTab (browser) {
       pages = browser.contexts()[0].pages()
     }
     for (const page of pages) {
-      if (_page === page._page) {
+      if (_frame && _frame === page._page) {
+        return page
+      } else if (_page === page._page) {
         return page
       }
     }
@@ -102,19 +106,47 @@ module.exports = () => {
       await browser.close()
       browsers[browserName] = undefined
     }
-    if (argv.pristine) {
-      // buggy route will not work :(
+    let ctxoption = {}
+    const device = playwright.devices[argv.device] || {}
+    if (argv.device) {
+      if (device) {
+        delete options.viewport
+        options.deviceScaleFactor = 1
+        ctxoption = {
+          ...ctxoption,
+          ...device
+        }
+      }
+    }
+    if (argv.pristine===true) {
       const { fn: { tilde } } = global.mitm
       const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
       console.log(c.yellow(`Browser profile ${tilde(bprofile)}`))
-      browser = await playBrowser.launchPersistentContext(bprofile, options)
+      browser = await playBrowser.launchPersistentContext(bprofile, {
+        ...device,
+        ...options
+      })
       page = await browser.pages()[0]
       bcontext = page.context()
     } else {
+      if (argv.device===undefined) {
+        ctxoption.viewport = null
+      }
       console.log('>>> Browser option', options)
-      browser = await playBrowser.launch(options)
+      if (argv.pristine==='server') {
+        const server = await playBrowser.launchServer(options)
+        const wsEndpoint = server.wsEndpoint()
+        browserServer[browserName] = server
+        server.wsEndpoint = wsEndpoint
+
+        console.log(c.yellow(`Browser wsEndpoint ${wsEndpoint}`))
+
+        browser = await playBrowser.connect({wsEndpoint})
+      } else {
+        browser = await playBrowser.launch(options)
+      }
       // const context = await browser.newContext({viewport: { height: 734, width: 800 }});
-      const context = await browser.newContext({ viewport: null })
+      const context = await browser.newContext(ctxoption)
       page = await context.newPage()
       bcontext = context
     }
@@ -122,7 +154,7 @@ module.exports = () => {
     if (browserName === 'chromium') {
       const cdp = await page.context().newCDPSession(page)
       global.mitm.cdp = cdp
-      if (!argv.pristine) {
+      if (argv.pristine!==true) {
         await page.goto('chrome://extensions/')
         const nodes = await page.$$('#detailsButton')
         for (const node of nodes) {

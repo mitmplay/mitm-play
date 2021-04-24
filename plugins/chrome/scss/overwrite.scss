@@ -45,3 +45,27 @@ div.mermaid {
   font-weight: bolder;
   color: #0a3d30;
 }
+
+#table-urls {
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 65%;
+  }  
+}
+
+@media screen and (max-width: 725px) {
+  #resize-tag3 {
+    display: none;
+  }
+  #table-tags {
+    td:nth-child(3) {
+      display: none;
+    }  
+  } 
+  #table-urls {
+    th:nth-child(2),
+    td:nth-child(2) {
+      display: none;
+    }  
+  } 
+}

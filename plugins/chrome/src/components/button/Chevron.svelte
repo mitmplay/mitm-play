@@ -1,6 +1,15 @@
 <script>
+export let id
 export let cols=3
 import { states } from './states.js';
+
+const props = {
+  class: 'f-right'
+}
+
+if (id) {
+  props.id = id
+}
 
 function resize(e) {
   const all = {...$states}
@@ -10,7 +19,7 @@ function resize(e) {
 </script>
 
 <button
-class="f-right" 
+{...props} 
 on:click="{resize}"
 style="{cols===3 ? '' : 'display:none;'}"
 >{$states.chevron}</button>

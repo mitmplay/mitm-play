@@ -1,4 +1,16 @@
-<table class="table-content">
+<script>
+export let id
+
+const props = {
+  class: 'table-content'
+}
+
+if (id) {
+  props.id = id
+}
+</script>
+
+<table {...props}>
 <slot></slot>
 </table>
 

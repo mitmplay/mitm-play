@@ -39,7 +39,7 @@ function clear (o) {
       }
     }
   } else {
-    const { browser, delete: d } = global.mitm.argv
+    const { browser, clear: d } = global.mitm.argv
     for (const browserName in browser) {
       if (d === true) {
         remove(`${path.home}/${browserName}/log`)

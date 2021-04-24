@@ -59,12 +59,11 @@ module.exports = () => {
       delete window.mitm.macrokeys
     }
     if (namespace) {
-      const { pathname } = location
+      const { href } = location
       const { _macros_, macros } = window.mitm
-      // console.log(namespace, location);
       for (const key in macros) {
         const { path, msg } = toRegex(key)
-        if (pathname.match(path)) {
+        if (href.match(path)) {
           button.innerHTML = msg || 'Autofill'
           _macros_ && _macros_()
           macros[key]()
@@ -89,8 +88,9 @@ module.exports = () => {
       const browser = _ws_vendor()
       const lenth = autofill.length
       const _page = window['xplay-page']
+      const _frame = window['xplay-frame']
       console.log(lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2))
-      window.ws__send('autofill', { autofill, browser, _page })
+      window.ws__send('autofill', { autofill, browser, _page, _frame })
     }
   }
 
@@ -115,7 +115,8 @@ module.exports = () => {
             const interval = setInterval(() => {
               let selector = macro[macroIndex]
               if (selector.match(/^ *[=-]>/)) {
-                selector = `${CssSelectorGenerator.getCssSelector(document.activeElement)} ${selector}`
+                const activeElement = CssSelectorGenerator.getCssSelector(document.activeElement)
+                selector = `${activeElement} ${selector}`
               }
               play([selector])
 
@@ -158,16 +159,28 @@ module.exports = () => {
       }, 0)
     })
   }
+
   const {location} = document
   let oldHref = location.href
+
+  function compareHref() {
+    console.log('DOM mutated!')
+    if (oldHref != location.href) {
+      window.dispatchEvent(event)
+      oldHref = location.href
+    }
+  }
+
+  const fn = history.pushState
+  history.pushState = function () {
+    fn.apply(history, arguments)
+    compareHref()
+  }
+
+  const observer = new MutationObserver(compareHref);
   function observed() {
-    const bodyList = document.querySelector("body")
-    const observer = new MutationObserver(() => {
-      if (oldHref != location.href) {
-        window.dispatchEvent(event)
-        oldHref = location.href
-      }
-    });
-    observer.observe(bodyList, {childList: true, subtree: true})
+    observer.disconnect()
+    const body = document.querySelector("body")
+    observer.observe(body, {childList: true, subtree: true})
   }
 }

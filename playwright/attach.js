@@ -35,7 +35,7 @@ function grey(page, msg) {
   }
 }
 
-async function evalPage(page, _page, msg, ifrm=false) {
+async function evalPage(page, _page, msg, _frame='') {
   const { argv, __flag } = global.mitm
   const url = page.url()
 
@@ -44,7 +44,7 @@ async function evalPage(page, _page, msg, ifrm=false) {
     return
   }
 
-  if (ifrm) {
+  if (_frame) {
     await page.waitForTimeout(2000)
   }
 
@@ -69,7 +69,7 @@ async function evalPage(page, _page, msg, ifrm=false) {
     msg2 = `name ${name}`  
   }
 
-  if (ifrm && page.isDetached()) {
+  if (_frame && page.isDetached()) {
     if (argv.debug || __flag['page-load']) {
       grey(page, 'detached-1! frame')
     }
@@ -77,8 +77,17 @@ async function evalPage(page, _page, msg, ifrm=false) {
     try {
       const state = {state: 'attached'}
       await page.waitForSelector('html', state)
-      await log(`${msg} ${_page} ${c.blue(msg1)}${msg2}`)
-      await page.evaluate(pg => window['xplay-page'] = pg, _page)
+      await log(`${msg} ${_page} ${c.blue(msg1)}${_frame ? _frame+' ' : ''}${msg2}`)
+      if (_frame) {
+        await page.evaluate(({_page, _frame}) => {
+          window['xplay-page']  = _page
+          window['xplay-frame'] = _frame
+        }, {_page, _frame})
+      } else {
+        await page.evaluate(_page => {
+          window['xplay-page'] = _page
+        }, _page)
+      }
     } catch (error) {
       const { message } = error
       if (argv.debug || __flag['page-load']) {
@@ -112,8 +121,10 @@ module.exports = async function(page) {
   })
 
   page.on('frameattached', async (frame) => {
+    const _frame = 'frame~' + (new Date()).toISOString().slice(0, 15).replace(/[T:-]/g, '')
     try {
-      await evalPage(frame, _page, 'xplay-page frame', true)
+      global.mitm.__page[_frame] = { session: {} }
+      await evalPage(frame, _page, 'xplay-page frame', _frame)
     } catch (error) {
       if (!error.message.match('Execution Context is not available')) {
         console.log('ERROR', error)

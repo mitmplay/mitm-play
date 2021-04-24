@@ -787,35 +787,36 @@ $ mitm-play --help
     2nd for loading profile
 
   options:
-    -h --help            show this help
-    -u --url             go to specific url
-    -s --save            save as default <profl>
-    -r --route           userscript folder routes
-    -a --activity        rec/replay cache activity*
-    -c --relaxcsp        relax CSP unblock websocket*
-    -d --delete          delete/clear cache & logs
-    -f --fullog          show detail logs on each rule* 
-    -p --pristine        pristine browser, default option
-    -i --insecure        accept insecure cert in nodejs env
-    -n --nosocket        no websocket injection to html page*
-    -k --cookie          reset cookies expire date*
-    -l --lazylog         delay ~500ms print console.log
-    -g --group           create cache group/rec
-    -t --incognito       set chromium incognito
-    -x --proxy           a proxy request
-    -z --lazyclick       delay ~700ms click action*
+    -h --help          show this help
+    -u --url           go to specific url
+    -s --save          save as default <profl>
+    -r --route         userscript folder routes
+    -a --activity      rec/replay cache activity*
+    -c --clear         clear/delete cache & log(s)
+    -d --device        resize to mobile screen device
+    -f --fullog        show detail logs on each rule* 
+    -p --pristine      pristine browser, default option
+    -i --insecure      accept insecure cert in nodejs env 
+    -n --nosocket      no websocket injection to html page*
+    -k --cookie        reset cookies expire date*
+    -l --lazylog       delay ~500ms print console.log
+    -g --group         create cache group/rec
+    -t --incognito     set chromium incognito
+    -x --proxy         a proxy request
+    -z --lazyclick     delay ~700ms click action*
 
-    -D --debug           show ws messages
-    -G --nogpu           set chromium without GPU
-    -H --nohost          set logs without host name*
-    -R --redirect        set redirection: true/false/manual
-    -U --nourl           set logs without URL*
-    -V --verbose         show more detail of console log
-    -X --proxypac        set chromium proxypac
+    -C --csp           relax CSP unblock websocket*
+    -D --debug         show ws messages
+    -G --nogpu         set chromium without GPU
+    -H --nohost        set logs without host name*
+    -R --redirect      set redirection: true/false/manual
+    -U --nourl         set logs without URL*
+    -V --verbose       show more detail of console log
+    -X --proxypac      set chromium proxypac
 
-    -C --chromium        run chromium browser
-    -F --firefox         run firefox browser
-    -W --webkit          run webkit browser
+    -C --chromium      run chromium browser
+    -F --firefox       run firefox browser
+    -W --webkit        run webkit browser
 
   * _global_.config.args
     
@@ -852,7 +853,7 @@ $ mitm-play -r='../user-route'  <OR>
 $ mitm-play --route='../user-route'
 ```
 </details>
-<details><summary><b>-c --activity</b></summary>
+<details><summary><b>-a --activity</b></summary>
 
 Flag the caching with sequences, they are three mode of activity:
 *  `rec:activity`  to record cache w/ `seq`, all cache always recorded
@@ -877,28 +878,31 @@ $ mitm-play -a='play:activity'
 ```
 
 </details>
-<details><summary><b>-c --relaxcsp</b></summary>
-
-Update CSP header on Html Page injected with wws-client.js to unblock Websocket communication
-
-```bash
-$ mitm-play -c  <OR>
-$ mitm-play --relaxcsp
-```
-</details>
-<details><summary><b>-d --delete</b></summary>
+<details><summary><b>-c --clear</b></summary>
 
 Delete logs or cache, can be all or specific one
 
 ```bash
+$ mitm-play -c  <OR>
+$ mitm-play --clear
+  <OR>
+$ mitm-play -c='log'  <OR>
+$ mitm-play --clear='log'
+  <OR>
+$ mitm-play -c='cache'  <OR>
+$ mitm-play --clear='cache'
+```
+</details>
+<details><summary><b>-d --device</b></summary>
+
+Resize screen to specific mobile device (still buggy)
+
+```bash
 $ mitm-play -d  <OR>
-$ mitm-play --delete
+$ mitm-play --device
   <OR>
-$ mitm-play -d='log'  <OR>
-$ mitm-play --delete='log'
-  <OR>
-$ mitm-play -d='cache'  <OR>
-$ mitm-play --delete='cache'
+$ mitm-play -d='iPhone 11 Pro'  <OR>
+$ mitm-play --device='iPhone 11 Pro'
 ```
 </details>
 <details><summary><b>-p --pristine [default]</b></summary>
@@ -997,6 +1001,15 @@ $ mitm-play -z=400  <OR>
 $ mitm-play --lazyclick=400
 ```
 </details><hr/>
+<details><summary><b>-C --csp</b></summary>
+
+Update CSP header on Html Page injected with wws-client.js to unblock Websocket communication
+
+```bash
+$ mitm-play -C  <OR>
+$ mitm-play --csp
+```
+</details>
 <details><summary><b>-D --debug</b></summary>
 
 More information will be shown in console.log (ex: websocket), including info from `DEBUG=pw:api`

@@ -15,8 +15,8 @@ module.exports = (_package) => {
     -s --save     \t save as default <profl>
     -r --route    \t userscript folder routes
     -a --activity \t rec/replay cache activity*
-    -c --relaxcsp \t relax CSP unblock websocket*
-    -d --delete   \t delete/clear cache & logs
+    -c --clear    \t clear/delete cache & log(s)
+    -d --device   \t resize to mobile screen device
     -f --fullog   \t show detail logs on each rule* 
     -p --pristine \t pristine browser, default option
     -i --insecure \t accept insecure cert in nodejs env 
@@ -28,6 +28,7 @@ module.exports = (_package) => {
     -x --proxy    \t a proxy request
     -z --lazyclick\t delay ~700ms click action*
 
+    -C --csp      \t relax CSP, unblock websocket*
     -D --debug    \t show ws messages
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*

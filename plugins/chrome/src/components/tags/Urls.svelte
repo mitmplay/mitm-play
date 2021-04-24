@@ -209,7 +209,7 @@ function itemlist(tagsStore, rerender) {
 </script>
 
 {itemlist($tags, $rerender)}
-<table>
+<table id='table-urls'>
   <tr>
     <th><Title1><TitleBtn _id="urls" items={title1} btn={btn1}/></Title1></th>
     <th><Title2><TitleBtn _id="farg" items={title2} btn={btn2}/></Title2></th>
@@ -238,9 +238,6 @@ function itemlist(tagsStore, rerender) {
 table {
   width: calc(100% - 12px);
   margin: 5px;
-}
-th, td {
-  width: 50%;
 }
 th {
   padding-left: 5px;

@@ -47,8 +47,8 @@ module.exports = () => {
   argv.profile = false
 
   argsChg('a', 'activity'  ) // feat: _global_.args
-  argsChg('c', 'relaxcsp'  ) // feat: _global_.args
-  argsChg('d', 'delete'    )
+  argsChg('c', 'clear'     ) 
+  argsChg('d', 'device'    )
   argsChg('f', 'fullog'    ) // feat: _global_.args
   argsChg('g', 'group'     )
   argsChg('h', 'help'      )
@@ -64,6 +64,7 @@ module.exports = () => {
   argsChg('x', 'proxy'     )
   argsChg('z', 'lazyclick' ) // feat: _global_.args
 
+  argsChg('C', 'relaxcsp'  ) // feat: _global_.args
   argsChg('D', 'debug'     )
   argsChg('G', 'nogpu'     )
   argsChg('H', 'nohost'    ) // feat: _global_.args
@@ -83,6 +84,10 @@ module.exports = () => {
 
   if (argv.activity===true) {
     argv.activity = 'rec' // rec:tag-html
+  }
+
+  if (argv.device===true) {
+    argv.device = 'iPhone 11 Pro'
   }
 
   if (argv.route===true) {
