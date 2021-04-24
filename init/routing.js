@@ -40,8 +40,8 @@ return (
 }
 
 function __body1(_global, _body1) {
-return (
-`(function(global) {
+return (`
+(function(global) {
   // file: macros.js
   ${_body1.replace(/\n/g, '\n  ')}
   const {macros: macro1} = window.mitm
@@ -54,12 +54,13 @@ return (
   ${_global.replace(/\n/g, '\n  ')}
   // pass to function params
   return window.mitm.macros
-})())`)
+})())`).replace(/\n/, '')
 }
 
 function __autoKeys(body) {
-return (
-`// [Ctrl]+[Shift] => Hide/Show Buttons
+return (`
+// [Ctrl] + [Alt] + [A] => run hotkey KeyA
+// [Ctrl] + [Shift] => Hide / Show Buttons
 if (window._ws_connect===undefined) {
   window._ws_connect = {}
 };\n
@@ -71,7 +72,7 @@ window.mitm._macros_ = () => {
 window._ws_connect.macrosOnMount = data => {
   console.log('macros code executed after ws open', data)
 };\n
-${body};\n`)
+${body};\n`).replace(/\n/, '')
 }
 
 module.exports = () => {
