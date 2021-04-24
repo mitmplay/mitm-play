@@ -5,6 +5,7 @@ window.mitm.macros = {
     console.log('olah')
     window.mitm.macrokeys = {
       'KeyA'() {
+        console.log('KeyA')
         alert('Alert KeyA')
       }
     }

@@ -165,7 +165,7 @@ module.exports = () => {
   let oldHref = location.href
 
   function compareHref() {
-    console.log('DOM mutated!')
+    // console.log('DOM mutated!')
     if (oldHref != location.href) {
       window.dispatchEvent(event)
       oldHref = location.href

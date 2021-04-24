@@ -14,6 +14,66 @@ const autoclick = () => {
   }, 1000)
 }
 
+function __body2(app, _global, _body1, _body2) {
+return (
+`(function(global, macro1) {
+  // file: ${app}@macros.js
+  ${_body2.replace(/\n/g, '\n  ')}
+  // macros.js + ${app}@macros.js
+  const {macros: macro2} = window.mitm
+  window.mitm.macros = {
+    ...global,
+    ...macro1,
+    ...macro2,
+  }
+})((function() {
+  // file: _global_/macros.js
+  ${_global.replace(/\n/g, '\n  ')}
+  // pass to function params
+  return window.mitm.macros
+})(), (function() {
+  // file: macros.js
+  ${_body1.replace(/\n/g, '\n  ')}
+  // pass to function params
+  return window.mitm.macros
+})())`)
+}
+
+function __body1(_global, _body1) {
+return (
+`(function(global) {
+  // file: macros.js
+  ${_body1.replace(/\n/g, '\n  ')}
+  const {macros: macro1} = window.mitm
+  window.mitm.macros = {
+    ...global,
+    ...macro1,
+  }
+})((function() {
+  // file: _global_/macros.js
+  ${_global.replace(/\n/g, '\n  ')}
+  // pass to function params
+  return window.mitm.macros
+})())`)
+}
+
+function __autoKeys(body) {
+return (
+`// [Ctrl]+[Shift] => Hide/Show Buttons
+if (window._ws_connect===undefined) {
+  window._ws_connect = {}
+};\n
+window.mitm.fn.autoclick = ${autoclick + ''};\n
+window.mitm.fn.hotKeys = ${hotKeys + ''};\n
+window.mitm._macros_ = () => {
+  window.mitm.macrokeys = {};
+};\n
+window._ws_connect.macrosOnMount = data => {
+  console.log('macros code executed after ws open', data)
+};\n
+${body};\n`)
+}
+
 module.exports = () => {
   const { argv, fn: { _tldomain, _nameSpace } } = global.mitm
 
@@ -43,59 +103,13 @@ module.exports = () => {
             path = `${argv.route}/${domain}/${app}@macros.js`
             if (fs.existsSync(path)) {
               const body2 = `${fs.readFileSync(path)}`
-              body = `(function(global, macro1) {
-  // file: ${app}@macros.js
-  ${body2.replace(/\n/g, '\n  ')}
-  // macros.js + ${app}@macros.js
-  const {macros: macro2} = window.mitm
-  window.mitm.macros = {
-    ...global,
-    ...macro1,
-    ...macro2,
-  }
-})((function() {
-  // file: _global_/macros.js
-  ${global.replace(/\n/g, '\n  ')}
-  // pass to function params
-  return window.mitm.macros
-})(), (function() {
-  // file: macros.js
-  ${body.replace(/\n/g, '\n  ')}
-  // pass to function params
-  return window.mitm.macros
-})())`
+              body = __body2(app, global, body, body2)
             }
           } else {
-            body = `(function(global) {
-  // file: macros.js
-  ${body.replace(/\n/g, '\n  ')}
-  const {macros: macro1} = window.mitm
-  window.mitm.macros = {
-    ...global,
-    ...macro1,
-  }
-})((function() {
-  // file: _global_/macros.js
-  ${global.replace(/\n/g, '\n  ')}
-  // pass to function params
-  return window.mitm.macros
-})())`
+            body = __body1(global, body)
           }
         }
-        resp.body = 
-`// [Ctrl]+[Shift] => Hide/Show Buttons
-if (window._ws_connect===undefined) {
-  window._ws_connect = {}
-};\n
-window.mitm.fn.autoclick = ${autoclick + ''};\n
-window.mitm.fn.hotKeys = ${hotKeys + ''};\n
-window.mitm._macros_ = () => {
-  window.mitm.macrokeys = {};
-};\n
-window._ws_connect.macrosOnMount = data => {
-  console.log('macros code executed after ws open', data)
-};\n
-${body};\n`
+        resp.body = __autoKeys(body)
         resp.headers['content-type'] = 'application/javascript'
       }
     },
