@@ -26,8 +26,9 @@ module.exports = () => {
     },
     '!:hidden:/mitm-play/macros.js': {
       response: resp => {
-        let global = ''; let body = ''; let path;
-        path = `${argv.route}/_global_/macros.js`
+        let global = ''
+        let body = ''
+        let path = `${argv.route}/_global_/macros.js`
         if (fs.existsSync(path)) {
           global = `${fs.readFileSync(path)}`
         }

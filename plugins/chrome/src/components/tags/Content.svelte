@@ -75,7 +75,7 @@ function handleMessage(event) {
           <button data-_cols=3 on:click="{oneClick}">[full]</button>
           <button data-_cols=2 on:click="{oneClick}">[two]</button>
           <button data-_cols=1 on:click="{oneClick}">[one]</button>
-          <Chevron id="resize-tag3"/>
+          <Chevron {cols} id="resize-tag3"/>
         </BHeader>
         <BTable id="table-tags">
           <tr class="set-tags">
