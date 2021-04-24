@@ -105,11 +105,18 @@ async function evalPage(page, _page, msg, _frame='') {
   }
 }
 
+const regx = /[.T:-]/g
+function ids(prefix, ln=15) {
+  return prefix + (new Date()).toISOString().slice(0, ln).replace(regx, '')
+}
 module.exports = async function(page) {
-  const _page = 'page~' + (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
+  const _page = ids('page~')
 
   page._page = _page
-  global.mitm.__page[_page] = { session: {} }
+  global.mitm.__page[_page] = {
+    session: {},
+    iframes: {},
+  }
 
   page.on('worker', worker => {
     log(`xplay-page worker ${_page}`)
@@ -121,9 +128,9 @@ module.exports = async function(page) {
   })
 
   page.on('frameattached', async (frame) => {
-    const _frame = 'frame~' + (new Date()).toISOString().slice(0, 15).replace(/[T:-]/g, '')
     try {
-      global.mitm.__page[_frame] = { session: {} }
+      const _frame = ids('frame~', 23)
+      global.mitm.__page[_page].iframes[_frame] = frame
       await evalPage(frame, _page, 'xplay-page frame', _frame)
     } catch (error) {
       if (!error.message.match('Execution Context is not available')) {
