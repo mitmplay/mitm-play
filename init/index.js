@@ -35,6 +35,7 @@ module.exports = () => {
   console.log(c.red('\n[init/chokidar/*.js]'))
   // must be last or other watcher wont work
   require('./chokidar/profile')() // file watcher for profile // feat: profile
+  require('./chokidar/macros')() // file watcher for macros
   require('./chokidar/route')() // file watcher for routes
   require('./chokidar/logs')() // file watcher for logs
   require('./chokidar/md')() // file watcher for md
