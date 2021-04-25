@@ -25,18 +25,19 @@ window._ws_connect.macrosOnMount = data => {
   console.log('macros code executed after ws open', data)
 };
 
-(function(global, macro1) {
+(function(global, _body1) {
   // file: hi@macros.js
   let _body2 = require('./hi@macros.js')
   if (typeof _body2==='function') {
-    _body1 = _body2()
+    _body2 = _body2()
   }
   // macros.js + hi@macros.js
-  const {macros: macro2} = window.mitm
+  const {macros: macro1} = window.mitm
   window.mitm.macros = {
     ...global,
     ...macro1,
-    ...macro2,
+    ..._body1,
+    ..._body2
   }
 })((function() {
   // file: _global_/macros.js

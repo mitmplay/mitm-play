@@ -34,8 +34,8 @@ window._ws_connect.macrosOnMount = data => {
   const {macros: macro1} = window.mitm
   window.mitm.macros = {
     ...global,
-    ..._body1,
     ...macro1,
+    ..._body1,
   }
 })((function() {
   // file: _global_/macros.js

@@ -1,79 +1,4 @@
 const fs = require('fs-extra')
-// const logs = require('./fn/logs');
-
-const hotKeys = obj => {
-  window.mitm.macrokeys = {
-    ...window.mitm.macrokeys,
-    ...obj
-  }
-}
-
-const autoclick = () => {
-  setTimeout(() => {
-    document.querySelector('.btn-autofill').click()
-  }, 1000)
-}
-
-function __body2(app, _global, _body1, _body2) {
-return (
-`(function(global, macro1) {
-  // file: ${app}@macros.js
-  ${_body2.replace(/\n/g, '\n  ')}
-  // macros.js + ${app}@macros.js
-  const {macros: macro2} = window.mitm
-  window.mitm.macros = {
-    ...global,
-    ...macro1,
-    ...macro2,
-  }
-})((function() {
-  // file: _global_/macros.js
-  ${_global.replace(/\n/g, '\n  ')}
-  // pass to function params
-  return window.mitm.macros
-})(), (function() {
-  // file: macros.js
-  ${_body1.replace(/\n/g, '\n  ')}
-  // pass to function params
-  return window.mitm.macros
-})())`)
-}
-
-function __body1(_global, _body1) {
-return (`
-(function(global) {
-  // file: macros.js
-  ${_body1.replace(/\n/g, '\n  ')}
-  const {macros: macro1} = window.mitm
-  window.mitm.macros = {
-    ...global,
-    ...macro1,
-  }
-})((function() {
-  // file: _global_/macros.js
-  ${_global.replace(/\n/g, '\n  ')}
-  // pass to function params
-  return window.mitm.macros
-})())`).replace(/\n/, '')
-}
-
-function __autoKeys(body) {
-return (`
-// [Ctrl] + [Alt] + [A] => run hotkey KeyA
-// [Ctrl] + [Shift] => Hide / Show Buttons
-if (window._ws_connect===undefined) {
-  window._ws_connect = {}
-};\n
-window.mitm.fn.autoclick = ${autoclick + ''};\n
-window.mitm.fn.hotKeys = ${hotKeys + ''};\n
-window.mitm._macros_ = () => {
-  window.mitm.macrokeys = {};
-};\n
-window._ws_connect.macrosOnMount = data => {
-  console.log('macros code executed after ws open', data)
-};\n
-${body};\n`).replace(/\n/, '')
-}
 
 module.exports = () => {
   const { argv, fn: { _tldomain, _nameSpace } } = global.mitm
@@ -87,30 +12,25 @@ module.exports = () => {
     },
     '!:hidden:/mitm-play/macros.js': {
       response: resp => {
-        let global = ''
         let body = ''
-        let path = `${argv.route}/_global_/macros.js`
-        if (fs.existsSync(path)) {
-          global = `${fs.readFileSync(path)}`
-        }
         const namespace = _nameSpace(_tldomain(resp.url))
         if (namespace) {
-          const [app, domain] = namespace.split('@')
-          path = `${argv.route}/${domain||app}/macros.js`
+          if (namespace.match('@')) {
+            const [app, domain] = namespace.split('@')
+            path = `${argv.route}/${domain}/${app}@bundle.js`
+          } else {
+            path = `${argv.route}/${domain}/bundle.js`
+          }
           if (fs.existsSync(path)) {
             body = `${fs.readFileSync(path)}`
-          }
-          if (domain) {
-            path = `${argv.route}/${domain}/${app}@macros.js`
-            if (fs.existsSync(path)) {
-              const body2 = `${fs.readFileSync(path)}`
-              body = __body2(app, global, body, body2)
-            }
           } else {
-            body = __body1(global, body)
+            path = `${argv.route}/_global_/bundle.js`
+            if (fs.existsSync(path)) {
+              body = `${fs.readFileSync(path)}`
+            }
           }
         }
-        resp.body = __autoKeys(body)
+        resp.body = body
         resp.headers['content-type'] = 'application/javascript'
       }
     },

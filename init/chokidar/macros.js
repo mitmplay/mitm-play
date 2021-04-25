@@ -48,8 +48,8 @@ return (`
   const {macros: macro1} = window.mitm
   window.mitm.macros = {
     ...global,
-    ..._body1,
     ...macro1,
+    ..._body1,
   }
 })((function() {
   // file: _global_/macros.js
@@ -61,18 +61,19 @@ return (`
   
 function __body2(app, _global, _body1, _body2) {
 return (
-`(function(global, macro1) {
+`(function(global, _body1) {
   // file: ${app}@macros.js
   ${_body2.replace(/\n/g, '\n  ')}
   if (typeof _body2==='function') {
-    _body1 = _body2()
+    _body2 = _body2()
   }
   // macros.js + ${app}@macros.js
-  const {macros: macro2} = window.mitm
+  const {macros: macro1} = window.mitm
   window.mitm.macros = {
     ...global,
     ...macro1,
-    ...macro2,
+    ..._body1,
+    ..._body2
   }
 })((function() {
   // file: _global_/macros.js
@@ -132,8 +133,8 @@ function genBuild(msg, fpath) {
       return
     }
     const opath = fpath.replace('macros.js', 'bundle.js')
-    // bundleEsbuild(bpath, opath)
-    bundleRollup(bpath, opath)
+    bundleEsbuild(bpath, opath)
+    // bundleRollup(bpath, opath)
   })
 }
 

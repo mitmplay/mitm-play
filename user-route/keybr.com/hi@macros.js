@@ -1,8 +1,11 @@
-const lol = require('./_macros_/test')
-const hello = 'hi macros'
+module.exports = () => {
+  const lol = require('./_macros_/test')
+  const hello = 'hi macros'
 
-window.mitm.macros = {
-    one: '1',
-    two: '2'
+  window.mitm.macros = {
+      one: '1',
+      two: '2'
+  }
+  console.log(lol)
+  return window.mitm.macros
 }
-console.log(lol)
