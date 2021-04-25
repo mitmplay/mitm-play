@@ -1,0 +1,57 @@
+{
+  "general": {
+    "ext": "css",
+    "status": 200,
+    "method": "GET",
+    "url": "https://www.speedtypingonline.com/css/_a_main2.css?v=53"
+  },
+  "respHeader": {
+    "date": "Sun, 25 Apr 2021 02:44:12 GMT",
+    "content-type": "text/css",
+    "transfer-encoding": "chunked",
+    "connection": "keep-alive",
+    "cache-control": "public, max-age=2419200",
+    "cf-bgj": "minify",
+    "cf-polished": "origSize=53425",
+    "etag": "W/\"d0b1-5bf05ab63e19a-gzip\"",
+    "last-modified": "Fri, 02 Apr 2021 23:25:54 GMT",
+    "vary": "Accept-Encoding",
+    "cf-cache-status": "HIT",
+    "age": "161153",
+    "cf-request-id": "09a882d4700000561b3d04e000000001",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "report-to": {
+      "group": "cf-nel",
+      "endpoints": [
+        {
+          "url": "https://a.nel.cloudflare.com/report?s=oDpMEii3rlp3Jv1hbMHqenZRkJnXL0qxVuRLqA9ES8WYRuRXP9ZRpLkGGsLAApQx88fLYnnO3ZdjE90zwY3I1XhmOlUY3%2BE%2F60l99YJnLkIW%2B7YkQxhyg3dJ"
+        }
+      ],
+      "max_age": 604800
+    },
+    "nel": "{\"max_age\":604800,\"report_to\":\"cf-nel\"}",
+    "server": "cloudflare",
+    "cf-ray": "64543a6719d2561b-SIN",
+    "content-encoding": "gzip",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-fetch-attempts": "1",
+    "header-size": "1074 ~est"
+  },
+  "reqsBody": "",
+  "reqsHeader": {
+    "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"90\"",
+    "sec-ch-ua-mobile": "?0",
+    "xplay-page": "page~20210425024",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.0 Safari/537.36",
+    "xplay-session": "session~2021042502441",
+    "accept": "text/css,*/*;q=0.1",
+    "referer": "https://www.speedtypingonline.com/typing-test",
+    "cookie": {
+      "PHPSESSID": "5df7htm9m5s3daa634d2h1nut3",
+      "__cfduid": "d871b4dd671fa85292bd0cc1e66703ba51618934700",
+      "__gads": "ID",
+      "_ga": "GA1.2.1088307205.1618934700",
+      "loginRedirect": "%2Ftyping-test"
+    }
+  }
+}

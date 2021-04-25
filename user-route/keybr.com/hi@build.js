@@ -27,14 +27,10 @@ window._ws_connect.macrosOnMount = data => {
 
 (function(global, macro1) {
   // file: hi@macros.js
-  const lol = require('./_macros_/test')
-  const hello = 'hi macros'
-  
-  window.mitm.macros = {
-      one: '1',
-      two: '2'
+  let _body2 = require('./hi@macros.js')
+  if (typeof _body2==='function') {
+    _body1 = _body2()
   }
-  console.log(lol)
   // macros.js + hi@macros.js
   const {macros: macro2} = window.mitm
   window.mitm.macros = {
@@ -44,37 +40,12 @@ window._ws_connect.macrosOnMount = data => {
   }
 })((function() {
   // file: _global_/macros.js
-  const hello = 'global'
-  
-  window.mitm.macros = {global: '0'}
-  
-  // pass to function params
-  return window.mitm.macros
+  let _global = require('../_global_/macros')
+  if (typeof _global==='function') { return _global()
+  } else if (_global!==undefined ) { return _global }
 })(), (function() {
   // file: macros.js
-  const hello = 'world'
-  
-  window.mitm.macros = {
-    '/'() {
-      console.log('olah')
-      window.mitm.macrokeys = {
-        'KeyA'() {
-          console.log('KeyA')
-          alert('Alert KeyA')
-        }
-      }
-      window.mitm.autobuttons = {
-        'one|yellow'() {
-          console.log('one')
-          return [
-            'input[type="password"] => password'
-          ]
-        },
-      }
-    },
-    zero: '0'
-  }
-  
-  // pass to function params
-  return window.mitm.macros
+  let _body1 = require('./macros')
+  if (typeof _body1==='function') { return _body1()
+  } else if (_body1!==undefined ) { return _body1 }
 })());

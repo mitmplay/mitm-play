@@ -27,21 +27,19 @@ window._ws_connect.macrosOnMount = data => {
 
 (function(global) {
   // file: macros.js
-  const hello = 'global'
-  
-  window.mitm.macros = {global: '0'}
-  
+  let _body1 = require('./macros')
+  if (typeof _body1==='function') {
+    _body1 = _body1()
+  }
   const {macros: macro1} = window.mitm
   window.mitm.macros = {
     ...global,
+    ..._body1,
     ...macro1,
   }
 })((function() {
   // file: _global_/macros.js
-  const hello = 'global'
-  
-  window.mitm.macros = {global: '0'}
-  
-  // pass to function params
-  return window.mitm.macros
+  let _global = require('../_global_/macros')
+  if (typeof _global==='function') { return _global()
+  } else if (_global!==undefined ) { return _global }
 })());
