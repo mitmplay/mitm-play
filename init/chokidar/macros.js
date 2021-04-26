@@ -19,6 +19,12 @@ const autoclick = () => {
   }, 1000)
 }
 
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 function __autoKeys(body) {
 return (`
 // [Ctrl] + [Alt] + [A] => run hotkey KeyA
@@ -26,6 +32,7 @@ return (`
 if (window._ws_connect===undefined) {
   window._ws_connect = {}
 }
+window.mitm.fn.getCookie = ${getCookie + ''}
 window.mitm.fn.autoclick = ${autoclick + ''}
 window.mitm.fn.hotKeys = ${hotKeys + ''}
 window.mitm._macros_ = () => {

@@ -19,11 +19,16 @@ module.exports = () => {
     return { path, msg }
   }
 
+  let debunk
   function setButtons () {
     if (window.mitm.autobuttons) {
       const { autobuttons } = window.mitm
       buttons.innerHTML = ''
-      setTimeout(() => {
+      if (debunk) {
+        clearTimeout(debunk)
+        debunk = undefined
+      }
+      debunk = setTimeout(() => {
         for (const key in autobuttons) {
           const btn = document.createElement('button')
           const br = document.createElement('span')
