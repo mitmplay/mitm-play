@@ -22,6 +22,7 @@ module.exports = () => {
   function setButtons () {
     if (window.mitm.autobuttons) {
       const { autobuttons } = window.mitm
+      buttons.innerHTML = ''
       setTimeout(() => {
         for (const key in autobuttons) {
           const btn = document.createElement('button')
@@ -53,7 +54,6 @@ module.exports = () => {
     }
     if (window.mitm.autobuttons) {
       delete window.mitm.autobuttons
-      buttons.innerHTML = ''
     }
     if (window.mitm.macrokeys) {
       delete window.mitm.macrokeys
