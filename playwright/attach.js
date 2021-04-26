@@ -74,7 +74,16 @@ async function evalPage(page, _page, msg, _frame='') {
       grey(page, 'detached-1! frame')
     }
   } else if (page) {
+    let isclosed;
     try {
+      if (typeof page.page==='function') {
+        isclosed = page.page().isClosed()
+      } else {
+        isclosed = page.isClosed()
+      }
+      if (isclosed) {
+        return
+      }
       const state = {state: 'attached'}
       await page.waitForSelector('html', state)
       await log(`${msg} ${_page} ${c.blue(msg1)}${_frame ? _frame+' ' : ''}${msg2}`)
@@ -97,8 +106,10 @@ async function evalPage(page, _page, msg, _frame='') {
           grey(page, 'closed! page')
         } else if (message.match('crashed!')) {
           grey(page, 'crashed page')
+        } else if (message.match('destroyed')) {
+          // ignore...
         } else {
-          console.log('IFRAME ERROR', error)
+          console.log('PAGE/IFRAME ERROR')
         }
       }
     }
