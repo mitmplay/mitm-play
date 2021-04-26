@@ -15,16 +15,16 @@ module.exports = () => {
         let body = ''
         const namespace = _nameSpace(_tldomain(resp.url))
         if (namespace) {
+          const [app, domain] = namespace.split('@')
           if (namespace.match('@')) {
-            const [app, domain] = namespace.split('@')
-            path = `${argv.route}/${domain}/${app}@bundle.js`
+            path = `${argv.route}/${domain}/_bundle_/${app}@macros.js`
           } else {
-            path = `${argv.route}/${domain}/bundle.js`
+            path = `${argv.route}/${app}/_bundle_/macros.js`
           }
           if (fs.existsSync(path)) {
             body = `${fs.readFileSync(path)}`
           } else {
-            path = `${argv.route}/_global_/bundle.js`
+            path = `${argv.route}/_global_/_bundle_/macros.js`
             if (fs.existsSync(path)) {
               body = `${fs.readFileSync(path)}`
             }

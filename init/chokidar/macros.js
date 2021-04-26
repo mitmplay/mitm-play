@@ -25,68 +25,55 @@ return (`
 // [Ctrl] + [Shift] => Hide / Show Buttons
 if (window._ws_connect===undefined) {
   window._ws_connect = {}
-};\n
-window.mitm.fn.autoclick = ${autoclick + ''};\n
-window.mitm.fn.hotKeys = ${hotKeys + ''};\n
+}
+window.mitm.fn.autoclick = ${autoclick + ''}
+window.mitm.fn.hotKeys = ${hotKeys + ''}
 window.mitm._macros_ = () => {
-  window.mitm.macrokeys = {};
-};\n
+  window.mitm.macrokeys = {}
+}
 window._ws_connect.macrosOnMount = data => {
   console.log('macros code executed after ws open', data)
-};\n
-${body};\n`).replace(/\n/, '')
 }
-  
-function __body1(_global, _body1) {
+${body}\n`).replace(/\n/, '')}
+
+function __body1(global, _body1) {
 return (`
-(function(global) {
-  // file: macros.js
-  ${_body1.replace(/\n/g, '\n  ')}
-  if (typeof _body1==='function') {
-    _body1 = _body1()
-  }
-  const {macros: macro1} = window.mitm
-  window.mitm.macros = {
-    ...global,
-    ...macro1,
-    ..._body1,
-  }
-})((function() {
-  // file: _global_/macros.js
-  ${_global.replace(/\n/g, '\n  ')}
-  if (typeof _global==='function') { return _global()
-  } else if (_global!==undefined ) { return _global }
-})())`).replace(/\n/, '')
+const {macros} = window.mitm
+${_body1}
+if (typeof _body1==='function') {
+  _body1 = _body1()
 }
-  
+${global}
+if (typeof global==='function') { 
+  global = global()
+}
+window.mitm.macros = {
+  ...global,
+  ...macros,
+  ..._body1,
+}`).replace(/\n/, '')}
+
 function __body2(app, _global, _body1, _body2) {
-return (
-`(function(global, _body1) {
-  // file: ${app}@macros.js
-  ${_body2.replace(/\n/g, '\n  ')}
-  if (typeof _body2==='function') {
-    _body2 = _body2()
-  }
-  // macros.js + ${app}@macros.js
-  const {macros: macro1} = window.mitm
-  window.mitm.macros = {
-    ...global,
-    ...macro1,
-    ..._body1,
-    ..._body2
-  }
-})((function() {
-  // file: _global_/macros.js
-  ${_global.replace(/\n/g, '\n  ')}
-  if (typeof _global==='function') { return _global()
-  } else if (_global!==undefined ) { return _global }
-})(), (function() {
-  // file: macros.js
-  ${_body1.replace(/\n/g, '\n  ')}
-  if (typeof _body1==='function') { return _body1()
-  } else if (_body1!==undefined ) { return _body1 }
-})())`)
+return (`
+const {macros} = window.mitm
+${_body1}
+if (typeof _body1==='function') { 
+  _body1 = _body1()
 }
+${_body2}
+if (typeof _body2==='function') {
+  _body2 = _body2()
+}
+${_global}
+if (typeof global==='function') { 
+  global = global()
+}
+window.mitm.macros = {
+  ...global,
+  ...macros,
+  ..._body1,
+  ..._body2
+}`).replace(/\n/, '')}
 
 function genBuild(msg, fpath) {
   const {argv,win32} = global.mitm
@@ -102,20 +89,20 @@ function genBuild(msg, fpath) {
   const rpath = fpath.replace(`${argv.route}/`, '')
   console.log(c.red(`${msg}: ${rpath}`))
 
-  path = `${argv.route}/_global_/macros.js`
+  path = `${argv.route}/_global_/_macros_/macros.js`
   if (fs.existsSync(path)) {
-    _global = `let _global = require('../_global_/macros')`
+    _global = `let global = require('../../_global_/_macros_/macros')`
   }
 
-  const [folder, file, other] = rpath.split('/')
+  const [folder, fmacro, file, other] = rpath.split('/')
   if (other===undefined) {
-    path = `${argv.route}/${folder}/macros.js`
+    path = `${argv.route}/${folder}/${fmacro}/macros.js`
     if (fs.existsSync(path)) {
       _body1 = `let _body1 = require('./macros')`
     }
     if (file.match('@')) {
       const [app] = file.split('@')
-      path = `${argv.route}/${folder}/${file}`
+      path = `${argv.route}/${folder}/${fmacro}/${file}`
       if (fs.existsSync(path)) {
         _body2 = `let _body2 = require('./${file}')`
         body = __body2(app, _global, _body1, _body2)
@@ -126,13 +113,13 @@ function genBuild(msg, fpath) {
   }
   body = __autoKeys(body)
   const bpath = fpath.replace('macros.js', 'build.js')
-  console.log(c.redBright('Write'), bpath)
+  // console.log(c.redBright('Write'), bpath)
   fs.writeFile(bpath, body, err => {
     if (err) {
       console.log(c.redBright('Error saving'), err)
       return
     }
-    const opath = fpath.replace('macros.js', 'bundle.js')
+    const opath = fpath.replace('_macros_', '_bundle_')
     bundleEsbuild(bpath, opath)
     // bundleRollup(bpath, opath)
   })
@@ -155,8 +142,8 @@ function delMacro (path) {
 module.exports = () => {
   const {argv} = global.mitm
   const glob = [
-    `${argv.route}/*/macros.js`,
-    `${argv.route}/*/*@macros.js`,
+    `${argv.route}/*/_macros_/macros.js`,
+    `${argv.route}/*/_macros_/*@macros.js`,
   ]
 
   // Initialize watcher.
@@ -181,6 +168,8 @@ function bundleEsbuild(bpath, opath) {
     // minify: true,
     sourcemap: 'inline',
     target: ['chrome89'],
+  }).then(prm => {
+    fs.removeSync(bpath)
   }).catch(() => process.exit(1))  
 }
 

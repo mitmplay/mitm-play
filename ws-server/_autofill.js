@@ -4,9 +4,14 @@ module.exports = async ({ data }) => {
   const page = await global.mitm.browsers[browser].currentTab(_page, _frame)
 
   console.log(c.greenBright('>>> autofill'))
+  let lastObj;
   for (let obj of autofill) {
     if (typeof (obj) === 'string') {
       console.log(c.greenBright(`   ${obj}`))
+      if (obj.match(/^ *[=-]>/)) {
+        obj = `${lastObj.split(/^(.+)([=-]>)/)[1]}${obj}`
+      }
+      lastObj = obj
       const [selector, typ, value] = obj.match(/^(.+)([=-]>)(.+)$/).slice(1).map(x => x.trim())
       if (typ === '=>') {
         obj = { selector, value }

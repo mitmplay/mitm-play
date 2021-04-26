@@ -55,6 +55,8 @@ module.exports = () => {
       if (s[macros]) {
         title = macros
         content = s[macros]
+        const file = fpath.split('/').pop()
+        fpath = fpath.replace(file, `_macros_/${file}`) // feat: _macros_
         fpath = fpath.replace('index.js', 'macros.js')
         files[macros] = {
           path,

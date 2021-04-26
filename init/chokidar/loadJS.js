@@ -33,7 +33,9 @@ function loadJS (path, msg, fn) {
         }
         global.mitm.source[key] = data
         if (r) {
-          const macros = path.replace('index.js', 'macros.js')
+          const file = path.split('/').pop()
+          let macros = path.replace(file, `_macros_/${file}`) // feat: _macros_
+          macros = macros.replace('index.js', 'macros.js')
           fs.access(macros, fs.F_OK, (err) => {
             if (!err) {
               fs.readFile(macros, 'utf8', function (err, data) {

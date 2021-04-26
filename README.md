@@ -1116,26 +1116,28 @@ When creating rule for specific website site (ie: **autologin to gmail**), insid
 ```bash
 # folder
 ./accounts.google.com/index.js
-./accounts.google.com/macros.js
+./accounts.google.com/_macros_/macros.js
 ```
 ```js
-// macros.js
-window.mitm.macros = {
-  '^/signin/v2/identifier?'() {
-    console.log('login to google account...!');
-    window.mitm.autofill = [
-      '#identifierId => myemailname',
-      '#identifierId -> press ~> Enter',
-    ];
-    //document.querySelector('.btn-autofill').click() // executed when loaded
-  },
-  '^/signin/v2/challenge/pwd?'() {
-    window.mitm.autofill = [
-      'input[type="password"] => password',
-      'input[type="password"] -> press ~> Enter',
-    ];
-    //document.querySelector('.btn-autofill').click() // executed when loaded
-  },
+// .../_macros_/macros.js
+module.exports = () => {
+  return {
+    '^/signin/v2/identifier?'() {
+      console.log('login to google account...!');
+      window.mitm.autofill = [
+        '#identifierId => myemailname',
+        '#identifierId -> press ~> Enter',
+      ];
+      //document.querySelector('.btn-autofill').click() // executed when loaded
+    },
+    '^/signin/v2/challenge/pwd?'() {
+      window.mitm.autofill = [
+        'input[type="password"] => password',
+        'input[type="password"] -> press ~> Enter',
+      ];
+      //document.querySelector('.btn-autofill').click() // executed when loaded
+    }
+  }
 }
 ```
 ```js
@@ -1169,8 +1171,8 @@ list of `key.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEv
 <details><summary><b>Example</b></summary>
 
 ```js
-// macros.js
-window.mitm.macros = {
+// .../_macros_/macros.js
+module.exports = () => {
   '^/signin/v2/identifier?'() {
     window.mitm.macrokeys = {
       'KeyA'() {

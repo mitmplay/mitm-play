@@ -1,7 +1,7 @@
 const {requires} = global.mitm.fn
 const [lol] = requires('./reload')
 
-lol()
+lol(0)
 
 const route = {
   urls: {
