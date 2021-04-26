@@ -92,6 +92,8 @@ function genBuild(msg, fpath) {
   path = `${argv.route}/_global_/_macros_/macros.js`
   if (fs.existsSync(path)) {
     _global = `let global = require('../../_global_/_macros_/macros')`
+  } else {
+    _global = 'let global = {}'
   }
 
   const [folder, fmacro, file, other] = rpath.split('/')
@@ -99,14 +101,18 @@ function genBuild(msg, fpath) {
     path = `${argv.route}/${folder}/${fmacro}/macros.js`
     if (fs.existsSync(path)) {
       _body1 = `let _body1 = require('./macros')`
+    } else {
+      _body1 = `let _body1 = {}`
     }
     if (file.match('@')) {
       const [app] = file.split('@')
       path = `${argv.route}/${folder}/${fmacro}/${file}`
       if (fs.existsSync(path)) {
         _body2 = `let _body2 = require('./${file}')`
-        body = __body2(app, _global, _body1, _body2)
+      } else {
+        _body2 = `let _body2 = {}`
       }
+      body = __body2(app, _global, _body1, _body2)
     } else {
       body = __body1(_global, _body1)
     }
