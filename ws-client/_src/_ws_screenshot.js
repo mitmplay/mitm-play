@@ -42,11 +42,13 @@ function screenshot (e) {
         e.stopPropagation()
         e.preventDefault()
         setTimeout(() => {
-          // console.log('>>> clicked');
           act = window.mitm.screenshot
-          window.mitm.screenshot = undefined
-          act.click()
-          act = undefined
+          if (act) {
+            act.click()
+            act = undefined  
+          } else {
+            console.log('delay action undefined');
+          }
         }, delay)
       }
       return
