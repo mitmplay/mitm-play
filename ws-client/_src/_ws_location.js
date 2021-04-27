@@ -32,13 +32,15 @@ module.exports = () => {
         for (const key in autobuttons) {
           const btn = document.createElement('button')
           const br = document.createElement('span')
-          const [caption, color] = key.split('|')
+          const [caption, color, klas] = key.split('|')
           const ev = autobuttons[key]
           btn.onclick = e => {
             const arr = ev(e)
             Array.isArray(arr) && play(arr)
           }
           btn.innerText = caption
+          btn.classList.add('mitm-btn')
+          btn.classList.add(klas || caption)
           buttons.appendChild(btn)
           buttons.appendChild(br)
           br.innerHTML = '&nbsp;'
