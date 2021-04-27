@@ -44,7 +44,7 @@ function screenshot (e) {
         setTimeout(() => {
           // console.log('>>> clicked');
           act = window.mitm.screenshot
-          window.mitm.screenshot.node = undefined
+          window.mitm.screenshot = undefined
           act.click()
           act = undefined
         }, delay)
