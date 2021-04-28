@@ -75,6 +75,7 @@ module.exports = async ({ data }) => {
         await page.goto(options)
       } else if (action === 'close') {
         await page.close()
+        await oldPage.bringToFront()
         page = oldPage
       } else if (action === 'save') {
         const obj2 = await page.$eval(selector, (e, opt) => {
