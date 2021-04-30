@@ -63,7 +63,9 @@ function routetag(tags, item) {
 function show(item) {
   const short = {request: 'reqs', response: 'resp'}
   const [k,v] = item.split(':');
-  if (v===undefined) return k;
+  if (v===undefined) {
+    return `${k} `
+  };
   return `${v}{${short[k] || k}}`;
 }
 
@@ -178,9 +180,12 @@ summary.space1 {
   padding-left: 5px;
 }
 summary.space1 .link-tags {
-  /* vertical-align: 25%; */
-  /* font-style: italic; */
   margin-left: -6px;
+}
+.space1 .link-tags {
+  margin-left: -1px;
+}
+.space1 .link-tags {
   font-size: 10px;
   font-family: roboto;
   color: darkmagenta;

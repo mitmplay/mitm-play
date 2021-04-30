@@ -106,10 +106,8 @@ function itemlist(tagsStore, rerender) {
             if (!Array.isArray(arr)) {
               for (const url in arr) {
                 const path = noTagInRule(url)
-                if (!isRuleOff(window.mitm, ns, path)) {
-                  const _path = addUrls(url)
-                  addUrl2(sec, _path, [tag])
-                }
+                const _path = addUrls(url)
+                addUrl2(sec, _path, [tag])
               }
             } else {
               for (const url of arr) {

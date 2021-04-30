@@ -69,6 +69,17 @@ const tags = function (_ns) {
         } else {
           tags[typ] = true
         }
+      } else { // feat: tag3 inside tag2 and depend to tag1 
+        for (const id in node) {
+          const [typ, tags] = id.split(':')
+          if (tags) {
+            if (node[typ]===undefined) {
+              node[typ] = [typ, id]
+            } else if (!node[typ].includes(id)) {
+              node[typ] = node[typ].concat(node[id])
+            }
+          }
+        }
       }
     }
     atags[namespace] = tags

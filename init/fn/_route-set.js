@@ -2,8 +2,8 @@ const c = require('ansi-colors')
 const typs = require('./_typs')
 
 const { typC, typA, typO } = typs
-const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
-const tgInUrl = /:[\w.#~-]+:/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \w.#~-]+:|)(.+)/ // feat: tags in url
+const tgInUrl = /:[ \w.#~-]+:/ // feat: tags in url
 
 function toRegex (str, flags = '') {
   return new RegExp(str
@@ -159,15 +159,20 @@ function _routeSet (_r, namespace, file) {
           const arr = site.tags.split(/ +/)
           for (const tag of arr) {
             tag3.tags[tag] = true // feat: update __tag3
-            tags[tag] = {state: true} // feat: update __tag2
+            tags[tag] = {state: true, tags: typ.split(/ +/).slice(1)} // feat: update __tag2
           }
         }
         // feat: tags in url
         if (str.match(tgInUrl) && method[2]!=='hidden:') {
+          const [utg, ...tag1] = method[2].split(':')[0].split(/ +/)
+          const path = str.split(':').pop()
           tag3 = _nsstag(typ, str)
-          const tag = `url:${method[2].split(':')[0]}`
+          if (tag1) {
+            tag3.tag1 = tag1
+          }
+          const tag = `url:${utg}`
           tag3.tags[tag] = true // feat: update __tag3
-          tags[tag] = {state: true} // feat: update __tag2
+          tags[tag] = { state: true, tags: tag1, path } // feat: update __tag2
         }
         if (tag3 && ptags) {
           const arr = ptags.split(/ +/)

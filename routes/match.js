@@ -82,8 +82,8 @@ const searchArr = ({url, method, browserName, typ: typs}) => {
   }
 }
 
-function checkTags(tg3, typ, key) {
-  const { rmethod } = global.mitm.fn
+function checkTags(tg1, tg2, tg3, typ, key) {
+  const {fn:{rmethod}} = global.mitm
   let isTagsOk = true
   let str = key
   const arrTag = str.match(rmethod)
@@ -91,29 +91,42 @@ function checkTags(tg3, typ, key) {
     const [, method,, path] = arrTag          // feat: tags in url
     str = method ? `${method}:${path}` : path // remove from url
   }
-  const typ3 = typ.split(':')[0]
+  const [typ3, tags] = typ.split(':') // feat: tag3 inside tag2
   if (tg3[str] && tg3[str][typ3]) {
     const nodes = tg3[str][typ3]
-    for (const tag in nodes) {
-      if (nodes[tag] === false) {
+    const _tag2 = tg2[nodes.tag2]
+    for (const tag in nodes.tags) { // feat: tag3=false and no tag2=true
+      if (nodes.tags[tag] === false && !(_tag2 && _tag2.state)) {
         isTagsOk = false
         break
+      } else {
+        let skip = true
+        for (const tag of nodes.tag1) { //feat: tag3 depend to tag1
+          if (tg1[tag]) {
+            skip = false
+            break
+          }
+        }
+        if (skip) {
+          isTagsOk = false
+        }
       }
     }
-  }
+  } 
   return isTagsOk
 }
 
 const searchFN = (typs, { url, method, browserName }) => {
-// const {router,routes, data} = global.mitm;
-  const { __args, __tag3, router, routes } = global.mitm
+  const { __args, __tag1, __tag2, __tag3, router, routes } = global.mitm
 
   return function search (nspace) {
     const namespace = _nameSpace(nspace)
     if (!namespace) {
       return
     }
-
+    const tg1 = __tag1[namespace]
+    const tg2 = __tag2[namespace]
+    const tg3 = __tag3[namespace] || {}
     let workspace = routes[namespace].workspace
     if (workspace) {
       workspace = home(workspace)
@@ -126,10 +139,9 @@ const searchFN = (typs, { url, method, browserName }) => {
       //   debugger;
       const route = routes[namespace][typ]
       const obj = router[namespace][typ]
-      const tg3 = __tag3[namespace] || {}
 
       for (const key in route) {
-        let isTagsOk = checkTags(tg3, typ, key)
+        let isTagsOk = checkTags(tg1, tg2, tg3, typ, key)
 
         const arr = isTagsOk && url.match(obj[key])
         const _m = obj[`${key}~method`]
