@@ -18,17 +18,27 @@ onMount(async () => {
 
 const routeHandler = obj => {
   console.warn('ws__send(getRoute)', obj);
+  window.mitm.routel = obj.routel
   window.mitm.routes = obj.routes
   window.mitm.routez = obj.routez
   list.set({
     ...$list,
+    routel:  obj.routel,
     routez: obj.routez
   })
   const {routes} = window.mitm
-  for (const id in obj.routes) {
-    const [sub, nspace] = id.split('@')
-    if (nspace) {
-      routes[id]._childns = routes[nspace]._childns || {list: {}, _subns: ''}
+  for (const _ns in obj.routel) {
+    const {list} = obj.routel[_ns]
+    for (const itm in list) {
+      routes[itm]._childns = obj.routel[_ns]
+    }
+    const {_childns: _childold} = routes[_ns]
+    routes[_ns]._childns = obj.routel[_ns]
+    const {_childns} = routes[_ns]
+    if (_childold && _childold._subns) {
+      const {_subns} = _childold
+      _childns.list[_subns] = true
+      _childns._subns = _subns
     }
   }
   if (obj._tags_) {

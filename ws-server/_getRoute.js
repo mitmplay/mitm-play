@@ -24,7 +24,17 @@ module.exports = () => {
     __tag4
   } = global.mitm
   const routez = Object.keys(r).filter(x=>!x.match('@'))
+  const routey = Object.keys(r).filter(x=>x.match('@'))
+  const routel = {} // feat: reference to _subns route
+  for (const item of routey) {
+    const [itm, ns] = item.split('@')
+    if (!routel[ns]) {
+      routel[ns] = {list: {}, _subns: ''}
+    }
+    routel[ns].list[item] = false
+  }
   const data = {
+    routel,
     routes,
     routez,
     files,
