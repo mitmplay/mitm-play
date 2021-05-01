@@ -133,7 +133,7 @@ function _routeSet (_r, namespace, file) {
     }
     const nss = urls[str]
     if (nss[typ] === undefined) {
-      nss[typ] = {tags: {}, note: ''}
+      nss[typ] = {note: '', tags: {}, tag1: []}
     }
     return nss[typ] // feat: update __tag3
   }
