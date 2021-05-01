@@ -88,7 +88,7 @@ function itemlist(tagsStore, rerender) {
             }
           } else if (sec.match(':')) {
             let skip = false
-            const tags = tag2.tags || []
+            const tags = tag2.tag1 || []
             for (const tag of tags) {
               if (__tag1[ns][tag]===false) {
                 skip = true

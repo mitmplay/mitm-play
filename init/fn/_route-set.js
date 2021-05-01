@@ -85,16 +85,18 @@ function _routeSet (_r, namespace, file) {
 
   const _typlist = function (typs) {
     const typlist = Object.keys(r).filter(x => {
-      const [sec, _tags] = x.split(':') // ie: 'css:1.no-ads active': {...}
-      if (sec===typs) {
+      const secs = r[x]
+      const [typ, _tags] = x.split(':') // ie: 'css:1.no-ads active': {...}
+      if (typ===typs) {
         if (_tags) {
-          const arr = _tags.split(/ +/)
-          const tag = `${sec}:${arr.shift()}`
-          if (arr.length) {
-            tags[tag] = {state: true, tags: arr} // feat: update __tag2  
-          } else {
-            tags[x] = {state: true} // feat: update __tag2
+          const path = []
+          for (const str in secs) {
+            const arr = str.match(rmethod)
+            path.push(arr ? arr[3] : str)
           }
+          const [tag, ...tag1] = _tags.split(/ +/)
+          const id = tag1.length ? `${typ}:${tag}` : x
+          tags[id] = {state: true, tag1, typ, path} // feat: update __tag2
         }
         return true
       }
@@ -158,27 +160,23 @@ function _routeSet (_r, namespace, file) {
           }
           const arr = site.tags.split(/ +/)
           for (const tag of arr) {
-            tag3.tags[tag] = true // feat: update __tag3
-            tags[tag] = {state: true, tags: typ.split(/ +/).slice(1)} // feat: update __tag2
+            tag3.tags[tag] = true
           }
         }
         // feat: tags in url
         if (str.match(tgInUrl) && method[2]!=='hidden:') {
           const [utg, ...tag1] = method[2].split(':')[0].split(/ +/)
-          const path = str.split(':').pop()
+          const path = [str.split(':').pop()]
           tag3 = _nsstag(typ, str)
-          if (tag1) {
-            tag3.tag1 = tag1
-          }
+          tag3.tag1 = tag1
           const tag = `url:${utg}`
           tag3.tags[tag] = true // feat: update __tag3
-          tags[tag] = { state: true, tags: tag1, path } // feat: update __tag2
+          tags[tag] = { state: true, tag1, typ, path } // feat: update __tag2
         }
         if (tag3 && ptags) {
-          const arr = ptags.split(/ +/)
-          const tag2 = arr.shift()
+          const [tag2, ...tag1] = ptags.split(/ +/)
           tag3.ptyp = ptyp
-          tag3.tag1 = arr
+          tag3.tag1 = tag1
           tag3.tag2 = `${ptyp}:${tag2}`
         }
 

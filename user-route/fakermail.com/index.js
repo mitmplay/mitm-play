@@ -10,7 +10,9 @@ h1,nav,span.text-gray-500,.py-12.bg-white,.absolute.inset-0,
 const route = {
   url: 'https://fakermail.com/',
   css:  {':ror clean css-js:/css/app': `=>${css}`},
-  mock: {'#201:clean:google.+.com': ''},
+  "mock:lol": {
+    '#201:clean:google.+.com': ''
+  },
   'cache:css-js clean': {
     '/js': {
       contentType: ['script'],
@@ -18,7 +20,7 @@ const route = {
     },
     '/css': {
       contentType: ['css'],
-      tags: ['tags']
+      tags: ['tags', 'togs']
     }
   },
 }

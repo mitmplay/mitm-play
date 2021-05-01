@@ -95,24 +95,28 @@ function checkTags(tg1, tg2, tg3, typ, key) {
   if (tg3[str] && tg3[str][typ3]) {
     const nodes = tg3[str][typ3]
     const _tag2 = tg2[nodes.tag2]
-    for (const tag in nodes.tags) { // feat: tag3=false and no tag2=true
-      if (nodes.tags[tag] === false && !(_tag2 && _tag2.state)) {
-        isTagsOk = false
-        break
-      } else {
+    if (!(_tag2 && _tag2.state)) {
+      for (const tag of nodes.tag1) { //feat: tag3 depend to tag1
+        if (tg1[tag]) {
+          break
+        }
+      }
+      if (isTagsOk) {
         let skip = true
-        for (const tag of nodes.tag1) { //feat: tag3 depend to tag1
-          if (tg1[tag]) {
+        const {tags} = nodes
+        for (const tag in tags) { // feat: tag3=false and no tag2=true
+          if (tags[tag]) {
             skip = false
             break
           }
         }
         if (skip) {
           isTagsOk = false
-        }
+        }  
       }
     }
-  } 
+    // console.log(isTagsOk, nodes.tags, typ,key)
+  }
   return isTagsOk
 }
 

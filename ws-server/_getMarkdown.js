@@ -26,7 +26,7 @@ module.exports = () => {
     }
   })
   data['<b>Mitm-play</b>'] = _sort(data['<b>Mitm-play</b>'])
-  if (__args.verbose && __args.verbose.match('getMarkdown')) {
+  if (__args.verbose) {
     console.log(data)
   }
   return data

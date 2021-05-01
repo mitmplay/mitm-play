@@ -39,7 +39,7 @@ function itemlist(items) {
 
 function routetag(tags, item) {
   const {__tag1, __tag2, fn: {rclass}} = window.mitm
-  const _tags = __tag2[ns][item].tags || [] // feat: update __tag2
+  const _tags = __tag2[ns][item].tag1 || [] // feat: update __tag2
   const tag2 = item.split(':')
 
   let klas
@@ -70,8 +70,8 @@ function show(item) {
 }
 
 function linkTags(item) {
-  const {tags} = window.mitm.__tag2[ns][item] // feat: update __tag2
-  const linkTags = tags && tags.length ? `[${tags.join(',')}]` : ''
+  const {tag1} = window.mitm.__tag2[ns][item] // feat: update __tag2
+  const linkTags = tag1 && tag1.length ? `[${tag1.join(',')}]` : ''
   return linkTags;
 }
 
@@ -82,9 +82,9 @@ function isGroup(item) {
 
 function urllist(_tags, item) {
   const {__tag2, fn: { noTagInRule, uniq }} = window.mitm;
-  const {tags} = __tag2[ns][item] // feat: update __tag2
-  if (tags && tags.length) {
-    item = `${item} ${tags.join(' ')}`
+  const {tag1} = __tag2[ns][item] // feat: update __tag2
+  if (tag1 && tag1.length) {
+    item = `${item} ${tag1.join(' ')}`
   }
   let obj = window.mitm.routes[ns][item]
   if (obj===undefined) {

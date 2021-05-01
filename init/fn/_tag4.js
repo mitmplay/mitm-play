@@ -52,7 +52,7 @@ const tags = function (_ns) {
             node[typ] = [typ]
           }
           node[typ].push(id)
-          const _tags = ns[id].tags
+          const _tags = ns[id].tag1
           if (_tags && ns[id].state) {
             let tagOk = true // feat: update __tag2
             for (const id of _tags) {

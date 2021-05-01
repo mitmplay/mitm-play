@@ -46,35 +46,33 @@ function noTagInRule(path, method=true) {
 
 function isRuleOff(tags, ns, path) {
   const secs = tags.__tag3[ns][path]
-  const tag2 = tags.__tag2[ns]
-  const tag1 = tags.__tag1
+  const tag1 = tags.__tag1[ns]
   if (secs) {
     let id1 = []
     let id2 = false
     for (const sec in secs) {
       const node = secs[sec]
-      let skip = true
-      for (const tag of node.tag1) { //feat: tag3 depend to tag1
-        if (tag1[ns][tag]) {
-          skip = false
-          break
+      if (node.tag1.length) {
+        let skip = true
+        for (const tag of node.tag1) { //feat: tag3 depend to tag1
+          if (tag1[tag]) {
+            skip = false
+            break
+          }
         }
-      }
-      if (skip) {
-        return true
+        if (skip) {
+          return true
+        }  
       }
       const tags = node.tags // feat: update __tag3
       for (const tag in tags) {
         if (tags[tag]) {
           id1.push(sec)
-        } else if (tags[tag]===false) {
-          id2 = sec
           break
         }
       }
     }
-    // feat: rule off if URL in the same section
-    if ((id1.length===0 && id2) || id1.indexOf(id2)>-1) {
+    if (id1.length===0) {
       return true
     }
   }
