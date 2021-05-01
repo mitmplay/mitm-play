@@ -24,6 +24,9 @@ function checkTags(namespace, key, typ, skip=false) {
     return skip
   }
   const tag3 = __tag3[namespace][key][typ]
+  if (tag3===undefined) {
+    return skip
+  }
   let {tag1, tag2, tags} = tag3 // feat: update __tag3
   if (tag1.length) {
     skip = skipTag1(tag1,  __tag1[namespace])
