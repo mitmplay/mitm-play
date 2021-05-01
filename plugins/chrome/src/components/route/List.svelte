@@ -42,11 +42,26 @@ const routeHandler = obj => {
     }
   }
   if (obj._tags_) {
-    window.mitm.__tag1 = obj._tags_.__tag1;
-    window.mitm.__tag2 = obj._tags_.__tag2;
-    window.mitm.__tag3 = obj._tags_.__tag3;
-    window.mitm.__tag4 = obj._tags_.__tag4;
-    window.mitm.__urls = obj._tags_.__urls;
+    const {__tag1,__tag2,__tag3,__tag4,__urls} = obj._tags_
+    const {mitm}= window
+    mitm.__tag1 = __tag1
+    mitm.__tag2 = __tag2
+    mitm.__tag3 = __tag3
+    mitm.__tag4 = __tag4
+    mitm.__urls = __urls
+    // feat: add placeholder to fix UI
+    for (const ns of mitm.routez) {
+      mitm.__tag1[ns] = {...__tag1[ns]}
+      mitm.__tag2[ns] = {...__tag2[ns],_:{}}
+      mitm.__tag3[ns] = {...__tag3[ns]}
+    }
+    const {_global_:g2} = mitm.__tag2
+    const {_global_:g3} = mitm.__tag3
+    delete mitm.__tag2._global_
+    delete mitm.__tag3._global_
+    mitm.__tag2._global_ = g2
+    mitm.__tag3._global_ = g3
+    // feat: add placeholder to fix UI
     setTimeout(() => urls(), 1)
   }
   if (window.mitm.files.route===undefined) {
