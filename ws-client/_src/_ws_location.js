@@ -4,13 +4,23 @@ const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
 
 module.exports = () => {
-  const containerStyle = 'position: fixed;z-index: 9999;top: 8px;right: 5px;'
+  const containerStyle1 = 'position: fixed;z-index: 9999;right: 3px;'
+  const containerStyle2 = 'position: fixed;z-index: 9999;left:  3px;'
+  const containerStyle3 = 'position: fixed;z-index: 9999;right: 3px; top: 20px;'
   const buttonStyle = 'border: none;border-radius: 15px;font-size: 10px;cursor: pointer;'
   const event = new Event('urlchanged')
-  let container = {}
+  let container = {
+    right3: {},
+    right: {},
+    left: {},
+  }
   let ctrl = false
   let button = {}
-  let buttons
+  let bgroup = {
+    right3: {},
+    right: {},
+    left: {},
+  }
   let intervId
 
   function toRegex (pathMsg) {
@@ -19,37 +29,41 @@ module.exports = () => {
     return { path, msg }
   }
 
-  let debunk
-  function setButtons () {
-    if (window.mitm.autobuttons) {
-      const { autobuttons } = window.mitm
-      buttons.innerHTML = ''
-      if (debunk) {
-        clearTimeout(debunk)
-        debunk = undefined
+  function createButton(buttons, pos) {
+    let br
+    for (const id in buttons) {
+      const [caption, color, klas] = id.split('|')
+      const btn = document.createElement('button')
+      const ev  = buttons[id]
+      btn.onclick = e => {
+        const arr = ev(e)
+        Array.isArray(arr) && play(arr)
       }
-      debunk = setTimeout(() => {
-        for (const key in autobuttons) {
-          const btn = document.createElement('button')
-          const br = document.createElement('span')
-          const [caption, color, klas] = key.split('|')
-          const ev = autobuttons[key]
-          btn.onclick = e => {
-            const arr = ev(e)
-            Array.isArray(arr) && play(arr)
-          }
-          btn.innerText = caption
-          btn.classList.add('mitm-btn')
-          btn.classList.add(klas || caption)
-          buttons.appendChild(btn)
-          buttons.appendChild(br)
-          br.innerHTML = '&nbsp;'
-          btn.style = buttonStyle + (color ? `background: ${color};` : '')
-        }
-      }, 0)
+      btn.innerText = caption
+      btn.classList.add('mitm-btn')
+      btn.classList.add(`${pos}`)
+      btn.classList.add(klas || caption)
+      btn.style = buttonStyle + (color ? `background: ${color};` : '')
+      bgroup[pos].appendChild(btn)
+      if (pos==='right') {
+        br = document.createElement('span')
+        br.innerHTML = '&nbsp;'
+      } else {
+        br = document.createElement('pre')
+        br.style = 'margin: -10px;'
+      }
+      bgroup[pos].appendChild(br)
     }
   }
 
+  function setButtons (buttons, position) {
+    if (bgroup[position]) {
+      bgroup[position].innerHTML = ''
+      createButton(buttons, position)
+    }
+  }
+
+  let debunk
   function urlChange (event) {
     const namespace = _ws_namespace()
     if (window.mitm.autofill) {
@@ -62,24 +76,41 @@ module.exports = () => {
     if (window.mitm.autobuttons) {
       delete window.mitm.autobuttons
     }
+    if (window.mitm.rightbuttons) {
+      delete window.mitm.rightbuttons
+    }
+    if (window.mitm.leftbuttons) {
+      delete window.mitm.leftbuttons
+    }
     if (window.mitm.macrokeys) {
       delete window.mitm.macrokeys
     }
     if (namespace) {
-      const { href, origin } = location
+      const {href, origin} = location
       const _href = href.replace(origin, '')
-      const { _macros_, macros } = window.mitm
+      const {_macros_, macros} = window.mitm
       for (const key in macros) {
         const { path, msg } = toRegex(key)
         if (_href.match(path)) {
           button.innerHTML = msg || 'Autofill'
           _macros_ && _macros_()
           macros[key]()
-          setButtons()
+          if (debunk) {
+            clearTimeout(debunk)
+            debunk = undefined
+          }
+          debunk = setTimeout(() => {
+            const {autobuttons, rightbuttons, leftbuttons} = window.mitm
+            rightbuttons && setButtons(rightbuttons, 'right3')
+            autobuttons && setButtons(autobuttons, 'right')
+            leftbuttons && setButtons(leftbuttons, 'left')  
+          }, 0)
         }
       }
     }
-    container.style = containerStyle
+    container.right3.style = containerStyle3
+    container.right.style = containerStyle1
+    container.left.style  = containerStyle2
     const visible = (window.mitm.autofill)
     button.style = buttonStyle + (visible ? 'background-color: azure;' : 'display: none;')
     if (typeof (window.mitm.autointerval) === 'function') {
@@ -111,7 +142,9 @@ module.exports = () => {
     const { macrokeys } = window.mitm
     if (e.ctrlKey && e.key === 'Shift') {
       ctrl = !ctrl
-      container.style = containerStyle + (!ctrl ? '' : 'display: none;')
+      container.right3.style = containerStyle3 + (!ctrl ? '' : 'display: none;')
+      container.right.style  = containerStyle1 + (!ctrl ? '' : 'display: none;')
+      container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
     } else if (e.ctrlKey && e.altKey) {
       console.log({ macro: `ctrl + alt + ${e.code}` })
       if (macrokeys) {
@@ -146,22 +179,38 @@ module.exports = () => {
     window.addEventListener('urlchanged', urlChange)
 
     window.addEventListener('DOMContentLoaded', () => {
-      const node = document.querySelector('html')
-      const noderef = node.firstElementChild
-      const newNode = document.createElement('div')
-      const html = '<button class="btn-autofill">Autofill</button>'
+      const html = document.querySelector('html')
+      const htmlref = html.firstElementChild
+      const styleBtnLeft = document.createElement('style')
+      const divTopRight3 = document.createElement('div')
+      const divTopRight = document.createElement('div')
+      const divTopLeft = document.createElement('div')
+      const auto = '<button class="btn-autofill">Autofill</button>'
 
-      newNode.innerHTML = `<span class="autofill-buttons"></span>${html}`
-      newNode.className = 'mitm autofill-container'
-      newNode.style = containerStyle
+      styleBtnLeft.innerHTML = 'button.mitm-btn:hover{text-decoration:underline;}'
+      divTopRight3.innerHTML = `<span class="bgroup-right"></span>`
+      divTopRight.innerHTML  = `<span class="bgroup-right"></span>${auto}`
+      divTopLeft.innerHTML   = `<span class="bgroup-left"></span>`
+      divTopRight.className  = 'mitm autofill-container'
+      divTopLeft.className   = 'mitm autofill-container'
+      divTopRight3.style = containerStyle3
+      divTopRight.style  = containerStyle1
+      divTopLeft.style   = containerStyle2
 
-      node.insertBefore(newNode, noderef)
+      html.insertBefore(styleBtnLeft, htmlref)
+      html.insertBefore(divTopRight3, htmlref)
+      html.insertBefore(divTopRight, htmlref)
+      html.insertBefore(divTopLeft, htmlref)
       setTimeout(() => {
-        container = newNode
-        buttons = newNode.children[0]
-        button = newNode.children[1]
+        container.right3 = divTopRight3
+        container.right  = divTopRight
+        container.left   = divTopLeft
+        button.style  = `${buttonStyle}background-color: azure;`
+        bgroup.right3 = divTopRight3.children[0]
+        bgroup.right = divTopRight.children[0]
+        bgroup.left  = divTopLeft.children[0]
+        button = divTopRight.children[1]
         button.onclick = btnclick
-        button.style = `${buttonStyle}background-color: azure;`
         urlChange(event)
         observed()
       }, 0)
