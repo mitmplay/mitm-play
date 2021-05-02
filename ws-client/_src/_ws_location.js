@@ -50,7 +50,7 @@ module.exports = () => {
         br.innerHTML = '&nbsp;'
       } else {
         br = document.createElement('pre')
-        br.style = 'margin: -10px;'
+        br.style = 'margin: 0px;'
       }
       bgroup[pos].appendChild(br)
     }
