@@ -212,17 +212,8 @@ function _routeSet (_r, namespace, file) {
     router.config = global.mitm.router._global_.config
   }
   global.mitm.router[namespace] = router
-  if (Object.keys(tags).length) {
-    global.mitm.__tag2[namespace] = tags
-    global.mitm.__tag3[namespace] = urls
-  } else {
-    if (global.mitm.__tag2[namespace]) {
-      delete global.mitm.__tag2[namespace]
-    }
-    if (global.mitm.__tag3[namespace]) {
-      delete global.mitm.__tag3[namespace]
-    }
-  }
+  global.mitm.__tag2[namespace] = tags
+  global.mitm.__tag3[namespace] = urls
   return r
 }
 

@@ -52,7 +52,7 @@ const routeHandler = obj => {
     // feat: add placeholder to fix UI
     for (const ns of mitm.routez) {
       mitm.__tag1[ns] = {...__tag1[ns]}
-      mitm.__tag2[ns] = {...__tag2[ns],_:{}}
+      mitm.__tag2[ns] = {...__tag2[ns]}
       mitm.__tag3[ns] = {...__tag3[ns]}
     }
     const {_global_:g2} = mitm.__tag2

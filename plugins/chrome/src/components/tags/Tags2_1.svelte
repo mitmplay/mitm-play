@@ -115,7 +115,6 @@ function q(key) {
 }
 </script>
 
-{#if Object.keys(items).length}
 <div class="border">
   <!-- feat: auto collapsed between tag2 & tag3 -->
   <Tags2Title on:message {ns}/>
@@ -158,7 +157,6 @@ function q(key) {
     </div>
   {/each}
 </div>
-{/if}
 
 <style>
 .ns {
