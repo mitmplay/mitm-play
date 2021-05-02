@@ -1,7 +1,7 @@
 const c = require('ansi-colors')
 
-function skipTag1(tag1, tags) {
-  for (const tag of tag1) { //feat: tag3 depend to tag1
+function skipTag1(tag1, tags) { //feat: tag2/3 depend to tag1
+  for (const tag of tag1) {
     if (tags[tag]) {
       return false
     }
@@ -20,7 +20,15 @@ function skipTags(tags) {
 
 function checkTags(namespace, key, typ, tags, skip=false) {
   const {__tag1, __tag2, __tag3} = global.mitm
-  if (__tag3[namespace] && __tag3[namespace][key]) {
+  if (tags.match(':')) { // check __tag2
+    const [tag, ...tag1] = tags.split(/ +/)
+    const obj = __tag2[namespace][tag]
+    if (obj && !obj.state) {
+      return true
+    } else if (tag1.length) {
+      skip = skipTag1(tag1,  __tag1[namespace])
+    }
+  } else if (__tag3[namespace][key]) { // check __tag3
     const tag3 = __tag3[namespace][key][typ]
     if (tag3===undefined) {
       return skip
@@ -35,15 +43,7 @@ function checkTags(namespace, key, typ, tags, skip=false) {
     if (!skip && tags.length) {
       skip = skipTags(tags)
     }
-  } else if (tags.match(':')) {
-    const [tag, ...tag1] = tags.split(/ +/)
-    const obj = __tag2[namespace][tag]
-    if (obj && !obj.state) {
-      return true
-    } else if (tag1.length) {
-      skip = skipTag1(tag1,  __tag1[namespace])
-    }
-  }
+  } 
   return skip
 }
 
