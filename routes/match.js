@@ -91,31 +91,46 @@ function checkTags(tg1, tg2, tg3, typ, key) {
     const [, method,, path] = arrTag          // feat: tags in url
     str = method ? `${method}:${path}` : path // remove from url
   }
-  const [typ3, tags] = typ.split(':') // feat: tag3 inside tag2
-  if (tg3[str] && tg3[str][typ3]) {
-    const nodes = tg3[str][typ3]
-    const _tag2 = tg2[nodes.tag2]
-    if (!(_tag2 && _tag2.state)) {
-      for (const tag of nodes.tag1) { //feat: tag3 depend to tag1
+  if (typ.match(':')) { // check __tag2
+    const [tag, ...tag1] = typ.split(/ +/)
+    const obj = tg2[tag]
+    if (obj && !obj.state) {
+      isTagsOk = false
+    } else if (tag1.length) {
+      isTagsOk = false
+      for (const tag of tag1) {
         if (tg1[tag]) {
+          isTagsOk = true
           break
         }
       }
-      if (isTagsOk) {
-        let skip = true
-        const {tags} = nodes
-        for (const tag in tags) { // feat: tag3=false and no tag2=true
-          if (tags[tag]) {
-            skip = false
+    }
+  } else {
+    if (tg3[str] && tg3[str][typ]) {
+      const nodes = tg3[str][typ]
+      const _tag2 = tg2[nodes.tag2]
+      if (!(_tag2 && _tag2.state)) {
+        for (const tag of nodes.tag1) { //feat: tag3 depend to tag1
+          if (tg1[tag]) {
             break
           }
         }
-        if (skip) {
-          isTagsOk = false
-        }  
+        if (isTagsOk) {
+          let skip = true
+          const {tags} = nodes
+          for (const tag in tags) { // feat: tag3=false and no tag2=true
+            if (tags[tag]) {
+              skip = false
+              break
+            }
+          }
+          if (skip) {
+            isTagsOk = false
+          }  
+        }
       }
+      // console.log(isTagsOk, nodes.tags, typ,key)
     }
-    // console.log(isTagsOk, nodes.tags, typ,key)
   }
   return isTagsOk
 }
