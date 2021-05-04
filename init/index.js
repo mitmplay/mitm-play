@@ -24,11 +24,13 @@ module.exports = () => {
   }
 
   let msg = JSON.stringify(global.mitm.argv, null, 2)
-  const arr = msg.match(/"proxy": "([^:]+:[^@]+)@\w+/)
-  if (arr) {
-    // feat: hide password
-    msg = msg.replace(arr[1], '******:******')
-  }
+  // feat: hide password
+  let arr1
+  let arr2
+  arr1 = msg.match(/"proxy": "([^:]+:[^@]+)@\w+/)
+  arr2 = msg.match(/"basic": "([^:]+:\w+)"/)
+  arr1 && (msg = msg.replace(arr1[1], '******:******'))
+  arr2 && (msg = msg.replace(arr2[1], '******:******'))
   const { tilde } = global.mitm.fn
   console.log(c.redBright('Profile Combine:'), c.greenBright(tilde(msg)))
   console.log(c.green(`\nv${pkg.version}\n`))

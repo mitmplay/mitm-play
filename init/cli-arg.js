@@ -47,6 +47,7 @@ module.exports = () => {
   argv.profile = false
 
   argsChg('a', 'activity'  ) // feat: _global_.args
+  argsChg('b', 'basic'     ) 
   argsChg('c', 'clear'     ) 
   argsChg('d', 'device'    )
   argsChg('f', 'fullog'    ) // feat: _global_.args

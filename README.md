@@ -792,6 +792,7 @@ $ mitm-play --help
     -s --save          save as default <profl>
     -r --route         userscript folder routes
     -a --activity      rec/replay cache activity*
+    -b --basic         login to http authentication
     -c --clear         clear/delete cache & log(s)
     -d --device        resize to mobile screen device
     -f --fullog        show detail logs on each rule* 
@@ -875,6 +876,16 @@ $ mitm-play -a='rec:activity'
 Next step is to replay the flow 
 ```bash
 $ mitm-play -a='play:activity'
+```
+
+</details>
+<details><summary><b>-b --basic</b></summary>
+
+When page required HTTP Authentication, this parameters will be passs to the newly created Page Context with login and password supplied to this params
+
+```bash
+$ mitm-play -b='MYCREAD:MYPASSWORD'  <OR>
+$ mitm-play --basic='MYCREAD:MYPASSWORD'
 ```
 
 </details>

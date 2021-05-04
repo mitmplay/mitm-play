@@ -15,6 +15,7 @@ module.exports = (_package) => {
     -s --save     \t save as default <profl>
     -r --route    \t userscript folder routes
     -a --activity \t rec/replay cache activity*
+    -b --basic    \t login to http authentication
     -c --clear    \t clear/delete cache & log(s)
     -d --device   \t resize to mobile screen device
     -f --fullog   \t show detail logs on each rule* 

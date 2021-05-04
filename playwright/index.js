@@ -127,13 +127,20 @@ module.exports = () => {
         }
       }
     }
+    if (argv.basic) {
+      const [username, password] = argv.basic.split(':')
+      ctxoption.httpCredentials = {
+        username, password
+      }
+    }
     if (argv.pristine===true) {
       const { fn: { tilde } } = global.mitm
       const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
       console.log(c.yellow(`Browser profile ${tilde(bprofile)}`))
       browser = await playBrowser.launchPersistentContext(bprofile, {
         ...device,
-        ...options
+        ...options,
+        ...ctxoption
       })
       page = await browser.pages()[0]
       bcontext = page.context()
