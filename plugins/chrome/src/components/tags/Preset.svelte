@@ -61,7 +61,8 @@ function items(tags) {
   const _preset = {}
   const {routes, fn: {oneSite}} = window.mitm
   for (const ns in routes) {
-    const {preset} = routes[ns]
+    const id = routes[ns]._childns._subns
+    const {preset} = routes[id || ns]
     if (preset && oneSite(tags, ns)) {
       for (const id in preset) {
         if (_preset[id]===undefined) {
@@ -83,7 +84,10 @@ function title(item) {
   const {ns: nss, id} = item 
   const arr = []
   for (const ns of nss) {
-    const {title} = routes[ns].preset[id]
+    let title
+    if (routes[ns].preset[id]) {
+      title = routes[ns].preset[id].title
+    }
     title && arr.push(`${title} ${ns}`)
   }
   return arr.join(',\n')
