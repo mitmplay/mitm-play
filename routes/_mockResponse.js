@@ -16,7 +16,8 @@ const mock = ({ url }, match) => {
     url,
     status: 200,
     headers: {
-      'content-type': 'text/plain'
+      'content-type': 'text/plain',
+      'access-control-allow-origin': '*'
     },
     body: 'Hello mock! - mitm-play'
   }
