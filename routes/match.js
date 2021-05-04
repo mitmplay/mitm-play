@@ -115,7 +115,7 @@ function checkTags(tg1, tg2, tg3, typ, key) {
     if (tag1.length) {
       isTagsOk = okTag1(tag1,  tg1)
     }
-    if (isTagsOk && tags.length) {
+    if (isTagsOk && Object.keys(tags).length) {
       isTagsOk = okTags(tags)
     }
   }
