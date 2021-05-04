@@ -115,7 +115,7 @@ function checkTags(tg1, tg2, tg3, typ, key) {
     if (tag1.length) {
       isTagsOk = okTag1(tag1,  tg1)
     }
-    if (isTagsOk) {
+    if (isTagsOk && tags.length) {
       isTagsOk = okTags(tags)
     }
   }
@@ -132,7 +132,7 @@ function checkTags(tg1, tg2, tg3, typ, key) {
       }
     }
   }
-  return isTagsOk
+  return isTagsOk===undefined || isTagsOk
 }
 
 const searchFN = (typs, { url, method, browserName }) => {
