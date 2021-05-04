@@ -13,10 +13,10 @@ const { matched, searchFN } = _match
 const logResponse = async function (reqs, responseHandler, _3d, cache) {
   const search = searchFN('log', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __args, __flag, fn: { _skipByTag } } = global.mitm
+  const { __args, __flag } = global.mitm
   let resp, msg
 
-  if (match && !_skipByTag(match, 'log')) {
+  if (match) {
     const { log, response, hidden } = match.route
     const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
     responseHandler.push((resp, reqs) => {

@@ -15,14 +15,14 @@ const { matched, searchFN } = _match
 const cacheResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __args, __flag, fn: { _skipByTag, tilde } } = global.mitm
+  const { __args, __flag, fn: { tilde } } = global.mitm
   let resp, resp2, msg
 
   if (match && match.route.debug) {
     debugger
   }
 
-  if (match && !_skipByTag(match, 'cache')) {
+  if (match) {
     const { url, browserName } = reqs
     const { route } = match
     const { response, hidden } = route

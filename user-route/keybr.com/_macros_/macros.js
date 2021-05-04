@@ -1,5 +1,8 @@
 const rbuttons = {
-  'right|yellow'() {
+  'right1|yellow'() {
+    console.log('right')
+  },
+  'download-right|yellow'() {
     console.log('right')
   },
 }

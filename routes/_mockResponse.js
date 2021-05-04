@@ -26,7 +26,7 @@ const mock = ({ url }, match) => {
 
 const mockResponse = async function ({ reqs, route }, _3d) {
   const search = searchFN('mock', reqs)
-  const { __args, __flag, fn: { _skipByTag } } = global.mitm
+  const { __args, __flag } = global.mitm
   const match = _3d ? search('_global_') : matched(search, reqs)
   let resp, msg = ''
 
@@ -34,7 +34,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
     debugger
   }
 
-  if (match && !_skipByTag(match, 'mock')) {
+  if (match) {
     const { response, hidden } = match.route
     resp = mock(reqs, match)
     if (typeof (match.route) === 'string') {

@@ -8,9 +8,9 @@ const { matched, searchFN } = _match
 const chgRequest = async function (reqs, _3d) {
   const search = searchFN('request', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __args, __flag, fn: { _skipByTag } } = global.mitm
+  const { __args, __flag } = global.mitm
 
-  let result = match && !_skipByTag(match, 'request')
+  let result = match
   if (result) {
     const { request, session, hidden } = match.route
     if (__flag.request && !match.hidden && !hidden) {

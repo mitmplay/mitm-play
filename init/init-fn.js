@@ -11,7 +11,6 @@ const { watcher, requires } = require('./fn/watcher')
 const { _proxy, _noproxy } = require('./fn/_proxies')
 const { exec, execFile } = require('./fn/_exec-file')
 const { tilde, home } = require('./fn/tildehome')
-const _skipByTag = require('./fn/_skipbytag')
 const _globalTag = require('./fn/_globalTag')
 const _nameSpace = require('./fn/_namespace')
 const _tldomain = require('./fn/_tldomain')
@@ -38,7 +37,6 @@ module.exports = () => {
     _sortLength,
     _keyLength,
     _nameSpace,
-    _skipByTag,
     _globalTag,
     _debounce,
     _routeSet,

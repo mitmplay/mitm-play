@@ -3,14 +3,8 @@
   "tags": [
     "1.no-ads",
     "2.scenario",
-    "4.logging",
-    "active",
-    "css:1.no-ads",
-    "html:active",
     "mock:1.no-ads",
-    "mock:2.scenario",
-    "response:active",
-    "tag3:4.logging"
+    "mock:2.scenario"
   ],
-  "_subns": "hi@keybr.com"
+  "_subns": ""
 }
