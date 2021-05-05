@@ -59,7 +59,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
           let fileMethod, fpath1, fpath2
           const arr = file.match(/\.\w+$/)
           if (arr) {
-            fileMethod = file.replace(arr[0], `~${reqs.method}`) + arr[0]
+            fileMethod = file.replace(arr[0], `~${reqs.method}_`) + arr[0]
           }
           let xfile = fileMethod
           fpath1 = `${_root}/${fileMethod}`
