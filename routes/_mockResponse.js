@@ -112,7 +112,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
         }
       }
       if (response) {
-        const resp2 = response(resp, reqs, match)
+        let resp2 = response(resp, reqs, match)
         if (typeof resp2 === 'object' && 'then' in resp2) {
           resp2 = await resp2
         }
