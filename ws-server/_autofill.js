@@ -20,11 +20,11 @@ module.exports = async ({ data }) => {
       if (typ === '=>') {
         obj = { selector, value }
       } else if (typ === '->') {
-        const [action, options] = value.split('~>').map(x => x.trim())
-        if (options) {
-          obj = { selector, action, options }
+        const [act, store] = value.split('~>').map(x => x.trim())
+        if (store) {
+          obj = { selector, act, store }
         } else {
-          obj = { selector, action: value }
+          obj = { selector, act: value }
         }
       } else {
         continue
@@ -46,21 +46,25 @@ module.exports = async ({ data }) => {
      * input[name="email"] => :mailinator
      */
     const {
+      store = '',
       selector,
-      action,
       value,
+      act,
     } = obj
 
-    if (action) {
-      const options = obj.options || {}
+    if (act) {
+      const [action, val] = act.split(':')
+      let options = {delay: val ? +val : 100}
       if (action === 'type') {
-        await input('type', selector, options)
+        await input('type', selector, store, options)
       } else if (action === 'wait') {
         await page.waitForSelector(selector)
+      } else if (action === 'fill') {
+        await page.fill(selector, store, options)
       } else if (action === 'press') {
-        await page.press(selector, options)
+        await page.press(selector, store)
       } else if (action === 'click') {
-        await page.click(selector, options)
+        await page.click(selector, store)
       } else if (action === 'focus') {
         await page.focus(selector)
       } else if (action === 'check') {
@@ -68,11 +72,11 @@ module.exports = async ({ data }) => {
       } else if (action === 'uncheck') {
         await page.uncheck(selector)
       } else if (action === 'selectOption') {
-        await page.selectOption(selector, options)
+        await page.selectOption(selector, store)
       } else if (action === 'newpage') {
         page = await browser.newPage()
         attach(page)
-        await page.goto(options)
+        await page.goto(store)
       } else if (action === 'close') {
         await page.close()
         await oldPage.bringToFront()
@@ -83,7 +87,7 @@ module.exports = async ({ data }) => {
           const [id1, id2] = attr.split('~')
           const value = id2 ? e[id1](id2) : e[id1]
           return {key, value}
-        }, options);
+        }, store);
         await oldPage.$eval('body', (e, obj2) => {
           const {key, value: val} = obj2
           localStorage.setItem(key, val)
