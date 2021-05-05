@@ -113,7 +113,13 @@ const mockResponse = async function ({ reqs, route }, _3d) {
       }
       if (response) {
         const resp2 = response(resp, reqs, match)
-        resp2 && (resp = { ...resp, ...resp2 })
+        if (typeof resp2 === 'object' && 'then' in resp2) {
+          resp2 = await resp2
+        }
+        resp2 && (resp = {
+          ...resp,
+          ...resp2
+        })
       }
     }
     if (!__flag.mock || match.hidden || hidden) {
