@@ -132,6 +132,7 @@ module.exports = () => {
       window.ws__send('autofill', { autofill, browser, _page, _frame })
     }
   }
+  window.mitm.fn.play = play
 
   function btnclick (e) {
     const { autofill } = window.mitm
