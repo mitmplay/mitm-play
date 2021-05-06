@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const _fetch = require('make-fetch-happen')
 const { cookieToObj, objToCookie } = require('./filesave/cookier')
+global.mitm.fn._fetch = _fetch
 
 async function extract ({ request: r, browserName }) {
   const headers = r.headers()

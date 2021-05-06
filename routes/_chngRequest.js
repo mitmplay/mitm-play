@@ -22,7 +22,10 @@ const chgRequest = async function (reqs, _3d) {
     }
     setSession(reqs, session, true)
     if (request) {
-      const reqs2 = request(reqs, match)
+      let reqs2 = request(reqs, match)
+      if (typeof reqs2 === 'object' && 'then' in reqs2) {
+        reqs2 = await reqs2
+      }
       result = {
         ...reqs,
         ...reqs2
