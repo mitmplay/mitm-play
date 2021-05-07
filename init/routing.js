@@ -1,4 +1,7 @@
 const fs = require('fs-extra')
+const rpath = require.resolve('../ws-client/ws-client.js.map')
+
+let wsclientJsMap = fs.readFileSync(rpath)
 
 module.exports = () => {
   const { argv, fn: { _tldomain, _nameSpace } } = global.mitm
@@ -34,10 +37,16 @@ module.exports = () => {
         resp.headers['content-type'] = 'application/javascript'
       }
     },
-    '!:hidden:/mitm-play/ws-client.js': {
+    '!:hidden:/mitm-play/ws-client.js$': {
       response: resp => {
         resp.body = global.mitm.fn._wsclient()
         resp.headers['content-type'] = 'application/javascript'
+      }
+    },
+    '!:hidden:/mitm-play/ws-client.js.map': {
+      response: resp => {
+        resp.body = wsclientJsMap
+        resp.headers['content-type'] = 'application/json'
       }
     },
     '!:hidden:/mitm-play/jslib/([\\w-]+.js)': {
