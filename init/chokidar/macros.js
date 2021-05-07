@@ -178,9 +178,10 @@ function bundleEsbuild(bpath, opath) {
     entryPoints: [bpath],
     outfile: opath,
     bundle: true,
-    // minify: true,
     sourcemap: 'inline',
     target: ['chrome89'],
+    minifyWhitespace: true,
+    // minify: true,
   }).then(prm => {
     fs.removeSync(bpath)
   }).catch(() => process.exit(1))  

@@ -42,7 +42,7 @@ module.exports = function ({ url }) {
     fn: {},
     version
   }
-  json = JSON.stringify(json, null, 2)
-  json = json.replace(/\n}$/g, macros)
+  json = JSON.stringify(json)
+  json = json.replace(/}$/g, macros)
   return `window.mitm = ${json}`
 }
