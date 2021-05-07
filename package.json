@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.8.364",
+  "version": "0.8.365",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -9,7 +9,7 @@
   "scripts": {
     "coverage": "jest --coverage",
     "start": "node --max-http-header-size=81000 --inspect ./mitm-play.js",
-    "client": "esbuild ws-client/_src/ws-client.js --outdir=ws-client --sourcemap --minify-whitespace --target=chrome89 --bundle  --watch",
+    "client": "esbuild ws-client/_src/ws-client.js --outdir=ws-client --sourcemap --minify --target=chrome89 --bundle  --watch",
     "standard": "standard --verbose | snazzy",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand",
     "test": "jest"

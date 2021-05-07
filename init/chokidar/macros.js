@@ -4,6 +4,7 @@ const chokidar = require('chokidar')
 const esbuild = require('esbuild')
 const rollup = require('rollup')
 const c = require('ansi-colors')
+const fg = require('fast-glob')
 const fs = require('fs-extra')
 
 const hotKeys = obj => {
@@ -138,7 +139,7 @@ function genBuild(msg, fpath) {
   })
 }
 
-function addMacro (path, msg) {
+function addMacro (path) {
   genBuild('add', path)
 }
 
@@ -171,6 +172,38 @@ module.exports = () => {
     .on('change', path => chgMacro(path))
     .on('unlink', path => delMacro(path))
   global.mitm.watcher.macrosWatcher = macrosWatcher
+  const files = fg.sync(glob) //[`${argv.route}/*/_macros_/*@macros.js`]
+  let glob2 = {}
+  for (const fpath of files) {
+    const pre = `${argv.route}/`
+    const wopre = fpath.replace(/\\/g, '/').replace(pre, '')
+    let [ns, p1, p2] = wopre.split('/')
+    let [app] = p2.split(/@/)
+    app==='macros.js' && (app = '$')
+    glob2[`${argv.route}/${ns}/${p1}/${app}/*.js`] = true
+  }
+  glob2 = Object.keys(glob2).sort()
+  const macro2Watcher = chokidar.watch(glob2, { persistent: true })
+
+  function rebuild (path) {
+    path = path.replace(/\\/g, '/')
+    const [p1, p2] = path.split('_macros_/')
+    let app = p2.split('/')[0]
+    if (app!=='$') {
+      app = `${p1}_macros_/${app}@macros.js`
+    } else {
+      app = `${p1}_macros_/macros.js`
+    }
+    genBuild('rebuild', app)
+  }
+  setTimeout(() => {
+    console.log(glob2)
+    macro2Watcher // Add event listeners.
+    .on('add', path => rebuild(path))
+    .on('change', path => rebuild(path))
+    .on('unlink', path => rebuild(path))
+    global.mitm.watcher.macro2Watcher = macro2Watcher      
+  }, 1000)
 }
 
 function bundleEsbuild(bpath, opath) {
