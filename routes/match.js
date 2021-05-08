@@ -35,7 +35,7 @@ function typTags (typ, namespace) {
 }
 
 const searchArr = ({url, method, browserName, typ: typs}) => {
-  const { __args, router, routes } = global.mitm
+  const { __args, __tag1, __tag2, __tag3, router, routes } = global.mitm
 
   return function (nspace) {
     const namespace = _nameSpace(nspace)
@@ -43,12 +43,17 @@ const searchArr = ({url, method, browserName, typ: typs}) => {
       return
     }
     if (routes[namespace]) {
+      const tg1 = __tag1[namespace]
+      const tg2 = __tag2[namespace]
+      const tg3 = __tag3[namespace] || {}
+  
       const list = typTags(typs, namespace)
       for (const typ of list) {
         const obj = router[namespace][typ]
         const arr = routes[namespace][typ] || []
         for (const key of arr) {
-          if (obj) {
+          const isTagsOk = checkTags(tg1, tg2, tg3, typ, key)
+          if (obj && isTagsOk) {
             const arr = url.match(obj[key])
             if (arr) {
               let log
@@ -160,8 +165,7 @@ const searchFN = (typs, { url, method, browserName }) => {
       const obj = router[namespace][typ]
 
       for (const key in route) {
-        let isTagsOk = checkTags(tg1, tg2, tg3, typ, key)
-
+        const isTagsOk = checkTags(tg1, tg2, tg3, typ, key)
         const arr = isTagsOk && url.match(obj[key])
         const _m = obj[`${key}~method`]
 
