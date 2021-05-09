@@ -119,7 +119,7 @@ module.exports = () => {
     ctrl = false
   }
 
-  function play (autofill) {
+  function play (autofill, handler) {
     if (autofill) {
       if (typeof (autofill) === 'function') {
         autofill = autofill()
@@ -129,10 +129,19 @@ module.exports = () => {
       const _page = window['xplay-page']
       const _frame = window['xplay-frame']
       console.log(lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2))
-      window.ws__send('autofill', { autofill, browser, _page, _frame })
+      window.ws__send('autofill', { autofill, browser, _page, _frame }, handler)
     }
   }
-  window.mitm.fn.play = play
+
+  window.mitm.fn.play = arr => {
+    return new Promise(function(resolve, reject) {
+      try {
+        play(arr, resolve)        
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
 
   function btnclick (e) {
     const { autofill } = window.mitm

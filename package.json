@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.8.366",
+  "version": "0.8.367",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {

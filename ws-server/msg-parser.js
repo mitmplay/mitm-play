@@ -45,7 +45,7 @@ const wscmd = {
 }
 global.mitm.wscmd = wscmd
 
-module.exports = (client, msg) => {
+module.exports = async (client, msg) => {
   const { __flag } = global.mitm
   if (__flag['ws-message']) {
     if (msg.length > 97) {
@@ -69,7 +69,10 @@ module.exports = (client, msg) => {
     } else {
       const cmd2 = `$${cmd.split(':')[0]}`
       if (wscmd[cmd2]) {
-        const data = wscmd[cmd2].call(client, json)
+        let data = wscmd[cmd2].call(client, json)
+        if (typeof data === 'object' && 'then' in data) {
+          data = await data
+        }
         client.send(`${cmd}${JSON.stringify({ data })}`)
       }
     }
