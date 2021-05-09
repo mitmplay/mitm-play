@@ -19,7 +19,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
   if (match) {
     const { log, response, hidden } = match.route
     const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
-    responseHandler.push((resp, reqs) => {
+    responseHandler.push(async (resp, reqs) => {
       changeStatus(match, resp)
       const mtype = ctype(match, resp)
       if (mtype) {
@@ -43,8 +43,14 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
         const body = jsonResp({ reqs, resp, match })
         filesave({ fpath1, body }, { fpath2, meta }, 'log')
         if (response) {
-          const resp2 = response(resp, reqs, match)
-          resp2 && (resp = { ...resp, ...resp2 })
+          let resp2 = response(resp, reqs, match)
+          if (typeof resp2 === 'object' && 'then' in resp2) {
+            resp2 = await resp2
+          }
+          resp2 && (resp = {
+            ...resp,
+            ...resp2
+          })
         }
         if (!__flag.log || match.hidden || hidden) {
           msg = ''

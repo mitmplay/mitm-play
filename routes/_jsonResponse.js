@@ -12,7 +12,7 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
 
   if (match) {
     const { response, hidden } = match.route
-    responseHandler.push(resp => {
+    responseHandler.push(async resp => {
       changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('application/json')) {
@@ -20,8 +20,14 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
           resp.body = match.route
         } else {
           if (response) {
-            const resp2 = response(resp, reqs, match)
-            resp2 && (resp = { ...resp, ...resp2 })
+            let resp2 = response(resp, reqs, match)
+            if (typeof resp2 === 'object' && 'then' in resp2) {
+              resp2 = await resp2
+            }
+            resp2 && (resp = {
+              ...resp,
+              ...resp2
+            })
           }
         }
         if (!__flag.json || match.hidden || hidden) {

@@ -129,13 +129,13 @@ module.exports = async function(page) {
     iframes: {},
   }
 
+  page.on('load', async () => {
+    await evalPage(page, _page, 'xplay-page load ')
+  })
+
   page.on('worker', worker => {
     log(`xplay-page worker ${_page}`)
     worker.on('close', worker => log('Worker destroyed: ' + worker.url()))
-  })
-
-  page.on('load', async () => {
-    await evalPage(page, _page, 'xplay-page load ')
   })
 
   page.on('frameattached', async (frame) => {

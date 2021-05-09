@@ -17,7 +17,7 @@ function btnClose(e) {
 }
 </script>
 
-<button class="collapse" on:click="{btnClose}">[-]</button>
+<button class="collapse" on:click="{btnClose}">[<b>-</b>]</button>
 
 <style>
 button {

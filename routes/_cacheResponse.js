@@ -65,7 +65,13 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           changeStatus(match, resp)
           if (response) {
             resp2 = response(resp, reqs, match)
-            resp2 && (resp = { ...resp, ...resp2 })
+            if (typeof resp2 === 'object' && 'then' in resp2) {
+              resp2 = await resp2
+            }
+            resp2 && (resp = {
+              ...resp,
+              ...resp2
+            })
           }
           const fname = fname1.split('/').pop()
           if (actyp && route.seq) {
@@ -127,7 +133,13 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           filesave({ fpath1: fname1, body }, { fpath2, meta }, 'cache')
           if (response) {
             resp2 = response(resp, reqs, match)
-            resp2 && (resp = { ...resp, ...resp2 })
+            if (typeof resp2 === 'object' && 'then' in resp2) {
+              resp2 = await resp2
+            }
+            resp2 && (resp = {
+              ...resp,
+              ...resp2
+            })
           }
         }
         if (!__flag.cache || match.hidden || hidden) {

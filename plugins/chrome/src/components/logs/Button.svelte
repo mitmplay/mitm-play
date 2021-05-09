@@ -76,8 +76,8 @@ function argsflag() {
     <input type="checkbox" on:click={btnAll} id="check-all"> logs
   </label>
   <input class="stop" on:click="{btnClear}" type="image" src="images/stop.svg" alt=""/>
-  <Collapse {st} name="logs" q="#list-logs"></Collapse>
-  <Expand {st} name="logs" q="#list-logs"></Expand>
+  <Collapse name="logs" q="#list-logs"></Collapse>
+  <Expand name="logs" q="#list-logs"></Expand>
   <label class="checkbox">
     <input type="checkbox" on:click={btnHostswch} checked={hostflag()}>host
   </label>
