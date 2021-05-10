@@ -19,17 +19,16 @@ module.exports = (_package) => {
     -c --clear    \t clear/delete cache & log(s)
     -d --device   \t resize to mobile screen device
     -f --fullog   \t show detail logs on each rule* 
-    -p --pristine \t pristine browser, default option
     -i --insecure \t accept insecure cert in nodejs env 
     -n --nosocket \t no websocket injection to html page*
     -k --cookie   \t reset cookies expire date*
     -l --lazylog  \t delay ~500ms print console.log
     -g --group    \t create cache group/rec
+    -p --csp      \t relax CSP, unblock websocket*
     -t --incognito\t set chromium incognito
     -x --proxy    \t a proxy request
     -z --lazyclick\t delay ~700ms click action*
 
-       --csp      \t relax CSP, unblock websocket*
     -D --debug    \t show ws messages
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*

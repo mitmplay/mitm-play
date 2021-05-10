@@ -796,17 +796,16 @@ $ mitm-play --help
     -c --clear         clear/delete cache & log(s)
     -d --device        resize to mobile screen device
     -f --fullog        show detail logs on each rule* 
-    -p --pristine      pristine browser, default option
     -i --insecure      accept insecure cert in nodejs env 
     -n --nosocket      no websocket injection to html page*
     -k --cookie        reset cookies expire date*
     -l --lazylog       delay ~500ms print console.log
     -g --group         create cache group/rec
+    -p --csp           relax CSP unblock websocket*
     -t --incognito     set chromium incognito
     -x --proxy         a proxy request
     -z --lazyclick     delay ~700ms click action*
 
-       --csp           relax CSP unblock websocket*
     -D --debug         show ws messages
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
@@ -916,15 +915,6 @@ $ mitm-play -d='iPhone 11 Pro'  <OR>
 $ mitm-play --device='iPhone 11 Pro'
 ```
 </details>
-<details><summary><b>-p --pristine [default]</b></summary>
-
-Launch browser with non Incognito, this is the default configuration, the opposite is to use --incognito. 
-
-```bash
-$ mitm-play -p  <OR>
-$ mitm-play --pristine
-```
-</details>
 <details><summary><b>-i --insecure</b></summary>
 
 Set NodeJS to operate within insecure / no https checking 
@@ -977,7 +967,7 @@ $ mitm-play --group='mygroup'
 </details>
 <details><summary><b>-t --incognito</b></summary>
 
-By Default program will run in normal/--pristine browser, adding this option will result in Incognito mode.
+By Default program will run in normal browser, adding this option will result in Incognito mode.
 
 ```bash
 $ mitm-play -t  <OR>

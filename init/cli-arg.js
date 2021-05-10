@@ -57,7 +57,7 @@ module.exports = () => {
   argsChg('k', 'cookie'    ) // feat: _global_.args
   argsChg('l', 'lazylog'   )
   argsChg('n', 'nosocket'  ) // feat: _global_.args
-  argsChg('p', 'pristine'  )
+  argsChg('p', 'csp'       ) // feat: _global_.args
   argsChg('r', 'route'     )
   argsChg('s', 'save'      )
   argsChg('t', 'incognito' )
@@ -65,7 +65,6 @@ module.exports = () => {
   argsChg('x', 'proxy'     )
   argsChg('z', 'lazyclick' ) // feat: _global_.args
 
-  argsChg('' , 'csp'       ) // feat: _global_.args
   argsChg('D', 'debug'     )
   argsChg('G', 'nogpu'     )
   argsChg('H', 'nohost'    ) // feat: _global_.args
@@ -145,12 +144,6 @@ module.exports = () => {
     if (typeof (browser) === 'string') {
       argv.browser[id] = browser.replace(/\\/g, '/')
     }
-  }
-
-  if (argv.incognito) {
-    argv.pristine && (delete argv.pristine)
-  } else if (argv.pristine === undefined) {
-    argv.pristine = true
   }
   global.mitm._argv = {...argv} // original argv
 }

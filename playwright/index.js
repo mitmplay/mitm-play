@@ -133,7 +133,7 @@ module.exports = () => {
         username, password
       }
     }
-    if (argv.pristine===true) {
+    if (argv.incognito===undefined) {
       const { fn: { tilde } } = global.mitm
       const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
       console.log(c.yellow(`Browser profile ${tilde(bprofile)}`))
@@ -149,7 +149,7 @@ module.exports = () => {
         ctxoption.viewport = null
       }
       console.log('>>> Browser option', options)
-      if (argv.pristine==='server') {
+      if (argv.incognito==='server') {
         const server = await playBrowser.launchServer(options)
         const wsEndpoint = server.wsEndpoint()
         browserServer[browserName] = server
@@ -170,7 +170,7 @@ module.exports = () => {
     if (browserName === 'chromium') {
       const cdp = await page.context().newCDPSession(page)
       global.mitm.cdp = cdp
-      if (argv.pristine!==true) {
+      if (argv.incognito) {
         await page.goto('chrome://extensions/')
         const nodes = await page.$$('#detailsButton')
         for (const node of nodes) {
