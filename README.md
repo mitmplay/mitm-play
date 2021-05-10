@@ -708,7 +708,7 @@ _global_ = {
     nosocket,  // no websocket injection to html page*
     nohost,    // set logs without host name*
     nourl,     // set logs without URL*
-    relaxcsp,  // relax CSP unblock websocket*
+    csp,       // relax CSP unblock websocket*
   }
 }
 ```
@@ -806,7 +806,7 @@ $ mitm-play --help
     -x --proxy         a proxy request
     -z --lazyclick     delay ~700ms click action*
 
-    -C --csp           relax CSP unblock websocket*
+       --csp           relax CSP unblock websocket*
     -D --debug         show ws messages
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
@@ -1012,12 +1012,11 @@ $ mitm-play -z=400  <OR>
 $ mitm-play --lazyclick=400
 ```
 </details><hr/>
-<details><summary><b>-C --csp</b></summary>
+<details><summary><b>--csp</b></summary>
 
 Update CSP header on Html Page injected with wws-client.js to unblock Websocket communication
 
 ```bash
-$ mitm-play -C  <OR>
 $ mitm-play --csp
 ```
 </details>

@@ -90,7 +90,7 @@ function injectWS (resp, url, jsLib) {
     js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
   }
   resp.body = script_src(resp.body, js)
-  if (__args.relaxcsp) {
+  if (__args.csp) {
     headerchg(resp.headers)
   }
 }

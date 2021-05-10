@@ -3,12 +3,12 @@ const c = require('ansi-colors')
 
 function argsChg (id, key) {
   const { argv } = global.mitm
-  if (argv[id]) {
+  if (id && argv[id]) {
     argv[key] = argv[id]
     delete argv[id]
-    if (argv[key] === 'false') {
-      argv[key] = false
-    }
+  }
+  if (argv[key] === 'false') {
+    argv[key] = false
   }
 }
 
@@ -65,7 +65,7 @@ module.exports = () => {
   argsChg('x', 'proxy'     )
   argsChg('z', 'lazyclick' ) // feat: _global_.args
 
-  argsChg('C', 'relaxcsp'  ) // feat: _global_.args
+  argsChg('' , 'csp'       ) // feat: _global_.args
   argsChg('D', 'debug'     )
   argsChg('G', 'nogpu'     )
   argsChg('H', 'nohost'    ) // feat: _global_.args
