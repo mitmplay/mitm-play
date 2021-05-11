@@ -18,10 +18,6 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
   const { __args, __flag, fn: { tilde } } = global.mitm
   let resp, resp2, msg
 
-  if (match && match.route.debug) {
-    debugger
-  }
-
   if (match) {
     const { url, browserName } = reqs
     const { route } = match

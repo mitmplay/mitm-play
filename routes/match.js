@@ -25,8 +25,6 @@ function _url(s, other='') {
 function typTags (typ, namespace) {
   const { __tag4 } = global.mitm
   const ns = __tag4[namespace]
-  // if (typ==='proxy')
-  //   debugger;
   if (ns) {
     return ns[typ] || []
   } else {
@@ -159,8 +157,6 @@ const searchFN = (typs, { url, method, browserName }) => {
     const list = typTags(typs, namespace)
 
     for (const typ of list) {
-      // if (namespace==='oldstorage.com.sg' && typs==='cache' && url.match('meta'))
-      //   debugger;
       const route = routes[namespace][typ]
       const obj = router[namespace][typ]
 

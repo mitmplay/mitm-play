@@ -135,7 +135,6 @@ On browser console type "ws"`
         delayCapture(data)
       } catch (error) {
         console.log(error)
-        debugger
       }
     } else {
       console.log('no session in _page', __page)
