@@ -1,4 +1,5 @@
 const attach = require('../playwright/attach')
+const c = require('ansi-colors')
 
 async function _page(browser, url) {
   let pages
@@ -20,6 +21,9 @@ async function _page(browser, url) {
   }
   if (!newpage) {
     newpage = await browser.newPage()
+    attach(newpage)
+  } else if (newpage._page===undefined) {
+    console.log(c.redBright('Non automation page...'))
     attach(newpage)
   }
   if (newpage.url()!==url) {
