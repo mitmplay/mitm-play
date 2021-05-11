@@ -1,10 +1,51 @@
 const attach = require('../playwright/attach')
 
+async function _page(browser, url) {
+  let pages
+  let newpage
+  if (browser.pages) {
+    pages = await browser.pages()
+  } else {
+    pages = browser.contexts()[0].pages()
+  }
+  if (pages && pages.length > 1) {
+    const {origin} = new URL(url)
+    for (const pg of pages) {
+      if (pg.url().match(origin)) {
+        await pg.bringToFront()
+        newpage = pg
+        break
+      }
+    }  
+  }
+  if (!newpage) {
+    newpage = await browser.newPage()
+    attach(newpage)
+  }
+  if (newpage.url()!==url) {
+    await newpage.goto(url)
+  }
+  return newpage
+}
+
+async function _save(page, oldPage, selector, store) {
+  const obj2 = await page.$eval(selector, (e, opt) => {
+    const [attr, key] = opt.split(':')
+    const [id1, id2] = attr.split('~')
+    const value = id2 ? e[id1](id2) : e[id1]
+    return {key, value}
+  }, store);
+  await oldPage.$eval('body', (e, obj2) => {
+    const {key, value: val} = obj2
+    localStorage.setItem(key, val)
+  }, obj2);
+}
+
 module.exports = async ({ data }) => {
   const c = require('ansi-colors')
-  const { autofill, browser: b, _page, _frame } = data
+  const { autofill, browser: b, _page: p, _frame: f } = data
   const browser = global.mitm.browsers[b]
-  let page = await browser.currentTab(_page, _frame)
+  let page = await browser.currentTab(p, f)
   let oldPage = page
 
   console.log(c.greenBright('>>> autofill'))
@@ -57,10 +98,10 @@ module.exports = async ({ data }) => {
       let options = {delay: val ? +val : 100}
       if (action === 'type') {
         await input('type', selector, store, options)
-      } else if (action === 'wait') {
-        await page.waitForSelector(selector)
       } else if (action === 'fill') {
         await page.fill(selector, store, options)
+      } else if (action === 'wait') {
+        await page.waitForSelector(selector)
       } else if (action === 'press') {
         await page.press(selector, store)
       } else if (action === 'click') {
@@ -73,25 +114,17 @@ module.exports = async ({ data }) => {
         await page.uncheck(selector)
       } else if (action === 'selectOption') {
         await page.selectOption(selector, store)
-      } else if (action === 'newpage') {
-        page = await browser.newPage()
-        attach(page)
-        await page.goto(store)
+      } else if (action === 'page') {
+        page = await _page(browser, store)
+      } else if (action === 'save') {
+        await _save(page, oldPage, selector, store)
+      } else if (action === 'leave') {
+        await oldPage.bringToFront()
+        page = oldPage
       } else if (action === 'close') {
         await page.close()
         await oldPage.bringToFront()
         page = oldPage
-      } else if (action === 'save') {
-        const obj2 = await page.$eval(selector, (e, opt) => {
-          const [attr, key] = opt.split(':')
-          const [id1, id2] = attr.split('~')
-          const value = id2 ? e[id1](id2) : e[id1]
-          return {key, value}
-        }, store);
-        await oldPage.$eval('body', (e, obj2) => {
-          const {key, value: val} = obj2
-          localStorage.setItem(key, val)
-        }, obj2);
       }
     } else if (value) {
       await input('fill', selector, value)
@@ -107,4 +140,3 @@ module.exports = async ({ data }) => {
     page[act](selector, value)
   }
 }
-
