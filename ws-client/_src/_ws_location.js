@@ -8,6 +8,8 @@ module.exports = () => {
   const containerStyle2 = 'position: fixed;z-index: 9999;left:  3px;'
   const containerStyle3 = 'position: fixed;z-index: 9999;right: 3px; top: 20px; text-align: end;'
   const buttonStyle = 'border: none;border-radius: 15px;font-size: 10px;cursor: pointer;'
+  const auto = '<button class="btn-autofill">Autofill</button>'
+
   const event = new Event('urlchanged')
   let container = {
     right3: {},
@@ -22,6 +24,7 @@ module.exports = () => {
     left: {},
   }
   let intervId
+  let observerfn
 
   function toRegex (pathMsg) {
     let [path, msg] = pathMsg.split('=>').map(item => item.trim())
@@ -89,21 +92,28 @@ module.exports = () => {
       const {href, origin} = location
       const _href = href.replace(origin, '')
       const {_macros_, macros} = window.mitm
+      observerfn = undefined
       for (const key in macros) {
         const { path, msg } = toRegex(key)
         if (_href.match(path)) {
           button.innerHTML = msg || 'Autofill'
           _macros_ && _macros_()
-          macros[key]()
-          if (debunk) {
-            clearTimeout(debunk)
-            debunk = undefined
-          }
+          observerfn = macros[key]()
+          debunk && clearTimeout(debunk)
           debunk = setTimeout(() => {
+            debunk = undefined
             const {autobuttons, rightbuttons, leftbuttons} = window.mitm
             rightbuttons && setButtons(rightbuttons, 'right3')
-            autobuttons && setButtons(autobuttons, 'right')
-            leftbuttons && setButtons(leftbuttons, 'left')  
+            leftbuttons && setButtons(leftbuttons, 'left')
+            const { autofill } = window.mitm
+            if (autofill) {
+              autobuttons && setButtons({
+                ...autobuttons,
+                'Autofill'() {play(autofill)}
+              }, 'right')
+            } else {
+              autobuttons && setButtons(autobuttons, 'right')
+            }
           }, 0)
         }
       }
@@ -141,11 +151,6 @@ module.exports = () => {
         reject(error)
       }
     })
-  }
-
-  function btnclick (e) {
-    const { autofill } = window.mitm
-    play(autofill)
   }
 
   function keybCtrl (e) {
@@ -195,11 +200,10 @@ module.exports = () => {
       const divTopRight3 = document.createElement('div')
       const divTopRight = document.createElement('div')
       const divTopLeft = document.createElement('div')
-      const auto = '<button class="btn-autofill">Autofill</button>'
 
       styleBtnLeft.innerHTML = 'button.mitm-btn:hover{text-decoration:underline;}'
       divTopRight3.innerHTML = `<span class="bgroup-right"></span>`
-      divTopRight.innerHTML  = `<span class="bgroup-right"></span>${auto}`
+      divTopRight.innerHTML  = `<span class="bgroup-right"></span>`
       divTopLeft.innerHTML   = `<span class="bgroup-left"></span>`
       divTopRight.className  = 'mitm autofill-container'
       divTopLeft.className   = 'mitm autofill-container'
@@ -219,8 +223,6 @@ module.exports = () => {
         bgroup.right3 = divTopRight3.children[0]
         bgroup.right = divTopRight.children[0]
         bgroup.left  = divTopLeft.children[0]
-        button = divTopRight.children[1]
-        button.onclick = btnclick
         urlChange(event)
         observed()
       }, 0)
@@ -229,12 +231,33 @@ module.exports = () => {
 
   const {location} = document
   let oldHref = location.href
-
-  function compareHref() {
+  let oDebunk = undefined
+  function compareHref(nodes) {
     // console.log('DOM mutated!')
     if (oldHref != location.href) {
       window.dispatchEvent(event)
       oldHref = location.href
+    } else {
+      if (typeof observerfn === 'function') {
+        oDebunk && clearTimeout(oDebunk)
+        oDebunk = setTimeout(()=> {
+          oDebunk = undefined
+          observerfn(nodes)
+          const {autobuttons, rightbuttons, leftbuttons} = window.mitm
+          rightbuttons && setButtons(rightbuttons, 'right3')
+          leftbuttons && setButtons(leftbuttons, 'left')
+          const { autofill } = window.mitm
+          if (autofill) {
+            autobuttons && setButtons({
+              ...autobuttons,
+              'Autofill'() {play(autofill)}
+            }, 'right')
+          } else {
+            autobuttons && setButtons(autobuttons, 'right')
+          }
+
+        }, 100)
+      }
     }
   }
 
