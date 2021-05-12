@@ -94,9 +94,12 @@ function okTag1(tag1, tags) { //feat: tag2/3 depend to tag1
   return false
 }
 
-function okTags(tags) {
-  for (const tag in tags) {
-    if (tags[tag]) {
+function okTags(tags, tag) {
+  const url = tag ? `url:${tag.slice(0,-1)}` : false
+  for (const id in tags) {
+    if (url && id===url) {
+      return tags[id]
+    } else if (tags[id]) {
       return true
     }
   }
@@ -105,11 +108,13 @@ function okTags(tags) {
 
 function checkTags(tg1, tg2, tg3, typ, key) {
   const {fn:{rmethod}} = global.mitm
+  let tag
   let str = key
   const arrTag = str.match(rmethod)
   if (arrTag) {
-    const [, method,, path] = arrTag          // feat: tags in url
+    const [, method, tg, path] = arrTag       // feat: tags in url
     str = method ? `${method}:${path}` : path // remove from url
+    tag = tg
   }
   const [_typ, _tags] = typ.split(':')
   let isTagsOk = tg3[str] && tg3[str][_typ]
@@ -119,7 +124,7 @@ function checkTags(tg1, tg2, tg3, typ, key) {
       isTagsOk = okTag1(tag1,  tg1)
     }
     if (isTagsOk && Object.keys(tags).length) {
-      isTagsOk = okTags(tags)
+      isTagsOk = okTags(tags, tag)
     }
   }
   if (!isTagsOk && _tags) { // if not, need to check on__tag2

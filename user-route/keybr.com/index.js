@@ -9,8 +9,12 @@ const route = {
   },
   proxy: ['keybr.com'],
   'mock:1.no-ads': {
+    'cloudflareinsights.com': '',
     '#201:google.+.com': '',
     'doubleclick.net': '',
+    'cookiebot.com': '',
+    'btloader.com': '',
+    'pub.network': '',
   },
   'mock:2.scenario 1.no-ads': {
     // ':2.scenario-#404:/api/login': 'What you need is not here',
@@ -48,6 +52,10 @@ const route = {
   //     ws: true
   //   },
   // },
+  mock: { 
+    ':resp~#200:c33bb71d63ce5996.woff2': '// What you need is not here 200',
+    ':resp~#201:c33bb71d63ce5996.woff2': '// What you need is not here 201',
+  },
   preset: {
     clear: {
       title: 'clear tags',
