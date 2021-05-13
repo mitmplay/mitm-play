@@ -17,7 +17,8 @@ module.exports = (_package) => {
     -a --activity \t rec/replay cache activity*
     -b --basic    \t login to http authentication
     -c --clear    \t clear/delete cache & log(s)
-    -d --device   \t resize to mobile screen device
+    -d --devtools \t show chrome devtools on start
+    -e --device   \t resize to mobile screen device
     -f --fullog   \t show detail logs on each rule* 
     -i --insecure \t accept insecure cert in nodejs env 
     -n --nosocket \t no websocket injection to html page*

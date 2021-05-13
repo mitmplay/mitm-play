@@ -49,7 +49,8 @@ module.exports = () => {
   argsChg('a', 'activity'  ) // feat: _global_.args
   argsChg('b', 'basic'     ) 
   argsChg('c', 'clear'     ) 
-  argsChg('d', 'device'    )
+  argsChg('d', 'devtools'  )
+  argsChg('e', 'device'    )
   argsChg('f', 'fullog'    ) // feat: _global_.args
   argsChg('g', 'group'     )
   argsChg('h', 'help'      )

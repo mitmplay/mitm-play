@@ -794,7 +794,8 @@ $ mitm-play --help
     -a --activity      rec/replay cache activity*
     -b --basic         login to http authentication
     -c --clear         clear/delete cache & log(s)
-    -d --device        resize to mobile screen device
+    -d --devtools      show chrome devtools on start
+    -e --device        resize to mobile screen device
     -f --fullog        show detail logs on each rule* 
     -i --insecure      accept insecure cert in nodejs env 
     -n --nosocket      no websocket injection to html page*
@@ -903,15 +904,24 @@ $ mitm-play -c='cache'  <OR>
 $ mitm-play --clear='cache'
 ```
 </details>
-<details><summary><b>-d --device</b></summary>
+<details><summary><b>-d --devtools</b></summary>
+
+Show chrome devtools on start up on ech tabs
+
+```bash
+$ mitm-play -d  <OR>
+$ mitm-play --devtools
+```
+</details>
+<details><summary><b>-e --device</b></summary>
 
 Resize screen to specific mobile device (still buggy)
 
 ```bash
-$ mitm-play -d  <OR>
+$ mitm-play -e  <OR>
 $ mitm-play --device
   <OR>
-$ mitm-play -d='iPhone 11 Pro'  <OR>
+$ mitm-play -e='iPhone 11 Pro'  <OR>
 $ mitm-play --device='iPhone 11 Pro'
 ```
 </details>
