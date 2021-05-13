@@ -115,15 +115,25 @@ module.exports = () => {
       await browser.close()
       browsers[browserName] = undefined
     }
+    let video = {}
     let ctxoption = {}
     const device = playwright.devices[argv.device] || {}
+    if (argv.video) {
+      video = {
+        recordVideo:{
+          dir: typeof argv.video==='string' ? argv.video : './video',
+          size: {width: argv.devtools ? 1600 : 800, height: 600}
+        }
+      }  
+    }
     if (argv.device) {
       if (device) {
         delete options.viewport
         options.deviceScaleFactor = 1
         ctxoption = {
           ...ctxoption,
-          ...device
+          ...device,
+          ...video,
         }
       }
     }
@@ -138,6 +148,7 @@ module.exports = () => {
       const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
       console.log(c.yellow(`Browser profile ${tilde(bprofile)}`))
       browser = await playBrowser.launchPersistentContext(bprofile, {
+        ...video,
         ...device,
         ...options,
         ...ctxoption
@@ -215,7 +226,10 @@ module.exports = () => {
       newPage(browser, page, url, count)
       count += 1
     }
-    page.on('close', () => {
+    page.on('close', async () => {
+      for (const browserName in argv.browser) {
+        await  browsers[browserName].close()
+      }
       if (!global.mitm.restart) {
         process.exit()
       }

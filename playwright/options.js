@@ -1,7 +1,7 @@
 const c = require('ansi-colors')
 
 module.exports = () => {
-  const { fn, argv: { proxy } } = global.mitm
+  const { fn, argv: { proxy, devtools } } = global.mitm
   const options = { headless: false }
 
   // Browser only support cli --proxy='httpp://proxy-with-value'
@@ -9,6 +9,9 @@ module.exports = () => {
   // if (proxy===true && _proxy) {
   //   proxy = _proxy;
   // }
+  if (devtools) {
+    options.devtools = true
+  }
   if (typeof (proxy) === 'string') {
     const bypass = fn._noproxy()
     global.mitm._noproxy = bypass
