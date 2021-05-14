@@ -94,7 +94,9 @@ module.exports = () => {
   }
 
   if (argv.route===true) {
-    argv.route = `${path.app}/user-route`
+    argv.route = `${path.app}/user-log`
+  } else if (argv.route===':test') {
+    argv.route = `${path.app}/user-test`
   }
 
   let saveArgs = loadProfile(prm1)
