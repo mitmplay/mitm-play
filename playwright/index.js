@@ -6,6 +6,8 @@ const proxies = require('./proxies')
 const cleanX = require('./clean-x')
 const routes = require('../routes')
 const attach = require('./attach')
+const browserPath = require('./browser-path')
+const currentTab = require('./current-tab')
 
 const pages = {}
 const browsers = {}
@@ -15,35 +17,6 @@ global.browserServer = browserServer
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-function currentTab (browser) {
-  browser.currentTab = async function (_page, _frame) {
-    let pages
-    if (browser.pages) {
-      pages = await browser.pages()
-    } else {
-      pages = browser.contexts()[0].pages()
-    }
-    const pageobj = global.mitm.__page[_page]
-    if (pageobj) {
-      if (_frame) {
-        const frame = pageobj.iframes[_frame]
-        if (frame) {
-          return frame
-        }
-      } else {
-        for (const page of pages) {
-          if (_page === page._page) {
-            return page
-          }
-        }
-      }
-    }
-
-    console.log(c.red('(*undetect page*)'))
-    return pages[0]
-  }
 }
 
 function initBrowserMsg(browserName, opt) {
@@ -69,55 +42,19 @@ module.exports = () => {
   global.mitm.pages = pages
   global.mitm.browsers = browsers
   global.mitm.bcontexts = bcontexts
-
   const args = require('./args-c')(argv);
 
-  // process.on('unhandledRejection', (err, p) => {
-  //   const econtext = `${err}`.match('Execution context was destroyed')
-  //   if (argv.debug || !econtext) {
-  //     console.log('An unhandledRejection occurred')
-  //     console.log(`Rejected Promise: ${p}`)
-  //     console.log(`Rejection: ${err}`)
-  //   } else {
-  //     console.log(c.red('(*execution context was destroyed*)'))
-  //   }
-  // });
-
-  function browserPath(browserName, options) {
-    let execPath = argv.browser[browserName]
-    if (typeof (execPath) === 'string') {
-      execPath = execPath.replace(/\\/g, '/')
-      if (browserName !== 'chromium') {
-        console.log(c.redBright('executablePath is unsupported for non Chrome!'))
-      } else if (process.platform === 'darwin') {
-        execPath += '/Contents/MacOS/Google Chrome'
-      }
-      options.executablePath = home(execPath)
-    } else {
-      const _browser = require('playwright')[browserName]
-      execPath = _browser.executablePath().replace(/\\/g, '/')
-    }
-    if (browserName !== 'chromium') {
-      console.log(c.yellow(`Exec. path: ${execPath}`))
-    }
-  }
-
   async function setup(browserName, options) {
-    let page, browser, bcontext
-    const playBrowser = playwright[browserName]
-    if (bcontexts[browserName]!==undefined) {
-      const context = bcontexts[browserName]
-      await context.close()
-      bcontexts[browserName] = undefined
-    }
-    if (browsers[browserName]!==undefined) {
-      const browser = browsers[browserName]
-      await browser.close()
-      browsers[browserName] = undefined
-    }
-    let video = {}
-    let ctxoption = {}
     const device = playwright.devices[argv.device] || {}
+    const playBrowser = playwright[browserName]
+    let bcontext = bcontexts[browserName]
+    let browser = browsers[browserName]
+    bcontexts[browserName] = undefined
+    browsers[browserName] = undefined
+    bcontext && await bcontext.close()
+    browser && await browser.close()
+
+    let video = {}
     if (argv.video) {
       video = {
         recordVideo:{
@@ -126,6 +63,8 @@ module.exports = () => {
         }
       }  
     }
+
+    let ctxoption = {}
     if (argv.device) {
       if (device) {
         delete options.viewport
@@ -143,6 +82,8 @@ module.exports = () => {
         username, password
       }
     }
+
+    let page
     if (argv.incognito===undefined) {
       const { fn: { tilde } } = global.mitm
       const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
@@ -172,11 +113,21 @@ module.exports = () => {
       } else {
         browser = await playBrowser.launch(options)
       }
-      // const context = await browser.newContext({viewport: { height: 734, width: 800 }});
-      const context = await browser.newContext(ctxoption)
-      page = await context.newPage()
-      bcontext = context
+      // bcontext = await browser.newContext({viewport: { height: 734, width: 800 }});
+      bcontext = await browser.newContext(ctxoption)
+      page = await bcontext.newPage()
     }
+    await bcontext.addInitScript(async () =>{
+      const {serviceWorker} = navigator
+      if (serviceWorker) {
+        console.log('check service worker....')
+        const registrations = await serviceWorker.getRegistrations() 
+        for(let registration of registrations) {
+          console.log('unregister swc')
+          registration.unregister()
+        }
+      }
+    });
     currentTab(browser)
     if (browserName === 'chromium') {
       const cdp = await page.context().newCDPSession(page)
