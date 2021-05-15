@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.8.378",
+  "version": "0.8.379",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -30,7 +30,7 @@
     "chokidar": "3.5.1",
     "clear-module": "4.1.1",
     "cssbeautify": "0.3.1",
-    "esbuild": "^0.11.19",
+    "esbuild": "^0.11.21",
     "express": "4.17.1",
     "fast-glob": "3.2.5",
     "fs-extra": "9.1.0",
@@ -41,7 +41,10 @@
     "markdown-it-container": "3.0.0",
     "playwright": "1.11.0",
     "prompt-sync": "4.2.0",
+    "rollup": "2.44.00",
+    "rollup-plugin-svelte": "^7.0.0",
     "stack-trace": "0.0.10",
+    "svelte-preprocess": "^3.9.8",
     "ws": "7.4.4",
     "yargs-parser": "20.2.7"
   },
@@ -51,13 +54,10 @@
     "jest": "26.6.3",
     "nock": "13.0.11",
     "npm": "7.8.0",
-    "rollup": "2.44.00",
     "rollup-plugin-cjs-es": "1.0.1",
     "rollup-plugin-sourcemaps": "0.6.3",
-    "rollup-plugin-svelte": "^7.0.0",
     "snazzy": "9.0.0",
-    "standard": "16.0.3",
-    "svelte-preprocess": "^3.9.8"
+    "standard": "16.0.3"
   },
   "engines": {
     "node": ">=14.16.1"
