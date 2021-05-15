@@ -6,6 +6,8 @@ const rollup = require('rollup')
 const c = require('ansi-colors')
 const fg = require('fast-glob')
 const fs = require('fs-extra')
+const svelte = require('rollup-plugin-svelte')
+const preprocess = require('svelte-preprocess')
 
 const hotKeys = obj => {
   window.mitm.macrokeys = {
@@ -134,8 +136,11 @@ function genBuild(msg, fpath) {
       return
     }
     const opath = fpath.replace('_macros_', '_bundle_')
-    bundleEsbuild(bpath, opath)
-    // bundleRollup(bpath, opath)
+    if (argv.svelte) {
+      bundleRollup(bpath, opath)
+    } else {
+      bundleEsbuild(bpath, opath)
+    }
   })
 }
 
@@ -225,10 +230,14 @@ function bundleRollup(bpath, opath) {
   const inputOptions = {
     input: bpath,
     plugins: [
+      svelte({
+        compilerOptions: {dev: true},
+        preprocess:  preprocess()
+      }),
       nodeResolve({
         browser: true,
-        // dedupe: ['svelte'],
-        // preferBuiltins: false
+        dedupe: ['svelte'],
+        preferBuiltins: false
       }),
       commonjs()
     ]
