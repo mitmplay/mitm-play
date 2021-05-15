@@ -94,16 +94,16 @@ function okTag1(tag1, tags) { //feat: tag2/3 depend to tag1
   return false
 }
 
-function okTags(tags, tag) {
-  const url = tag ? `url:${tag.slice(0,-1)}` : false
-  for (const id in tags) {
-    if (url && id===url) {
-      return tags[id]
-    } else if (tags[id]) {
-      return true
+function okTags(tags, utg='') {
+  let ok = false
+  for (const tg in tags) {
+    const tag = tags[tg]
+    if (utg && tg===utg) {
+      return tag
     }
+    tag && (ok = true)
   }
-  return false
+  return ok
 }
 
 function checkTags(tg1, tg2, tg3, typ, key) {
@@ -114,7 +114,7 @@ function checkTags(tg1, tg2, tg3, typ, key) {
   if (arrTag) {
     const [, method, tg, path] = arrTag       // feat: tags in url
     str = method ? `${method}:${path}` : path // remove from url
-    tag = tg
+    tag = `url:${tg.slice(0,-1).split(/ +/)[0]}`
   }
   const [_typ, _tags] = typ.split(':')
   let isTagsOk = tg3[str] && tg3[str][_typ]
