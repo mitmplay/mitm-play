@@ -1,8 +1,8 @@
 /* global chrome */
 import App from './App.svelte'
-const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([\w.#~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \(\)\w.#~-]+:|)(.+)/ // feat: tags in url
 const tmethod = /^(GET|PUT|POST|DELETE):/
-const rclass = /[.#~/]+/g
+const rclass = /[\(\).#~/]+/g
 
 console.log('Load MITM plugin')
 

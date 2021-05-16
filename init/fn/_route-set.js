@@ -2,8 +2,8 @@ const c = require('ansi-colors')
 const typs = require('./_typs')
 
 const { typC, typA, typO } = typs
-const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \w.#~-]+:|)(.+)/ // feat: tags in url
-const tgInUrl = /:[ \w.#~-]+:/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \(\)\w.#~-]+:|)(.+)/ // feat: tags in url
+const tgInUrl = /:[ \(\)\w.#~-]+:/ // feat: tags in url
 
 function toRegex (str, flags = '') {
   return new RegExp(str
@@ -141,7 +141,7 @@ function _routeSet (_r, namespace, file) {
     router[typ] = {}
     const [ptyp, ptags] = typ.split(':')
     for (const str in r[typ]) {
-      const method = str.match(rmethod)
+      const method = str.match(rmethod) // feat: tags in url
       routerSet(router, typ, method, str)
       const site = r[typ][str]
       if (site!==undefined) { // fix:empty-string{'GET:/google': ''}
@@ -163,8 +163,8 @@ function _routeSet (_r, namespace, file) {
             tag3.tags[tag] = true
           }
         }
-        // feat: tags in url
-        if (str.match(tgInUrl) && method[2]!=='hidden:') {
+
+        if (str.match(tgInUrl) && method[2]!=='hidden:') { // feat: tags in url
           const [utg, ...tag1] = method[2].split(':')[0].split(/ +/)
           const path = [str.split(':').pop()]
           tag3 = _nsstag(typ, str)
