@@ -99,7 +99,7 @@ function okTags(tags, utg='') {
   for (const tg in tags) {
     const tag = tags[tg]
     if (utg && tg===utg) {
-      return tag
+      return tag || ok // feat: tags in url or in tags
     }
     tag && (ok = true)
   }

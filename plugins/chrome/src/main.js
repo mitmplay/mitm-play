@@ -61,7 +61,7 @@ function isRuleOff(tags, ns, path) {
           }
         }
         if (skip) {
-          return true
+          continue //feat: tag3 depend to tag1
         }  
       }
       const tags = node.tags // feat: update __tag3
