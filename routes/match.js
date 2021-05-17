@@ -4,13 +4,11 @@ const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const mmethod = /^(GET|PUT|POST|DELETE):/
 const nohttp = /https?:\/\//
 
-function mth(m) {
-  return {
-    GET:    'gt:',
-    PUT:    'pt:',
-    POST:   'ps:',
-    DELETE: 'dl:'
-  }[m] || m
+const m1 = {GET: 'gt', PUT: 'pt', POST: 'ps', DELETE: 'dl' }
+const m2 = {GET: 'gt:',PUT: 'pt:',POST: 'ps:',DELETE: 'dl:'}
+
+function mth(m, k) {
+  return (k.match(/^:/) ? m1: m2)[m] || m
 }
 
 function bloc(s) {
@@ -58,7 +56,7 @@ const searchArr = ({url, method, browserName, typ: typs}) => {
               if (key.match(mmethod)) {
                 log = `${browser[browserName]} ${typ} ${bloc(key)}`
               } else {
-                log = `${browser[browserName]} ${typ} ${bloc(c.gray(mth(method))+key)}`
+                log = `${browser[browserName]} ${typ} ${bloc(c.gray(mth(method, key))+key)}`
               }
               const { host, origin: o, pathname, search } = new URL(url)
               let msg = (__args.nohost ? '' : o.replace(nohttp,''))+pathname
@@ -185,7 +183,7 @@ const searchFN = (typs, { url, method, browserName }) => {
               log += `${bloc(key)}`
             } else {
               other += method
-              log += `${bloc(c.gray(mth(method))+key)}`
+              log += `${bloc(c.gray(mth(method, key))+key)}`
             }
             !__args.nourl && (log += _url(msg, other))
           }
