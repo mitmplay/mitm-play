@@ -4,9 +4,9 @@ const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
 
 module.exports = () => {
-  const containerStyle1 = 'position: fixed;z-index: 9999;right: 3px;'
-  const containerStyle2 = 'position: fixed;z-index: 9999;left:  3px;'
-  const containerStyle3 = 'position: fixed;z-index: 9999;right: 3px; top: 20px; text-align: end;'
+  const containerStyle1 = 'position: fixed;z-index: 99999;right: 3px;'
+  const containerStyle2 = 'position: fixed;z-index: 99999;left:  3px;'
+  const containerStyle3 = 'position: fixed;z-index: 99999;right: 3px; top: 20px; text-align: end;'
   const buttonStyle = 'border: none;border-radius: 15px;font-size: 10px;cursor: pointer;'
   const auto = '<button class="btn-autofill">Autofill</button>'
 
