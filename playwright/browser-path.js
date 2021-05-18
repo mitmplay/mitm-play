@@ -1,3 +1,5 @@
+const c = require('ansi-colors')
+
 function browserPath(browserName, options) {
   const {
     argv,

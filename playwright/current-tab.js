@@ -1,3 +1,5 @@
+const c = require('ansi-colors')
+
 function currentTab (browser) {
   browser.currentTab = async function (_page, _frame) {
     let pages
