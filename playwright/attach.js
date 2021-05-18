@@ -12,6 +12,17 @@ async function log(msg) {
   }
 }
 
+function pagename(page) {
+  let name = ''
+  if (typeof page.name==='function') {
+    name = page.name()
+  }
+  if (name && name.length>30) {
+    name = name.substr(0,27) + '...'
+  }
+  return name ? ` name:${name}` : ''
+}
+
 function grey(page, msg) {
   let url = ''
   if (typeof page.url==='function') {
@@ -22,16 +33,9 @@ function grey(page, msg) {
     const { origin, pathname } = new URL(url)
     msg2 = origin!=='null' ? `${origin}${pathname}` : `${url}`
     msg2 = `${msg} url: ${msg2}`.trim()
-    console.log(c.gray(`(*${msg2}*)`))
+    console.log(c.gray(`(*${msg2}${pagename(page)}*)`))
   } else {
-    let name = '.'
-    if (typeof page.name==='function') {
-      name = page.name()
-    }
-    if (name && name.length>30) {
-      name = name.substr(0,27) + '...'
-    }
-    console.log(c.gray(`(*${msg} name ${name}*)`))
+    console.log(c.gray(`(*${msg}${pagename(page)}*)`))
   }
 }
 
@@ -54,24 +58,16 @@ async function evalPage(page, _page, msg, _frame='') {
     msg1 = Object.keys(_pg.session).pop()+' '
   }
 
-  let name = '.'
   let msg2 = ''
   if (url) {
     const { origin, pathname } = new URL(url)
     msg2 = origin!=='null' ? `url: ${origin}${pathname}` : `url: ${url}`
-  } else {
-    if (typeof page.name==='function') {
-      name = page.name()
-      if (name && name.length>30) {
-        name = name.substr(0,27) + '...'
-      }  
-    }
-    msg2 = `name ${name}`  
   }
+  msg2 += pagename(page)  
 
   if (_frame && page.isDetached()) {
     if (argv.debug || __flag['page-load']) {
-      grey(page, 'detached-1! frame')
+      grey(page, c.strikethrough('frame detached-1'))
     }
   } else if (page) {
     let isclosed;
@@ -86,7 +82,7 @@ async function evalPage(page, _page, msg, _frame='') {
       }
       const state = {state: 'attached'}
       await page.waitForSelector('html', state)
-      await log(`${msg} ${_page} ${c.blue(msg1)}${_frame ? _frame+' ' : ''}${msg2}`)
+      await log(`${msg} ${_page} ${c.blue(msg1)}${_frame ? _frame : ''}${msg2}`)
       if (_frame) {
         await page.evaluate(({_page, _frame}) => {
           window['xplay-page']  = _page
@@ -101,11 +97,11 @@ async function evalPage(page, _page, msg, _frame='') {
       const { message } = error
       if (argv.debug || __flag['page-load']) {
         if (message.match('detached!')) {
-          grey(page, 'detached-2! frame')
+          grey(page, c.strikethrough('frame detached-2'))
         } else if (message.match('closed!')) {
-          grey(page, 'closed! page')
+          grey(page, c.strikethrough('page: closed.'))
         } else if (message.match('crashed!')) {
-          grey(page, 'crashed page')
+          grey(page, c.strikethrough('page: crashed'))
         } else if (message.match('destroyed')) {
           // ignore...
         } else {
@@ -148,6 +144,14 @@ module.exports = async function(page) {
         console.log('ERROR', error)
       }
     }
+  })
+
+  page.on('framedetached', async (frame) => {
+    grey(frame, c.strikethrough('frame detached-0'))
+  })
+
+  page.on('framenavigated', async (frame) => {
+    grey(frame, c.strikethrough('frame navigate-0'))
   })
 
   await page.setExtraHTTPHeaders({ 'xplay-page': _page })
