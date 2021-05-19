@@ -101,8 +101,6 @@ module.exports = () => {
       }
     }
   }
-  mitm.routes['keybr.com']._childns._subns = 'lol'
-  const lol = mitm.routes['hi@keybr.com']._childns._subns
 
   if (typeof (argv.url) === 'string') {
     if (!argv.url.match('https')) {
