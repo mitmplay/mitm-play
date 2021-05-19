@@ -81,7 +81,7 @@ function _routeSet (_r, namespace, file) {
   const tags = {}
   const urls = {}
   const router = {}
-  router._namespace_ = toRegex(namespace.replace(/~/, '[^.]*'))
+  router._namespace_ = toRegex(namespace.replace(/~/g, '[^.]*'))
 
   const _typlist = function (typs) {
     const typlist = Object.keys(r).filter(x => {

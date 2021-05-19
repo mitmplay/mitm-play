@@ -12,7 +12,7 @@ function istag(tags, ns) {
   if (ns.match('@')) {
     ok = false
   } else  if (filterUrl) {
-    const rgx = toRegex(ns.replace(/~/,'[^.]*'));
+    const rgx = toRegex(ns.replace(/~/g,'[^.]*'));
     ok = ok && mitm.browser.activeUrl.match(rgx) || oneSite(tags, ns); //ns==='_global_';
   }
   return ok;

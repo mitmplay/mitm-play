@@ -8,7 +8,7 @@ module.exports = () => {
   }
 
   for (const key in window.mitm.routes) {
-    if (host.match(toRegex(key.replace(/~/, '[^.]*')))) {
+    if (host.match(toRegex(key.replace(/~/g, '[^.]*')))) {
       namespace = key
       break
     }
