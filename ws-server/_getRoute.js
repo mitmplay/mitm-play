@@ -23,6 +23,7 @@ module.exports = () => {
     __tag3,
     __tag4
   } = global.mitm
+  mitm._childns && (delete mitm._childns) // feat: default app
   const routez = Object.keys(r).filter(x=>!x.match('@'))
   const routey = Object.keys(r).filter(x=>x.match('@'))
   const routel = {} // feat: reference to _subns route

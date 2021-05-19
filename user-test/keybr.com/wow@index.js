@@ -1,4 +1,7 @@
 const route = {
+  urls: {
+    keybw: 'https://keybr.com/',
+  },
   cache: {
     '!:/assets/(.+).css': {
       contentType: ['css', 'image'],

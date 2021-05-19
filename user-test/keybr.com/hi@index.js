@@ -5,7 +5,7 @@ lol(0)
 
 const route = {
   urls: {
-    keyb2: 'https://keybr.com/',
+    keybh: 'https://keybr.com/',
   },  
   'html:hi': {
     'GET:/url': {

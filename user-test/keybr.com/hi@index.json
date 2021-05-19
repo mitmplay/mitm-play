@@ -2,7 +2,11 @@
   "_": "auto-generated during saveTags!",
   "tags": [
     "1.no-ads",
-    "mock:1.no-ads"
+    "mock:1.no-ads",
+    "resp~#200",
+    "resp~#201",
+    "url:resp~#200",
+    "url:resp~#201"
   ],
   "_subns": ""
 }

@@ -1,10 +1,12 @@
 {
   "_": "auto-generated during saveTags!",
   "tags": [
-    "1.no-ads",
-    "2.scenario",
-    "mock:1.no-ads",
-    "mock:2.scenario"
+    "html:wow",
+    "resp~#200",
+    "resp~#201",
+    "url:resp~#200",
+    "url:resp~#201",
+    "wow"
   ],
   "_subns": ""
 }

@@ -86,10 +86,23 @@ module.exports = () => {
     process.exit()
   }
   global.mitm.data.nolog = true
-  for (const file of files) {
+  for (const file of files) { // feat: load routes for the first time
     loadJS(file)
   }
   delete global.mitm.data.nolog
+  const {routes, routex} =  global.mitm
+  for (const _ns in routex) {
+    let _childns = {list: {}, _subns: ''}
+    for (const id in routex[_ns]) {// feat: set same _childns
+      if (id==='index.js') {
+        _childns = routes[_ns]._childns
+      } else {
+        routes[`${id}@${_ns}`]._childns = _childns
+      }
+    }
+  }
+  mitm.routes['keybr.com']._childns._subns = 'lol'
+  const lol = mitm.routes['hi@keybr.com']._childns._subns
 
   if (typeof (argv.url) === 'string') {
     if (!argv.url.match('https')) {
@@ -106,22 +119,45 @@ module.exports = () => {
       const _urls = {}
       for (const namespace in routes) {
         const { url, urls } = routes[namespace]
+        const urls2 = Object.keys(urls||{})
         for (const key of argv0) {
           const rgx = toRegex(key, 'i')
           let urlsSet = false
-          // find on urls
           if (urls) {
-            for (const loc in urls) {
-              if (loc.match(rgx)) {
-                _urls[loc] = urls[loc]
-                urlsSet = true // found
-              }
+            // "_subns": ""
+            // "_subns": "hi@keybr.com"
+            if (urls2.includes(key)) {
+              _urls[key] = urls[key]
+              urlsSet = true // found
+            } else {
+              for (const loc in urls) { // feat: find in urls
+                if (loc.match(rgx)) {
+                  _urls[loc] = urls[loc]
+                  urlsSet = true // found
+                  break
+                }
+              }  
             }
           }
           /**
            * find on url if urls cannot be found
            */
-          if (!urlsSet && url && url.match(rgx)) {
+          if (urlsSet) {
+            if (mitm._childns===undefined) {
+              const {_childns} = mitm.routes[namespace]
+              if (namespace.match('@')) {
+                for (const l in _childns.list) {
+                  _childns.list[l] = false
+                }
+                _childns.list[namespace] = true
+                _childns._subns = namespace  
+              } else {
+                _childns._subns = ''  
+              }
+              mitm._childns = _childns // feat: default app  
+            }
+            break
+          } else if (url && url.match(rgx)) {
             _urls.def = url
           }
         }

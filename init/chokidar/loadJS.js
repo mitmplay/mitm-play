@@ -132,7 +132,7 @@ function sort (obj, size=false, _typO) {
 }
 
 function routeSort (fn) { // feat: upadte tags
-  const { routes: { _global_ } } = global.mitm
+  const { routes: { _global_ }, argv } = global.mitm
   const { _routeSet } = global.mitm.fn
   if (_global_._childns===undefined) {
     _routeSet(_global_, '_global_', '')
@@ -201,6 +201,15 @@ function routeSort (fn) { // feat: upadte tags
       }
     }
     tag1[ns] = sort({..._tags, ...tag1[ns]})
+  }
+  if (mitm._childns) { // feat: default app
+    const {_childns} = mitm
+    const {routes, routex} =  global.mitm
+    const _ns = _childns._subns.split('@').pop()
+    for (const id in routex[_ns]) {
+      const ns = id==='index.js' ? _ns : `${id}@${_ns}`
+      routes[ns]._childns = _childns
+    }
   }
   global.mitm.__tag1 = tag1
   global.mitm.fn._clear()
