@@ -8,7 +8,7 @@ export let ns;
 const list = window.mitm.routes[ns]._childns.list
 
 function q(key) {
-  return key.replace(/[@.]/g, '-')
+  return key.replace(/[@~.]/g, '-')
 }
 function childns(_ns) {
   const {_childns} = window.mitm.routes[ns]

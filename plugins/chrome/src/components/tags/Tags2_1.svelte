@@ -111,7 +111,7 @@ function spacex(tags, item, path) {
 }
 
 function q(key) {
-  return key.replace(/[@.]/g, '-')
+  return key.replace(/[@~.]/g, '-')
 }
 
 function checked(tags, item) {
