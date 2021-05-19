@@ -40,6 +40,9 @@ function routetag(tags, item) {
     klas += tags.__tag2[ns][item] ? ' slc' : ''
     klas += ' r2'
   }
+  if (tags.check && !items.tags[item]) {
+    klas += ' hidden'
+  }
   return `${klas} _${item.split(':').pop().replace(rclass, '-')}`
 }
 
@@ -58,6 +61,13 @@ function xitems(tags) {
 function check(item) {
   return item.indexOf('url:')===-1 && item.indexOf(':')>-1
 }
+function props(tags) {
+  let props = {}
+  if (tags.check) {
+    props.disabled = true
+  }
+  return props
+}
 </script>
 
 {#each xitems($tags) as item}
@@ -74,7 +84,8 @@ function check(item) {
         <input type="checkbox"
         data-item={item}
         on:click={clicked} 
-        bind:checked={items.tags[item]}/>
+        bind:checked={items.tags[item]}
+        {...props($tags)}/>
         <span>{title(item)}</span>      
       </label>
     {/if}
@@ -87,6 +98,9 @@ function check(item) {
 }
 .space3 span {
   vertical-align: 15%;
+}
+.space3.hidden {
+  display: none;
 }
 .rtag {
   font-size: 13px;

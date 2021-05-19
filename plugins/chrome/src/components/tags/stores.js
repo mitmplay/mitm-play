@@ -11,6 +11,7 @@ export const tags = writable({
   __tag2: {},
   __tag3: {},
   route: '',
+  check: false,
   uniq: true,
   list: true,
   mth: false

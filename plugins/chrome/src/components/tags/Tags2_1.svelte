@@ -113,13 +113,29 @@ function spacex(tags, item, path) {
 function q(key) {
   return key.replace(/[@.]/g, '-')
 }
+
+function checked(tags, item) {
+  let klas = ''
+  if (tags.check && !item) {
+    klas += 'hidden'
+  }
+  return klas
+}
+
+function props(tags, item) {
+  let props = {}
+  if (tags.check) {
+    props.disabled = true
+  }
+  return props
+}
 </script>
 
 <div class="border">
   <!-- feat: auto collapsed between tag2 & tag3 -->
   <Tags2Title on:message {ns}/>
   {#each itemlist(items) as item}
-    <div class="t2 {q(ns)}">
+    <div class="t2 {q(ns)} {checked($tags, items[item].state)}">
     {#if isGroup(item)}
       <details>
         <summary class="space1 {routetag($tags, item)}">
@@ -127,7 +143,8 @@ function q(key) {
             <input type="checkbox"
             data-item={item}
             on:click={clicked} 
-            bind:checked={items[item].state}/> <!-- // feat: update __tag2 -->
+            bind:checked={items[item].state}
+            {...props($tags, items[item].state)}/> <!-- // feat: update __tag2 -->
             <span class="itm {item.match(':') ? 'big' : ''}">{show(item)}</span>
             <span class="link-tags">{linkTags(item)}</span>
           </label> 
@@ -148,7 +165,8 @@ function q(key) {
           <input type="checkbox"
           data-item={item}
           on:click={clicked} 
-          bind:checked={items[item].state}/> <!-- // feat: update __tag2 -->
+          bind:checked={items[item].state}
+          {...props($tags, items[item].state)}/> <!-- // feat: update __tag2 -->
           <span class="itm {item.match(':') ? 'big' : ''}">{show(item)}</span>
           <span class="link-tags">{linkTags(item)}</span>
         </label>
@@ -162,6 +180,9 @@ function q(key) {
 .ns {
   margin-left: -3px;
   font-size: 15px;
+}
+.t2.hidden {
+  display: none;
 }
 .border {
   border: 1px grey solid;

@@ -72,21 +72,21 @@ function clicked(e) {
   }, 10);
 }
 
-function routetag(item) {
+function routetag(tags, item) {
   const { browser } = window.mitm;
-  const slc = $tags.__tag1[item] ? 'slc' : '';
-  const grp = $tags.tgroup[item] ? 'grp' : '';
+  const slc = tags.__tag1[item] ? 'slc' : '';
+  const grp = tags.tgroup[item] ? 'grp' : '';
   let itm = ''
-  if ($tags.tgroup[item]) {
+  if (tags.tgroup[item]) {
     for (const ns of browser.nss) {
-      const tag3 = $tags.__tag3[ns] || []
+      const tag3 = tags.__tag3[ns] || []
       for (const id in tag3) {
         const secs = tag3[id]
         for (const sec in secs) {
           const tags = secs[sec].tags // feat: update __tag3
           for (const tag in tags) {
             if (item===tag.split(':').pop()) {
-              itm = 'itm'
+              itm = 'itm '
               break
             }
           }
@@ -94,9 +94,12 @@ function routetag(item) {
       }
     }
   }
+  if (tags.check && !list[item]) {
+    itm += 'hidden'
+  }
   let url = ''
   for (const ns of browser.nss) {
-    const tag3 = $tags.__tag3[ns] || [] // feat: update __tag3
+    const tag3 = tags.__tag3[ns] || [] // feat: update __tag3
     for (const id in tag3) {
       if (id.match(`:${item}:`)) {
         url = 'url'
@@ -152,13 +155,20 @@ function leave(e) {
     node.innerHTML = ``
   }
 }
+function props(tags) {
+  let props = {}
+  if (tags.check) {
+    props.disabled = true
+  }
+  return props
+}
 </script>
 
 {#if listTags($tags).length}
 <td style="{cols>1 ? '' : 'display:none;'}">
   <div class="border">
     {#each tgs as item}
-    <div class="space0 {routetag(item)}">
+    <div class="space0 {routetag($tags, item)}">
       <label 
       data-item={item}
       on:mouseenter={enter}
@@ -167,7 +177,8 @@ function leave(e) {
         <input type="checkbox"
         data-item={item}
         on:click={clicked}
-        bind:checked={list[item]}/>
+        bind:checked={list[item]}
+        {...props($tags, list[item])}/>
         <span class="big">{item}</span>
       </label>
     </div>
@@ -188,6 +199,9 @@ function leave(e) {
   font-weight: bolder;
   color: darkblue;
   /* background: deepskyblue; */
+}
+.space0.hidden {
+  display: none;
 }
 .space0 span {
   vertical-align: 15%;

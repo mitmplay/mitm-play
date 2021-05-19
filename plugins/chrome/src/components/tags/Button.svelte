@@ -61,6 +61,12 @@ onMount(() => {
   <label class="checker">
     <input
     type="checkbox"
+    bind:checked={$tags.check}/>
+    check
+  </label>
+  <label class="checker">
+    <input
+    type="checkbox"
     bind:checked={$tags.uniq}/>
     fit
   </label>
