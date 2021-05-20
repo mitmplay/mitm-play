@@ -53,12 +53,20 @@ module.exports = async ({ data }) => {
   }
 
   async function _leave() {
-    await oldPage.bringToFront()
+    if (oldPage.page)  {
+      await oldPage.page().bringToFront()
+    } else if (oldPage.bringToFront) {
+      await oldPage.bringToFront()
+    }
     page = oldPage
   }
 
   async function _close() {
-    await oldPage.bringToFront()
+    if (oldPage.page)  {
+      await oldPage.page().bringToFront()
+    } else if (oldPage.bringToFront) {
+      await oldPage.bringToFront()
+    }
     await page.close()
     page = oldPage
   }
