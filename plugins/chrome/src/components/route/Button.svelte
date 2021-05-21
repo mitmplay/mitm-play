@@ -1,5 +1,6 @@
 <script>
 import { source } from './stores.js';
+import { tags } from '../tags/stores';
 import Exbutton from '../monaco/Exbutton.svelte';
 
 function btnSave(e) {
@@ -42,7 +43,22 @@ function btnUrl(id) {
 }
 
 function btnTag(e) {
-  chrome.tabs.update({url: e.target.dataset.url});
+  const {__tag1, __tag2, __tag3, routes} = window.mitm;
+  const {url, ns} = e.target.dataset
+  const {_childns: chld} = routes[ns]
+  const {list} = chld
+  for (const id in list) {
+    list[id] = false
+  }
+  list[ns] = true
+  chld._subns = ns
+  tags.set({...$tags})
+  const _childns = {}
+  for (const ns in routes) {
+    _childns[ns] = routes[ns]._childns
+  }
+  ws__send('saveTags', {_childns, __tag1, __tag2, __tag3});
+  setTimeout(()=>chrome.tabs.update({url}), 100)
 }
 
 function btnGo(e) {
@@ -56,10 +72,20 @@ function btnGo(e) {
 {#if $source.path}
 	<div class="btn-container">
   {#each btns($source.item) as item}
-  <button class="tlb btn-go" on:click="{btnTag}"
-  data-url="{btnUrl(item)}">{item}</button> - 
+    <button
+      class="tlb btn-go"
+      on:click="{btnTag}"
+      data-ns={$source.item}
+      data-url="{btnUrl(item)}">
+      {item}
+    </button> - 
   {/each}
-  <button class="tlb btn-go" disabled={$source.goDisabled} on:click="{btnGo}">Go</button>.
+  <button
+    class="tlb btn-go"
+    on:click="{btnGo}"
+    disabled={$source.goDisabled}>
+    Go
+  </button>.
   </div>
 {/if}
 <div class="file-path">

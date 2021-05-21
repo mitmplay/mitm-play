@@ -22,16 +22,15 @@ function setSubns(e) {
   const {checked, dataset} = e.target
   setTimeout(() => {
     const {_childns} = window.mitm.routes[ns]
+    const {item: _ns} = dataset
     const {list} = _childns
-    const {item} = dataset
-    _childns._subns = list[item] ? item : ''
     if (checked) {
       for (const id in list) {
-        if (id!==item) {
-          list[id] = false
-        }
+        list[id] = false
       }
+      list[_ns] = true
     }
+    _childns._subns = list[_ns] ? _ns : ''
     tags.set({...$tags})
   }, 1);
 }
