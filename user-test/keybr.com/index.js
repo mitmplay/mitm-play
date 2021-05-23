@@ -1,3 +1,18 @@
+const preset = {
+  clear: {
+    title: 'clear tags',
+    tags: []
+  },
+  default: {
+    title: 'Default tags for common operation',
+    tags:[
+      'active',
+      'css:no-ads~css',
+      'mock:no-ads',
+    ]
+  }
+}
+
 const css = `
 .Body-header,.Body-aside {
   display: none !important;
@@ -8,7 +23,7 @@ const route = {
     keybr: 'https://keybr.com/',
   },
   proxy: ['keybr.com'],
-  'mock:1.no-ads': {
+  'mock:no-ads': {
     'cloudflareinsights.com': '',
     '#201:google.+.com': '',
     'doubleclick.net': '',
@@ -16,77 +31,14 @@ const route = {
     'btloader.com': '',
     'pub.network': '',
   },
-  'mock:2.scenario 1.no-ads': {
-    // ':2.scenario-#404:/api/login': 'What you need is not here',
-    'GET:/account': {
-      response: r => {
-        r.body = 'Hi There'
-      },
-      tags: ['widi'],
-      ws: true
-    },
-    // ':2.scenario-2:/api/login': '...',
+  css: {
+    'GET:no-ads~wow:/assets/[a-z0-9]+': `=>${css}`,
   },
-  // 'css:1.no-ads active': { 
-  //   'GET#202:/assets/[a-z0-9]+': `=>${css}`
-  // },
-  // workspace: '_assets_/',
-  // 'cache:select~1': { 
-  //   '.(pn|sv)g$': {
-  //     contentType: ['image'],
-  //     tags: 'image'
-  //   }
-  // },
-  // 'log:select~2': {},
-  // 'log:select~3': {},
-  // log: {
-  //   'POST:/lol': {
-  //     contentType: ['html'],
-  //     tags: '4.logging'
-  //   }
-  // },
-  // 'response:active': {},
-  // 'html:active': {
-  //   'GET:dodol:/z$': {
-  //     tags: 'in-html',
-  //     ws: true
-  //   },
-  // },
-  mock: { 
-    ':resp~#200:c33bb71d63ce5996.woff2': '// What you need is not here 200',
-    ':resp~#201:c33bb71d63ce5996.woff2': '// What you need is not here 201',
-  },
-  preset: {
-    clear: {
-      title: 'clear tags',
-      tags: []
-    },
-    default: {
-      title: 'Default tags for common operation',
-      tags:[
-        'active',
-        'css:1.no-ads',
-        'mock:1.no-ads',
-        'mock:2.scenario',
-        'tag3:image',
-        'tag3:url:2.scenario-#404',
-        // '2.scenario',
-        // '2.scenario-#404',
-        // '2.scenario-2',
-        // '4.logging',
-        // 'dodol',
-        // 'html:active',
-        // 'image',
-        // 'response:active',
-        // 'select~1',
-        // 'tag3:4.logging',
-        // 'tag3:url:2.scenario-2',
-        // 'tag3:url:dodol',
-        // 'url:2.scenario-#404',
-        // 'url:2.scenario-2',
-        // 'url:dodol'
-      ]
+  html: {
+    '/df': {
+      tags: 'no-ads~wiw'
     }
-  }
+  },
+  preset
 }
 module.exports = route;

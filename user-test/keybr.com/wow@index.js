@@ -2,6 +2,15 @@ const route = {
   urls: {
     keybw: 'https://keybr.com/',
   },
+  'mock:2.scenario 1.no-ads': {
+    'GET:/account': {
+      response: r => {
+        r.body = 'Hi There'
+      },
+      tags: ['widi'],
+      ws: true
+    },
+  },
   cache: {
     '!:/assets/(.+).css': {
       contentType: ['css', 'image'],

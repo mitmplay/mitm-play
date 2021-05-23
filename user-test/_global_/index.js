@@ -7,7 +7,7 @@ const route = {
     'ws-message': true,
     'page-load': true
   },
-  'args:1.no-ads': {
+  'args:no-ads': {
     activity: '123:lol'
   },
   preset: {

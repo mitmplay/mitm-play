@@ -17,8 +17,8 @@ function clicked(e) {
     const {__tag1,__tag2,__tag3} = $tags;
     const {dataset, checked} = e.target;
     const {item: tag} = dataset;
-    const [group1, id1] = tag.split('~');
 
+    const [group1, id1] = tag.split('~');
     for (let ns in __tag1) {
       if (oneSite(tagsStore, ns)) {
         ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
@@ -31,14 +31,15 @@ function clicked(e) {
         }
         if (!_global_ || arr.length) {
           __tag1[ns][tag] = checked
-          if (id1 && checked) {
+          if (id1) {
             for (let tg in list) {
-              const [group2, id2] = tg.split('~');
-              if (group1===group2 && id1!==id2) {
-                if (__tag1[ns][group1]!==undefined) {
-                  __tag1[ns][group1] = true;
+              if (group1===tg) {
+                __tag1[ns][group1] = checked;
+              } else {
+                const [, id2] = tg.split('~');
+                if (tag!==tg && id2) {
+                  __tag1[ns][tg] = false;
                 }
-                __tag1[ns][tg] = false;
               }
             }
           }
