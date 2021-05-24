@@ -1,4 +1,5 @@
 const c = require('ansi-colors')
+const { promisify } = require('util')
 const playwright = require('playwright')
 const _options = require('./options')
 const plugins = require('./plugins')
@@ -8,16 +9,13 @@ const routes = require('../routes')
 const attach = require('./attach')
 const browserPath = require('./browser-path')
 const currentTab = require('./current-tab')
+const sleep = promisify(setTimeout)
 
 const pages = {}
 const browsers = {}
 const bcontexts = {}
 const browserServer = {}
 global.browserServer = browserServer
-
-function sleep (ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
 function initBrowserMsg(browserName, opt) {
   const msg = `Init Browser: [${browserName}]`
