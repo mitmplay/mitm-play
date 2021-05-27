@@ -1,5 +1,13 @@
 {
   "_": "auto-generated during saveTags!",
-  "tags": [],
+  "tags": [
+    "ads",
+    "mock:no-ads",
+    "no-ads",
+    "no-ads~wiw",
+    "tag3:no-ads~wiw",
+    "tag3:url:ads",
+    "url:ads"
+  ],
   "_subns": ""
 }

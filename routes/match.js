@@ -46,8 +46,8 @@ const searchArr = ({url, method, browserName, typ: typs}) => {
       const list = typTags(typs, namespace)
       for (const typ of list) {
         const obj = router[namespace][typ]
-        const arr = routes[namespace][typ] || []
-        for (const key of arr) {
+        const route = routes[namespace][typ] || []
+        for (const key of route) {
           const isTagsOk = checkTags(tg1, tg2, tg3, typ, key)
           if (obj && isTagsOk) {
             const arr = url.match(obj[key])
@@ -193,6 +193,7 @@ const searchFN = (typs, { url, method, browserName }) => {
           const matched = {
             contentType: obj[`${key}~contentType`],
             route: route[key],
+            tag3: tg3[key],
             workspace,
             namespace,
             pathname,

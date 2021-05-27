@@ -22,19 +22,20 @@ const route = {
   urls: {
     keybr: 'https://keybr.com/',
   },
-  proxy: ['keybr.com'],
+  proxy: [':proxy:keybr.com'],
+  skip: [':skipper:google'],
   'mock:no-ads': {
-    'cloudflareinsights.com': '',
-    '#201:google.+.com': '',
-    'doubleclick.net': '',
-    'cookiebot.com': '',
-    'btloader.com': '',
-    'pub.network': '',
+    ':ads:cloudflareinsights.com': '',
+    '#201:ads:google.+.com': '',
+    ':ads:doubleclick.net': '',
+    ':ads:cookiebot.com': '',
+    ':ads:btloader.com': '',
+    ':ads:pub.network': '',
   },
   css: {
     'GET:no-ads~wow:/assets/[a-z0-9]+': `=>${css}`,
   },
-  html: {
+  mock: {
     '/df': {
       tags: 'no-ads~wiw'
     }
