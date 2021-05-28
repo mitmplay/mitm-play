@@ -150,7 +150,7 @@ Detail structure of `Object` and `Function` shared accros **Section**
 ```js
 /**
  * match: {
- *   tag3       : {},
+ *   tags       : {},
  *   route      : {}, 
  *   contentType: {}, 
  *   workspace  : '',/undefined,

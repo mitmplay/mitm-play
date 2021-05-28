@@ -187,18 +187,22 @@ const searchFN = (typs, { url, method, browserName }) => {
             }
             !__args.nourl && (log += _url(msg, other))
           }
+          let tags = []
+          if (tg3[key] && tg3[key][ty]) {
+            tags = tg3[key][ty].tags || []
+          }
           tg && (log += tg)
 
           const hidden = key.match(/^[\w#]*!:/)
           const matched = {
             contentType: obj[`${key}~contentType`],
             route: route[key],
-            tag3: tg3[key],
             workspace,
             namespace,
             pathname,
             hidden,
             search,
+            tags,
             host,
             url,
             key,
