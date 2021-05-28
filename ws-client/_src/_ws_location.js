@@ -107,11 +107,16 @@ module.exports = () => {
             const {autobuttons, rightbuttons, leftbuttons} = window.mitm
             rightbuttons && setButtons(rightbuttons, 'right3')
             leftbuttons && setButtons(leftbuttons, 'left')
-            const { autofill } = window.mitm
-            if (autofill) {
+            if (window.mitm.autofill) {
               autobuttons && setButtons({
                 ...autobuttons,
-                'Autofill'() {play(autofill)}
+                'Autofill'() {
+                  let {autofill} = window.mitm
+                  if (typeof autofill === 'function') {
+                    autofill = autofill()
+                  }
+                  play(autofill)
+                }
               }, 'right')
             } else {
               autobuttons && setButtons(autobuttons, 'right')
