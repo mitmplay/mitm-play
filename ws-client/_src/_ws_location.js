@@ -53,8 +53,8 @@ module.exports = () => {
         bgroup[pos].appendChild(br)
         bgroup[pos].appendChild(btn)
       } else {
-        br = document.createElement('pre')
-        br.style = 'margin: 0px;'
+        br = document.createElement('span')
+        br.style = 'display:table;margin: 0 0 -10px 0;'
         bgroup[pos].appendChild(btn)
         bgroup[pos].appendChild(br)
       }
