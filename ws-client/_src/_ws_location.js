@@ -8,8 +8,14 @@ module.exports = () => {
   const containerStyle2 = 'position: fixed;z-index: 99999;left:  3px;'
   const containerStyle3 = 'position: fixed;z-index: 99999;right: 3px; top: 20px; text-align: end;'
   const buttonStyle = 'border: none;border-radius: 15px;font-size: 10px;cursor: pointer;'
-  const auto = '<button class="btn-autofill">Autofill</button>'
-
+  const style = `
+  .mitm-btn:hover{
+    text-decoration:underline;
+  }
+  .bgroup-right .mitm-br,
+  .bgroup-left .mitm-br{
+    display:table;
+  }`
   const event = new Event('urlchanged')
   let container = {
     right3: {},
@@ -54,7 +60,7 @@ module.exports = () => {
         bgroup[pos].appendChild(btn)
       } else {
         br = document.createElement('span')
-        br.style = 'display:table;margin: 0 0 -10px 0;'
+        br.className = 'mitm-br'
         bgroup[pos].appendChild(btn)
         bgroup[pos].appendChild(br)
       }
@@ -98,7 +104,7 @@ module.exports = () => {
       for (const key in macros) {
         const { path, msg } = toRegex(key)
         if (_href.match(path)) {
-          button.innerHTML = msg || 'Autofill'
+          button.innerHTML = msg || 'Entry'
           _macros_ && _macros_()
           observerfn = macros[key]()
           debunk && clearTimeout(debunk)
@@ -110,7 +116,7 @@ module.exports = () => {
             if (window.mitm.autofill) {
               autobuttons && setButtons({
                 ...autobuttons,
-                'Autofill'() {
+                'Entry'() {
                   let {autofill} = window.mitm
                   if (typeof autofill === 'function') {
                     autofill = autofill()
@@ -203,12 +209,12 @@ module.exports = () => {
     window.addEventListener('DOMContentLoaded', () => {
       const html = document.querySelector('html')
       const htmlref = html.firstElementChild
-      const styleBtnLeft = document.createElement('style')
+      const styleButtons = document.createElement('style')
       const divTopRight3 = document.createElement('div')
       const divTopRight = document.createElement('div')
       const divTopLeft = document.createElement('div')
 
-      styleBtnLeft.innerHTML = 'button.mitm-btn:hover{text-decoration:underline;}'
+      styleButtons.innerHTML = style
       divTopRight3.innerHTML = `<span class="bgroup-right"></span>`
       divTopRight.innerHTML  = `<span class="bgroup-right"></span>`
       divTopLeft.innerHTML   = `<span class="bgroup-left"></span>`
@@ -218,7 +224,7 @@ module.exports = () => {
       divTopRight.style  = containerStyle1
       divTopLeft.style   = containerStyle2
 
-      html.insertBefore(styleBtnLeft, htmlref)
+      html.insertBefore(styleButtons, htmlref)
       html.insertBefore(divTopRight3, htmlref)
       html.insertBefore(divTopRight, htmlref)
       html.insertBefore(divTopLeft, htmlref)
@@ -257,7 +263,7 @@ module.exports = () => {
           if (autofill) {
             autobuttons && setButtons({
               ...autobuttons,
-              'Autofill'() {play(autofill)}
+              'Entry'() {play(autofill)}
             }, 'right')
           } else {
             autobuttons && setButtons(autobuttons, 'right')
