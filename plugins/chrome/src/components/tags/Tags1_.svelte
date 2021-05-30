@@ -36,8 +36,8 @@ function clicked(e) {
               if (group1===tg) {
                 __tag1[ns][group1] = checked;
               } else {
-                const [, id2] = tg.split('~');
-                if (tag!==tg && id2) {
+                const [group2, id2] = tg.split('~');
+                if (tag!==tg && group1===group2 && id2) {
                   __tag1[ns][tg] = false;
                 }
               }
