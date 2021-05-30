@@ -36,6 +36,7 @@ function fetch (route, browserName, { url, proxy, ...reqs }, handler) {
     opts.redirect = 'manual'
   }
   if (proxy) {
+    opts.proxy = ''
     if (proxy === true) {
       const _proxy = fn._proxy()
       _proxy && (opts.proxy = _proxy)
@@ -44,6 +45,9 @@ function fetch (route, browserName, { url, proxy, ...reqs }, handler) {
         proxy = `http://${proxy}`
       }
       opts.proxy = proxy
+    }
+    if (argv.basic && !opts.proxy.match('@')) {
+      opts.proxy = opts.proxy.replace(/:\/\//,`://${argv.basic}@`)
     }
     opts.proxy && (opts.noProxy = fn._noproxy())
   }
