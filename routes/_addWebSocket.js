@@ -4,24 +4,29 @@ const _match = require('./match')
 const { injectWS } = require('./inject')
 const setSession = require('./set-session')
 const { matched, searchKey, searchArr } = _match
+const noWS = /(css|script|image)/
 
 const addWebSocket = async function (reqs, responseHandler, _3d) {
   const { __args, __flag, fn: { _nameSpace } } = global.mitm
-  const { url, headers, browserName } = reqs
+  const { url, pageUrl, headers, browserName,oriRef } = reqs
+  const { origin, pathname } = new URL(url)
   const accpt = headers.accept + ''
-  const { origin, referer } = headers
   let resp, msg
 
-  if (origin || referer) {
-    return
+  if (oriRef) {
+    if (!url.match(oriRef)) {
+      return
+    } else if (!pageUrl.match(origin)) {
+      return
+    }
   }
+
   if (accpt === '*/*' || accpt.indexOf('text/html') > -1) {
     const search = searchArr({ typ: 'nosocket', url, browserName })
     const match = _3d ? search('_global_') : matched(search, reqs)
     setSession(reqs, true) // feat: session
     if (match) {
       if (__flag.nosocket && !match.hidden) {
-        const { origin, pathname } = new URL(url)
         msg = c.redBright(`>>> nosocket (${origin}${pathname})`)
         __args.fullog && console.log(msg) // feat: fullog
       }

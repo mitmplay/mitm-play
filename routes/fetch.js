@@ -6,21 +6,25 @@ global.mitm.fn._fetch = _fetch
 async function extract ({ request: r, browserName }) {
   const headers = r.headers()
   const { origin, referer } = headers
-  const oriRef = global.mitm.fn._tldomain(origin||referer)
+  const { browsers, pages, fn } = global.mitm
+  const oriRef = fn._tldomain(origin||referer)
+  const _page = pages[browserName]
   cookieToObj(headers) // feat: cookie autoconvert
+  const pageUrl = _page.url()
+  const url = r.url()
   let page
   if (headers['xplay-page']) {
-    const { browsers } = global.mitm
     page = await browsers[browserName].currentTab(headers['xplay-page'])
   }
   const result = {
     method: r.method(),
     body: r.postData(),
-    url: r.url(),
     browserName,
+    pageUrl,
     headers,
     oriRef,
-    page
+    page,
+    url
   }
   return result
 }
