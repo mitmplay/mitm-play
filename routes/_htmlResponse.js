@@ -55,7 +55,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
             })
           }
           if (ws) {
-            setSession(reqs, true) // feat: session
+            setSession(reqs, {session:true, msg: '_htmlResponse'}) // feat: session
             const jsLib = matched(searchKey('jsLib'), reqs)
             injectWS(resp, reqs.url, jsLib)
           }

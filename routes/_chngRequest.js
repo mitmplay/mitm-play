@@ -20,7 +20,7 @@ const chgRequest = async function (reqs, _3d) {
         }
       }
     }
-    setSession(reqs, session, true)
+    setSession(reqs, {session, persist:true, msg: '_chngRequest'})
     if (request) {
       let reqs2 = request(reqs, match)
       if (typeof reqs2 === 'object' && 'then' in reqs2) {

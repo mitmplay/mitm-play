@@ -4,14 +4,19 @@ function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-async function setSession (reqs, session, persist=false) {
+let old_id;
+async function setSession (reqs, {session, persist=false, msg=''}) {
   const { page, url } = reqs
   if (page && session && (!page._persist || persist)) {
     const id = (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
+    if (old_id===id) {
+      return
+    }
+    old_id = id
     let _session
     if (session === true) {
       _session = `session~${id}`
-      global.mitm.__page[page._page].session[_session] = { url, log: [] }
+      global.mitm.__page[page._page].session[_session] = { msg, url, log: [] }
     } else {
       _session = `${session}||${id}`
     }
@@ -20,9 +25,9 @@ async function setSession (reqs, session, persist=false) {
     const { origin } = new URL(url)
     if (persist) {
       page._persist = true
-      console.log(c.magenta(`>>> session: ${id} ${origin}**`))
+      console.log(c.magenta(`>>> session: ${id} ${msg} ${origin}**`))
     } else {
-      console.log(c.magenta(`>>> session: ${id} ${origin}`))
+      console.log(c.magenta(`>>> session: ${id} ${msg} ${origin}`))
     }
   }
 }
