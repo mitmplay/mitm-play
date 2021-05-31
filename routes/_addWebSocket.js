@@ -21,7 +21,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
     }
   }
 
-  if (accpt === '*/*' || accpt.indexOf('text/html') > -1) {
+  if (accpt.indexOf('text/html') > -1) {
     const search = searchArr({ typ: 'nosocket', url, browserName })
     const match = _3d ? search('_global_') : matched(search, reqs)
     setSession(reqs, {session:true, msg: '_addWebSocket'}) // feat: session

@@ -6,7 +6,7 @@ function sleep (ms) {
 
 let old_id;
 async function setSession (reqs, {session, persist=false, msg=''}) {
-  const { page, url } = reqs
+  const { page, url, headers } = reqs
   if (page && session && (!page._persist || persist)) {
     const id = (new Date()).toISOString().slice(0, 18).replace(/[T:-]/g, '')
     if (old_id===id) {
@@ -22,6 +22,7 @@ async function setSession (reqs, {session, persist=false, msg=''}) {
     }
     typeof session === 'number' && sleep(session)
     page.setExtraHTTPHeaders({ 'xplay-page': page._page, 'xplay-session': _session })
+    headers['xplay-session'] = _session
     const { origin } = new URL(url)
     if (persist) {
       page._persist = true

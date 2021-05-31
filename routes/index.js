@@ -24,6 +24,7 @@ const response = {
   headers: {},
   body: ''
 }
+const _route = {route:{}}
 const nohttp = /https?:\/\//
 
 module.exports = async ({ route, request, browserName }) => {
@@ -93,8 +94,9 @@ module.exports = async ({ route, request, browserName }) => {
     _jsResponse(  reqs, responseHandler, _3ds),
     _logResponse( reqs, responseHandler, _3ds, match)
   ])
-  const {match: _m} = _html
-  if (!(_m && _m.route.ws) && !nosocket) {
+  const {match: _m1=_route} = _html
+  const {match: _m2=_route} = _resp
+  if (!(_m1.route.ws) && !(_m2.route.ws) && !nosocket) {
     // --inject websocket client to html
     await _addWebSocket(reqs, responseHandler, _3ds)
   }
