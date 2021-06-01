@@ -601,7 +601,7 @@ css: {
     response(resp, reqs, match) {
       const {body} = resp;
       ....
-      return {body} //can be {} or combination of {status, headers, body}
+      return {body} // {status, headers, body}
     },
     tags: 'css-manipulate',
   },
@@ -628,7 +628,7 @@ js: {
     response(resp, reqs, match) {
       const {body} = resp;
       ....
-      return {body} //can be {} or combination of {status, headers, body}
+      return {body} // {status, headers, body}
     },
     tags: 'js-manipulate',
   },
@@ -653,7 +653,7 @@ log: {
   }
 },
 ```
-`log` support `response` function, it means the result can be manipulate first before send to the browser.
+`log` support `response` function, it means the result can be manipulate first before send to the browser or save to logs file.
 ```js
 log: {
   'amazon.com': {
@@ -661,7 +661,7 @@ log: {
     response(resp, reqs, match) {
       const {body} = resp;
       ...
-      return {body} // {status, headers, body}
+      return {body} // {status, headers, body} or false as skip it
     },
   }
 },

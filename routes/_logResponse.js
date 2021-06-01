@@ -39,19 +39,21 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
         } else {
           fpath1 = `${fpath1}.${ext(resp)}`
         }
-        const meta = metaResp({ reqs, resp })
-        const body = jsonResp({ reqs, resp, match })
-        filesave({ fpath1, body }, { fpath2, meta }, 'log')
+        let resp2
         if (response) {
-          let resp2 = response(resp, reqs, match)
+          resp2 = response(resp, reqs, match)
           if (typeof resp2 === 'object' && 'then' in resp2) {
             resp2 = await resp2
           }
-          resp2 && (resp = {
-            ...resp,
-            ...resp2
-          })
         }
+        if (resp2===false) {
+          return 
+        } else if (resp2) {
+          resp = {...resp, ...resp2}
+        }
+        const meta = metaResp({ reqs, resp })
+        const body = jsonResp({ reqs, resp, match })
+        filesave({ fpath1, body }, { fpath2, meta }, 'log')
         if (!__flag.log || match.hidden || hidden) {
           msg = ''
         } else {
