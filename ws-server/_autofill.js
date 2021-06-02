@@ -39,6 +39,11 @@ module.exports = async ({ data }) => {
     page = newpage
   }
 
+  async function _goto(store) {
+    const pageobj = global.mitm.pages[b]
+    await pageobj.goto(store)
+  }
+
   async function _save(selector, store) {
     const obj2 = await page.$eval(selector, (e, opt) => {
       const [attr, key] = opt.split(':')
@@ -139,6 +144,7 @@ module.exports = async ({ data }) => {
         if (action === 'uncheck'     ) { await page.uncheck(selector)              } else
         if (action === 'check'       ) { await page.check(selector)                } else
         if (action === 'focus'       ) { await page.focus(selector)                } else
+        if (action === 'goto'        ) { await _goto(store)                        } else
         if (action === 'page'        ) { await _page(store)                        } else
         if (action === 'close'       ) { await _close()                            } else
         if (action === 'leave'       ) { await _leave()                            }
