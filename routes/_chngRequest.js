@@ -26,9 +26,10 @@ const chgRequest = async function (reqs, _3d) {
       if (typeof reqs2 === 'object' && 'then' in reqs2) {
         reqs2 = await reqs2
       }
-      result = {
-        ...reqs,
-        ...reqs2
+      if (reqs2) {
+        result = {...reqs, ...reqs2}
+      } else if (reqs2===false) {
+        return
       }
     } else {
       result = reqs

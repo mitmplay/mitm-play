@@ -24,10 +24,11 @@ const cssResponse = async function (reqs, responseHandler, _3d) {
             if (typeof resp2 === 'object' && 'then' in resp2) {
               resp2 = await resp2
             }
-            resp2 && (resp = {
-              ...resp,
-              ...resp2
-            })
+            if (resp2) {
+              resp = {...resp, ...resp2}
+            } else if (resp2===false) {
+              return
+            }
           }
         }
         if (!__flag.css || match.hidden || hidden) {

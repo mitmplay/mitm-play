@@ -418,7 +418,7 @@ mock: {
     response(resp, reqs, match) {
       const {body} = resp;
       ...
-      return {body} //can be {} or combination of {status, headers, body}
+      return {body} // {status, headers, body} or false to skip
     },
     log: true, // optional - enable logging
   },
@@ -487,7 +487,7 @@ cache: {
     response(resp, reqs, match) {
       const {body} = resp;
       ...
-      return {body} //can be {} or combination of {status, headers, body}
+      return {body} // {status, headers, body} or false to skip
     },    
   }
 },
@@ -548,7 +548,7 @@ html: {
     response(resp, reqs, match) {
       const {body} = resp;
       ....
-      return {body} //can be {} or combination of {status, headers, body}
+      return {body} // {status, headers, body} or false to skip
     },
     tags: 'response' // enable/disable route by tags
     hidden: true, // optional - no consolo.log
@@ -574,7 +574,7 @@ json: {
     response(resp, reqs, match) {
       const {body} = resp;
       ....
-      return {body} //can be {} or combination of {status, headers, body}
+      return {body} // {status, headers, body} or false to skip
     },
     tags: 'json-manipulate',
   },
@@ -601,7 +601,7 @@ css: {
     response(resp, reqs, match) {
       const {body} = resp;
       ....
-      return {body} // {status, headers, body}
+      return {body} // {status, headers, body} or false to skip
     },
     tags: 'css-manipulate',
   },
@@ -628,7 +628,7 @@ js: {
     response(resp, reqs, match) {
       const {body} = resp;
       ....
-      return {body} // {status, headers, body}
+      return {body} // {status, headers, body} or false to skip
     },
     tags: 'js-manipulate',
   },
@@ -661,7 +661,7 @@ log: {
     response(resp, reqs, match) {
       const {body} = resp;
       ...
-      return {body} // {status, headers, body} or false as skip it
+      return {body} // {status, headers, body} or false to skip
     },
   }
 },

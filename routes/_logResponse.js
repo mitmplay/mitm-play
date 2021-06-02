@@ -46,10 +46,10 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
             resp2 = await resp2
           }
         }
-        if (resp2===false) {
-          return 
-        } else if (resp2) {
+        if (resp2) {
           resp = {...resp, ...resp2}
+        } else if (resp2===false) {
+          return 
         }
         const meta = metaResp({ reqs, resp })
         const body = jsonResp({ reqs, resp, match })
