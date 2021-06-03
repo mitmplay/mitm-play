@@ -50,10 +50,15 @@ module.exports = () => {
     for (const id in buttons) {
       const [caption, color, klas] = id.split('|')
       const btn = document.createElement('button')
-      const ev  = buttons[id]
-      btn.onclick = e => {
-        const arr = ev(e)
-        Array.isArray(arr) && play(arr)
+      const fn  = buttons[id]
+      btn.onclick = async e => {
+        let arr = fn(e)
+        if (typeof arr === 'object' && 'then' in arr) {
+          arr = await arr
+        }
+        if (Array.isArray(arr)) {
+          await play(arr)
+        }
       }
       btn.innerText = caption
       btn.classList.add('mitm-btn')
