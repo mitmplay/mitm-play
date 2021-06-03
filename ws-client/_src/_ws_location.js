@@ -288,9 +288,9 @@ module.exports = () => {
   }
 
   const observer = new MutationObserver(compareHref);
+  window.observer = observer
   function observed() {
     observer.disconnect()
-    const body = document.querySelector("body")
-    observer.observe(body, {childList: true, subtree: true})
+    observer.observe(document.body, {subtree: true, childList: true})
   }
 }

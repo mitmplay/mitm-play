@@ -118,11 +118,15 @@ module.exports = () => {
     await bcontext.addInitScript(async () =>{
       const {serviceWorker} = navigator
       if (serviceWorker) {
-        console.log('check service worker....')
-        const registrations = await serviceWorker.getRegistrations() 
-        for(let registration of registrations) {
-          console.log('unregister swc')
-          registration.unregister()
+        try {
+          console.log('check service worker....')
+          const registrations = await serviceWorker.getRegistrations() 
+          for(let registration of registrations) {
+            console.log('unregister swc')
+            registration.unregister()
+          }            
+        } catch (error) {
+          console.error(error)
         }
       }
     });
