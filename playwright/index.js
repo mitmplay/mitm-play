@@ -9,6 +9,7 @@ const routes = require('../routes')
 const attach = require('./attach')
 const browserPath = require('./browser-path')
 const currentTab = require('./current-tab')
+const cdpSession = require('./cdp-session')
 const sleep = promisify(setTimeout)
 
 const pages = {}
@@ -132,8 +133,7 @@ module.exports = () => {
     });
     currentTab(browser)
     if (browserName === 'chromium') {
-      const cdp = await page.context().newCDPSession(page)
-      global.mitm.cdp = cdp
+      await cdpSession(page)
       if (argv.incognito) {
         await page.goto('chrome://extensions/')
         const nodes = await page.$$('#detailsButton')
@@ -207,6 +207,7 @@ async function goto (page, url) {
 const newPage = async (browser, page, url, count) => {
   if (count > 0) {
     const page = await browser.newPage()
+    await cdpSession(page)
     await goto(page, url)
   } else {
     await goto(page, url)
