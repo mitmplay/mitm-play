@@ -2,13 +2,8 @@
   "_": "auto-generated during saveTags!",
   "tags": [
     "ads",
-    "mock:no-ads",
-    "no-ads",
-    "no-ads~wiw",
-    "tag3:no-ads~wiw",
     "tag3:url:ads",
-    "tag3:url:no-ads~wow",
     "url:ads"
   ],
-  "_subns": "test@keybr.com"
+  "_subns": ""
 }

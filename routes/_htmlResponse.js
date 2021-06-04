@@ -46,7 +46,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
           }
           if (response) {
             let resp2 = response(resp, reqs, match)
-            if (typeof resp2 === 'object' && 'then' in resp2) {
+            if (resp2 instanceof Promise) {
               resp2 = await resp2
             }
             if (resp2) {

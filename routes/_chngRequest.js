@@ -23,7 +23,7 @@ const chgRequest = async function (reqs, _3d) {
     setSession(reqs, {session, persist:true, msg: '_chngRequest'})
     if (request) {
       let reqs2 = request(reqs, match)
-      if (typeof reqs2 === 'object' && 'then' in reqs2) {
+      if (reqs2 instanceof Promise) {
         reqs2 = await reqs2
       }
       if (reqs2) {

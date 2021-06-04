@@ -53,7 +53,7 @@ module.exports = () => {
       const fn  = buttons[id]
       btn.onclick = async e => {
         let arr = fn(e)
-        if (typeof arr === 'object' && 'then' in arr) {
+        if (arr instanceof Promise) {
           arr = await arr
         }
         if (Array.isArray(arr)) {

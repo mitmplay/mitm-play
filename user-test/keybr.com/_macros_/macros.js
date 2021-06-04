@@ -1,20 +1,20 @@
 const rbuttons = {
-  'right1|yellow'() {
+  'right1|yellow': async function () {
     console.log('right')
   },
-  'download-right|yellow'() {
-    console.log('right')
+  'download-right|yellow': async function () {
+    console.log('download-right')
   },
 }
 const lbuttons = {
-  'left1|yellow'() {
-    console.log('left')
+  'left1|yellow': async function () {
+    console.log('left1')
   },
-  'left2|yellow'() {
-    console.log('left')
+  'left2|yellow': async function () {
+    console.log('left2')
   },
-  'left3|yellow'() {
-    console.log('left')
+  'left3|yellow': async function () {
+    console.log('left3')
   },
 }
 module.exports = () => {

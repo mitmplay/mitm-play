@@ -70,7 +70,7 @@ module.exports = async (client, msg) => {
       const cmd2 = `$${cmd.split(':')[0]}`
       if (wscmd[cmd2]) {
         let data = wscmd[cmd2].call(client, json)
-        if (typeof data === 'object' && 'then' in data) {
+        if (data instanceof Promise) {
           data = await data
         }
         client.send(`${cmd}${JSON.stringify({ data })}`)

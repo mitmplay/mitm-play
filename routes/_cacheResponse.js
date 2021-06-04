@@ -61,7 +61,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           changeStatus(match, resp)
           if (response) {
             resp2 = response(resp, reqs, match)
-            if (typeof resp2 === 'object' && 'then' in resp2) {
+            if (resp2 instanceof Promise) {
               resp2 = await resp2
             }
             resp2 && (resp = {
@@ -129,7 +129,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           filesave({ fpath1: fname1, body }, { fpath2, meta }, 'cache')
           if (response) {
             resp2 = response(resp, reqs, match)
-            if (typeof resp2 === 'object' && 'then' in resp2) {
+            if (resp2 instanceof Promise) {
               resp2 = await resp2
             }
             if (resp2) {
