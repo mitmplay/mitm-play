@@ -32,7 +32,7 @@ async function extract ({ request: r, browserName }) {
 function fetch (route, browserName, { url, proxy, ...reqs }, handler) {
   const { fn, argv } = global.mitm
   const opts = { redirect: true }
-  if (argv.redirect && argv.redirect !== true) {
+  if (argv.redirect && argv.redirect !== 'follow' && argv.redirect !== true) {
     opts.redirect = 'manual'
   }
   if (proxy) {
