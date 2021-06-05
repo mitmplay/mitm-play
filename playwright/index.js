@@ -207,7 +207,9 @@ async function goto (page, url) {
 const newPage = async (browser, page, url, count) => {
   if (count > 0) {
     const page = await browser.newPage()
-    await cdpSession(page)
+    if (browser._initializer.isChromium) {
+      await cdpSession(page)
+    }
     await goto(page, url)
   } else {
     await goto(page, url)
