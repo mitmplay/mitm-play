@@ -43,10 +43,13 @@ module.exports = async page => {
           await continueRequest(request)
         } else {
           response.requestId = requestId
+          if (response.body) {
+            response.body = Buffer.from(response.body, 'ascii').toString('base64')
+          }
           await fulfillRequest(response)
         }
       } else {
-        console.log('Fetch.continueRequest rqs', url)
+        // console.log('Fetch.continueRequest rqs', url)
         await client.send('Fetch.continueRequest', { requestId })
       }
     } else {
@@ -62,14 +65,14 @@ module.exports = async page => {
             const status = responseStatusCode
             let rObj = {body: ''}
             if ([301, 302].includes(responseStatusCode)) {
-              console.log('Fetch.continueRequest rdr', url)
+              // console.log('Fetch.continueRequest rdr', url)
               await client.send('Fetch.continueRequest', { requestId })
               return
             } else {
               try {
                 rObj = await client.send('Fetch.getResponseBody', {requestId});          
               } catch (error) {
-                console.log('error', url)
+                console.error('error', url)
               }  
             }
             const ct = headers['content-type']
@@ -117,7 +120,7 @@ module.exports = async page => {
           }
         }  
       }
-      console.log('Fetch.continueRequest rsp', url)
+      // console.log('Fetch.continueRequest rsp', url)
       await client.send('Fetch.continueRequest', { requestId })
     }
   })
@@ -142,32 +145,28 @@ module.exports = async page => {
 
     try {
       const msg = [url.split('?')[0], response.body.length]
-      console.log('Fetch.fulfillRequest. res', ...msg)
+      // console.log('Fetch.fulfillRequest. res', ...msg)
       await client.send('Fetch.fulfillRequest', response)
-      // await client.send('Fetch.continueRequest', { requestId })
     } catch (error) {
       console.error(error)
     }
   }
 
-  async function continueRequest(request) {
-    let {
+  async function continueRequest(reqs) {
+    let {requestId,url,method,headers,postData} = reqs
+ 
+    headers = objToArr(headers)
+ 
+    const request = {
       requestId,
       url,
       method,
       headers,
       postData
-    } = request
-    headers = objToArr(headers)
+    }
+ 
     try {
-      request = {
-        requestId,
-        url,
-        method,
-        headers,
-        postData
-      }
-      console.log('Fetch.continueRequest req', url)
+      // console.log('Fetch.continueRequest req', url)
       await client.send('Fetch.continueRequest', request)              
     } catch (error) {
       console.error(error)
