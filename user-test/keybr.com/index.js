@@ -20,10 +20,10 @@ const css = `
 ;
 const route = {
   urls: {
-    keybr: 'https://keybr.com/',
+    keybr: 'https://www.keybr.com/',
   },
   proxy: [':proxy:keybr.com'],
-  skip: [':skipper:google'],
+  skip: [':skipper:google','woff2'],
   'mock:no-ads': {
     ':ads:cloudflareinsights.com': '',
     '#201:ads:google.+.com': '',

@@ -1,4 +1,5 @@
 const route = {
+  skip: ['httpwatch.com'],
   flag: {
     'referer-reqs': true,
     'no-namespace': true,
