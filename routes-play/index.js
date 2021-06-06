@@ -1,18 +1,18 @@
 const c = require('ansi-colors')
-const { extract, fetch } = require('./fetch')
-const _3rdparties = require('./_3rdparties')
-const _jsResponse = require('./_jsResponse')
-const _chngRequest = require('./_chngRequest')
-const _cssResponse = require('./_cssResponse')
-const _logResponse = require('./_logResponse')
-const _jsonResponse = require('./_jsonResponse')
-const _htmlResponse = require('./_htmlResponse')
-const _chgResponse = require('./_chgResponse')
-const _proxyRequest = require('./_proxyRequest')
-const _skipResponse = require('./_skipResponse')
-const _mockResponse = require('./_mockResponse')
-const _addWebSocket = require('./_addWebSocket')
-const _cacheResponse = require('./_cacheResponse')
+const { extract, fetch } = require('../routes/fetch')
+const _3rdparties = require('../routes/_3rdparties')
+const _jsResponse = require('../routes/_jsResponse')
+const _chngRequest = require('../routes/_chngRequest')
+const _cssResponse = require('../routes/_cssResponse')
+const _logResponse = require('../routes/_logResponse')
+const _jsonResponse = require('../routes/_jsonResponse')
+const _htmlResponse = require('../routes/_htmlResponse')
+const _chgResponse = require('../routes/_chgResponse')
+const _proxyRequest = require('../routes/_proxyRequest')
+const _skipResponse = require('../routes/_skipResponse')
+const _mockResponse = require('../routes/_mockResponse')
+const _addWebSocket = require('../routes/_addWebSocket')
+const _cacheResponse = require('../routes/_cacheResponse')
 
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const noURL = /^(brave|edge):\/\//
@@ -80,6 +80,9 @@ module.exports = async ({ route, request, browserName }) => {
       await _logResponse(reqs, responseHandler, _3ds)
     }
     await Events(responseHandler, resp, reqs, route)
+    return // fulfill
+  } else if (mock===false) {
+    route.continue()
     return
   }
 

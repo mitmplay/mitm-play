@@ -53,10 +53,11 @@ const searchArr = ({url, method, browserName, typ: typs}) => {
             const arr = url.match(obj[key])
             if (arr) {
               let log
+              const ty = typ.padEnd(8, ' ')
               if (key.match(mmethod)) {
-                log = `${browser[browserName]} ${typ} ${bloc(key)}`
+                log = `${browser[browserName]} ${ty} ${bloc(key)}`
               } else {
-                log = `${browser[browserName]} ${typ} ${bloc(c.gray(mth(method, key))+key)}`
+                log = `${browser[browserName]} ${ty} ${bloc(c.gray(mth(method, key))+key)}`
               }
               const { host, origin: o, pathname, search } = new URL(url)
               let msg = (__args.nohost ? '' : o.replace(nohttp,''))+pathname

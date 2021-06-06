@@ -71,7 +71,6 @@ const mockResponse = async function ({ reqs, route }, _3d) {
               const b = browser[reqs.browserName]
               msg = c.bgYellowBright.bold.red(`${b} mock err (${_root}/${fileMethod} or ${file}) did not exists!`)
               console.log(msg)
-              route.continue()
               return false
             }
           }

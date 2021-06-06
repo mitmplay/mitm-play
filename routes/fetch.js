@@ -20,8 +20,8 @@ async function extract ({ request: r, browserName }) {
     method: r.method(),
     body: r.postData(),
     browserName,
-    pageUrl,
     headers,
+    pageUrl,
     oriRef,
     page,
     url

@@ -5,8 +5,8 @@ const _options = require('./options')
 const plugins = require('./plugins')
 const proxies = require('./proxies')
 const cleanX = require('./clean-x')
-const routes = require('../routes')
 const attach = require('./attach')
+const routes = require('../routes-play')
 const browserPath = require('./browser-path')
 const currentTab = require('./current-tab')
 const cdpSession = require('./cdp-session')
@@ -171,9 +171,11 @@ module.exports = () => {
     const {page, browser, bcontext} = await setup(browserName, options)
     console.log(c.redBright(`MITM Hooked [${browserName}]`))
     bcontext.on('page', attach)
-    await bcontext.route(/.*/, (route, request) => {
-      routes({ route, request, browserName, bcontext })
-    })
+    if (argv.cdp===undefined) {
+      await bcontext.route(/.*/, (route, request) => {
+        routes({ route, request, browserName, bcontext })
+      })  
+    }
     let count = 0
     for (const url of argv.urls) {
       newPage(browser, page, url, count)
