@@ -14,7 +14,6 @@ const _addWebSocket = require('../routes/_addWebSocket')
 const _cacheResponse = require('../routes/_cacheResponse')
 const Events = require('./events')
 
-const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const noURL = /^(brave|edge):\/\//
 const brExt = /^chrome-\w+:\/\//
 const wBlob = /^blob:http/
@@ -25,7 +24,6 @@ const response = {
   body: ''
 }
 const _route = {route:{}}
-const nohttp = /https?:\/\//
 
 module.exports = async (page, client, reqEvent) => {
   const {
@@ -40,8 +38,6 @@ module.exports = async (page, client, reqEvent) => {
 
   const {
     requestId,
-    responseStatusCode,
-    responseHeaders= [],
     request: {
       url, 
       method, 

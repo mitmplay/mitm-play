@@ -133,7 +133,7 @@ module.exports = () => {
     });
     currentTab(browser)
     if (browserName === 'chromium') {
-      await cdpSession(page)
+      cdpSession(page)
       if (argv.incognito) {
         await page.goto('chrome://extensions/')
         const nodes = await page.$$('#detailsButton')
@@ -210,7 +210,7 @@ const newPage = async (browser, page, url, count) => {
   if (count > 0) {
     const page = await browser.newPage()
     if (browser._initializer.isChromium) {
-      await cdpSession(page)
+      cdpSession(page)
     }
     await goto(page, url)
   } else {
