@@ -134,4 +134,3 @@ module.exports = async (page, client, reqEvent) => {
     return {request: reqs, rqs2, responseHandler, _3ds} // not fulfill
   }
 }
-

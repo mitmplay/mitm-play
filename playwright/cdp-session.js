@@ -193,7 +193,7 @@ function lowerCase(_headers) {
 function objToArr(_headers) {
   const headers = []
   for (const name in _headers) {
-    const value = _headers[name]
+    const value = `${_headers[name]}`
     headers.push({name, value})
   }
   return headers

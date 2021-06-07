@@ -1,6 +1,6 @@
 const c = require('ansi-colors')
 const _fetch = require('make-fetch-happen')
-const { cookieToObj, objToCookie } = require('./filesave/cookier')
+const { cookieToObj, objToCookie } = require('../routes/filesave/cookier')
 global.mitm.fn._fetch = _fetch
 
 async function extract ({ request: r, browserName }) {
@@ -28,12 +28,17 @@ async function extract ({ request: r, browserName }) {
   }
   return result
 }
-
+const redirect = {
+  'follow': true,
+  'manual': true,
+}
 function fetch (route, browserName, { url, proxy, ...reqs }, handler) {
   const { fn, argv } = global.mitm
   const opts = { redirect: true }
-  if (argv.redirect && argv.redirect !== 'follow' && argv.redirect !== true) {
+  if (argv.redirect===true) {
     opts.redirect = 'manual'
+  } else if (redirect[argv.redirect]) {
+    opts.redirect = argv.redirect
   }
   if (proxy) {
     opts.proxy = ''
