@@ -22,6 +22,12 @@ module.exports = argv => {
     '--test-type',
   ]
 
+  // https://groups.google.com/a/chromium.org/g/headless-dev/c/eNTnQ8GKOBA
+  // https://github.com/chrisvfritz/prerender-spa-plugin/issues/343
+  if (argv.cdp) {
+    args.push('--disable-web-security')
+  }
+
   if (argv.nogpu) {
     if (argv.nogpu==='all') {
       args.push('--disable-gpu')
