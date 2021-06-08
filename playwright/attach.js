@@ -1,4 +1,7 @@
 const c = require('ansi-colors')
+const { promisify } = require('util')
+const cdpSession = require('./cdp-session')
+const sleep = promisify(setTimeout)
 
 async function log(msg) {
   const bypass = !msg.match(' frame')
@@ -126,6 +129,15 @@ module.exports = async function(page) {
   }
 
   page.on('load', async () => {
+    if (page._browserContext._initializer.isChromium) {
+      if (!page._CDP) {
+        cdpSession(page)
+        console.log('Init CDP!')
+        if (global.mitm.argv.cdp) {
+          await sleep(300)
+        }
+      }
+    }
     await evalPage(page, _page, 'xplay-page load ')
   })
 

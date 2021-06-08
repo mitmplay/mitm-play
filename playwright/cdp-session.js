@@ -126,6 +126,7 @@ module.exports = async page => {
   })
 
   async function fulfillRequest(resp) {
+    const { argv, __flag } = global.mitm
     let {requestId,url,status,headers,body} = resp
     headers['content-length'] = `${body.length}`
 
@@ -144,8 +145,14 @@ module.exports = async page => {
     }
 
     try {
-      const msg = [url.split('?')[0], response.body.length]
-      // console.log('Fetch.fulfillRequest. res', ...msg)
+      if (argv.debug || __flag['page-load']) {
+        const msg = []
+        if (url) {
+          msg.push(url.split('?')[0])
+          msg.push(response.body.length)
+          console.log('Fetch.fulfillRequest. res', ...msg)
+        }
+      }
       await client.send('Fetch.fulfillRequest', response)
     } catch (error) {
       console.error(error)

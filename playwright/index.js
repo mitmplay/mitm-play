@@ -9,7 +9,6 @@ const attach = require('./attach')
 const routes = require('../routes-play')
 const browserPath = require('./browser-path')
 const currentTab = require('./current-tab')
-const cdpSession = require('./cdp-session')
 const sleep = promisify(setTimeout)
 
 const pages = {}
@@ -25,8 +24,7 @@ function initBrowserMsg(browserName, opt) {
 }
 
 function browserProxy() {
-  const {proxy} = global.mitm.argv
-  if (proxy === true) {
+  if (global.mitm.argv.proxy === true) {
     console.log(c.red.bgYellowBright('>>> mitm-play will use --proxy but browser will not!'))
   }
 }
@@ -133,7 +131,6 @@ module.exports = () => {
     });
     currentTab(browser)
     if (browserName === 'chromium') {
-      cdpSession(page)
       if (argv.incognito) {
         await page.goto('chrome://extensions/')
         const nodes = await page.$$('#detailsButton')
@@ -209,9 +206,6 @@ async function goto (page, url) {
 const newPage = async (browser, page, url, count) => {
   if (count > 0) {
     const page = await browser.newPage()
-    if (browser._initializer.isChromium) {
-      cdpSession(page)
-    }
     await goto(page, url)
   } else {
     await goto(page, url)
