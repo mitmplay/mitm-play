@@ -45,7 +45,7 @@
     "rollup-plugin-svelte": "^7.0.0",
     "stack-trace": "0.0.10",
     "svelte-preprocess": "^3.9.8",
-    "ws": "7.4.4",
+    "ws": "7.4.6",
     "yargs-parser": "20.2.7"
   },
   "devDependencies": {
