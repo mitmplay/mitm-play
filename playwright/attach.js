@@ -119,6 +119,18 @@ const regx = /[.T:-]/g
 function ids(prefix, ln=15) {
   return prefix + (new Date()).toISOString().slice(0, ln).replace(regx, '')
 }
+
+async function attachCdp(page) {
+  if (page._browserContext._initializer.isChromium) {
+    if (!page._CDP) {
+      cdpSession(page)
+      if (global.mitm.argv.cdp) {
+        await sleep(300)
+      }
+    }
+  }
+}
+
 module.exports = async function(page) {
   const _page = ids('page~')
 
@@ -128,16 +140,9 @@ module.exports = async function(page) {
     iframes: {},
   }
 
+  await attachCdp(page)
   page.on('load', async () => {
-    if (page._browserContext._initializer.isChromium) {
-      if (!page._CDP) {
-        cdpSession(page)
-        console.log('Init CDP!')
-        if (global.mitm.argv.cdp) {
-          await sleep(300)
-        }
-      }
-    }
+    await attachCdp(page)
     await evalPage(page, _page, 'xplay-page load ')
   })
 
