@@ -51,8 +51,7 @@ module.exports = () => {
     _ws_msgParser(e, e.data)
   }
   
-  const vendor = _ws_vendor()
-  const pre = ['firefox', 'webkit'].includes(vendor) ? 'ws' : 'wss'
+  const pre = ['firefox', 'webkit'].includes(_ws_vendor()) ? 'ws' : 'wss'
   const url = `${pre}://localhost:3001/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
   let ws
   try {
