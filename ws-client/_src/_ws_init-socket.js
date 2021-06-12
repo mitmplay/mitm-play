@@ -51,8 +51,10 @@ module.exports = () => {
     _ws_msgParser(e, e.data)
   }
   
-  const pre = ['firefox', 'webkit'].includes(_ws_vendor()) ? 'ws' : 'wss'
-  const url = `${pre}://localhost:3001/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
+  const vendor = ['firefox', 'webkit'].includes(_ws_vendor())
+  const pre = vendor ? 'ws' : 'wss'
+  const prt = vendor ? '3002' : '3001'
+  const url = `${pre}://localhost:${prt}/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
   let ws
   try {
     ws = new WebSocket(url)    

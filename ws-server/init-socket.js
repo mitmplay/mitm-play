@@ -23,12 +23,20 @@ module.exports = () => {
     key
   }, app)
 
-  const config = {server, path: '/ws'}
+  const config = {
+    server,
+    path: '/ws'
+  }
+
   const wss = new WebSocket.Server(config)
+  const ws = new WebSocket.Server({config, port: 3002});
+
   wss.on('connection', connection)
+  ws.on('connection', connection);
 
   console.log(c.yellow('Listen:3001'))
   global.wsservers = wss
+  global.wsserver = ws
   server.listen(3001)
 
   wss.isAlive = function(fn, ms=500) {

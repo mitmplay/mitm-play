@@ -16,6 +16,14 @@ module.exports = () => {
         }
       }
     })
+    global.wsserver.clients.forEach(function each (client) {
+      if (client.readyState === WebSocket.OPEN) {
+        if (_all || client !== that) {
+          pages.push(client._page)
+          client.send(data)
+        }
+      }
+    })
     if (__flag['ws-broadcast']) {
       const msg = JSON.stringify(data)
       if (msg.length > 97) {

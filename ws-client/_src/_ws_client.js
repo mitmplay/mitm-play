@@ -25,6 +25,7 @@ module.exports = () => {
     // ex: ws__
     _saveTags ({ routes }) {
       if (!location.origin.match('chrome-extension')) {
+        console.log('Update routes')
         window.mitm.routes = routes
       }
     },
