@@ -18,6 +18,7 @@ module.exports = async ({data}) => {
   global.mitm.bcontexts.chromium.unroute(/.*/)
   global.mitm.pages.chromium.close()
 
+  global.wsserver.isAlive()
   global.wsservers.isAlive()
   await global.mitm.play('chromium')
   delete mitm.restart

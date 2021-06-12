@@ -12,17 +12,32 @@ function heartbeat() {
   this.isAlive = true;
 }
 
-module.exports = () => {
-  const servers = https.createServer({
-    cert: fs.readFileSync(`${path}/selfsigned.crt`),
-    key: fs.readFileSync(`${path}/selfsigned.key`)
-  }, website())
+const cert = fs.readFileSync(`${path}/selfsigned.crt`)
+const key = fs.readFileSync(`${path}/selfsigned.key`)
+const app = website()
 
-  const wss = new WebSocket.Server({ server: servers, path: '/ws' })
+module.exports = () => {
+  const server = https.createServer({
+    rejectUnauthorized: false,
+    cert,
+    key
+  }, app)
+
+  const config = {
+    server,
+    path: '/ws'
+  }
+
+  const wss = new WebSocket.Server(config)
+  const ws = new WebSocket.Server({config, port: 3002});
+
   wss.on('connection', connection)
+  ws.on('connection', connection);
+
   console.log(c.yellow('Listen:3001'))
   global.wsservers = wss
-  servers.listen(3001)
+  global.wsserver = ws
+  server.listen(3001)
 
   wss.isAlive = function(fn, ms=500) {
     // console.log('PING!!!')

@@ -36,6 +36,12 @@ module.exports = () => {
         client.send(data)
       }
     })
+    global.wsserver.clients.forEach(function each (client) {
+      if (client.readyState === WebSocket.OPEN && client._page.match(regex)) {
+        pages.push(client._page)
+        client.send(data)
+      }
+    })
     console.log('emitpage', data, pages)
   }
   global.broadcast = broadcast

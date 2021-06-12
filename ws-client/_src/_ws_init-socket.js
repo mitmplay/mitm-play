@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 const _ws_msgParser = require('./_ws_msg-parser')
 const _ws_inIframe = require('./_ws_in-iframe')
+const _ws_vendor = require('./_ws_vendor')
 
 module.exports = () => {
   window._ws_queue = {}
@@ -47,11 +48,18 @@ module.exports = () => {
     // if (__flag['ws-connect']) {
     //   console.log('on-message:', e.data)
     // }
-    _ws_msgParser(event, event.data)
+    _ws_msgParser(e, e.data)
   }
-
-  const url = `wss://localhost:3001/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
-  const ws = new WebSocket(url)
+  
+  const vendor = _ws_vendor()
+  const pre = ['firefox', 'webkit'].includes(vendor) ? 'ws' : 'wss'
+  const url = `${pre}://localhost:3001/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
+  let ws
+  try {
+    ws = new WebSocket(url)    
+  } catch (error) {
+    console.error(error)
+  }
   console.time('ws')
   window._ws = ws
 

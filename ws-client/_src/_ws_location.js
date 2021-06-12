@@ -154,6 +154,35 @@ module.exports = () => {
     ctrl = false
   }
 
+  const vendor = _ws_vendor()
+  if (['firefox', 'webkit'].includes(vendor) || (window.chrome && !chrome.tabs)) {
+    document.querySelector('html').addEventListener('keydown', keybCtrl)
+    window.addEventListener('urlchanged', urlChange)
+    if(document.readyState !== 'loading') {
+      init();
+    } else {
+      window.addEventListener('DOMContentLoaded', init)
+    }    
+  } else {
+    return
+  }
+
+  const fn = history.pushState
+  history.pushState = function () {
+    fn.apply(history, arguments)
+    compareHref()
+  }
+
+  window.mitm.fn.play = arr => {
+    return new Promise(function(resolve, reject) {
+      try {
+        play(arr, resolve)        
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
   function play (autofill, handler) {
     if (autofill) {
       if (typeof (autofill) === 'function') {
@@ -166,16 +195,6 @@ module.exports = () => {
       console.log(lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2))
       window.ws__send('autofill', { autofill, browser, _page, _frame }, handler)
     }
-  }
-
-  window.mitm.fn.play = arr => {
-    return new Promise(function(resolve, reject) {
-      try {
-        play(arr, resolve)        
-      } catch (error) {
-        reject(error)
-      }
-    })
   }
 
   function keybCtrl (e) {
@@ -211,48 +230,6 @@ module.exports = () => {
       }
     }
   }
-  if (!window.chrome) {
-    return
-  }
-  if (!chrome.tabs) {
-    document.querySelector('html').addEventListener('keydown', keybCtrl)
-    window.addEventListener('urlchanged', urlChange)
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const html = document.querySelector('html')
-      const htmlref = html.firstElementChild
-      const styleButtons = document.createElement('style')
-      const divTopRight3 = document.createElement('div')
-      const divTopRight = document.createElement('div')
-      const divTopLeft = document.createElement('div')
-
-      styleButtons.innerHTML = style
-      divTopRight3.innerHTML = `<span class="bgroup-right"></span>`
-      divTopRight.innerHTML  = `<span class="bgroup-right"></span>`
-      divTopLeft.innerHTML   = `<span class="bgroup-left"></span>`
-      divTopRight.className  = 'mitm autofill-container'
-      divTopLeft.className   = 'mitm autofill-container'
-      divTopRight3.style = containerStyle3
-      divTopRight.style  = containerStyle1
-      divTopLeft.style   = containerStyle2
-
-      html.insertBefore(styleButtons, htmlref)
-      html.insertBefore(divTopRight3, htmlref)
-      html.insertBefore(divTopRight, htmlref)
-      html.insertBefore(divTopLeft, htmlref)
-      setTimeout(() => {
-        container.right3 = divTopRight3
-        container.right  = divTopRight
-        container.left   = divTopLeft
-        button.style  = `${buttonStyle}background-color: azure;`
-        bgroup.right3 = divTopRight3.children[0]
-        bgroup.right = divTopRight.children[0]
-        bgroup.left  = divTopLeft.children[0]
-        urlChange(event)
-        observed()
-      }, 0)
-    })
-  }
 
   const {location} = document
   let oldHref = location.href
@@ -286,10 +263,39 @@ module.exports = () => {
     }
   }
 
-  const fn = history.pushState
-  history.pushState = function () {
-    fn.apply(history, arguments)
-    compareHref()
+  function init() {
+    const html = document.querySelector('html')
+    const htmlref = html.firstElementChild
+    const styleButtons = document.createElement('style')
+    const divTopRight3 = document.createElement('div')
+    const divTopRight = document.createElement('div')
+    const divTopLeft = document.createElement('div')
+
+    styleButtons.innerHTML = style
+    divTopRight3.innerHTML = `<span class="bgroup-right"></span>`
+    divTopRight.innerHTML  = `<span class="bgroup-right"></span>`
+    divTopLeft.innerHTML   = `<span class="bgroup-left"></span>`
+    divTopRight.className  = 'mitm autofill-container'
+    divTopLeft.className   = 'mitm autofill-container'
+    divTopRight3.style = containerStyle3
+    divTopRight.style  = containerStyle1
+    divTopLeft.style   = containerStyle2
+
+    html.insertBefore(styleButtons, htmlref)
+    html.insertBefore(divTopRight3, htmlref)
+    html.insertBefore(divTopRight, htmlref)
+    html.insertBefore(divTopLeft, htmlref)
+    setTimeout(() => {
+      container.right3 = divTopRight3
+      container.right  = divTopRight
+      container.left   = divTopLeft
+      button.style  = `${buttonStyle}background-color: azure;`
+      bgroup.right3 = divTopRight3.children[0]
+      bgroup.right = divTopRight.children[0]
+      bgroup.left  = divTopLeft.children[0]
+      urlChange(event)
+      observed()
+    }, 0)
   }
 
   const observer = new MutationObserver(compareHref);
@@ -298,4 +304,5 @@ module.exports = () => {
     observer.disconnect()
     observer.observe(document.body, {subtree: true, childList: true})
   }
+
 }
