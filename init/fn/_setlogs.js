@@ -6,17 +6,17 @@ const _logs = function (_silent = false) {
     'ws-broadcast': false,
     'no-namespace': !_silent,
     'referer-reqs': !_silent,
+    nosocket: false,
     silent: false, // ok
     skip: !_silent,
-    nosocket: !_silent,
-    request: !_silent,
     mock: !_silent,
+    request: !_silent,
     cache: !_silent,
-    log: !_silent,
     html: !_silent,
     json: !_silent,
     css: !_silent,
     js: !_silent,
+    log: !_silent,
     response: !_silent
   }
 }

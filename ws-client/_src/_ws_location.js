@@ -173,17 +173,43 @@ module.exports = () => {
     compareHref()
   }
 
-  window.mitm.fn.play = arr => {
+  _play = json => {
     return new Promise(function(resolve, reject) {
       try {
-        play(arr, resolve)        
+        window.ws__send('autofill', json, resolve)
+        // play(json, resolve)
       } catch (error) {
         reject(error)
       }
     })
   }
 
-  function play (autofill, handler) {
+  _post = json => {
+    const config = {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(json)
+    }
+    return new Promise(function(resolve, reject) {
+      try {
+        fetch('/mitm-play/play.json', config)
+        .then(function(response) {
+          resolve(response.json())
+  
+        }).then(function(data) {
+          resolve(data)
+        });          
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  async function play (autofill) {
+    const {__flag} = window.mitm
     if (autofill) {
       if (typeof (autofill) === 'function') {
         autofill = autofill()
@@ -192,11 +218,19 @@ module.exports = () => {
       const lenth = autofill.length
       const _page = window['xplay-page']
       const _frame = window['xplay-frame']
+      const _json = {autofill, browser, _page, _frame}
       console.log(lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2))
-      window.ws__send('autofill', { autofill, browser, _page, _frame }, handler)
+      let result
+      if (__flag.nosocket) {
+        result = await _post(_json)
+      } else {
+        result = await _play(_json)
+      }
+      return result
     }
   }
-
+  window.mitm.fn.play = play
+  
   function keybCtrl (e) {
     const { macrokeys } = window.mitm
     if (e.ctrlKey && e.key === 'Shift') {
