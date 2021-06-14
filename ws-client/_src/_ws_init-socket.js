@@ -52,7 +52,7 @@ module.exports = () => {
   }
   
   const connect = __args.nosocket===undefined
-  if (connect || (chrome && chrome.tabs)) {
+  if (connect || (window.chrome && chrome.tabs)) {
     const vendor = ['firefox', 'webkit'].includes(_ws_vendor())
     const pre = vendor ? 'ws' : 'wss'
     const prt = vendor ? '3002' : '3001'

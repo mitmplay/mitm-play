@@ -1,5 +1,6 @@
 /* global location, mitm */
 /* eslint-disable camelcase */
+const _screenshot = require('./_screenshot')
 const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
 
@@ -34,7 +35,7 @@ function screenshot (e) {
       const _page = window['xplay-page']
       const params = { namespace, _page, host, browser }
       params.fname = fname==='~' ? '~_' : fname
-      window.ws__send('screenshot', params)
+      _screenshot(params)
       if (mitm.argv.lazyclick) {
         // delay action to finish screenshot
         window.mitm.screenshot = e.target

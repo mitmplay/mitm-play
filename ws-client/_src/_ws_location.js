@@ -177,7 +177,6 @@ module.exports = () => {
     return new Promise(function(resolve, reject) {
       try {
         window.ws__send('autofill', json, resolve)
-        // play(json, resolve)
       } catch (error) {
         reject(error)
       }
@@ -185,23 +184,19 @@ module.exports = () => {
   }
 
   _post = json => {
-    const config = {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(json)
-    }
     return new Promise(function(resolve, reject) {
       try {
+        const config = {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(json)
+        }
         fetch('/mitm-play/play.json', config)
-        .then(function(response) {
-          resolve(response.json())
-  
-        }).then(function(data) {
-          resolve(data)
-        });          
+        .then(function(response) { resolve(response.json())})
+        .then(function(data    ) { resolve(data)           })
       } catch (error) {
         reject(error)
       }

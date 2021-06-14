@@ -138,6 +138,7 @@ On browser console type "ws"`
     } catch (error) {
       console.log(error)
     }
+    return {ok: 'ok'}
   }
 
   function $csp_error ({ data }) {

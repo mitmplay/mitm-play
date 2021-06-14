@@ -1,5 +1,6 @@
 /* global location, MutationObserver */
 /* eslint-disable camelcase */
+const _screenshot = require('./_screenshot')
 const _ws_namespace = require('./_ws_namespace')
 const _ws_debounce = require('./_ws_debounce')
 const _ws_vendor = require('./_ws_vendor')
@@ -75,7 +76,8 @@ module.exports = () => {
           if (sshot[id].insert) {
             fname = location.pathname.replace(/^\//, '').replace(/\//g, '-')
             fname = `${fname}-${sshot[id].title}-insert`
-            window.ws__send('screenshot', { namespace, _page, host, fname, browser })
+            const params = { namespace, _page, host, fname, browser }
+            _screenshot(params)
           }
         }
       } else {
@@ -85,7 +87,8 @@ module.exports = () => {
           if (sshot[id].remove) {
             fname = location.pathname.replace(/^\//, '').replace(/\//g, '-')
             fname = `${fname}-${sshot[id].title}-remove`
-            window.ws__send('screenshot', { namespace, _page, host, fname, browser })
+            const params = { namespace, _page, host, fname, browser }
+            _screenshot(params)
           }
         }
       }

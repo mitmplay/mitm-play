@@ -14,9 +14,17 @@ module.exports = () => {
       }
     },
     '!:hidden:/mitm-play/play.json': {
-      response: async (resp, reqs, match) => {
+      response: async (resp, reqs) => {
         const data = JSON.parse(reqs.body)
         const result = await global.mitm.wscmd.$autofill({data})
+        resp.headers['content-type'] = 'application/json'
+        resp.body = JSON.stringify(result)
+      }
+    },
+    '!:hidden:/mitm-play/screnshot.json': {
+      response: (resp, reqs) => {
+        const data = JSON.parse(reqs.body)
+        const result = global.mitm.wscmd.$screenshot({data})
         resp.headers['content-type'] = 'application/json'
         resp.body = JSON.stringify(result)
       }
