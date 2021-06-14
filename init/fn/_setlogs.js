@@ -6,7 +6,6 @@ const _logs = function (_silent = false) {
     'ws-broadcast': false,
     'no-namespace': !_silent,
     'referer-reqs': !_silent,
-    nosocket: false,
     silent: false, // ok
     skip: !_silent,
     mock: !_silent,

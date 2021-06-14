@@ -30,6 +30,7 @@ const nohttp = /https?:\/\//
 
 module.exports = async ({ route, request, browserName }) => {
   const {
+    __args,
     __flag,
     argv: {
       proxy,
@@ -100,9 +101,11 @@ module.exports = async ({ route, request, browserName }) => {
   ])
   const {match: _m1=_route} = _html
   const {match: _m2=_route} = _resp
-  if (!(_m1.route.ws) && !(_m2.route.ws) && !nosocket) {
+  if (!(_m1.route.ws) && !(_m2.route.ws)) {
     // --inject websocket client to html
-    await _addWebSocket(reqs, responseHandler, _3ds)
+    if ([undefined, 'off'].includes(__args.nosocket)) {
+      await _addWebSocket(reqs, responseHandler, _3ds)
+    }
   }
 
   if (resp) {

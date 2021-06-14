@@ -17,8 +17,8 @@ module.exports = () => {
       response: async (resp, reqs, match) => {
         const data = JSON.parse(reqs.body)
         const result = await global.mitm.wscmd.$autofill({data})
-        resp.body = result
         resp.headers['content-type'] = 'application/json'
+        resp.body = JSON.stringify(result)
       }
     },
     '!:hidden:/mitm-play/macros.js': {

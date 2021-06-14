@@ -155,7 +155,7 @@ module.exports = () => {
   }
 
   const vendor = _ws_vendor()
-  if (['firefox', 'webkit'].includes(vendor) || (window.chrome && !chrome.tabs)) {
+  if (['firefox', 'webkit'].includes(vendor) || (chrome && !chrome.tabs)) {
     document.querySelector('html').addEventListener('keydown', keybCtrl)
     window.addEventListener('urlchanged', urlChange)
     if(document.readyState !== 'loading') {
@@ -209,7 +209,7 @@ module.exports = () => {
   }
 
   async function play (autofill) {
-    const {__flag} = window.mitm
+    const {__args} = window.mitm
     if (autofill) {
       if (typeof (autofill) === 'function') {
         autofill = autofill()
@@ -221,7 +221,7 @@ module.exports = () => {
       const _json = {autofill, browser, _page, _frame}
       console.log(lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2))
       let result
-      if (__flag.nosocket) {
+      if ([true, 'off'].includes(__args.nosocket)) {
         result = await _post(_json)
       } else {
         result = await _play(_json)

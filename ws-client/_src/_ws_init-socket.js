@@ -7,7 +7,7 @@ const _ws_vendor = require('./_ws_vendor')
 module.exports = () => {
   window._ws_queue = {}
   window._ws_connected = false
-  const { __flag } = window.mitm
+  const {__args, __flag} = window.mitm
 
   if (window._ws_connect===undefined) {
     window._ws_connect = {}
@@ -45,29 +45,32 @@ module.exports = () => {
   }
 
   const onmessage = function (e) {
-    // if (__flag['ws-connect']) {
-    //   console.log('on-message:', e.data)
-    // }
+    if (__flag['on-message']) {
+      console.log('on-message:', e.data)
+    }
     _ws_msgParser(e, e.data)
   }
   
-  const vendor = ['firefox', 'webkit'].includes(_ws_vendor())
-  const pre = vendor ? 'ws' : 'wss'
-  const prt = vendor ? '3002' : '3001'
-  const url = `${pre}://localhost:${prt}/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
-  let ws
-  try {
-    ws = new WebSocket(url)    
-  } catch (error) {
-    console.error(error)
+  const connect = __args.nosocket===undefined
+  if (connect || (chrome && chrome.tabs)) {
+    const vendor = ['firefox', 'webkit'].includes(_ws_vendor())
+    const pre = vendor ? 'ws' : 'wss'
+    const prt = vendor ? '3002' : '3001'
+    const url = `${pre}://localhost:${prt}/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`
+    let ws
+    try {
+      ws = new WebSocket(url)    
+    } catch (error) {
+      console.error(error)
+    }
+    console.time('ws')
+    window._ws = ws
+  
+    ws.onopen = onopen
+    ws.onclose = onclose
+    ws.onmessage = onmessage  
   }
-  console.time('ws')
-  window._ws = ws
-
-  ws.onopen = onopen
-  ws.onclose = onclose
-  ws.onmessage = onmessage
   if (__flag['ws-connect']) {
-    console.log('ws: init connection')
+    console.log(`ws: ${connect ? 'init' : 'off'} connection`)
   }
 }

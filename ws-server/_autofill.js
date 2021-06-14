@@ -161,5 +161,5 @@ module.exports = async ({ data }) => {
       console.log(error)
     }
   }
-  return { ok: 'OK' }
+  return { ok: 'ok' }
 }

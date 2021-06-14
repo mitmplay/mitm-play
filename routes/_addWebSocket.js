@@ -22,11 +22,18 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
   }
 
   if (accpt.indexOf('text/html') > -1) {
-    const search = searchArr({ typ: 'nosocket', url, browserName })
-    const match = _3d ? search('_global_') : matched(search, reqs)
+    let search, match
+    if (__args.nosocket===true) {
+      msg = c.red(`>>> nosocket to all html`)
+      console.log(msg) // feat: fullog
+      return
+    } else {
+      search = searchArr({ typ: 'nosocket', url, browserName })
+      match = _3d ? search('_global_') : matched(search, reqs)  
+    }
     setSession(reqs, {session:true, msg: '_addWebSocket'}) // feat: session
     if (match) { // no adding web-socket
-      if (__flag.nosocket && !match.hidden) {
+      if (!match.hidden) {
         msg = c.redBright(`>>> nosocket (${origin}${pathname})`)
         __args.fullog && console.log(msg) // feat: fullog
       }
