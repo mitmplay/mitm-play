@@ -937,11 +937,17 @@ $ mitm-play --insecure
 </details>
 <details><summary><b>-n --nosocket</b></summary>
 
-No Injection of websocket to the browser
+If only the params with no value, it will act as No Injection on HTML Page, meaning no open websocket on the page
 
 ```bash
 $ mitm-play -n  <OR>
 $ mitm-play --nosocket
+```
+if params contain value _off_ ie: `-n=off`, there will be Injection into HTML Page with no open websocket connection, this options is to get alternative `for macros automation tobe send via [POST] request`.
+
+```bash
+$ mitm-play -n=off  <OR>
+$ mitm-play --nosocket=off
 ```
 </details>
 <details><summary><b>-k --cookie</b></summary>
