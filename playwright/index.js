@@ -174,6 +174,7 @@ module.exports = () => {
       })  
     }
     let count = 0
+    await sleep(300) // feat: if request faster then __args={}
     for (const url of argv.urls) {
       newPage(browser, page, url, count)
       count += 1

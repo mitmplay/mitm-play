@@ -23,8 +23,8 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
 
   if (accpt.indexOf('text/html') > -1) {
     let search, match
-    if (__args.nosocket===true) {
-      msg = c.red(`>>> nosocket to all html`)
+    if (__args.nosocket===true) { // feat: if request faster then __args={}
+        msg = c.red(`>>> nosocket to all html`)
       console.log(msg) // feat: fullog
       return
     } else {
