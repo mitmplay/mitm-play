@@ -87,7 +87,7 @@ module.exports = () => {
   }
 
   let debunk
-  function urlChange (event) {
+  async function urlChange (event) {
     const namespace = _ws_namespace()
     if (window.mitm.autofill) {
       delete window.mitm.autofill
@@ -119,6 +119,9 @@ module.exports = () => {
           button.innerHTML = msg || 'Entry'
           _macros_ && _macros_()
           observerfn = macros[key]()
+          if (observerfn instanceof Promise) {
+            observerfn = await observerfn
+          }
           debunk && clearTimeout(debunk)
           debunk = setTimeout(() => {
             debunk = undefined
