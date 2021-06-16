@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 module.exports = () => {
   const containerStyle1 = 'position: fixed;z-index: 99999;right: 3px;'
@@ -37,7 +38,7 @@ module.exports = () => {
     left: {},
   }
   let intervId
-  let observerfn
+  let observerfn = []
 
   function toRegex (pathMsg) {
     let [path, msg] = pathMsg.split('=>').map(item => item.trim())
@@ -112,16 +113,19 @@ module.exports = () => {
       const {href, origin} = location
       const _href = href.replace(origin, '')
       const {_macros_, macros} = window.mitm
-      observerfn = undefined
+      observerfn = []
       for (const key in macros) {
         const { path, msg } = toRegex(key)
         if (_href.match(path)) {
           button.innerHTML = msg || 'Entry'
           _macros_ && _macros_()
-          observerfn = macros[key]()
-          if (observerfn instanceof Promise) {
-            observerfn = await observerfn
+          let fn = macros[key]()
+          if (fn instanceof Promise) {
+            fn = await fn
           }
+          if (typeof fn === 'function') {
+            observerfn.push(fn)
+          } 
           debunk && clearTimeout(debunk)
           debunk = setTimeout(() => {
             debunk = undefined
@@ -228,6 +232,7 @@ module.exports = () => {
     }
   }
   window.mitm.fn.play = play
+  window.mitm.fn.wait = wait
   
   function keybCtrl (e) {
     const { macrokeys } = window.mitm
@@ -272,11 +277,13 @@ module.exports = () => {
       window.dispatchEvent(event)
       oldHref = location.href
     } else {
-      if (typeof observerfn === 'function') {
+      if (observerfn.length) {
         oDebunk && clearTimeout(oDebunk)
         oDebunk = setTimeout(()=> {
           oDebunk = undefined
-          observerfn(nodes)
+          for (const fn of observerfn) {
+            fn(nodes)
+          }
           const {autobuttons, rightbuttons, leftbuttons} = window.mitm
           rightbuttons && setButtons(rightbuttons, 'right3')
           leftbuttons && setButtons(leftbuttons, 'left')
