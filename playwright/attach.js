@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const { promisify } = require('util')
 const cdpSession = require('./cdp-session')
+const logmsg = require('./logmsg')
 const sleep = promisify(setTimeout)
 
 async function log(msg) {
@@ -11,7 +12,7 @@ async function log(msg) {
       const undef = c.red('undefined')
       msg = msg.replace('undefined', undef)
     }
-    console.log(c.gray(`(*${msg}*)`))
+    logmsg(c.gray(`(*${msg}*)`))
   }
 }
 
@@ -36,9 +37,9 @@ function grey(page, msg) {
     const { origin, pathname } = new URL(url)
     msg2 = origin!=='null' ? `${origin}${pathname}` : `${url}`
     msg2 = `${msg} url: ${msg2}`.trim()
-    console.log(c.gray(`(*${msg2}${pagename(page)}*)`))
+    logmsg(c.gray(`(*${msg2}${pagename(page)}*)`))
   } else {
-    console.log(c.gray(`(*${msg}${pagename(page)}*)`))
+    logmsg(c.gray(`(*${msg}${pagename(page)}*)`))
   }
 }
 
@@ -108,7 +109,7 @@ async function evalPage(page, _page, msg, _frame='') {
         } else if (message.match('destroyed')) {
           // ignore...
         } else {
-          console.log('PAGE/IFRAME ERROR')
+          logmsg('PAGE/IFRAME ERROR')
         }
       }
     }
@@ -158,7 +159,7 @@ module.exports = async function(page) {
       await evalPage(frame, _page, 'xplay-page frame', _frame)
     } catch (error) {
       if (!error.message.match('Execution Context is not available')) {
-        console.log('ERROR', error)
+        logmsg('ERROR', error)
       }
     }
   })

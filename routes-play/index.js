@@ -14,6 +14,7 @@ const _addWebSocket = require('../routes/_addWebSocket')
 const _cacheResponse = require('../routes/_cacheResponse')
 const { Events, routeCall } = require('./events')
 const { extract, fetch } = require('./fetch')
+const logmsg = require('../playwright/logmsg')
 
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const noURL = /^(brave|edge):\/\//
@@ -57,7 +58,7 @@ module.exports = async ({ route, request, browserName }) => {
   const matchSkip = await _skipResponse(reqs, _3ds)
   if (matchSkip) {
     if (__flag.skip && !matchSkip.hidden) {
-      console.log(c.grey(matchSkip.log))
+      logmsg(c.grey(matchSkip.log))
     }
     routeCall(route, 'continue')
     return
@@ -69,7 +70,7 @@ module.exports = async ({ route, request, browserName }) => {
     if (verbose) {
       const msg = JSON.stringify(reqs.headers)
       const log = msg.length <= 100 ? msg : msg.slice(0, 100) + '...'
-      console.log(c.redBright(`>>> ${'request'.padEnd(8, ' ')} (${log})`))
+      clogmsg(c.redBright(`>>> ${'request'.padEnd(8, ' ')} (${log})`))
     }
   }
 
@@ -129,11 +130,11 @@ module.exports = async ({ route, request, browserName }) => {
         msg = `${c.red('(')}${c.grey(msg)}${c.red(')')}`
         if (_3ds) {
           if (__flag['no-namespace']) {
-            console.log(c.redBright(`${browser[browserName]} no-namespace %s`), msg)
+            logmsg(c.redBright(`${browser[browserName]} no-namespace ${msg}`))
           }
         } else {
           if (__flag['referer-reqs']) {
-            console.log(c.redBright.italic(`${browser[browserName]} referer-reqs %s`), msg)
+            logmsg(c.redBright.italic(`${browser[browserName]} referer-reqs ${msg}`))
           }
         }
       }

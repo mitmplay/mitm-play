@@ -1,3 +1,4 @@
+const logmsg = require('../playwright/logmsg')
 
 async function Events (responseHandler, resp, reqs, route) {
   const { __args } = global.mitm
@@ -29,7 +30,7 @@ async function Events (responseHandler, resp, reqs, route) {
     if (mtyp.length) {
       msg += `[${mtyp.join(',')}]`
     }
-    console.log(msg)  
+    logmsg(msg)  
   }
   routeCall(route, 'fulfill', resp)
 }

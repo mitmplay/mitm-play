@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const routeCDP = require('../routes-cdp')
 const Events = require('../routes-cdp/events')
+const logmsg = require('./logmsg')
 
 const patterns = [
   {urlPattern: '*', requestStage: 'Request'},
@@ -11,10 +12,10 @@ const nohttp = /https?:\/\//
 module.exports = async page => {
   const {__flag} = global.mitm
   if (page._CDP) {
-    console.log('CDP ALREADY INIT!!!')
+    logmsg('CDP ALREADY INIT!!!')
     return
   }
-  console.log('Init CDP!')
+  logmsg('Init CDP!')
   const client = await page.context().newCDPSession(page)
   page._CDP = client
 
@@ -50,7 +51,7 @@ module.exports = async page => {
           await fulfillRequest(response)
         }
       } else {
-        // console.log('Fetch.continueRequest rqs', url)
+        // logmsg(`Fetch.continueRequest rqs ${url}`)
         await client.send('Fetch.continueRequest', { requestId })
       }
     } else {
@@ -66,7 +67,7 @@ module.exports = async page => {
             const status = responseStatusCode
             let rObj = {body: ''}
             if ([301, 302].includes(responseStatusCode)) {
-              // console.log('Fetch.continueRequest rdr', url)
+              // logmsg(`Fetch.continueRequest rdr ${url}`)
               await client.send('Fetch.continueRequest', { requestId })
               return
             } else {
@@ -106,11 +107,11 @@ module.exports = async page => {
               msg = `${c.red('(')}${c.grey(msg)}${c.red(')')}`
               if (_3ds) {
                 if (__flag['no-namespace']) {
-                  console.log(c.redBright(`[C] no-namespace %s`), msg)
+                  logmsg(c.redBright(`[C] no-namespace ${msg}`))
                 }
               } else {
                 if (__flag['referer-reqs']) {
-                  console.log(c.redBright.italic(`[C] referer-reqs %s`), msg)
+                  logmsg(c.redBright.italic(`[C] referer-reqs ${msg}`))
                 }
               }
             }
@@ -121,7 +122,7 @@ module.exports = async page => {
           }
         }  
       }
-      // console.log('Fetch.continueRequest rsp', url)
+      // logmsg(`Fetch.continueRequest rsp ${url}`)
       await client.send('Fetch.continueRequest', { requestId })
     }
   })
@@ -151,7 +152,7 @@ module.exports = async page => {
         if (url) {
           msg.push(url.split('?')[0])
           msg.push(response.body.length)
-          console.log('Fetch.fulfillRequest. res', ...msg)
+          logmsg(`Fetch.fulfillRequest. res ${msg.join(' ')}`)
         }
       }
       await client.send('Fetch.fulfillRequest', response)
@@ -174,7 +175,7 @@ module.exports = async page => {
     }
  
     try {
-      // console.log('Fetch.continueRequest req', url)
+      // logmsg(`Fetch.continueRequest req ${url}`)
       await client.send('Fetch.continueRequest', request)              
     } catch (error) {
       console.error(error)
