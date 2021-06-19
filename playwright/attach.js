@@ -34,7 +34,8 @@ function grey(page, msg) {
   }
   if (url) { //&& url!=='about:blank'
     let msg2 = ''
-    const { origin, pathname } = new URL(url)
+    url = url.length > 97 ? `${url.slice(0, 97)}...` : url
+    let { origin, pathname } = new URL(url)
     msg2 = origin!=='null' ? `${origin}${pathname}` : `${url}`
     msg2 = `${msg} url: ${msg2}`.trim()
     logmsg(c.gray(`(*${msg2}${pagename(page)}*)`))

@@ -19,6 +19,7 @@ const $getProfile = require('./_getProfile') // feat: profile
 const $saveProfile = require('./_saveProfile')
 const $getMarkdown = require('./_getMarkdown')
 const $getMContent = require('./_getMContent')
+const { logmsg } = global.mitm.fn
 
 // accessible from client
 const wscmd = {
@@ -48,11 +49,8 @@ global.mitm.wscmd = wscmd
 module.exports = async (client, msg) => {
   const { __flag } = global.mitm
   if (__flag['ws-message']) {
-    if (msg.length > 97) {
-      console.log(c.blue('>>> ws-message: `%s...`'), msg.slice(0, 97))
-    } else {
-      console.log(c.blue('>>> ws-message: `%s`'), msg)
-    }
+    const _msg = msg.length > 97 ? `${msg.slice(0, 97)}...` : msg
+    logmsg(c.blue(`>>> ws-message:`),_msg)
   }
   const arr = msg.replace(/\s+$/, '').match(/^ *([\w:]+) *(\{.*)/)
   if (arr) {

@@ -50,7 +50,7 @@ module.exports = () => {
         client.send(data)
       }
     })
-    console.log('emitpage', data, pages)
+    logmsg('emitpage', data, pages)
   }
   global.broadcast = broadcast
   global.emitpage = emitpage

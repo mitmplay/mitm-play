@@ -1,9 +1,10 @@
 const fs = require('fs-extra')
+const { logmsg } = global.mitm.fn
 
 module.exports = ({ data }) => {
   const { __args } = global.mitm
   if (__args.debug) {
-    console.log('>>> saveTags')
+    logmsg('>>> saveTags')
   }
   global.mitm.__tag1 = data.__tag1
   global.mitm.__tag2 = data.__tag2

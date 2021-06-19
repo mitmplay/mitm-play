@@ -1,5 +1,6 @@
 const { chromium, firefox } = require("playwright")
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 const regex = /(chromium|firefox|webkit)\/log\/page~(\d+)-(session~(\d+)|undefined)/
 
@@ -31,7 +32,7 @@ module.exports = () => {
         path
       }  
     } else {
-      console.log(c.red(`Error in log file ${element}`))
+      logmsg(c.red(`Error in log file ${element}`))
     }
   })
   return data

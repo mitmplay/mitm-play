@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const fs = require('fs-extra')
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 module.exports = () => {
   /**
@@ -25,7 +26,7 @@ module.exports = () => {
 Double check on client implementation "ws_***()".
 On browser console type "ws"`
     const msg = `_help${JSON.stringify({ data })}`
-    console.log('_help', msg)
+    logmsg('_help', msg)
     this.send(msg)
   }
 
@@ -35,7 +36,7 @@ On browser console type "ws"`
     let { data } = json
     data = typeof (data) === 'string' ? data : JSON.stringify(data)
     const msg = `_ping${JSON.stringify({ data })}`
-    console.log('_ping', msg)
+    logmsg('_ping', msg)
     this.send(msg)
     return data
   }
@@ -44,7 +45,7 @@ On browser console type "ws"`
   //    => _open({data:{url: "https://google.com"}})
   const _open = function (json) {
     const msg = `_open${JSON.stringify(json)}`
-    console.log('_open', msg)
+    logmsg('_open', msg)
     this.send(msg)
   }
 
@@ -53,7 +54,7 @@ On browser console type "ws"`
   const _style = function (json) {
     let { data, _all } = json
     data = `_style${JSON.stringify({ data })}`
-    console.log('_style', data)
+    logmsg('_style', data)
     global.broadcast.call(this, { data, _all })
   }
 
@@ -80,14 +81,14 @@ On browser console type "ws"`
     path = path.replace(/(\/\.)([a-z]{3})$/, (s,s1,s2) => `.${s2}`)
     const err = await fs.ensureFile(path)
     if (err) {
-      console.log(c.redBright('(*error saving screenshot*)'), path)
+      logmsg(c.redBright('(*error saving screenshot*)'), path)
     } else {
       try {
         // await page.waitFor('body');
-        console.log(c.green('(*screenshot*)'))
+        logmsg(c.green('(*screenshot*)'))
         await page.screenshot({ path })
       } catch (error) {
-        console.log(c.redBright('(*error screenshot*)'), error, path)
+        logmsg(c.redBright('(*error screenshot*)'), error, path)
       }
     }
   }
@@ -136,7 +137,7 @@ On browser console type "ws"`
       data.session = `${_page}-${_session}`
       delayCapture(data)
     } catch (error) {
-      console.log(error)
+      logmsg(error)
     }
     return {ok: 'ok'}
   }
@@ -162,10 +163,10 @@ On browser console type "ws"`
     }
     fs.ensureFile(path, err => {
       if (err) {
-        console.log(c.redBright('>>> Error saving csp'), path)
+        logmsg(c.redBright('>>> Error saving csp'), path)
       } else {
         fs.writeFile(path, body, err => {
-          err && console.log(c.redBright('>>> Error write'), err)
+          err && logmsg(c.redBright('>>> Error write'), err)
         })
       }
     })

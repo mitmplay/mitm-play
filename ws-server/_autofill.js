@@ -1,5 +1,6 @@
 const attach = require('../playwright/attach')
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 module.exports = async ({ data }) => {
   const c = require('ansi-colors')
@@ -30,7 +31,7 @@ module.exports = async ({ data }) => {
       newpage = await browser.newPage()
       attach(newpage)
     } else if (newpage._page===undefined) {
-      console.log(c.redBright('Non automation page...'))
+      logmsg(c.redBright('Non automation page...'))
       attach(newpage)
     }
     if (newpage.url()!==url) {
@@ -90,11 +91,11 @@ module.exports = async ({ data }) => {
     page[act](selector, value)
   }
 
-  console.log(c.greenBright('>>> autofill'))
+  logmsg(c.greenBright('>>> autofill'))
   let lastObj;
   for await (let obj of autofill) {
     if (typeof (obj) === 'string') {
-      console.log(c.greenBright(`   ${obj}`))
+      logmsg(c.greenBright(`   ${obj}`))
       if (lastObj && obj.match(/^ *[=-]>/)) {
         obj = `${lastObj.split(/^(.*)([=-]>)/)[1]}${obj}`
       }
@@ -113,7 +114,7 @@ module.exports = async ({ data }) => {
         continue
       }
     } else {
-      console.log(c.greenBright(`${JSON.stringify(obj, null, 2)}`))
+      logmsg(c.greenBright(`${JSON.stringify(obj, null, 2)}`))
     }
     /**
      * valid variations
@@ -158,7 +159,7 @@ module.exports = async ({ data }) => {
         await _input('fill', selector, value)
       }        
     } catch (error) {
-      console.log(error)
+      logmsg(error)
     }
   }
   return { ok: 'ok' }

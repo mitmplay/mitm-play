@@ -1,4 +1,5 @@
 const fs = require('fs-extra')
+const { logmsg } = global.mitm.fn
 
 module.exports = async ({data}) => {
   if (!mitm.browsers.chromium) {
@@ -13,7 +14,7 @@ module.exports = async ({data}) => {
   }
 
   global.mitm.restart = true
-  console.log('pages', pages)
+  logmsg('pages', pages)
 
   global.mitm.bcontexts.chromium.unroute(/.*/)
   global.mitm.pages.chromium.close()

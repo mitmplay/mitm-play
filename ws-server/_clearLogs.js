@@ -1,3 +1,5 @@
+const { logmsg } = global.mitm.fn
+
 module.exports = ({ data }) => {
   const { folders } = data
 
@@ -7,6 +9,6 @@ module.exports = ({ data }) => {
   })
 
   const json = { ok: 'OK' }
-  console.log(data)
+  logmsg(data)
   return json
 }

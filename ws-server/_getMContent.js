@@ -12,6 +12,7 @@ const md = require('markdown-it')({
     return ''; // use external default escaping
   }
 });
+const { logmsg } = global.mitm.fn
 md.use(require('markdown-it-anchor'));
 md.use(require('markdown-it-container'), 'spoiler', {
 
@@ -54,7 +55,7 @@ module.exports = ({data: {fpath}}) => {
   const {route, app} = mitm.path
 
   if (!global.mitm.__flag['ws-message']) {
-    console.log('>>> help ', fpath)
+    logmsg('>>> help ', fpath)
   }
 
   if (fpath.match(app)) {

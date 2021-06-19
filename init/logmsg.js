@@ -1,3 +1,5 @@
+const c = require('ansi-colors')
+
 let repeat = 1
 let lastMsg = undefined
 const {stdout} = process
@@ -23,7 +25,8 @@ function logmsg(msg) {
         stdout.write(m)
       }
     } catch (error) {
-      console.log(error)
+      console.log('')
+      stdout.write(c.red(`${error}`))
     }
   } else {
     repeat += 1
