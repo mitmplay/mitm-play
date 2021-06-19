@@ -1,8 +1,9 @@
 const c = require('ansi-colors')
 const WebSocket = require('ws')
+const { logmsg } = global.mitm.fn
 
 module.exports = () => {
-// ex: broadcast({data:"there"});
+  // ex: broadcast({data:"there"});
   function broadcast ({ data, _all }) {
     const { __flag } = global.mitm
     const pages = []
@@ -25,12 +26,11 @@ module.exports = () => {
       }
     })
     if (__flag['ws-broadcast']) {
-      const msg = JSON.stringify(data)
+      let msg = data.replace(/"(\w+)":/g, (m,p1)=>`${p1}:`)
       if (msg.length > 97) {
-        console.log(c.blue('>>> ws-broadcast: `%s...`'), msg.slice(0, 97))
-      } else {
-        console.log(c.blue('>>> ws-broadcast: `%s`'), msg)
+        msg = `${msg.slice(0, 97)}...`
       }
+      logmsg(c.blue('>>> ws-broadcast:'), msg)
     }
   }
 

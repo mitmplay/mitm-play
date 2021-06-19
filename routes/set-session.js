@@ -1,5 +1,7 @@
 const c = require('ansi-colors')
 
+const { logmsg } = global.mitm.fn
+
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -26,9 +28,9 @@ async function setSession (reqs, {session, persist=false, msg=''}) {
     const { origin } = new URL(url)
     if (persist) {
       page._persist = true
-      console.log(c.magenta(`>>> session: ${id} ${msg} ${origin}**`))
+      logmsg(c.magenta(`>>> session: ${id} ${msg} ${origin}**`))
     } else {
-      console.log(c.magenta(`>>> session: ${id} ${msg} ${origin}`))
+      logmsg(c.magenta(`>>> session: ${id} ${msg} ${origin}`))
     }
   }
 }

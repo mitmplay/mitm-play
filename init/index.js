@@ -1,7 +1,8 @@
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 module.exports = () => {
-  console.log(c.red('\n[init/index.js]'))
+  logmsg(c.red('\n[init/index.js]'))
   const pkg = require('../package.json')
 
   require('./init-ap')
@@ -10,7 +11,7 @@ module.exports = () => {
   if (global.mitm.argv.help) {
     require('./helper')(pkg)
   }
-  require('./console')() // init console.log
+  require('./console')() // init logmsg
   require('./init-fn')() // must be first, init _debounce
   require('./routing')() // populate mitm.fn object
   require('./cli-cmd')() // setup folders & clean up
@@ -32,9 +33,9 @@ module.exports = () => {
   arr1 && (msg = msg.replace(arr1[1], '******:******'))
   arr2 && (msg = msg.replace(arr2[1], '******:******'))
   const { tilde } = global.mitm.fn
-  console.log(c.redBright('Profile Combine:'), c.greenBright(tilde(msg)))
-  console.log(c.green(`\nv${pkg.version}\n`))
-  console.log(c.red('\n[init/chokidar/*.js]'))
+  logmsg(c.redBright('Profile Combine:'), c.greenBright(tilde(msg)))
+  logmsg(c.green(`\nv${pkg.version}\n`))
+  logmsg(c.red('\n[init/chokidar/*.js]'))
   // must be last or other watcher wont work
   require('./chokidar/profile')() // file watcher for profile // feat: profile
   require('./chokidar/macros')() // file watcher for macros

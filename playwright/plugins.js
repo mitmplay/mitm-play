@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const fs = require('fs-extra')
 const _path = require('path')
+const { logmsg } = global.mitm.fn
 
 function chromePlugins(args) {
   const { fn: { flist, tilde, stringify }, path: { userroute } } = global.mitm
@@ -38,13 +39,14 @@ function chromePlugins(args) {
     if (arr.length) {
       path = arr.join(',')
     }
-    path = `${global.__app}/plugins/chrome,${path}`
+    const chrome = `${global.__app}/plugins/chrome`
+    path = path ? `${chrome},${path}`:chrome
     path = path.replace(/\\/g, '/')
     global.mitm.plugins = allPlugins
-    console.log(c.yellow('Plugins:'), tilde(path).split(','))
+    logmsg(c.yellow('Plugins:'), tilde(path).split(','))
     args.push(`--load-extension=${path}`)
   } catch (err) {
-    console.error('Error loading Chrome-extentions', err)
+    logmsg(c.red('Error loading Chrome-extentions'), err)
   }
 }
 

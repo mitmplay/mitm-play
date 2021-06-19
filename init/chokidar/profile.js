@@ -3,6 +3,7 @@ const c = require('ansi-colors')
 const fs = require('fs-extra')
 const chokidar = require('chokidar')
 const broadcast = require('./broadcast')
+const { logmsg } = global.mitm.fn
 
 const showFiles = global._debounce(broadcast('profile'), 1002, 'profile')
 
@@ -11,7 +12,7 @@ function loadSource (path) {
   win32 && (path = path.replace(/\\/g, '/'))
   fs.readFile(path, 'utf8', function (err, data) {
     if (err) {
-      console.log(c.redBright('Error read source file'), err)
+      logmsg(c.redBright('Error read source file'), err)
     } else {
       if (profile.indexOf(path) === -1) {
         profile.push(path)
@@ -46,7 +47,7 @@ module.exports = () => {
 
   // Initialize watcher.
   const msg = global.mitm.fn.tilde(glob)
-  console.log(c.magentaBright(`>>> Profile watcher:`), [msg])
+  logmsg(c.magentaBright(`>>> Profile watcher:`), [msg])
   const profileWatcher = chokidar.watch(glob, {
     ignored: /\/\$\//, // ignore /$/
     persistent: true

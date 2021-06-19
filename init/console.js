@@ -1,8 +1,9 @@
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 let delayFN
 if (global.mitm.argv.lazylog) {
-  console.log(c.redBright('>>> delay console.log'))
+  logmsg(c.redBright('>>> delay logmsg'))
 
   delayFN = function () {
     const { lazylog } = global.mitm.argv
@@ -11,7 +12,7 @@ if (global.mitm.argv.lazylog) {
     let _timeout = null
     const { log } = console
 
-    console.log = function () {
+    logmsg = function () {
       msg = msg.concat([].slice.call(arguments), '\n')
       _timeout && clearTimeout(_timeout)
       _timeout = setTimeout(() => {

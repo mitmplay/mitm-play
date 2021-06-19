@@ -1,8 +1,8 @@
 const c = require('ansi-colors')
 const { promisify } = require('util')
 const cdpSession = require('./cdp-session')
-const logmsg = require('./logmsg')
 const sleep = promisify(setTimeout)
+const { logmsg } = global.mitm.fn
 
 async function log(msg) {
   const bypass = !msg.match(' frame')

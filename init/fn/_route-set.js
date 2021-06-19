@@ -1,5 +1,6 @@
 const c = require('ansi-colors')
 const typs = require('./_typs')
+const { logmsg } = global.mitm.fn
 
 const { typC, typA, typO } = typs
 const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \(\)\w.#~-]+:|)(.+)/ // feat: tags in url
@@ -17,8 +18,8 @@ function toRegex (str, flags = '') {
 
 function routerSet (router, typ, method, str) {
   if (method && method[3][0]==='!') {
-    console.log(c.red.bgYellowBright(`Error route: ${ method[0]}`))
-    console.log({typ, method})
+    logmsg(c.red.bgYellowBright(`Error route: ${ method[0]}`))
+    logmsg({typ, method})
     process.exit()
   }
   let regex // feat: url start with method: ie: GET:/api/login

@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const chokidar = require('chokidar')
 const broadcast = require('./broadcast')
+const { logmsg } = global.mitm.fn
 
 const showFiles = global._debounce(broadcast('cache'), 1002, 'cache')
 
@@ -24,7 +25,7 @@ module.exports = () => {
   const glob = Object.keys(global.mitm.argv.browser).map(x => `${home}/${x}/**/cache/**`)
 
   // Initialize watcher.
-  console.log(c.magentaBright('cache watcher:'), glob)
+  logmsg(c.magentaBright('cache watcher:'), glob)
   const cacheWatcher = chokidar.watch(glob, {
     ignored: /\/\$\//, // ignore /$/
     persistent: true

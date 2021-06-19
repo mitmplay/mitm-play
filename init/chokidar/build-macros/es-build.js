@@ -1,5 +1,6 @@
 const esbuild = require('esbuild')
 const fs = require('fs-extra')
+const { logmsg } = global.mitm.fn
 
 function bundleEsbuild(bpath, opath) {
   esbuild.build({
@@ -13,7 +14,7 @@ function bundleEsbuild(bpath, opath) {
   }).then(prm => {
     fs.removeSync(bpath)
   }).catch(err => {
-    console.log(err)
+    logmsg(err)
     process.exit(1)
   })
 }

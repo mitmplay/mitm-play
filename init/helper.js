@@ -1,7 +1,8 @@
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 module.exports = (_package) => {
-  console.log(c.greenBright(
+  logmsg(c.greenBright(
   `
   Usage: mitm-play [args] [options]
   
@@ -23,7 +24,7 @@ module.exports = (_package) => {
     -i --insecure \t accept insecure cert in nodejs env 
     -n --nosocket \t no websocket injection to html page*
     -k --cookie   \t reset cookies expire date*
-    -l --lazylog  \t delay ~500ms print console.log
+    -l --lazylog  \t delay ~500ms print logmsg
     -g --group    \t create cache group/rec
     -p --csp      \t relax CSP, unblock websocket*
     -t --incognito\t set chromium incognito

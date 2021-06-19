@@ -6,6 +6,7 @@ const loadJS = require('./loadJS')
 
 const broadcast = _broadcast('route')
 const slash = p => p.replace(/\\/g, '/')
+const { logmsg } = global.mitm.fn
 
 module.exports = () => {
   const { win32 } = global.mitm
@@ -24,13 +25,13 @@ module.exports = () => {
   }
 
   if (!files.length) {
-    console.log('>>> no watcher', userroute, files)
+    logmsg('>>> no watcher', userroute, files)
     return
   }
 
   // Initialize watcher.
   const msg = tilde(userroute)
-  console.log(c.magentaBright(`>>> Route watcher:`), [msg])
+  logmsg(c.magentaBright(`>>> Route watcher:`), [msg])
   const paths = [
     userroute,
     userroute.replace('index.js', '*@index.js')
@@ -41,7 +42,7 @@ module.exports = () => {
   })
 
   // Something to use when events are received.
-  const log = console.log.bind(console)
+  const log = logmsg.bind(console)
   urouteWatcher // Add event listeners.
     .on('add',    p => { p = slash(p); updateJS(p, c.blueBright(`>>> add route ${tilde(p)}`)) })
     .on('change', p => { p = slash(p); updateJS(p, c.blueBright(`>>> chg route ${tilde(p)}`)) })

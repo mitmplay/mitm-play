@@ -22,6 +22,7 @@ const _wsmitm = require('./fn/_wsmitm')
 const _clear = require('./fn/_clear')
 const _tag4 = require('./fn/_tag4')
 const flist = require('./fn/flist')
+const { logmsg } = global.mitm.fn
 
 module.exports = () => {
   global.mitm.lib = {
@@ -48,6 +49,7 @@ module.exports = () => {
     _clear,
     _sort,
     _tag4,
+    logmsg,
     formToObj,
     objToForm,
     stringify,

@@ -4,6 +4,7 @@ const fg = require('fast-glob')
 const c = require('ansi-colors')
 const prompt = require('prompt-sync')()
 const loadJS = require('./chokidar/loadJS')
+const { logmsg } = global.mitm.fn
 
 module.exports = () => {
   const {
@@ -18,12 +19,12 @@ module.exports = () => {
 
   const { path } = global.mitm
   const dirhandler = (err) => {
-    err && console.log(c.redBright('>>> Error creating browser profile folder'), err)
+    err && logmsg(c.redBright('>>> Error creating browser profile folder'), err)
   }
 
   fs.ensureDir(path.home, err => {
     if (err) {
-      console.log(c.redBright('>>> Error creating home folder'), err)
+      logmsg(c.redBright('>>> Error creating home folder'), err)
     } else { // browwser profile
       fs.ensureDir(`${path.home}/_profiles_/chromium`, dirhandler)
       fs.ensureDir(`${path.home}/_profiles_/firefox`, dirhandler)
@@ -53,14 +54,14 @@ module.exports = () => {
     const n = prompt(`\nCreate ${uroute} (Y/n)? `)
 
     if (n !== '' && n.toLowerCase() !== 'y') {
-      console.log('Please provide correct "route" folder using -r option')
+      logmsg('Please provide correct "route" folder using -r option')
       process.exit()
     } else {
       if (!fs.pathExistsSync(`${path.home}/argv/default.js`)) {
         argv.save = true
       }
       route = home(uroute)
-      console.log('PATH', uroute)
+      logmsg('PATH', uroute)
       const src = `${path.app}/user-route`
       fs.ensureDirSync(`${route}/_global_`)
       fs.ensureDirSync(`${route}/keybr.com`)
@@ -79,10 +80,10 @@ module.exports = () => {
   const file1 = fg.sync([userroute])
   const file2 = fg.sync([userroute.replace('index.js', '*@index.js')])
   const files = file1.concat(file2)
-  console.log(c.redBright('INIT Route'), files)
+  logmsg(c.redBright('INIT Route'), files)
   if (!files.length) {
-    console.log(c.red('Routes path is incorrect'), argv.route)
-    console.log(c.yellow('Please pass option: -r=\'...\' / --route=\'your routing path\''))
+    logmsg(c.red('Routes path is incorrect'), argv.route)
+    logmsg(c.yellow('Please pass option: -r=\'...\' / --route=\'your routing path\''))
     process.exit()
   }
   global.mitm.data.nolog = true
@@ -197,10 +198,10 @@ module.exports = () => {
     const body = JSON.stringify({ _args, _argv: rest }, null, 2)
     fs.ensureFile(fpath, err => {
       if (err) {
-        console.log(c.redBright('>>> Error saving cli options'), fpath)
+        logmsg(c.redBright('>>> Error saving cli options'), fpath)
       } else {
         fs.writeFile(fpath, body, err => {
-          err && console.log(c.redBright('>>> Error saving cli options'), err)
+          err && logmsg(c.redBright('>>> Error saving cli options'), err)
         })
       }
     })

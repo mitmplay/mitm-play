@@ -1,4 +1,5 @@
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 function currentTab (browser) {
   browser.currentTab = async function (_page, _frame) {
@@ -24,7 +25,7 @@ function currentTab (browser) {
       }
     }
 
-    console.log(c.red('(*undetect page*)'))
+    logmsg(c.red('(*undetect page*)'))
     return pages[0]
   }
 }

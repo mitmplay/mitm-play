@@ -2,6 +2,7 @@ const c = require('ansi-colors')
 const _match = require('./match')
 const changeStatus = require('./change-status')
 const addReplaceBody = require('./add-replace-body')
+const { logmsg } = global.mitm.fn
 const { matched, searchFN } = _match
 
 const jsResponse = async function (reqs, responseHandler, _3d) {
@@ -35,7 +36,7 @@ const jsResponse = async function (reqs, responseHandler, _3d) {
           msg = ''
         } else {
           msg = c.cyanBright(match.log)
-          __args.fullog && console.log(msg) // feat: fullog
+          __args.fullog && logmsg(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'js'} : undefined // feat: fullog

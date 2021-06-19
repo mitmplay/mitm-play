@@ -2,6 +2,7 @@ const fs = require('fs-extra')
 const c = require('ansi-colors')
 const typs = require('../fn/_typs')
 const _debounce = require('../fn/_debounce')
+const { logmsg } = global.mitm.fn
 /**
  * at loadJS end of linear call will trigger the non liniear code: routeSort
  * to populate remaining: __tag1, __tag4
@@ -10,7 +11,7 @@ const resort = _debounce(routeSort, 900, 'clear')
 
 function loadJS (path, msg, fn) {
   const { _routeSet } = global.mitm.fn
-  msg && console.log(msg)
+  msg && logmsg(msg)
   try {
     const arr = path.match(/([\w~.-]+)[\\/]([@\w.-]+)$/)
     const file = arr[2].split('/').pop()
@@ -22,7 +23,7 @@ function loadJS (path, msg, fn) {
     const r = _routeSet(route, domain, file)
     fs.readFile(path, 'utf8', function (err, data) {
       if (err) {
-        console.log(c.redBright('Error read source file'), err)
+        logmsg(c.redBright('Error read source file'), err)
       } else {
         let key = ''
         const [sub, index] = file.split('@')
@@ -40,7 +41,7 @@ function loadJS (path, msg, fn) {
             if (!err) {
               fs.readFile(macros, 'utf8', function (err, data) {
                 if (err) {
-                  console.log(c.redBright('Error read macros file'), err)
+                  logmsg(c.redBright('Error read macros file'), err)
                 } else {
                   global.mitm.source[`${key}/macros`] = data
                 }
@@ -52,7 +53,7 @@ function loadJS (path, msg, fn) {
     })  
     resort(fn) // feat: upadte tags
   } catch (error) {
-    console.log(c.redBright('Failed load route'), error)
+    logmsg(c.redBright('Failed load route'), error)
     process.exit(1)
   }
 }
@@ -80,14 +81,14 @@ function load (path) {
         reslt._childns.list[jsn._subns] = true
       }
     } catch (error) {
-      console.log('invalid json', _jpath)
+      logmsg('invalid json', _jpath)
     }
   }
   return reslt
 }
 
 const remove = function (path, msg, fn) {
-  msg && console.log(msg)
+  msg && logmsg(msg)
   try {
     const domain = path.match(/([\w~.-]+)[\\/]([\w.-]+)$/)[1]
     delete global.mitm.routes[domain]
@@ -97,7 +98,7 @@ const remove = function (path, msg, fn) {
     delete global.mitm.__tag4[domain]
     resort(fn)
   } catch (error) {
-    console.log(c.redBright('Failed delete route'), error)
+    logmsg(c.redBright('Failed delete route'), error)
     process.exit(1)
   }
 }
@@ -137,7 +138,7 @@ function routeSort (fn) { // feat: upadte tags
   if (_global_._childns===undefined) {
     _routeSet(_global_, '_global_', '')
   }
-  console.log(c.red('(*reset routes*)'))
+  logmsg(c.red('(*reset routes*)'))
   global.mitm.routes = sort(global.mitm.routes, true, typs.typO)
   global.mitm.router = sort(global.mitm.router, true, typs.typO)
   global.mitm.__tag2 = sort(global.mitm.__tag2, true)

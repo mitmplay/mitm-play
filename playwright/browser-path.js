@@ -1,4 +1,5 @@
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 function browserPath(browserName, options) {
   const {
@@ -9,7 +10,7 @@ function browserPath(browserName, options) {
   if (typeof (execPath) === 'string') {
     execPath = execPath.replace(/\\/g, '/')
     if (browserName !== 'chromium') {
-      console.log(c.redBright('executablePath is unsupported for non Chrome!'))
+      logmsg(c.redBright('executablePath is unsupported for non Chrome!'))
     } else if (process.platform === 'darwin') {
       execPath += '/Contents/MacOS/Google Chrome'
     }
@@ -19,7 +20,7 @@ function browserPath(browserName, options) {
     execPath = _browser.executablePath().replace(/\\/g, '/')
   }
   if (browserName !== 'chromium') {
-    console.log(c.yellow(`Exec. path: ${execPath}`))
+    logmsg(c.yellow(`Exec. path: ${execPath}`))
   }
 }
 module.exports = browserPath

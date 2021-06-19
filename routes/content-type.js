@@ -1,11 +1,12 @@
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 function ctype (match, resp) {
   const atype = match.route.contentType
   const ctype = resp.headers['content-type'] || 'text'
 
   if (atype===undefined) {
-    console.log(c.red(`Warning: no contentType`), match.log)
+    logmsg(c.red(`Warning: no contentType`), match.log)
     return false
   } else if (atype.length && ctype) {
     return atype.find(t => {

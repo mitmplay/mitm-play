@@ -1,4 +1,4 @@
-const logmsg = require('../playwright/logmsg')
+const { logmsg } = global.mitm.fn
 
 async function Events (responseHandler, resp, reqs, route) {
   const { __args } = global.mitm

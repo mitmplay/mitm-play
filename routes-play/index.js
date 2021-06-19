@@ -14,8 +14,8 @@ const _addWebSocket = require('../routes/_addWebSocket')
 const _cacheResponse = require('../routes/_cacheResponse')
 const { Events, routeCall } = require('./events')
 const { extract, fetch } = require('./fetch')
-const logmsg = require('../playwright/logmsg')
 
+const { logmsg } = global.mitm.fn
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const noURL = /^(brave|edge):\/\//
 const brExt = /^chrome-\w+:\/\//

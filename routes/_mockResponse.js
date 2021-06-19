@@ -8,6 +8,7 @@ const resetCookies = require('./reset-cookies')
 const filePath = require('./filepath/file-path')
 
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
+const { logmsg } = global.mitm.fn
 const { matched, searchFN } = _match
 const { source } = inject
 
@@ -70,7 +71,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
             } else {
               const b = browser[reqs.browserName]
               msg = c.bgYellowBright.bold.red(`${b} mock err (${_root}/${fileMethod} or ${file}) did not exists!`)
-              console.log(msg)
+              logmsg(msg)
               return false
             }
           }
@@ -98,7 +99,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
               resp.headers['content-type'] = xtype[ext[1]]
             } else {
               msg = c.redBright('>>> WARNING: Need a proper file extension')
-              __args.fullog && console.log(msg) // feat: fullog
+              __args.fullog && logmsg(msg) // feat: fullog
             }
           }
         } else if (js) {
@@ -122,7 +123,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
       msg = ''
     } else {
       msg = c.cyanBright(match.log) + msg
-      __args.fullog && console.log(msg) // feat: fullog
+      __args.fullog && logmsg(msg) // feat: fullog
     }
     resp.log = msg ? {msg, mtyp: 'mock'} : undefined // feat: fullog
     return {match, resp}

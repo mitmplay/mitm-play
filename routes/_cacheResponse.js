@@ -8,6 +8,7 @@ const resetCookies = require('./reset-cookies')
 const filesave = require('./filesave/filesave')
 const metaResp = require('./filesave/meta-resp')
 const fpathcache = require('./filepath/fpath-cache')
+const { logmsg } = global.mitm.fn
 
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const { matched, searchFN } = _match
@@ -79,9 +80,9 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           const msg1 = `${browser[browserName]} cache er (${tilde(fpath1)})`
           if (__args.fullog) {
             const msg2 = `    Error in ${error}`
-            console.log(c.bgYellowBright.bold.red(`${msg1}\n${msg2}`)) // feat: fullog  
+            logmsg(c.bgYellowBright.bold.red(`${msg1}\n${msg2}`)) // feat: fullog  
           } else {
-            console.log(c.bgYellowBright.bold.red(msg1))
+            logmsg(c.bgYellowBright.bold.red(msg1))
           }
           resp = {
             url,
@@ -94,7 +95,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           msg = ''
         } else {
           msg = route.path ? c.green(msg) :  c.greenBright(msg)
-          __args.fullog && console.log(msg) // feat: fullog  
+          __args.fullog && logmsg(msg) // feat: fullog  
         }
         resp.log = msg ? {msg, mtyp: 'cache'} : undefined
       }
@@ -109,7 +110,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             msg = c.grey(msg)
             const msg2 = `[${actyp}:${fname1.split('/').pop()}]`
             msg += actyp==='play' ? c.red(msg2) : c.cyan(msg2)
-            __args.fullog && console.log(msg) // feat: fullog
+            __args.fullog && logmsg(msg) // feat: fullog
         } else if (ctype(match, resp)) {
           const fname = fname1.split('/').pop()
           msg = c.magentaBright(msg)
@@ -121,7 +122,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           }
           if (__flag.cache && !match.hidden) {
             if (hidden !== 2) {
-              __args.fullog && console.log(msg) // feat: fullog
+              __args.fullog && logmsg(msg) // feat: fullog
             }
           }
           const meta = metaResp({ reqs, resp })

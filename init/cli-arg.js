@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
 const c = require('ansi-colors')
+const { logmsg } = global.mitm.fn
 
 function argsChg (id, key) {
   const { argv } = global.mitm
@@ -36,8 +37,8 @@ function loadProfile (profile) {
     // feat: hide password
     msg1 = msg1.replace(arr1[1], '******:******')
   }
-  console.log(c.green(`>>> cmd: mitm-play ${msg1}`), `(${profile})`)
-  // console.log(c.green(`>>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
+  logmsg(c.green(`>>> cmd: mitm-play ${msg1.trim()}`), `(${profile})`)
+  // logmsg(c.green(`>>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
   return saveArgs
 }
 
@@ -116,7 +117,7 @@ module.exports = () => {
       // feat: hide password
       msg2 = msg2.replace(arr2[1], '******:******')
     }
-    console.log(c.green(`>>> cmd2 mitm-play ${msg2}`))
+    logmsg(c.green(`>>> cmd2 mitm-play ${msg2}`))
     const {
       _argv: {
         browser: b,
@@ -127,7 +128,7 @@ module.exports = () => {
       }
     } = saveArgs
     browser = b
-    console.log(c.green('>>> Profile argv._'), argv._)
+    logmsg(c.green('>>> Profile argv._'), argv._)
     if (rest._ && argv._.length===0) {
       delete argv._
     }

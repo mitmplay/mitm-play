@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const _ext = require('../filepath/ext')
 const searchParams = require('./search-params')
+const { logmsg } = global.mitm.fn
 const { xjson } = searchParams
 
 module.exports = ({ reqs, resp, match }) => {
@@ -24,7 +25,7 @@ module.exports = ({ reqs, resp, match }) => {
         try {
           respBody = JSON.parse(respBody)          
         } catch (error) {
-          console.log({error, respBody})
+          logmsg({error, respBody})
           process.exit()
         }
       }
@@ -57,8 +58,8 @@ module.exports = ({ reqs, resp, match }) => {
       parse && (jsonResp = parse(jsonResp))
       respBody = JSON.stringify(jsonResp, null, 2)
     } catch (error) {
-      console.log(c.bgYellowBright.bold.red('>>> Error JSON.stringify'))
-      console.log(error)
+      logmsg(c.bgYellowBright.bold.red('>>> Error JSON.stringify'))
+      logmsg(error)
     }
   }
   return respBody

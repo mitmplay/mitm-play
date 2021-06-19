@@ -2,6 +2,7 @@ const fs = require('fs-extra')
 const c = require('ansi-colors')
 const bundleRollup = require('./rollup')
 const bundleEsbuild = require('./es-build')
+const { logmsg } = global.mitm.fn
 
 const hotKeys = obj => {
   window.mitm.macrokeys = {
@@ -91,7 +92,7 @@ function genBuild(msg, fpath) {
     fpath = fpath.replace(/\\/g, '/')
   }
   const rpath = fpath.replace(`${argv.route}/`, '')
-  console.log(c.red(`${msg}: ${rpath}`))
+  logmsg(c.red(`${msg}: ${rpath}`))
 
   path = `${argv.route}/_global_/_macros_/macros.js`
   if (fs.existsSync(path)) {
@@ -123,10 +124,10 @@ function genBuild(msg, fpath) {
   }
   body = __autoKeys(body)
   const bpath = fpath.replace('macros.js', 'build.js')
-  // console.log(c.redBright('Write'), bpath)
+  // logmsg(c.redBright('Write'), bpath)
   fs.writeFile(bpath, body, err => {
     if (err) {
-      console.log(c.redBright('Error saving'), err)
+      logmsg(c.redBright('Error saving'), err)
       return
     }
     const opath = fpath.replace('_macros_', '_bundle_')

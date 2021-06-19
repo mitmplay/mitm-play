@@ -1,7 +1,7 @@
 const c = require('ansi-colors')
 const _match = require('./match')
 const changeStatus = require('./change-status')
-
+const { logmsg } = global.mitm.fn
 const { matched, searchFN } = _match
 
 const jsonResponse = async function (reqs, responseHandler, _3d) {
@@ -35,7 +35,7 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
           msg = ''
         } else {
           msg = c.yellowBright(match.log)
-          __args.fullog && console.log(msg) // feat: fullog
+          __args.fullog && logmsg(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'json'} : undefined // feat: fullog

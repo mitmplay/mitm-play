@@ -34,7 +34,9 @@ const client = {
 /**
  * Common Global vars
  */
+const {mitm} = global
 global.mitm = {
+  ...mitm,
   splitter,
   session,
   client,
@@ -42,7 +44,6 @@ global.mitm = {
   win32,
   path,
   argv,
-  fn: {},
   data: {},
   pages: {},
   watcher: {},

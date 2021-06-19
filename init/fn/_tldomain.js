@@ -1,5 +1,6 @@
 const c = require('ansi-colors')
 const rgxDomain = /^\w+:\/\/([\w-.]+)/
+const { logmsg } = global.mitm.fn
 
 function _tldomain (fullpath) {
   if (typeof (fullpath) !== 'string' || fullpath.match(/^chrome/)) {
@@ -9,7 +10,7 @@ function _tldomain (fullpath) {
   if (match) {
     return match[1]
   } else {
-    console.log(c.redBright(`>>> Error _tldomain ${fullpath}`))
+    logmsg(c.redBright(`>>> Error _tldomain ${fullpath}`))
     return '**tld-error**'
   }
 }

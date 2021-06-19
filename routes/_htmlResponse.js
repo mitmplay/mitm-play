@@ -4,7 +4,7 @@ const _match = require('./match')
 const _inject = require('./inject')
 const setSession = require('./set-session')
 const changeStatus = require('./change-status')
-
+const { logmsg } = global.mitm.fn
 const { matched, searchFN, searchKey } = _match
 const { script_src, e_head, injectWS } = _inject
 
@@ -66,7 +66,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
         } else {
           const len = match.log.length
           msg = `${'-'.repeat(len)}\n${msg}`
-          __args.fullog && console.log(msg) // feat: fullog
+          __args.fullog && logmsg(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'html'} : undefined // feat: fullog

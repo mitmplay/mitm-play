@@ -3,6 +3,7 @@ const svelte = require('rollup-plugin-svelte')
 const preprocess = require('svelte-preprocess')
 const commonjs = require('@rollup/plugin-commonjs')
 const {nodeResolve} = require('@rollup/plugin-node-resolve')
+const { logmsg } = global.mitm.fn
 
 function bundleRollup(bpath, opath) {
   // see below for details on the options
@@ -30,14 +31,14 @@ function bundleRollup(bpath, opath) {
   async function build() {
     // create a bundle
     const bundle = await rollup.rollup(inputOptions);
-    console.log(bundle.watchFiles); // an array of file names this bundle depends on
+    logmsg(bundle.watchFiles); // an array of file names this bundle depends on
     const { output } = await bundle.generate(outputOptions);
 
     for (const chunkOrAsset of output) {
       if (chunkOrAsset.type === 'asset') {
-        console.log('Asset', chunkOrAsset);
+        logmsg('Asset', chunkOrAsset);
       } else {
-        console.log('Chunk', chunkOrAsset.modules);
+        logmsg('Chunk', chunkOrAsset.modules);
       }
     }
     await bundle.write(outputOptions);

@@ -3,7 +3,7 @@ const { fn: { home, _nameSpace } } = global.mitm
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const mmethod = /^(GET|PUT|POST|DELETE):/
 const nohttp = /https?:\/\//
-
+const { logmsg } = global.mitm.fn
 const m1 = {GET: 'gt', PUT: 'pt', POST: 'ps', DELETE: 'dl' }
 const m2 = {GET: 'gt:',PUT: 'pt:',POST: 'ps:',DELETE: 'dl:'}
 
@@ -248,7 +248,7 @@ const matched = (search, { url, oriRef }) => {
   if (!match) {
     match = search('_global_') // to global
   }
-  // console.log('>>> Match', tld, !!match)
+  // logmsg('>>> Match', tld, !!match)
   return match
 }
 

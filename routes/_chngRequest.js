@@ -3,6 +3,7 @@ const _match = require('./match')
 const setSession = require('./set-session')
 const { cookieToObj, objToCookie } = require('./filesave/cookier')
 
+const { logmsg } = global.mitm.fn
 const { matched, searchFN } = _match
 
 const chgRequest = async function (reqs, _3d) {
@@ -16,7 +17,7 @@ const chgRequest = async function (reqs, _3d) {
     if (__flag.request && !match.hidden && !hidden) {
       if (!match.url.match('/mitm-play/websocket')) {
         if (!__args.ommit.request) {
-          console.log(c.cyanBright(match.log))
+          logmsg(c.cyanBright(match.log))
         }
       }
     }

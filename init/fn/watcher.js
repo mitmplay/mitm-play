@@ -2,6 +2,7 @@ const stackTrace = require('stack-trace');
 const chokidar = require('chokidar')
 const c = require('ansi-colors')
 const fs = require('fs-extra')
+const { logmsg } = global.mitm.fn
 
 let timeout = undefined;
 let doubleCall = -1
@@ -30,7 +31,7 @@ function watcher(arrayModule, pwd) {
       if (doubleCall) {
         return
       }
-      // console.log('WATCHER', pwd, arrpath)
+      // logmsg('WATCHER', pwd, arrpath)
       delete require.cache[require.resolve(p)]
       try {
         const time = new Date();

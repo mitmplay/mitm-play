@@ -2,6 +2,7 @@ const c = require('ansi-colors')
 const _ext = require('../filepath/ext')
 const searchParams = require('./search-params')
 const _setCookie = require('./set-cookie')
+const { logmsg } = global.mitm.fn
 const { xjson } = searchParams
 
 module.exports = ({ reqs, resp }) => {
@@ -60,8 +61,8 @@ module.exports = ({ reqs, resp }) => {
       meta.CSP = CSP
     }
   } catch (error) {
-    console.log(c.bgYellowBright.bold.red('>>> Error JSON.stringify'))
-    console.log(error)
+    logmsg(c.bgYellowBright.bold.red('>>> Error JSON.stringify'))
+    logmsg(error)
   }
   return meta
 }

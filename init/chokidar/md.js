@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const chokidar = require('chokidar')
 const broadcast = require('./broadcast')
+const { logmsg } = global.mitm.fn
 
 const showFiles = global._debounce(broadcast('markdown'), 1002, 'markdown')
 
@@ -9,7 +10,7 @@ function addMarkdown (path) {
   win32 && (path = path.replace(/\\/g, '/'))
   markdown.push(path)
   if (global.mitm.__flag['file-md']) {
-    console.log(c.red(`Markdown add: ${path}`))
+    logmsg(c.red(`Markdown add: ${path}`))
   }
   showFiles()
 }
@@ -20,7 +21,7 @@ function delMarkdown (path) {
   const idx = markdown.indexOf(path);
   (idx > -1) && markdown.splice(idx, 1)
   if (global.mitm.__flag['file-log']) {
-    console.log(c.red(`Markdown del: ${path}`))
+    logmsg(c.red(`Markdown del: ${path}`))
   }
   showFiles()
 }
@@ -34,7 +35,7 @@ module.exports = () => {
   ]
 
   // Initialize watcher.
-  console.log(c.magentaBright('>>> Md watcher:'), glob)
+  logmsg(c.magentaBright('>>> Md watcher:'), glob)
   const markdownWatcher = chokidar.watch(glob, { persistent: true })
 
   markdownWatcher // Add event listeners.

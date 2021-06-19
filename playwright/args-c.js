@@ -6,6 +6,7 @@
 // https://usefyi.com/chrome-flags/
 // chrome://chrome-urls/
 // chrome://version
+const { logmsg } = global.mitm.fn
 
 module.exports = argv => {
   const args = [
@@ -41,7 +42,7 @@ module.exports = argv => {
     }
   }
   if (argv.verbose) {
-    console.log('Chromium flags', args)
+    logmsg('Chromium flags', args)
   }
   return args
 }
