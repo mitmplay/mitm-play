@@ -1,6 +1,7 @@
 const c = require('ansi-colors')
 const _fetch = require('make-fetch-happen')
 const { cookieToObj, objToCookie } = require('../routes/filesave/cookier')
+const { logmsg } = global.mitm.fn
 global.mitm.fn._fetch = _fetch
 
 async function extract ({ request: r, browserName }) {
@@ -62,7 +63,7 @@ function fetch (route, browserName, { url, proxy, ...reqs }, handler) {
     let status = resp.status
     if (proxy && argv.verbose) {
       const { origin, pathname } = new URL(url)
-      console.log(c.grey(`>>> proxy (${origin}${pathname})`))
+      logmsg(c.grey(`>>> proxy (${origin}${pathname})`))
     }
     let headerSize = 42
     const headers = {}
@@ -102,8 +103,8 @@ Redirect...
         status = headers['x-app-status']
       }
       if (status >= 400) {
-        console.log(c.redBright(`[${reqs.method}] ${url} => ${status}`))
-        console.log(c.red(`${body}`))
+        logmsg(c.redBright(`[${reqs.method}] ${url} => ${status}`))
+        logmsg(c.red(`${body}`))
       }
       headers['header-size'] = `${headerSize} ~est`
       handler({ url, status, headers, body })
@@ -118,7 +119,7 @@ Redirect...
     for (let i = 1; i <= n; i++) {
       try {
         if (global.mitm.argv.debug) {
-          console.log(c.yellowBright(`URL:${url}`))
+          logmsg(c.yellowBright(`URL:${url}`))
         }
         const headers = {...opt.headers}
         if (typeof headers.cookie !== 'string') {
@@ -129,11 +130,11 @@ Redirect...
         break
       } catch (err) {
         if ((err.code === 'ECONNRESET' || err.code === 'ENETUNREACH') && i <= n) {
-          console.log(c.yellowBright(`RETRY:${i}`), url)
+          logmsg(c.yellowBright(`RETRY:${i}`), url)
           await delay(2500)
         } else if (err.code === 'ENOTFOUND') {
           const { origin } = new URL(url)
-          console.log(c.red(`(*ENOTFOUND ${origin}*)`))
+          logmsg(c.red(`(*ENOTFOUND ${origin}*)`))
           handler({
             url,
             status: 500,
@@ -152,11 +153,11 @@ Redirect...
   // delete reqs.headers['accept-language'];
   // delete reqs.headers['accept-encoding'];
   if (typeof (global.mitm.argv.browser[browserName]) === 'string' && reqs.body === null && (reqs.method === 'POST' || reqs.method === 'PUT')) {
-    console.log(c.red.bgYellowBright(`>>> WARNING!!! ${reqs.method} having request payload NULL!, might be a bug from browser? Please use --${browserName} without browser path.`))
+    logmsg(c.red.bgYellowBright(`>>> WARNING!!! ${reqs.method} having request payload NULL!, might be a bug from browser? Please use --${browserName} without browser path.`))
   }
   if (argv.debug) {
     const { method } = reqs
-    console.log(method, opts)
+    logmsg(method, opts)
   }
   fetchRetry(url, { ...reqs, ...opts }, 2)
 }
