@@ -82,6 +82,25 @@ module.exports = async ({ data }) => {
     page = oldPage
   }
 
+  async function _screenshot(file) {
+    const {_page} = page
+    const {__page} = global.mitm
+
+    const session = Object.keys(__page[_page].session).pop()
+    const _path = `${mitm.path.home}/${b}/log/${_page}-${session}`
+
+    const host = (new URL(page.url())).origin.replace('://' ,'~~')
+    const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
+    const prefix = `${stamp}--sshot@${host}~`
+
+    if (file) {
+      file = `${file.replace(/\.png/, '')}.png`
+    } else {
+      file = `file-${Math.floor(Math.random()*999)}.png`
+    }
+    await page.screenshot({ path: `${_path}/${prefix}${file}` })
+  }
+
   async function _input(act, selector, value) {
     if (value.match(/^:/)) {
       value = await page.$eval('body', (e, key) => {
@@ -154,7 +173,8 @@ module.exports = async ({ data }) => {
         if (action === 'goto'        ) { await _goto(store)                        } else
         if (action === 'page'        ) { await _page(store)                        } else
         if (action === 'close'       ) { await _close()                            } else
-        if (action === 'leave'       ) { await _leave()                            }
+        if (action === 'leave'       ) { await _leave()                            } else
+        if (action === 'screenshot'  ) { await _screenshot(store)                  }
       } else if (value) {
         await _input('fill', selector, value)
       }        
