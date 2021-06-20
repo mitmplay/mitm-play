@@ -10,7 +10,7 @@ module.exports = () => {
   if (location.origin.match('chrome-extension')) {
     return
   }
-  const { hostname: host } = location
+  const host = location.origin.replace('://' ,'~~')
   const sshot = {}
   const nodes = {}
 
@@ -75,7 +75,7 @@ module.exports = () => {
           } 
           if (sshot[id].insert) {
             fname = location.pathname.replace(/^\//, '').replace(/\//g, '-')
-            fname = `${fname}-${sshot[id].title}-insert`
+            fname = `~${fname}-${sshot[id].title}-insert`
             const params = { namespace, _page, host, fname, browser }
             _screenshot(params)
           }
@@ -86,7 +86,7 @@ module.exports = () => {
           nodes[id].insert = false
           if (sshot[id].remove) {
             fname = location.pathname.replace(/^\//, '').replace(/\//g, '-')
-            fname = `${fname}-${sshot[id].title}-remove`
+            fname = `~${fname}-${sshot[id].title}-remove`
             const params = { namespace, _page, host, fname, browser }
             _screenshot(params)
           }
