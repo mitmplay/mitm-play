@@ -44,7 +44,7 @@ function loadProfile (profile) {
 
 module.exports = () => {
   let { argv, path } = global.mitm
-  const [, prm1] = argv._
+  const [prm0, prm1] = argv._
   argv.profile = false
 
   argsChg('a', 'activity'  ) // feat: _global_.args
@@ -96,14 +96,29 @@ module.exports = () => {
     argv.device = 'iPhone 11 Pro'
   }
 
+  if (prm0 && prm0.match(/^http/)) {
+    if (argv.route===undefined) {
+      argv.route = true
+    }
+    if (argv.url===undefined) {
+      argv.url = prm0
+    } else {
+      logmsg(`incorrect params`)
+      process.exit(1)
+    }
+  }
   if (argv.route===true) {
-    argv.route = `${path.app}/user-log`
-  } else if (argv.route===':test') {
-    argv.route = `${path.app}/user-test`
+    argv.route = `${path.app}/user-route`
+  } else {
+    let {route} = argv
+    let postfix = route.match(/^-\w+/)
+    if (postfix) {
+      argv.route = `${path.app}/uroute${postfix}`
+    }
   }
 
-  let saveArgs = loadProfile(prm1)
-  if (prm1 && saveArgs) {
+  let saveArgs = prm1 ? loadProfile(prm1) : undefined
+  if (saveArgs) {
     argv.profile = true
   } else if (prm1 !== 'default') {
     saveArgs = loadProfile('default')

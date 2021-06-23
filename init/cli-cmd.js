@@ -50,8 +50,8 @@ module.exports = () => {
   }
 
   if (!fs.pathExistsSync(route)) {
-    const uroute = '~/user-route'
-    const n = prompt(`\nCreate ${uroute} (Y/n)? `)
+    logmsg('Path', route)
+    const n = prompt(`\nCreate ${route} (Y/n)? `)
 
     if (n !== '' && n.toLowerCase() !== 'y') {
       logmsg('Please provide correct "route" folder using -r option')
@@ -60,8 +60,7 @@ module.exports = () => {
       if (!fs.pathExistsSync(`${path.home}/argv/default.js`)) {
         argv.save = true
       }
-      route = home(uroute)
-      logmsg('PATH', uroute)
+      logmsg('PATH', route)
       const src = `${path.app}/user-route`
       fs.ensureDirSync(`${route}/_global_`)
       fs.ensureDirSync(`${route}/keybr.com`)
