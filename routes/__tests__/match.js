@@ -1,3 +1,6 @@
+const logmsg = require('../../init/logmsg')
+global.mitm = {fn: {logmsg}}
+
 require('../../init/init-ap')
 const { routeSort } = require('../../init/chokidar/loadJS')
 const { _routeSet } = require('../../init/fn/_route-set')
@@ -8,6 +11,7 @@ global.mitm = {
   ...global.mitm,
   routes: require('../__fixture__/routes'),
   fn: {
+    logmsg,
     _routeSet,
     _globalTag,
     _sortLength,

@@ -1,3 +1,6 @@
+const logmsg = require('../../logmsg')
+global.mitm = {fn: {logmsg}}
+
 global.mitm = {
   __tag2: {},
   __tag3: {},
@@ -14,6 +17,7 @@ global.mitm = {
   data: {},
   argv: {},
   fn: {
+    logmsg,
     _routeSet: require('../_route-set')._routeSet
   }
 }

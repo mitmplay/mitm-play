@@ -11,8 +11,8 @@ const {
 const {
   script_src,
   source,
-  e_head,
-  e_end
+  head,
+  body
 } = require('../inject')
 
 describe('fetch.js - script_src', () => {
@@ -39,10 +39,10 @@ describe('fetch.js - source', () => {
   })
 })
 
-describe('fetch.js - e_head', () => {
+describe('fetch.js - head', () => {
   const fn = () => { alert(0) }
   test('insert js function inside <html>', () => {
-    const result = e_head('<html><body></body>', [fn])
+    const result = head('<html><body></body>', [fn])
     expect(result).toBe(
 `<html>
 <script>(() => {
@@ -52,7 +52,7 @@ describe('fetch.js - e_head', () => {
   })
 
   test('insert js function inside <head>', () => {
-    const result = e_head('<html><head></head>', [fn])
+    const result = head('<html><head></head>', [fn])
     expect(result).toBe(
 `<html><head>
 <script>(() => {
@@ -62,7 +62,7 @@ describe('fetch.js - e_head', () => {
   })
 
   test('insert js function on top', () => {
-    const result = e_head('<body></body>', [fn])
+    const result = head('<body></body>', [fn])
     expect(result).toBe(`
 <script>(() => {
     alert(0);
@@ -71,10 +71,10 @@ describe('fetch.js - e_head', () => {
   })
 })
 
-describe('fetch.js - e_end', () => {
+describe('fetch.js - body', () => {
   const fn = () => { alert(0) }
   test('insert js code at end of </body>', () => {
-    const result = e_end('<html><body>Hi</body>', [fn])
+    const result = body('<html><body>Hi</body>', [fn])
     expect(result).toBe(
 `<html><body>Hi
 <script>(() => {
@@ -84,7 +84,7 @@ describe('fetch.js - e_end', () => {
   })
 
   test('insert js code at end of </html>', () => {
-    const result = e_end('<html>Hi</html>', [fn])
+    const result = body('<html>Hi</html>', [fn])
     expect(result).toBe(
 `<html>Hi
 <script>(() => {
@@ -94,7 +94,7 @@ describe('fetch.js - e_end', () => {
   })
 
   test('insert js code at end of file', () => {
-    const result = e_end('Hi there', [fn])
+    const result = body('Hi there', [fn])
     expect(result).toBe(
 `Hi there
 <script>(() => {

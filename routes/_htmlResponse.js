@@ -6,7 +6,7 @@ const setSession = require('./set-session')
 const changeStatus = require('./change-status')
 const { logmsg } = global.mitm.fn
 const { matched, searchFN, searchKey } = _match
-const { script_src, e_head, injectWS } = _inject
+const { script_src, head, injectWS } = _inject
 
 const htmlResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs)
@@ -38,7 +38,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
           resp.body = match.route
         } else {
           if (js) {
-            const inject = _inject[el] || e_head
+            const inject = _inject[el] || head
             resp.body = inject(resp.body, js)
           }
           if (src) {

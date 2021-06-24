@@ -30,7 +30,7 @@ function source (body, src) {
   return `${body}\n${el}`
 }
 
-function e_head (body, fn) {
+function head (body, fn) {
   const el = fn.map(el => `(${el})();`).join('\n')
   const script = `\n<script>${el}</script>\n`
   let b = body + ''
@@ -45,7 +45,7 @@ function e_head (body, fn) {
   return b
 }
 
-function e_end (body, fn) {
+function body (body, fn) {
   const el = fn.map(el => `(${el})();`).join('\n')
   const script = `\n<script>${el}</script>\n`
   let b = body + ''
@@ -98,6 +98,6 @@ module.exports = {
   script_src,
   injectWS,
   source,
-  e_head,
-  e_end
+  head,
+  body
 }

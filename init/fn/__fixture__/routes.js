@@ -18,7 +18,7 @@ const routes = {
     ],
     html: {
       'www.gtm.com/search': {
-        el: 'e_end', // JS at end of
+        el: 'body', // JS at end of
         js: [hello] // html body
       }
     }, // all js request from gstatic.com

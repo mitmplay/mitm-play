@@ -1,22 +1,22 @@
-const headerCSP = function({headers}) {
-  const val = ' blob: ws://localhost:3000 ';
-  const csp = headers['content-security-policy'];
-  if (csp) {
-    headers['content-security-policy'] = csp[0].replace(/ blob: /g, val);
-  }
-  return {headers};
-};
+// const headerCSP = function({headers}) {
+//   const val = ' blob: ws://localhost:3000 ';
+//   const csp = headers['content-security-policy'];
+//   if (csp) {
+//     headers['content-security-policy'] = csp[0].replace(/ blob: /g, val);
+//   }
+//   return {headers};
+// };
 
 const unregisterJS = function() {
-  document.addEventListener('DOMContentLoaded', (event) => {
-    setTimeout(() => {
+  // document.addEventListener('DOMContentLoaded', (event) => {
+    // setTimeout(() => {
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for(let registration of registrations) {
         registration.unregister()
       }});
       console.log('unregister service worker')
-    }, 1000)
-  })
+    // }, 1000)
+  // })
 };
 
 let debunk;
@@ -62,37 +62,47 @@ const route = {
     at: 'sshot',
   },
   mock: {
-    'mitm-play/twitter.js': {
-      js: [unregisterJS],
-    },
+    '/sw.js': '',
+    // 'abs.twimg.com/': '',
+  //   'mitm-play/twitter.js': {
+  //     js: [unregisterJS],
+    // },
   },
   cache: {
-    'abs.twimg.com': {
-      contentType: ['javascript'],
-      querystring: true,
-    },
-    'video.twimg.com': {
-      contentType: ['mpegURL', 'MP2T'],
-      response: html5vid,
-    },
-  },
-  log: {
-    'api.twitter.com': {
-      contentType: ['json']
-    },
+  //   'abs.twimg.com': {
+  //     contentType: ['javascript'],
+  //     querystring: true,
+  //   },
+  //   'video.twimg.com': {
+  //     contentType: ['mpegURL', 'MP2T'],
+  //     response: html5vid,
+  //   },
+  // },
+  // log: {
+  //   'api.twitter.com': {
+  //     contentType: ['json']
+  //   },
   },  
   html: {
-    'twimg.com': 0,
+    // 'twimg.com': 0,
     'twitter.com': {
-      response: headerCSP,
-      src:['twitter.js'],
+      response(resp) {
+        const {headers} = resp
+        delete headers['content-security-policy'] 
+      },
+      el: 'body',
+      js: [unregisterJS],
+      // response: headerCSP,
+      // src:['twitter.js'],
     },
   },
   response: {
-    'api.twitter.com': {
+    '/client_event.json': {
       response(resp) {
-        resp.headers['access-control-allow-origin'] = '*'
-      }
+        const {headers} = resp
+        headers['access-control-allow-origin'] = '*'
+      },
+      tags: 'all-response',
     }
   }
 }

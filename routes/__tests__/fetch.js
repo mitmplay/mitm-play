@@ -1,7 +1,11 @@
+const logmsg = require('../../init/logmsg')
+global.mitm = {fn: {logmsg}}
+
 const { _proxy, _noproxy } = require('../../init/fn/_proxies')
 const _tldomain = require('../../init/fn/_tldomain')
 global.mitm = {
   fn: {
+    logmsg,
     _proxy,
     _noproxy,
     _tldomain
@@ -9,6 +13,11 @@ global.mitm = {
   argv: {
     verbose: true,
     browser: { chromium: true }
+  },
+  pages: {
+    chromium: {
+      url() {return 'https://url.com'}
+    }
   }
 }
 
@@ -21,7 +30,7 @@ const {
 const {
   extract,
   fetch
-} = require('../fetch')
+} = require('../../routes-play/fetch')
 
 describe('fetch.js - extract', () => {
   test('return object keys without \'_\'', () => {

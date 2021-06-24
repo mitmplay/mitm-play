@@ -1,3 +1,6 @@
+const logmsg = require('../../logmsg')
+global.mitm = {fn: {logmsg}}
+
 const {
   test,
   expect,
@@ -5,7 +8,10 @@ const {
 } = global
 
 global.mitm = {
-  fn: { _tldomain: require('../_tldomain') }
+  fn: {
+    logmsg,
+    _tldomain: require('../_tldomain')
+  }
 }
 
 describe('_tldomain.js - function', () => {

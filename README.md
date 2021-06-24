@@ -522,12 +522,12 @@ html: {'twitter.net': ''},
 ```
 
 Insert `js` script element into specific area in html document:
-* el: 'e_head' &nbsp; // default, no need to add `el` key
-* el: 'e_end'
+* el: 'head' &nbsp; // default, no need to add `el` key
+* el: 'body'
 ```js
 html: {
   'https://keybr.com/': {
-    // el: 'e_head', // JS at <head> 
+    // el: 'head', // JS at <head> 
     js: [()=>console.log('Injected on Head')],
   },
 },
