@@ -14,18 +14,18 @@ const md = require('markdown-it')({
 });
 const { logmsg } = global.mitm.fn
 md.use(require('markdown-it-anchor'));
-md.use(require('markdown-it-container'), 'spoiler', {
+md.use(require('markdown-it-container'), 'summary', {
 
   validate: function(params) {
-    return params.trim().match(/^spoiler\s+(.*)$/);
+    return params.trim().match(/^summary\s+(.*)$/);
   },
 
   render: function (tokens, idx) {
-    var m = tokens[idx].info.trim().match(/^spoiler\s+(.*)$/);
+    var m = tokens[idx].info.trim().match(/^summary\s+(.*)$/);
 
     if (tokens[idx].nesting === 1) {
       // opening tag
-      return '<details><summary>' + md.utils.escapeHtml(m[1]) + '</summary>\n';
+      return `<details><summary>${md.renderInline(m[1])}</summary>\n`;
 
     } else {
       // closing tag
