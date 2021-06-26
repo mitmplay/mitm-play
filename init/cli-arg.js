@@ -58,6 +58,7 @@ module.exports = () => {
   argsChg('i', 'insecure'  )
   argsChg('k', 'cookie'    ) // feat: _global_.args
   argsChg('l', 'lazylog'   )
+  argsChg('o', 'offline'   ) // console.log without \n
   argsChg('n', 'nosocket'  ) // feat: _global_.args
   argsChg('p', 'csp'       ) // feat: _global_.args
   argsChg('r', 'route'     )
