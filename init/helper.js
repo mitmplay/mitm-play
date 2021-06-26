@@ -23,6 +23,7 @@ module.exports = (_package) => {
     -f --fullog   \t show detail logs on each rule* 
     -i --insecure \t accept insecure cert in nodejs env 
     -n --nosocket \t no websocket injection to html page*
+    -o --offline  \t console log withount new-line
     -k --cookie   \t reset cookies expire date*
     -l --lazylog  \t delay ~500ms print logmsg
     -g --group    \t create cache group/rec

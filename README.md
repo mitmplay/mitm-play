@@ -800,6 +800,7 @@ $ mitm-play --help
     -f --fullog        show detail logs on each rule* 
     -i --insecure      accept insecure cert in nodejs env 
     -n --nosocket      no websocket injection to html page*
+    -o --offline       console log withount new-line
     -k --cookie        reset cookies expire date*
     -l --lazylog       delay ~500ms print console.log
     -g --group         create cache group/rec
@@ -948,6 +949,15 @@ if params contain value _off_ ie: `-n=off`, there will be Injection into HTML Pa
 ```bash
 $ mitm-play -n=off  <OR>
 $ mitm-play --nosocket=off
+```
+</details>
+<details><summary><b>-o --offline</b></summary>
+
+change console.log to print the logs only when the log-message is unique from the previous log
+
+```bash
+$ mitm-play -o  <OR>
+$ mitm-play --offline
 ```
 </details>
 <details><summary><b>-k --cookie</b></summary>
