@@ -113,7 +113,9 @@ function checkTags(tg1, tg2, tg3, typ, key) {
   if (arrTag) {
     const [, method, tg, path] = arrTag       // feat: tags in url
     str = method ? `${method}:${path}` : path // remove from url
-    tag = `url:${tg.slice(0,-1).split(/ +/)[0]}`
+    if (tg) {
+      tag = `url:${tg.slice(0,-1).split(/ +/)[0]}`
+    }
   }
   const [_typ, _tags] = typ.split(':')
   let isTagsOk = tg3[str] && tg3[str][_typ]

@@ -42,7 +42,7 @@ describe('fetch.js - extract', () => {
     }
     const route = {}
     return extract({ route, request, browserName: 'chromium' }).then(function (result) {
-      expect(Object.keys(result).join(',')).toBe('method,body,url,browserName,headers,oriRef,page')
+      expect(Object.keys(result).join(',')).toBe('method,body,browserName,headers,pageUrl,oriRef,page,url')
     });
   })
 })
