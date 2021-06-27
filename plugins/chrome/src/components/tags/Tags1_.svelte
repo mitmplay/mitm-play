@@ -114,7 +114,7 @@ function routetag(tags, item) {
 function listTags(tags) {
   console.log('rerender...');
   const {browser, routes, fn: {oneSite}} = window.mitm;
-  list = {}
+  const obj = {}
   const nss = []
   for (let ns in tags.__tag1) {
     nss.push(ns)
@@ -122,15 +122,45 @@ function listTags(tags) {
       ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
       const tag1 = tags.__tag1[ns]
       for (const id in tag1) {
-        if (list[id]===undefined || tag1[id]) {
-          // console.log(id, list)
-          list[id] = tag1[id] 
+        if (obj[id]===undefined || tag1[id]) {
+          // console.log(id, obj)
+          obj[id] = tag1[id] 
         }
       }
     }
   }
+  list = {}
+  const keys = Object.keys(obj).sort()
+  for (const [idx, id] of keys.entries()) {
+    const id2  = keys[idx+1]
+    const arr1 = id.split('~')
+    const arr2 = id2 ? id2.split('~') : undefined
+
+    let value = obj[id]
+    let group = undefined
+
+    if(arr2 && arr2[0]===arr1[0]) {
+      group = arr1[0]
+    } else if (arr1[1]) {
+      group = arr1[0]
+    }
+    list[id] = {value, group}
+  }
   browser.nss = nss;
-  tgs = Object.keys(list).sort();
+  const arr = []
+  let same = undefined
+  for (const key in list) {
+    const {group} = list[key]
+    if (group) {
+      if (same!==group) {
+        same = group
+        arr.push(`${group}!`)
+      }
+    } else {
+      arr.push(key)
+    }
+  }
+  tgs = arr;
   return tgs;
 }
 function enter(e) {
@@ -163,35 +193,86 @@ function props(tags) {
   }
   return props
 }
+function subitem(g) {
+  const [group] = g.split(/!/)
+  const arr = []
+  for (const key in list) {
+    const obj = list[key]
+    if (obj.group===group) {
+      arr.push(key)
+    }
+  }
+  return arr
+}
 </script>
 
 {#if listTags($tags).length}
 <td style="{cols>1 ? '' : 'display:none;'}">
   <div class="border">
     {#each tgs as item}
-    <div class="space0 {routetag($tags, item)}">
-      <label 
-      data-item={item}
-      on:mouseenter={enter}
-      on:mouseleave={leave}
-      >
-        <input type="checkbox"
-        data-item={item}
-        on:click={clicked}
-        bind:checked={list[item]}
-        {...props($tags, list[item])}/>
-        <span class="big">{item}</span>
-      </label>
-    </div>
+      {#if item.match(/!/)}
+        <details class="tag1">
+          <summary><span>{item.split(/!/)[0]}</span></summary>
+          {#each subitem(item) as item2}
+            <div class="space0 {routetag($tags, item2)}">
+              <label 
+              data-item={item2}
+              on:mouseenter={enter}
+              on:mouseleave={leave}
+              >
+                <input type="checkbox"
+                data-item={item2}
+                on:click={clicked}
+                bind:checked={list[item2].value}
+                {...props($tags, list[item])}/>
+                <span class="big">{item2}</span>
+              </label>
+            </div>  
+          {/each}
+        </details>
+      {:else}
+        <div class="space0 {routetag($tags, item)}">
+          <label 
+          data-item={item}
+          on:mouseenter={enter}
+          on:mouseleave={leave}
+          >
+            <input type="checkbox"
+            data-item={item}
+            on:click={clicked}
+            bind:checked={list[item].value}
+            {...props($tags, list[item])}/>
+            <span class="big">{item}</span>
+          </label>
+        </div>
+      {/if}
     {/each}
-  </div>
+</div>
 </td>
 {/if}
 
+
 <style>
-  td {
-    width: 20%;
-  }
+td {
+  width: 20%;
+}
+details.tag1 {
+  background: aliceblue;
+}
+.tag1>summary {
+  padding-left: 8px;
+}
+.tag1>summary::marker {
+  color: coral;
+}
+.tag1>summary>span {
+  padding-left: 2px;
+  color: grey;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: serif;
+  vertical-align: 10%;
+}
 .border {
   border: 1px dotted;
 }
