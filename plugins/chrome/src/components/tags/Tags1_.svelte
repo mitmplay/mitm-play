@@ -95,7 +95,7 @@ function routetag(tags, item) {
       }
     }
   }
-  if (tags.check && !list[item]) {
+  if (tags.check && !list[item].value) {
     itm += 'hidden'
   }
   let url = ''
@@ -267,7 +267,7 @@ details.tag1 {
 }
 .tag1>summary>span {
   padding-left: 2px;
-  color: grey;
+  color: coral;
   font-size: 13px;
   font-weight: 700;
   font-family: serif;
@@ -321,5 +321,8 @@ details.tag1 {
 }
 .rtag.grp.itm, .rtag.url {
   text-decoration: underline;
+}
+details .space0 input {
+  margin-left: 12px;
 }
 </style>
