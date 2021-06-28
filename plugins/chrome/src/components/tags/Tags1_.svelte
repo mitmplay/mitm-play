@@ -116,15 +116,19 @@ function listTags(tags) {
   const {browser, routes, fn: {oneSite}} = window.mitm;
   const obj = {}
   const nss = []
+  const {check} = tags
   for (let ns in tags.__tag1) {
     nss.push(ns)
     if (oneSite(tags, ns)) {
       ns = routes[ns]._childns._subns || ns // feat: chg to child namespace
       const tag1 = tags.__tag1[ns]
       for (const id in tag1) {
-        if (obj[id]===undefined || tag1[id]) {
-          // console.log(id, obj)
-          obj[id] = tag1[id] 
+        const _check =  tag1[id]
+        if (obj[id]===undefined || _check) {
+          // collect if setting is not check or all check
+          if (!check || _check) {
+            obj[id] = _check
+          }
         }
       }
     }
@@ -138,17 +142,27 @@ function listTags(tags) {
 
     let group = undefined
     if(arr2) {
-      const g1 = arr1[0]
-      const g2 = arr2[0]
+      const [g1] = arr1
+      const [g2] = arr2
       const match1 = id1.match(`^${g2}`)
       const match2 = id2.match(`^${g1}`)
       if (match1) {group = g2} else 
       if (match2) {group = g1} 
     }
-    if (!group && arr1[1]) {
-      group = arr1[0]
-    }
-    
+    if (!group) {
+      if (arr1[1]) {
+        group = arr1[0]
+      } else {
+        const id0 = keys[idx-1]
+        if (id0) {
+          const [g0] = id0.split('~')
+          if (id1.match(`^${g0}`)) {
+            group = g0
+          }
+        }
+      }
+    } 
+
     let value = obj[id1]
     list[id1] = {value, group}
   }

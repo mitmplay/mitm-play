@@ -74,7 +74,7 @@ onMount(() => {
     <input
     type="checkbox"
     bind:checked={$tags.mth}/>
-    mth
+    method
   </label>
   <!-- <label class="checker">
     <input 
@@ -83,8 +83,8 @@ onMount(() => {
     bind:checked={$tags.filterUrl}/>
     current-tab
   </label> -->
-  <button class="tlb btn-go" on:click="{btnReset}" disabled={autoSave}>Reset</button>
-  <button class="tlb btn-go" on:click="{btnSave}"  disabled={autoSave}>Save</button>
+  <button class="tlb btn-go" on:click="{btnReset}" disabled={autoSave}>reset</button>
+  <button class="tlb btn-go" on:click="{btnSave}"  disabled={autoSave}>save</button>
   <label class="checker">
     <input
     type="checkbox"
