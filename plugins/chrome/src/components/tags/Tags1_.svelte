@@ -95,16 +95,18 @@ function routetag(tags, item) {
       }
     }
   }
-  if (tags.check && !list[item].value) {
-    itm += 'hidden'
-  }
   let url = ''
-  for (const ns of browser.nss) {
-    const tag3 = tags.__tag3[ns] || [] // feat: update __tag3
-    for (const id in tag3) {
-      if (id.match(`:${item}:`)) {
-        url = 'url'
-        break
+  if (list[item]) { // if group no need to check
+    if (tags.check && !list[item].value) {
+      itm += 'hidden'
+    }
+    for (const ns of browser.nss) {
+      const tag3 = tags.__tag3[ns] || [] // feat: update __tag3
+      for (const id in tag3) {
+        if (id.match(`:${item}:`)) {
+          url = 'url'
+          break
+        }
       }
     }
   }
