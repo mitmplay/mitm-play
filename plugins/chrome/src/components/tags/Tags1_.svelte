@@ -131,20 +131,26 @@ function listTags(tags) {
   }
   list = {}
   const keys = Object.keys(obj).sort()
-  for (const [idx, id] of keys.entries()) {
+  for (const [idx, id1] of keys.entries()) {
     const id2  = keys[idx+1]
-    const arr1 = id.split('~')
+    const arr1 = id1.split('~')
     const arr2 = id2 ? id2.split('~') : undefined
 
-    let value = obj[id]
     let group = undefined
-
-    if(arr2 && arr2[0]===arr1[0]) {
-      group = arr1[0]
-    } else if (arr1[1]) {
+    if(arr2) {
+      const g1 = arr1[0]
+      const g2 = arr2[0]
+      const match1 = id1.match(`^${g2}`)
+      const match2 = id2.match(`^${g1}`)
+      if (match1) {group = g2} else 
+      if (match2) {group = g1} 
+    }
+    if (!group && arr1[1]) {
       group = arr1[0]
     }
-    list[id] = {value, group}
+    
+    let value = obj[id1]
+    list[id1] = {value, group}
   }
   browser.nss = nss;
   const arr = []
