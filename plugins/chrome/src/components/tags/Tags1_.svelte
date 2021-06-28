@@ -1,5 +1,7 @@
 <script>
 import { tags } from './stores.js';
+import Expand from '../button/Expand.svelte';
+import Collapse from '../button/Collapse.svelte';
 export let cols;
 /***
 * ex:
@@ -231,27 +233,35 @@ function subitem(g) {
 {#if listTags($tags).length}
 <td style="{cols>1 ? '' : 'display:none;'}">
   <div class="border">
+    <div class="space0 header">
+      <!-- feat: auto collapsed tag1 -->
+      <Collapse on:message name="state1" q=".t1"></Collapse>
+      <Expand on:message name="state1" q=".t1"></Expand>
+      <span class="ns"><span>All Tags</span></span>
+    </div>
     {#each tgs as item}
       {#if item.match(/!/)}
-        <details class="tag1">
-          <summary><span>{item.split(/!/)[0]}</span></summary>
-          {#each subitem(item) as item2}
-            <div class="space0 {routetag($tags, item2)}">
-              <label 
-              data-item={item2}
-              on:mouseenter={enter}
-              on:mouseleave={leave}
-              >
-                <input type="checkbox"
+        <div class="t1">
+          <details class="tag1">
+            <summary><span>{item.split(/!/)[0]}</span></summary>
+            {#each subitem(item) as item2}
+              <div class="space0 {routetag($tags, item2)}">
+                <label 
                 data-item={item2}
-                on:click={clicked}
-                bind:checked={list[item2].value}
-                {...props($tags, list[item])}/>
-                <span class="big">{item2}</span>
-              </label>
-            </div>  
-          {/each}
-        </details>
+                on:mouseenter={enter}
+                on:mouseleave={leave}
+                >
+                  <input type="checkbox"
+                  data-item={item2}
+                  on:click={clicked}
+                  bind:checked={list[item2].value}
+                  {...props($tags, list[item])}/>
+                  <span class="big">{item2}</span>
+                </label>
+              </div>  
+            {/each}
+          </details>  
+        </div>
       {:else}
         <div class="space0 {routetag($tags, item)}">
           <label 
@@ -346,5 +356,13 @@ details.tag1 {
 }
 details .space0 input {
   margin-left: 12px;
+}
+.space0.header {
+  background: lightgray;
+  line-height: 1.58;
+}
+span.ns span {
+  vertical-align: -3.5px;
+  line-height: 0.8;
 }
 </style>

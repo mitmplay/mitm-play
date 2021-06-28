@@ -79,7 +79,7 @@ function handleMessage(event) {
         </BHeader>
         <BTable id="table-tags">
           <tr class="set-tags">
-            <Tags1 {cols}/>
+            <Tags1 {cols} />
             <Tags2 {cols} on:message={handleMessage}/>
             <Tags3 {cols} on:message={handleMessage}/>
           </tr>
