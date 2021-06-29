@@ -72,7 +72,9 @@ function props(tags) {
 
 {#each xitems($tags) as item}
   <div class="space3 {routetag($tags, item)}">
-    {#if check(item) }
+    {#if item.match(/^\w?\.?---/)}
+      <!-- line -->
+    {:else if check(item) }
       <label>
         <input type="checkbox"
         data-item={item}

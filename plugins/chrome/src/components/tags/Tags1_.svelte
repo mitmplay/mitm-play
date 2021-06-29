@@ -228,6 +228,10 @@ function subitem(g) {
   }
   return arr
 }
+function hr(item) {
+  const color = item.split(/-+/)[1]
+  return color ? `border-top: 2px solid ${color}` : ''
+}
 </script>
 
 {#if listTags($tags).length}
@@ -240,7 +244,9 @@ function subitem(g) {
       <span class="ns"><span>All Tags</span></span>
     </div>
     {#each tgs as item}
-      {#if item.match(/!/)}
+      {#if item.match(/^\w?\.?---/)}
+        <hr style={hr(item)}/>
+      {:else if item.match(/!/)}
         <div class="t1">
           <details class="tag1">
             <summary><span>{item.split(/!/)[0]}</span></summary>
@@ -287,6 +293,10 @@ function subitem(g) {
 <style>
 td {
   width: 20%;
+}
+.border hr {
+  margin: 1px 0;
+  border-top: 2px solid coral;
 }
 details.tag1 {
   background: aliceblue;
