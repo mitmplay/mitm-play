@@ -157,8 +157,9 @@ function routeSort (fn) { // feat: upadte tags
       for (const sec in secs) {
         const tags = secs[sec].tags
         for (const tag in tags) {
+          const _tag = tag.split(':').pop()
+          _tags[_tag] = false // collect tag1
           if (tags[tag] === true) {
-            _tags[tag.split(':').pop()] = false
             tags[tag] = false // feat: update __tag3
           }
         }
@@ -177,13 +178,13 @@ function routeSort (fn) { // feat: upadte tags
       }
     }
     for (const id in tag2) {
-      _tags[id.split(':').pop()] = false
-      const mainTag = id.split(':')
+      const _tag = id.split(':').pop()
+      _tags[_tag] = false // collect tag1
       tag2[id].state = !flag // feat: update __tag2
       if (flag) {
         for (const d of flag) {
           if (id===d) {
-            tag1[ns][mainTag.pop()] = true
+            tag1[ns][_tag] = true
             tag2[id].state = true // feat: update __tag2
           }
         }
