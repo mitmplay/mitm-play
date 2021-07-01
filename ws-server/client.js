@@ -133,8 +133,9 @@ On browser console type "ws"`
     const {_page} = data
     _stamp.push((new Date()).toISOString().replace(/[:-]/g, ''))
     try {
-      const _session = Object.keys(__page[_page].session).pop()
-      data.session = `${_page}-${_session}`
+      const _session = __page[_page].page._session // feat: session stamp
+      const session = _session || Object.keys(__page[_page].session).pop()
+      data.session = `${_page}-${session}`
       delayCapture(data)
     } catch (error) {
       logmsg(error)

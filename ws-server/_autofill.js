@@ -83,10 +83,10 @@ module.exports = async ({ data }) => {
   }
 
   async function _screenshot(file) {
-    const {_page} = page
+    const {_page, _session} = page // feat: session stamp
     const {__page} = global.mitm
 
-    const session = Object.keys(__page[_page].session).pop()
+    const session = _session || Object.keys(__page[_page].session).pop()
     const _path = `${mitm.path.home}/${b}/log/${_page}-${session}`
 
     const host = (new URL(page.url())).origin.replace('://' ,'~~')

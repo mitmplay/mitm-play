@@ -15,10 +15,15 @@ async function setSession (reqs, {session, persist=false, msg=''}) {
       return
     }
     old_id = id
-    let _session
+    let {_page, _session} = page
+    const __page = global.mitm.__page[_page]
     if (session === true) {
-      _session = `session~${id}`
-      global.mitm.__page[page._page].session[_session] = { msg, url, log: [] }
+      const arr = Object.keys(__page.session)
+      if (arr.length) {
+        _session = `session~${id}` 
+        page._session = _session // feat: session stamp
+      }
+      __page.session[_session] = { msg, url, log: [] }
     } else {
       _session = `${session}||${id}`
     }

@@ -11,6 +11,9 @@ const { logmsg } = global.mitm.fn
 module.exports = argv => {
   const args = [
     '--disable-features=site-per-process,isolate-origins',
+    '--disable-offer-store-unmasked-wallet-cards',
+    '--disable-autofill-credit-card-upload',
+    '--disable-offer-upload-credit-cards',
     '--disable-session-crashed-bubble',
     '--disable-site-isolation-trials',
     '--ignore-certificate-errors',
