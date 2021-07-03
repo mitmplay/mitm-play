@@ -10,11 +10,11 @@
 const unregisterJS = function() {
   // document.addEventListener('DOMContentLoaded', (event) => {
     // setTimeout(() => {
+      console.log('unregister service worker')
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for(let registration of registrations) {
         registration.unregister()
       }});
-      console.log('unregister service worker')
     // }, 1000)
   // })
 };
@@ -96,14 +96,5 @@ const route = {
       // src:['twitter.js'],
     },
   },
-  response: {
-    '/client_event.json': {
-      response(resp) {
-        const {headers} = resp
-        headers['access-control-allow-origin'] = '*'
-      },
-      tags: 'all-response',
-    }
-  }
 }
 module.exports = route;

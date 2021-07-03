@@ -77,7 +77,7 @@ module.exports = async page => {
                 console.error('error', url)
               }  
             }
-            const ct = headers['content-type']
+            const ct = headers['content-type'] || ''
             const ec = ct.match(/(font|image)/) ? 'binary' : 'ascii'
             let body = ''
             if (rObj.base64Encoded) {

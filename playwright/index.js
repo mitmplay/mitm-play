@@ -17,6 +17,7 @@ const browsers = {}
 const bcontexts = {}
 const browserServer = {}
 global.browserServer = browserServer
+const preload = {path: './playwright/preload.js'}
 
 function initBrowserMsg(browserName, opt) {
   const msg = `Init Browser: [${browserName}]`
@@ -115,21 +116,7 @@ module.exports = () => {
       bcontext = await browser.newContext(ctxoption)
       page = await bcontext.newPage()
     }
-    await bcontext.addInitScript(async () =>{
-      const {serviceWorker} = navigator
-      if (serviceWorker) {
-        try {
-          // console.log('check service worker....')
-          const registrations = await serviceWorker.getRegistrations() 
-          for(let registration of registrations) {
-            console.log('unregister swc')
-            registration.unregister()
-          }            
-        } catch (error) {
-          console.error(error)
-        }
-      }
-    });
+    await bcontext.addInitScript(preload);
     currentTab(browser)
     if (browserName === 'chromium') {
       if (argv.incognito) {
