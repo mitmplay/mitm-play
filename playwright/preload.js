@@ -26,10 +26,15 @@ module.exports = function(argv) {
   async function fnTimeout() {
     const {serviceWorker: w} = navigator
     try {
-      const registrations = await w.getRegistrations()
-      unregisterServiceWorker(registrations);  
+      if (w && w.getRegistrations) {
+        const registrations = await w.getRegistrations()
+        unregisterServiceWorker(registrations);  
+      }
     } catch (error) {
-      if (gretry>3) {
+      const {message} = error
+      if (message.match('The document is in an invalid state')) {
+        // known bug - https://bugs.chromium.org/p/chromium/issues/detail?id=1102209
+      } else if (gretry>3) {
         console.log(error)
       } else {
         console.log('Retry: get registration service worker', gretry)
@@ -42,8 +47,8 @@ module.exports = function(argv) {
   if (!argv.worker) {    
     const fn = e => {}
     setTimeout(fnTimeout, timeout)
-    navigator.serviceWorker.register = function() {
-      console.log('Service Worker is disabled!')
+    navigator.serviceWorker.register = function(url) {
+      console.log('Service Worker is disabled!', url)
       return new Promise(fn, fn)
     }  
   }  
