@@ -1,7 +1,7 @@
-document.addEventListener('DOMContentLoaded', e => {
+module.exports = function(argv) {
   let retry = 1
-  let getreg = 1
-  let timeout = 400
+  let gretry = 1
+  let timeout = 500
 
   function unregisterServiceWorker(registrations) {
     for(let registration of registrations) {
@@ -18,24 +18,33 @@ document.addEventListener('DOMContentLoaded', e => {
         break
       }
     }
+    if (registrations.length) {
+      location = location
+    }
   }
 
   async function fnTimeout() {
     const {serviceWorker: w} = navigator
     try {
       const registrations = await w.getRegistrations()
-      unregisterServiceWorker(registrations);
+      unregisterServiceWorker(registrations);  
     } catch (error) {
-      if (getreg>3) {
-        console.log('Retray: get registration service worker', getreg)
-        setTimeout(fnTimeout, timeout)
-        getreg += 1
-      } else {
+      if (gretry>3) {
         console.log(error)
+      } else {
+        console.log('Retry: get registration service worker', gretry)
+        setTimeout(fnTimeout, timeout + 1000)
+        gretry += 1
       }    
     }
   }
 
-  // console.log('UNREGISTER Service Worker')
-  setTimeout(fnTimeout, timeout)
-})
+  if (!argv.worker) {    
+    const fn = e => {}
+    setTimeout(fnTimeout, timeout)
+    navigator.serviceWorker.register = function() {
+      console.log('Service Worker is disabled!')
+      return new Promise(fn, fn)
+    }  
+  }  
+}

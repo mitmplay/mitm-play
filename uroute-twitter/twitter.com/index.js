@@ -62,11 +62,12 @@ const route = {
     at: 'sshot',
   },
   mock: {
-    '/sw.js': '',
+    // '/sw.js': '',
     // 'abs.twimg.com/': '',
-  //   'mitm-play/twitter.js': {
-  //     js: [unregisterJS],
+    // 'mitm-play/twitter.js': {
+    //   js: [unregisterJS],
     // },
+    '/client_event.json': ''
   },
   cache: {
   //   'abs.twimg.com': {
@@ -90,8 +91,8 @@ const route = {
         const {headers} = resp
         delete headers['content-security-policy'] 
       },
-      el: 'body',
-      js: [unregisterJS],
+      // el: 'body',
+      // js: [unregisterJS],
       // response: headerCSP,
       // src:['twitter.js'],
     },

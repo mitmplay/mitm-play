@@ -66,6 +66,7 @@ module.exports = () => {
   argsChg('t', 'incognito' )
   argsChg('u', 'url'       )
   argsChg('v', 'video'     )
+  argsChg('w', 'worker'    ) 
   argsChg('x', 'proxy'     )
   argsChg('z', 'lazyclick' ) // feat: _global_.args
   argsChg('e', 'devtools'  )

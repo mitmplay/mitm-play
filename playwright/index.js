@@ -9,6 +9,7 @@ const attach = require('./attach')
 const routes = require('../routes-play')
 const browserPath = require('./browser-path')
 const currentTab = require('./current-tab')
+const preload = require('./preload.js')
 const sleep = promisify(setTimeout)
 
 const { logmsg } = global.mitm.fn
@@ -17,7 +18,6 @@ const browsers = {}
 const bcontexts = {}
 const browserServer = {}
 global.browserServer = browserServer
-const preload = {path: './playwright/preload.js'}
 
 function initBrowserMsg(browserName, opt) {
   const msg = `Init Browser: [${browserName}]`
@@ -116,7 +116,7 @@ module.exports = () => {
       bcontext = await browser.newContext(ctxoption)
       page = await bcontext.newPage()
     }
-    await bcontext.addInitScript(preload);
+    await bcontext.addInitScript(preload, global.mitm.argv);
     currentTab(browser)
     if (browserName === 'chromium') {
       if (argv.incognito) {
