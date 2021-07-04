@@ -158,7 +158,9 @@ module.exports = () => {
     bcontext.on('page', attach)
     if (argv.cdp===undefined) {
       await bcontext.route(/.*/, (route, request) => {
-        routes({ route, request, browserName, bcontext })
+        if (!global.mitm.restart) {
+          routes({ route, request, browserName, bcontext })
+        }
       })  
     }
     let count = 0
@@ -169,7 +171,9 @@ module.exports = () => {
     }
     page.on('close', async () => {
       for (const browserName in argv.browser) {
-        await  browsers[browserName].close()
+        if (browsers[browserName]) {
+          await browsers[browserName].close()
+        }
       }
       if (!global.mitm.restart) {
         process.exit()

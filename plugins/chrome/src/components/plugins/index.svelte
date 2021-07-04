@@ -80,7 +80,7 @@ function clicked(e) {
   {/each}
 </table>
 <div class="btn-container">
-  <button on:click="{btnRestart}">[restart]</button>
+  <button class="btn-restart" on:click="{btnRestart}">[restart]</button>
 </div>
 
 <style>
@@ -112,6 +112,7 @@ span.path:hover {
   background: transparent;
   font-weight: 700;
   font-size: 10px;
+  cursor: pointer;
   padding: 2px;
   border: 0;
   color: red;
