@@ -28,7 +28,7 @@ function screenshot (e) {
   const delay = mitm.argv.lazyclick === true ? 700 : mitm.argv.lazyclick
   for (const el of arr) {
     let node = e.target
-    while (el !== node && node !== document.body) {
+    while (el !== node && node !== null && node !== document.body) {
       node = node.parentNode
     }
     if (node !== document.body) {
