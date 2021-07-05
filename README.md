@@ -806,6 +806,7 @@ $ mitm-play --help
     -g --group         create cache group/rec
     -p --csp           relax CSP unblock websocket*
     -t --incognito     set chromium incognito
+    -w --worker        enable service worker
     -x --proxy         a proxy request
     -z --lazyclick     delay ~700ms click action*
 
@@ -999,6 +1000,15 @@ By Default program will run in normal browser, adding this option will result in
 ```bash
 $ mitm-play -t  <OR>
 $ mitm-play --incognito
+```
+</details>
+<details><summary><b>-w --worker</b></summary>
+
+enable service worker, current release playwirght cannot intercept request that came from service worker.
+
+```bash
+$ mitm-play -w  <OR>
+$ mitm-play --worker
 ```
 </details>
 <details><summary><b>-x --proxy</b></summary>

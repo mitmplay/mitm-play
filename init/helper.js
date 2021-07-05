@@ -29,6 +29,7 @@ module.exports = (_package) => {
     -g --group    \t create cache group/rec
     -p --csp      \t relax CSP, unblock websocket*
     -t --incognito\t set chromium incognito
+    -w --worker   \t enable service worker
     -x --proxy    \t a proxy request
     -z --lazyclick\t delay ~700ms click action*
 
