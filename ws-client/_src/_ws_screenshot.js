@@ -46,7 +46,8 @@ function screenshot (e) {
           act = window.mitm.screenshot
           if (act) {
             act.click()
-            act = undefined  
+            act = undefined
+            mitm.lastEvent = e
           } else {
             console.log('delay action undefined');
           }
@@ -57,11 +58,18 @@ function screenshot (e) {
   }
 }
 
+function eventclick(e) {
+  mitm.lastEvent = e
+}
+
 module.exports = () => {
   const route = window.mitm.routes[_ws_namespace()]
-  if (route && route.screenshot) {
-    window.addEventListener('DOMContentLoaded', () => {
-      document.querySelector('body').addEventListener('click', screenshot)
-    })
-  }
+  window.addEventListener('DOMContentLoaded', () => {
+    const body = document.querySelector('body')
+    if (route && route.screenshot) {
+      body.addEventListener('click', screenshot)
+    } else {
+      body.addEventListener('click', eventclick)
+    }
+  })
 }
