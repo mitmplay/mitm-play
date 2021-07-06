@@ -88,6 +88,7 @@ module.exports = () => {
   }
 
   let debunk
+  let onces = {} // feat: onetime fn call
   async function urlChange (event) {
     const namespace = _ws_namespace()
     if (window.mitm.autofill) {
@@ -128,6 +129,7 @@ module.exports = () => {
           } 
           debunk && clearTimeout(debunk)
           debunk = setTimeout(() => {
+            onces = {} // feat: onetime fn call
             debunk = undefined
             const {autobuttons, rightbuttons, leftbuttons} = window.mitm
             rightbuttons && setButtons(rightbuttons, 'right3')
@@ -282,6 +284,14 @@ module.exports = () => {
         oDebunk = setTimeout(()=> {
           oDebunk = undefined
           for (const fn of observerfn) {
+            const name = fn.name
+            if (name && name.match(/Once$/)) {
+              if (onces[name]) { // feat: onetime fn call
+                continue
+              } else {
+                onces[name] = true
+              }
+            }
             fn(nodes)
           }
           const {autobuttons, rightbuttons, leftbuttons} = window.mitm
