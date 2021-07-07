@@ -47,8 +47,10 @@ function routetag(tags, item) {
 }
 
 function title(item) {
+  let {tag1=''} = items
   const [key, tag] = item.split(':')
-  return tag ? `${tag}{${key}}` : key
+  tag1.length && (tag1 = `<span> [${tag1.join(',')}]</span>`)
+  return tag ? `${tag}{${key}}` : `${key}${tag1}`
 }
 function xitems(tags) {
   const {uniq, sortTag} = window.mitm.fn;
@@ -79,7 +81,7 @@ function props(tags) {
         <input type="checkbox"
         data-item={item}
         checked={$tags.__tag2[ns][item]} disabled/>
-        <span>{title(item)}</span>
+        <span>{@html title(item)}</span>
       </label>
     {:else}
       <label>
@@ -88,7 +90,7 @@ function props(tags) {
         on:click={clicked} 
         bind:checked={items.tags[item]}
         {...props($tags)}/>
-        <span>{title(item)}</span>      
+        <span>{@html title(item)}</span>      
       </label>
     {/if}
   </div>
@@ -99,10 +101,16 @@ function props(tags) {
   padding-left: 28px;
 }
 .space3 span {
+  font-family: serif;
   vertical-align: 15%;
 }
 .space3.hidden {
   display: none;
+}
+:global(.space3 span>span) {
+  font-size: 10px;
+  font-family: roboto;
+  color: darkmagenta;
 }
 .rtag {
   font-size: 13px;

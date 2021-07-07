@@ -218,15 +218,21 @@ function props(tags) {
   }
   return props
 }
-function subitem(g) {
+function subitem(tags, g) {
   const [group] = g.split(/!/)
   const arr = []
   let chk = false
   for (const key in list) {
     const obj = list[key]
     if (obj.group===group) {
-      if (!chk && list[key].value) {
-        chk = true
+      if (list[key].value) {
+        if (!chk) {
+          chk = true
+        }
+      } else {
+        if (tags.check) {
+          continue
+        }
       }
       arr.push(key)
     }
@@ -257,7 +263,7 @@ function hr(item) {
           <details class="tag1">
             <summary><span>
               {item.split(/!/)[0]}
-                {#if subitem(item)}
+                {#if subitem($tags, item)}
                   <img src="images/checked.svg" alt=""/>
                 {/if}
             </span></summary>
@@ -314,13 +320,17 @@ details.tag1 {
 }
 .tag1>summary {
   padding-left: 8px;
+  cursor: pointer;
+}
+.tag1>summary:hover {
+  background: greenyellow
 }
 .tag1>summary::marker {
   color: coral;
 }
 .tag1>summary>span {
   padding-left: 2px;
-  color: coral;
+  color: #23201f;
   font-size: 13px;
   font-weight: 700;
   font-family: serif;
