@@ -9,6 +9,7 @@ export let cols;
 * __tag1[ns][remove-ads~2] = false
 ***/
 let tgs = [];
+let grp = {};
 let list = {};
 
 function clicked(e) {
@@ -220,13 +221,18 @@ function props(tags) {
 function subitem(g) {
   const [group] = g.split(/!/)
   const arr = []
+  let chk = false
   for (const key in list) {
     const obj = list[key]
     if (obj.group===group) {
+      if (!chk && list[key].value) {
+        chk = true
+      }
       arr.push(key)
     }
   }
-  return arr
+  grp[g] = arr
+  return chk
 }
 function hr(item) {
   const color = item.split(/-+/)[1]
@@ -249,8 +255,13 @@ function hr(item) {
       {:else if item.match(/!/)}
         <div class="t1">
           <details class="tag1">
-            <summary><span>{item.split(/!/)[0]}</span></summary>
-            {#each subitem(item) as item2}
+            <summary><span>
+              {item.split(/!/)[0]}
+                {#if subitem(item)}
+                  <img src="images/checked.svg" alt=""/>
+                {/if}
+            </span></summary>
+            {#each grp[item] as item2}
               <div class="space0 {routetag($tags, item2)}">
                 <label 
                 data-item={item2}
@@ -314,6 +325,9 @@ details.tag1 {
   font-weight: 700;
   font-family: serif;
   vertical-align: 10%;
+}
+.tag1 img {
+  vertical-align: -2px;
 }
 .border {
   border: 1px dotted;
