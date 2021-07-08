@@ -69,7 +69,7 @@ summary.space2 {
   margin-bottom: 2px;
 }
 .space2 {
-  padding-left: 12px;
+  padding-left: 16px;
   font-weight: bolder;
   color: green;
 }

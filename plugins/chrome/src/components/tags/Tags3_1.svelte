@@ -75,13 +75,12 @@ function xtags(path) {
     <details id="path{i}">
       <summary on:click="{btnExpand}" class="space1 {xtags(path)}">
         {#if machMethod(path)}
-          {#if !$tags.mth}
-            <span class="no-method" title="{path}">{removeMethod(path)}</span>
-          {:else }
-            {removeMethod(path)}<span class="with-method">[{machMethod(path)[1]}]</span>
+          <span class="no-method" title="{path}">{removeMethod(path)}</span>
+          {#if $tags.mth}
+            <span class="with-method">[{machMethod(path)[1]}]</span>
           {/if}
         {:else}
-          {path}
+          <span class="generic">{path}</span>
         {/if}
       </summary>
       <Tags32 items={items[path]} {path} {ns}/>
@@ -103,8 +102,12 @@ function xtags(path) {
   background: lightgrey;
   color: darkblue;
 }
+summary>span {
+  margin-left: -3px;
+}
 .space1 {
   font-size: 13px;
+  font-family: serif;
   font-weight: bolder;
   color: blueviolet;
   padding-left: 3px;

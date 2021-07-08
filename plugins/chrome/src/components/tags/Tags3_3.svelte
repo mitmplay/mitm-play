@@ -101,6 +101,7 @@ function props(tags) {
   padding-left: 28px;
 }
 .space3 span {
+  margin-left: -5px;
   font-family: serif;
   vertical-align: 15%;
 }
