@@ -30,6 +30,19 @@ function typTags (typ, namespace) {
   }
 }
 
+function validRoute(namespace) {
+  const { routes } = global.mitm
+  // routes[namespace] can be undefined
+  if (!namespace) {
+    return false
+  } else if (!routes[namespace]) {
+    logmsg(c.red(`\nUndefined namespace: ${namespace}!`))
+    logmsg(c.redBright(`Please fix: *index.json - _subns value or delete the file!\n`))
+    process.exit(1)
+  }
+  return true
+}
+
 const searchArr = ({url, method, browserName, typ: typs}) => {
   const { __args, __tag1, __tag2, __tag3, router, routes } = global.mitm
 
@@ -149,8 +162,7 @@ const searchFN = (typs, { url, method, browserName }) => {
 
   return function search (nspace) {
     const namespace = _nameSpace(nspace)
-    // routes[namespace] can be undefined
-    if (!namespace || !routes[namespace]) {
+    if (!validRoute(namespace)) {
       return
     }
     const tg1 = __tag1[namespace]
@@ -232,8 +244,7 @@ const searchKey = key => {
 
   return function search (nspace) {
     const namespace = _nameSpace(nspace)
-    // routes[namespace] can be undefined
-    if (!namespace || !routes[namespace]) {
+    if (!validRoute(namespace)) {
       return
     }
 
