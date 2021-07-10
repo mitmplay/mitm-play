@@ -62,7 +62,12 @@ function items(tags) {
   const {routes, fn: {oneSite}} = window.mitm
   for (const ns in routes) {
     const id = routes[ns]._childns._subns
-    const {preset} = routes[id || ns]
+    const route = routes[id || ns]
+    // routes[namespace] can be undefined
+    if (route===undefined) {
+      continue
+    }
+    const {preset} = route
     if (preset && oneSite(tags, ns)) {
       for (const id in preset) {
         if (_preset[id]===undefined) {

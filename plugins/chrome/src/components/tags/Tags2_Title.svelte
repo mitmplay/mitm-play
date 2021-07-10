@@ -2,16 +2,16 @@
 import { tags } from './stores.js';
 import Expand from '../button/Expand.svelte';
 import Collapse from '../button/Collapse.svelte';
-import { dataset_dev } from 'svelte/internal';
 
 export let ns;
-const list = window.mitm.routes[ns]._childns.list
+const route = window.mitm.routes[ns]
+const list = route ? route._childns.list : []
 
 function q(key) {
   return key.replace(/[@~.]/g, '-')
 }
 function childns(_ns) {
-  const {_childns} = window.mitm.routes[ns]
+  const {_childns} = window.mitm.routes[ns] || {}
   if (_childns && _childns.list!==undefined) {
     return Object.keys(_childns.list)
   } else {

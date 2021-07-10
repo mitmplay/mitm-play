@@ -149,7 +149,8 @@ const searchFN = (typs, { url, method, browserName }) => {
 
   return function search (nspace) {
     const namespace = _nameSpace(nspace)
-    if (!namespace) {
+    // routes[namespace] can be undefined
+    if (!namespace || !routes[namespace]) {
       return
     }
     const tg1 = __tag1[namespace]
@@ -231,7 +232,8 @@ const searchKey = key => {
 
   return function search (nspace) {
     const namespace = _nameSpace(nspace)
-    if (!namespace) {
+    // routes[namespace] can be undefined
+    if (!namespace || !routes[namespace]) {
       return
     }
 

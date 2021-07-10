@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.8.457",
+  "version": "0.8.458",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -32,7 +32,7 @@
     "cssbeautify": "0.3.1",
     "esbuild": "^0.11.21",
     "express": "4.17.1",
-    "fast-glob": "3.2.5",
+    "fast-glob": "^3.2.7",
     "fs-extra": "9.1.0",
     "highlight.js": "10.7.1",
     "make-fetch-happen": "8.0.14",
