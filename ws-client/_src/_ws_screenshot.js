@@ -42,12 +42,12 @@ function screenshot (e) {
         e.stopImmediatePropagation()
         e.stopPropagation()
         e.preventDefault()
+        mitm.lastEvent = e
         setTimeout(() => {
           act = window.mitm.screenshot
           if (act) {
             act.click()
             act = undefined
-            mitm.lastEvent = e
           } else {
             console.log('delay action undefined');
           }

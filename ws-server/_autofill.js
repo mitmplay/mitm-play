@@ -110,6 +110,11 @@ module.exports = async ({ data }) => {
     page[act](selector, value)
   }
 
+  async function _click(selector, store) {
+    const options = store ? {modifiers: store.split(',')} : {}
+    await page.click(selector, options)
+  }
+
   logmsg(c.greenBright('>>> autofill'))
   let lastObj;
   for await (let obj of autofill) {
@@ -159,13 +164,13 @@ module.exports = async ({ data }) => {
       if (act) {
         const [action, val] = act.split(':')
         let options = {delay: val ? +val : 100}
+        if (action === 'click'       ) { await _click(selector, store)             } else
         if (action === 'save'        ) { await _save(selector, store)              } else
         if (action === 'type'        ) { await _input('type', selector, store)     } else
-        if (action === 'fill'        ) { await page.fill(selector, store, options) } else
         if (action === 'selectOption') { await page.selectOption(selector, store)  } else
+        if (action === 'fill'        ) { await page.fill(selector, store, options) } else
         if (action === 'wait'        ) { await page.waitForSelector(selector)      } else
         if (action === 'press'       ) { await page.press(selector, store)         } else
-        if (action === 'click'       ) { await page.click(selector, store)         } else
         if (action === 'uncheck'     ) { await page.uncheck(selector)              } else
         if (action === 'check'       ) { await page.check(selector)                } else
         if (action === 'focus'       ) { await page.focus(selector)                } else
