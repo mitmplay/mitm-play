@@ -110,9 +110,10 @@ module.exports = async ({ data }) => {
     page[act](selector, value)
   }
 
-  async function _click(selector, store) {
-    const options = store ? {modifiers: store.split(',')} : {}
-    await page.click(selector, options)
+  async function _click(selector, store='') {
+    const modifiers = store.split(/ *, */)
+    const opt = store ? {modifiers} : {}
+    await page.click(selector, opt)
   }
 
   logmsg(c.greenBright('>>> autofill'))

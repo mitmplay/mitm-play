@@ -1158,6 +1158,9 @@ When creating rule for specific website site (ie: **autologin to gmail**), insid
 ```js
 // .../_macros_/macros.js
 module.exports = () => {
+  const observeOnce = async function() {
+    console.log('Getting execute one time')
+  }
   return {
     '^/signin/v2/identifier?'() {
       console.log('login to google account...!');
@@ -1165,14 +1168,15 @@ module.exports = () => {
         '#identifierId => myemailname',
         '#identifierId -> press ~> Enter',
       ];
-      //document.querySelector('.btn-autofill').click() // executed when loaded
     },
     '^/signin/v2/challenge/pwd?'() {
       window.mitm.autofill = [
         'input[type="password"] => password',
         'input[type="password"] -> press ~> Enter',
       ];
-      //document.querySelector('.btn-autofill').click() // executed when loaded
+      // executed when DOM changes, use MutationObserver event
+      // postfix "Once" indicate one-time execution
+      return observeOnce
     }
   }
 }
@@ -1210,23 +1214,25 @@ list of `key.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEv
 ```js
 // .../_macros_/macros.js
 module.exports = () => {
-  '^/signin/v2/identifier?'() {
-    window.mitm.macrokeys = {
-      'KeyA'() {
-        alert('Alert KeyA')
+  return {
+    '^/signin/v2/identifier?'() {
+      window.mitm.macrokeys = {
+        'KeyA'() {
+          alert('Alert KeyA')
+        }
       }
+      // -- OR --
+      window.mitm.fn.hotKeys({
+        'KeyP'() {
+          // chance is a javascript faker defined in jsLib
+          const name = chance.email().split('@')[0];
+          return [
+            `=> ${name}@mailinator.com`,
+            '-> press ~> Enter',
+          ]  
+        }
+      })
     }
-    // -- OR --
-    window.mitm.fn.hotKeys({
-      'KeyP'() {
-        // chance is a javascript faker defined in jsLib
-        const name = chance.email().split('@')[0];
-        return [
-          `=> ${name}@mailinator.com`,
-          '-> press ~> Enter',
-        ]  
-      }
-    });
   }
 }    
 ```

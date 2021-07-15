@@ -16,6 +16,9 @@ const lbuttons = {
 }
 module.exports = () => {
   const hello = 'world'
+  const oneOnce = async function() {
+    console.log('lol')
+  }
   return {
     '/'() {
       console.log('olah')
@@ -27,6 +30,7 @@ module.exports = () => {
       }
       window.mitm.autofill = ['input[type="password"] => password']
       window.mitm.autobuttons  = rbuttons
+      return oneOnce
     },
     zero: '0'
   }
