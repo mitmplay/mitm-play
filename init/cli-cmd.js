@@ -54,7 +54,8 @@ module.exports = () => {
     const n = prompt(`\nCreate ${route} (Y/n)? `)
 
     if (n !== '' && n.toLowerCase() !== 'y') {
-      logmsg('Please provide correct "route" folder using -r option')
+      logmsg(c.red('Please provide correct "route" folder using -r option'))
+      logmsg(c.magentaBright('or use demo route, ie: mitm-play -dr'),'\n')
       process.exit()
     } else {
       if (!fs.pathExistsSync(`${path.home}/argv/default.js`)) {

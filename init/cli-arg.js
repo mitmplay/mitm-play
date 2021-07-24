@@ -109,14 +109,16 @@ module.exports = () => {
       process.exit(1)
     }
   }
-  if (argv.route===true) {
-    argv.route = `${path.app}/user-route`
-  } else {
-    let {route} = argv
-    let postfix = route.match(/^-\w+/)
-    if (postfix) {
-      argv.route = `${path.app}/uroute${postfix}`
-    }
+  let {route} = argv
+  if (route) {
+    if (route===true) {
+      argv.route = `${path.app}/user-route`
+    } else {
+      let postfix = route.match(/^-\w+/)
+      if (postfix) {
+        argv.route = `${path.app}/uroute${postfix}`
+      }
+    }  
   }
 
   let saveArgs = prm1 ? loadProfile(prm1) : undefined
