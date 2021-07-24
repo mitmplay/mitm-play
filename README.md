@@ -26,10 +26,11 @@
 ```bash
 npm install -g mitm-play
 ```
-Execute mitm-play command with demo route:
+Execute mitm-play command with demo route, or add `-h` to see help screen:
 ```bash
-mitm-play -rG
+mitm-play -Gdr
 ```
+
 <details><summary>Example</summary>
 
 ```js
