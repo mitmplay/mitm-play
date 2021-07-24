@@ -1261,6 +1261,7 @@ cache: {
 __Block/Mock unnecessary javascript with an empty result__, be careful to not block UX or content navigation.
 ```js
 mock: {
+  'block/w/empty.js': '',
   'some/url/with/adv.js': {
     response(resp, reqs, match) {
       const {body} = resp;
