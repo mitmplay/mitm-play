@@ -1292,3 +1292,4 @@ Issue or Limitation on Playwright:
 * Support route aka request interception for service workers [#1090](https://github.com/microsoft/playwright/issues/1090)
   * Workaround to disable service worker [#6045](https://github.com/microsoft/playwright/issues/6045)
 * Route handler to support redirects [#3993](https://github.com/microsoft/playwright/issues/3993) / Disallow intercepting redirects [#2617](https://github.com/microsoft/playwright/pull/2617)
+  * or alternative intercept response is implemented [#1774](https://github.com/microsoft/playwright/issues/1774) 
