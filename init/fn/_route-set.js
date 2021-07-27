@@ -6,8 +6,8 @@ const { typC, typA, typO } = typs
 const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \(\)\w.#~-]+:|)(.+)/ // feat: tags in url
 const tgInUrl = /:[ \(\)\w.#~-]+:/ // feat: tags in url
 
-function toRegex (str, flags = '') {
-  return new RegExp(str
+function toRegex (gpath, flags = '') {
+  return new RegExp(gpath
     .replace(/\//g, '\\/')
     .replace(/\?/g, '\\?')
     .replace(/\.([^*+]|$)/g, (m,p1) => `\\.${p1}`)
@@ -16,7 +16,7 @@ function toRegex (str, flags = '') {
     .replace(/(\[.*)(\\\.)(.*\])/g, (m,p1,p2,p3) => `${p1}.${p3}`), flags)
 }
 
-function routerSet (router, typ, method, str) {
+function routerSet (router, typ, method, gpath) {
   if (method && method[3][0]==='!') {
     logmsg(c.red.bgYellowBright(`Error route: ${ method[0]}`))
     logmsg({typ, method})
@@ -24,12 +24,12 @@ function routerSet (router, typ, method, str) {
   }
   let regex // feat: url start with method: ie: GET:/api/login
   if (method) {
-    router[typ][`${str}~method`] = method[1]
+    router[typ][`${gpath}~method`] = method[1]
     regex = toRegex(method.pop())
   } else {
-    regex = toRegex(str)
+    regex = toRegex(gpath)
   }
-  router[typ][str] = regex
+  router[typ][gpath] = regex
 }
 
 const fkeys = x => x !== 'tags' && x !== 'contentType'
@@ -91,9 +91,9 @@ function _routeSet (_r, namespace, file) {
       if (typ===typs) {
         if (_tags) {
           const path = []
-          for (const str in secs) {
-            const arr = str.match(rmethod)
-            path.push(arr ? arr[3] : str)
+          for (const gpath in secs) {
+            const arr = gpath.match(rmethod)
+            path.push(arr ? arr[3] : gpath)
           }
           const [tag, ...tag1] = _tags.split(/ +/)
           const id = tag1.length ? `${typ}:${tag}` : x
@@ -114,86 +114,93 @@ function _routeSet (_r, namespace, file) {
     const typlist = _typlist(typs)
     for (const typ of typlist) {
       router[typ] = {}
-      for (const str of r[typ]) {
-        const method = str.match(rmethod)
-        routerSet(router, typ, method, str)
+      for (const gpath of r[typ]) {
+        const method = gpath.match(rmethod)
+        routerSet(router, typ, method, gpath)
       }
     }
   }
 
-  function _nsstag(typ, str){
+  function _nsstag(typ, gpath){
     // feat: remove tag from url/rule for __tag3
-    const arrTag = str.match(rmethod)
+    const arrTag = gpath.match(rmethod)
     if (arrTag) {
       const [, method,, path] = arrTag
-      str = method ? `${method}:${path}` : path // remove from url
+      gpath = method ? `${method}:${path}` : path // remove from url
     }
     typ = typ.split(':')[0] // remove from rule
-    if (urls[str] === undefined) {
-      urls[str] = {}
+    if (urls[gpath] === undefined) {
+      urls[gpath] = {}
     }
-    const nss = urls[str]
+    const nss = urls[gpath]
     if (nss[typ] === undefined) {
       nss[typ] = {note: '', tags: {}, tag1: []}
     }
     return nss[typ] // feat: update __tag3
   }
+  
   function addType (typ) {
     router[typ] = {}
     const [ptyp, ptags] = typ.split(':')
-    for (const str in r[typ]) {
-      const method = str.match(rmethod) // feat: tags in url
-      routerSet(router, typ, method, str)
-      const site = r[typ][str]
-      if (site!==undefined) { // fix:empty-string{'GET:/google': ''}
-        let tag3
-        if (site.tags) {
-          if (Array.isArray(site.tags)) {
-            site.tags = site.tags.join(' ')
-          }
-          tag3 = _nsstag(typ, str) // feat: update __tag3
-          const ctype = site.contentType ? `[${site.contentType.join(',')}]` : ''
-          const keys = Object.keys(site).filter(fkeys).join(',')
-          tag3.note = `${ctype}<${keys}>`.replace('<>', '') // feat: update __tag3
+    for (const gpath in r[typ]) {
+      const method = gpath.match(rmethod) // feat: tags in url
+      routerSet(router, typ, method, gpath)
+      const site = r[typ][gpath]
 
-          if (site.tags.match(':')) {
-            throw new Error('char ":" cannot be included in tags!')
-          }
-          const arr = site.tags.split(/ +/)
-          for (const tag of arr) {
-            tag3.tags[tag] = true
-          }
+      if (site===undefined || site===null) { // fix:empty-gpathing{'GET:/google': ''}
+        const obj = {}
+        obj[typ] = r[typ]
+        logmsg(c.red(`\n incorrect route: ${namespace}\n`), obj, '\n')
+        process.exit(1)
+      }
+ 
+      let tag3
+      if (site.tags) {
+        if (Array.isArray(site.tags)) {
+          site.tags = site.tags.join(' ')
         }
+        tag3 = _nsstag(typ, gpath) // feat: update __tag3
+        const ctype = site.contentType ? `[${site.contentType.join(',')}]` : ''
+        const keys = Object.keys(site).filter(fkeys).join(',')
+        tag3.note = `${ctype}<${keys}>`.replace('<>', '') // feat: update __tag3
 
-        if (str.match(tgInUrl) && method[2]!=='hidden:') { // feat: tags in url
-          const [utg, ...tag1] = method[2].split(':')[0].split(/ +/)
-          const path = [str.split(':').pop()]
-          tag3 = _nsstag(typ, str)
-          tag3.tag1 = tag1
-          const tag = `url:${utg}`
-          tag3.tags[tag] = true // feat: update __tag3
-          tags[tag] = { state: true, tag1, typ, path } // feat: update __tag2
+        if (site.tags.match(':')) {
+          throw new Error('char ":" cannot be included in tags!')
         }
-        if (tag3 && ptags) {
-          const [tag2, ...tag1] = ptags.split(/ +/)
-          tag3.ptyp = ptyp
-          tag3.tag1 = tag1
-          tag3.tag2 = `${ptyp}:${tag2}`
+        const arr = site.tags.split(/ +/)
+        for (const tag of arr) {
+          tag3.tags[tag] = true
         }
+      }
 
-        if (site.contentType) {
-          const contentType = {}
-          for (const typ2 of site.contentType) {
-            if (contentType[typ2]) {
-              const ct = site.contentType.join("', '")
-              throw new Error([
-                'contentType should be unique:',
-                `${namespace}.${typ}['${str}'].contentType => ['${ct}']`])
-            }
-            contentType[typ2] = toRegex(typ2)
+      if (gpath.match(tgInUrl) && method[2]!=='hidden:') { // feat: tags in url
+        const [utg, ...tag1] = method[2].split(':')[0].split(/ +/)
+        const path = [gpath.split(':').pop()]
+        tag3 = _nsstag(typ, gpath)
+        tag3.tag1 = tag1
+        const tag = `url:${utg}`
+        tag3.tags[tag] = true // feat: update __tag3
+        tags[tag] = { state: true, tag1, typ, path } // feat: update __tag2
+      }
+      if (tag3 && ptags) {
+        const [tag2, ...tag1] = ptags.split(/ +/)
+        tag3.ptyp = ptyp
+        tag3.tag1 = tag1
+        tag3.tag2 = `${ptyp}:${tag2}`
+      }
+
+      if (site.contentType) {
+        const contentType = {}
+        for (const typ2 of site.contentType) {
+          if (contentType[typ2]) {
+            const ct = site.contentType.join("', '")
+            throw new Error([
+              'contentType should be unique:',
+              `${namespace}.${typ}['${gpath}'].contentType => ['${ct}']`])
           }
-          router[typ][`${str}~contentType`] = contentType
+          contentType[typ2] = toRegex(typ2)
         }
+        router[typ][`${gpath}~contentType`] = contentType
       }
     }
   }

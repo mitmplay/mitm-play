@@ -40,6 +40,9 @@ const route = {
       tags: 'no-ads~wiw'
     }
   },
+  // html: {
+  //   '/': null
+  // },
   preset
 }
 module.exports = route;
