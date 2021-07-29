@@ -1120,9 +1120,22 @@ Launch Chromium browser
 ```bash
 $ mitm-play -C  <OR>
 $ mitm-play --chromium
+```
 
-# can be a path to Chrome installation ie on MAC
-
+### Preset either **`chrome`** or **`msedge`** 
+If in the system having stock browser of chrome or msedge
+  * chrome
+  * msedge
+  * chrome-dev
+  * msedge-dev
+  * chrome-beta
+  * msedge-beta
+```bash
+$ mitm-play -C="chrome"  <OR> 
+$ mitm-play --chromium="chrome"
+```
+### Can be a path to Chrome installation ie on MAC
+```bash
 $ mitm-play -C="/Applications/Google\ Chrome.app"  <OR> 
 $ mitm-play --chromium="/Applications/Google\ Chrome.app"
 ```

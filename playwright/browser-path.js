@@ -1,5 +1,13 @@
 const c = require('ansi-colors')
 const { logmsg } = global.mitm.fn
+const channel = {
+  msedge: true,
+  chrome: true,
+  'chrome-dev': true,
+  'msedge-dev': true,
+  'chrome-beta': true,
+  'msedge-beta': true,
+}
 
 function browserPath(browserName, options) {
   const {
@@ -8,13 +16,17 @@ function browserPath(browserName, options) {
   } = global.mitm
   let execPath = argv.browser[browserName]
   if (typeof (execPath) === 'string') {
-    execPath = execPath.replace(/\\/g, '/')
-    if (browserName !== 'chromium') {
-      logmsg(c.redBright('executablePath is unsupported for non Chrome!'))
-    } else if (process.platform === 'darwin') {
-      execPath += '/Contents/MacOS/Google Chrome'
+    if (channel[execPath]) {
+      options.channel = execPath
+    } else {
+      execPath = execPath.replace(/\\/g, '/')
+      if (browserName !== 'chromium') {
+        logmsg(c.redBright('executablePath is unsupported for non Chrome!'))
+      } else if (process.platform === 'darwin') {
+        execPath += '/Contents/MacOS/Google Chrome'
+      }
+      options.executablePath = home(execPath)  
     }
-    options.executablePath = home(execPath)
   } else {
     const _browser = require('playwright')[browserName]
     execPath = _browser.executablePath().replace(/\\/g, '/')
