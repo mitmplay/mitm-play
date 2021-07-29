@@ -15,3 +15,4 @@ function addRoute(route, rout1) {
   }
   return route
 }
+module.exports = addRoute
