@@ -480,6 +480,7 @@ cache: {
     // file: (reqs, match) => 'filename'
   },
 },
+```
 `cache` support `response` function, it means the result can be manipulate first before send to the browser.
 ```js
 cache: {

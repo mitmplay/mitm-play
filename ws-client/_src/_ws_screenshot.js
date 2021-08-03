@@ -52,6 +52,8 @@ function screenshot (e) {
             console.log('delay action undefined');
           }
         }, delay)
+      } else {
+        mitm.lastEvent = e
       }
       return
     }
