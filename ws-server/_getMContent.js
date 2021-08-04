@@ -74,7 +74,7 @@ ${p2}
 </div>
 `
   }
-  const rgx = /::: mermaid +([^\n]+)\n([^:]+|\n):::/s
+  const rgx = /::: mermaid +([^\n]+)\n(.+?(?=:::)):::/s
   while (md1.match(rgx)) {
     md1 = md1.replace(rgx, mermaid)
   }
