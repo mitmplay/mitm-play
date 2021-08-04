@@ -16,8 +16,8 @@
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/mitm-play.js",
             "runtimeArgs": ["--max-http-header-size=80000"], 
-            "args": ["twitter", "-nscdr=-twitter", "-R='manual'"] //, "-n=off"
-            // "args": ["keybr", "-srGCW", "--proxy='w:h@main.com:80'"]
+            // "args": ["twitter", "-nscdr=-twitter", "-R='manual'"] //, "-n=off"
+            "args": ["keybr", "-Gdr"]
         }
     ]
 }

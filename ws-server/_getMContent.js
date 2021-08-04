@@ -13,8 +13,10 @@ const md = require('markdown-it')({
   }
 });
 const { logmsg } = global.mitm.fn
-md.use(require('markdown-it-anchor'));
-md.use(require('markdown-it-container'), 'summary', {
+const anchor = require('markdown-it-anchor')
+const container = require('markdown-it-container')
+md.use(anchor);
+md.use(container, 'summary', {
 
   validate: function(params) {
     return params.trim().match(/^summary\s+(.*)$/);
@@ -26,7 +28,6 @@ md.use(require('markdown-it-container'), 'summary', {
     if (tokens[idx].nesting === 1) {
       // opening tag
       return `<details><summary>${md.renderInline(m[1])}</summary>\n`;
-
     } else {
       // closing tag
       return '</details>\n';
@@ -64,6 +65,19 @@ module.exports = ({data: {fpath}}) => {
     md1 = updateUrl(md1, fpath, route, 'mitm-assets')
   }
 
+  function mermaid(match, p1, p2) {
+return `
+<div class="details" title="${md.renderInline(p1)}">
+<div class="mermaid">
+${p2}
+</div>
+</div>
+`
+  }
+  const rgx = /::: mermaid +([^\n]+)\n([^:]+|\n):::/s
+  while (md1.match(rgx)) {
+    md1 = md1.replace(rgx, mermaid)
+  }
   let content = md.render(md1);
   let flag = true
   while (flag) {
@@ -73,6 +87,6 @@ module.exports = ({data: {fpath}}) => {
     } else {
       flag = false
     }
-  }  
+  }
   return {content}
 }
