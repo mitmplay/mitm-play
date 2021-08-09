@@ -27,10 +27,10 @@ md.use(container, 'summary', {
 
     if (tokens[idx].nesting === 1) {
       // opening tag
-      return `<details><summary>${md.renderInline(m[1])}</summary>\n`;
+      return `<div class="details" title="${md.renderInline(m[1])}">\n`;
     } else {
       // closing tag
-      return '</details>\n';
+      return '</div>\n';
     }
   }
 });
@@ -65,19 +65,32 @@ module.exports = ({data: {fpath}}) => {
     md1 = updateUrl(md1, fpath, route, 'mitm-assets')
   }
 
-  function mermaid(match, p1, p2) {
+  function _mermaid(match, p1, p2) {
 return `
-<div class="details" title="${md.renderInline(p1)}">
+<div class="details _mermaid_" title="${md.renderInline(p1)}">
 <div class="mermaid">
 ${p2}
 </div>
 </div>
 `
   }
-  const rgx = /::: mermaid +([^\n]+)\n(.+?(?=:::)):::/s
-  while (md1.match(rgx)) {
-    md1 = md1.replace(rgx, mermaid)
+  const rMermaid = /\^\^\^ mermaid +([^\n]+)\n(.+?(?=\^\^\^))\^\^\^/s
+  while (md1.match(rMermaid)) {
+    md1 = md1.replace(rMermaid, _mermaid)
   }
+
+  function _expand(match, p1, p2) {
+    return `
+<div class="details _summary_" title="${md.renderInline(p1)}">
+${p2}
+</div>
+`
+  }
+  const rSummary = /\^\^\^ summary +([^\n]+)\n(.+?(?=\^\^\^))\^\^\^/s
+  while (md1.match(rSummary)) {
+    md1 = md1.replace(rSummary, _expand)
+  }
+
   let content = md.render(md1);
   let flag = true
   while (flag) {

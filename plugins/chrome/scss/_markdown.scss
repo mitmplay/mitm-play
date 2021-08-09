@@ -127,5 +127,23 @@
         border: 1px solid red;
       }
     }
+    details {
+      ._mermaid_ summary,
+      ._summary_ summary {
+        font-family: system-ui;
+        font-size: small;
+      }
+      ._mermaid_ summary {
+        color: cornflowerblue;
+      }
+      ._summary_ summary {
+        color: darkgreen;
+      }
+    }
+    div.details {
+      position: absolute;
+      top: -10000px;
+      left: -10000px;
+    }
   } 
 }

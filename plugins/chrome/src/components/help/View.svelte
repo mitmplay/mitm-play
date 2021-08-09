@@ -41,20 +41,21 @@ function content(src) {
   setTimeout(() => {
     if (document.querySelector('#markdown .mermaid')) {
       mermaid.init();
-      const arr = document.querySelectorAll('div.details')
-      for (let node of arr) {
-        const title = node.getAttribute('title')
-        const details = document.createElement('details')
-        details.innerHTML = `<summary>${title}</summary>`
-        const childs = []
-        for (let child of node.children) {
-          childs.push(child)
-        }
-        for (let child of childs) {
-          details.appendChild(child)
-        }
-        node.appendChild(details)
+    }
+    const arr = document.querySelectorAll('div.details')
+    for (let node of arr) {
+      const title = node.getAttribute('title')
+      const details = document.createElement('details')
+      details.innerHTML = `<summary>${title}</summary>`
+      const childs = []
+      for (let child of node.children) {
+        childs.push(child)
       }
+      for (let child of childs) {
+        details.appendChild(child)
+      }
+      node.appendChild(details)
+      node.classList.remove('details')
     }
     if (!document.querySelector('#markdown a.up')) {
       let _top;

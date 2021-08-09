@@ -134,6 +134,18 @@ label {
       .show-container #markdown a.up:hover {
         background: yellow;
         border: 1px solid red; }
+    .show-container #markdown details ._mermaid_ summary,
+    .show-container #markdown details ._summary_ summary {
+      font-family: system-ui;
+      font-size: small; }
+    .show-container #markdown details ._mermaid_ summary {
+      color: cornflowerblue; }
+    .show-container #markdown details ._summary_ summary {
+      color: darkgreen; }
+    .show-container #markdown div.details {
+      position: absolute;
+      top: -10000px;
+      left: -10000px; }
 
 li.version {
   font-size: 10px;
