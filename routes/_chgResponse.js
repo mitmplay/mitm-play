@@ -14,7 +14,7 @@ const allRequest = async function (reqs, responseHandler, _3d) {
 
   if (match) {
     const { response, contentType, hidden } = match.route
-    responseHandler.push(async resp => {
+    const que = async resp => {
       changeStatus(match, resp)
       if (response) {
         if (contentType === undefined || ctype(match, resp)) {
@@ -37,7 +37,9 @@ const allRequest = async function (reqs, responseHandler, _3d) {
       }
       resp.log = msg ? {msg, mtyp: 'response'} : undefined // feat: fullog
       return resp
-    })
+    }
+    que._rule = 'response'
+    responseHandler.push(que)
     resp = undefined
   }
   return { match, resp }

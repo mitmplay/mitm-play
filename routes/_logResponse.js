@@ -19,7 +19,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
   if (match) {
     const { log, response, hidden } = match.route
     const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
-    responseHandler.push(async (resp, reqs) => {
+    const que = async (resp, reqs) => {
       changeStatus(match, resp)
       const mtype = ctype(match, resp)
       if (mtype) {
@@ -63,7 +63,9 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
       }
       resp.log = msg ? {msg, mtyp: 'log'} : undefined // feat: fullog
       return resp
-    })
+    }
+    que._rule = 'log'
+    responseHandler.push(que)
     resp = undefined
   }
   return { match, resp }

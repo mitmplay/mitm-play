@@ -39,7 +39,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
         __args.fullog && logmsg(msg) // feat: fullog
       }
     } else {
-      responseHandler.push(resp => {
+      const que = resp => {
         if (!_nameSpace(url)) {
           return
         }
@@ -52,7 +52,9 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
         }
         resp.log = msg ? {msg, mtyp: 'nosocket'} : undefined // feat: fullog
         return resp
-      })
+      }
+      que._rule = 'ws'
+      responseHandler.push(que)
     }
   }
 }

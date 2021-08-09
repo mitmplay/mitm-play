@@ -13,7 +13,7 @@ const jsResponse = async function (reqs, responseHandler, _3d) {
 
   if (match) {
     const { response, hidden } = match.route
-    responseHandler.push(async resp => {
+    const que = async resp => {
       changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('javascript')) {
@@ -41,7 +41,9 @@ const jsResponse = async function (reqs, responseHandler, _3d) {
       }
       resp.log = msg ? {msg, mtyp: 'js'} : undefined // feat: fullog
       return resp
-    })
+    }
+    que._rule = 'js'
+    responseHandler.push(que)
     resp = undefined
   }
   return { match, resp }

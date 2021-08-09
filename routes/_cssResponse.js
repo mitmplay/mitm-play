@@ -12,7 +12,7 @@ const cssResponse = async function (reqs, responseHandler, _3d) {
 
   if (match) {
     const { response, hidden } = match.route
-    responseHandler.push(async resp => {
+    const que = async resp => {
       changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/css')) {
@@ -40,7 +40,9 @@ const cssResponse = async function (reqs, responseHandler, _3d) {
       }
       resp.log = msg ? {msg, mtyp: 'css'} : undefined // feat: fullog
       return resp
-    })
+    }
+    que._rule = 'css'
+    responseHandler.push(que)
     resp = undefined
   }
   return { match, resp }

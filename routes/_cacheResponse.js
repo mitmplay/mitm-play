@@ -102,7 +102,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     }
     if (remote) {
       // get from remote
-      responseHandler.push(async resp => {
+      const que = async resp => {
         changeStatus(match, resp)
         // feat: activity
         const fname1 = `${fpath1}.${_ext(resp)}`
@@ -145,7 +145,9 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         }
         resp.log = msg ? {msg, mtyp: 'cache'} : undefined // feat: fullog
         return resp // back to events loop call in fetch
-      })
+      }
+      que._rule = 'cache' 
+      responseHandler.push(que)
       resp = undefined
     }
   }
