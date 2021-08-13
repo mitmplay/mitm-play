@@ -1,7 +1,9 @@
 <script>
+const _c = 'color: blueviolet'
+
 function btnOpen() {
   ws__send('openHome', '', data => {
-    console.log('Done open home folder!');
+    console.log('%cOther: Done open home folder!', _c);
   });
 }
 </script>

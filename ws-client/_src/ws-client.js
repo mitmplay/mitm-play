@@ -6,6 +6,7 @@ const _ws_location = require('./_ws_location')
 const _ws_observer = require('./_ws_observer')
 const _ws_general = require('./_ws_general')
 const _ws_cspErr = require('./_ws_csp-err')
+const _c = 'background: #222; color: red'
 
 _ws_postmessage()
 _ws_initSocket()
@@ -14,4 +15,4 @@ _ws_location()
 _ws_observer()
 _ws_general()
 _ws_cspErr()
-console.log('ws-client loaded...')
+console.log('%cWs: ws-client loaded...', _c)

@@ -1,5 +1,6 @@
 <script> // feat: profile
 import { source } from './stores.js';
+const _c = 'color: blueviolet'
 
 export let item;
 export let onChange;
@@ -9,7 +10,7 @@ function clickHandler(e) {
   const { editor: { _profile, _profileEdit }, files } = mitm;
   const obj = files.profile[item];
   const url = item;
-  console.log(item, obj);
+  console.log(`%cProfile: ${item}`, _c);
 
   if (_profile===undefined) {
     _profileEdit(obj.content);

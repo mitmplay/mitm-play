@@ -2,6 +2,8 @@
 import { urls } from './url-debounce';
 import { onMount } from 'svelte';
 import { tags } from './stores.js';
+const _c = 'color: blueviolet'
+
 let autoSave = true;
 let _tags = $tags;
 
@@ -21,7 +23,7 @@ function btnSave(e) {
     __tag2,
     __tag3,
   };
-  console.log('saveTags', e.target);
+  console.log('%cTags: saveTags', _c, e.target);
   ws__send('saveTags', tags);
   urls()
 }
@@ -45,7 +47,7 @@ onMount(() => {
   };
 
   window.mitm.browser.chgUrl_events.tagsEvent = function() {
-    console.log('Update tags!');
+    console.log('%cLogs: Update tags!', _c);
     tags.set({...$tags});
   }
 });

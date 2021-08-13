@@ -4,6 +4,7 @@ import { onMount } from 'svelte';
 import Item from './Item.svelte';
 import Summary from './Summary.svelte';
 import { client } from '../other/stores.js';
+const _c = 'color: blueviolet'
 
 let rerender = 0;
 let data = [];
@@ -11,12 +12,12 @@ let data = [];
 $: _data = data;
 
 onMount(async () => {
-  console.warn('onMount logs/list');
+  console.log('%cLogs: onMount logs/list', _c);
   _ws_connect.logOnMount = () => ws__send('getLog', '', logHandler);
 });
 
 const logHandler = obj => {
-  console.warn('ws__send(getLog)', obj);
+  console.log('%cLogs: ws__send(getLog)', _c, obj);
   if ( window.mitm.client.clear) {
     delete window.mitm.client.clear;
     logstore.set({
@@ -59,7 +60,7 @@ window.mitm.files.log_events.LogsTable = () => {
 }
 
 function nohostlogs(flag) {
-  console.log('nohostlogs', flag);
+  console.log('%cLogs: nohostlogs', _c, flag);
 }
 
 </script>

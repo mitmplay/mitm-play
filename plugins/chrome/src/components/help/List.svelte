@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
 import Summary from './Summary.svelte';
+const _c = 'color: blueviolet'
 
 let rerender = 0;
 let data = [];
@@ -9,12 +10,12 @@ let data = [];
 $: _data = data;
 
 onMount(async () => {
-  console.warn('onMount help/list');
+  console.log('%cHelp: onMount help/list', _c);
   _ws_connect.markdownOnMount = () => ws__send('getMarkdown', '', markdownHandler);
 });
 
 const markdownHandler = obj => {
-  console.warn('ws__send(getMarkdown)', obj);
+  console.log('%cHelp: ws__send(getMarkdown)', _c, obj);
   if (window.mitm.files.markdown===undefined) {
     window.mitm.files.markdown = obj;
     data = obj;

@@ -1,6 +1,6 @@
 <script>
 export let cols;
-export let _resize;
+export let _resize=undefined;
 import { tags } from './stores.js';
 import Tags31 from './Tags3_1.svelte';
 

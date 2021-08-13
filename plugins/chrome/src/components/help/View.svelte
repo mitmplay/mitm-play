@@ -1,11 +1,13 @@
 <script>
 import { onMount } from 'svelte';
 import { source } from './stores.js';
+const _c = 'color: blueviolet'
 
 onMount(() => {
+  console.log('%cHelp: onMount help/view', _c);
   document.querySelector('#markdown').onclick = function(e) {
     const { hash } = e.target;
-    console.log('clicked', hash);
+    console.log('%cHelp: clicked', _c, hash);
     if (hash) {
       e.preventDefault();
       e.stopPropagation();
@@ -19,7 +21,7 @@ onMount(() => {
       let node = e.target
       while (node.id!=='markdown') {
         if (node.nodeName==='A') {
-          console.log('anchor');
+          console.log('%cHelp: anchor', _c);
           if (node.href.match(/https?:\//)) {
             e.preventDefault();
             e.stopPropagation();

@@ -2,6 +2,8 @@
 import { client } from '../other/stores.js';
 import  Collapse from '../button/Collapse.svelte';
 import  Expand from '../button/Expand.svelte';
+const _c = 'color: blueviolet'
+
 let st = {
   collapse: true,
   expand: false
@@ -35,8 +37,8 @@ function btnClear(e) {
     document.querySelector('#check-all').checked = false
     // logs view will be close when .log_events.LogsTable
     // logstore.set() to empty on Table.svelte 
+    console.log('%cLogs: Done Clear!', _c);
     window.mitm.client.clear = true;
-    console.log('Done Clear!');
   });
 }
 
@@ -49,7 +51,7 @@ function toogle(prop) {
   });
   console.log($client);
   ws__send('setClient', {...prop}, data => {
-    console.log('Done change state', data);
+    console.log('%cLogs: Done change state', _c, data);
     window.mitm.client = data;
   });
 }

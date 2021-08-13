@@ -2,6 +2,7 @@
 import { tags } from './stores.js';
 import Tags2Title from './Tags2_Title.svelte';
 const {machMethod, removeMethod} = window.mitm.fn;
+const _c = 'color: blueviolet'
 
 export let items;
 export let ns;
@@ -16,7 +17,7 @@ function clicked(e) {
     tagx[itm] = namespace[itm]
   }
   setTimeout(()=>{
-    console.log('e', {__tag2,__tag3});
+    console.log('%cTags: e', _c, {__tag2,__tag3});
     resetRule2($tags, item, ns, tagx)
     resetRule3($tags, item, ns)
     tags.set({

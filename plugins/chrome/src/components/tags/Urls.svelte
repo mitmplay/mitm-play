@@ -6,7 +6,7 @@ import Title1 from './Title-1.svelte';
 import Title2 from './Title-2.svelte';
 import TitleBtn from './Title-btn.svelte';
 import TitleUrl from './Title-url.svelte';
-
+const _c = 'background: #222; color: blueviolet'
 
 const replace = (s,p1,p2,p3) => p3;
 let btn1 = {
@@ -28,7 +28,7 @@ let btn2 = {
 }
 let _urls, _cfgs, title1, title2
 function itemlist(tagsStore, rerender) {
-  console.log('rerender...');
+  console.log('%cTags: rerender...', _c);
   const { __tag1, __tag2, __tag3, __urls, routes, fn } = window.mitm;
   const { rmethod, noTagInRule, isRuleOff, oneSite } = fn;
   let urls = {}

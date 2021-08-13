@@ -11,21 +11,22 @@ import Tags1 from './Tags1_.svelte';
 import Tags2 from './Tags2_.svelte'; 
 import Tags3 from './Tags3_.svelte'; 
 import Effected from './Effected.svelte';
+const _c = 'color: blueviolet'
 
 export let top = "23";
-export let left;
+export let left = "0";
 
 let block = true;
 let cols = 3;
 
 onMount(async () => {
-  console.warn('onMount tags/index');
+  console.log('%cTags: onMount tags/content', _c);
 });
 
 window.mitm.files.getRoute_events.tagsTable = () => {
   // window.ws__send('getRoute', '', routeHandler);
   const {__tag1, __tag2, __tag3} = window.mitm;
-  console.log('events.tagsTable...');
+  console.log('%cTags: events.tagsTable...', _c);
   const tgroup = {};
   for (let ns in __tag2) {
     const tsks = __tag2[ns]

@@ -3,8 +3,9 @@ import App from './App.svelte'
 const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \(\)\w.#~-]+:|)(.+)/ // feat: tags in url
 const tmethod = /^(GET|PUT|POST|DELETE):/
 const rclass = /[\(\).#~/]+/g
+const _c = 'background: #222; color: lightskyblue'
 
-console.log('Load MITM plugin')
+console.log('%cMitm: Load MITM plugin', _c)
 
 function machMethod(path) {
   return path.match(tmethod);
@@ -224,7 +225,7 @@ function chgUrl (url) {
   if (!url) {
     return
   }
-  console.log('Chg url:', url)
+  console.log(`%cMitm: Chg url: ${url}`, _c)
   const { browser } = window.mitm
   browser.activeUrl = url
   for (const e in browser.chgUrl_events) {
@@ -245,7 +246,7 @@ let debounce
 let firstRunTabsOnUpdated = 1
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (firstRunTabsOnUpdated) {
-    console.log('first run chrome.tabs.onUpdated')
+    console.log('%cMitm: first run chrome.tabs.onUpdated', _c)
     firstRunTabsOnUpdated = 0
   }
   if (!tab.active) {
@@ -283,7 +284,7 @@ chrome.tabs.onActivated.addListener(function (activeInfo) {
 })
 
 const app = new App({ target: document.body })
-console.log('Start plugin')
+console.log('%cMitm: Start plugin', _c)
 getUrl()
 
 export default app

@@ -1,5 +1,6 @@
 <script>
 import { logstore, tabstore } from './stores.js';
+const _c = 'color: blueviolet'
 
 function btnMin() {
   const {tab, editor} = $tabstore;
@@ -19,7 +20,7 @@ function btnOpen() {
   const path = arr.join('/');
   console.log({path});
   ws__send('openFolder', {path}, data => {
-    console.log('Done Open!');
+    console.log('%cLogs: Done Open!', _c);
   });
 }
 </script>

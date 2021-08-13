@@ -1,17 +1,18 @@
 <script>
   import { onMount } from 'svelte';
   import { cfg, resize } from '../monaco/init';
+  const _c = 'color: blueviolet'
 
   export let onChange;
 
   onMount(async () => {
     function initCodeEditor(src) {
-      console.log('load monaco: profile')
       const element = window.document.getElementById('profile');
       const _profile =  window.monaco.editor.create(element, cfg);
       const ro = new ResizeObserver(resize(_profile))
       ro.observe(element);
 
+      console.log('%cRoute: Editor initilized!', _c)
       window.mitm.editor._profile = _profile;
       window.mitm.editor._profileEl = element;
 

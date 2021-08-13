@@ -11,6 +11,7 @@ export let cols;
 let tgs = [];
 let grp = {};
 let list = {};
+const _c = 'background: #222; color: blueviolet'
 
 function clicked(e) {
   const { routes, fn } = window.mitm;
@@ -117,7 +118,7 @@ function routetag(tags, item) {
 }
 
 function listTags(tags) {
-  console.log('rerender...');
+  console.log('%cTags: rerender...', _c);
   const {browser, routes, fn: {oneSite}} = window.mitm;
   const obj = {}
   const nss = []

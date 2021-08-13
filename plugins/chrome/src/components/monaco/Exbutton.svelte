@@ -1,4 +1,6 @@
 <script>
+const _c = 'color: blueviolet'
+
 export let editor;
 export let source;
 
@@ -15,7 +17,7 @@ function btnPlus() {
 function btnOpen() {
   console.log(source);
   ws__send('openFolder', source, data => {
-    console.log('Done Open!');
+    console.log('%c Monaco: Done Open!', _c);
   });
 }
 </script>

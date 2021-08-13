@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import { cfg, resize } from '../monaco/init';
 import { source } from './stores.js';
+const _c = 'color: blueviolet'
 
 export let onChange;
 export let item;
@@ -13,11 +14,11 @@ onMount(async () => {
     const ro = new ResizeObserver(resize(_route))
     ro.observe(element);
 
+    console.log('%cRoute: Editor1 initilized!', _c)
     window.mitm.editor._route = _route;
     window.mitm.editor._routeEl = element;
 
     _route.onDidChangeModelContent(onChange);
-    console.log('monaco route1 initilized!')
   }
 });
 

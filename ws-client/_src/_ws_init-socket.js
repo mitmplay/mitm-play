@@ -3,6 +3,7 @@
 const _ws_msgParser = require('./_ws_msg-parser')
 const _ws_inIframe = require('./_ws_in-iframe')
 const _ws_vendor = require('./_ws_vendor')
+const _c = 'color: #bada55'
 
 module.exports = () => {
   window._ws_queue = {}
@@ -16,14 +17,15 @@ module.exports = () => {
   const onopen = data => {
     function ws_send() {
       for (const key in window._ws_connect) {
+        const fn = window._ws_connect[key]
         window._ws_connected_send = true
-        console.warn(window._ws_connect[key] + '')
-        window._ws_connect[key](data)
+        console.log(`%cWs: ${fn+''}`, _c)
+        fn(data)
       }
     }
 
     if (__flag['ws-connect']) {
-      console.log('ws: open connection')
+      console.log('%cWs: open connection', _c)
     }
 
     console.timeEnd('ws')
@@ -71,6 +73,6 @@ module.exports = () => {
     ws.onmessage = onmessage  
   }
   if (__flag['ws-connect']) {
-    console.log(`ws: ${connect ? 'init' : 'off'} connection`)
+    console.log(`%cWs: ${connect ? 'init' : 'off'} connection`, _c)
   }
 }

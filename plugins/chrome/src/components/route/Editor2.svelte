@@ -3,6 +3,7 @@ import { source } from './stores.js';
 import { cfg, resize } from '../monaco/init';
 import { Tabs, Tab } from 'svelma';
 import { onMount } from 'svelte';
+const _c = 'color: blueviolet'
 
 export let onChange;
 export let item;
@@ -31,7 +32,7 @@ onMount(async () => {
     ro1.observe(node1);
     ro2.observe(node2);
 
-    console.log('monaco route2 initilized!')
+    console.log('%cRoute: Editor2 initilized!', _c)
     const nodes = document.querySelectorAll('.tab-route a');
     for (let [i,node] of nodes.entries()) {
       node.onclick = function(e) {
@@ -56,7 +57,7 @@ onMount(async () => {
 
 function reload(item) {
   if (edit1) {
-    console.log('Editor2', item)
+    console.log('%cRoute: Editor2 reload', _c, item)
     const { route } = mitm.files;
     edit1.setValue(route[item].content);
     edit1.revealLine(1);

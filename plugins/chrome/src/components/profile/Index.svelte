@@ -6,6 +6,7 @@ import VBox2 from '../box/VBox2.svelte';
 import Button from './Button.svelte';
 import Editor from './Editor.svelte';
 import List from './List.svelte';
+const _c = 'color: blueviolet'
 
 let left = 165;
 const top = '47';
@@ -13,7 +14,7 @@ const title = '-Profile(s)-'
 const id = 'profileLeft';
 
 onMount(async () => {
-  console.warn('onMount profile/index');
+  console.log('%cProfile: onMount profile/index', _c);
   chrome.storage.local.get(id, function(opt) {
     opt[id] && (left = opt[id])
   });

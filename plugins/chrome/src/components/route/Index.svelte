@@ -7,13 +7,14 @@ import title from './Title.svelte';
 import Editor2 from './Editor2.svelte';
 import Button from './Button.svelte';
 import List from './List.svelte';
+const _c = 'color: blueviolet'
 
 let left = 165;
 const top = '47';
 const id = 'routeLeft';
 
 onMount(async () => {
-  console.warn('onMount route/index');
+  console.log('%cRoute: onMount route/index', _c);
   chrome.storage.local.get(id, function(opt) {
     opt[id] && (left = opt[id])
   });

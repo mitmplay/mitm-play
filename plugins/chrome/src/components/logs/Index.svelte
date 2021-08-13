@@ -6,13 +6,14 @@ import VBox2 from '../box/VBox2.svelte';
 import title from './Title.svelte';
 import List from './List.svelte';
 import Show from './Show.svelte';
+const _c = 'color: blueviolet'
 
 let left = 163;
 const top = '47';
 const id = 'logsLeft';
 
 onMount(async () => {
-  console.warn('onMount logs/index');
+  console.log('%cLogs: onMount logs/index', _c);
   chrome.storage.local.get(id, function(opt) {
     opt[id] && (left = opt[id])
   });

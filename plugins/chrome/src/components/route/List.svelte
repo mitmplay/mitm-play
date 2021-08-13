@@ -5,6 +5,7 @@ import { urls } from '../tags/url-debounce';
 import { list } from '../tags/stores';
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
+const _c = 'color: blueviolet'
 
 let rerender = 0;
 let data = [];
@@ -12,12 +13,12 @@ let data = [];
 $: _data = data;
 
 onMount(async () => {
-  console.warn('onMount route/list');
+  console.log('%cRoute: onMount route/list', _c);
   _ws_connect.routeOnMount = () => ws__send('getRoute', '', routeHandler);
 });
 
 const routeHandler = obj => {
-  console.warn('ws__send(getRoute)', obj);
+  console.log('%cRoute: ws__send(getRoute)', _c, obj);
   window.mitm.routel = obj.routel
   window.mitm.routes = obj.routes
   window.mitm.routez = obj.routez
@@ -90,7 +91,7 @@ const routeHandler = obj => {
 }
 
 window.mitm.files.route_events.routeTable = () => {
-  console.log('routeTable getting called!!!');
+  console.log('%cRoute: routeTable getting called!!!', _c);
   window.ws__send('getRoute', '', routeHandler);
 }
 

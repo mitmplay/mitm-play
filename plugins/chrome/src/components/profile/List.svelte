@@ -3,6 +3,7 @@ export let onChange;
 
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
+const _c = 'color: blueviolet'
 
 let rerender = 0;
 let data = [];
@@ -10,12 +11,12 @@ let data = [];
 $: _data = data;
 
 onMount(async () => {
-  console.warn('onMount profile/list');
+  console.log('%cProfile: onMount profile/list', _c);
   _ws_connect.profileOnMount = () => ws__send('getProfile', '', profileHandler);
 });
 
 const profileHandler = obj => {
-  console.warn('ws__send(getProfile)', obj);
+  console.log('%cProfile: ws__send(getProfile)', _c, obj);
   if (window.mitm.files.profile===undefined) {
     window.mitm.files.profile = obj;
     data = obj;

@@ -3,6 +3,7 @@ import { logstore, tabstore } from './stores.js';
 import { cfg, resize } from '../monaco/init';
 import { onMount } from 'svelte';
 import { Tab } from 'svelma';
+const _c = 'color: blueviolet'
 
 const option = {
   ...cfg,
@@ -59,7 +60,7 @@ onMount(async () => {
   edit2 =  window.monaco.editor.create(node2, val2);
   edit3 =  window.monaco.editor.create(node3, val3);
 
-  console.log('load monaco: logs 1,2,3')
+  console.log('%cLogs: load monaco: logs 1,2,3', _c)
   const ro1 = new ResizeObserver(resize(edit1));
   const ro2 = new ResizeObserver(resize(edit2));
   const ro3 = new ResizeObserver(resize(edit3));

@@ -61,9 +61,9 @@ module.exports = () => {
       }
     }, 5000)
     const params = `${key}${JSON.stringify({ data })}`
-    if (__flag['ws-message']) {
-      console.log('_ws.send', cmd)
-    }
+    // if (__flag['ws-message']) {
+    //   console.log('_ws.send', cmd)
+    // }
     _ws.send(params)
   }
 }
