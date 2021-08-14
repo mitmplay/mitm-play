@@ -21,11 +21,12 @@ module.exports = argv => {
     '--disable-notifications',
     '--disable-dev-shm-usage', //https://github.com/puppeteer/puppeteer/issues/1834
     '--disable-infobars',
-    '--force-dark-mode',
     '--no-experiments',
     '--test-type',
   ]
-
+  if (argv.dark) {
+    args.push('--force-dark-mode')
+  }
   // https://groups.google.com/a/chromium.org/g/headless-dev/c/eNTnQ8GKOBA
   // https://github.com/chrisvfritz/prerender-spa-plugin/issues/343
   if (argv.cdp) {

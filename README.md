@@ -815,6 +815,7 @@ $ mitm-play --help
     -D --debug         show ws messages
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
+    -K --dark          set chrome devtools to dark mode 
     -R --redirect      set redirection: true/false/manual
     -U --nourl         set logs without URL*
     -V --verbose       show more detail of console log
@@ -1076,6 +1077,15 @@ set logs without host name
 ```bash
 $ mitm-play -H  <OR>
 $ mitm-play --nohost
+```
+</details>
+<details><summary><b>-K --dark</b></summary>
+
+set chrome devtools to dark mode, this option effected only when theme set to `System preference`.
+
+```bash
+$ mitm-play -K  <OR>
+$ mitm-play --dark
 ```
 </details>
 <details><summary><b>-R --redirect</b></summary>

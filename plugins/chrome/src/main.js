@@ -3,7 +3,7 @@ import App from './App.svelte'
 const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \(\)\w.#~-]+:|)(.+)/ // feat: tags in url
 const tmethod = /^(GET|PUT|POST|DELETE):/
 const rclass = /[\(\).#~/]+/g
-const _c = 'background: #222; color: lightskyblue'
+const _c = 'color: lightskyblue'
 
 console.log('%cMitm: Load MITM plugin', _c)
 

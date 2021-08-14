@@ -11,7 +11,7 @@ export let cols;
 let tgs = [];
 let grp = {};
 let list = {};
-const _c = 'background: #222; color: blueviolet'
+const _c = 'color: blueviolet'
 
 function clicked(e) {
   const { routes, fn } = window.mitm;

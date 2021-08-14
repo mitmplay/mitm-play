@@ -6,7 +6,7 @@ import Title1 from './Title-1.svelte';
 import Title2 from './Title-2.svelte';
 import TitleBtn from './Title-btn.svelte';
 import TitleUrl from './Title-url.svelte';
-const _c = 'background: #222; color: blueviolet'
+const _c = 'color: blueviolet'
 
 const replace = (s,p1,p2,p3) => p3;
 let btn1 = {
