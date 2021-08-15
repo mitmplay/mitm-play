@@ -10,8 +10,10 @@ import TagsTab from './components/tags/Index.svelte';
 import Other from './components/other/Index.svelte';
 import Route from './components/route/Index.svelte';
 import Help from './components/help/Index.svelte';
+const _c = 'color: blueviolet'
 
 onMount(async () => {
+  console.log('%cApp: onMount components/app', _c);
   setTimeout(()=>{
     const node = document.querySelector('nav.tabs>ul');
     const li = document.createElement('LI');

@@ -3,10 +3,11 @@
   "tags": [
     "ads",
     "no-ads~wow",
+    "tag3:no-ads~wiw",
     "tag3:url:ads",
     "tag3:url:no-ads~wow",
     "url:ads",
     "url:no-ads~wow"
   ],
-  "_subns": ""
+  "_subns": "keybr.com"
 }

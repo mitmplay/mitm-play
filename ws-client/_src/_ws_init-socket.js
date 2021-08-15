@@ -42,13 +42,13 @@ module.exports = () => {
 
   const onclose = function () {
     if (__flag['ws-connect']) {
-      console.log('ws: close connection')
+      console.log('%cWs: close connection', _c)
     }
   }
 
   const onmessage = function (e) {
     if (__flag['on-message']) {
-      console.log('on-message:', e.data)
+      console.log('%cWs: on-message:', _c, e.data)
     }
     _ws_msgParser(e, e.data)
   }

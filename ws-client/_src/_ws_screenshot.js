@@ -3,6 +3,7 @@
 const _screenshot = require('./_screenshot')
 const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
+const _c = 'color: #bada55'
 
 let act
 function screenshot (e) {
@@ -49,7 +50,7 @@ function screenshot (e) {
             act.click()
             act = undefined
           } else {
-            console.log('delay action undefined');
+            console.log('%cWs: delay action undefined', _c);
           }
         }, delay)
       } else {

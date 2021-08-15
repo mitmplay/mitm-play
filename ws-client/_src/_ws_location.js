@@ -3,6 +3,7 @@
 const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+const _c = 'color: #bada55'
 
 module.exports = () => {
   const containerStyle1 = 'position: fixed;z-index: 99999;right: 3px;'
@@ -223,7 +224,8 @@ module.exports = () => {
       const _page = window['xplay-page']
       const _frame = window['xplay-frame']
       const _json = {autofill, browser, _page, _frame}
-      console.log(lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2))
+      const msg = lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2)
+      console.log(`%cMacros: ${msg}`, _c)
       let result
       if ([true, 'off'].includes(__args.nosocket)) {
         result = await _post(_json)
@@ -244,11 +246,12 @@ module.exports = () => {
       container.right.style  = containerStyle1 + (!ctrl ? '' : 'display: none;')
       container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
     } else if (e.ctrlKey && e.altKey) {
-      console.log({ macro: `ctrl + alt + ${e.code}` })
+      const msg = `ctrl + alt + ${e.code}`
+      console.log(`%cMacros: ${msg}`, _c)
       if (macrokeys) {
         let macro = macrokeys[e.code]
         if (macro) {
-          macro = macro()
+          macro = macro(e)
           if (Array.isArray(macro)) {
             let macroIndex = 0
             const interval = setInterval(() => {
@@ -274,7 +277,7 @@ module.exports = () => {
   let oldHref = location.href
   let oDebunk = undefined
   function compareHref(nodes) {
-    // console.log('DOM mutated!')
+    // console.log('$cMacros: DOM mutated!', _c)
     if (oldHref != location.href) {
       window.dispatchEvent(event)
       oldHref = location.href

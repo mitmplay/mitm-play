@@ -1,6 +1,8 @@
 <script>
 import { onMount } from 'svelte';
 import Item from './Item.svelte';
+const _c = 'color: blueviolet'
+
 let rerender = 0;
 let data =  [];
 $: _data = data;
@@ -23,6 +25,7 @@ const cacheHandler = obj => {
 }
 
 onMount(async () => {
+  console.log('%cCache: onMount cache/table', _c);
   window._ws_connect.cacheOnMount = () => {
      ws__send('getCache', '', cacheHandler)
   };

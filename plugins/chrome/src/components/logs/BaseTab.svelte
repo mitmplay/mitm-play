@@ -20,7 +20,7 @@ let edit2;
 let edit3;
 
 onMount(async () => {
-  console.warn('onMount logs - BaseTab.svelte');
+  console.warn('%cLogs: onMount basetable', _c);
   console.log($logstore)
   const ext = $logstore.ext==='js' ? 'javascript' : $logstore.ext
   const hdrs = JSON.parse($logstore.headers);

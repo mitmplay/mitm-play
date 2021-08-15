@@ -1,12 +1,14 @@
 <script>
 import Item from "../profile/Item.svelte";
 import { onMount } from 'svelte';
+const _c = 'color: blueviolet'
 
 let data = {};
 $: _data = data;
 let rerender = 0;
 
 onMount(() => {
+  console.log('%cPlugins: onMount logs/css', _c);
   data = window.mitm.plugins
 });
 

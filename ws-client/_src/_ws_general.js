@@ -1,4 +1,5 @@
 const t64 = 'Wabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZh'
+const _c = 'color: #bada55'
 
 const nanoid = (size = 8) => {
   let id = ''
@@ -57,14 +58,10 @@ module.exports = () => {
     setTimeout(function () {
       if (window._ws_queue[key]) {
         delete window._ws_queue[key]
-        console.log('>>> ws timeout!', key)
+        console.log('%cWs: ws timeout!', _c, key)
       }
     }, 5000)
     const params = `${key}${JSON.stringify({ data })}`
-    // if (__flag['ws-message']) {
-    //   console.log('_ws.send', cmd)
-    // }
     _ws.send(params)
   }
 }
-// ws__send('_ping', 'LOL', w=>console.log('>result',w));

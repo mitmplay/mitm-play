@@ -1,3 +1,5 @@
+const _c = 'color: #bada55'
+
 module.exports = () => {
   let windowRef
   return {
@@ -25,7 +27,7 @@ module.exports = () => {
     // ex: ws__
     _saveTags ({ routes }) {
       if (!location.origin.match('chrome-extension')) {
-        console.log('Update routes')
+        console.log('%cWs: Update routes', _c)
         window.mitm.routes = routes
       }
     },
@@ -43,7 +45,7 @@ module.exports = () => {
       }
     },
     _setClient ({ data }) {
-      console.log('_setClient', data)
+      console.log('%cWs: _setClient', _c, data)
       window.mitm.client = data
     }
   }

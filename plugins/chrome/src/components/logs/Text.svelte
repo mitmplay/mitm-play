@@ -4,8 +4,10 @@ import { onMount } from 'svelte';
 import { tabstore } from './stores.js';
 import Button2 from './Button2.svelte';
 import BaseTab from './BaseTab.svelte';
+const _c = 'color: blueviolet'
 
 onMount(() => {
+  console.log('%cLogs: onMount logs/text', _c);
   setTimeout(()=>{
     const nodes = document.querySelectorAll('.tab-text a');
     for (let [i,node] of nodes.entries()) {

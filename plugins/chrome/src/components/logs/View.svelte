@@ -3,8 +3,10 @@ import { Tabs } from 'svelma';
 import { onMount } from 'svelte';
 import { tabstore } from './stores.js';
 import BaseTab from './BaseTab.svelte';
+const _c = 'color: blueviolet'
 
 onMount(() => {
+  console.log('%cLogs: onMount logs/view', _c);
   setTimeout(()=>{
     const nodes = document.querySelectorAll('.tab-view a');
     for (let [i,node] of nodes.entries()) {
