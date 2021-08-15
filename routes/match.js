@@ -204,8 +204,8 @@ const searchFN = (typs, { url, method, browserName }) => {
             !__args.nourl && (log += _url(msg, other))
           }
           let tags = []
-          const urls = key.split(':')[2]
-          const obj3 = urls ? tg3[urls] : tg3[key]
+          const [t,, urls] = key.split(':')
+          const obj3 = urls ? tg3[t ? `${t}:${urls}` : urls]:tg3[key]
           if (obj3 && obj3[ty]) {
             tags = obj3[ty].tags || []
           }
