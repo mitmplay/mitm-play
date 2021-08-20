@@ -36,7 +36,7 @@ const route = {
     'GET:no-ads~wow:/assets/[a-z0-9]+': {
       response(resp, reqs, match) {
         resp.body = `${resp.body}\n${css}`
-        console.log(match.tags)
+        // console.log(match.tags)
       },
       tags: ['tag3']
     },

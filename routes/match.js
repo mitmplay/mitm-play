@@ -189,27 +189,33 @@ const searchFN = (typs, { url, method, browserName }) => {
           let msg = (__args.nohost ? '' : o.replace(nohttp,''))+pathname
 
           let [ty, tg] = typ.split(':')
-          tg = tg ?  `:${tg}` : ''
+          let [t,, urls] = key.split(':')
+          let id3 = urls ? (t ? `${t}:${urls}` : urls) : key
           let log = `${browser[browserName]} ${ty.padEnd(8, ' ')} `
+          let tgs = tg || ''
+
+          let tags = []
+          let obj3 = tg3[id3]
+          if (obj3 && obj3[ty]) {
+            tags = obj3[ty].tags || {}
+            const t3 = Object.keys(tags).filter(x=>tags[x])
+            t3.length && (tgs += `{${t3.reverse()}}`)
+          }
+
           if (__args.nourl && __args.nourl==='url') {
-            log += _url(msg, tg)
+            log += _url(msg, tgs)
           } else {
-            let other = key+tg
+            let other = key+tgs
             if (key.match(mmethod)) {
-              log += `${bloc(key)}`
+              log += `${bloc(id3)}`
             } else {
               other += method
-              log += `${bloc(c.gray(mth(method, key))+key)}`
+              log += `${bloc(c.gray(mth(method, id3))+id3)}`
             }
             !__args.nourl && (log += _url(msg, other))
           }
-          let tags = []
-          const [t,, urls] = key.split(':')
-          const obj3 = urls ? tg3[t ? `${t}:${urls}` : urls]:tg3[key]
-          if (obj3 && obj3[ty]) {
-            tags = obj3[ty].tags || []
-          }
-          tg && (log += tg)
+
+          tgs && (log += tgs)
 
           const hidden = key.match(/^[\w#]*!:/)
           const matched = {
