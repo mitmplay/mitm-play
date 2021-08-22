@@ -237,39 +237,81 @@ module.exports = () => {
   }
   window.mitm.fn.play = play
   window.mitm.fn.wait = wait
-  
+
+  function macroAutomation(macro) {
+    if (Array.isArray(macro)) {
+      let macroIndex = 0
+      const interval = setInterval(() => {
+        let selector = macro[macroIndex]
+        if (selector.match(/^ *[=-]>/)) {
+          const activeElement = CssSelectorGenerator.getCssSelector(document.activeElement)
+          selector = `${activeElement} ${selector}`
+        }
+        play([selector])
+
+        macroIndex += 1
+        if (macroIndex >= macro.length) {
+          clearInterval(interval)
+        }
+      }, 100)
+    }
+  }
+  const kdelay = 1400
+  let bouncer = undefined
   function keybCtrl (e) {
     const { macrokeys } = window.mitm
-    if (e.ctrlKey && e.key === 'Shift') {
+    if (e.key==='Alt' || e.key === 'Control') {
+      return
+    } else if (e.ctrlKey && e.key === 'Shift') {
       ctrl = !ctrl
       container.right3.style = containerStyle3 + (!ctrl ? '' : 'display: none;')
       container.right.style  = containerStyle1 + (!ctrl ? '' : 'display: none;')
       container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
-    } else if (e.ctrlKey && e.altKey) {
-      const msg = `ctrl + alt + ${e.code}`
-      console.log(`%cMacros: ${msg}`, _c)
-      if (macrokeys) {
-        let macro = macrokeys[e.code]
-        if (macro) {
-          macro = macro(e)
-          if (Array.isArray(macro)) {
-            let macroIndex = 0
-            const interval = setInterval(() => {
-              let selector = macro[macroIndex]
-              if (selector.match(/^ *[=-]>/)) {
-                const activeElement = CssSelectorGenerator.getCssSelector(document.activeElement)
-                selector = `${activeElement} ${selector}`
-              }
-              play([selector])
-
-              macroIndex += 1
-              if (macroIndex >= macro.length) {
-                clearInterval(interval)
-              }
-            }, 100)
+    } else if (e.altKey) {
+      let macro
+      let stdKey
+      let hghKey
+      let _now = Date.now()
+      let {lastKey: keyb} = mitm
+      if (e.ctrlKey) {
+        const msg = `ctrl + alt + ${e.code}`
+        console.log(`%cMacros: ${msg}`, _c)
+        if (macrokeys) {
+          macro = macrokeys[e.code]
+          if (macro) {
+            macro = macro(e)
+            macroAutomation(macro)
           }
         }
+      } else if (keyb) {
+        const ev = e
+        clearTimeout(bouncer)
+        bouncer = setTimeout(_=>{
+          macro = macrokeys[ev.code]
+          const msg = `shift + alt + ${ev.code}`
+          console.log(`%cMacros: ${msg}`, 'color: #badaf1')
+          if (macro) {
+            macro = macro(ev)
+            macroAutomation(macro)
+          }  
+        }, kdelay)
+        const elapsed = _now - keyb._now
+        if (elapsed < kdelay) {
+          clearTimeout(bouncer)
+          stdKey = `{${keyb.key}:${e.key}}`
+          hghKey = `{${keyb.code}:${e.code}}`
+          console.log(`%cMacros: alt + ( ${stdKey} | ${hghKey} )`, 'color: #badaf1', e)
+          macro = macrokeys[hghKey] || macrokeys[stdKey]
+          if (macro) {
+            macro = macro(e)
+            macroAutomation(macro)
+          }
+          _now = 0
+        }
       }
+      keyb = e
+      keyb._now = _now
+      mitm.lastKey = keyb
     }
   }
 
