@@ -167,6 +167,7 @@ module.exports = () => {
   const vendor = _ws_vendor()
   if (['firefox', 'webkit'].includes(vendor) || (chrome && !chrome.tabs)) {
     document.querySelector('html').addEventListener('keydown', keybCtrl)
+    document.querySelector('html').addEventListener('keyup', keybUp)
     window.addEventListener('urlchanged', urlChange)
     if(document.readyState !== 'loading') {
       init();
@@ -256,62 +257,65 @@ module.exports = () => {
       }, 100)
     }
   }
-  const kdelay = 1400
-  let bouncer = undefined
+
+  let stdKey = []
+  let hghKey = []
+  const kdelay = 1000
+  let bouncr = undefined
+  function macroRun() {
+    const key1 = `{${stdKey.join(':')}}`
+    const key2 = `{${hghKey.join(':')}}`
+    const { macrokeys, lastKey: e } = window.mitm
+    console.log(`%cMacros: alt + ( ${key1} | ${key2} )`, 'color: #badaf1')
+    macro = macrokeys[key2] || macrokeys[key1]
+    if (macro) {
+      macro = macro(e)
+      macroAutomation(macro)
+    }
+    bouncr = undefined
+    stdKey = []
+    hghKey = []
+  }
+
+  function keybUp (e) {
+    if (bouncr && !e.altKey) {
+      clearTimeout(bouncr)
+      bouncr = undefined
+      macroRun()
+      console.log('faster...')
+    }
+  }
+
   function keybCtrl (e) {
-    const { macrokeys } = window.mitm
     if (e.key==='Alt' || e.key === 'Control') {
       return
-    } else if (e.ctrlKey && e.key === 'Shift') {
-      ctrl = !ctrl
-      container.right3.style = containerStyle3 + (!ctrl ? '' : 'display: none;')
-      container.right.style  = containerStyle1 + (!ctrl ? '' : 'display: none;')
-      container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
-    } else if (e.altKey) {
-      let macro
-      let stdKey
-      let hghKey
-      let _now = Date.now()
-      let {lastKey: keyb} = mitm
+    } else {
+      const { macrokeys } = window.mitm
       if (e.ctrlKey) {
-        const msg = `ctrl + alt + ${e.code}`
-        console.log(`%cMacros: ${msg}`, _c)
-        if (macrokeys) {
-          macro = macrokeys[e.code]
-          if (macro) {
-            macro = macro(e)
-            macroAutomation(macro)
-          }
+        if (e.key === 'Shift') {
+          ctrl = !ctrl
+          container.right3.style = containerStyle3 + (!ctrl ? '' : 'display: none;')
+          container.right.style  = containerStyle1 + (!ctrl ? '' : 'display: none;')
+          container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
         }
-      } else if (keyb) {
-        const ev = e
-        clearTimeout(bouncer)
-        bouncer = setTimeout(_=>{
-          macro = macrokeys[ev.code]
-          const msg = `shift + alt + ${ev.code}`
-          console.log(`%cMacros: ${msg}`, 'color: #badaf1')
-          if (macro) {
-            macro = macro(ev)
-            macroAutomation(macro)
-          }  
-        }, kdelay)
-        const elapsed = _now - keyb._now
-        if (elapsed < kdelay) {
-          clearTimeout(bouncer)
-          stdKey = `{${keyb.key}:${e.key}}`
-          hghKey = `{${keyb.code}:${e.code}}`
-          console.log(`%cMacros: alt + ( ${stdKey} | ${hghKey} )`, 'color: #badaf1', e)
-          macro = macrokeys[hghKey] || macrokeys[stdKey]
-          if (macro) {
-            macro = macro(e)
-            macroAutomation(macro)
+        if (e.altKey) {
+          const msg = `ctrl + alt + ${e.code}`
+          console.log(`%cMacros: ${msg}`, _c)
+          if (macrokeys) {
+            let macro = macrokeys[e.code]
+            if (macro) {
+              macro = macro(e)
+              macroAutomation(macro)
+            }
           }
-          _now = 0
-        }
-      }
-      keyb = e
-      keyb._now = _now
-      mitm.lastKey = keyb
+        } 
+      } else if (e.altKey) {
+        stdKey.push(e.key)
+        hghKey.push(e.code)
+        clearTimeout(bouncr)
+        bouncr = setTimeout(macroRun, kdelay)
+      } 
+      mitm.lastKey = e
     }
   }
 
