@@ -260,6 +260,8 @@ module.exports = () => {
 
   let stdDbl = []
   let hghDbl = []
+  let stdCtl = []
+  let hghCtl = []
   let stdAlt = []
   let hghAlt = []
   const kdelay = 1000
@@ -274,7 +276,26 @@ module.exports = () => {
     hghDbl = []
     debounceDbl = undefined
     macro = macrokeys[key1] || macrokeys[key2]
-    console.log(`%cMacros: ctrl  + alt +  ${key1}  |  ${key2}`, _c)
+    console.log(`%cMacros: ctrl + alt  +  ${key1}  |  ${key2}`, _c)
+    if (macro) {
+      macro = macro(e)
+      macroAutomation(macro)
+    } else {
+      return false
+    }
+  }
+
+  let debounceCtl = undefined
+  function macroCtl() {
+    const key1 = `<${stdCtl.join('')}>`
+    const key2 = `<${hghCtl.join(':')}>`
+    const { macrokeys, lastKey: e } = window.mitm
+
+    stdCtl = []
+    hghCtl = []
+    debounceCtl = undefined
+    macro = macrokeys[key1] || macrokeys[key2]
+    console.log(`%cMacros: .... + ctrl + ${key1} | ${key2}`, 'color: #baeaf1')
     if (macro) {
       macro = macro(e)
       macroAutomation(macro)
@@ -293,7 +314,7 @@ module.exports = () => {
     hghAlt = []
     debounceAlt = undefined
     macro = macrokeys[key1] || macrokeys[key2]
-    console.log(`%cMacros: .... + alt + ${key1} | ${key2}`, 'color: #badaf1')
+    console.log(`%cMacros: .... + alt  + ${key1} | ${key2}`, 'color: #badaf1')
     if (macro) {
       macro = macro(e)
       macroAutomation(macro)
@@ -304,15 +325,20 @@ module.exports = () => {
 
   function keybUp (e) {
     if (!e.altKey) {
-      if (debounceDbl || debounceAlt) {
+      if (debounceDbl || (debounceCtl && !e.ctrlKey) || debounceAlt) {
         clearTimeout(debounceDbl)
+        clearTimeout(debounceCtl)
         clearTimeout(debounceAlt)
         if (debounceDbl) {
           macroDbl()
+        } else 
+        if (debounceCtl) {
+          macroCtl()
         } else {
           macroAlt()
         }
         debounceDbl = undefined
+        debounceCtl = undefined
         debounceAlt = undefined
       }
     }
@@ -323,27 +349,32 @@ module.exports = () => {
       return
     } else {
       const { macrokeys } = window.mitm
-      if (e.ctrlKey) {
-        if (e.key === 'Shift') {
+      if (e.key === 'Shift') {
+        if (e.ctrlKey) {
           ctrl = !ctrl
           container.right3.style = containerStyle3 + (!ctrl ? '' : 'display: none;')
           container.right.style  = containerStyle1 + (!ctrl ? '' : 'display: none;')
           container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
-        } else if (e.altKey) {
+        }
+      } else {
+        if (e.ctrlKey && e.altKey) {
           stdDbl.push(e.key)
           hghDbl.push(e.code)
           clearTimeout(debounceDbl)
           debounceDbl = setTimeout(macroDbl, kdelay)
-        } 
-      } else if (e.altKey && e.key !== 'Shift') {
-        stdAlt.push(e.key)
-        hghAlt.push(e.code)
-        clearTimeout(debounceAlt)
-        debounceAlt = setTimeout(macroAlt, kdelay)
-      }
-      if (e.key !== 'Shift') {
+        } else if (e.ctrlKey) {
+          stdCtl.push(e.key)
+          hghCtl.push(e.code)
+          clearTimeout(debounceCtl)
+          debounceCtl = setTimeout(macroCtl, kdelay)
+        } else if (e.altKey) {
+          stdAlt.push(e.key)
+          hghAlt.push(e.code)
+          clearTimeout(debounceAlt)
+          debounceAlt = setTimeout(macroAlt, kdelay)
+        }
         mitm.lastKey = e
-      }
+      } 
     }
   }
 

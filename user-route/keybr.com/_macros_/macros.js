@@ -19,6 +19,15 @@ module.exports = () => {
       window.mitm.macrokeys = {
         'KeyA'(_e) {
           console.log(`%cMacro: ${_e.code}`, _c, _e)
+        },
+        '{KeyA}'(_e) {
+          console.log(`%cAlt Macro: ${_e.code}`, _c, _e)
+        },
+        'us'(_e) {
+          console.log(`%cUS Country`, _c, _e)
+        },
+        'u'(_e) {
+          console.log(`%cU Char`, _c, _e)
         }
       }
 

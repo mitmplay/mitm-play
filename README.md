@@ -1228,8 +1228,6 @@ window.mitm.macrokeys = {...}
 # Macro Keys
 A hot keys that can be press on specific page and it will do similar thing with _a macro from mechanical keyboard_, except its generated from injected mitm-play `macros.js`, 
 
-As you can compare with autofill `macros` above, the commands don't include selector, means it will run from current input focused.
-
 Example below show a defined macro keys: `KeyP` & To activate, it need to press combination buttons of `Ctrl` **+** `Alt` **+** `KeyP`. 
 
 list of `key.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
@@ -1260,6 +1258,42 @@ module.exports = () => {
     }
   }
 }    
+```
+Automation commands return from `KeyP` function don't include selector, means it will run from current input focused.
+</details>
+
+<details><summary><b>Variations</b></summary>
+
+#### Recomended macro keys
+Only this variations will work on windows/mac
+```js
+window.mitm.macrokeys = {
+  'a'()         { console.log('key in: Ctrl + Alt + a') },
+  'A'()         { console.log('key in: Ctrl + Alt + A') },
+  'aA'()        { console.log('key in: Ctrl + Alt + aA') },
+  'KeyA'()      { console.log('key in: Ctrl + Alt + KeyA') },
+  'KeyA:KeyB'() { console.log('key in: Ctrl + Alt + KeyA:KeyB') },
+}
+```
+#### Not Recomended macro keys - might conflict
+```js
+window.mitm.macrokeys = {
+  '<a>'()         { console.log('key in: .... + Ctrl + a') },
+  '<A>'()         { console.log('key in: .... + Ctrl + A') },
+  '<aA>'()        { console.log('key in: .... + Ctrl + aA') },
+  '<KeyA>'()      { console.log('key in: .... + Ctrl + KeyA') },
+  '<KeyA:KeyB>'() { console.log('key in: .... + Ctrl + KeyA:KeyB') },
+}
+```
+#### Not Recomended macro keys - might conflict
+```js
+window.mitm.macrokeys = {
+  '{a}'()         { console.log('key in: .... + Alt + a') },
+  '{A}'()         { console.log('key in: .... + Alt + A') },
+  '{aA}'()        { console.log('key in: .... + Alt + aA') },
+  '{KeyA}'()      { console.log('key in: .... + Alt + KeyA') },
+  '{KeyA:KeyB}'() { console.log('key in: .... + Alt + KeyA:KeyB') },
+}
 ```
 </details>
 
