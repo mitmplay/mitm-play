@@ -1268,31 +1268,31 @@ Automation commands return from `KeyP` function don't include selector, means it
 Only this variations will work on windows/mac
 ```js
 window.mitm.macrokeys = {
-  'a'()         { console.log('key in: Ctrl + Alt + a') },
-  'A'()         { console.log('key in: Ctrl + Alt + A') },
-  'aA'()        { console.log('key in: Ctrl + Alt + aA') },
-  'KeyA'()      { console.log('key in: Ctrl + Alt + KeyA') },
-  'KeyA:KeyB'() { console.log('key in: Ctrl + Alt + KeyA:KeyB') },
+  'key:a'()          { console.log('key in: Ctrl + Alt + a') },
+  'key:A'()          { console.log('key in: Ctrl + Alt + A') },
+  'key:aA'()         { console.log('key in: Ctrl + Alt + aA') },
+  'code:KeyA'()      { console.log('key in: Ctrl + Alt + KeyA') },
+  'code:KeyA:KeyB'() { console.log('key in: Ctrl + Alt + KeyA:KeyB') },
 }
 ```
 #### Not Recomended macro keys - might conflict
 ```js
 window.mitm.macrokeys = {
-  '<a>'()         { console.log('key in: .... + Ctrl + a') },
-  '<A>'()         { console.log('key in: .... + Ctrl + A') },
-  '<aA>'()        { console.log('key in: .... + Ctrl + aA') },
-  '<KeyA>'()      { console.log('key in: .... + Ctrl + KeyA') },
-  '<KeyA:KeyB>'() { console.log('key in: .... + Ctrl + KeyA:KeyB') },
+  'key:<a>'()          { console.log('key in: .... + Ctrl + a') },
+  'key:<A>'()          { console.log('key in: .... + Ctrl + A') },
+  'key:<aA>'()         { console.log('key in: .... + Ctrl + aA') },
+  'code:<KeyA>'()      { console.log('key in: .... + Ctrl + KeyA') },
+  'code:<KeyA:KeyB>'() { console.log('key in: .... + Ctrl + KeyA:KeyB') },
 }
 ```
 #### Not Recomended macro keys - might conflict
 ```js
 window.mitm.macrokeys = {
-  '{a}'()         { console.log('key in: .... + Alt + a') },
-  '{A}'()         { console.log('key in: .... + Alt + A') },
-  '{aA}'()        { console.log('key in: .... + Alt + aA') },
-  '{KeyA}'()      { console.log('key in: .... + Alt + KeyA') },
-  '{KeyA:KeyB}'() { console.log('key in: .... + Alt + KeyA:KeyB') },
+  'key:{a}'()          { console.log('key in: .... + Alt + a') },
+  'key:{A}'()          { console.log('key in: .... + Alt + A') },
+  'key:{aA}'()         { console.log('key in: .... + Alt + aA') },
+  'code:{KeyA}'()      { console.log('key in: .... + Alt + KeyA') },
+  'code:{KeyA:KeyB}'() { console.log('key in: .... + Alt + KeyA:KeyB') },
 }
 ```
 </details>

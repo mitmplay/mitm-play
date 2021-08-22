@@ -268,8 +268,8 @@ module.exports = () => {
 
   let debounceDbl = undefined
   function macroDbl() {
-    const key1 = stdDbl.join('')
-    const key2 = hghDbl.join(':')
+    const key1 = `key:${stdDbl.join('')}`
+    const key2 = `code:${hghDbl.join(':')}`
     const { macrokeys, lastKey: e } = window.mitm
 
     stdDbl = []
@@ -287,8 +287,8 @@ module.exports = () => {
 
   let debounceCtl = undefined
   function macroCtl() {
-    const key1 = `<${stdCtl.join('')}>`
-    const key2 = `<${hghCtl.join(':')}>`
+    const key1 = `key:<${stdCtl.join('')}>`
+    const key2 = `code:<${hghCtl.join(':')}>`
     const { macrokeys, lastKey: e } = window.mitm
 
     stdCtl = []
@@ -306,8 +306,8 @@ module.exports = () => {
 
   let debounceAlt = undefined
   function macroAlt() {
-    const key1 = `{${stdAlt.join('')}}`
-    const key2 = `{${hghAlt.join(':')}}`
+    const key1 = `key:{${stdAlt.join('')}}`
+    const key2 = `code:{${hghAlt.join(':')}}`
     const { macrokeys, lastKey: e } = window.mitm
 
     stdAlt = []

@@ -17,16 +17,16 @@ module.exports = () => {
     '/'() {
       console.log('%cMacro: olleh >< hello', _c, hello)
       window.mitm.macrokeys = {
-        'KeyA'(_e) {
+        'code:KeyA'(_e) {
           console.log(`%cMacro: ${_e.code}`, _c, _e)
         },
-        '{KeyA}'(_e) {
+        'code:{KeyA}'(_e) {
           console.log(`%cAlt Macro: ${_e.code}`, _c, _e)
         },
-        'us'(_e) {
+        'key:us'(_e) {
           console.log(`%cUS Country`, _c, _e)
         },
-        'u'(_e) {
+        'key:u'(_e) {
           console.log(`%cU Char`, _c, _e)
         }
       }
