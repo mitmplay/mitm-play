@@ -26,7 +26,7 @@ module.exports = () => {
     '/'() {
       console.log('olah')
       window.mitm.macrokeys = {
-        'KeyA'() {
+        'code:KeyA'() {
           console.log('KeyA')
           alert('Alert KeyA')
         }

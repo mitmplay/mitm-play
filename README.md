@@ -1240,13 +1240,13 @@ module.exports = () => {
   return {
     '^/signin/v2/identifier?'() {
       window.mitm.macrokeys = {
-        'KeyA'() {
+        'code:KeyA'() {
           alert('Alert KeyA')
         }
       }
       // -- OR --
       window.mitm.fn.hotKeys({
-        'KeyP'() {
+        'code:KeyP'() {
           // chance is a javascript faker defined in jsLib
           const name = chance.email().split('@')[0];
           return [
