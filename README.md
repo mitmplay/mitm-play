@@ -1265,7 +1265,7 @@ Automation commands return from `KeyP` function don't include selector, means it
 <details><summary><b>Variations</b></summary>
 
 #### Recomended macro keys
-Only this variations will work on windows/mac
+Only this variations will work on `Mac`/`Windows`
 ```js
 window.mitm.macrokeys = {
   'key:a'()          { console.log('key in: Ctrl + Alt + a') },
@@ -1276,6 +1276,7 @@ window.mitm.macrokeys = {
 }
 ```
 #### Not Recomended macro keys - might conflict
+Conflict with Chrome shortcut keys or in Windows conflict with `Ctrl + J`
 ```js
 window.mitm.macrokeys = {
   'key:<a>'()          { console.log('key in: .... + Ctrl + a') },
@@ -1286,6 +1287,7 @@ window.mitm.macrokeys = {
 }
 ```
 #### Not Recomended macro keys - might conflict
+In windows conflict with `Alt + D`, unless need to combine with Shift ie: `Shift + Alt + D`
 ```js
 window.mitm.macrokeys = {
   'key:{a}'()          { console.log('key in: .... + Alt + a') },
