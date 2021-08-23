@@ -1228,7 +1228,7 @@ window.mitm.macrokeys = {...}
 # Macro Keys
 A hot keys that can be press on specific page and it will do similar thing with _a macro from mechanical keyboard_, except its generated from injected mitm-play `macros.js`, 
 
-Example below show a defined macro keys: `KeyP` & To activate, it need to press combination buttons of `Ctrl` **+** `Alt` **+** `KeyP`. 
+Example below show a defined macro keys: `code:KeyA` or `code:KeyP` & To activate, it need to press combination buttons of `Ctrl` **+** `Alt` **+** `KeyA`/`KeyP`. 
 
 list of `key.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
 
