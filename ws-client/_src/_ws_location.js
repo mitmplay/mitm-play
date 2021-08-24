@@ -264,6 +264,7 @@ module.exports = () => {
   let hghCtl = []
   let stdAlt = []
   let hghAlt = []
+  let saveKey = ''
   const kdelay = 1000
 
   let debounceDbl = undefined
@@ -274,14 +275,14 @@ module.exports = () => {
 
     stdDbl = []
     hghDbl = []
+    saveKey = ''
     debounceDbl = undefined
     macro = macrokeys[key1] || macrokeys[key2]
     console.log(`%cMacros: ctrl + alt  +  ${key1}  |  ${key2}`, _c)
     if (macro) {
       macro = macro(e)
       macroAutomation(macro)
-    } else {
-      return false
+      return true
     }
   }
 
@@ -293,14 +294,14 @@ module.exports = () => {
 
     stdCtl = []
     hghCtl = []
+    saveKey = ''
     debounceCtl = undefined
     macro = macrokeys[key1] || macrokeys[key2]
     console.log(`%cMacros: .... + ctrl + ${key1} | ${key2}`, 'color: #baeaf1')
     if (macro) {
       macro = macro(e)
       macroAutomation(macro)
-    } else {
-      return false
+      return true
     }
   }
 
@@ -312,14 +313,14 @@ module.exports = () => {
 
     stdAlt = []
     hghAlt = []
+    saveKey = ''
     debounceAlt = undefined
     macro = macrokeys[key1] || macrokeys[key2]
     console.log(`%cMacros: .... + alt  + ${key1} | ${key2}`, 'color: #badaf1')
     if (macro) {
       macro = macro(e)
       macroAutomation(macro)
-    } else {
-      return false
+      return true
     }
   }
 
@@ -345,7 +346,7 @@ module.exports = () => {
   }
 
   function keybCtrl (e) {
-    if (e.key==='Alt' || e.key === 'Control') {
+    if (['Alt', 'Control', 'Meta', 'MetaLeft', 'MetaRight'].includes(e.key)) {
       return
     } else {
       const { macrokeys } = window.mitm
@@ -357,23 +358,31 @@ module.exports = () => {
           container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
         }
       } else {
-        if (e.ctrlKey && e.altKey) {
-          stdDbl.push(e.key)
-          hghDbl.push(e.code)
+        if (e.metaKey) {
           clearTimeout(debounceDbl)
-          debounceDbl = setTimeout(macroDbl, kdelay)
-        } else if (e.ctrlKey) {
-          stdCtl.push(e.key)
-          hghCtl.push(e.code)
           clearTimeout(debounceCtl)
-          debounceCtl = setTimeout(macroCtl, kdelay)
-        } else if (e.altKey) {
-          stdAlt.push(e.key)
-          hghAlt.push(e.code)
           clearTimeout(debounceAlt)
-          debounceAlt = setTimeout(macroAlt, kdelay)
+          saveKey += e.key
+        } else {
+          if (e.ctrlKey && e.altKey) {
+            stdDbl.push(e.key)
+            hghDbl.push(e.code)
+            clearTimeout(debounceDbl)
+            debounceDbl = setTimeout(macroDbl, kdelay)
+          } else if (e.ctrlKey) {
+            stdCtl.push(e.key)
+            hghCtl.push(e.code)
+            clearTimeout(debounceCtl)
+            debounceCtl = setTimeout(macroCtl, kdelay)
+          } else if (e.altKey) {
+            stdAlt.push(e.key)
+            hghAlt.push(e.code)
+            clearTimeout(debounceAlt)
+            debounceAlt = setTimeout(macroAlt, kdelay)
+          }
+          e._keys = saveKey
+          mitm.lastKey = e  
         }
-        mitm.lastKey = e
       } 
     }
   }
