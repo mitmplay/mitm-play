@@ -1,12 +1,14 @@
 const rollup = require('rollup')
+const scss = require('rollup-plugin-scss')
 const svelte = require('rollup-plugin-svelte')
 const preprocess = require('svelte-preprocess')
 const commonjs = require('@rollup/plugin-commonjs')
-const {nodeResolve} = require('@rollup/plugin-node-resolve')
+const {nodeResolve:resolve} = require('@rollup/plugin-node-resolve')
 const { logmsg } = global.mitm.fn
 
 function bundleRollup(bpath, opath) {
   // see below for details on the options
+  const output = opath.replace(/\.js$/,'.css')
   const inputOptions = {
     input: bpath,
     plugins: [
@@ -14,7 +16,8 @@ function bundleRollup(bpath, opath) {
         compilerOptions: {dev: true},
         preprocess:  preprocess()
       }),
-      nodeResolve({
+      scss({output}),
+      resolve({
         browser: true,
         dedupe: ['svelte'],
         preferBuiltins: false
@@ -25,7 +28,8 @@ function bundleRollup(bpath, opath) {
   const outputOptions = {
     file: opath,
     sourcemap: 'inline',
-    format: 'iife'
+    format: 'iife',
+    name: 'app'
   };
 
   async function build() {

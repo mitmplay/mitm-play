@@ -1,3 +1,4 @@
+// const {default:App} = require('../_svelte_/VBox.svelte')
 const _c = 'color: cornflowerblue'
 
 const rbuttons = {
@@ -15,6 +16,7 @@ module.exports = () => {
 
   return {
     '/'() {
+      // new App({ target: document.body })
       console.log('%cMacro: olleh >< hello', _c, hello)
       window.mitm.macrokeys = {
         'code:KeyA'(_e) {

@@ -3,9 +3,30 @@ const rpath = require.resolve('../ws-client/ws-client.js.map')
 
 let wsclientJsMap = fs.readFileSync(rpath)
 
-module.exports = () => {
+function mockMacros(resp, ex) {
   const { argv, fn: { _tldomain, _nameSpace } } = global.mitm
+  let body = ''
+  const namespace = _nameSpace(_tldomain(resp.url))
+  if (namespace) {
+    const [app, domain] = namespace.split('@')
+    if (namespace.match('@')) {
+      path = `${argv.route}/${domain}/_bundle_/${app}@macros.${ex}`
+    } else {
+      path = `${argv.route}/${app}/_bundle_/macros.${ex}`
+    }
+    if (fs.existsSync(path)) {
+      body = `${fs.readFileSync(path)}`
+    } else {
+      path = `${argv.route}/_global_/_bundle_/macros.${ex}`
+      if (fs.existsSync(path)) {
+        body = `${fs.readFileSync(path)}`
+      }
+    }
+  }
+  return body
+}
 
+module.exports = () => {
   const mock = {
     '!:hidden:/mitm-play/mitm.js': {
       response: resp => {
@@ -31,26 +52,14 @@ module.exports = () => {
     },
     '!:hidden:/mitm-play/macros.js': {
       response: resp => {
-        let body = ''
-        const namespace = _nameSpace(_tldomain(resp.url))
-        if (namespace) {
-          const [app, domain] = namespace.split('@')
-          if (namespace.match('@')) {
-            path = `${argv.route}/${domain}/_bundle_/${app}@macros.js`
-          } else {
-            path = `${argv.route}/${app}/_bundle_/macros.js`
-          }
-          if (fs.existsSync(path)) {
-            body = `${fs.readFileSync(path)}`
-          } else {
-            path = `${argv.route}/_global_/_bundle_/macros.js`
-            if (fs.existsSync(path)) {
-              body = `${fs.readFileSync(path)}`
-            }
-          }
-        }
-        resp.body = body
+        resp.body = mockMacros(resp, 'js')
         resp.headers['content-type'] = 'application/javascript'
+      }
+    },
+    '!:hidden:/mitm-play/macros.css': {
+      response: resp => {
+        resp.body = mockMacros(resp, 'css')
+        resp.headers['content-type'] = 'text/css'
       }
     },
     '!:hidden:/mitm-play/ws-client.js$': {

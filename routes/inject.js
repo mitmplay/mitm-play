@@ -1,4 +1,22 @@
 /* eslint-disable camelcase */
+function css_src (body, src) {
+  const el = src.map(el => {
+    return `<link href="${el}" rel="stylesheet">`
+  }).join('\n')
+  let b = body + ''
+  if (b.match(/<head>/i)) {
+    b = b.replace(/<head>/i, `<head>\n${el}`)
+  } else {
+    const h = b.match(/(<html[^>]*>)/i)
+    if (h) {
+      b = b.replace(h[0], `${h[0]}\n${el}`)
+    } else {
+      b = `${el}\n${b}`
+    }
+  }
+  return b
+}
+
 function script_src (body, src) {
   const el = src.map(el => {
     const arr = el.match(/\.m:js/)
@@ -81,7 +99,12 @@ const headerchg = headers => {
 function injectWS (resp, url, jsLib) {
   const { __args, fn: { _tldomain, _nameSpace } } = global.mitm
   const js = ['/mitm-play/mitm.js']
+  let body = `${resp.body}`
+
   if (_nameSpace(_tldomain(url))) {
+    if (__args.svelte) {
+      body = css_src(body, ['/mitm-play/macros.css'])
+    }
     js.push('/mitm-play/macros.js')
   }
   js.push('/mitm-play/ws-client.js')
@@ -89,7 +112,7 @@ function injectWS (resp, url, jsLib) {
   if (jsLib) {
     js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
   }
-  resp.body = script_src(resp.body, js)
+  resp.body = script_src(body, js)
   if (__args.csp) {
     headerchg(resp.headers)
   }
@@ -97,6 +120,7 @@ function injectWS (resp, url, jsLib) {
 module.exports = {
   script_src,
   injectWS,
+  css_src,
   source,
   head,
   body

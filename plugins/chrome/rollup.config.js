@@ -16,9 +16,7 @@ export default {
   },
   plugins: [
 		svelte({
-			compilerOptions: {
-        dev: true,
-      },
+			compilerOptions: {dev: true},
       preprocess:  preprocess()
     }),
     css({ output: 'bundle.css' }),   
