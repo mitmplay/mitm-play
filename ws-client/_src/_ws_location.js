@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
+const _key = require('./_keyboard')
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 const _c = 'color: #bada55'
 
@@ -346,7 +347,7 @@ module.exports = () => {
   }
 
   function keybCtrl (e) {
-    if (['Alt', 'Control', 'Meta', 'MetaLeft', 'MetaRight'].includes(e.key)) {
+    if (['Alt', 'Control', 'Meta'].includes(e.key)) {
       return
     } else {
       const { macrokeys } = window.mitm
@@ -358,24 +359,25 @@ module.exports = () => {
           container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
         }
       } else {
+        const char = _key(e)
         if (e.metaKey) {
           clearTimeout(debounceDbl)
           clearTimeout(debounceCtl)
           clearTimeout(debounceAlt)
-          saveKey += e.key
+          saveKey += char
         } else {
           if (e.ctrlKey && e.altKey) {
-            stdDbl.push(e.key)
+            stdDbl.push(char)
             hghDbl.push(e.code)
             clearTimeout(debounceDbl)
             debounceDbl = setTimeout(macroDbl, kdelay)
           } else if (e.ctrlKey) {
-            stdCtl.push(e.key)
+            stdCtl.push(char)
             hghCtl.push(e.code)
             clearTimeout(debounceCtl)
             debounceCtl = setTimeout(macroCtl, kdelay)
           } else if (e.altKey) {
-            stdAlt.push(e.key)
+            stdAlt.push(char)
             hghAlt.push(e.code)
             clearTimeout(debounceAlt)
             debounceAlt = setTimeout(macroAlt, kdelay)
