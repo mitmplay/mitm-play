@@ -41,26 +41,26 @@ const kcode3 = {
   10: ')'
 }
 
-module.exports = evn => {
-  const {code} = evn
+module.exports = (evn, opt={codeOnly:false}) => {
+  const {code, shiftKey} = evn
+  const {codeOnly} = opt
   let match
   let char = ''
   match = code.match(/Key(.)/)
   if (match) {
-    if (evn.shiftKey) {
-      char = match.pop()
-    } else {
-      char = match.pop().toLowerCase()
+    char = match.pop()
+    if (!codeOnly && !shiftKey) {
+      char = char.toLowerCase()
     }
   } else {
     match = code.match(/(Digit|Numpad)(.)/)
     if (match) {
       char = match.pop()
-      if (evn.shiftKey) {
+      if (!codeOnly && shiftKey) {
         char = kcode3[char]
       }
     } else {
-      if (evn.shiftKey) {
+      if (!codeOnly && shiftKey) {
         char = kcode2[code]
       } else {
         char = kcode1[code]

@@ -359,32 +359,33 @@ module.exports = () => {
           container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
         }
       } else {
-        const char = _key(e)
-        if (e.metaKey) {
-          clearTimeout(debounceDbl)
-          clearTimeout(debounceCtl)
-          clearTimeout(debounceAlt)
-          saveKey += char
-        } else {
-          if (e.ctrlKey && e.altKey) {
-            stdDbl.push(char)
-            hghDbl.push(e.code)
+        let char = _key(e)
+        if (e.ctrlKey && e.altKey) {
+          if (e.shiftKey) {
+            char = _key(e, {codeOnly: true})
             clearTimeout(debounceDbl)
-            debounceDbl = setTimeout(macroDbl, kdelay)
-          } else if (e.ctrlKey) {
-            stdCtl.push(char)
-            hghCtl.push(e.code)
             clearTimeout(debounceCtl)
-            debounceCtl = setTimeout(macroCtl, kdelay)
-          } else if (e.altKey) {
-            stdAlt.push(char)
-            hghAlt.push(e.code)
             clearTimeout(debounceAlt)
-            debounceAlt = setTimeout(macroAlt, kdelay)
-          }
-          e._keys = saveKey
-          mitm.lastKey = e  
+            saveKey += char
+            return
+          } 
+          stdDbl.push(char)
+          hghDbl.push(e.code)
+          clearTimeout(debounceDbl)
+          debounceDbl = setTimeout(macroDbl, kdelay)
+        } else if (e.ctrlKey) {
+          stdCtl.push(char)
+          hghCtl.push(e.code)
+          clearTimeout(debounceCtl)
+          debounceCtl = setTimeout(macroCtl, kdelay)
+        } else if (e.altKey) {
+          stdAlt.push(char)
+          hghAlt.push(e.code)
+          clearTimeout(debounceAlt)
+          debounceAlt = setTimeout(macroAlt, kdelay)
         }
+        e._keys = saveKey
+        mitm.lastKey = e        
       } 
     }
   }

@@ -1230,7 +1230,7 @@ A hot keys that can be press on specific page and it will do similar thing with 
 
 Example below show a defined macro keys: `code:KeyA` or `code:KeyP` & To activate, it need to press combination buttons of `Ctrl` **+** `Alt` **+** `KeyA`/`KeyP`. 
 
-list of `key.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
+list of `event.code` : https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
 
 <details><summary><b>Example</b></summary>
 
@@ -1264,37 +1264,55 @@ Automation commands return from `KeyP` function don't include selector, means it
 
 <details><summary><b>Variations</b></summary>
 
-#### Recomended macro keys
-Only this variations will work on `Mac`/`Windows`
+### Recomended macro keys
+Combination `Ctrl + Alt + ...` will work on `Mac`/`Windows`.
+
+Suport all `event.code` & lowercase `event.key`
 ```js
 window.mitm.macrokeys = {
-  'key:a'()          { console.log('key in: Ctrl + Alt + a') },
-  'key:A'()          { console.log('key in: Ctrl + Alt + A') },
-  'key:aA'()         { console.log('key in: Ctrl + Alt + aA') },
+  'key:a'()          { console.log('key in: Ctrl + Alt + a') }, // take presedance over code:KeyA
+  'key:ab'()         { console.log('key in: Ctrl + Alt + ab') },// take presedance over code:KeyA:KeyB
   'code:KeyA'()      { console.log('key in: Ctrl + Alt + KeyA') },
   'code:KeyA:KeyB'() { console.log('key in: Ctrl + Alt + KeyA:KeyB') },
 }
 ```
-#### Not Recomended macro keys - might conflict
+Feature to provide shortcut with option of `_keys` as condition logic.
+
+if `Shift key` **pressed**, it will serve as `saving the key` into `windows.mitm.lastKey._keys`. 
+
+Ie: how to type shortcut: KeyL with same keys: 'one' save to `windows.mitm.lastKey._keys`:
+```js
+* press:   `Ctrl + Alt + Shift + one`, then
+* release: `Shift` and press: `KeyL`
+// complete press/release on oneliner
+* press: `Ctrl + Alt + Shift + one` release: `Shift` press: `KeyL`
+```
+
+### Not Recomended macro keys - may conflict with reserved keys on OS/Chrome
 Conflict with Chrome shortcut keys or in Windows conflict with `Ctrl + J`
+
+Suport all `event.code` & `event.key`
 ```js
 window.mitm.macrokeys = {
-  'key:<a>'()          { console.log('key in: .... + Ctrl + a') },
-  'key:<A>'()          { console.log('key in: .... + Ctrl + A') },
-  'key:<aA>'()         { console.log('key in: .... + Ctrl + aA') },
+  'key:<a>'()          { console.log('key in: .... + Ctrl + a') }, // take presedance over code:KeyA
+  'key:<A>'()          { console.log('key in: .... + Ctrl + A') }, // take presedance over code:KeyA
+  'key:<aA>'()         { console.log('key in: .... + Ctrl + aA') },// take presedance over code:KeyA:KeyA
   'code:<KeyA>'()      { console.log('key in: .... + Ctrl + KeyA') },
-  'code:<KeyA:KeyB>'() { console.log('key in: .... + Ctrl + KeyA:KeyB') },
+  'code:<KeyA:KeyA>'() { console.log('key in: .... + Ctrl + KeyA:KeyA') },
 }
 ```
-#### Not Recomended macro keys - might conflict
+
+### Not Recomended macro keys - may conflict with reserved keys on OS/Chrome
 In windows conflict with `Alt + D`, unless need to combine with Shift ie: `Shift + Alt + D`
+
+Suport all `event.code` & `event.key`
 ```js
 window.mitm.macrokeys = {
-  'key:{a}'()          { console.log('key in: .... + Alt + a') },
-  'key:{A}'()          { console.log('key in: .... + Alt + A') },
-  'key:{aA}'()         { console.log('key in: .... + Alt + aA') },
+  'key:{a}'()          { console.log('key in: .... + Alt + a') }, // take presedance over code:KeyA
+  'key:{A}'()          { console.log('key in: .... + Alt + A') }, // take presedance over code:KeyA
+  'key:{aA}'()         { console.log('key in: .... + Alt + aA') },// take presedance over code:KeyA:KeyA
   'code:{KeyA}'()      { console.log('key in: .... + Alt + KeyA') },
-  'code:{KeyA:KeyB}'() { console.log('key in: .... + Alt + KeyA:KeyB') },
+  'code:{KeyA:KeyA}'() { console.log('key in: .... + Alt + KeyA:KeyA') },
 }
 ```
 </details>
