@@ -1,10 +1,10 @@
 // https://github.com/sveltejs/template/blob/master/rollup.config.js
 
+import scss from 'rollup-plugin-scss'
 import svelte from 'rollup-plugin-svelte'
+import preprocess from 'svelte-preprocess'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
-import preprocess from 'svelte-preprocess'
-import css from 'rollup-plugin-css-only'
 
 export default {
   input: 'src/main.js',
@@ -19,7 +19,7 @@ export default {
 			compilerOptions: {dev: true},
       preprocess:  preprocess()
     }),
-    css({ output: 'bundle.css' }),   
+    scss({ output: 'bundle.css' }),   
 		resolve({
 			browser: true,
 			dedupe: ['svelte'],
