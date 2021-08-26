@@ -117,11 +117,11 @@ module.exports = () => {
       const _href = href.replace(origin, '')
       const {_macros_, macros} = window.mitm
       observerfn = []
+      _macros_ && _macros_()
       for (const key in macros) {
         const { path, msg } = toRegex(key)
         if (_href.match(path)) {
           button.innerHTML = msg || 'Entry'
-          _macros_ && _macros_()
           let fn = macros[key]()
           if (fn instanceof Promise) {
             fn = await fn
