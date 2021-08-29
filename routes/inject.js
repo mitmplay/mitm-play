@@ -98,16 +98,16 @@ const headerchg = headers => {
 
 function injectWS (resp, url, jsLib) {
   const { __args, fn: { _tldomain, _nameSpace } } = global.mitm
-  const js = ['/mitm-play/mitm.js']
+  const js = ['/mitm-play/mitm.js', '/mitm-play/ws-client.js']
   let body = `${resp.body}`
 
+  // do not change JS load order! 
   if (_nameSpace(_tldomain(url))) {
     if (__args.svelte) {
       body = css_src(body, ['/mitm-play/macros.css'])
     }
     js.push('/mitm-play/macros.js')
   }
-  js.push('/mitm-play/ws-client.js')
   js.push('/mitm-play/jslib/selector.js')
   if (jsLib) {
     js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
