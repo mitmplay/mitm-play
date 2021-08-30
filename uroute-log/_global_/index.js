@@ -7,6 +7,7 @@ const route = {
     'ws-broadcast': true,
     'ws-connect': true,
     'ws-message': true,
+    'frame-load': true,
     'page-load': true
   }
 }

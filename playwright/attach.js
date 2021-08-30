@@ -136,6 +136,7 @@ async function attachCdp(page) {
 module.exports = async function(page) {
   const _page = ids('page~')
   const _session = ids('session~')
+  const { __flag } = global.mitm
 
   page._page = _page
   page._session = _session // feat: session stamp
@@ -179,11 +180,11 @@ module.exports = async function(page) {
   })
 
   page.on('framedetached', async (frame) => {
-    grey(frame, c.strikethrough('frame detached-0'))
+    __flag['frame-load'] && grey(frame, c.strikethrough('frame detached-0'))
   })
 
   page.on('framenavigated', async (frame) => {
-    grey(frame, c.strikethrough('frame navigate-0'))
+    __flag['frame-load'] && grey(frame, c.strikethrough('frame navigate-0'))
   })
 
   await page.setExtraHTTPHeaders({ 'xplay-page': _page })

@@ -7,6 +7,7 @@ const route = {
     'no-namespace': false,
     'ws-connect': true,
     'ws-message': true,
+    'frame-load': true,
     'page-load': true,
   }
 }

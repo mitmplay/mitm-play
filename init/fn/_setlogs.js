@@ -57,6 +57,7 @@ function _setlogs () {
       logs2['ws-broadcast'] = true
       logs2['ws-message'] = true
       logs2['ws-connect'] = true
+      logs2['frame-load'] = true
       logs2['page-load']  = true
       logs2['mitm-mock']  = true
       logs2['file-log']   = true

@@ -723,6 +723,7 @@ _global_ = {
     'ws-broadcast': false, // true if --verbose/--debug
     'ws-connect': false,   // true if --verbose/--debug
     'ws-message': false,   // true if --verbose/--debug
+    'frame-load': false,   // true if --verbose/--debug
     'page-load': false,    // true if --verbose/--debug
     'mitm-mock': false,    // true if --verbose/--debug
     'file-log': false,     // true if --verbose/--debug
