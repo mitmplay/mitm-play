@@ -38,16 +38,22 @@ const mockResponse = async function ({ reqs, route }, _3d) {
     if (typeof (match.route) === 'string') {
       resp.body = match.route
     } else {
+      let otyp
       let { file, js } = match.route
       if (typeof file === 'function') {
         file = file(reqs, match)
-        if (!file) {
-          return false
+        otyp = typeof file
+        if (otyp==='boolean') {
+          return file          
         }
       }
       if (file || js) {
         const {path: p1, route: {path: p2}} = match
-        const path = p1 || p2
+        let path = p1 || p2
+        if (otyp==='object') {
+          file.path && (path = file.path)
+          file.file && (file = file.file)
+        }
 
         if (file) {
           file = filePath(match, path, file)

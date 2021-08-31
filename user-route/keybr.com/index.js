@@ -53,8 +53,9 @@ const route = {
   cache: {
     '/df': {
       file(reqs, match) {
-        match.path = 'dor'
-        return 'me'
+        const path = 'path'
+        const file = 'file'
+        return {path, file}
       },
     }
   },

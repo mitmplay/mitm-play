@@ -19,11 +19,17 @@ module.exports = ({ reqs, match }) => {
     stamp1 = `${host}${at}${fpath}`
     stamp2 = `${host}${at}/$${fpath}`
   }
+  let otyp
   let _root
   if (typeof file === 'function') {
     file = file(reqs, match)
     if (match.path) {
       path = match.path
+    }
+    otyp = typeof file
+    if (otyp==='object') {
+      file.path && (path = file.path)
+      file.file && (file = file.file)
     }
   }
   if (file) {

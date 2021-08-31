@@ -214,9 +214,9 @@ Detail structure of `Object` and `Function` shared accros **Section**
  * for Mock: False value indicate skip mocking
 */
 file(reqs, match) {
-   match.path = 'some/path' // superseded match.route.path
+  match.path = 'some/path' // superseded match.route.path
   ...
-  return 'common.js';
+  return 'common.js'; //return {path: 'some/path', file: 'common.js'}
 },
 ```
 </details>
@@ -420,7 +420,7 @@ mock: {
     file(reqs, match) {
       match.path = 'some/path' // superseded match.route.path
       ...
-      return 'filename'
+      return 'filename' //return {path: 'some/path', file: 'filename'}
     },
     response(resp, reqs, match) {
       const {body} = resp
