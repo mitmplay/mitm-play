@@ -1,7 +1,7 @@
 const { root, filename } = require('./file-util')
 const filePath = require('./file-path')
 
-module.exports = ({ match, reqs }) => {
+module.exports = ({ reqs, match }) => {
   let { host, route: { at, path, file } } = match
   const { __args } = global.mitm
   const fpath = filename(match)
@@ -21,7 +21,7 @@ module.exports = ({ match, reqs }) => {
   }
   let _root
   if (typeof file === 'function') {
-    file = file(match, reqs)
+    file = file(reqs, match)
   }
   if (file) {
     file = filePath(match, path, file)
