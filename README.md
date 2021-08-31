@@ -214,6 +214,7 @@ Detail structure of `Object` and `Function` shared accros **Section**
  * for Mock: False value indicate skip mocking
 */
 file(reqs, match) {
+   match.path = 'some/path' // superseded match.route.path
   ...
   return 'common.js';
 },
@@ -416,8 +417,13 @@ Manipulate **response** with `response` *function*
 ```js
 mock: {
   'mitm-play/twitter.js': {
+    file(reqs, match) {
+      match.path = 'some/path' // superseded match.route.path
+      ...
+      return 'filename'
+    },
     response(resp, reqs, match) {
-      const {body} = resp;
+      const {body} = resp
       ...
       return {body} // {status, headers, body} or false to skip
     },

@@ -47,7 +47,7 @@ module.exports = async ({ data }) => {
 
   async function _goto(store) {
     page = global.mitm.pages[b]
-    page.goto(store)
+    await page.goto(store)
   }
 
   async function _save(selector, store) {

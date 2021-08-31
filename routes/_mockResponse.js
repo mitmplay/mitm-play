@@ -46,7 +46,9 @@ const mockResponse = async function ({ reqs, route }, _3d) {
         }
       }
       if (file || js) {
-        const { path } = match.route
+        const {path: p1, route: {path: p2}} = match
+        const path = p1 || p2
+
         if (file) {
           file = filePath(match, path, file)
           const apath = file.split('/')

@@ -41,9 +41,21 @@ const route = {
       tags: ['tag3']
     },
   },
-  mock: {
+  // mock: {
+  //   '/df': {
+  //     file(reqs, match) {
+  //       match.path = 'dor'
+  //       return 'me'
+  //     },
+  //     tags: 'no-ads~wiw'
+  //   }
+  // },
+  cache: {
     '/df': {
-      tags: 'no-ads~wiw'
+      file(reqs, match) {
+        match.path = 'dor'
+        return 'me'
+      },
     }
   },
   // html: {

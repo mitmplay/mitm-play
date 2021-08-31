@@ -22,6 +22,9 @@ module.exports = ({ reqs, match }) => {
   let _root
   if (typeof file === 'function') {
     file = file(reqs, match)
+    if (match.path) {
+      path = match.path
+    }
   }
   if (file) {
     file = filePath(match, path, file)
