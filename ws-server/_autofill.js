@@ -46,8 +46,8 @@ module.exports = async ({ data }) => {
   }
 
   async function _goto(store) {
-    const pageobj = global.mitm.pages[b]
-    await pageobj.goto(store)
+    page = global.mitm.pages[b]
+    page.goto(store)
   }
 
   async function _save(selector, store) {
