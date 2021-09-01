@@ -126,7 +126,11 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             }
           }
           const meta = metaResp({ reqs, resp })
-          const body = resp.body
+          let body = resp.body
+          if (__args.nice && match.typ==='json') {
+            let json = JSON.parse(`${body}`)
+            body = JSON.stringify(json, null, 2)
+          }
           filesave({ fpath1: fname1, body }, { fpath2, meta }, 'cache')
           if (response) {
             resp2 = response(resp, reqs, match)

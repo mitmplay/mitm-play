@@ -822,7 +822,8 @@ $ mitm-play --help
     -D --debug         show ws messages
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
-    -K --dark          set chrome devtools to dark mode 
+    -K --dark          set chrome devtools to dark mode
+    -N --nice          JSON cache save as human readable
     -R --redirect      set redirection: true/false/manual
     -U --nourl         set logs without URL*
     -V --verbose       show more detail of console log

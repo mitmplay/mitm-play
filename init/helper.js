@@ -36,7 +36,8 @@ module.exports = (_package) => {
     -D --debug    \t show ws messages
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*
-    -K --dark     \t set chrome devtools to dark mode 
+    -K --dark     \t set chrome devtools to dark mode
+    -N --nice     \t JSON cache save as human readable
     -R --redirect \t set redirection: true/false/manual
     -U --nourl    \t set logs without URL*
     -V --verbose  \t show more detail of console log
