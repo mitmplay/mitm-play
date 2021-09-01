@@ -41,24 +41,24 @@ const route = {
       tags: ['tag3']
     },
   },
-  // mock: {
-  //   '/df': {
-  //     file(reqs, match) {
-  //       match.path = 'dor'
-  //       return 'me'
-  //     },
-  //     tags: 'no-ads~wiw'
-  //   }
-  // },
-  cache: {
+  mock: {
     '/df': {
       file(reqs, match) {
-        const path = 'path'
-        const file = 'file'
-        return {path, file}
+        match.path = '_assets_'
+        return 'me@error.json'
       },
+      tags: 'no-ads~wiw'
     }
   },
+  // cache: {
+  //   '/df': {
+  //     file(reqs, match) {
+  //       const path = 'path'
+  //       const file = 'file'
+  //       return {path, file}
+  //     },
+  //   }
+  // },
   // html: {
   //   '/': null
   // },

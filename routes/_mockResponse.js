@@ -84,12 +84,12 @@ const mockResponse = async function ({ reqs, route }, _3d) {
             }
           }
           match.log += `[${xfile}]`
-          const xfile2 = xfile.split('@')[0]
-          if (await fs.pathExists(`${_root}/$/${xfile}.json`)) {
-            fpath2 = `${_root}/$/${xfile}.json`
-          } else if (xfile2 !== xfile) {
-            if (await fs.pathExists(`${_root}/$/${xfile2}.json`)) {
-              fpath2 = `${_root}/$/${xfile2}.json`
+          const [,fheader] = xfile.split('@')
+          fpath2 = `${_root}/$/${fheader}`
+          if (!(fheader && await fs.pathExists(fpath2))) {
+            fpath2 = `${_root}/$/${xfile}`
+            if (!await fs.pathExists(fpath2)) {
+              fpath2 = false
             }
           }
           if (fpath2) {
