@@ -35,21 +35,21 @@ const mockResponse = async function ({ reqs, route }, _3d) {
   if (match) {
     const { response, hidden } = match.route
     resp = mock(reqs, match)
+    let otyp
     if (typeof (match.route) === 'string') {
       resp.body = match.route
     } else {
-      let otyp
       let { file, js } = match.route
       if (typeof file === 'function') {
         file = file(reqs, match)
-        otyp = typeof file
-        if (otyp==='boolean') {
-          return file          
+        if (file===false) {
+          return          
         }
       }
       if (file || js) {
         const {path: p1, route: {path: p2}} = match
         let path = p1 || p2
+        otyp = typeof file
         if (otyp==='object') {
           file.path && (path = file.path)
           file.file && (file = file.file)
@@ -80,7 +80,7 @@ const mockResponse = async function ({ reqs, route }, _3d) {
               const b = browser[reqs.browserName]
               msg = c.bgYellowBright.bold.red(`${b} mock err (${_root}/${fileMethod} or ${file}) did not exists!`)
               logmsg(msg)
-              return false
+              return
             }
           }
           match.log += `[${xfile}]`
