@@ -11,8 +11,8 @@ const chgRequest = async function (reqs, _3d) {
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __args, __flag } = global.mitm
 
-  let result = match
-  if (result) {
+  let result = {}
+  if (match) {
     const { request, session, hidden } = match.route
     if (__flag.request && !match.hidden && !hidden) {
       if (!match.url.match('/mitm-play/websocket')) {
