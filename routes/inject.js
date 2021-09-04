@@ -99,7 +99,8 @@ const headerchg = headers => {
 function injectWS (resp, url, jsLib) {
   const { __args, fn: { _tldomain, _nameSpace } } = global.mitm
   const js = ['/mitm-play/mitm.js', '/mitm-play/ws-client.js']
-  let body = `${resp.body}`
+  let {body, headers} = resp
+  body = `${body}`
 
   // do not change JS load order! 
   if (_nameSpace(_tldomain(url))) {
@@ -114,7 +115,10 @@ function injectWS (resp, url, jsLib) {
   }
   resp.body = script_src(body, js)
   if (__args.csp) {
-    headerchg(resp.headers)
+    headerchg(headers)
+    if (__args.csp==='nosts' && headers['strict-transport-security']) {
+      delete headers['strict-transport-security']
+    }
   }
 }
 module.exports = {

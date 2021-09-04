@@ -14,16 +14,13 @@ function heartbeat() {
   this.isAlive = true;
 }
 
-const cert = fs.readFileSync(`${path}/selfsigned.crt`)
-const key = fs.readFileSync(`${path}/selfsigned.key`)
-const app = website()
-
 module.exports = () => {
   const server = https.createServer({
+    key:  fs.readFileSync(`${path}/selfsigned.key`, 'utf8'),
+    cert: fs.readFileSync(`${path}/selfsigned.crt`, 'utf8'),
     rejectUnauthorized: false,
-    cert,
-    key
-  }, app)
+    agent: false,
+  }, website())
 
   const config = {
     server,

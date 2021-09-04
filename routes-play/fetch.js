@@ -1,3 +1,4 @@
+const https = require('https');
 const c = require('ansi-colors')
 const _fetch = require('make-fetch-happen')
 const { cookieToObj, objToCookie } = require('../routes/filesave/cookier')
@@ -33,9 +34,16 @@ const redirect = {
   'follow': true,
   'manual': true,
 }
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
 function fetch (route, browserName, { url, proxy, ...reqs }, handler) {
   const { fn, argv } = global.mitm
-  const opts = { redirect: true }
+  const opts = { 
+    redirect: true,
+    agent: httpsAgent,
+    credentials: 'include',
+  }
   if (argv.redirect===true) {
     opts.redirect = 'manual'
   } else if (redirect[argv.redirect]) {
