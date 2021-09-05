@@ -122,13 +122,19 @@ module.exports = () => {
         const { path, msg } = toRegex(key)
         if (_href.match(path)) {
           button.innerHTML = msg || 'Entry'
-          let fn = macros[key]()
-          if (fn instanceof Promise) {
-            fn = await fn
+          let fns = macros[key]()
+          if (fns instanceof Promise) {
+            fns = await fns
           }
-          if (typeof fn === 'function') {
-            observerfn.push(fn)
-          } 
+          if (typeof fns === 'function') {
+            observerfn.push(fns)
+          } else if (Array.isArray(fns)) {
+            for (const fn2 of fns) {
+              if (typeof fn2 === 'function') {
+                observerfn.push(fn2)
+              }
+            }
+          }
           debunk && clearTimeout(debunk)
           debunk = setTimeout(() => {
             onces = {} // feat: onetime fn call
