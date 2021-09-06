@@ -353,7 +353,7 @@ module.exports = () => {
   }
 
   function keybCtrl (e) {
-    if (['Alt', 'Control', 'Meta'].includes(e.key)) {
+    if (!e.code || ['Alt', 'Control', 'Meta'].includes(e.key)) {
       return
     } else {
       const { macrokeys } = window.mitm
