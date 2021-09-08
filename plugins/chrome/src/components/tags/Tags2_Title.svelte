@@ -22,17 +22,14 @@ function setSubns(e) {
   const {checked, dataset} = e.target
   setTimeout(() => {
     const {_childns} = window.mitm.routes[ns]
-    const {item: _ns} = dataset
-    const {list} = _childns
+    let {item: _ns} = dataset
     if (checked) {
+      const {list} = _childns
       for (const id in list) {
-        list[id] = false
+        list[id] = _ns===id
       }
-      if (_ns.match('@')) { // feat: only for sub-apps
-        list[_ns] = true
-      }
-    }
-    _childns._subns = list[_ns] ? _ns : ''
+    } // feat: only for sub-apps
+    _childns._subns = checked ? _ns :  _ns.split('@').pop()
     tags.set({...$tags})
   }, 1);
 }

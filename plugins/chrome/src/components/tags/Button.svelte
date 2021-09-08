@@ -23,7 +23,7 @@ function btnSave(e) {
     __tag2,
     __tag3,
   };
-  console.log('%cTags: saveTags', _c, e.target);
+  console.log('%cTags: saveTags', _c, tags, e.target);
   ws__send('saveTags', tags);
   urls()
 }

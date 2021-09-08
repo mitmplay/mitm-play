@@ -59,6 +59,7 @@ function btnTag(e) {
   for (const ns in routes) {
     _childns[ns] = routes[ns]._childns
   }
+  console.log({_childns, __tag1, __tag2, __tag3})
   ws__send('saveTags', {_childns, __tag1, __tag2, __tag3});
   setTimeout(()=>chrome.tabs.update({url}), 100)
 }
