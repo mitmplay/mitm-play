@@ -50,7 +50,9 @@ function btnTag(e) {
   for (const id in list) {
     list[id] = false
   }
-  list[ns] = true
+  if (ns.match('@')) { // feat: only for sub-apps
+    list[ns] = true
+  }
   chld._subns = ns
   tags.set({...$tags})
   const _childns = {}
