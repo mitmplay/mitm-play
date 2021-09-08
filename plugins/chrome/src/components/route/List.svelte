@@ -38,7 +38,9 @@ const routeHandler = obj => {
     const {_childns} = routes[_ns]
     if (_childold && _childold._subns) {
       const {_subns} = _childold
-      _childns.list[_subns] = true
+      if (_subns.match('@')) { // feat: only for sub-apps
+        _childns.list[_subns] = true
+      }
       _childns._subns = _subns
     }
   }

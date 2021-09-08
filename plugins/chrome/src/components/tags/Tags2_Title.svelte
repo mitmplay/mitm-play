@@ -28,7 +28,9 @@ function setSubns(e) {
       for (const id in list) {
         list[id] = false
       }
-      list[_ns] = true
+      if (_ns.match('@')) { // feat: only for sub-apps
+        list[_ns] = true
+      }
     }
     _childns._subns = list[_ns] ? _ns : ''
     tags.set({...$tags})
