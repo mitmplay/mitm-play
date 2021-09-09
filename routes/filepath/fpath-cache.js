@@ -23,6 +23,9 @@ module.exports = ({ reqs, match }) => {
   let _root
   if (typeof file === 'function') {
     file = file(reqs, match)
+    if (file===false) {
+      return {fpath1: '', fpath2: ''} // feat: skip cache!
+    }
     if (match.path) {
       path = match.path
     }

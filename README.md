@@ -211,7 +211,7 @@ Detail structure of `Object` and `Function` shared accros **Section**
  * 
  * return: <filename: string>/false
  * 
- * for Mock: False value indicate skip mocking
+ * False value indicate skiping rule
 */
 file(reqs, match) {
   match.path = 'some/path' // superseded match.route.path

@@ -146,8 +146,8 @@ function checkTags(tg1, tg2, tg3, typ, key) {
     isTagsOk = tg2[tag].state
     if (isTagsOk && tag1.length) {
       isTagsOk = false
-      for (const tag of tag1) {
-        if (tg1[tag]) {
+      for (const _t1 of tag1) {
+        if (tg1[_t1]) {
           isTagsOk = true
           break
         }
