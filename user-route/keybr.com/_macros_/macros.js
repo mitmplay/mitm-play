@@ -35,7 +35,8 @@ module.exports = () => {
 
       window.mitm.autofill = ['input[type="password"] => password']
       window.mitm.autobuttons  = rbuttons
-
+      // window.mitm.rightbuttons = rbuttons
+      // window.mitm.leftbuttons  = rbuttons
       return observeOnce
     },
     zero: '0'

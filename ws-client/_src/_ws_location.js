@@ -7,10 +7,10 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 const _c = 'color: #bada55'
 
 module.exports = () => {
-  const styleLeft   = 'top: -8px; left:  3px;'
-  const styleRight  = 'top: -8px; right: 3px;'
-  const styleRight3 = 'top:  8px; right: 3px; text-align: end;'
-  const buttonStyle = ''
+  const styleLeft  = 'top: -8px; left:  3px;'
+  const styleTopR  = 'top: -8px; right: 3px;'
+  const styleRight = 'top:  8px; right: 3px; text-align: end;'
+  const buttonStyle= ''
   const style = `
   .mitm-container {
     position: fixed;
@@ -179,8 +179,8 @@ module.exports = () => {
         }
       }
     }
-    container.right.style = styleRight3
-    container.topr.style  = styleRight
+    container.right.style = styleRight
+    container.topr.style  = styleTopR
     container.left.style  = styleLeft
     const visible = (window.mitm.autofill)
     button.style = buttonStyle + (visible ? 'background-color: azure;' : 'display: none;')
@@ -379,8 +379,8 @@ module.exports = () => {
       if (e.key === 'Shift') {
         if (e.ctrlKey) {
           ctrl = !ctrl
-          container.right.style = styleRight3 + (!ctrl ? '' : 'display: none;')
-          container.topr.style  = styleRight + (!ctrl ? '' : 'display: none;')
+          container.right.style = styleRight + (!ctrl ? '' : 'display: none;')
+          container.topr.style  = styleTopR + (!ctrl ? '' : 'display: none;')
           container.left.style  = styleLeft + (!ctrl ? '' : 'display: none;')
         }
       } else {
@@ -474,8 +474,8 @@ module.exports = () => {
     divTopR.className  = 'mitm-container topr'
     divRight.className = 'mitm-container right'
     divCenter.className= 'mitm-container center'
-    divRight.style = styleRight3
-    divTopR.style  = styleRight
+    divRight.style = styleRight
+    divTopR.style  = styleTopR
     divLeft.style   = styleLeft
 
     html.insertBefore(styleBtn, htmlref)
