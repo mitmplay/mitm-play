@@ -130,7 +130,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           }
           const meta = metaResp({ reqs, resp })
           let body = resp.body
-          if (__args.nice && match.typ==='json') {
+          if (__args.nice && resp.headers['content-type'].match(/json/)) {
             let json = JSON.parse(`${body}`)
             body = JSON.stringify(json, null, 2)
           }

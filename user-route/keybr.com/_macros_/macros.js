@@ -5,6 +5,9 @@ const rbuttons = {
   'Right|#1445d733': async function () {
     console.log('%cMacro: Clicked on "Right" button', 'color:#bc0099')
   },
+  'Two|#1445d733': async function () {
+    console.log('%cMacro: Clicked on "Right" button', 'color:#bc0099')
+  },
 }
 
 module.exports = () => {
@@ -35,8 +38,8 @@ module.exports = () => {
 
       window.mitm.autofill = ['input[type="password"] => password']
       window.mitm.autobuttons  = rbuttons
-      // window.mitm.rightbuttons = rbuttons
-      // window.mitm.leftbuttons  = rbuttons
+      window.mitm.rightbuttons = rbuttons
+      window.mitm.leftbuttons  = rbuttons
       return observeOnce
     },
     zero: '0'

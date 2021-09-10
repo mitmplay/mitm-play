@@ -7,9 +7,9 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 const _c = 'color: #bada55'
 
 module.exports = () => {
-  const styleLeft  = 'top: -8px; left:  3px;'
-  const styleTopR  = 'top: -8px; right: 3px;'
-  const styleRight = 'top:  8px; right: 3px; text-align: end;'
+  const styleLeft  = 'top:  1px; left:  3px;'
+  const styleTopR  = 'top: -4px; right: 3px;'
+  const styleRight = 'top: 16px; right: 3px; text-align: end;'
   const buttonStyle= ''
   const style = `
   .mitm-container {
@@ -31,19 +31,21 @@ module.exports = () => {
     display: none;
   }
   .mitm-btn {
+    color: black;
     border: none;
     font-size: 8px;
     cursor: pointer;
+    padding: 1px 6px;
     border-radius: 3px;
     font-family: monaco, Consolas, "Lucida Console", monospace;
   }
   .mitm-btn:hover{
     text-decoration:underline;
   }
-  .bgroup-right .mitm-br,
-  .bgroup-topr .mitm-br,
-  .bgroup-left .mitm-br{
+  .bgroup-left button,
+  .bgroup-right button {
     display:table;
+    margin-top: 4px;
   }`
   const event = new Event('urlchanged')
   let container = {
@@ -91,13 +93,8 @@ module.exports = () => {
         br = document.createElement('span')
         br.innerHTML = '&nbsp;'
         bgroup[pos].appendChild(br)
-        bgroup[pos].appendChild(btn)
-      } else {
-        br = document.createElement('span')
-        br.className = 'mitm-br'
-        bgroup[pos].appendChild(btn)
-        bgroup[pos].appendChild(br)
       }
+      bgroup[pos].appendChild(btn)
     }
   }
 
