@@ -87,7 +87,7 @@ module.exports = () => {
       btn.classList.add(`${pos}`)
       btn.classList.add(klas || caption)
       btn.style = buttonStyle + (color ? `background: ${color};` : '')
-      if (pos==='right') {
+      if (pos==='topr') {
         br = document.createElement('span')
         br.innerHTML = '&nbsp;'
         bgroup[pos].appendChild(br)
