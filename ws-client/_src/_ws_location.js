@@ -41,20 +41,21 @@ module.exports = () => {
     text-decoration:underline;
   }
   .bgroup-right .mitm-br,
+  .bgroup-topr .mitm-br,
   .bgroup-left .mitm-br{
     display:table;
   }`
   const event = new Event('urlchanged')
   let container = {
-    right3: {},
     right: {},
+    topr: {},
     left: {},
   }
   let ctrl = false
   let button = {}
   let bgroup = {
-    right3: {},
     right: {},
+    topr: {},
     left: {},
   }
   let intervId
@@ -158,7 +159,7 @@ module.exports = () => {
             onces = {} // feat: onetime fn call
             debunk = undefined
             const {autobuttons, rightbuttons, leftbuttons} = window.mitm
-            rightbuttons && setButtons(rightbuttons, 'right3')
+            rightbuttons && setButtons(rightbuttons, 'right')
             leftbuttons && setButtons(leftbuttons, 'left')
             if (window.mitm.autofill) {
               autobuttons && setButtons({
@@ -170,16 +171,16 @@ module.exports = () => {
                   }
                   play(autofill)
                 }
-              }, 'right')
+              }, 'topr')
             } else {
-              autobuttons && setButtons(autobuttons, 'right')
+              autobuttons && setButtons(autobuttons, 'topr')
             }
           }, 0)
         }
       }
     }
-    container.right3.style = styleRight3
-    container.right.style = styleRight
+    container.right.style = styleRight3
+    container.topr.style  = styleRight
     container.left.style  = styleLeft
     const visible = (window.mitm.autofill)
     button.style = buttonStyle + (visible ? 'background-color: azure;' : 'display: none;')
@@ -378,9 +379,9 @@ module.exports = () => {
       if (e.key === 'Shift') {
         if (e.ctrlKey) {
           ctrl = !ctrl
-          container.right3.style = styleRight3 + (!ctrl ? '' : 'display: none;')
-          container.right.style  = styleRight + (!ctrl ? '' : 'display: none;')
-          container.left.style   = styleLeft + (!ctrl ? '' : 'display: none;')
+          container.right.style = styleRight3 + (!ctrl ? '' : 'display: none;')
+          container.topr.style  = styleRight + (!ctrl ? '' : 'display: none;')
+          container.left.style  = styleLeft + (!ctrl ? '' : 'display: none;')
         }
       } else {
         let char = _key(e)
@@ -439,16 +440,16 @@ module.exports = () => {
             fn(nodes)
           }
           const {autobuttons, rightbuttons, leftbuttons} = window.mitm
-          rightbuttons && setButtons(rightbuttons, 'right3')
+          rightbuttons && setButtons(rightbuttons, 'right')
           leftbuttons && setButtons(leftbuttons, 'left')
           const { autofill } = window.mitm
           if (autofill) {
             autobuttons && setButtons({
               ...autobuttons,
               'Entry'() {play(autofill)}
-            }, 'right')
+            }, 'topr')
           } else {
-            autobuttons && setButtons(autobuttons, 'right')
+            autobuttons && setButtons(autobuttons, 'topr')
           }
 
         }, 100)
@@ -459,37 +460,37 @@ module.exports = () => {
   function init() {
     const html = document.querySelector('html')
     const htmlref = html.firstElementChild
-    const styleButtons = document.createElement('style')
-    const divTopRight3 = document.createElement('div')
-    const divTopRight = document.createElement('div')
-    const divTopLeft = document.createElement('div')
-    const divCenter = document.createElement('div')
+    const styleBtn = document.createElement('style')
+    const divRight = document.createElement('div')
+    const divTopR  = document.createElement('div')
+    const divLeft  = document.createElement('div')
+    const divCenter= document.createElement('div')
 
-    styleButtons.innerHTML = style
-    divTopRight3.innerHTML = `<span class="bgroup-right"></span>`
-    divTopRight.innerHTML  = `<span class="bgroup-right"></span>`
-    divTopLeft.innerHTML   = `<span class="bgroup-left"></span>`
-    divTopLeft.className   = 'mitm-container autofill-container'
-    divTopRight.className  = 'mitm-container autofill-container'
-    divTopRight3.className = 'mitm-container right3'
-    divCenter.className    = 'mitm-container center'
-    divTopRight3.style = styleRight3
-    divTopRight.style  = styleRight
-    divTopLeft.style   = styleLeft
+    styleBtn.innerHTML = style
+    divRight.innerHTML = `<span class="bgroup-right"></span>`
+    divTopR.innerHTML  = `<span class="bgroup-topr"></span>`
+    divLeft.innerHTML  = `<span class="bgroup-left"></span>`
+    divLeft.className  = 'mitm-container left'
+    divTopR.className  = 'mitm-container topr'
+    divRight.className = 'mitm-container right'
+    divCenter.className= 'mitm-container center'
+    divRight.style = styleRight3
+    divTopR.style  = styleRight
+    divLeft.style   = styleLeft
 
-    html.insertBefore(styleButtons, htmlref)
-    html.insertBefore(divTopRight3, htmlref)
-    html.insertBefore(divTopRight, htmlref)
-    html.insertBefore(divTopLeft, htmlref)
+    html.insertBefore(styleBtn, htmlref)
+    html.insertBefore(divRight, htmlref)
+    html.insertBefore(divTopR, htmlref)
+    html.insertBefore(divLeft, htmlref)
     html.insertBefore(divCenter, htmlref)
     setTimeout(() => {
-      container.right3 = divTopRight3
-      container.right  = divTopRight
-      container.left   = divTopLeft
-      button.style  = `${buttonStyle}background-color: azure;`
-      bgroup.right3 = divTopRight3.children[0]
-      bgroup.right = divTopRight.children[0]
-      bgroup.left  = divTopLeft.children[0]
+      container.right= divRight
+      container.topr = divTopR
+      container.left = divLeft
+      button.style = `${buttonStyle}background-color: azure;`
+      bgroup.right = divRight.children[0]
+      bgroup.topr  = divTopR.children[0]
+      bgroup.left  = divLeft.children[0]
       urlChange(event)
       observed()
     }, 0)
