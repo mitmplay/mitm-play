@@ -7,11 +7,29 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 const _c = 'color: #bada55'
 
 module.exports = () => {
-  const containerStyle1 = 'position: fixed;z-index: 99999;right: 3px;'
-  const containerStyle2 = 'position: fixed;z-index: 99999;left:  3px;'
-  const containerStyle3 = 'position: fixed;z-index: 99999;right: 3px; top: 20px; text-align: end;'
+  const styleLeft   = 'top: -8px; left:  3px;'
+  const styleRight  = 'top: -8px; right: 3px;'
+  const styleRight3 = 'top:  8px; right: 3px; text-align: end;'
   const buttonStyle = ''
   const style = `
+  .mitm-container {
+    position: fixed;
+    z-index: 99999;
+  }
+  .mitm-container.center {
+    background: #dceaffb0;
+    position: fixed;
+    /* center the element */
+    right: 0;
+    left: 0;
+    top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    /* give it dimensions */
+    min-height: 10em;
+    width: 90%;
+    display: none;
+  }
   .mitm-btn {
     border: none;
     font-size: 8px;
@@ -160,9 +178,9 @@ module.exports = () => {
         }
       }
     }
-    container.right3.style = containerStyle3
-    container.right.style = containerStyle1
-    container.left.style  = containerStyle2
+    container.right3.style = styleRight3
+    container.right.style = styleRight
+    container.left.style  = styleLeft
     const visible = (window.mitm.autofill)
     button.style = buttonStyle + (visible ? 'background-color: azure;' : 'display: none;')
     if (typeof (window.mitm.autointerval) === 'function') {
@@ -360,9 +378,9 @@ module.exports = () => {
       if (e.key === 'Shift') {
         if (e.ctrlKey) {
           ctrl = !ctrl
-          container.right3.style = containerStyle3 + (!ctrl ? '' : 'display: none;')
-          container.right.style  = containerStyle1 + (!ctrl ? '' : 'display: none;')
-          container.left.style   = containerStyle2 + (!ctrl ? '' : 'display: none;')
+          container.right3.style = styleRight3 + (!ctrl ? '' : 'display: none;')
+          container.right.style  = styleRight + (!ctrl ? '' : 'display: none;')
+          container.left.style   = styleLeft + (!ctrl ? '' : 'display: none;')
         }
       } else {
         let char = _key(e)
@@ -445,21 +463,25 @@ module.exports = () => {
     const divTopRight3 = document.createElement('div')
     const divTopRight = document.createElement('div')
     const divTopLeft = document.createElement('div')
+    const divCenter = document.createElement('div')
 
     styleButtons.innerHTML = style
     divTopRight3.innerHTML = `<span class="bgroup-right"></span>`
     divTopRight.innerHTML  = `<span class="bgroup-right"></span>`
     divTopLeft.innerHTML   = `<span class="bgroup-left"></span>`
-    divTopRight.className  = 'mitm autofill-container'
-    divTopLeft.className   = 'mitm autofill-container'
-    divTopRight3.style = containerStyle3
-    divTopRight.style  = containerStyle1
-    divTopLeft.style   = containerStyle2
+    divTopLeft.className   = 'mitm-container autofill-container'
+    divTopRight.className  = 'mitm-container autofill-container'
+    divTopRight3.className = 'mitm-container right3'
+    divCenter.className    = 'mitm-container center'
+    divTopRight3.style = styleRight3
+    divTopRight.style  = styleRight
+    divTopLeft.style   = styleLeft
 
     html.insertBefore(styleButtons, htmlref)
     html.insertBefore(divTopRight3, htmlref)
     html.insertBefore(divTopRight, htmlref)
     html.insertBefore(divTopLeft, htmlref)
+    html.insertBefore(divCenter, htmlref)
     setTimeout(() => {
       container.right3 = divTopRight3
       container.right  = divTopRight
