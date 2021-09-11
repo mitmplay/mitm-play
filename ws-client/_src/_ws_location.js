@@ -52,8 +52,8 @@ module.exports = () => {
     right: {},
     topr: {},
     left: {},
+    svlt: {},
   }
-  let ctrl = false
   let button = {}
   let bgroup = {
     right: {},
@@ -207,7 +207,7 @@ module.exports = () => {
     compareHref()
   }
 
-  _play = json => {
+  const _play = json => {
     return new Promise(function(resolve, reject) {
       try {
         window.ws__send('autofill', json, resolve)
@@ -217,7 +217,7 @@ module.exports = () => {
     })
   }
 
-  _post = json => {
+  const _post = json => {
     return new Promise(function(resolve, reject) {
       try {
         const config = {
@@ -300,7 +300,7 @@ module.exports = () => {
     hghDbl = []
     saveKey = ''
     debounceDbl = undefined
-    macro = macrokeys[key1] || macrokeys[key2]
+    let macro = macrokeys[key1] || macrokeys[key2]
     console.log(`%cMacros: ctrl + alt  +  ${key1}  |  ${key2}`, _c)
     if (macro) {
       macro = macro(e)
@@ -319,7 +319,7 @@ module.exports = () => {
     hghCtl = []
     saveKey = ''
     debounceCtl = undefined
-    macro = macrokeys[key1] || macrokeys[key2]
+    let macro = macrokeys[key1] || macrokeys[key2]
     console.log(`%cMacros: .... + ctrl + ${key1} | ${key2}`, 'color: #baeaf1')
     if (macro) {
       macro = macro(e)
@@ -338,7 +338,7 @@ module.exports = () => {
     hghAlt = []
     saveKey = ''
     debounceAlt = undefined
-    macro = macrokeys[key1] || macrokeys[key2]
+    let macro = macrokeys[key1] || macrokeys[key2]
     console.log(`%cMacros: .... + alt  + ${key1} | ${key2}`, 'color: #badaf1')
     if (macro) {
       macro = macro(e)
@@ -367,7 +367,8 @@ module.exports = () => {
       }
     }
   }
-
+  var ctrl = false
+  var svlt = false
   function keybCtrl (e) {
     if (!e.code || ['Alt', 'Control', 'Meta'].includes(e.key)) {
       return
@@ -375,10 +376,15 @@ module.exports = () => {
       const { macrokeys } = window.mitm
       if (e.key === 'Shift') {
         if (e.ctrlKey) {
-          ctrl = !ctrl
-          container.right.style = styleRight + (!ctrl ? '' : 'display: none;')
-          container.topr.style  = styleTopR + (!ctrl ? '' : 'display: none;')
-          container.left.style  = styleLeft + (!ctrl ? '' : 'display: none;')
+          if (e.code==='ShiftRight') {
+            ctrl = !ctrl
+            container.right.style = styleRight + (!ctrl ? '' : 'display: none;')
+            container.topr.style  = styleTopR + (!ctrl ? '' : 'display: none;')
+            container.left.style  = styleLeft + (!ctrl ? '' : 'display: none;')  
+          } else {
+            svlt = !svlt
+            container.svlt.style  = (!svlt ? '' : 'display: block;')  
+          }
         }
       } else {
         let char = _key(e)
@@ -484,6 +490,7 @@ module.exports = () => {
       container.right= divRight
       container.topr = divTopR
       container.left = divLeft
+      container.svlt = divCenter
       button.style = `${buttonStyle}background-color: azure;`
       bgroup.right = divRight.children[0]
       bgroup.topr  = divTopR.children[0]

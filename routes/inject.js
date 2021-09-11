@@ -105,7 +105,7 @@ function injectWS (resp, url, jsLib) {
   // do not change JS load order! 
   if (_nameSpace(_tldomain(url))) {
     if (__args.svelte) {
-      body = css_src(body, ['/mitm-play/macros.css'])
+      body = css_src(body, ['/mitm-play/macros.css', '/mitm-play/ws-client.css'])
     }
     js.push('/mitm-play/macros.js')
   }
