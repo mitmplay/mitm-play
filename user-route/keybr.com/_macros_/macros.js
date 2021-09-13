@@ -1,4 +1,4 @@
-// const {default:App} = require('../_svelte_/VBox.svelte')
+const {default:App} = require('../_svelte_/VBox.svelte')
 const _c = 'color: cornflowerblue'
 
 const rbuttons = {
@@ -16,12 +16,12 @@ module.exports = () => {
   async function observeOnce() {
     console.log('%cMacro: execute after observer once', _c)
   }
-
   return {
     '/'() {
-      // new App({ target: document.body })
+      const target = document.querySelector('.mitm-container.center')
+      new mitm.svelte.Hotkeys({target})
       console.log('%cMacro: olleh >< hello', _c, hello)
-      window.mitm.macrokeys = {
+      const keys = {
         'code:KeyA'(_e) {
           console.log(`%cMacro: ${_e.code}`, _c, _e)
         },
@@ -35,7 +35,12 @@ module.exports = () => {
           console.log(`%cU Char`, _c, _e)
         }
       }
+      keys['code:KeyA'  ]._title = 'this is KeyA'
+      keys['code:{KeyA}']._title = 'this is {KeyA}'
+      keys['key:us'     ]._title = 'this is us'
+      keys['key:u'      ]._title = 'this is u'
 
+      window.mitm.macrokeys = keys
       window.mitm.autofill = ['input[type="password"] => password']
       window.mitm.autobuttons  = rbuttons
       window.mitm.rightbuttons = rbuttons

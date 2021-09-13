@@ -3,7 +3,7 @@
 
 <details><summary><b>mitm-play in action</b></summary>
 
-[![mitm-play](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-ytube.png)](https://www.youtube.com/watch?v=sXTsy_XxILg)
+[![mitm-play](https://raw.githubusercontent.com/mitmplay/user-route/docs/docs/keybr.com-ytube.png)](https://www.youtube.com/watch?v=sXTsy_XxILg)
 
 </details>
 
@@ -824,8 +824,8 @@ $ mitm-play --help
     -H --nohost        set logs without host name*
     -K --dark          set chrome devtools to dark mode
     -N --nice          JSON cache save as human readable
-    -S --svelte        can build w/ svelte using rollup 
     -R --redirect      set redirection: true/false/manual
+    -S --svelte        build with svelte using rollup 
     -U --nourl         set logs without URL*
     -V --verbose       show more detail of console log
     -X --proxypac      set chromium proxypac
@@ -1327,9 +1327,9 @@ window.mitm.macrokeys = {
 </details>
 
 # User Route
-[User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
+[User-route](https://github.com/mitmplay/user-route) are available on this repo: https://github.com/mitmplay/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
 
-If you think you have a nice routing want to share, you can create a PR to the [user-route](https://github.com/mitm-proxy/user-route) or add a `link` to your repo.  
+If you think you have a nice routing want to share, you can create a PR to the [user-route](https://github.com/mitmplay/user-route) or add a `link` to your repo.  
 
 # Use Cases
 <details><summary><b>Reduce Internet usage</b></summary>

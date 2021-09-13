@@ -39,7 +39,7 @@ module.exports = (_package) => {
     -K --dark     \t set chrome devtools to dark mode
     -N --nice     \t JSON cache save as human readable
     -R --redirect \t set redirection: true/false/manual
-    -S --svelte   \t can build w/ svelte using rollup 
+    -S --svelte   \t can build with svelte using rollup 
     -U --nourl    \t set logs without URL*
     -V --verbose  \t show more detail of console log
     -X --proxypac \t set chromium proxypac

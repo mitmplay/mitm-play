@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.8.502",
+  "version": "0.8.503",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -10,6 +10,7 @@
     "coverage": "jest --coverage",
     "start": "node --max-http-header-size=81000 --inspect ./mitm-play.js",
     "client": "esbuild ws-client/_src/ws-client.js --outdir=ws-client --sourcemap=inline --minify-whitespace --target=chrome89 --bundle  --watch",
+    "client2": "rollup --config ws-client/rollup.config.js -w",
     "standard": "standard --verbose | snazzy",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand",
     "test": "jest"
@@ -18,10 +19,10 @@
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mitm-proxy/mitm-play.git"
+    "url": "git+https://github.com/mitmplay/mitm-play.git"
   },
   "bugs": {
-    "url": "https://github.com/mitm-proxy/mitm-play/issues"
+    "url": "https://github.com/mitmplay/mitm-play/issues"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^18.0.0",

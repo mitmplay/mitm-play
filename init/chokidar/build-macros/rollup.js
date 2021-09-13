@@ -4,7 +4,7 @@ const svelte = require('rollup-plugin-svelte')
 const preprocess = require('svelte-preprocess')
 const commonjs = require('@rollup/plugin-commonjs')
 const {nodeResolve:resolve} = require('@rollup/plugin-node-resolve')
-const { logmsg } = global.mitm.fn
+const { path: {app}, fn: {logmsg} } = global.mitm
 
 function bundleRollup(bpath, opath) {
   // see below for details on the options
@@ -13,6 +13,7 @@ function bundleRollup(bpath, opath) {
     input: bpath,
     plugins: [
       svelte({
+        // include: `${app}/svelte/index.js`,
         compilerOptions: {dev: true},
         preprocess:  preprocess()
       }),
@@ -22,13 +23,15 @@ function bundleRollup(bpath, opath) {
         dedupe: ['svelte'],
         preferBuiltins: false
       }),
-      commonjs()
+      commonjs({
+        dynamicRequireTargets: [`${app}/svelte/*.svelte`]
+      })
     ]
   };
   const outputOptions = {
-    file: opath,
     sourcemap: 'inline',
     format: 'iife',
+    file: opath,
     name: 'app'
   };
 
