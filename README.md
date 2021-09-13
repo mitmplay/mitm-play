@@ -3,7 +3,7 @@
 
 <details><summary><b>mitm-play in action</b></summary>
 
-[![mitm-play](https://raw.githubusercontent.com/mitm-proxy/user-route/docs/docs/keybr.com-ytube.png)](https://www.youtube.com/watch?v=sXTsy_XxILg)
+[![mitm-play](https://raw.githubusercontent.com/mitmplay/user-route/docs/docs/keybr.com-ytube.png)](https://www.youtube.com/watch?v=sXTsy_XxILg)
 
 </details>
 
@@ -1327,9 +1327,9 @@ window.mitm.macrokeys = {
 </details>
 
 # User Route
-[User-route](https://github.com/mitm-proxy/user-route) are available on this repo: https://github.com/mitm-proxy/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
+[User-route](https://github.com/mitmplay/user-route) are available on this repo: https://github.com/mitmplay/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
 
-If you think you have a nice routing want to share, you can create a PR to the [user-route](https://github.com/mitm-proxy/user-route) or add a `link` to your repo.  
+If you think you have a nice routing want to share, you can create a PR to the [user-route](https://github.com/mitmplay/user-route) or add a `link` to your repo.  
 
 # Use Cases
 <details><summary><b>Reduce Internet usage</b></summary>
