@@ -824,8 +824,8 @@ $ mitm-play --help
     -H --nohost        set logs without host name*
     -K --dark          set chrome devtools to dark mode
     -N --nice          JSON cache save as human readable
-    -S --svelte        can build w/ svelte using rollup 
     -R --redirect      set redirection: true/false/manual
+    -S --svelte        build with svelte using rollup 
     -U --nourl         set logs without URL*
     -V --verbose       show more detail of console log
     -X --proxypac      set chromium proxypac
