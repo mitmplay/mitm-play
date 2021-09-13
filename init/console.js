@@ -1,5 +1,5 @@
 const c = require('ansi-colors')
-const { logmsg } = global.mitm.fn
+let { logmsg } = global.mitm.fn
 
 let delayFN
 if (global.mitm.argv.lazylog) {
