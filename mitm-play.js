@@ -19,6 +19,7 @@ if (opt) {
 } else {
   process.env.NODE_OPTIONS = '--max-http-header-size=40960'
 }
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 logmsg(c.yellow(`NODE_OPTIONS=${process.env.NODE_OPTIONS}`))
 
 global.__app = __dirname.replace(/\\/g, '/')
