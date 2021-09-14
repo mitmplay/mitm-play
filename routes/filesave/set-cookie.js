@@ -1,4 +1,4 @@
-module.exports = respHeader => {
+ function cookieToObj(respHeader) {
   if (respHeader['set-cookie']) {
     const setCookie = []
     let cookies = respHeader['set-cookie']
@@ -22,3 +22,36 @@ module.exports = respHeader => {
     return setCookie
   }
 }
+
+function objToCookie(arr) {
+  const setCookie = []
+  for (const obj of arr) {
+    const keyValue = []
+    for (const key in obj) {
+      const value = obj[key]
+      if (value!==true) {
+        keyValue.push(`${key}=${value}`)
+      } else {
+        keyValue.push(key)
+      }
+    }
+    setCookie.push(keyValue.join('; '))
+  }
+  return setCookie
+}
+
+function getCookie(arr, id) {
+  for (const obj of arr) {
+    const key = Object.keys(obj)[0]
+    if (key===id) {
+      return obj
+    }
+  }
+}
+
+const {fn} = global.mitm
+fn.getCookie   = getCookie
+fn.cookieToObj = cookieToObj
+fn.objToCookie = objToCookie
+
+module.exports = cookieToObj
