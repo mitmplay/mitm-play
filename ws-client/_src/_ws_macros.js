@@ -1,5 +1,3 @@
-const _c = 'color: #bada55'
-
 module.exports = function () {
   if (window._ws_connect===undefined) {
     window._ws_connect = {}
@@ -27,10 +25,6 @@ module.exports = function () {
   window.mitm._macros_ = () => {
     window.mitm.macrokeys = {}
   }
-
-  function init(_d) {
-    let msg = 'Macros: executed after ws open'
-    console.log(`%c${msg}`, _c, _d)
-  }
-  window._ws_connect.macrosOnMount = init
+  const onMount = e => console.log('%cMacros: executed after ws open', 'color: #5ada55', e)
+  window._ws_connect.macrosOnMount = onMount
 }

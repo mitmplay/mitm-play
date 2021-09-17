@@ -95,12 +95,16 @@ module.exports = () => {
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const observer = new MutationObserver(_ws_debounce(callback, 100))
-    observer.observe(document.body, {
-      attributes: true,
+  if (route && route.screenshot) {
+    const {observer: ob} = route.screenshot
+    const options = {
+      attributes: ob ? true : false,
       childList: true,
       subtree: true
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new MutationObserver(_ws_debounce(callback, 280))
+      observer.observe(document.body, options)
     })
-  })  
+  }
 }

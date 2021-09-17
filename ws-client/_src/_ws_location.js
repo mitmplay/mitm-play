@@ -504,7 +504,9 @@ module.exports = () => {
   window.observer = observer
   function observed() {
     observer.disconnect()
-    observer.observe(document.body, {subtree: true, childList: true})
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    })
   }
-
 }

@@ -1,46 +1,46 @@
 {
-	"name": "play-chrome",
-	"version": "0.1.0",
-	"license": "AGPL-3.0",
-	"author": "Widi Harsojo",
-	"scripts": {
-		"rollup": "rollup -wc",
-		"scss": "node-sass scss/overwrite.scss -w -o css",
-		"start": "npm-run-all scss rollup ",
-		"eslint": "eslint --ext .js,.svelte ."
-	},
-	"devDependencies": {
-		"@rollup/plugin-commonjs": "^16.0.0",
-		"@rollup/plugin-node-resolve": "^10.0.0",
-		"bulma": "0.8.0",
-		"chokidar": "^3.4.0",
-		"eslint": "^5.16.0",
-		"eslint-plugin-import": "^2.19.1",
-		"eslint-plugin-svelte3": "^1.2.3",
-		"lockr": "^0.8.4",
-		"monaco-editor": "^0.23.0",
-		"node-sass": "^5.0.0",
-		"npm-run-all": "^4.1.5",
-		"prettier": "^1.19.1",
-		"prettier-plugin-svelte": "^0.4.2",
-		"rollup": "^2.33.3",
-		"rollup-plugin-scss": "^3.0.0",
-		"rollup-plugin-livereload": "^2.0.0",
-		"rollup-plugin-postcss": "^3.1.8",
-		"rollup-plugin-svelte": "^7.0.0",
-		"rollup-plugin-terser": "^7.0.2",
-		"sass": "^1.38.1",
-		"stylelint": "^13.8.0",
-		"stylelint-config-standard": "^20.0.0",
-		"svelma": "^0.4.0",
-		"svelte": "~3.29.7s",
-		"svelte-preprocess": "^3.9.8"
-	},
-	"engines": {
-		"node": ">=10.15.0"
-	},
-	"dependencies": {
-		"node-gyp": "^3.8.0",
-		"sass": "^1.30.0"
-	}
+  "name": "play-chrome",
+  "version": "0.1.0",
+  "license": "AGPL-3.0",
+  "author": "Widi Harsojo",
+  "scripts": {
+    "rollup": "rollup -wc",
+    "scss": "node-sass scss/overwrite.scss -w -o css",
+    "start": "npm-run-all scss rollup ",
+    "eslint": "eslint --ext .js,.svelte ."
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "bulma": "0.8.0",
+    "chokidar": "^3.4.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-svelte3": "^1.2.3",
+    "lockr": "^0.8.4",
+    "monaco-editor": "^0.23.0",
+    "node-sass": "^5.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
+    "prettier-plugin-svelte": "^0.4.2",
+    "rollup": "^2.33.3",
+    "rollup-plugin-scss": "^3.0.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-postcss": "^3.1.8",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "^1.38.1",
+    "stylelint": "^13.8.0",
+    "stylelint-config-standard": "^20.0.0",
+    "svelma": "^0.4.0",
+    "svelte": "~3.29.7s",
+    "svelte-preprocess": "^3.9.8"
+  },
+  "engines": {
+    "node": ">=14.16.1 <16.0.0" 
+  },
+  "dependencies": {
+    "node-gyp": "^3.8.0",
+    "sass": "^1.30.0"
+  }
 }

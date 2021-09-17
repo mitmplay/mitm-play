@@ -22,6 +22,7 @@ const route = {
   urls: {
     keybr: 'https://www.keybr.com/',
   },
+  screenshot: {},
   proxy: [':proxy:keybr.com'],
   skip: [':skipper:google','woff2'],
   'mock:no-ads': {
