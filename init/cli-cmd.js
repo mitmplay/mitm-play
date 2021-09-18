@@ -114,7 +114,7 @@ module.exports = () => {
     if (argv0) {
       // on window comma change to space
       argv0 = argv0.trim().split(/[, ]+/)
-      const _urls = {}
+      let _urls = {}
       for (const namespace in routes) {
         const { url, urls } = routes[namespace]
         const urls2 = Object.keys(urls||{})
@@ -160,9 +160,9 @@ module.exports = () => {
           }
         }
       }
-      const urls = Object.values(_urls)
-      if (urls.length) {
-        argv.urls = urls
+      _urls = Object.values(_urls)
+      if (_urls.length) {
+        argv.urls = _urls
       } else {
         argv.urls = ['https://keybr.com/']
       }
@@ -194,12 +194,12 @@ module.exports = () => {
     _args = _args.replace(/=([^ ]+)/g, (x, x1) => `='${x1}'`)
     const fpath = `${path.home}/argv/${save === true ? 'default' : save}.js`
     const body = JSON.stringify({ _args, _argv: rest }, null, 2)
-    fs.ensureFile(fpath, err => {
-      if (err) {
+    fs.ensureFile(fpath, err0 => {
+      if (err0) {
         logmsg(c.redBright('>>> Error saving cli options'), fpath)
       } else {
-        fs.writeFile(fpath, body, err => {
-          err && logmsg(c.redBright('>>> Error saving cli options'), err)
+        fs.writeFile(fpath, body, err1 => {
+          err && logmsg(c.redBright('>>> Error saving cli options'), err1)
         })
       }
     })
