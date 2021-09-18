@@ -39,9 +39,9 @@ function bundleRollup(bpath, opath) {
     // create a bundle
     const bundle = await rollup.rollup(inputOptions);
     logmsg(bundle.watchFiles); // an array of file names this bundle depends on
-    const { output } = await bundle.generate(outputOptions);
+    const { output: result } = await bundle.generate(outputOptions);
 
-    for (const chunkOrAsset of output) {
+    for (const chunkOrAsset of result) {
       if (chunkOrAsset.type === 'asset') {
         logmsg('Asset', chunkOrAsset);
       } else {

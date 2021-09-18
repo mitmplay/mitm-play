@@ -49,6 +49,25 @@ window.mitm.macros = {
   ..._body2
 }`).replace(/\n/, '')}
 
+function bundling(fpath, body) {
+  const {argv} = global.mitm
+  body = __autoKeys(body)
+  const bpath = fpath.replace('macros.js', 'build.js')
+  // logmsg(c.redBright('Write'), bpath)
+  fs.writeFile(bpath, body, err => {
+    if (err) {
+      logmsg(c.redBright('Error saving'), err)
+      return
+    }
+    const opath = fpath.replace('_macros_', '_bundle_')
+    if (argv.svelte) {
+      bundleRollup(bpath, opath)
+    } else {
+      bundleEsbuild(bpath, opath)
+    }
+  })  
+}
+
 function genBuild(msg, fpath) {
   const {argv,win32} = global.mitm
   let _global = ''
@@ -91,20 +110,6 @@ function genBuild(msg, fpath) {
       body = __body1(_global, _body1)
     }
   }
-  body = __autoKeys(body)
-  const bpath = fpath.replace('macros.js', 'build.js')
-  // logmsg(c.redBright('Write'), bpath)
-  fs.writeFile(bpath, body, err => {
-    if (err) {
-      logmsg(c.redBright('Error saving'), err)
-      return
-    }
-    const opath = fpath.replace('_macros_', '_bundle_')
-    if (argv.svelte) {
-      bundleRollup(bpath, opath)
-    } else {
-      bundleEsbuild(bpath, opath)
-    }
-  })
+  bundling(fpath, body)
 }
 module.exports = genBuild
