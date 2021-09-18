@@ -114,7 +114,6 @@ module.exports = () => {
     if (argv0) {
       // on window comma change to space
       argv0 = argv0.trim().split(/[, ]+/)
-      const { routes } = global.mitm
       const _urls = {}
       for (const namespace in routes) {
         const { url, urls } = routes[namespace]

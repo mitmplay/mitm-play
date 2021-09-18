@@ -38,7 +38,6 @@ function loadProfile (profile) {
     msg1 = msg1.replace(arr1[1], '******:******')
   }
   logmsg(c.green(`>>> cmd: mitm-play ${msg1.trim()}`), `(${profile})`)
-  // logmsg(c.green(`>>> cmd: mitm-play ${JSON.stringify(saveArgs._args, null, 2)}`),`(${profile})`);
   return saveArgs
 }
 
@@ -169,9 +168,9 @@ module.exports = () => {
     argv.browser = { ...browser }
   }
   for (const id in argv.browser) {
-    const browser = argv.browser[id]
-    if (typeof (browser) === 'string') {
-      argv.browser[id] = browser.replace(/\\/g, '/')
+    const value = argv.browser[id]
+    if (typeof (value) === 'string') {
+      argv.browser[id] = value.replace(/\\/g, '/')
     }
   }
   global.mitm._argv = {...argv} // original argv
