@@ -1,6 +1,6 @@
 const { logmsg } = global.mitm.fn
 
-function debounce (fn, delay = 500, msg) {
+function debounce (fn, delay = 500, msg='') {
   let _timeout = null
   return function () {
     const _this = this

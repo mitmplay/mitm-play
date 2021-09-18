@@ -1,4 +1,6 @@
-const hello = () => {}
+const hello = () => {
+  // This is intentional
+}
 
 const routes = {
   _global_: {

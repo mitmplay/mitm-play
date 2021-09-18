@@ -26,22 +26,16 @@ function _globalTag() {
     __tag2._global_ = {}
   }
 
-  // _global_.config.args
-  // _global_.config.logs
   let {args, logs: flag}  = _global_.config
 
   for (const [key, value] of Object.entries(__tag2._global_)) {
     if (value.state) { // feat: reset __args
       if (key.split(':')[0]==='config') {
-        // ie: _global_['config:test'].args
-        // ie: _global_['config:test'].flag
         args = {...args, ..._global_[key].args}
         flag = {...flag, ..._global_[key].logs}
       }
     }
   }
-  // _global_.args
-  // _global_.flag
   _global_.args && (args =  {...args, ..._global_.args})
   _global_.flag && (flag =  {...flag, ..._global_.flag})
 
@@ -53,8 +47,6 @@ function _globalTag() {
     if (value.state) { // feat: reset __args
       const [id] = key.split(':')
       if (id==='args' || id==='flag') {
-        // ie: _global_['args:test'].args
-        // ie: _global_['args:test'].flag
         obj[id] = {...obj[id], ..._global_[key]}
       }
     }

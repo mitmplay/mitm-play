@@ -26,8 +26,8 @@ function clear (o) {
   const { path } = global.mitm
   if (o) {
     if (o.folders) {
-      for (const path of o.folders) {
-        fs.remove(path, err)
+      for (const _path of o.folders) {
+        fs.remove(_path, err)
       }
     } else if (o.browserName) {
       const { browserName, delete: d } = o

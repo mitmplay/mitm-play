@@ -23,7 +23,9 @@ if (global.mitm.argv.lazylog) {
     }
   }
 } else {
-  delayFN = () => {}
+  delayFN = () => {
+    // This is intentional
+  }
 }
 
 module.exports = delayFN
