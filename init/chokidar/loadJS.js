@@ -34,12 +34,12 @@ function loadJS (path, msg, fn) {
         }
         global.mitm.source[key] = data
         if (r) {
-          const file = path.split('/').pop()
-          let macros = path.replace(file, `_macros_/${file}`) // feat: _macros_
-          macros = macros.replace('index.js', 'macros.js')
-          fs.access(macros, fs.F_OK, (err) => {
+          let fmacro = path.split('/').pop()
+          fmacro = path.replace(fmacro, `_macros_/${fmacro}`) // feat: _macros_
+          fmacro = fmacro.replace('index.js', 'macros.js')
+          fs.access(fmacro, fs.F_OK, (err) => {
             if (!err) {
-              fs.readFile(macros, 'utf8', function (err, data) {
+              fs.readFile(fmacro, 'utf8', function (err, data) {
                 if (err) {
                   logmsg(c.redBright('Error read macros file'), err)
                 } else {

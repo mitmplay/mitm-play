@@ -241,7 +241,7 @@ function observed() {
   })
 }
 
-const event = new Event('urlchanged')
+const _urlChanged = new Event('urlchanged')
 function init() {
   const html = document.querySelector('html')
   const htmlref = html.firstElementChild
@@ -277,7 +277,7 @@ function init() {
     bgroup.right = divRight.children[0]
     bgroup.topr  = divTopR.children[0]
     bgroup.left  = divLeft.children[0]
-    urlChange(event)
+    urlChange(_urlChanged)
     observed()
   }, 0)
 }
@@ -444,9 +444,9 @@ let oDebunk = undefined
 let observerfn = []
 
 function compareHref(nodes) {
-  // console.log('$cMacros: DOM mutated!', _c)
+  // console.log(`%cMacros: DOM mutated!`, _c)
   if (oldHref != location.href) {
-    window.dispatchEvent(event)
+    window.dispatchEvent(_urlChanged)
     oldHref = location.href
   } else {
     if (observerfn.length) {
