@@ -121,7 +121,7 @@ function sort (obj, size=false, _typO=false) {
     newobj[id] = ns
     if (_typO) {
       // Sort URL in rule
-      for (rule in ns) {
+      for (const rule in ns) {
         if (_typO.indexOf(rule.split(':')[0])>-1) { // rule without tag
           ns[rule] = _sortLength(ns[rule])
         }
@@ -165,11 +165,11 @@ function routeSort (fn) { // feat: upadte tags
         }
         if (flag) { // restore tags from json
           const _tag3 = flag.filter(f3).map(m3)
-          const _tags = Object.keys(tags)
-          for (let tag of _tag3) {
+          const _arr_ = Object.keys(tags)
+          for (const tag of _tag3) {
             if (tags[tag]===undefined) {
-              tag = _tags.filter(x => x.indexOf(tag)>-1)[0] // tag url:tag-name
-              tag && (tags[tag] = true) // feat: upadte tags
+              const key = _arr_.filter(x => x.indexOf(tag)>-1)[0] // tag url:tag-name
+              key && (tags[key] = true) // feat: upadte tags
             } else {
               tags[tag] = true // feat: update __tag2
             }
