@@ -30,8 +30,7 @@ module.exports = () => {
   }
 
   // Initialize watcher.
-  const msg = tilde(userroute)
-  logmsg(c.magentaBright(`>>> Route watcher:`), [msg])
+  logmsg(c.magentaBright(`>>> Route watcher:`), [tilde(userroute)])
   const paths = [
     userroute,
     userroute.replace('index.js', '*@index.js')
@@ -42,7 +41,6 @@ module.exports = () => {
   })
 
   // Something to use when events are received.
-  const log = logmsg.bind(console)
   urouteWatcher // Add event listeners.
     .on('add',    p => { p = slash(p); updateJS(p, c.blueBright(`>>> add route ${tilde(p)}`)) })
     .on('change', p => { p = slash(p); updateJS(p, c.blueBright(`>>> chg route ${tilde(p)}`)) })
