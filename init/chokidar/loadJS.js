@@ -109,12 +109,11 @@ function sort (obj, size=false, _typO=false) {
   delete obj._global_
   const newobj = {}
   // Sort namespace
-  const arr = Object.keys(obj)
-  let keys
+  const keys = Object.keys(obj)
   if (size) {
-    keys = arr.sort(_keyLength)
+    keys.sort(_keyLength)
   } else {
-    keys = arr.sort()
+    keys.sort()
   }
   for (const id of keys) {
     const ns = obj[id]
@@ -133,7 +132,7 @@ function sort (obj, size=false, _typO=false) {
 }
 
 function routeSort (fn) { // feat: upadte tags
-  const { routes: { _global_ }, argv } = global.mitm
+  const { routes: { _global_ } } = global.mitm
   const { _routeSet } = global.mitm.fn
   if (_global_._childns===undefined) {
     _routeSet(_global_, '_global_', '')
