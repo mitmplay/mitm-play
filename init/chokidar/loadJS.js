@@ -21,7 +21,7 @@ function loadJS (path, msg, fn) {
      * populate: __tag2, __tag3 on each namespace
      */
     const r = _routeSet(route, domain, file)
-    fs.readFile(path, 'utf8', function (err0, data) {
+    fs.readFile(path, 'utf8', function (err0, data0) {
       if (err0) {
         logmsg(c.redBright('Error read source file'), err0)
       } else {
@@ -32,18 +32,18 @@ function loadJS (path, msg, fn) {
         } else {
           key = `${domain}${r ? '' : '/'+file}`
         }
-        global.mitm.source[key] = data
+        global.mitm.source[key] = data0
         if (r) {
           let fmacro = path.split('/').pop()
           fmacro = path.replace(fmacro, `_macros_/${fmacro}`) // feat: _macros_
           fmacro = fmacro.replace('index.js', 'macros.js')
           fs.access(fmacro, fs.F_OK, (err1) => {
             if (!err1) {
-              fs.readFile(fmacro, 'utf8', function (err2, data) {
+              fs.readFile(fmacro, 'utf8', function (err2, data2) {
                 if (err2) {
                   logmsg(c.redBright('Error read macros file'), err2)
                 } else {
-                  global.mitm.source[`${key}/macros`] = data
+                  global.mitm.source[`${key}/macros`] = data2
                 }
               })
             }
