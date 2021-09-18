@@ -167,7 +167,6 @@ module.exports = () => {
         argv.urls = ['https://keybr.com/']
       }
     } else if (!argv.urls || argv.urls.length===0) {
-      const { routes } = global.mitm
       for (const key in routes) {
         if (key === '_global_') {
           continue
