@@ -21,9 +21,9 @@ function loadJS (path, msg, fn) {
      * populate: __tag2, __tag3 on each namespace
      */
     const r = _routeSet(route, domain, file)
-    fs.readFile(path, 'utf8', function (err, data) {
-      if (err) {
-        logmsg(c.redBright('Error read source file'), err)
+    fs.readFile(path, 'utf8', function (err0, data) {
+      if (err0) {
+        logmsg(c.redBright('Error read source file'), err0)
       } else {
         let key = ''
         const [sub, index] = file.split('@')
@@ -37,11 +37,11 @@ function loadJS (path, msg, fn) {
           let fmacro = path.split('/').pop()
           fmacro = path.replace(fmacro, `_macros_/${fmacro}`) // feat: _macros_
           fmacro = fmacro.replace('index.js', 'macros.js')
-          fs.access(fmacro, fs.F_OK, (err) => {
-            if (!err) {
-              fs.readFile(fmacro, 'utf8', function (err, data) {
-                if (err) {
-                  logmsg(c.redBright('Error read macros file'), err)
+          fs.access(fmacro, fs.F_OK, (err1) => {
+            if (!err1) {
+              fs.readFile(fmacro, 'utf8', function (err2, data) {
+                if (err2) {
+                  logmsg(c.redBright('Error read macros file'), err2)
                 } else {
                   global.mitm.source[`${key}/macros`] = data
                 }
@@ -103,7 +103,7 @@ const remove = function (path, msg, fn) {
   }
 }
 
-function sort (obj, size=false, _typO) {
+function sort (obj, size=false, _typO=false) {
   const { _keyLength, _sortLength } = global.mitm.fn
   const _g = obj._global_
   delete obj._global_
