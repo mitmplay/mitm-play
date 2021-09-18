@@ -7,7 +7,7 @@ const _setlogs = require('./_setlogs')
  *
  * @param {namespace} _ns
  */
-const tags = function (_ns) {
+const tagsfn = function (_ns) {
   const { __tag1, __tag2, __tag3, router } = global.mitm
   const tag4 = {}
   let routr = {}
@@ -55,8 +55,8 @@ const tags = function (_ns) {
           const _tags = ns[id].tag1
           if (_tags && ns[id].state) {
             let tagOk = true // feat: update __tag2
-            for (const id of _tags) {
-              if (__tag1[namespace][id]===false) {
+            for (const tg of _tags) {
+              if (__tag1[namespace][tg]===false) {
                 tagOk = false
                 break
               }
@@ -70,13 +70,13 @@ const tags = function (_ns) {
           tags[typ] = true
         }
       } else { // feat: tag3 inside tag2 and depend to tag1 
-        for (const id in node) {
-          const [typ, tags] = id.split(':')
-          if (tags) {
-            if (node[typ]===undefined) {
-              node[typ] = [typ, id]
-            } else if (!node[typ].includes(id)) {
-              node[typ] = node[typ].concat(node[id])
+        for (const tg4 in node) {
+          const [_typ, _tags] = tg4.split(':')
+          if (_tags) {
+            if (node[_typ]===undefined) {
+              node[_typ] = [_typ, tg4]
+            } else if (!node[_typ].includes(tg4)) {
+              node[_typ] = node[_typ].concat(node[tg4])
             }
           }
         }
@@ -89,9 +89,9 @@ const tags = function (_ns) {
     const ns = tag3[namespace]
     for (const id in ns) {
       const urls = ns[id]
-      for (url in urls) {
+      for (const url in urls) {
         const secs = urls[url]
-        for (tag in secs.tags) {
+        for (const tag in secs.tags) {
           if (tag1[namespace][tag]) {
             tags[tag] = true
           }
@@ -120,4 +120,4 @@ const tags = function (_ns) {
   _setlogs()
 }
 
-module.exports = tags
+module.exports = tagsfn
