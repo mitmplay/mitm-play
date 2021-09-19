@@ -48,7 +48,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
           injectWS(resp, url, jsLib)
         }
         resp.log = msg ? {msg, mtyp: 'nosocket'} : undefined // feat: fullog
-        return resp
+        return resp // back to events loop call in fetch
       }
       que._rule = 'ws'
       responseHandler.push(que)

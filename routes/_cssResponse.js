@@ -39,7 +39,7 @@ const cssResponse = async function (reqs, responseHandler, _3d) {
         }
       }
       resp.log = msg ? {msg, mtyp: 'css'} : undefined // feat: fullog
-      return resp
+      return resp // back to events loop call in fetch
     }
     que._rule = 'css'
     responseHandler.push(que)

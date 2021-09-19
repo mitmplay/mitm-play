@@ -17,11 +17,11 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __args, __flag, fn: { tilde } } = global.mitm
-  let resp, resp2, msg
+  let msg
 
   if (match) {
-    const { url, browserName } = reqs
     const { route } = match
+    const { url, browserName } = reqs
     const { response, hidden } = route
 
     let { fpath1, fpath2 } = fpathcache({ match, reqs })
@@ -30,14 +30,14 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     }
     let remote = true
     // feat: activity
-    let actyp, actag
+    let actyp
     msg = match.log
     if (__args.activity) {
-      [actyp, actag] = __args.activity.split(':')
+      [actyp] = __args.activity.split(':')
     }
+    let getFromCache = true
     if ((!actyp || actyp==='play' || (actyp==='mix' && !route.seq)) ) {
       // get from cache
-      let getFromCache = true
       const fpath0 = fpath2.replace(/_\d+_/,'_') // feat: seq
       if (!fs.existsSync(fpath2)) {
         if (fpath0!==fpath2 && fs.existsSync(fpath0)) {
@@ -49,6 +49,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
         }
       }
       if (getFromCache) {
+        let resp, resp2
         try {
           const json = JSON.parse(await fs.readFile(fpath2))
           const { general: { status }, setCookie, respHeader: headers } = json
@@ -59,7 +60,6 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           if (setCookie && __args.cookie) {
             headers['set-cookie'] = resetCookies(setCookie)
           }
-          remote = false
           const body = await fs.readFile(fname1)
           resp = { url, status, headers, body }
           changeStatus(match, resp)
@@ -94,6 +94,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
             body: `Mitm-play - Cache error!\n\nError in ${error}`.replace(', ','\n')
           }
         }
+        remote = false
         if (!__flag.cache || match.hidden || hidden) {
           msg = ''
         } else {
@@ -101,6 +102,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           __args.fullog && logmsg(msg) // feat: fullog  
         }
         resp.log = msg ? {msg, mtyp: 'cache'} : undefined
+        return { match, resp }
       }
     }
     if (remote) {
@@ -136,7 +138,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           }
           filesave({ fpath1: fname1, body }, { fpath2, meta }, 'cache')
           if (response) {
-            resp2 = response(resp, reqs, match)
+            let resp2 = response(resp, reqs, match)
             if (resp2 instanceof Promise) {
               resp2 = await resp2
             }
@@ -155,10 +157,9 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
       }
       que._rule = 'cache' 
       responseHandler.push(que)
-      resp = undefined
     }
   }
-  return { match, resp }
+  return { match }
 }
 
 module.exports = cacheResponse

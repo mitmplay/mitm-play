@@ -39,7 +39,7 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
         }
       }
       resp.log = msg ? {msg, mtyp: 'json'} : undefined // feat: fullog
-      return resp
+      return resp // back to events loop call in fetch
     }
     que._rule = 'json'
     responseHandler.push(que)

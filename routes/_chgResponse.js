@@ -36,7 +36,7 @@ const allRequest = async function (reqs, responseHandler, _3d) {
         }
       }
       resp.log = msg ? {msg, mtyp: 'response'} : undefined // feat: fullog
-      return resp
+      return resp // back to events loop call in fetch
     }
     que._rule = 'response'
     responseHandler.push(que)

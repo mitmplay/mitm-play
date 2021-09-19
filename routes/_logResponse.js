@@ -62,7 +62,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
         }
       }
       resp.log = msg ? {msg, mtyp: 'log'} : undefined // feat: fullog
-      return resp
+      return resp // back to events loop call in fetch
     }
     que._rule = 'log'
     responseHandler.push(que)
