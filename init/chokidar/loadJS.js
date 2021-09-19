@@ -162,12 +162,12 @@ function routeSort (fn) { // feat: upadte tags
             tags[tag] = false // feat: update __tag3
           }
         }
-        if (flag) { // restore tags from json
+        if (flag) { // feat: restore tags from json
           const _tag3 = flag.filter(f3).map(m3)
           const _arr_ = Object.keys(tags)
           for (const tag of _tag3) {
-            if (tags[tag]===undefined) {
-              const key = _arr_.filter(x => x.indexOf(tag)>-1)[0] // tag url:tag-name
+            if (tags[tag]===undefined) { // feat: restore url:tag from json
+              const key = _arr_.filter(x => x.match(`^(url:|)${tag}$`))[0] // tag url:tag-name
               key && (tags[key] = true) // feat: upadte tags
             } else {
               tags[tag] = true // feat: update __tag2

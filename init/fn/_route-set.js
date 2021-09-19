@@ -168,7 +168,7 @@ function _routeSet (_r, namespace, file) {
         }
         const arr = site.tags.split(/ +/)
         for (const tag of arr) {
-          tag3.tags[tag] = true
+          tag3.tags[tag] = false
         }
       }
 
@@ -178,8 +178,8 @@ function _routeSet (_r, namespace, file) {
         tag3 = _nsstag(typ, gpath)
         tag3.tag1 = tag1
         const tag = `url:${utg}`
-        tag3.tags[tag] = true // feat: update __tag3
-        tags[tag] = { state: true, tag1, typ, path } // feat: update __tag2
+        tag3.tags[tag] = false // feat: update __tag3
+        tags[tag] = { state: false, tag1, typ, path } // feat: update __tag2
       }
       if (tag3 && ptags) {
         const [tag2, ...tag1] = ptags.split(/ +/)
