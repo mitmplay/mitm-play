@@ -78,10 +78,10 @@ module.exports = () => {
     }
   }
   const mockr = {
-    '!:hidden:/mitm-play/mitm.js':      new RegExp('\\/mitm-play\\/mitm\\.js'),
-    '!:hidden:/mitm-play/chance.js':    new RegExp('\\/mitm-play\\/chance\\.js'),
-    '!:hidden:/mitm-play/macros.js':    new RegExp('\\/mitm-play\\/macros\\.js'),
-    '!:hidden:/mitm-play/ws-client.js': new RegExp('\\/mitm-play\\/ws-client\\.js')
+    '!:hidden:/mitm-play/mitm.js':      /\/mitm-play\/mitm\.js/,
+    '!:hidden:/mitm-play/chance.js':    /\/mitm-play\/chance\.js/,
+    '!:hidden:/mitm-play/macros.js':    /\/mitm-play\/macros\.js/,
+    '!:hidden:/mitm-play/ws-client.js': /\/mitm-play\/ws-client\.js/,
   }
   global.mitm.__mockr = mockr
   global.mitm.__mocks = mock // feat: __mocks

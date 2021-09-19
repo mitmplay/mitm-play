@@ -5,8 +5,9 @@ function isObjLiteral (_obj) {
     ? false
     : (
         (function () {
-          while (!false) {
-            if (Object.getPrototypeOf(_test = Object.getPrototypeOf(_test)) === null) {
+          while (true) {
+            _test = Object.getPrototypeOf(_test)
+            if (Object.getPrototypeOf(_test) === null) {
               break
             }
           }
