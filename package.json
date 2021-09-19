@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.8.507",
+  "version": "0.8.508",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -64,7 +64,7 @@
     "standard": "16.0.3"
   },
   "engines": {
-    "node": ">=14.16.1 <16.0.0" 
+    "node": ">=14.16.1" 
   },
   "standard": {
     "ignore": [
