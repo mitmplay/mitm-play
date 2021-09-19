@@ -1,4 +1,36 @@
-.vbox.svelte-bxuy5d {
+.vbox.svelte-1ucdyll.svelte-1ucdyll {
+  padding: 0 10px;
   position: absolute;
   color: blue;
+  left: 0;
+  right: 0;
+}
+
+table.svelte-1ucdyll.svelte-1ucdyll {
+  width: 100%;
+  color: maroon;
+  border-collapse: collapse;
+}
+
+table.svelte-1ucdyll td.svelte-1ucdyll {
+  font-size: small;
+  border: 1px solid #999;
+  padding-left: 5px;
+}
+
+table.svelte-1ucdyll .no.svelte-1ucdyll {
+  padding: 0;
+  width: 25px;
+  text-align: center;
+}
+
+table.svelte-1ucdyll .kcode.svelte-1ucdyll {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  width: 100px;
+}
+
+table.svelte-1ucdyll .title.svelte-1ucdyll {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  width: calc(100% - 100px);
 }

@@ -23,7 +23,7 @@ const style = `
   margin-right: auto;
   margin-left: auto;
   /* give it dimensions */
-  min-height: 10em;
+  height: calc(100vh - 50px);
   width: 90%;
   display: none;
 }

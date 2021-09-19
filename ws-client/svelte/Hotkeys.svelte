@@ -19,17 +19,48 @@ onMount(async () => {
 </script>
 
 <div class="vbox">
-  Hot-keys:
-  <ul>
-    {#each _keys as obj}
-      <li>{obj.id} - {obj.title}</li>
+  <b>Hot-keys:</b>
+  <table>
+    {#each _keys as obj,i}
+      <tr>
+        <td class="no">{i+1}</td>
+        <td class="kcode">{obj.id}</td>
+        <td class="title">{obj.title}</td>
+      </tr>
     {/each}
-  </ul>
+  </table>
 </div>
 
 <style type="text/scss">
   .vbox {
+    padding: 0 10px;
     position: absolute;
     color:blue;
+    left: 0;
+    right: 0;
+  }
+  table {
+    width: 100%;
+    color: maroon;
+    border-collapse: collapse;
+    td {
+      font-size: small;
+      border: 1px solid #999;
+      padding-left: 5px;
+    }
+    .no {
+      padding: 0;
+      width: 25px;
+      text-align: center;
+    }
+    .kcode {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      width: 100px;
+    }
+    .title {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      width: calc(100% - 100px);
+    }
   }
 </style>
