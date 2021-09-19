@@ -18,8 +18,8 @@ module.exports = () => {
   } = global.mitm
 
   const { path } = global.mitm
-  const dirhandler = (err) => {
-    err && logmsg(c.redBright('>>> Error creating browser profile folder'), err)
+  const dirhandler = (err0) => {
+    err0 && logmsg(c.redBright('>>> Error creating browser profile folder'), err0)
   }
 
   fs.ensureDir(path.home, err => {
@@ -199,7 +199,7 @@ module.exports = () => {
         logmsg(c.redBright('>>> Error saving cli options'), fpath)
       } else {
         fs.writeFile(fpath, body, err1 => {
-          err && logmsg(c.redBright('>>> Error saving cli options'), err1)
+          err1 && logmsg(c.redBright('>>> Error saving cli options'), err1)
         })
       }
     })

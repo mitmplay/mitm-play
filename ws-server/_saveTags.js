@@ -29,8 +29,8 @@ module.exports = ({ data }) => {
         tags: ns._jtags,
         _subns
       }
-      fs.writeJson(ns._jpath, json, {spaces: '  '}, err => {
-        err && console.error(ns._jpath, {err})
+      fs.writeJson(ns._jpath, json, {spaces: '  '}, err0 => {
+        err0 && console.error(ns._jpath, {err0})
       })
     }
   }

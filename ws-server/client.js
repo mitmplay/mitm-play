@@ -162,12 +162,12 @@ On browser console type "ws"`
     } else {
       path = `${home}/log/${session}/${stamp}--${at}@${host}--${fname}.json`
     }
-    fs.ensureFile(path, err => {
-      if (err) {
+    fs.ensureFile(path, err0 => {
+      if (err0) {
         logmsg(c.redBright('>>> Error saving csp'), path)
       } else {
-        fs.writeFile(path, body, err => {
-          err && logmsg(c.redBright('>>> Error write'), err)
+        fs.writeFile(path, body, err1 => {
+          err1 && logmsg(c.redBright('>>> Error write'), err1)
         })
       }
     })
