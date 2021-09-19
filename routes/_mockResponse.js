@@ -26,7 +26,7 @@ const mock = ({ url }, match) => {
   return resp
 }
 
-const mockResponse = async function ({ reqs, route }, _3d) {
+const mockResponse = async function ({ reqs }, _3d) {
   const search = searchFN('mock', reqs)
   const { __args, __flag } = global.mitm
   const match = _3d ? search('_global_') : matched(search, reqs)

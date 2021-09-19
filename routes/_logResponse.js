@@ -14,12 +14,12 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
   const search = searchFN('log', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __args, __flag } = global.mitm
-  let resp, msg
 
   if (match) {
     const { log, response, hidden } = match.route
     const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
     const que = async (resp, reqs) => {
+      let msg
       changeStatus(match, resp)
       const mtype = ctype(match, resp)
       if (mtype) {
@@ -66,9 +66,8 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
     }
     que._rule = 'log'
     responseHandler.push(que)
-    resp = undefined
   }
-  return { match, resp }
+  return { match }
 }
 
 module.exports = logResponse

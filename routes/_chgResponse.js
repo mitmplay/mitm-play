@@ -10,11 +10,11 @@ const allRequest = async function (reqs, responseHandler, _3d) {
   const search = searchFN('response', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __args, __flag } = global.mitm
-  let resp, msg
 
   if (match) {
     const { response, contentType, hidden } = match.route
     const que = async resp => {
+      let msg
       changeStatus(match, resp)
       if (response) {
         if (contentType === undefined || ctype(match, resp)) {
@@ -40,9 +40,8 @@ const allRequest = async function (reqs, responseHandler, _3d) {
     }
     que._rule = 'response'
     responseHandler.push(que)
-    resp = undefined
   }
-  return { match, resp }
+  return { match }
 }
 
 module.exports = allRequest

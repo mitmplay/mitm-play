@@ -8,11 +8,11 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('json', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __args, __flag } = global.mitm
-  let resp, msg
 
   if (match) {
     const { response, hidden } = match.route
     const que = async resp => {
+      let msg
       changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('application/json')) {
@@ -43,9 +43,8 @@ const jsonResponse = async function (reqs, responseHandler, _3d) {
     }
     que._rule = 'json'
     responseHandler.push(que)
-    resp = undefined
   }
-  return { match, resp }
+  return { match }
 }
 
 module.exports = jsonResponse

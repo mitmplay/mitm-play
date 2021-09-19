@@ -12,10 +12,10 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('html', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
   const { __args, __flag } = global.mitm
-  let resp, msg
 
   if (match) {
     const que = async resp => {
+      let msg
       changeStatus(match, resp)
       const contentType = `${resp.headers['content-type']}`
       if (contentType && contentType.match('text/html')) {
@@ -74,9 +74,8 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
     }
     que._rule = 'html'
     responseHandler.push(que)
-    resp = undefined
   }
-  return { match, resp }
+  return { match }
 }
 
 module.exports = htmlResponse

@@ -5,19 +5,16 @@ const { injectWS } = require('./inject')
 const setSession = require('./set-session')
 const { matched, searchKey, searchArr } = _match
 const { logmsg } = global.mitm.fn
-const noWS = /(css|script|image)/
 
 const addWebSocket = async function (reqs, responseHandler, _3d) {
-  const { __args, __flag, fn: { _nameSpace } } = global.mitm
   const { url, pageUrl, headers, browserName,oriRef } = reqs
+  const { __args, fn: { _nameSpace } } = global.mitm
   const { origin, pathname } = new URL(url)
   const accpt = headers.accept + ''
-  let resp, msg
+  let msg
 
   if (oriRef) {
-    if (!url.match(oriRef)) {
-      return
-    } else if (!pageUrl.match(origin)) {
+    if (!url.match(oriRef) || !pageUrl.match(origin)) {
       return
     }
   }
@@ -25,7 +22,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
   if (accpt.indexOf('text/html') > -1) {
     let search, match
     if (__args.nosocket===true) { // feat: if request faster then __args={}
-        msg = c.red(`>>> nosocket to all html`)
+      msg = c.red(`>>> nosocket to all html`)
       logmsg(msg) // feat: fullog
       return
     } else {
