@@ -1,21 +1,39 @@
 <script>
-import { onMount } from 'svelte';
+import { onMount, onDestroy } from 'svelte';
 const _c = 'color: blueviolet'
 
 let keys = []
-$: _keys = keys 
+$: _keys = keys
 
+function reloadKeys() {
+  console.log('%cReload hotkeys.', _c);
+  const {macrokeys: mkey} = window.mitm
+  keys = []
+  for (const id in mkey) {
+    keys.push({id, title: mkey[id]._title})
+  }
+}
+
+let observer
 onMount(async () => {
-  console.log('%cMounted...', _c);
-  setTimeout(()=>{
-    const {macrokeys: mkey} = window.mitm
-    keys = []
-    for (const id in mkey) {
-      keys.push({id, title: mkey[id]._title})
+  const qry = '.mitm-container.center'
+  const node = document.querySelector(qry)
+  const nodeVisible = obs => {
+    if (node.attributes.style) {
+      reloadKeys()
     }
-  }, 1000)
+  }
+  observer = new MutationObserver(nodeVisible);
+  observer.observe(node, {attributes: true})
+  setTimeout(reloadKeys, 1000)
 });
 
+onDestroy(() => {
+  if (observer) {
+    observer.disconnect()
+    observer = undefined
+  }
+});
 </script>
 
 <div class="vbox">

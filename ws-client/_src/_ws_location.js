@@ -393,9 +393,8 @@ function keybCtrl (e) {
   if (!e.code || ['Alt', 'Control', 'Meta'].includes(e.key)) {
     return
   } else {
-    const { macrokeys } = window.mitm
-    if (e.key === 'Shift') {
-      if (e.ctrlKey) {
+    if (e.key==='Shift') {
+      if (e.ctrlKey && !e.altKey) {
         if (e.code==='ShiftRight') {
           ctrl = !ctrl
           container.right.style = styleRight + (!ctrl ? '' : 'display: none;')
@@ -403,7 +402,11 @@ function keybCtrl (e) {
           container.left.style  = styleLeft + (!ctrl ? '' : 'display: none;')  
         } else {
           svlt = !svlt
-          container.svlt.style  = (!svlt ? '' : 'display: block;')  
+          if (svlt) {
+            container.svlt.style = 'display: block;'
+          } else {
+            container.svlt.attributes.removeNamedItem('style')
+          }
         }
       }
     } else {
