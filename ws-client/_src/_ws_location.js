@@ -24,6 +24,7 @@ const style = `
   margin-left: auto;
   /* give it dimensions */
   height: calc(100vh - 50px);
+  overflow: auto;
   width: 90%;
   display: none;
 }

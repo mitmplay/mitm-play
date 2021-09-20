@@ -74,7 +74,6 @@ onDestroy(() => {
     .kcode {
       font-family: 'Courier New', Courier, monospace;
       font-weight: bold;
-      width: 100px;
     }
     .title {
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
