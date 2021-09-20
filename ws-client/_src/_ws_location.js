@@ -14,7 +14,7 @@ const style = `
   z-index: 99999;
 }
 .mitm-container.center {
-  background: #dceaffb0;
+  background: #fcffdcb0;
   position: fixed;
   /* center the element */
   right: 0;
@@ -47,10 +47,10 @@ const style = `
 }`
 
 let container = {
-  right: {},
   topr: {},
   left: {},
-  svlt: {},
+  right: {},
+  center: {},
 }
 let button = {}
 let bgroup = {
@@ -262,28 +262,41 @@ function init() {
   divCenter.className= 'mitm-container center'
   divRight.style = styleRight
   divTopR.style  = styleTopR
-  divLeft.style   = styleLeft
+  divLeft.style  = styleLeft
 
   html.insertBefore(styleBtn, htmlref)
   html.insertBefore(divRight, htmlref)
   html.insertBefore(divTopR, htmlref)
   html.insertBefore(divLeft, htmlref)
   html.insertBefore(divCenter, htmlref)
+  const hotkey = new mitm.svelte.Hotkeys({target:divCenter})
   setTimeout(() => {
-    container.right= divRight
     container.topr = divTopR
     container.left = divLeft
-    container.svlt = divCenter
+    container.right= divRight
+    container.hotkey = hotkey
+    container.center = divCenter
+    container.nodekey= divCenter.children[0]
     button.style = `${buttonStyle}background-color: azure;`
     bgroup.right = divRight.children[0]
     bgroup.topr  = divTopR.children[0]
     bgroup.left  = divLeft.children[0]
     urlChange(_urlChanged)
     observed()
+    document.addEventListener('click', function(event) {
+      if (center && !divCenter.contains(event.target)) {
+        divCenter.attributes.removeNamedItem('style')
+        center = false
+      }
+    });
   }, 0)
 }
 
 function macroAutomation(macro) {
+  if (center) {
+    container.center.attributes.removeNamedItem('style')
+    center = false
+  }
   if (Array.isArray(macro)) {
     let macroIndex = 0
     const interval = setInterval(() => {
@@ -389,7 +402,7 @@ function keybUp (e) {
   }
 }
 var ctrl = false
-var svlt = false
+var center = false
 function keybCtrl (e) {
   if (!e.code || ['Alt', 'Control', 'Meta'].includes(e.key)) {
     return
@@ -402,11 +415,14 @@ function keybCtrl (e) {
           container.topr.style  = styleTopR + (!ctrl ? '' : 'display: none;')
           container.left.style  = styleLeft + (!ctrl ? '' : 'display: none;')  
         } else {
-          svlt = !svlt
-          if (svlt) {
-            container.svlt.style = 'display: block;'
+          center = !center
+          if (center) {
+            if (container.center.children[0]!==container.nodekey) {
+              container.center.replaceChildren(container.nodekey)
+            }
+            container.center.style = 'display: block;'
           } else {
-            container.svlt.attributes.removeNamedItem('style')
+            container.center.attributes.removeNamedItem('style')
           }
         }
       }
@@ -508,5 +524,9 @@ function wsLocation() {
     fn.apply(history, arguments)
     compareHref()
   }
+}
+window.mitm.fn.svelte = function(Comp) {
+  container.center.replaceChildren('')
+  window.mitm.sapp = new Comp({target: container.center})
 }
 module.exports = wsLocation

@@ -34,6 +34,25 @@ onDestroy(() => {
     observer = undefined
   }
 });
+
+function handleClick(e) {
+  document.body.click()
+  const key = e.target.innerText
+  const fn = mitm.macrokeys[key]
+  const [typ, ...arr] = key.split(':')
+  const opt = {}
+  if (typ==='key') {
+    const k = arr.pop().substr(-1)
+    opt.code = 'Key' + k.toUpperCase()
+    opt.key = k
+  } else if (typ==='code') {
+    const c = arr.pop()
+    const k = c.substr(-1).toLowerCase()
+    opt.code = c
+    opt.key  = k
+  }
+  fn && fn(new KeyboardEvent('keydown', opt))
+}
 </script>
 
 <div class="vbox">
@@ -42,7 +61,9 @@ onDestroy(() => {
     {#each _keys as obj,i}
       <tr>
         <td class="no">{i+1}</td>
-        <td class="kcode">{obj.id}</td>
+        <td class="kcode" on:click={handleClick}>
+          {obj.id}
+        </td>
         <td class="title">{obj.title}</td>
       </tr>
     {/each}
@@ -61,6 +82,16 @@ onDestroy(() => {
     width: 100%;
     color: maroon;
     border-collapse: collapse;
+    tr:hover {
+      background: rgba(199, 166, 116, 0.452);
+      .kcode {
+        text-decoration: underline;
+        &:hover {
+          color: red;
+          cursor: pointer;
+        }
+      }
+    }
     td {
       font-size: small;
       border: 1px solid #999;

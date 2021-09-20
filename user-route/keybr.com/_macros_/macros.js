@@ -18,8 +18,6 @@ module.exports = () => {
   }
   return {
     '/'() {
-      const target = document.querySelector('.mitm-container.center')
-      new mitm.svelte.Hotkeys({target})
       console.log('%cMacro: olleh >< hello', _c, hello)
       const keys = {
         'code:KeyA'(_e) {
