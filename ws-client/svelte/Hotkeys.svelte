@@ -36,22 +36,50 @@ onDestroy(() => {
 });
 
 function handleClick(e) {
-  document.body.click()
   const key = e.target.innerText
   const fn = mitm.macrokeys[key]
-  const [typ, ...arr] = key.split(':')
+  let [typ, ...arr] = key.split(':')
   const opt = {}
   if (typ==='key') {
-    const k = arr.pop().substr(-1)
-    opt.code = 'Key' + k.toUpperCase()
-    opt.key = k
+    const qctl = key.match(/<([^>]+)>/)
+    const qalt = key.match(/{([^}]+)}/)
+    let k
+    if (qctl) {
+      opt.altKey = true
+      k = qctl[1].substr(-1)
+    } else if (qalt) {
+      k.ctrlKey = true
+      k = qalt[1].substr(-1)
+    } else {
+      opt.altKey = true
+      opt.ctrlKey = true
+      k = arr.pop().substr(-1)
+    }
+    opt.shiftKey = e.shiftKey
+    opt.code = `Key${k.toUpperCase()}`
+    opt.key = mitm.fn.codeToChar(opt)
   } else if (typ==='code') {
-    const c = arr.pop()
-    const k = c.substr(-1).toLowerCase()
-    opt.code = c
-    opt.key  = k
+    const qctl = key.match(/<([^>]+)>/)
+    const qalt = key.match(/{([^}]+)}/)
+    if (qctl) {
+      opt.altKey = true
+      arr = qctl[1].split(':')
+    } else if (qalt) {
+      opt.ctrlKey = true
+      arr = qalt[1].split(':')
+    } else {
+      opt.altKey = true
+      opt.ctrlKey = true
+    }
+    opt.code = arr.pop()
+    opt.shiftKey = e.shiftKey
+    opt.key = mitm.fn.codeToChar(opt)
   }
-  fn && fn(new KeyboardEvent('keydown', opt))
+  if (fn) {
+    const macro = fn(new KeyboardEvent('keydown', opt))
+    mitm.fn.macroAutomation(macro)
+    return true
+  }
 }
 </script>
 

@@ -517,16 +517,20 @@ function wsLocation() {
     return
   }
 
-  window.mitm.fn.play = play
-  window.mitm.fn.wait = wait
   const fn = history.pushState
   history.pushState = function () {
     fn.apply(history, arguments)
     compareHref()
   }
 }
-window.mitm.fn.svelte = function(Comp) {
+function svelte(Comp) {
   container.center.replaceChildren('')
   window.mitm.sapp = new Comp({target: container.center})
 }
+
+window.mitm.fn.play = play
+window.mitm.fn.wait = wait
+window.mitm.fn.svelte = svelte
+window.mitm.fn.macroAutomation = macroAutomation
+
 module.exports = wsLocation

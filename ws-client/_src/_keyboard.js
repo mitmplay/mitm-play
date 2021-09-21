@@ -41,7 +41,7 @@ const kcode3 = {
   10: ')'
 }
 
-module.exports = (evn, opt={codeOnly:false}) => {
+function codeToChar(evn, opt={codeOnly:false}) {
   const {code, shiftKey} = evn
   const {codeOnly} = opt
   let match
@@ -69,3 +69,6 @@ module.exports = (evn, opt={codeOnly:false}) => {
   }
   return char
 }
+
+window.mitm.fn.codeToChar = codeToChar
+module.exports = codeToChar
