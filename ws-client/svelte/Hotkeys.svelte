@@ -62,14 +62,14 @@ function handleClick(e) {
     const qctl = key.match(/<([^>]+)>/)
     const qalt = key.match(/{([^}]+)}/)
     if (qctl) {
-      opt.altKey = true
+      opt.ctrlKey = true
       arr = qctl[1].split(':')
     } else if (qalt) {
-      opt.ctrlKey = true
+      opt.altKey = true
       arr = qalt[1].split(':')
     } else {
-      opt.altKey = true
       opt.ctrlKey = true
+      opt.altKey  = true
     }
     opt.code = arr.pop()
     opt.shiftKey = e.shiftKey
@@ -81,6 +81,55 @@ function handleClick(e) {
     return true
   }
 }
+function kcode(obj) {
+  const key = obj.id
+  const {codeToChar: char} = mitm.fn
+  let [typ, ...arr] = key.split(':')
+  const opt = {}
+  let msg
+  if (typ==='key') {
+    const qctl = key.match(/<([^>]+)>/)
+    const qalt = key.match(/{([^}]+)}/)
+    let k
+    if (qctl) {
+      msg = '[ctl]......+'
+      opt.ctrlKey = true
+      k = qctl[1].substr(-1)
+    } else if (qalt) {
+      msg = '[alt]......+'
+      opt.altKey = true
+      k = qalt[1].substr(-1)
+    } else {
+      msg = '[ctl]+[alt]+'
+      opt.ctrlKey = true
+      opt.altKey  = true
+      opt.code = arr.pop()
+      k = arr.pop().substr(-1)
+    }
+    opt.shiftKey = false
+    msg += `\`${char(opt)}\``
+  } else if (typ==='code') {
+    const qctl = key.match(/<([^>]+)>/)
+    const qalt = key.match(/{([^}]+)}/)
+    if (qctl) {
+      msg = '[ctl]......+'
+      opt.ctrlKey = true
+      arr = qctl[1].split(':')
+    } else if (qalt) {
+      msg = '[alt]......+'
+      opt.altKey = true
+      arr = qalt[1].split(':')
+    } else {
+      msg = '[ctl]+[alt]+'
+      opt.ctrlKey = true
+      opt.altKey  = true
+    }
+    opt.code = arr.pop()
+    opt.shiftKey = false
+    msg += `\`${char(opt)}\``
+  }
+  return msg
+}
 </script>
 
 <div class="vbox">
@@ -90,8 +139,9 @@ function handleClick(e) {
       <tr>
         <td class="no">{i+1}</td>
         <td class="kcode" on:click={handleClick}>
-          {obj.id}
+          {obj.id.match(/\w+:(.+)/)[1]}
         </td>
+        <td class="key">{kcode(obj)}</td>
         <td class="title">{obj.title}</td>
       </tr>
     {/each}
@@ -130,13 +180,13 @@ function handleClick(e) {
       width: 25px;
       text-align: center;
     }
-    .kcode {
+    .key,.kcode {
       font-family: 'Courier New', Courier, monospace;
       font-weight: bold;
     }
     .title {
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-      width: calc(100% - 100px);
+      width: 50%;
     }
   }
 </style>

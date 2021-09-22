@@ -836,7 +836,7 @@ $ mitm-play --help
 
   * _global_.config.args
     
-  v0.8.xxx
+  v0.9.xxx
 ```
 </details>
 <details><summary><b>-u --url</b></summary>
