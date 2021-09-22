@@ -90,43 +90,15 @@ function kcode(obj) {
   if (typ==='key') {
     const qctl = key.match(/<([^>]+)>/)
     const qalt = key.match(/{([^}]+)}/)
-    let k
-    if (qctl) {
-      msg = '[ctl]......+'
-      opt.ctrlKey = true
-      k = qctl[1].substr(-1)
-    } else if (qalt) {
-      msg = '[alt]......+'
-      opt.altKey = true
-      k = qalt[1].substr(-1)
-    } else {
-      msg = '[ctl]+[alt]+'
-      opt.ctrlKey = true
-      opt.altKey  = true
-      opt.code = arr.pop()
-      k = arr.pop().substr(-1)
-    }
-    opt.shiftKey = false
-    msg += `\`${char(opt)}\``
+    if      (qctl) { msg = `[ctl]......+\`${qctl[1].substr(-1)}\`` }
+    else if (qalt) { msg = `[alt]......+\`${qalt[1].substr(-1)}\`` }
+    else           { msg = `[ctl]+[alt]+\`${arr.pop()}\``          }
   } else if (typ==='code') {
     const qctl = key.match(/<([^>]+)>/)
     const qalt = key.match(/{([^}]+)}/)
-    if (qctl) {
-      msg = '[ctl]......+'
-      opt.ctrlKey = true
-      arr = qctl[1].split(':')
-    } else if (qalt) {
-      msg = '[alt]......+'
-      opt.altKey = true
-      arr = qalt[1].split(':')
-    } else {
-      msg = '[ctl]+[alt]+'
-      opt.ctrlKey = true
-      opt.altKey  = true
-    }
-    opt.code = arr.pop()
-    opt.shiftKey = false
-    msg += `\`${char(opt)}\``
+    if      (qctl) { msg = '[ctl]......+'+qctl[1]      }
+    else if (qalt) { msg = '[alt]......+'+qalt[1]      }
+    else           { msg = '[ctl]+[alt]+'+arr.join(':')}
   }
   return msg
 }

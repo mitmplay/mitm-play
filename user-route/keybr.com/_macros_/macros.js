@@ -23,8 +23,11 @@ module.exports = () => {
         'code:KeyA'(_e) {
           console.log(`%cMacro: ${_e.code}`, _c, _e)
         },
-        'code:{KeyA}'(_e) {
+        'code:{KeyA:KeyB}'(_e) {
           console.log(`%cAlt Macro: ${_e.code}`, _c, _e)
+        },
+        'code:Enter'(_e) {
+          console.log(`%cMacro: ${_e.code}`, _c, _e)
         },
         'key:us'(_e) {
           console.log(`%cUS Country`, _c, _e)
@@ -33,10 +36,11 @@ module.exports = () => {
           console.log(`%cU Char`, _c, _e)
         }
       }
-      keys['code:KeyA'  ]._title = 'this is KeyA'
-      keys['code:{KeyA}']._title = 'this is {KeyA}'
-      keys['key:us'     ]._title = 'this is us'
-      keys['key:u'      ]._title = 'this is u'
+      keys['code:KeyA'       ]._title = 'this is KeyA'
+      keys['code:{KeyA:KeyB}']._title = 'this is {KeyA}'
+      keys['code:Enter'      ]._title = 'this is Enter'
+      keys['key:us'          ]._title = 'this is us'
+      keys['key:u'           ]._title = 'this is u'
 
       window.mitm.macrokeys = keys
       window.mitm.autofill = ['input[type="password"] => password']
