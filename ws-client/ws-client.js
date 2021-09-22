@@ -1643,13 +1643,13 @@ var app = (function () {
   			td2 = element("td");
   			t4 = text(t4_value);
   			t5 = space();
-  			attr_dev(td0, "class", "no svelte-14inhhw");
+  			attr_dev(td0, "class", "no svelte-2wicpg");
   			add_location(td0, file, 90, 8, 2097);
-  			attr_dev(td1, "class", "kcode svelte-14inhhw");
+  			attr_dev(td1, "class", "kcode svelte-2wicpg");
   			add_location(td1, file, 91, 8, 2132);
-  			attr_dev(td2, "class", "title svelte-14inhhw");
+  			attr_dev(td2, "class", "title svelte-2wicpg");
   			add_location(td2, file, 94, 8, 2218);
-  			attr_dev(tr, "class", "svelte-14inhhw");
+  			attr_dev(tr, "class", "svelte-2wicpg");
   			add_location(tr, file, 89, 6, 2083);
   		},
   		m: function mount(target, anchor) {
@@ -1717,9 +1717,9 @@ var app = (function () {
   			}
 
   			add_location(b, file, 86, 2, 2020);
-  			attr_dev(table, "class", "svelte-14inhhw");
+  			attr_dev(table, "class", "svelte-2wicpg");
   			add_location(table, file, 87, 2, 2040);
-  			attr_dev(div, "class", "vbox svelte-14inhhw");
+  			attr_dev(div, "class", "vbox svelte-2wicpg");
   			add_location(div, file, 85, 0, 1998);
   		},
   		l: function claim(nodes) {

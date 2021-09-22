@@ -46,8 +46,9 @@ const wscmd = {
 }
 global.mitm.wscmd = wscmd
 
-module.exports = async (client, msg) => {
+module.exports = async (client, data) => {
   const { __flag } = global.mitm
+  const msg = `${data}`
   if (__flag['ws-message']) {
     const _msg = msg.length > 97 ? `${msg.slice(0, 97)}...` : msg
     logmsg(c.blue(`>>> ws-message:`),_msg)
