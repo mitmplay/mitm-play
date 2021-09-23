@@ -76,7 +76,7 @@ const searchArr = ({url, method, browserName, typ: typs}) => {
               let msg = (__args.nohost ? '' : o.replace(nohttp,''))+pathname
               !__args.nourl && (log += _url(msg, method+key))
               const hidden = key.match(/^[\w#]*!:/)
-              const matched = {
+              return {
                 namespace,
                 pathname,
                 hidden,
@@ -88,7 +88,6 @@ const searchArr = ({url, method, browserName, typ: typs}) => {
                 log,
                 typ
               }
-              return matched
             }
           }
         }
@@ -188,9 +187,14 @@ const searchFN = (typs, { url, method, browserName }) => {
           const { host, origin: o, pathname, search } = new URL(url)
           let msg = (__args.nohost ? '' : o.replace(nohttp,''))+pathname
 
+          let [t, oth, urls] = key.split(':')
+          let id3 // feat: construct id3 for tag3
+          if (t) {// t: GET/PUT/POST
+            id3 = `${t}:${urls||oth}`
+          } else {
+            id3 = urls || key.replace(/^:/, '')
+          }
           let [ty, tg] = typ.split(':')
-          let [t,, urls] = key.split(':')
-          let id3 = urls ? (t ? `${t}:${urls}` : urls) : key
           let log = `${browser[browserName]} ${ty.padEnd(8, ' ')} `
           let tgs = tg || ''
 
@@ -216,9 +220,8 @@ const searchFN = (typs, { url, method, browserName }) => {
           }
 
           tgs && (log += tgs)
-
           const hidden = key.match(/^[\w#]*!:/)
-          const matched = {
+          return  {
             contentType: obj[`${key}~contentType`],
             route: route[key],
             workspace,
@@ -234,13 +237,6 @@ const searchFN = (typs, { url, method, browserName }) => {
             log,
             typ
           }
-          // if (data.maches===undefined) {
-          //   data.maches = [];
-          // } else if (data.maches.length>20) {
-          //   data.maches.shift();
-          // }
-          // data.maches.push(matched);
-          return matched
         }
       }
     }

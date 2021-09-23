@@ -43,7 +43,7 @@ const route = {
     },
   },
   mock: {
-    '/df': {
+    ':/df': {
       file(reqs, match) {
         match.path = '_assets_'
         return 'me@error.json'
