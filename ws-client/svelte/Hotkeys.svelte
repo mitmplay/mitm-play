@@ -36,7 +36,7 @@ onDestroy(() => {
 });
 
 function handleClick(e) {
-  const key = e.target.innerText
+  const key = e.target.dataset.id
   const fn = mitm.macrokeys[key]
   let [typ, ...arr] = key.split(':')
   const opt = {}
@@ -81,6 +81,11 @@ function handleClick(e) {
     return true
   }
 }
+
+function ktoShow(k) {
+  return k.split('').map(x=>`${x}`).join('✧')
+}
+
 function kcode(obj) {
   const key = obj.id
   const {codeToChar: char} = mitm.fn
@@ -90,15 +95,15 @@ function kcode(obj) {
   if (typ==='key') {
     const qctl = key.match(/<([^>]+)>/)
     const qalt = key.match(/{([^}]+)}/)
-    if      (qctl) { msg = `[ctl]......+\`${qctl[1].substr(-1)}\`` }
-    else if (qalt) { msg = `[alt]......+\`${qalt[1].substr(-1)}\`` }
-    else           { msg = `[ctl]+[alt]+\`${arr.pop()}\``          }
+    if      (qctl) { msg = `[ctl]...... ⇾ ${ktoShow(qctl[1])}`  }
+    else if (qalt) { msg = `[alt]...... ⇾ ${ktoShow(qalt[1])}`  }
+    else           { msg = `[ctl]+[alt] ⇾ ${ktoShow(arr.pop())}`}
   } else if (typ==='code') {
     const qctl = key.match(/<([^>]+)>/)
     const qalt = key.match(/{([^}]+)}/)
-    if      (qctl) { msg = '[ctl]......+'+qctl[1]      }
-    else if (qalt) { msg = '[alt]......+'+qalt[1]      }
-    else           { msg = '[ctl]+[alt]+'+arr.join(':')}
+    if      (qctl) { msg = '[ctl]...... ⇨ '+mitm.fn.codeToShow(qctl[1])}
+    else if (qalt) { msg = '[alt]...... ⇨ '+mitm.fn.codeToShow(qalt[1])}
+    else           { msg = '[ctl]+[alt] ⇨ '+mitm.fn.codeToShow(arr.join(':'))}
   }
   return msg
 }
@@ -110,10 +115,9 @@ function kcode(obj) {
     {#each _keys as obj,i}
       <tr>
         <td class="no">{i+1}</td>
-        <td class="kcode" on:click={handleClick}>
-          {obj.id.match(/\w+:(.+)/)[1]}
+        <td class="kcode" data-id={obj.id} on:click={handleClick}>
+          {kcode(obj)}
         </td>
-        <td class="key">{kcode(obj)}</td>
         <td class="title">{obj.title}</td>
       </tr>
     {/each}
@@ -152,7 +156,7 @@ function kcode(obj) {
       width: 25px;
       text-align: center;
     }
-    .key,.kcode {
+    .kcode {
       font-family: 'Courier New', Courier, monospace;
       font-weight: bold;
     }

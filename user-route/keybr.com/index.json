@@ -3,8 +3,9 @@
   "tags": [
     "mock:no-ads",
     "no-ads",
-    "no-ads~wiw",
-    "tag3:no-ads~wiw"
+    "no-ads~wow",
+    "tag3:url:no-ads~wow",
+    "url:no-ads~wow"
   ],
   "_subns": ""
 }

@@ -1,8 +1,8 @@
 /* global location, history, chrome, Event, CssSelectorGenerator */
 /* eslint-disable camelcase */
+const {codeToChar:_key} = require('./_keyboard')
 const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
-const _key = require('./_keyboard')
 const _c = 'color: #bada55'
 const styleLeft  = 'top:  1px; left:  3px;'
 const styleTopR  = 'top: -4px; right: 3px;'

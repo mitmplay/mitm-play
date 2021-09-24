@@ -24,10 +24,10 @@ module.exports = () => {
           console.log(`%cMacro: ${_e.code}`, _c, _e)
         },
         'code:{KeyA:KeyB}'(_e) {
-          console.log(`%cAlt Macro: ${_e.code}`, _c, _e)
+          console.log(`%Alt w/ 2 keys: ${_e.code}`, _c, _e)
         },
         'code:Enter'(_e) {
-          console.log(`%cMacro: ${_e.code}`, _c, _e)
+          console.log(`%cPress Enter: ${_e.code}`, _c, _e)
         },
         'key:us'(_e) {
           console.log(`%cUS Country`, _c, _e)
