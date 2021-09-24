@@ -24,6 +24,7 @@ const style = `
   margin-left: auto;
   /* give it dimensions */
   height: calc(100vh - 50px);
+  padding: 0 10px;
   overflow: auto;
   width: 90%;
   display: none;
@@ -50,7 +51,7 @@ let container = {
   topr: {},
   left: {},
   right: {},
-  center: {},
+  target: {},
 }
 let button = {}
 let bgroup = {
@@ -275,7 +276,7 @@ function init() {
     container.left = divLeft
     container.right= divRight
     container.hotkey = hotkey
-    container.center = divCenter
+    container.target = divCenter
     container.nodekey= divCenter.children[0]
     button.style = `${buttonStyle}background-color: azure;`
     bgroup.right = divRight.children[0]
@@ -294,7 +295,7 @@ function init() {
 
 function macroAutomation(macro) {
   if (center) {
-    container.center.attributes.removeNamedItem('style')
+    container.target.attributes.removeNamedItem('style')
     center = false
   }
   if (Array.isArray(macro)) {
@@ -409,20 +410,24 @@ function keybCtrl (e) {
   } else {
     if (e.key==='Shift') {
       if (e.ctrlKey && !e.altKey) {
+        const {nodekey, target, right, topr, left} = container
         if (e.code==='ShiftRight') {
           ctrl = !ctrl
-          container.right.style = styleRight + (!ctrl ? '' : 'display: none;')
-          container.topr.style  = styleTopR + (!ctrl ? '' : 'display: none;')
-          container.left.style  = styleLeft + (!ctrl ? '' : 'display: none;')  
+          right.style = styleRight+ (!ctrl ? '' : 'display: none;')
+          topr.style  = styleTopR + (!ctrl ? '' : 'display: none;')
+          left.style  = styleLeft + (!ctrl ? '' : 'display: none;')  
         } else {
-          center = !center
-          if (center) {
-            if (container.center.children[0]!==container.nodekey) {
-              container.center.replaceChildren(container.nodekey)
-            }
-            container.center.style = 'display: block;'
+          if (target.children[0]!==nodekey) {
+            target.replaceChildren(nodekey)
+            target.style = 'display: block;'
+            center = true
           } else {
-            container.center.attributes.removeNamedItem('style')
+            center = !center
+            if (center) {
+              target.style = 'display: block;'
+            } else {
+              target.attributes.removeNamedItem('style')
+            }  
           }
         }
       }
@@ -523,9 +528,54 @@ function wsLocation() {
     compareHref()
   }
 }
-function svelte(Comp) {
-  container.center.replaceChildren('')
-  window.mitm.sapp = new Comp({target: container.center})
+
+const pastel = {
+  PostIt:          '#fcffdcb0',
+  PastelGreen:     '#77dd77b0',
+  PastelBrown:     '#836953b0',
+  BabyBlue:        '#89cff0b0',
+  PastelTurquoise: '#99c5c4b0',
+  BlueGreenPastel: '#9adedbb0',
+  PersianPastel:   '#aa9499b0',
+  MagicMint:       '#aaf0d1b0',
+  LightPastelGreen:'#b2fba5b0',
+  PastelPurple:    '#b39eb5b0',
+  PastelLilac:     '#bdb0d0b0',
+  PastelPea:       '#bee7a5b0',
+  LightLime:       '#befd73b0',
+  LightPeriwinkle: '#c1c6fcb0',
+  PaleMauve:       '#c6a4a4b0',
+  LightLightGreen: '#c8ffb0b0',
+  PastelViolet:    '#cb99c9b0',
+  PastelMint:      '#cef0ccb0',
+  PastelGrey:      '#cfcfc4b0',
+  PaleBlue:        '#d6fffeb0',
+  PastelLavender:  '#d8a1c4b0',
+  PastelPink:      '#dea5a4b0',
+  PastelSmirk:     '#deece1b0',
+  PastelDay:       '#dfd8e1b0',
+  PastelParchment: '#e5d9d3b0',
+  PastelRoseTan:   '#e9d1bfb0',
+  PastelMagenta:   '#f49ac2b0',
+  ElectricLavender:'#f4bfffb0',
+  PastelYellow:    '#fdfd96b0',
+  PastelRed:       '#ff6961b0',
+  PastelOrange:    '#ff964fb0',
+  AmericanPink:    '#ff9899b0',
+  BabyPink:        '#ffb7ceb0',
+  BabyPurple:      '#ca9bf7b0',
+}
+
+function svelte(Svelt, bg='PostIt') { // feat: svelte related
+  const {target} = container
+  target.replaceChildren('')
+  window.mitm.sapp = new Svelt({target})
+  setTimeout(() => {
+    const bcolor = pastel[bg]
+    target.style = `display: block${bcolor ? ';background:'+bcolor : ''};`
+    center = true
+  }, 0)
+  
 }
 
 window.mitm.fn.play = play

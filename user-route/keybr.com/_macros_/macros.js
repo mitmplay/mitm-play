@@ -26,6 +26,10 @@ module.exports = () => {
         'code:{KeyA:KeyB}'(_e) {
           console.log(`%Alt w/ 2 keys: ${_e.code}`, _c, _e)
         },
+        'code:KeyC'(_e) {
+          const {fn,svelte} = window.mitm
+          fn.svelte(svelte.Cspheader, 'ElectricLavender')
+        },
         'code:Enter'(_e) {
           console.log(`%cPress Enter: ${_e.code}`, _c, _e)
         },
@@ -37,6 +41,7 @@ module.exports = () => {
         }
       }
       keys['code:KeyA'       ]._title = 'this is KeyA'
+      keys['code:KeyC'       ]._title = 'Show CSP Header'
       keys['code:{KeyA:KeyB}']._title = 'this is {KeyA}'
       keys['code:Enter'      ]._title = 'this is Enter'
       keys['key:us'          ]._title = 'this is us'

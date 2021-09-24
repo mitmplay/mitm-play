@@ -95,15 +95,15 @@ function kcode(obj) {
   if (typ==='key') {
     const qctl = key.match(/<([^>]+)>/)
     const qalt = key.match(/{([^}]+)}/)
-    if      (qctl) { msg = `[ctl]...... ⇾ ${ktoShow(qctl[1])}`  }
-    else if (qalt) { msg = `[alt]...... ⇾ ${ktoShow(qalt[1])}`  }
-    else           { msg = `[ctl]+[alt] ⇾ ${ktoShow(arr.pop())}`}
+    if      (qctl) { msg = `ctl . ... ⇾ ${ktoShow(qctl[1])}`  }
+    else if (qalt) { msg = `alt . ... ⇾ ${ktoShow(qalt[1])}`  }
+    else           { msg = `ctl + alt ⇾ ${ktoShow(arr.pop())}`}
   } else if (typ==='code') {
     const qctl = key.match(/<([^>]+)>/)
     const qalt = key.match(/{([^}]+)}/)
-    if      (qctl) { msg = '[ctl]...... ⇨ '+mitm.fn.codeToShow(qctl[1])}
-    else if (qalt) { msg = '[alt]...... ⇨ '+mitm.fn.codeToShow(qalt[1])}
-    else           { msg = '[ctl]+[alt] ⇨ '+mitm.fn.codeToShow(arr.join(':'))}
+    if      (qctl) { msg = 'ctl . ... ⇨ '+mitm.fn.codeToShow(qctl[1])}
+    else if (qalt) { msg = 'alt . ... ⇨ '+mitm.fn.codeToShow(qalt[1])}
+    else           { msg = 'ctl + alt ⇨ '+mitm.fn.codeToShow(arr.join(':'))}
   }
   return msg
 }
@@ -126,8 +126,6 @@ function kcode(obj) {
 
 <style type="text/scss">
   .vbox {
-    padding: 0 10px;
-    position: absolute;
     color:blue;
     left: 0;
     right: 0;
