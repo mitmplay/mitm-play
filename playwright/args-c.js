@@ -20,6 +20,7 @@ module.exports = argv => {
     '--disable-site-isolation',
     '--disable-notifications',
     '--disable-dev-shm-usage', //https://github.com/puppeteer/puppeteer/issues/1834
+    '--disable-web-security',
     '--disable-infobars',
     '--no-experiments',
     '--test-type',

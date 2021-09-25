@@ -86,9 +86,10 @@ Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools
 | Feature     | payload      | note
 |-------------|--------------|----------------------------------------
 | `screenshot`| ----------   | DOM specific rules for taking screenshot
-| `skip`      | ----------   | array ..of `[domain]` - browser will handle it
-| `proxy`     | ----------   | array ..of `[domain]` - will serve using proxy
 | `noproxy`   | ----------   | array ..of `[domain]` - will serve directly
+| `proxy`     | ----------   | array ..of `[domain]` - will serve using proxy
+| `noskip`    | ----------   | array ..of `[domain]` - forces to noskip
+| `skip`      | ----------   | array ..of `[domain]` - browser will handle it
 | `request`   | __request__  | modify reqs object - call to remote server
 | `mock`      | __response__ | mock resp object - no call to remote server
 | `cache`     | __response__ | 1st call save to local - next call, read from cache
@@ -106,7 +107,7 @@ Mitm intercept is **hierarchical checking routes**.
 First check is to **match** domain on the url with **route-folder** as a domain `namespace`.
 
 Next check is to **match** full-url with **regex-routing** of each section/rule. the **regex-routing** having two type:
-* **An Array** [ `skip, proxy, nonproxy, nosocket` ] 
+* **An Array** [ `nosocket, nonproxy, proxy, noskip, skip` ] 
 * **Object Key**: 
   1. General [ `request, mock, cache, log, response` ] 
   2. Specific to content-type [ `html, json, css, js` ] 
@@ -273,10 +274,11 @@ route = {
   jsLib:   [],
   workspace: '',
   screenshot: {}, //user interaction rules & DOM-element observer
-  proxy:   [], //request with proxy
-  noproxy: [], 
   nosocket:[],
-  skip:    [], //start routing rules
+  noproxy: [], 
+  proxy:   [], //request with proxy
+  noskip:  [], //start routing rules
+  skip:    [],
   request: {},
   mock:    {}, 
   cache:   {},
@@ -352,14 +354,11 @@ screenshot: {
 ```
 `at` is a partion of filename and having a simple rule attach on it. Guess what is it?.
 </details>
-<details><summary><b>Proxy</b></summary>
+<details><summary><b>Nosocket</b></summary>
 
-Certain domain will go thru proxy, `proxy` & `noproxy` will make sanse if command line contains -x/--proxy
+No `WebSocket` Injection to **`html`**, `mitm-play` will process further.
 ```js
-// HTTP_PROXY env need to be set, cli: --proxy ..
-proxy: [
-  'google-analytics.com',
-],
+nosocket: ['sso'],
 ```
 </details>
 <details><summary><b>Noproxy</b></summary>
@@ -371,18 +370,29 @@ noproxy: ['nytimes.com'],
 proxy:   ['.+'],
 ```
 </details>
-<details><summary><b>Nosocket</b></summary>
+<details><summary><b>Proxy</b></summary>
 
-No `WebSocket` Injection to **`html`**, `mitm-play` will process further.
+Certain domain will go thru proxy, `proxy` & `noproxy` will make sanse if command line contains -x/--proxy
 ```js
-nosocket: ['sso'],
+// HTTP_PROXY env need to be set, cli: --proxy ..
+proxy: [
+  'google-analytics.com',
+],
+```
+</details>
+<details><summary><b>Noskip</b></summary>
+
+Forces to some domains not to be skip it 
+```js
+noskip: ['wp-admin'],
+skip  : ['.+'], // put it in on global routes
 ```
 </details>
 <details><summary><b>Skip</b></summary>
 
 Skipping back **`url`** to the browser if partion of **`url`** match text in array of `skip` section, `mitm-play` will not process further.
 ```js
-skip: ['wp-admin'],
+skip: ['.+'],
 ```
 </details>
 <details><summary><b>Request</b></summary>

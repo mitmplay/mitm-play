@@ -54,13 +54,27 @@ function html5vid({url}, fn) {
   }
 }
 
+const css = `
+[data-testid="placementTracking"] {
+  display: none !important;
+}`
+
 const route = {
   title: 'Twitter - twitter',
   url: 'https://www.twitter.com/search?q=covid&src=typed_query',
-  screenshot: {
-    selector: 'button[type=submit],a[role=button]',
-    at: 'sshot',
+  urls: {
+    twhome: 'https://twitter.com/home',
+    twlogin: 'https://twitter.com/i/flow/login'
   },
+  // screenshot: {
+  //   selector: 'button[type=submit],a[role=button]',
+  //   at: 'sshot',
+  // },
+  noskip: [
+    '/i/api/2/search/adaptive.json',
+    '/i/api/2/timeline/home.json',
+    'twitter.com/home',
+  ],
   mock: {
     // '/sw.js': '',
     // 'abs.twimg.com/': '',
@@ -83,7 +97,11 @@ const route = {
   //   'api.twitter.com': {
   //     contentType: ['json']
   //   },
-  },  
+  },
+  json: {
+    '/i/api/2/search/adaptive.json': {response },
+    '/i/api/2/timeline/home.json':   {response },
+  },
   html: {
     // 'twimg.com': 0,
     'twitter.com': {
@@ -99,3 +117,18 @@ const route = {
   },
 }
 module.exports = route;
+
+// lol.timeline.instructions[0].addEntries.entries[1] - entryId: "promotedTweet-1430926902454325253-d67673d83ef523b"
+function response(resp, reqs, match) {
+  const tw = JSON.parse(resp.body)
+  const {entries} = tw.timeline.instructions[0].addEntries
+  const twiiits = []
+  for (const obj of entries) {
+    if (!obj.entryId.match('promotedTweet')) {
+      twiiits.push(obj)
+    }
+  }
+  // tw.globalObjects.users = {}
+  tw.timeline.instructions[0].addEntries.entries = twiiits
+  resp.body = JSON.stringify(tw)
+}

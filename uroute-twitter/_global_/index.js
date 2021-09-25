@@ -1,4 +1,10 @@
 const route = {
+  noskip: [
+    '/mitm-play',
+  ],
+  skip: [
+    '.+'
+  ],
   'args': {
     debug: false
   },

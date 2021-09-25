@@ -202,6 +202,7 @@ function init() {
   const divCenter= document.createElement('div')
 
   styleBtn.innerHTML = style
+  styleBtn.className = 'mitm-class'
   divRight.innerHTML = `<span class="bgroup-right"></span>`
   divTopR.innerHTML  = `<span class="bgroup-topr"></span>`
   divLeft.innerHTML  = `<span class="bgroup-left"></span>`

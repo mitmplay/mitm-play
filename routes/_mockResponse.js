@@ -20,7 +20,7 @@ const mock = ({ url }, match) => {
       'content-type': 'text/plain',
       'access-control-allow-origin': '*'
     },
-    body: 'Hello mock! - mitm-play'
+    body: '// Hello mock! - mitm-play'
   }
   changeStatus(match, resp)
   return resp
