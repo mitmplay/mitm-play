@@ -18,11 +18,4 @@ _ws_general()
 _ws_cspErr()
 _ws_macros()
 console.log('%cWs: ws-client loaded...', _c)
-
-// feat: svelte related
-const {default: Cspheader} = require('../svelte/Cspheader.svelte')
-const {default: Hotkeys}   = require('../svelte/Hotkeys.svelte')
-window.mitm.svelte = {
-  Cspheader,
-  Hotkeys
-}
+window.mitm.svelte = require('../svelte')

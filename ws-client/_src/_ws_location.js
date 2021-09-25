@@ -3,6 +3,7 @@
 const {codeToChar:_key} = require('./_keyboard')
 const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
+const play = require('./_ws_play')
 const _c = 'color: #bada55'
 const styleLeft  = 'top:  1px; left:  3px;'
 const styleTopR  = 'top: -4px; right: 3px;'
@@ -58,59 +59,6 @@ let bgroup = {
   right: {},
   topr: {},
   left: {},
-}
-
-function _post(json) {
-  return new Promise(function(resolve, reject) {
-    try {
-      const config = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(json)
-      }
-      fetch('/mitm-play/play.json', config)
-      .then(function(response) { resolve(response.json())})
-      .then(function(data    ) { resolve(data)           })
-    } catch (error) {
-      reject(error)
-    }
-  })
-}
-
-async function play (autofill) {
-  const {__args} = window.mitm
-  if (autofill) {
-    if (typeof (autofill) === 'function') {
-      autofill = autofill()
-    }
-    const browser = _ws_vendor()
-    const lenth = autofill.length
-    const _page = window['xplay-page']
-    const _frame = window['xplay-frame']
-    const _json = {autofill, browser, _page, _frame}
-    const msg = lenth === 1 ? `  ${autofill}` : JSON.stringify(autofill, null, 2)
-    console.log(`%cMacros: ${msg}`, _c)
-    let result
-    if ([true, 'off'].includes(__args.nosocket)) {
-      result = await _post(_json)
-    } else {
-      result = await _play(_json)
-    }
-    return result
-  }
-}
-
-function _play(json) {
-  return new Promise(function(resolve, reject) {
-    try {
-      window.ws__send('autofill', json, resolve)
-    } catch (error) {
-      reject(error)
-    }
-  })
 }
 
 function wait(ms) {
@@ -198,7 +146,7 @@ async function urlChange (event) {
           }
         }
         debunk && clearTimeout(debunk)
-        debunk = setTimeout(() => {
+        debunk = setTimeout(async () => {
           onces = {} // feat: onetime fn call
           debunk = undefined
           const {autobuttons, rightbuttons, leftbuttons} = window.mitm
@@ -575,12 +523,11 @@ function svelte(Svelt, bg='PostIt') { // feat: svelte related
     target.style = `display: block${bcolor ? ';background:'+bcolor : ''};`
     center = true
   }, 0)
-  
 }
 
+window.mitm.fn.macroAutomation = macroAutomation
+window.mitm.fn.svelte = svelte
 window.mitm.fn.play = play
 window.mitm.fn.wait = wait
-window.mitm.fn.svelte = svelte
-window.mitm.fn.macroAutomation = macroAutomation
 
 module.exports = wsLocation

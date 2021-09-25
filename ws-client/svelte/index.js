@@ -1,5 +1,8 @@
-import Hotkeys from './Hotkeys.svelte'
-module.exports.Hotkeys = Hotkeys
-window['mitm-svelte'] = {
+// feat: svelte related
+const {default: Cspheader} = require('./Cspheader.svelte')
+const {default: Hotkeys}   = require('./Hotkeys.svelte')
+
+module.exports = {
+  Cspheader,
   Hotkeys
 }
