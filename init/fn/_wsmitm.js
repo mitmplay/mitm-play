@@ -28,8 +28,8 @@ module.exports = function ({ url }, reqs) {
   const csp = {}
   if (_csp) {
     _csp.split('; ').forEach(d=> {
-      const [k, ...v] = d.split(/ +/)
-      csp[k] = v
+      const [k, ...policy] = d.split(/ +/)
+      csp[k] = {policy}
     })
   }
   info = {csp}

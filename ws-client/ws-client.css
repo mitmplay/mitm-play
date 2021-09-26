@@ -1,9 +1,9 @@
-details.note.svelte-1jr26wm.svelte-1jr26wm {
+details.note.svelte-ws3cmd.svelte-ws3cmd {
   padding-left: 14px;
   padding-bottom: 3px;
 }
 
-details.note.svelte-1jr26wm summary.svelte-1jr26wm {
+details.note.svelte-ws3cmd summary.svelte-ws3cmd {
   color: red;
   cursor: pointer;
   font-size: x-small;
@@ -12,26 +12,30 @@ details.note.svelte-1jr26wm summary.svelte-1jr26wm {
   list-style: none;
 }
 
-details.note.svelte-1jr26wm summary.svelte-1jr26wm::-webkit-details-marker {
+details.note.svelte-ws3cmd summary.svelte-ws3cmd::-webkit-details-marker {
   display: none;
 }
 
-details.note.svelte-1jr26wm summary.svelte-1jr26wm:hover {
+details.note.svelte-ws3cmd summary.svelte-ws3cmd:hover {
   background-color: lightgoldenrodyellow;
 }
 
-summary.svelte-1jr26wm.svelte-1jr26wm, .item.svelte-1jr26wm.svelte-1jr26wm {
+summary.svelte-ws3cmd.svelte-ws3cmd, .item.svelte-ws3cmd.svelte-ws3cmd {
   cursor: pointer;
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;
   font-size: small;
 }
 
-summary.svelte-1jr26wm.svelte-1jr26wm:hover, .item.svelte-1jr26wm.svelte-1jr26wm:hover {
+summary.svelte-ws3cmd.svelte-ws3cmd:hover, .item.svelte-ws3cmd.svelte-ws3cmd:hover {
   background-color: lightblue;
 }
 
-.item.svelte-1jr26wm.svelte-1jr26wm {
+summary.fallback.svelte-ws3cmd.svelte-ws3cmd {
+  color: darkred;
+}
+
+.item.svelte-ws3cmd.svelte-ws3cmd {
   padding-left: 14px;
   font-size: smaller;
   color: #9100cd;

@@ -9,18 +9,20 @@ import {
 let csp = window.mitm.info.csp
 
 onMount(async () => {
-  if (csp['default-src'].length>1) {
-    const fallback = csp['default-src']
+  const fallback = true
+  const {policy} = csp['default-src'] || {}
+  if (policy.length>0) {
     for (const id of cspFetch) {
       if (!csp[id]) {
-        csp[id] = ['*fallback*', ...fallback]
+        csp[id] = {policy, fallback}
       }
     }
   }
   for (const id of cspEAttr) {
     const par = id.replace(/-.{4}$/, '')
-    if (!csp[id] && csp[par]) {
-      csp[id] = csp[par]
+    const {policy} = csp[par] || {}
+    if (!csp[id] && policy) {
+      csp[id] = {policy, fallback}
     }
   }
 })
@@ -37,11 +39,11 @@ onMount(async () => {
   <div>
     {#each cspArr as id, i}
     {#if csp[id]}      
-      <details><summary>
+      <details><summary class={csp[id].fallback ? 'fallback' : ''}>
         {#if cspInfo[id].link}
-          {i+1}.<a href={cspInfo[id].link}>{id}:</a>({csp[id].length})<small>v{cspInfo[id].level}</small>
+          {i+1}.{id}:({csp[id].policy.length})<a href={cspInfo[id].link}><small>v{cspInfo[id].level}</small></a>
         {:else}
-          {i+1}.{id}:({csp[id].length})<small>v{cspInfo[id].level}</small>
+          {i+1}.{id}:({csp[id].policy.length})<small>v{cspInfo[id].level}</small>
         {/if}
       </summary>
         {#if cspInfo[id].note}
@@ -49,7 +51,7 @@ onMount(async () => {
             <small>{@html cspInfo[id].note}</small>
           </details>
         {/if}
-        {#each csp[id] as item, x}
+        {#each csp[id].policy as item, x}
           <div class="item">{x+1}:{item}</div>
         {/each}
       </details>
@@ -85,6 +87,9 @@ summary,.item {
   &:hover {
     background-color: lightblue;
   }
+}
+summary.fallback {
+  color: darkred;
 }
 .item {
   padding-left: 14px;
