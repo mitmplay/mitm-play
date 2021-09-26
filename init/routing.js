@@ -41,8 +41,8 @@ module.exports = () => {
   const client = `${app}/ws-client/ws-client`
   const mock = {
     '!:hidden:/mitm-play/mitm.js': {
-      response: resp => {
-        resp.body = global.mitm.fn._wsmitm(resp)
+      response: (resp, reqs) => {
+        resp.body = global.mitm.fn._wsmitm(resp, reqs)
         resp.headers['content-type'] = 'application/javascript'
       }
     },

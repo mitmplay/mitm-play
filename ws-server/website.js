@@ -9,7 +9,7 @@ module.exports = () => {
   app.use('/mitm-assets', express.static(path.route));
 
   app.get('/mitm-play/mitm.js', (req, res) => {
-    const _body = _wsmitm(req)
+    const _body = _wsmitm(req, res)
     res.type('.js')
     res.send(_body)
   })

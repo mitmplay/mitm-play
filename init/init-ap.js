@@ -14,6 +14,9 @@ const argv = { ommit: {}, browser: {}, ...yargs(process.argv.slice(2)) }
 const path = { app, cwd, home, userroute }
 const win32 = platform === 'win32'
 
+const info = {
+  csp: {}
+}
 const files = {
   _markdown:{}, // feat: markdown
   _profile: {}, // feat: profile
@@ -44,6 +47,7 @@ global.mitm = {
   win32,
   path,
   argv,
+  info,
   data: {},
   pages: {},
   watcher: {},

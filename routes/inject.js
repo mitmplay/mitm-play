@@ -85,15 +85,11 @@ function replaceCSP (csp) {
   return csp
 }
 
-const headerchg = headers => {
-  let csp
-  if (headers['content-security-policy']) {
-    csp = replaceCSP(headers['content-security-policy'])
-    headers['content-security-policy'] = csp
-  } else if (headers['content-security-policy-report-only']) {
-    csp = replaceCSP(headers['content-security-policy-report-only'])
-    headers['content-security-policy-report-only'] = csp
-  }
+const addCsp = (url, csp) => {
+  setTimeout(()=>{
+    const {origin, pathname} = new URL(url)
+    mitm.info.csp[`${origin}${pathname}`] = csp
+  }, 0)
 }
 
 function injectWS (resp, url, jsLib) {
@@ -102,6 +98,7 @@ function injectWS (resp, url, jsLib) {
   let {body, headers} = resp
   body = `${body}`
 
+  // console.log('injectWS')
   // do not change JS load order! 
   if (_nameSpace(_tldomain(url))) {
     if (__args.svelte) {
@@ -114,11 +111,16 @@ function injectWS (resp, url, jsLib) {
     js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
   }
   resp.body = script_src(body, js)
-  if (__args.csp) {
-    headerchg(headers)
-    if (__args.csp==='nosts' && headers['strict-transport-security']) {
-      delete headers['strict-transport-security']
+  const csp = headers['content-security-policy'] || 
+              headers['content-security-policy-report-only']
+  if (csp) {
+    addCsp(url,csp)
+    if (__args.csp) {
+      headers[csp] = replaceCSP(headers[csp])
     }
+  }
+  if (__args.csp==='nosts' && headers['strict-transport-security']) {
+    delete headers['strict-transport-security']
   }
 }
 module.exports = {

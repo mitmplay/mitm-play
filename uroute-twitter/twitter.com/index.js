@@ -106,8 +106,8 @@ const route = {
     // 'twimg.com': 0,
     'twitter.com': {
       response(resp) {
-        const {headers} = resp
-        delete headers['content-security-policy'] 
+        // const {headers} = resp
+        // delete headers['content-security-policy'] 
       },
       // el: 'body',
       // js: [unregisterJS],

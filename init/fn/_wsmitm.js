@@ -1,7 +1,9 @@
-module.exports = function ({ url }) {
-  const {
+module.exports = function ({ url }, reqs) {
+  const {mitm} = global
+  let {
     argv,
     path,
+    info,
     __args,
     __flag,
     client,
@@ -11,7 +13,7 @@ module.exports = function ({ url }) {
     fn: {
       _nameSpace
     }
-  } = global.mitm
+  } = mitm
   const namespace = _nameSpace(url)
   let macros = []
   if (namespace && routes[namespace].macros) {
@@ -20,10 +22,22 @@ module.exports = function ({ url }) {
       macros.push(`\n    "${i}": ${m[i] + ''}`)
     }
   }
+  const {headers: {referer}} = reqs
+  const {origin, pathname} = new URL(referer)
+  const _csp = info.csp[`${origin}${pathname}`]
+  const csp = {}
+  if (_csp) {
+    _csp.split('; ').forEach(d=> {
+      const [k, ...v] = d.split(/ +/)
+      csp[k] = v
+    })
+  }
+  info = {csp}
   macros = `,\n  "macros": {${macros.join(',')}\n  }\n}`
   let json = {
     __args,
     __flag,
+    info,
     argv,
     path,
     client,
