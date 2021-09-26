@@ -1,6 +1,29 @@
 <script>
-import {cspArr, cspInfo} from './Cspdirective'
+import {onMount} from 'svelte';
+import {
+  cspArr,
+  cspInfo,
+  cspFetch,
+  cspEAttr,
+} from './Cspdirective'
 let csp = window.mitm.info.csp
+
+onMount(async () => {
+  if (csp['default-src'].length>1) {
+    const fallback = csp['default-src']
+    for (const id of cspFetch) {
+      if (!csp[id]) {
+        csp[id] = ['*fallback*', ...fallback]
+      }
+    }
+  }
+  for (const id of cspEAttr) {
+    const par = id.replace(/-.{4}$/, '')
+    if (!csp[id] && csp[par]) {
+      csp[id] = csp[par]
+    }
+  }
+})
 </script>
 
 <div class="vbox">
@@ -22,7 +45,9 @@ let csp = window.mitm.info.csp
         {/if}
       </summary>
         {#if cspInfo[id].note}
-          <small>{@html cspInfo[id].note}</small>
+          <details class="note"><summary>expand...</summary>
+            <small>{@html cspInfo[id].note}</small>
+          </details>
         {/if}
         {#each csp[id] as item, x}
           <div class="item">{x+1}:{item}</div>
@@ -34,9 +59,32 @@ let csp = window.mitm.info.csp
 </div>
 
 <style type="text/scss">
+details.note {
+  padding-left: 14px;
+  padding-bottom: 3px;
+  summary {
+    color: red;
+    cursor: pointer;
+    font-size: x-small;
+    margin-left: -14px;
+    padding-left: 14px;
+    list-style: none;
+    &::-webkit-details-marker {
+      display: none;
+    }
+    &:hover {
+      background-color: lightgoldenrodyellow;
+    }
+  }
+} 
 summary,.item {
+  cursor: pointer;
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
+  font-size: small;
+  &:hover {
+    background-color: lightblue;
+  }
 }
 .item {
   padding-left: 14px;

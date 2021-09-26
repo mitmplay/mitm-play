@@ -1,9 +1,37 @@
-summary.svelte-11e5856, .item.svelte-11e5856 {
-  font-family: "Courier New", Courier, monospace;
-  font-weight: bold;
+details.note.svelte-1jr26wm.svelte-1jr26wm {
+  padding-left: 14px;
+  padding-bottom: 3px;
 }
 
-.item.svelte-11e5856 {
+details.note.svelte-1jr26wm summary.svelte-1jr26wm {
+  color: red;
+  cursor: pointer;
+  font-size: x-small;
+  margin-left: -14px;
+  padding-left: 14px;
+  list-style: none;
+}
+
+details.note.svelte-1jr26wm summary.svelte-1jr26wm::-webkit-details-marker {
+  display: none;
+}
+
+details.note.svelte-1jr26wm summary.svelte-1jr26wm:hover {
+  background-color: lightgoldenrodyellow;
+}
+
+summary.svelte-1jr26wm.svelte-1jr26wm, .item.svelte-1jr26wm.svelte-1jr26wm {
+  cursor: pointer;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: small;
+}
+
+summary.svelte-1jr26wm.svelte-1jr26wm:hover, .item.svelte-1jr26wm.svelte-1jr26wm:hover {
+  background-color: lightblue;
+}
+
+.item.svelte-1jr26wm.svelte-1jr26wm {
   padding-left: 14px;
   font-size: smaller;
   color: #9100cd;

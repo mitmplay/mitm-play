@@ -47,7 +47,7 @@ module.exports = () => {
       keys['key:us'          ]._title = 'this is us'
       keys['key:u'           ]._title = 'this is u'
 
-      window.mitm.macrokeys = keys
+      window.mitm.fn.hotKeys (keys)
       window.mitm.autofill = ['input[type="password"] => password']
       window.mitm.autobuttons  = rbuttons
       window.mitm.rightbuttons = rbuttons

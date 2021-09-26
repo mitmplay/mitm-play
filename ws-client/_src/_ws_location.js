@@ -25,7 +25,7 @@ const style = `
   margin-left: auto;
   /* give it dimensions */
   height: calc(100vh - 50px);
-  padding: 0 10px;
+  padding: 5px 10px;
   overflow: auto;
   width: 90%;
   display: none;
@@ -111,7 +111,7 @@ function defaultHotKeys() {
   const {mitm: {fn}} = window
   const keys = {
     'code:KeyC'(_e) {
-      fn.svelte(mitm.svelte.Cspheader, 'ElectricLavender')
+      fn.svelte(mitm.svelte.Cspheader, 'LightPastelGreen')
     },
   }
   keys['code:KeyC']._title = 'Show CSP Header'
@@ -137,11 +137,11 @@ async function urlChange (event) {
     const {href, origin} = location
     const _href = href.replace(origin, '')
     observerfn = []
-    for (const key in macros) {
+    for (const key in mitm.macros) {
       const { path, msg } = toRegex(key)
       if (_href.match(path)) {
         button.innerHTML = msg || 'Entry'
-        let fns = macros[key]()
+        let fns = mitm.macros[key]()
         if (fns instanceof Promise) {
           fns = await fns
         }
@@ -488,40 +488,40 @@ function wsLocation() {
 }
 
 const pastel = {
-  PostIt:          '#fcffdcb0',
-  PastelGreen:     '#77dd77b0',
-  PastelBrown:     '#836953b0',
-  BabyBlue:        '#89cff0b0',
-  PastelTurquoise: '#99c5c4b0',
-  BlueGreenPastel: '#9adedbb0',
-  PersianPastel:   '#aa9499b0',
-  MagicMint:       '#aaf0d1b0',
-  LightPastelGreen:'#b2fba5b0',
-  PastelPurple:    '#b39eb5b0',
-  PastelLilac:     '#bdb0d0b0',
-  PastelPea:       '#bee7a5b0',
-  LightLime:       '#befd73b0',
-  LightPeriwinkle: '#c1c6fcb0',
-  PaleMauve:       '#c6a4a4b0',
-  LightLightGreen: '#c8ffb0b0',
-  PastelViolet:    '#cb99c9b0',
-  PastelMint:      '#cef0ccb0',
-  PastelGrey:      '#cfcfc4b0',
-  PaleBlue:        '#d6fffeb0',
-  PastelLavender:  '#d8a1c4b0',
-  PastelPink:      '#dea5a4b0',
-  PastelSmirk:     '#deece1b0',
-  PastelDay:       '#dfd8e1b0',
-  PastelParchment: '#e5d9d3b0',
-  PastelRoseTan:   '#e9d1bfb0',
-  PastelMagenta:   '#f49ac2b0',
-  ElectricLavender:'#f4bfffb0',
-  PastelYellow:    '#fdfd96b0',
-  PastelRed:       '#ff6961b0',
-  PastelOrange:    '#ff964fb0',
-  AmericanPink:    '#ff9899b0',
-  BabyPink:        '#ffb7ceb0',
-  BabyPurple:      '#ca9bf7b0',
+  PostIt:          '#fcffdcd6',
+  PastelGreen:     '#77dd77d6',
+  PastelBrown:     '#836953d6',
+  BabyBlue:        '#89cff0d6',
+  PastelTurquoise: '#99c5c4d6',
+  BlueGreenPastel: '#9adedbd6',
+  PersianPastel:   '#aa9499d6',
+  MagicMint:       '#aaf0d1d6',
+  LightPastelGreen:'#b2fba5d6',
+  PastelPurple:    '#b39eb5d6',
+  PastelLilac:     '#bdb0d0d6',
+  PastelPea:       '#bee7a5d6',
+  LightLime:       '#befd73d6',
+  LightPeriwinkle: '#c1c6fcd6',
+  PaleMauve:       '#c6a4a4d6',
+  LightLightGreen: '#c8ffb0d6',
+  PastelViolet:    '#cb99c9d6',
+  PastelMint:      '#cef0ccd6',
+  PastelGrey:      '#cfcfc4d6',
+  PaleBlue:        '#d6fffed6',
+  PastelLavender:  '#d8a1c4d6',
+  PastelPink:      '#dea5a4d6',
+  PastelSmirk:     '#deece1d6',
+  PastelDay:       '#dfd8e1d6',
+  PastelParchment: '#e5d9d3d6',
+  PastelRoseTan:   '#e9d1bfd6',
+  PastelMagenta:   '#f49ac2d6',
+  ElectricLavender:'#f4bfffd6',
+  PastelYellow:    '#fdfd96d6',
+  PastelRed:       '#ff6961d6',
+  PastelOrange:    '#ff964fd6',
+  AmericanPink:    '#ff9899d6',
+  BabyPink:        '#ffb7ced6',
+  BabyPurple:      '#ca9bf7d6',
 }
 
 function svelte(Svelt, bg='PostIt') { // feat: svelte related
@@ -535,7 +535,15 @@ function svelte(Svelt, bg='PostIt') { // feat: svelte related
   }, 0)
 }
 
+function hotKeys(obj) {
+  window.mitm.macrokeys = {
+    ...window.mitm.macrokeys,
+    ...obj
+  }
+}
+
 window.mitm.fn.macroAutomation = macroAutomation
+window.mitm.fn.hotKeys = hotKeys
 window.mitm.fn.svelte = svelte
 window.mitm.fn.play = play
 window.mitm.fn.wait = wait
