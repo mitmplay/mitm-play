@@ -107,6 +107,17 @@ function setButtons (buttons, position) {
   }
 }
 
+function defaultHotKeys() {
+  const {mitm: {fn}} = window
+  const keys = {
+    'code:KeyC'(_e) {
+      fn.svelte(mitm.svelte.Cspheader, 'ElectricLavender')
+    },
+  }
+  keys['code:KeyC']._title = 'Show CSP Header'
+  mitm.macrokeys = keys
+}
+
 let debunk
 let intervId
 let onces = {} // feat: onetime fn call
@@ -121,13 +132,11 @@ async function urlChange (event) {
   if (mitm.autobuttons)  {delete mitm.autobuttons }
   if (mitm.leftbuttons)  {delete mitm.leftbuttons }
   if (mitm.rightbuttons) {delete mitm.rightbuttons}
-  if (mitm.macrokeys)    {delete mitm.macrokeys   }
+  if (mitm.macrokeys)    {defaultHotKeys()        }
   if (namespace) {
     const {href, origin} = location
     const _href = href.replace(origin, '')
-    const {_macros_, macros} = window.mitm
     observerfn = []
-    _macros_ && _macros_()
     for (const key in macros) {
       const { path, msg } = toRegex(key)
       if (_href.match(path)) {

@@ -1,3 +1,14 @@
+summary.svelte-11e5856, .item.svelte-11e5856 {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+}
+
+.item.svelte-11e5856 {
+  padding-left: 14px;
+  font-size: smaller;
+  color: #9100cd;
+}
+
 .vbox.svelte-zpccy4.svelte-zpccy4 {
   color: blue;
   left: 0;

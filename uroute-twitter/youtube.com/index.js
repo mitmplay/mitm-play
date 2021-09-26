@@ -1,6 +1,6 @@
 const route = {
   noskip: [
-    'youtube.com/watch',
+    'youtube.com/',
   ]
 }
 module.exports = route

@@ -54,7 +54,12 @@ module.exports = function ({ url }, reqs) {
       getMarkdown_events: {}
     },
     fn: {},
-    version
+    version,
+    autofill: {},
+    macrokeys: {},
+    autobuttons: {},
+    leftbuttons: {},
+    rightbuttons: {},
   }
   json = JSON.stringify(json)
   json = json.replace(/}$/g, macros)

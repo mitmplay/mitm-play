@@ -8,7 +8,7 @@ module.exports = () => {
       [data-testid="placementTracking"] {
         display: none !important;
       }
-      `    
+      `
     }
   }
 }
