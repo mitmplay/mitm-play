@@ -111,12 +111,16 @@ function injectWS (resp, url, jsLib) {
     js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
   }
   resp.body = script_src(body, js)
-  const csp = headers['content-security-policy'] || 
-              headers['content-security-policy-report-only']
-  if (csp) {
-    addCsp(url,csp)
+  let csp = 'content-security-policy'
+  let _cs = headers[csp]
+  if (!_cs) {
+    csp = 'content-security-policy-report-only'
+    _cs = headers[csp]
+  }
+  if (_cs) {
+    addCsp(url,_cs)
     if (__args.csp) {
-      headers[csp] = replaceCSP(headers[csp])
+      headers[csp] = replaceCSP(_cs)
     }
   }
   if (__args.csp==='nosts' && headers['strict-transport-security']) {

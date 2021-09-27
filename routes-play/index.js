@@ -17,7 +17,7 @@ const { extract, fetch } = require('./fetch')
 
 const { logmsg } = global.mitm.fn
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
-const noURL = /^(brave|edge):\/\//
+const noURL = /^(puffin|brave|edge):\/\//
 const brExt = /^chrome-\w+:\/\//
 const wBlob = /^blob:http/
 const wNull = /\/null$/
@@ -36,7 +36,6 @@ module.exports = async ({ route, request, browserName }) => {
     argv: {
       proxy,
       verbose,
-      nosocket,
     },
   } = global.mitm
   let reqs = await extract({ route, request, browserName })
@@ -45,6 +44,7 @@ module.exports = async ({ route, request, browserName }) => {
   const { url } = reqs
   if (url.match(noURL) || url.match(wNull)) {
     routeCall(route, 'fulfill', response)
+    return
   } else if (url.match(brExt)) {
     // fix: Uncaught (in promise) TypeError: Failed to fetch dynamically imported module: chrome-extension
     route.continue(); // Needed by Chrome Plugins

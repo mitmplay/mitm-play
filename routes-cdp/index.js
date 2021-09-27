@@ -14,7 +14,7 @@ const _addWebSocket = require('../routes/_addWebSocket')
 const _cacheResponse = require('../routes/_cacheResponse')
 const Events = require('./events')
 
-const noURL = /^(brave|edge):\/\//
+const noURL = /^(puffin|brave|edge):\/\//
 const brExt = /^chrome-\w+:\/\//
 const wBlob = /^blob:http/
 const wNull = /\/null$/
