@@ -27,11 +27,11 @@ module.exports = function (resp, reqs) {
   let referer = reqs.headers.referer
   if (referer) {
     const {origin, pathname} = new URL(referer)
-    const {_csp, reportTo} = info.csp[`${origin}${pathname}`]
+    const {_csp, reportTo} = info.csp[`${origin}${pathname}`] || {}
     if (_csp) {
       _csp.split('; ').forEach(d=> {
         const [k, ...policy] = d.split(/ +/)
-        csp[k] = {policy}
+        csp[k] = {policy: policy.sort()}
       })
     }
     csp.reportTo = reportTo

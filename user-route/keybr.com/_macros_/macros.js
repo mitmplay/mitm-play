@@ -1,4 +1,4 @@
-const {default:App} = require('../_svelte_/VBox.svelte')
+require('../_svelte_')
 const _c = 'color: cornflowerblue'
 
 const rbuttons = {
@@ -26,9 +26,9 @@ module.exports = () => {
         'code:{KeyA:KeyB}'(_e) {
           console.log(`%Alt w/ 2 keys: ${_e.code}`, _c, _e)
         },
-        'code:KeyC'(_e) {
+        'key:hi'(_e) {
           const {fn,svelte} = window.mitm
-          fn.svelte(svelte.Cspheader, 'ElectricLavender')
+          fn.svelte(svelte.App, 'ElectricLavender')
         },
         'code:Enter'(_e) {
           console.log(`%cPress Enter: ${_e.code}`, _c, _e)
@@ -41,7 +41,7 @@ module.exports = () => {
         }
       }
       keys['code:KeyA'       ]._title = 'this is KeyA'
-      keys['code:KeyC'       ]._title = 'Show CSP Header'
+      keys['key:hi'          ]._title = 'Show Svelte App'
       keys['code:{KeyA:KeyB}']._title = 'this is {KeyA}'
       keys['code:Enter'      ]._title = 'this is Enter'
       keys['key:us'          ]._title = 'this is us'

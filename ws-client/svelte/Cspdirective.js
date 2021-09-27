@@ -22,6 +22,7 @@ const cspArr = [
   'navigate-to',
   'form-action',
   'frame-ancestors',
+  'upgrade-insecure-requests',
   'report-uri',
   'report-to',
 ]
@@ -67,6 +68,11 @@ const cspInfo = {
     link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src',
     note: 'specifies which URLs to load fonts from.'
   },
+  'frame-src': {
+    level: 1,
+    link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src',
+    note: 'specifies valid sources for nested browsing contexts loading using elements such as &lt;frame&gt; and &lt;iframe&gt;.'
+  },
   'img-src': {
     level: 1,
     link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src',
@@ -82,15 +88,15 @@ const cspInfo = {
     link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/media-src',
     note: 'specifies the URLs from which video, audio and text track resources can be loaded from.'
   },
-  'prefetch-src': {
-    level: 3,
-    link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/prefetch-src',
-    note: 'specifies the URLs from which resources can be prefetched from.'
-  },
   'object-src': {
     level: 1,
     link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/object-src',
     note: 'specifies the URLs from which plugins can be loaded from.'
+  },
+  'prefetch-src': {
+    level: 3,
+    link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/prefetch-src',
+    note: 'specifies the URLs from which resources can be prefetched from.'
   },
   'script-src': {
     level: 1,
@@ -121,6 +127,11 @@ const cspInfo = {
     level: 1,
     link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src',
     note: 'specifies valid sources for inline styles applied to individual DOM elements.'
+  },
+  'worker-src': {
+    level: 3,
+    link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/worker-src',
+    note: 'specifies valid sources for Worker, SharedWorker, or ServiceWorker scripts.'
   },
   'base-uri': {
     level: 2,
@@ -153,15 +164,10 @@ const cspInfo = {
     link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors',
     note: 'restricts the URLs that can embed the requested resource inside of &lt;frame&gt;, &lt;iframe&gt;, &lt;object&gt;, &lt;embed&gt;, or &lt;applet&gt; elements.'
   },
-  'frame-src': {
-    level: 1,
-    link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src',
-    note: 'specifies valid sources for nested browsing contexts loading using elements such as &lt;frame&gt; and &lt;iframe&gt;.'
-  },
-  'worker-src': {
-    level: 3,
-    link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/worker-src',
-    note: 'specifies valid sources for Worker, SharedWorker, or ServiceWorker scripts.'
+  'upgrade-insecure-requests': {
+    level: '?',
+    link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests',
+    note: 'instructs user agents to treat all of a site\'s insecure URLs (those served over HTTP) as though they have been replaced with secure URLs (those served over HTTPS). This directive is intended for web sites with large numbers of insecure legacy URLs that need to be rewritten.'
   },
   'report-uri': {
     level: 1,

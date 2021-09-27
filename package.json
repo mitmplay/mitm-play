@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -47,6 +47,7 @@
     "rollup-plugin-svelte": "7.1.0",
     "sass": "1.42.1",
     "stack-trace": "0.0.10",
+    "svelte": "^3.43.0",
     "svelte-preprocess": "4.9.4",
     "user": "*",
     "ws": "8.2.2",

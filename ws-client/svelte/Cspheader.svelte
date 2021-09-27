@@ -12,7 +12,7 @@ let reportTo = csp.reportTo
 onMount(async () => {
   const fallback = true
   const {policy} = csp['default-src'] || {}
-  if (policy.length>0) {
+  if (policy && policy.length>0) {
     for (const id of cspFetch) {
       if (!csp[id]) {
         csp[id] = {policy, fallback}
@@ -24,6 +24,13 @@ onMount(async () => {
     const {policy} = csp[par] || {}
     if (!csp[id] && policy) {
       csp[id] = {policy, fallback}
+    }
+  }
+  if (reportTo!=='JSON Error!' && reportTo.length > 15) {
+    let cb = reportTo.replace(/\n/g,'').trim()
+    if (cb[0]==='{' && cb.slice(-1)==='}') {
+      cb = JSON.stringify(JSON.parse(`[${cb}]`), null, 2)
+      reportTo = cb.replace(/\[|\]/g, '').replace(/\n  /g, '\n').trim()
     }
   }
 })
