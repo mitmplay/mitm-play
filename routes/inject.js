@@ -85,10 +85,16 @@ function replaceCSP (csp) {
   return csp
 }
 
-const addCsp = (url, csp) => {
+const addCsp = (url, headers, _csp) => {
   setTimeout(()=>{
+    let reportTo = ''
+    if (headers['report-to']) {
+      reportTo = headers['report-to']
+    }
     const {origin, pathname} = new URL(url)
-    mitm.info.csp[`${origin}${pathname}`] = csp
+    mitm.info.csp[`${origin}${pathname}`] = {
+      _csp, reportTo
+    }
   }, 0)
 }
 
@@ -118,7 +124,7 @@ function injectWS (resp, url, jsLib) {
     _cs = headers[csp]
   }
   if (_cs) {
-    addCsp(url,_cs)
+    addCsp(url, headers, _cs)
     if (__args.csp) {
       headers[csp] = replaceCSP(_cs)
     }

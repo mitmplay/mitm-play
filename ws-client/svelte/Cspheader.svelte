@@ -7,6 +7,7 @@ import {
   cspEAttr,
 } from './Cspdirective'
 let csp = window.mitm.info.csp
+let reportTo = csp.reportTo
 
 onMount(async () => {
   const fallback = true
@@ -56,7 +57,14 @@ onMount(async () => {
         {/each}
       </details>
     {/if}
-    {/each}  
+    {/each}
+    <hr />
+    <details><summary class="report"><b>report-to</b>:</summary>
+      <details class="note"><summary>expand...</summary>
+        <small>{@html 'used to specify details about the different endpoints that a user-agent has available to it for delivering reports to. You can then retrieve reports by making a request to those URLs.'}</small>
+      </details>
+      <div class="item">{reportTo}</div>
+    </details>
   </div>
 </div>
 
