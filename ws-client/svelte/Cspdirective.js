@@ -173,10 +173,18 @@ const cspInfo = {
     note: 'which is a groupname defined in the header in a json formatted header value.'
   },
 }
+const policy = {
+  'none'  : 'Won\'t allow loading of any resources.',
+  'blob:' : 'Raw data that isn\'t necessarily in a JavaScript-native format.',
+  'data:' : 'Only allow resources from the data scheme (ie: Base64 encoded images).',
+  "'self'": 'Only allow resources from the current origin.',
+  "'unsafe-inline'": '',
+}
 
 module.exports = {
   cspArr,
   cspInfo,
   cspFetch,
   cspEAttr,
+  policy,
 }
