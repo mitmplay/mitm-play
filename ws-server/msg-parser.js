@@ -19,6 +19,9 @@ const $getProfile = require('./_getProfile') // feat: profile
 const $saveProfile = require('./_saveProfile')
 const $getMarkdown = require('./_getMarkdown')
 const $getMContent = require('./_getMContent')
+const $sqlList = require('./_sqlList')
+const $sqlIns = require('./_sqlIns')
+const $sqlDel = require('./_sqlDel')
 const { logmsg } = global.mitm.fn
 
 // accessible from client
@@ -42,6 +45,9 @@ const wscmd = {
   $getCache,
   $autofill,
   $restart,
+  $sqlList,
+  $sqlIns,
+  $sqlDel,
   $getLog
 }
 global.mitm.wscmd = wscmd

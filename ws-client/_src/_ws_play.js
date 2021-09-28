@@ -54,4 +54,38 @@ async function play (autofill) {
   }
 }
 
+function sqlList(where) {
+  return new Promise(function(resolve, reject) {
+    try {
+      window.ws__send('sqlList', where, resolve)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+function sqlDel(where) {
+  return new Promise(function(resolve, reject) {
+    try {
+      window.ws__send('sqlDel', where, resolve)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+function sqlIns(fields) {
+  return new Promise(function(resolve, reject) {
+    try {
+      window.ws__send('sqlIns', fields, resolve)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+window.mitm.fn.sqlList = sqlList
+window.mitm.fn.sqlDel  = sqlDel
+window.mitm.fn.sqlIns  = sqlIns
+
 module.exports = play

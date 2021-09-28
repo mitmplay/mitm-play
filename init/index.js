@@ -15,7 +15,8 @@ module.exports = () => {
   require('./init-fn')() // must be first, init _debounce
   require('./routing')() // populate mitm.fn object
   require('./cli-cmd')() // setup folders & clean up
-
+  require('./init-db')() // load sqlite db
+   
   if (global.mitm.argv.insecure) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
   }

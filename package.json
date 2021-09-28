@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -36,6 +36,7 @@
     "fast-glob": "3.2.7",
     "fs-extra": "10.0.0",
     "highlight.js": "10.7.1",
+    "knex": "^0.95.11",
     "make-fetch-happen": "9.1.0",
     "markdown-it": "12.0.4",
     "markdown-it-anchor": "7.1.0",
@@ -46,6 +47,7 @@
     "rollup-plugin-scss": "3.0.0",
     "rollup-plugin-svelte": "7.1.0",
     "sass": "1.42.1",
+    "sqlite3": "^5.0.2",
     "stack-trace": "0.0.10",
     "svelte": "^3.43.0",
     "svelte-preprocess": "4.9.4",
