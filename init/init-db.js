@@ -19,26 +19,29 @@ module.exports = async () => {
   if (!exists) {
     await knex.schema.createTable('kv', function(t) {
       t.increments('id').primary();
-      t.string('ns'  , 100);
+      t.string('hst' , 100);
+      t.string('app' , 100);
       t.string('grp' , 100);
       t.string('typ' , 100);
       t.string('name', 100);
       t.text(  'value'    );
-      t.index(['ns', 'grp', 'typ', 'name'])
+      t.index(['hst', 'app', 'typ', 'app'])
+      t.index(['hst', 'grp', 'typ', 'grp'])
     });
   }
   mitm.db = knex
 
-  let rows = await knex('kv').select('ns', 'grp', 'typ', 'name', 'value')
+  let rows = await knex('kv').select('*')
   if (!rows.length) {
     await knex('kv').insert({
-      ns   : 'demo1',
+      hst  : 'host1',
+      app  : 'apps1',
       grp  : 'group1',
       typ  : 'type1',
       name : 'name1',
       value: 'value1'
     })
-    rows = await knex('kv').select('ns', 'grp', 'typ', 'name', 'value')
+    rows = await knex('kv').select('*')
   }
   console.log('Knex Rows:', rows)
 }

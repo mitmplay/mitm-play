@@ -1,4 +1,4 @@
-module.exports = async ({ data={} }) => {
-  const result = await mitm.db('kv').insert(data)
-  return result
+module.exports = async ({ data }) => {
+  const inserted = await mitm.fn.sqlIns(data)
+  return inserted
 }

@@ -6,6 +6,7 @@ const clearModule = require('clear-module');
 
 const { _keyLength, _sortLength, _sort } = require('./fn/_key-length')
 const { _routeSet, toRegex, rmethod } = require('./fn/_route-set')
+const { sqlList, sqlIns, sqlDel } = require('./fn/_sql')
 const { formToObj, objToForm } = require('./fn/form')
 const { watcher, requires } = require('./fn/watcher')
 const { _proxy, _noproxy } = require('./fn/_proxies')
@@ -60,6 +61,9 @@ module.exports = () => {
     rmethod,
     toRegex,
     watcher,
+    sqlList,
+    sqlDel,
+    sqlIns,
     flist,
     tilde,
     home

@@ -1,10 +1,4 @@
-module.exports = async ({ data='' }) => {
-  const pre = mitm.db('kv').select('ns', 'grp', 'typ', 'name', 'value')
-  let rows
-  if (data) {
-    rows = await pre.where(data)
-  } else {
-    rows = await pre
-  }
+module.exports = async ({ data }) => {
+  const rows = await mitm.fn.sqlList(data)
   return rows
 }

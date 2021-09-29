@@ -1,4 +1,4 @@
-module.exports = async ({ data={} }) => {
-  const rows = await mitm.db('kv').del().where(data)
-  return rows
+module.exports = async ({ data }) => {
+  const deleted = await mitm.fn.sqlDel(data)
+  return deleted
 }
