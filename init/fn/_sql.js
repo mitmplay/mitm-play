@@ -1,9 +1,11 @@
+var brc = / *([)]+)/
 var rmv = /^(and|or) /i
-var rgx = /(or +\w+ *|and +\w+ *|\w+ *)(LIKE|[<=>]?=?)(.+)/i
+var lgc = /like|[<=>]{1}=?/i
+var rgx = /(or +[\w%_/(.):]+ *|and +[\w%_/(.):]+ *|[\w%_/(.):]+ *)(like|[<=>]?=?)(.+)/i
 
-// where('field1 >= argument1 and field2 < argument2 or field3 like argument3')
-// (11) ['field1 ', '>=', 'argument1 ', 'and', 'field2 ', '<', 'argument2 ', 'or', 'field3 ', 'like', 'argument3']
-function parse(data) {
+// parse('(field3 like ar% lol) or (wow = wew)')
+// result: "(field3 like ?) OR (wow = ?)" arr: ['ar% lol', 'wew']
+function parse(data, rcv=1) {
   if (typeof data==='string') {
     data = data.trim()
     let arr = data.match(rgx)
@@ -14,46 +16,60 @@ function parse(data) {
         data.pop()
         const pre = last.match(rmv)
         if (pre) {
-          data = data.concat(pre[1].toUpperCase())
+          data = data.concat(pre[0].toUpperCase())
           last = last.replace(rmv, '')
         }
-        data = data.concat(parse(last)).filter(x=>x!=='')
+        data = data.concat(parse(last, 0)).filter(x=>x!=='')
       } else if (data[1]==='') {
         data = data.join('')
       }
     }
-    console.log('where:', data)
+  }
+  if (rcv===1 && Array.isArray(data)) {
+    let arr2 = []
+    let params = ''
+    let result = ''
+    let combine = false
+    for (let v of data) {
+      if (combine) {
+        if (v.match(rmv)) {
+          combine = false
+          const bracket = params.match(brc)
+          if (bracket) {
+            params = params.replace(brc,'')
+            v = `${bracket[1]} ${v}`
+          } else {
+            v = ` ${v}`
+          }
+          arr2.push(params.trim())
+          result += ` ?${v}`
+          params  = ''
+        } else {
+          params += v
+        }
+      } else {
+        if (v.match(lgc)) {
+          combine = true
+        } 
+        result += v
+        // console.log({result, combine, v})
+      }
+    }
+    if (params) {
+      const bracket = params.match(/ *([)]+)/)
+      if (bracket) {
+        params = params.replace(/ *([)]+)/,'')
+        result += ` ?${bracket[1].trim()}`
+      } else {
+        result += ` ?`
+      }
+      arr2.push(params.trim())
+      
+    }
+    console.log({data, whereRaw: `${result}, ${JSON.stringify(arr2)}`})
+    data = [result, arr2]
   }
   return data
-}
-
-function chain(pre, arr) {
-  function builder() {
-    let exc = this
-    let cmd = 'where'
-    let id = arr.indexOf('OR')
-    if (id>-1) {
-      const opt = arr.slice(0, id)
-      exc = exc[cmd](...opt)
-      arr = arr.slice(id+1)
-      cmd = 'orWhere'
-    } else {
-      id = arr.indexOf('AND')
-      if (id>-1) {
-        const opt = arr.slice(0, id)
-        exc = exc[cmd](...opt)
-        arr = arr.slice(id+1)
-        cmd = 'andWhere'
-      } 
-    }
-    if (id>-1) {
-      return builder.call(exc)
-    } else {
-      return exc[cmd](...arr)
-    }
-
-  }
-  return pre.where(builder)
 }
 
 async function sqlList(data) {
@@ -62,8 +78,8 @@ async function sqlList(data) {
     if (data) {
       data = parse(data)
       if (Array.isArray(data)) {
-        // pre = pre.where(...data)
-        pre = chain(pre, data) 
+        pre = pre.whereRaw(...data)
+        // pre = chain(pre, data) 
       } else {
         pre = pre.where(data)
       }
@@ -80,8 +96,8 @@ async function sqlDel(data) {
     let pre = await mitm.db('kv').del()
     data = parse(data)
     if (Array.isArray(data)) {
-      // pre = pre.where(...data)
-      pre = chain(pre, data) 
+      pre = pre.whereRaw(...data)
+      // pre = chain(pre, data) 
     } else {
       pre = pre.where(data)
     }
