@@ -1,6 +1,6 @@
  function cookieToObj(respHeader) {
+  const setCookie = []
   if (respHeader['set-cookie']) {
-    const setCookie = []
     let cookies = respHeader['set-cookie']
     if (typeof cookies === 'string') {
       cookies = [cookies]
@@ -19,8 +19,8 @@
       }
       setCookie.push(items)
     }
-    return setCookie
   }
+  return setCookie
 }
 
 function objToCookie(arr) {

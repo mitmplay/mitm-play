@@ -42,7 +42,7 @@ function parse(data, rcv=1) {
             v = ` ${v}`
           }
           arr2.push(params.trim())
-          result += ` ?${v}`
+          result += `?${v}`
           params  = ''
         } else {
           params += v
@@ -51,20 +51,19 @@ function parse(data, rcv=1) {
         if (v.match(lgc)) {
           combine = true
         } 
-        result += v
-        // console.log({result, combine, v})
+        result += v==='like' ? 'LIKE ' : v
       }
     }
     if (params) {
       const bracket = params.match(/ *([)]+)/)
       if (bracket) {
         params = params.replace(/ *([)]+)/,'')
-        result += ` ?${bracket[1].trim()}`
+        result += `?${bracket[1].trim()}`
       } else {
-        result += ` ?`
+        result += `?`
       }
       arr2.push(params.trim())
-      
+
     }
     console.log({data, whereRaw: `${result}, ${JSON.stringify(arr2)}`})
     data = [result, arr2]
@@ -79,13 +78,12 @@ async function sqlList(data) {
       data = parse(data)
       if (Array.isArray(data)) {
         pre = pre.whereRaw(...data)
-        // pre = chain(pre, data) 
       } else {
         pre = pre.where(data)
       }
     }
     const rows = await pre
-    return rows      
+    return rows
   } catch (error) {
     return error
   }
@@ -97,12 +95,11 @@ async function sqlDel(data) {
     data = parse(data)
     if (Array.isArray(data)) {
       pre = pre.whereRaw(...data)
-      // pre = chain(pre, data) 
     } else {
       pre = pre.where(data)
     }
     const deleted = await pre
-    return deleted      
+    return deleted
   } catch (error) {
     return error
   }
@@ -111,7 +108,7 @@ async function sqlDel(data) {
 async function sqlIns(data={}) {
   try {
     const inserted = await mitm.db('kv').insert(data)
-    return inserted      
+    return inserted
   } catch (error) {
     return error
   }

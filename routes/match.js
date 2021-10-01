@@ -189,7 +189,7 @@ const searchFN = (typs, { url, method, browserName }) => {
 
           let [t, oth, urls] = key.split(':')
           let id3 // feat: construct id3 for tag3
-          if (t) {// t: GET/PUT/POST
+          if (t && (urls||oth)) {// t: GET/PUT/POST
             id3 = `${t}:${urls||oth}`
           } else {
             id3 = urls || key.replace(/^:/, '')

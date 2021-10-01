@@ -26,7 +26,12 @@ function bundleRollup(bpath, opath) {
       commonjs({
         dynamicRequireTargets: [`${app}/svelte/*.svelte`]
       })
-    ]
+    ],
+    onwarn: function ( message, warn ) {
+      if (/external dependency/.test( message )) return;
+      if (message.code==='CIRCULAR_DEPENDENCY')  return;
+      console.error( message );
+    }
   };
   const outputOptions = {
     sourcemap: 'inline',
