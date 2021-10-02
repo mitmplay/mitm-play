@@ -835,6 +835,7 @@ $ mitm-play --help
     -K --dark          set chrome devtools to dark mode
     -N --nice          JSON cache save as human readable
     -R --redirect      set redirection: true/false/manual
+    -Q --nosql         disabling persist data using sqlite
     -S --svelte        build with svelte using rollup 
     -U --nourl         set logs without URL*
     -V --verbose       show more detail of console log

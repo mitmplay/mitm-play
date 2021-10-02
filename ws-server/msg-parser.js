@@ -21,6 +21,7 @@ const $getMarkdown = require('./_getMarkdown')
 const $getMContent = require('./_getMContent')
 const $sqlList = require('./_sqlList')
 const $sqlIns = require('./_sqlIns')
+const $sqlUpd = require('./_sqlUpd')
 const $sqlDel = require('./_sqlDel')
 const { logmsg } = global.mitm.fn
 
@@ -47,6 +48,7 @@ const wscmd = {
   $restart,
   $sqlList,
   $sqlIns,
+  $sqlUpd,
   $sqlDel,
   $getLog
 }

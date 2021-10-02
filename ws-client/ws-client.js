@@ -545,16 +545,6 @@ var app = (function () {
     })
   }
 
-  function sqlDel(where) {
-    return new Promise(function(resolve, reject) {
-      try {
-        window.ws__send('sqlDel', where, resolve);
-      } catch (error) {
-        reject(error);
-      }
-    })
-  }
-
   function sqlIns(fields) {
     return new Promise(function(resolve, reject) {
       try {
@@ -565,9 +555,30 @@ var app = (function () {
     })
   }
 
+  function sqlUpd(fields) {
+    return new Promise(function(resolve, reject) {
+      try {
+        window.ws__send('sqlUpd', fields, resolve);
+      } catch (error) {
+        reject(error);
+      }
+    })
+  }
+
+  function sqlDel(where) {
+    return new Promise(function(resolve, reject) {
+      try {
+        window.ws__send('sqlDel', where, resolve);
+      } catch (error) {
+        reject(error);
+      }
+    })
+  }
+
   window.mitm.fn.sqlList = sqlList;
-  window.mitm.fn.sqlDel  = sqlDel;
   window.mitm.fn.sqlIns  = sqlIns;
+  window.mitm.fn.sqlUpd  = sqlUpd;
+  window.mitm.fn.sqlDel  = sqlDel;
 
   var _ws_play = play;
 

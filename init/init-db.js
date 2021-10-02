@@ -25,6 +25,8 @@ module.exports = async () => {
       t.string('typ' , 100);
       t.string('name', 100);
       t.text(  'value'    );
+      t.timestamp('dtc').notNull();
+      t.timestamp('dtu').notNull();
       t.index(['hst', 'app', 'typ', 'app'])
       t.index(['hst', 'grp', 'typ', 'grp'])
     });
@@ -39,7 +41,9 @@ module.exports = async () => {
       grp  : 'group1',
       typ  : 'type1',
       name : 'name1',
-      value: 'value1'
+      value: 'value1',
+      dtc: mitm.db.fn.now(),
+      dtu: mitm.db.fn.now()
     })
     rows = await knex('kv').select('*')
   }
