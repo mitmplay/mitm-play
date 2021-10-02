@@ -164,7 +164,18 @@ module.exports = () => {
       if (_urls.length) {
         argv.urls = _urls
       } else {
-        argv.urls = ['https://keybr.com/']
+        let go = 'https://keybr.com/'
+        for (const ns in mitm.routes) {
+          if (ns==='_global_') {
+            continue
+          }
+          const obj = mitm.routes[ns]
+          if (obj.url) {
+            go = obj.url
+            break
+          }
+        }
+        argv.urls = [go]
       }
     } else if (!argv.urls || argv.urls.length===0) {
       for (const key in routes) {

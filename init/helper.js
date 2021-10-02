@@ -52,5 +52,4 @@ module.exports = (_package) => {
 
   v${_package.version}
 `))
-  process.exit()
 }

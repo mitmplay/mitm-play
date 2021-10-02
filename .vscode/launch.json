@@ -9,15 +9,16 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "runtimeExecutable": "node",
+            "runtimeExecutable": "C:/Users/whars/AppData/Local/nvs/node/15.14.0/x64/node.exe",
+            "console": "integratedTerminal",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/mitm-play.js",
             "runtimeArgs": ["--max-http-header-size=80000"], 
-            // "args": ["twitter", "-nscdr=-twitter", "-R='manual'"] //, "-n=off"
-            "args": ["keybr", "-Gdr"]
+            "args": ["-NSGdr='~/user-route'"]
+            //"args": ["-SGdr"]
         }
     ]
 }

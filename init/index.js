@@ -10,6 +10,7 @@ module.exports = () => {
   global.mitm.version = pkg.version
   if (global.mitm.argv.help) {
     require('./helper')(pkg)
+    process.exit()
   }
   require('./console')() // init logmsg
   require('./init-fn')() // must be first, init _debounce
