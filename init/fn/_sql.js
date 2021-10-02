@@ -81,34 +81,43 @@ function parse(data, rcv=1) {
   return data
 }
 
+function select(pre, data) {
+  const [result, arr2] = data
+  let msg = c.green(`where:${result}, ${JSON.stringify(arr2)}`)
+  let order = []
+  if (data.length>2 && data[2].length) {
+    order = data[2].map(x=>{
+      const ord = x.split(':')
+      if (ord.length===1) {
+        return {column: ord[0], order: 'asc'}
+      } else {
+        return {column: ord[0], order: {a:'asc',d:'desc'}[ord[1]]}
+      }
+    })
+    const msg2 = order.map(x=>Object.values(x).join(' ')).join(', ')
+    msg += ` orderby:${msg2}`
+  }
+  pre.whereRaw(...(data.slice(0,2))).orderBy(order)
+  return {pre, msg}
+}
+
 async function sqlList(data) {
   try {
     let pre = mitm.db('kv').select('*')
     if (data) {
       let msg
-      let order = []
       data = parse(data)
       if (Array.isArray(data)) {
-        const [result, arr2] = data
-        msg = c.green(`where:${result}, ${JSON.stringify(arr2)}`)
-        if (data.length>2 && data[2].length) {
-          order = data[2].map(x=>{
-            const ord = x.split(':')
-            if (ord.length===1) {
-              return {column: ord[0], order: 'asc'}
-            } else {
-              return {column: ord[0], order: {a:'asc',d:'desc'}[ord[1]]}
-            }
-          })
-          const msg2 = order.map(x=>Object.values(x).join(' ')).join(', ')
-          msg += ` order:${msg2}`
-        }
-        pre = pre.whereRaw(...(data.slice(0,2))).orderBy(order)
+        const {pre:p, msg:m} = select(pre, data)
+        pre = p 
+        msg = m
       } else {
         msg = c.green(`where:${JSON.stringify(data)}`)
         pre = pre.where(data)
       }
       logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlList')} ${msg}*)`))
+    } else {
+      logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlList')}*)`))
     }
     const rows = await pre
     return rows
@@ -142,12 +151,15 @@ async function sqlIns(data={}) {
   try {
     const msg = c.green(`set:${JSON.stringify(data)}`)
     logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlIns')} ${msg}*)`))
-    data = {
-      ...data,
-      dtc: mitm.db.fn.now(),
-      dtu: mitm.db.fn.now()
+    const {id, where, limit, ...obj} = data
+    obj.dtc = mitm.db.fn.now()
+    obj.dtu = mitm.db.fn.now()
+    if (where) {
+      const {pre} = select(mitm.db('kv'), parse(where))
+      console.log('SQL Result:', pre.toSQL().toNative())
+      await pre.del()
     }
-    const inserted = await mitm.db('kv').insert(data)
+    const inserted = await mitm.db('kv').insert(obj)
     return inserted
   } catch (error) {
     return error
@@ -158,10 +170,23 @@ async function sqlUpd(data={}) {
   try {
     const msg = c.green(`set:${JSON.stringify(data)}`)
     logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlUpd')} ${msg}*)`))
-    const {id, ...obj} = data
+    const {id, where, ...obj} = data
     obj.dtu = mitm.db.fn.now()
-    const updated = await mitm.db('kv').where({id}).update(obj)
-    return updated
+    let pre = mitm.db('kv')
+    let updated
+    if (where && id) {
+      updated = 'id & where detected, cannot update!'
+    } else if (where || id) {
+      if (where) {
+        pre = pre.whereRaw(...parse(where))
+      } else {
+        pre = pre.where({id})
+      }
+      updated = await pre.update(obj)
+    } else {
+      updated = 'id OR where, cannot update!'
+    }
+    return updated  
   } catch (error) {
     return error
   }

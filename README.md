@@ -18,6 +18,7 @@
    * [CLI Options](#cli-options)
    * [Macros](#macros)
    * [Macro Keys](#macro-keys)
+   * [Persistent](#persistent)
    * [User Route](#user-route)
    * [Use Cases](#use-cases)
    * [Early Stage](#early-stage)
@@ -1334,6 +1335,65 @@ window.mitm.macrokeys = {
   'code:{KeyA}'()      { console.log('key in: .... + Alt + KeyA') },
   'code:{KeyA:KeyA}'() { console.log('key in: .... + Alt + KeyA:KeyA') },
 }
+```
+</details>
+
+# Persistent
+`isomorphic - persistent` is currently implement as a global function under namespace `mitm.fn.sql....`:
+
+<details><summary><b> `mitm.fn.sqlList` - retriving records from sqlite</b></summary>
+
+parameters is optional, and it should be a string contains `where` and `order` sql like statement, 
+no need to put quote and the `order orientation` need to be added after fieldname `with colon` 
+either :a for `asc` and :d for `desc`
+```js
+await mitm.fn.sqlList()
+// (*sqlite sqlList*)
+
+await mitm.fn.sqlList('(hst like %o%) orderby hst id:d')
+// (*sqlite sqlList where:(hst LIKE ?), ["%o%"] order:hst asc, id desc*)
+
+await mitm.fn.sqlList('(hst like %o%) and app=WOW orderby hst id:d')
+// (*sqlite sqlList where:(hst LIKE ?) AND app=?, ["%o%","WOW"] order:hst asc, id desc*)
+```
+
+</details>
+
+<details><summary><b> `mitm.fn.sqlDel` - delete record(s) from sqlite</b></summary>
+
+parameters is required, the string parameters having same rules as `sqlList` excluding `orderby`
+```js
+await mitm.fn.sqlDel('(hst like %o%) and app=WOW')
+// (*sqlite sqlDel where:(hst LIKE ?) AND app=?, ["%o%","WOW"]*)
+```
+</details>
+
+<details><summary><b> `mitm.fn.sqlUpd` - update a record to sqlite</b></summary>
+
+parameters is required, an object literal at minimum should be 2 field and the first field either `id` or `where` to indentify 
+record that need to be updated.
+```js
+await mitm.fn.sqlUpd({id:14, app: 'LOL2'})
+// (*sqlite sqlUpd set:{"id":14,"app":"LOL2"}*)
+
+await mitm.fn.sqlUpd({where:'id<10', app: 'below10'})
+// (*sqlite sqlUpd set:{"where":"id<10","app":"below10"}*)
+```
+</details>
+
+<details><summary><b> `mitm.fn.sqlIns` - add new record to sqlite</b></summary>
+
+parameters is required, an object literal. it will serve two purpose: 
+first just insert a record or with `where` key, to delete record(s) before insert.
+```js
+await mitm.fn.sqlIns({hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'})
+// (*sqlite sqlIns set:{"hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+
+await mitm.fn.sqlIns({where:'id<10', hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'})
+// (*sqlite sqlIns set:{"where":"id<10","hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+
+await mitm.fn.sqlIns({where:'id<10', limit: 10, hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'})
+// 
 ```
 </details>
 
