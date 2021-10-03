@@ -1373,6 +1373,14 @@ parameters is required, the string parameters having same rules as `sqlList` exc
 await mitm.fn.sqlDel('(hst like %o%) && app=WOW')
 // (*sqlite sqlDel where:(hst LIKE ?) AND app = ?, ["%o%","WOW"]*)
 // delete from `kv` where (hst LIKE ?) AND app = ? [ '%o%', 'WOW' ]
+
+await mitm.fn.sqlDel({_hold_:'id>1 orderby hst:d', _limit_: 15})
+// (*sqlite sqlDel where:{"_hold_":"id>1 orderby hst:d","_limit_":15}*)
+// delete from `kv` where `id` in (select `id` from `kv` where id > ? order by `hst` desc limit ? offset ?) [ '1', -1, 15 ]
+
+await mitm.fn.sqlDel({id:1, _hold_:'id>1 orderby hst:d', _limit_: 15})
+// (*sqlite sqlDel where:{"id":1,"_hold_":"id>1 orderby hst:d","_limit_":15}*)
+// delete from `kv` where `id` in (select `id` from `kv` where id > ? order by `hst` desc limit ? offset ?) or (`id` = ?) [ '1', -1, 15, 1 ]
 ```
 </details>
 

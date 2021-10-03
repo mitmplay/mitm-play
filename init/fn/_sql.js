@@ -143,7 +143,18 @@ async function sqlDel(data) {
       pre = pre.whereRaw(...data).del()
     } else {
       msg = c.green(`where:${JSON.stringify(data)}`)
-      pre = pre.where(data).del()
+      const {id, _hold_, _limit_} = data
+      if (_hold_) {
+        pre = select(pre.select('id'), parse(_hold_)).pre
+        pre = pre.limit(-1).offset(_limit_ || 1)
+        pre = mitm.db('kv').where('id', 'in', pre)
+      }
+      if (id) {
+        pre = pre.orWhere({id})
+      }
+      pre = pre.del()
+      console.log(...Object.values(pre.toSQL().toNative()))
+      await pre
     }
     logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlDel')} ${msg}*)`))
     console.log(...Object.values(pre.toSQL().toNative()))
@@ -188,7 +199,7 @@ async function sqlUpd(data={}) {
   try {
     const msg = c.green(`set:${JSON.stringify(data)}`)
     logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlUpd')} ${msg}*)`))
-    const {id, _where_, ...obj} = data
+    const {id, _add_, _where_, ...obj} = data
     obj.dtu = mitm.db.fn.now()
     let pre = mitm.db('kv')
     let updated
@@ -202,6 +213,11 @@ async function sqlUpd(data={}) {
       }
       console.log(...Object.values(pre.toSQL().toNative()))
       updated = await pre
+      if (updated===0 && _where_ && _add_) {
+        pre = mitm.db('kv').insert(obj)
+        console.log(...Object.values(pre.toSQL().toNative()))
+        updated = await pre
+      }
     } else {
       updated = 'id OR where, cannot update!'
     }
