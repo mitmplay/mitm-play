@@ -1343,18 +1343,25 @@ window.mitm.macrokeys = {
 
 <details><summary><b> `mitm.fn.sqlList` - retriving records from sqlite</b></summary>
 
-parameters is optional, and it should be a string contains `where` and `order` sql like statement, 
-no need to put quote and the `order orientation` need to be added after fieldname `with colon` 
-either :a for `asc` and :d for `desc`
+parameters is optional, and it should be a string contains `where condition` (`no need to put quote`) 
+and `orderby` sql like statement, `the order orientation` need to be added after fieldname `with colon` 
+either `:a` for `asc` and `:d` for `desc`
 ```js
 await mitm.fn.sqlList()
 // (*sqlite sqlList*)
+// select * from `kv` []
 
 await mitm.fn.sqlList('(hst like %o%) orderby hst id:d')
-// (*sqlite sqlList where:(hst LIKE ?), ["%o%"] order:hst asc, id desc*)
+// (*sqlite sqlList where:(hst LIKE ?) orderby:hst asc, id desc, ["%o%"]*)
+// select * from `kv` where (hst LIKE ?) order by `hst` asc, `id` desc [ '%o%' ]
 
-await mitm.fn.sqlList('(hst like %o%) and app=WOW orderby hst id:d')
-// (*sqlite sqlList where:(hst LIKE ?) AND app=?, ["%o%","WOW"] order:hst asc, id desc*)
+await mitm.fn.sqlList('(hst like %o%) && id=20 orderby hst id:d')
+// (*sqlite sqlList where:(hst LIKE ?) AND id = ? orderby:hst asc, id desc, ["%o%","20"]*)
+// select * from `kv` where (hst LIKE ?) AND id = ? order by `hst` asc, `id` desc [ '%o%', '20' ]
+
+await mitm.fn.sqlList('(hst like %o%) && (id=20 || id=21) orderby hst id:d')
+// (*sqlite sqlList where:(hst LIKE ?) AND (id = ? OR id = ?) orderby:hst asc, id desc, ["%o%","20","21"]*)
+// select * from `kv` where (hst LIKE ?) AND (id = ? OR id = ?) order by `hst` asc, `id` desc [ '%o%', '20', '21' ]
 ```
 
 </details>
@@ -1363,37 +1370,60 @@ await mitm.fn.sqlList('(hst like %o%) and app=WOW orderby hst id:d')
 
 parameters is required, the string parameters having same rules as `sqlList` excluding `orderby`
 ```js
-await mitm.fn.sqlDel('(hst like %o%) and app=WOW')
-// (*sqlite sqlDel where:(hst LIKE ?) AND app=?, ["%o%","WOW"]*)
+await mitm.fn.sqlDel('(hst like %o%) && app=WOW')
+// (*sqlite sqlDel where:(hst LIKE ?) AND app = ?, ["%o%","WOW"]*)
+// delete from `kv` where (hst LIKE ?) AND app = ? [ '%o%', 'WOW' ]
 ```
 </details>
 
 <details><summary><b> `mitm.fn.sqlUpd` - update a record to sqlite</b></summary>
 
-parameters is required, an object literal at minimum should be 2 field and the first field either `id` or `where` to indentify 
+parameters is required, an object literal at minimum should be 2 field and the first field either `id` or `_where_` to indentify 
 record that need to be updated.
 ```js
 await mitm.fn.sqlUpd({id:14, app: 'LOL2'})
 // (*sqlite sqlUpd set:{"id":14,"app":"LOL2"}*)
+// update `kv` set `app` = ?, `dtu` = CURRENT_TIMESTAMP where `id` = ? [ 'LOL2', 14 ]
 
-await mitm.fn.sqlUpd({where:'id<10', app: 'below10'})
-// (*sqlite sqlUpd set:{"where":"id<10","app":"below10"}*)
+await mitm.fn.sqlUpd({_where_:'id<10', app: 'below10'})
+// (*sqlite sqlUpd set:{"_where_":"id<10","app":"below10"}*)
+// update `kv` set `app` = ?, `dtu` = CURRENT_TIMESTAMP where id < ? [ 'below10', '10' ]
 ```
 </details>
 
 <details><summary><b> `mitm.fn.sqlIns` - add new record to sqlite</b></summary>
 
 parameters is required, an object literal. it will serve two purpose: 
-first just insert a record or with `where` key, to delete record(s) before insert.
+**first** `just insert a record` or **second** `to delete record(s) before insert` with `_hold_, _limit_, _del_` keys.
 ```js
 await mitm.fn.sqlIns({hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'})
 // (*sqlite sqlIns set:{"hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+// insert into `kv` (`dtc`, `dtu`, `grp`, `hst`, `name`, `typ`, `value`) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'group3', 'demo3', 'name3', 'type3', 'value3' ]
 
-await mitm.fn.sqlIns({where:'id<10', hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'})
-// (*sqlite sqlIns set:{"where":"id<10","hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+await mitm.fn.sqlIns({
+  _hold_:'id>1 orderby hst:d',  
+  hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'
+})
+// (*sqlite sqlIns set:{"_hold_":"id>1 orderby hst:d","hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+// delete from `kv` where `id` in (select `id` from `kv` where id > ? order by `hst` desc limit ? offset ?) [ '1', -1, 1 ]
+// insert into `kv` (`dtc`, `dtu`, `grp`, `hst`, `name`, `typ`, `value`) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'group3', 'demo3', 'name3', 'type3', 'value3' ]
 
-await mitm.fn.sqlIns({where:'id<10', limit: 10, hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'})
-// 
+await mitm.fn.sqlIns({
+  _hold_:'id>1 orderby hst:d', _limit_: 15,  
+  hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'
+})
+// (*sqlite sqlIns set:{"_hold_":"id>1 orderby hst:d","_limit_":15,"hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+// delete from `kv` where `id` in (select `id` from `kv` where id > ? order by `hst` desc limit ? offset ?) [ '1', -1, 15 ]
+// insert into `kv` (`dtc`, `dtu`, `grp`, `hst`, `name`, `typ`, `value`) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'group3', 'demo3', 'name3', 'type3', 'value3' ]
+
+await mitm.fn.sqlIns({
+  _hold_:'id>1 orderby hst:d', _limit_: 15, _del_:'id<10', 
+  hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'
+})
+// (*sqlite sqlIns set:{"_hold_":"id>1 orderby hst:d","_limit_":15,"_del_":"id<10","hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+// delete from `kv` where id < ? [ '10' ]
+// delete from `kv` where `id` in (select `id` from `kv` where id > ? order by `hst` desc limit ? offset ?) [ '1', -1, 15 ]
+// insert into `kv` (`dtc`, `dtu`, `grp`, `hst`, `name`, `typ`, `value`) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'group3', 'demo3', 'name3', 'type3', 'value3' ]
 ```
 </details>
 
