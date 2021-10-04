@@ -1,6 +1,6 @@
 const c = require('ansi-colors')
 const parse  = require('./parse')
-const { logmsg } = global.mitm.fn
+const {argv, fn: {logmsg}} = global.mitm
 
 async function sqlUpd(data={}) {
   try {
@@ -18,11 +18,15 @@ async function sqlUpd(data={}) {
       } else {
         pre = pre.whereRaw(...parse(_where_)).update(obj)
       }
-      logmsg(...Object.values(pre.toSQL().toNative()))
+      if (argv.debug) {
+        logmsg(...Object.values(pre.toSQL().toNative()))
+      }
       updated = await pre
       if (updated===0 && _where_ && _add_) {
         pre = mitm.db('kv').insert(obj)
-        logmsg(...Object.values(pre.toSQL().toNative()))
+        if (argv.debug) {
+          logmsg(...Object.values(pre.toSQL().toNative()))
+        }
         updated = await pre
       }
     } else {

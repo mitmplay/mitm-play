@@ -1,15 +1,15 @@
 const c = require('ansi-colors')
 const parse  = require('./parse')
 const select = require('./select')
-const { logmsg } = global.mitm.fn
+const {argv, fn: {logmsg}} = global.mitm
 
 async function sqlList(data) {
   try {
+    let ttl
     let pagination
     let pre = mitm.db('kv').select('*')
     if (data) {
       let msg
-      let ttl
       data = parse(data)
       if (Array.isArray(data)) {
         const {pre:p, msg:m} = select(pre, data)
@@ -27,7 +27,6 @@ async function sqlList(data) {
         }
         if (_pages_) {
           ttl = select(mitm.db('kv'), parse(_where_)).pre.count('id', {as: 'ttl'})
-          logmsg(...Object.values(ttl.toSQL().toNative()))
           pagination = {
             limit: _limit_,
             offset: _offset_,
@@ -39,7 +38,10 @@ async function sqlList(data) {
     } else {
       logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlList')}*)`))
     }
-    logmsg(...Object.values(pre.toSQL().toNative()))
+    if (argv.debug) {
+      ttl && logmsg(...Object.values(ttl.toSQL().toNative()))
+      logmsg(...Object.values(pre.toSQL().toNative()))
+    }
     const rows = await pre
     if (pagination) {
       return {pagination, rows}

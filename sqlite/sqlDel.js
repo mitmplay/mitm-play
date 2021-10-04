@@ -1,10 +1,11 @@
 const c = require('ansi-colors')
 const parse  = require('./parse')
 const select = require('./select')
-const { logmsg } = global.mitm.fn
+const {argv, fn: {logmsg}} = global.mitm
 
 async function sqlDel(data) {
   try {
+    let arr
     let msg
     data = parse(data)
     let pre = mitm.db('kv')
@@ -24,11 +25,14 @@ async function sqlDel(data) {
         pre = pre.orWhere({id})
       }
       pre = pre.del()
-      logmsg(...Object.values(pre.toSQL().toNative()))
+      arr = Object.values(pre.toSQL().toNative())
       await pre
     }
     logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlDel')} ${msg}*)`))
-    logmsg(...Object.values(pre.toSQL().toNative()))
+    if (argv.debug) {
+      arr && logmsg(...arr)
+      logmsg(...Object.values(pre.toSQL().toNative()))
+    }
     const deleted = await pre
     return deleted
   } catch (error) {
