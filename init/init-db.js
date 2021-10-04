@@ -23,10 +23,11 @@ module.exports = async () => {
       t.string('app' , 100);
       t.string('grp' , 100);
       t.string('typ' , 100);
-      t.string('name', 100);
-      t.text(  'value'    );
-      t.timestamp('dtc').notNull();
+      t.string('name', 200);
+      t.text  ('meta'     );
+      t.text  ('data'     );
       t.timestamp('dtu').notNull();
+      t.timestamp('dtc').notNull();
       t.index(['hst', 'app', 'typ', 'app'])
       t.index(['hst', 'grp', 'typ', 'grp'])
     });
@@ -36,14 +37,15 @@ module.exports = async () => {
   let rows = await knex('kv').select('*')
   if (!rows.length) {
     await knex('kv').insert({
-      hst  : 'host1',
-      app  : 'apps1',
-      grp  : 'group1',
-      typ  : 'type1',
-      name : 'name1',
-      value: 'value1',
+      hst : 'host1',
+      app : 'apps1',
+      grp : 'group1',
+      typ : 'type1',
+      name: 'name1',
+      meta: 'meta1',
+      data: 'data1',
+      dtu: mitm.db.fn.now(),
       dtc: mitm.db.fn.now(),
-      dtu: mitm.db.fn.now()
     })
     rows = await knex('kv').select('*')
   }

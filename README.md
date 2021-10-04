@@ -1372,7 +1372,9 @@ await mitm.fn.sqlList({
   _offset_: 0,
   _pages_: true
 })
-// 
+// (*sqlite sqlList where:{"_where_":"(hst like %o%) orderby dtu:d","_limit_":15,"_offset_":0,"_pages_":true}*)
+// select count(`id`) as `ttl` from `kv` where (hst LIKE ?) order by `dtu` desc [ '%o%' ]
+// select * from `kv` where `id` in (select `id` from `kv` where (hst LIKE ?) order by `dtu` desc limit ?) [ '%o%', 15 ]
 ```
 
 </details>
@@ -1415,34 +1417,34 @@ await mitm.fn.sqlUpd({_where_:'id<10', app: 'below10'})
 parameters is required, an object literal. it will serve two purpose: 
 **first** `just insert a record` or **second** `to delete record(s) before insert` with `_hold_, _limit_, _del_` keys.
 ```js
-await mitm.fn.sqlIns({hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'})
-// (*sqlite sqlIns set:{"hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
-// insert into `kv` (`dtc`, `dtu`, `grp`, `hst`, `name`, `typ`, `value`) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'group3', 'demo3', 'name3', 'type3', 'value3' ]
+await mitm.fn.sqlIns({hst: 'demo2', grp: 'group2', typ: 'type2', name: 'name2', meta: 'meta2', data: 'data2'})
+// (*sqlite sqlIns set:{"hst":"demo2","grp":"group2","typ":"type2","name":"name2","meta":"meta2","data":"data2"}*)
+// insert into `kv` (`data`, `dtc`, `dtu`, `grp`, `hst`, `meta`, `name`, `typ`) values (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'data2', 'group2', 'demo2', 'meta2', 'name2', 'type2' ]
 
 await mitm.fn.sqlIns({
   _hold_:'id>1 orderby hst:d',  
-  hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'
+  hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', meta: 'meta3', data: 'data3'
 })
-// (*sqlite sqlIns set:{"_hold_":"id>1 orderby hst:d","hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+// (*sqlite sqlIns set:{"_hold_":"id>1 orderby hst:d","hst":"demo3","grp":"group3","typ":"type3","name":"name3","meta":"meta3","data":"data3"}*)
 // delete from `kv` where `id` in (select `id` from `kv` where id > ? order by `hst` desc limit ? offset ?) [ '1', -1, 1 ]
-// insert into `kv` (`dtc`, `dtu`, `grp`, `hst`, `name`, `typ`, `value`) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'group3', 'demo3', 'name3', 'type3', 'value3' ]
+// insert into `kv` (`data`, `dtc`, `dtu`, `grp`, `hst`, `meta`, `name`, `typ`) values (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'data3', 'group3', 'demo3', 'meta3', 'name3', 'type3' ]
 
 await mitm.fn.sqlIns({
   _hold_:'id>1 orderby hst:d', _limit_: 15,  
-  hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'
+  hst: 'demo4', grp: 'group4', typ: 'type4', name: 'name4', meta: 'meta4', data: 'data4'
 })
-// (*sqlite sqlIns set:{"_hold_":"id>1 orderby hst:d","_limit_":15,"hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+// (*sqlite sqlIns set:{"_hold_":"id>1 orderby hst:d","_limit_":15,"hst":"demo4","grp":"group4","typ":"type4","name":"name4","meta":"meta4","data":"data4"}*)
 // delete from `kv` where `id` in (select `id` from `kv` where id > ? order by `hst` desc limit ? offset ?) [ '1', -1, 15 ]
-// insert into `kv` (`dtc`, `dtu`, `grp`, `hst`, `name`, `typ`, `value`) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'group3', 'demo3', 'name3', 'type3', 'value3' ]
+// insert into `kv` (`data`, `dtc`, `dtu`, `grp`, `hst`, `meta`, `name`, `typ`) values (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'data4', 'group4', 'demo4', 'meta4', 'name4', 'type4' ]
 
 await mitm.fn.sqlIns({
   _hold_:'id>1 orderby hst:d', _limit_: 15, _del_:'id<10', 
-  hst: 'demo3', grp: 'group3', typ: 'type3', name: 'name3', value: 'value3'
+  hst: 'demo5', grp: 'group5', typ: 'type5', name: 'name5', meta: 'meta5', data: 'data5'
 })
-// (*sqlite sqlIns set:{"_hold_":"id>1 orderby hst:d","_limit_":15,"_del_":"id<10","hst":"demo3","grp":"group3","typ":"type3","name":"name3","value":"value3"}*)
+// (*sqlite sqlIns set:{"_hold_":"id>1 orderby hst:d","_limit_":15,"_del_":"id<10","hst":"demo5","grp":"group5","typ":"type5","name":"name5","meta":"meta5","data":"data5"}*)
 // delete from `kv` where id < ? [ '10' ]
 // delete from `kv` where `id` in (select `id` from `kv` where id > ? order by `hst` desc limit ? offset ?) [ '1', -1, 15 ]
-// insert into `kv` (`dtc`, `dtu`, `grp`, `hst`, `name`, `typ`, `value`) values (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'group3', 'demo3', 'name3', 'type3', 'value3' ]
+// insert into `kv` (`data`, `dtc`, `dtu`, `grp`, `hst`, `meta`, `name`, `typ`) values (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?) [ 'data5', 'group5', 'demo5', 'meta5', 'name5', 'type5' ]
 ```
 </details>
 
