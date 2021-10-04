@@ -17,8 +17,8 @@
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/mitm-play.js",
             "runtimeArgs": ["--max-http-header-size=80000"], 
-            "args": ["-NSGdr='~/user-route'"]
-            //"args": ["-SGdr"]
+            // "args": ["-NSGdr='~/user-route'"]
+            "args": ["-SGdr"]
         }
     ]
 }

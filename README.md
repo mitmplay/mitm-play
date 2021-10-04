@@ -1341,11 +1341,14 @@ window.mitm.macrokeys = {
 # Persistent
 `isomorphic - persistent` is currently implement as a global function under namespace `mitm.fn.sql....`:
 
-<details><summary><b> `mitm.fn.sqlList` - retriving records from sqlite</b></summary>
+<details><summary>mitm.fn.sqlList - retriving records</summary>
 
-parameters is optional, and it should be a string contains `where condition` (`no need to put quote`) 
-and `orderby` sql like statement, `the order orientation` need to be added after fieldname `with colon` 
-either `:a` for `asc` and `:d` for `desc`
+when params is a string, should be sql like statement `where condition` (`no need to put quote`) 
+with an option of `orderby`, `the order orientation` need to be added after fieldname `with colon` 
+either `:a` for `asc` and `:d` for `desc`, other type is an object params with combination of keys:
+* `_where_` - string sql like statement as state above
+* `_limit_` + `_offset_` - number for pagination result set
+* `_pages_` - boolean to calculate how many pagination pages 
 ```js
 await mitm.fn.sqlList()
 // (*sqlite sqlList*)
@@ -1362,11 +1365,19 @@ await mitm.fn.sqlList('(hst like %o%) && id=20 orderby hst id:d')
 await mitm.fn.sqlList('(hst like %o%) && (id=20 || id=21) orderby hst id:d')
 // (*sqlite sqlList where:(hst LIKE ?) AND (id = ? OR id = ?) orderby:hst asc, id desc, ["%o%","20","21"]*)
 // select * from `kv` where (hst LIKE ?) AND (id = ? OR id = ?) order by `hst` asc, `id` desc [ '%o%', '20', '21' ]
+
+await mitm.fn.sqlList({
+  _where_:'(hst like %o%) orderby dtu:d',
+  _limit_: 15,
+  _offset_: 0,
+  _pages_: true
+})
+// 
 ```
 
 </details>
 
-<details><summary><b> `mitm.fn.sqlDel` - delete record(s) from sqlite</b></summary>
+<details><summary>mitm.fn.sqlDel - delete record(s)</summary>
 
 parameters is required, the string parameters having same rules as `sqlList` excluding `orderby`
 ```js
@@ -1384,7 +1395,7 @@ await mitm.fn.sqlDel({id:1, _hold_:'id>1 orderby hst:d', _limit_: 15})
 ```
 </details>
 
-<details><summary><b> `mitm.fn.sqlUpd` - update a record to sqlite</b></summary>
+<details><summary>mitm.fn.sqlUpd - update record(s)</summary>
 
 parameters is required, an object literal at minimum should be 2 field and the first field either `id` or `_where_` to indentify 
 record that need to be updated.
@@ -1399,7 +1410,7 @@ await mitm.fn.sqlUpd({_where_:'id<10', app: 'below10'})
 ```
 </details>
 
-<details><summary><b> `mitm.fn.sqlIns` - add new record to sqlite</b></summary>
+<details><summary>mitm.fn.sqlIns - add a new record</summary>
 
 parameters is required, an object literal. it will serve two purpose: 
 **first** `just insert a record` or **second** `to delete record(s) before insert` with `_hold_, _limit_, _del_` keys.
