@@ -3,12 +3,12 @@ const parse  = require('./parse')
 const select = require('./select')
 const {argv, fn: {logmsg}} = global.mitm
 
-async function sqlDel(data) {
+async function sqlDel(data, tbl='kv') {
   try {
     let arr
     let msg
     data = parse(data)
-    let pre = mitm.db('kv')
+    let pre = mitm.db(tbl)
     if (Array.isArray(data)) {
       const [result, arr2] = data
       msg = c.green(`where:${result}, ${JSON.stringify(arr2)}`)
@@ -19,7 +19,7 @@ async function sqlDel(data) {
       if (_hold_) {
         pre = select(pre.select('id'), parse(_hold_)).pre
         pre = pre.limit(-1).offset(_limit_ || 1)
-        pre = mitm.db('kv').where('id', 'in', pre)
+        pre = mitm.db(tbl).where('id', 'in', pre)
       }
       if (id) {
         pre = pre.orWhere({id})

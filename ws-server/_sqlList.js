@@ -1,4 +1,4 @@
-module.exports = async ({ data }) => {
-  const rows = await mitm.fn.sqlList(data)
+module.exports = async ({data:{q, tbl} }) => {
+  const rows = await mitm.fn.sqlList(q, tbl)
   return rows
 }

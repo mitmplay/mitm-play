@@ -54,38 +54,24 @@ async function play (autofill) {
   }
 }
 
-function sqlList(where) {
+function sqlite() {
+  const [cmd, q, tbl] = arguments
   return new Promise(function(resolve, reject) {
     try {
-      window.ws__send('sqlList', where, resolve)
+      const data = {q}
+      if (tbl) {
+        data.tbl = tbl
+      }
+      window.ws__send(cmd, data, resolve)
     } catch (error) {
       reject(error)
     }
   })
 }
 
-function sqlDel(where) {
-  return new Promise(function(resolve, reject) {
-    try {
-      window.ws__send('sqlDel', where, resolve)
-    } catch (error) {
-      reject(error)
-    }
-  })
-}
-
-function sqlIns(fields) {
-  return new Promise(function(resolve, reject) {
-    try {
-      window.ws__send('sqlIns', fields, resolve)
-    } catch (error) {
-      reject(error)
-    }
-  })
-}
-
-window.mitm.fn.sqlList = sqlList
-window.mitm.fn.sqlDel  = sqlDel
-window.mitm.fn.sqlIns  = sqlIns
+window.mitm.fn.sqlList = (q, tbl) => sqlite('sqlList', q, tbl)
+window.mitm.fn.sqlDel  = (q, tbl) => sqlite('sqlDel' , q, tbl)
+window.mitm.fn.sqlIns  = (q, tbl) => sqlite('sqlIns' , q, tbl)
+window.mitm.fn.sqlUpd  = (q, tbl) => sqlite('sqlUpd' , q, tbl)
 
 module.exports = play

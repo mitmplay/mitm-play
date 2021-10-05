@@ -3,11 +3,11 @@ const parse  = require('./parse')
 const select = require('./select')
 const {argv, fn: {logmsg}} = global.mitm
 
-async function sqlList(data) {
+async function sqlList(data, tbl='kv') {
   try {
     let ttl
     let pagination
-    let pre = mitm.db('kv').select('*')
+    let pre = mitm.db(tbl).select('*')
     if (data) {
       let msg
       data = parse(data)
@@ -19,14 +19,14 @@ async function sqlList(data) {
         msg = c.green(`where:${JSON.stringify(data)}`)
         const {_where_, _limit_, _offset_, _pages_} = data
         if (_limit_) {
-          pre = select(mitm.db('kv').select('id'), parse(_where_)).pre
+          pre = select(mitm.db(tbl).select('id'), parse(_where_)).pre
           pre = pre.limit(_limit_).offset(_offset_!==undefined ? _offset_ : 0)
-          pre = mitm.db('kv').where('id', 'in', pre)
+          pre = mitm.db(tbl).where('id', 'in', pre)
         } else {
           pre = select(pre, parse(_where_)).pre
         }
         if (_pages_) {
-          ttl = select(mitm.db('kv'), parse(_where_)).pre.count('id', {as: 'ttl'})
+          ttl = select(mitm.db(tbl), parse(_where_)).pre.count('id', {as: 'ttl'})
           pagination = {
             limit: _limit_,
             offset: _offset_,

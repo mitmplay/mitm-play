@@ -2,13 +2,13 @@ const c = require('ansi-colors')
 const parse  = require('./parse')
 const {argv, fn: {logmsg}} = global.mitm
 
-async function sqlUpd(data={}) {
+async function sqlUpd(data={}, tbl='kv') {
   try {
     const msg = c.green(`set:${JSON.stringify(data)}`)
     logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlUpd')} ${msg}*)`))
     const {id, _add_, _where_, ...obj} = data
     obj.dtu = mitm.db.fn.now()
-    let pre = mitm.db('kv')
+    let pre = mitm.db(tbl)
     let updated
     if (_where_ && id) {
       updated = 'id & where detected, cannot update!'
@@ -23,7 +23,7 @@ async function sqlUpd(data={}) {
       }
       updated = await pre
       if (updated===0 && _where_ && _add_) {
-        pre = mitm.db('kv').insert(obj)
+        pre = mitm.db(tbl).insert(obj)
         if (argv.debug) {
           logmsg(...Object.values(pre.toSQL().toNative()))
         }

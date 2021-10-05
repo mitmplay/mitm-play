@@ -3,7 +3,7 @@ const parse  = require('./parse')
 const select = require('./select')
 const {argv, fn: {logmsg}} = global.mitm
 
-async function sqlIns(data={}) {
+async function sqlIns(data={}, tbl='kv') {
   try {
     const msg = c.green(`set:${JSON.stringify(data)}`)
     logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlIns')} ${msg}*)`))
@@ -14,19 +14,19 @@ async function sqlIns(data={}) {
     let arr
     if (_del_||_hold_) {
       if (_del_) {
-        pre = select(mitm.db('kv'), parse(_del_)).pre.del()
+        pre = select(mitm.db(tbl), parse(_del_)).pre.del()
         arr = Object.values(pre.toSQL().toNative())
         await pre
       }
       if (_hold_) {
-        pre = select(mitm.db('kv').select('id'), parse(_hold_)).pre
+        pre = select(mitm.db(tbl).select('id'), parse(_hold_)).pre
         pre = pre.limit(-1).offset(_limit_ || 1)
-        pre = mitm.db('kv').where('id', 'in', pre).del()
+        pre = mitm.db(tbl).where('id', 'in', pre).del()
         arr = Object.values(pre.toSQL().toNative())
         await pre
       }
     }
-    pre = mitm.db('kv').insert(obj)
+    pre = mitm.db(tbl).insert(obj)
     if (argv.debug) {
       arr && logmsg(...arr)
       logmsg(...Object.values(pre.toSQL().toNative()))

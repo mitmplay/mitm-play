@@ -1448,6 +1448,8 @@ await mitm.fn.sqlIns({
 ```
 </details>
 
+There are three tables available: `kv(default)`, log & cache. `log & cache are preserved, not yet used`.   
+
 # User Route
 [User-route](https://github.com/mitmplay/user-route) are available on this repo: https://github.com/mitmplay/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
 
