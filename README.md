@@ -1406,8 +1406,8 @@ await mitm.fn.sqlUpd({id:14, app: 'LOL2'})
 // (*sqlite sqlUpd set:{"id":14,"app":"LOL2"}*)
 // update `kv` set `app` = ?, `dtu` = CURRENT_TIMESTAMP where `id` = ? [ 'LOL2', 14 ]
 
-await mitm.fn.sqlUpd({_where_:'id<10', app: 'below10'})
-// (*sqlite sqlUpd set:{"_where_":"id<10","app":"below10"}*)
+await mitm.fn.sqlUpd({_upd_:'id<10', app: 'below10'})
+// (*sqlite sqlUpd set:{"_upd_":"id<10","app":"below10"}*)
 // update `kv` set `app` = ?, `dtu` = CURRENT_TIMESTAMP where id < ? [ 'below10', '10' ]
 ```
 </details>

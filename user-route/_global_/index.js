@@ -1,6 +1,6 @@
 const route = {
   'args': {
-    debug: false
+    debug: true
   },
   'flag': {
     'referer-reqs': false,

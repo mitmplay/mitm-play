@@ -1,12 +1,15 @@
 const c = require('ansi-colors')
-const parse  = require('./parse')
+const parse = require('./parse')
 const select = require('./select')
+const sqlList = require('./sqlList') 
 const {argv, fn: {logmsg}} = global.mitm
 
 async function sqlDel(data, tbl='kv') {
   try {
     let arr
     let msg
+    let obj
+    let deleted
     data = parse(data)
     let pre = mitm.db(tbl)
     if (Array.isArray(data)) {
@@ -15,7 +18,8 @@ async function sqlDel(data, tbl='kv') {
       pre = pre.whereRaw(...data).del()
     } else {
       msg = c.green(`where:${JSON.stringify(data)}`)
-      const {id, _hold_, _limit_} = data
+      const {id, _hold_, _where_, _limit_, _offset_, _pages_} = data
+      obj = {_where_, _limit_, _offset_, _pages_}
       if (_hold_) {
         pre = select(pre.select('id'), parse(_hold_)).pre
         pre = pre.limit(-1).offset(_limit_ || 1)
@@ -33,8 +37,13 @@ async function sqlDel(data, tbl='kv') {
       arr && logmsg(...arr)
       logmsg(...Object.values(pre.toSQL().toNative()))
     }
-    const deleted = await pre
-    return deleted
+    deleted = await pre
+    if (obj._where_) {
+      const result = await sqlList(obj, tbl)
+      result.deleted = deleted
+      return result
+    }
+    return {deleted}
   } catch (error) {
     return error
   }

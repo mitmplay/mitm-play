@@ -18,20 +18,35 @@ async function sqlList(data, tbl='kv') {
       } else {
         msg = c.green(`where:${JSON.stringify(data)}`)
         const {_where_, _limit_, _offset_, _pages_} = data
+        const parsed = parse(_where_)
         if (_limit_) {
-          pre = select(mitm.db(tbl).select('id'), parse(_where_)).pre
-          pre = pre.limit(_limit_).offset(_offset_!==undefined ? _offset_ : 0)
+          pre = select(mitm.db(tbl).select('id'), parsed).pre
+          pre = pre.limit(_limit_).offset(_offset_===undefined ? 0 : _offset_)
           pre = mitm.db(tbl).where('id', 'in', pre)
+          if (parsed[2]) {
+            const order = parsed[2].map(x=>{
+              const ord = x.split(':')
+              if (ord.length===1) {
+                return {column: ord[0], order: 'asc'}
+              } else {
+                return {column: ord[0], order: {a:'asc',d:'desc'}[ord[1]]}
+              }
+            })
+            pre = pre.orderBy(order)
+          }
         } else {
-          pre = select(pre, parse(_where_)).pre
+          pre = select(pre, parsed).pre
         }
         if (_pages_) {
-          ttl = select(mitm.db(tbl), parse(_where_)).pre.count('id', {as: 'ttl'})
+          ttl = select(mitm.db(tbl), parsed).pre.count('id', {as: 'totalrow'})
           pagination = {
             limit: _limit_,
             offset: _offset_,
             ...(await ttl)[0],
-          }  
+          }
+          if (parsed[2]) {
+            pagination.orderby = parsed[2].join(' ')
+          }
         }
       }
       logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlList')} ${msg}*)`))
@@ -46,7 +61,7 @@ async function sqlList(data, tbl='kv') {
     if (pagination) {
       return {pagination, rows}
     } else {
-      return rows
+      return {rows}
     }
   } catch (error) {
     return error

@@ -1,17 +1,19 @@
 const c = require('ansi-colors')
-const parse  = require('./parse')
+const parse = require('./parse')
 const select = require('./select')
+const sqlList = require('./sqlList') 
 const {argv, fn: {logmsg}} = global.mitm
 
 async function sqlIns(data={}, tbl='kv') {
   try {
     const msg = c.green(`set:${JSON.stringify(data)}`)
     logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlIns')} ${msg}*)`))
-    const {id, _del_, _hold_, _limit_, ...obj} = data
+    const {id, _del_, _hold_, _where_, _limit_, _offset_, _pages_, ...obj} = data
     obj.dtc = mitm.db.fn.now()
     obj.dtu = mitm.db.fn.now()
     let pre
     let arr
+    let inserted
     if (_del_||_hold_) {
       if (_del_) {
         pre = select(mitm.db(tbl), parse(_del_)).pre.del()
@@ -31,7 +33,13 @@ async function sqlIns(data={}, tbl='kv') {
       arr && logmsg(...arr)
       logmsg(...Object.values(pre.toSQL().toNative()))
     }
-    return await pre
+    if (_where_) {
+      const result = await sqlList({_where_, _limit_, _offset_, _pages_}, tbl)
+      result.inserted = inserted
+      return result
+    }
+    inserted = await pre
+    return {inserted}
   } catch (error) {
     return error
   }
