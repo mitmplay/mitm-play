@@ -6,8 +6,9 @@ const {argv, fn: {logmsg}} = global.mitm
 
 async function sqlIns(data={}, tbl='kv') {
   try {
-    const msg = c.green(`set:${JSON.stringify(data)}`)
-    logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlIns')} ${msg}*)`))
+    let msg = JSON.stringify(data)
+    msg = c.green(`set:${msg.length>97?`${msg.slice(0, 97)}...`:msg}`)
+    logmsg(c.blueBright(`(*${c.redBright('sqlIns')} ${msg}*)`))
     const {id, _del_, _hold_, _where_, _limit_, _offset_, _pages_, ...obj} = data
     obj.dtc = mitm.db.fn.now()
     obj.dtu = mitm.db.fn.now()

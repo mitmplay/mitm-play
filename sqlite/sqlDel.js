@@ -32,7 +32,7 @@ async function sqlDel(data, tbl='kv') {
       arr = Object.values(pre.toSQL().toNative())
       await pre
     }
-    logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlDel')} ${msg}*)`))
+    logmsg(c.blueBright(`(*${c.redBright('sqlDel')} ${msg}*)`))
     if (argv.debug) {
       arr && logmsg(...arr)
       logmsg(...Object.values(pre.toSQL().toNative()))

@@ -49,9 +49,9 @@ async function sqlList(data, tbl='kv') {
           }
         }
       }
-      logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlList')} ${msg}*)`))
+      logmsg(c.blueBright(`(*${c.redBright('sqlList')} ${msg}*)`))
     } else {
-      logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlList')}*)`))
+      logmsg(c.blueBright(`(*${c.redBright('sqlList')}*)`))
     }
     if (argv.debug) {
       ttl && logmsg(...Object.values(ttl.toSQL().toNative()))

@@ -6,8 +6,9 @@ const {argv, fn: {logmsg}} = global.mitm
 
 async function sqlUpd(data={}, tbl='kv') {
   try {
-    const msg = c.green(`set:${JSON.stringify(data)}`)
-    logmsg(c.blueBright(`(*sqlite ${c.redBright('sqlUpd')} ${msg}*)`))
+    let msg = JSON.stringify(data)
+    msg = c.green(`set:${msg.length>97?`${msg.slice(0, 97)}...`:msg}`)
+    logmsg(c.blueBright(`(*${c.redBright('sqlUpd')} ${msg}*)`))
     const {id, _upd_, _where_, _limit_, _offset_, _pages_, ...obj} = data
     obj.dtu = mitm.db.fn.now()
     let pre = mitm.db(tbl)
