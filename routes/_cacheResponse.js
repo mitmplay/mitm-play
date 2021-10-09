@@ -16,13 +16,13 @@ const { matched, searchFN } = _match
 const cacheResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('cache', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __args, __flag, fn: { tilde } } = global.mitm
+  const { __args, __flag, fn: { tilde, sqlIns } } = global.mitm
   let msg
 
   if (match) {
     const { route } = match
     const { url, browserName } = reqs
-    const { response, hidden } = route
+    const { db, response, hidden } = route
 
     let { fpath1, fpath2 } = fpathcache({ match, reqs })
     if (!fpath1 && !fpath2) {
@@ -135,6 +135,18 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           if (__args.nice && resp.headers['content-type'].match(/json/)) {
             let json = JSON.parse(`${body}`)
             body = JSON.stringify(json, null, 2)
+          }
+          if (db) {
+            const rec = {
+              namespace: match.namespace,
+              route:     match.key,
+              tags:      match.tags.join(','),
+              status:   `${reqs.method}:${resp.status}`,
+              url:       reqs.url,
+              meta:      JSON.stringify(meta, null, 2),
+              data:      body,
+            }
+            sqlIns(rec, 'cache')
           }
           filesave({ fpath1: fname1, body }, { fpath2, meta }, 'cache')
           if (response) {

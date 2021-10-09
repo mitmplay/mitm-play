@@ -14,6 +14,12 @@ const route = {
         replace(/connect-src /, 'connect-src wss://localhost:3001 ')
       }
     }
+  },
+  log: {
+    'data.json': {
+      contentType: ['json'],
+      db: true
+    }
   }
 }
 module.exports = route;

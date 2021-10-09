@@ -13,10 +13,10 @@ const { matched, searchFN } = _match
 const logResponse = async function (reqs, responseHandler, _3d, cache) {
   const search = searchFN('log', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)
-  const { __args, __flag } = global.mitm
+  const { __args, __flag, fn: {sqlIns} } = global.mitm
 
   if (match) {
-    const { log, response, hidden } = match.route
+    const { db, log, response, hidden } = match.route
     const stamp = (new Date()).toISOString().replace(/[:-]/g, '')
     const que = async (resp, reqs) => {
       let msg
@@ -53,6 +53,18 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
         }
         const meta = metaResp({ reqs, resp })
         const body = jsonResp({ reqs, resp, match })
+        if (db) {
+          const rec = {
+            namespace: match.namespace,
+            route:     match.key,
+            tags:      match.tags.join(','),
+            status:   `${reqs.method}:${resp.status}`,
+            url:       reqs.url,
+            meta:      JSON.stringify(meta, null, 2),
+            data:      body,
+          }
+          sqlIns(rec, 'log')
+        }
         filesave({ fpath1, body }, { fpath2, meta }, 'log')
         if (!__flag.log || match.hidden || hidden) {
           msg = ''
