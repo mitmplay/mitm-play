@@ -56,9 +56,9 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
         if (db) {
           const rec = {
             namespace: match.namespace,
+            session:   reqs.headers['xplay-session'],
             route:     match.key,
-            tags:      match.tags.join(','),
-            status:   `${reqs.method}:${resp.status}`,
+            status:   `${resp.status} ${reqs.method.toLowerCase()}`,
             url:       reqs.url,
             meta:      JSON.stringify(meta, null, 2),
             data:      body,

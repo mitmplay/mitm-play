@@ -23,16 +23,16 @@ function kv(t) {
 function lg(t) {
   t.increments('id').primary();
   t.string('namespace', 100);
+  t.string('session'  , 100);
   t.string('route'    , 100);
-  t.string('tags'     , 100);
   t.string('status'   , 100);
   t.string('url'      , 200);
   t.text  ('meta'          );
   t.text  ('data'          );
   t.timestamp('dtu').notNull();
   t.timestamp('dtc').notNull();
-  t.index(['namespace', 'route' , 'url'])
-  t.index(['namespace', 'status', 'url'])
+  t.index(['namespace', 'route', 'url'])
+  t.index(['session'  , 'route', 'url'])
 }
 
 module.exports = async () => {
