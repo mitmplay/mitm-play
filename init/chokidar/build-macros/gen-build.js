@@ -60,7 +60,7 @@ function bundling(fpath, body) {
       return
     }
     const opath = fpath.replace('_macros_', '_bundle_')
-    if (argv.svelte) {
+    if (argv.build) {
       bundleRollup(bpath, opath)
     } else {
       bundleEsbuild(bpath, opath)

@@ -830,6 +830,7 @@ $ mitm-play --help
     -x --proxy         a proxy request
     -z --lazyclick     delay ~700ms click action*
 
+    -B --build         rollup build w/ svelte  
     -D --debug         show ws messages
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
@@ -837,7 +838,7 @@ $ mitm-play --help
     -N --nice          JSON cache save as human readable
     -R --redirect      set redirection: true/false/manual
     -Q --nosql         disabling persist data using sqlite
-    -S --svelte        build with svelte using rollup 
+    -S --session       sqlite session from requst header
     -U --nourl         set logs without URL*
     -V --verbose       show more detail of console log
     -X --proxypac      set chromium proxypac

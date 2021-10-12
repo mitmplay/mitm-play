@@ -71,8 +71,7 @@ const route = {
   //   at: 'sshot',
   // },
   noskip: [
-    '/i/api/2/search/adaptive.json',
-    '/i/api/2/timeline/home.json',
+    '.json',
     'twitter.com/home',
   ],
   mock: {
@@ -115,6 +114,12 @@ const route = {
       // src:['twitter.js'],
     },
   },
+  log: {
+    '/': {
+      contentType: ['json'],
+      db: true
+    }
+  }
 }
 module.exports = route;
 

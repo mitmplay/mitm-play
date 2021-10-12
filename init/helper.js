@@ -33,6 +33,7 @@ module.exports = (_package) => {
     -x --proxy    \t a proxy request
     -z --lazyclick\t delay ~700ms click action*
 
+    -B --build    \t rollup build w/ svelte 
     -D --debug    \t show ws messages
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*
@@ -40,7 +41,7 @@ module.exports = (_package) => {
     -N --nice     \t JSON cache save as human readable
     -R --redirect \t set redirection: true/false/manual
     -Q --nosql    \t disabling persist data using sqlite
-    -S --svelte   \t build with svelte using rollup 
+    -S --session  \t sqlite session from requst header 
     -U --nourl    \t set logs without URL*
     -V --verbose  \t show more detail of console log
     -X --proxypac \t set chromium proxypac

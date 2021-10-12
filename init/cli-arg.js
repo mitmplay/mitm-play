@@ -69,6 +69,7 @@ module.exports = () => {
   argsChg('x', 'proxy'     )
   argsChg('z', 'lazyclick' ) // feat: _global_.args
 
+  argsChg('B', 'build'     )
   argsChg('D', 'debug'     )
   argsChg('G', 'nogpu'     )
   argsChg('H', 'nohost'    ) // feat: _global_.args
@@ -78,7 +79,7 @@ module.exports = () => {
   argsChg('P', 'cdp'       )
   argsChg('Q', 'nosql'     ) 
   argsChg('R', 'redirect'  )
-  argsChg('S', 'svelte'    )
+  argsChg('S', 'session'   )
   argsChg('U', 'nourl'     ) // feat: _global_.args
   argsChg('V', 'verbose'   )
   argsChg('X', 'proxypac'  )

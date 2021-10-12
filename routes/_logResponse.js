@@ -54,9 +54,10 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
         const meta = metaResp({ reqs, resp })
         const body = jsonResp({ reqs, resp, match })
         if (db) {
+          let css = __args.session
           const rec = {
             namespace: match.namespace,
-            session:   reqs.headers['xplay-session'],
+            session:   css ? resp.headers[css] || null : reqs.headers['xplay-session'],
             route:     match.key,
             status:   `${resp.status} ${reqs.method.toLowerCase()}`,
             url:       reqs.url,
