@@ -9,7 +9,7 @@ async function sqlUpd(data={}, tbl='kv') {
     let msg = JSON.stringify(data)
     msg = c.green(`set:${msg.length>97?`${msg.slice(0, 97)}...`:msg}`)
     logmsg(c.blueBright(`(*${c.redBright('sqlUpd')} ${msg}*)`))
-    const {id, _upd_, _where_, _limit_, _offset_, _pages_, ...obj} = data
+    const {id, _upd_, _distinct_, _where_, _limit_, _offset_, _pages_, ...obj} = data
     obj.dtu = mitm.db.fn.now()
     let pre = mitm.db(tbl)
     let updated
@@ -33,7 +33,7 @@ async function sqlUpd(data={}, tbl='kv') {
         updated = await pre
       }
       if (_where_) {
-        const result = await sqlList({_where_, _limit_, _offset_, _pages_}, tbl)
+        const result = await sqlList({_distinct_, _where_, _limit_, _offset_, _pages_}, tbl)
         result.updated = updated
         return result
       }

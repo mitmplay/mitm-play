@@ -108,13 +108,17 @@ function setButtons (buttons, position) {
 }
 
 function defaultHotKeys() {
-  const {mitm: {fn}} = window
+  const {mitm: {svelte: {Cspheader, Sqlite}, fn}} = window
   const keys = {
     'code:KeyC'(_e) {
-      fn.svelte(mitm.svelte.Cspheader, 'LightPastelGreen')
+      fn.svelte(Cspheader, 'LightPastelGreen')
+    },
+    'code:KeyQ'(_e) {
+      fn.svelte(Sqlite, 'LightPastelGreen')
     },
   }
   keys['code:KeyC']._title = 'Show CSP Header'
+  keys['code:KeyQ']._title = 'Show Sqlite'
   mitm.macrokeys = keys
 }
 

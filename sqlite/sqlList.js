@@ -16,9 +16,12 @@ async function sqlList(data, tbl='kv') {
         pre = p 
         msg = m
       } else {
+        const {_distinct_, _where_, _limit_, _offset_, _pages_} = data
         msg = c.green(`where:${JSON.stringify(data)}`)
-        const {_where_, _limit_, _offset_, _pages_} = data
-        const parsed = parse(_where_)
+        let parsed = parse(_where_||'id>0')
+        if (_distinct_) {
+          pre = mitm.db(tbl).distinct(..._distinct_)
+        }
         if (_limit_) {
           pre = select(mitm.db(tbl).select('id'), parsed).pre
           pre = pre.limit(_limit_).offset(_offset_===undefined ? 0 : _offset_)

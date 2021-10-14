@@ -9,7 +9,7 @@ async function sqlIns(data={}, tbl='kv') {
     let msg = JSON.stringify(data)
     msg = c.green(`set:${msg.length>97?`${msg.slice(0, 97)}...`:msg}`)
     logmsg(c.blueBright(`(*${c.redBright('sqlIns')} ${msg}*)`))
-    const {id, _del_, _hold_, _where_, _limit_, _offset_, _pages_, ...obj} = data
+    const {id, _del_, _hold_, _distinct_, _where_, _limit_, _offset_, _pages_, ...obj} = data
     obj.dtc = mitm.db.fn.now()
     obj.dtu = mitm.db.fn.now()
     let pre
@@ -35,7 +35,7 @@ async function sqlIns(data={}, tbl='kv') {
       logmsg(...Object.values(pre.toSQL().toNative()))
     }
     if (_where_) {
-      const result = await sqlList({_where_, _limit_, _offset_, _pages_}, tbl)
+      const result = await sqlList({_distinct_, _where_, _limit_, _offset_, _pages_}, tbl)
       result.inserted = inserted
       return result
     }

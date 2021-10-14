@@ -18,8 +18,8 @@ async function sqlDel(data, tbl='kv') {
       pre = pre.whereRaw(...data).del()
     } else {
       msg = c.green(`where:${JSON.stringify(data)}`)
-      const {id, _hold_, _where_, _limit_, _offset_, _pages_} = data
-      obj = {_where_, _limit_, _offset_, _pages_}
+      const {id, _hold_, _distinct_, _where_, _limit_, _offset_, _pages_} = data
+      obj = {_distinct_, _where_, _limit_, _offset_, _pages_}
       if (_hold_) {
         pre = select(pre.select('id'), parse(_hold_)).pre
         pre = pre.limit(-1).offset(_limit_ || 1)
