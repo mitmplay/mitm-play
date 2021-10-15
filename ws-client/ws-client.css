@@ -88,10 +88,24 @@ table.svelte-zpccy4 .title.svelte-zpccy4 {
   width: 50%;
 }
 
-details.rows.svelte-1ar1iqb {
+[type=checkbox].svelte-fjlr5a.svelte-fjlr5a {
+  vertical-align: middle;
+}
+
+details.rows.svelte-fjlr5a.svelte-fjlr5a {
   padding-left: 16px;
 }
 
-details.row-data.svelte-1ar1iqb {
-  padding-left: 16px;
+details.row-data.svelte-fjlr5a.svelte-fjlr5a {
+  padding-left: 14px;
+}
+
+summary.title.svelte-fjlr5a.svelte-fjlr5a, .row-data.svelte-fjlr5a pre.svelte-fjlr5a {
+  font-family: Consolas, Monaco, Courier, monospace;
+  font-size: small;
+  margin: 0;
+}
+
+summary.title.svelte-fjlr5a.svelte-fjlr5a:hover {
+  background-color: lightgoldenrodyellow;
 }
