@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
+  import Json from './Json.svelte';
 
   let lst = {}
   let obj = {rows: []}
@@ -24,7 +25,14 @@
     console.log(ss)
     if (!lst[ss]?.length) {
       const obj = await mitm.fn.sqlList({_where_: `session=${ss} orderby id`}, 'log')
-      lst[ss] = obj.rows
+      lst[ss] = obj.rows.map(x => {
+        x.meta = JSON.parse(x.meta)
+        if (x.meta.general.ext==='json') {
+          x.data = JSON.parse(x.data)
+          delete x.data.general
+        }
+        return x
+      })
       console.log('lst:', obj.rows)
     }
   }
@@ -35,6 +43,10 @@
       setTimeout(() => {
         if (details.attributes.open) {
           details.children[2].setAttribute('open','')
+          const arr = details.querySelectorAll('.row-data.content details:is(.respBody,.respHeader)')
+          for (const node of arr) {
+            node.setAttribute('open','')
+          }
         }
       }, 0);
     }
@@ -69,16 +81,22 @@
     {#if lst[item.session].length}
       {#each lst[item.session] as i2}
         <details class='rows'>
-          <summary class="title" data-id={i2.id} data-ss={item.session} on:click={expClick}>
+          <summary class='title st{Math.trunc(i2.meta.general.status/100)}x' data-id={i2.id} data-ss={item.session} on:click={expClick}>
+            {i2.meta.general.status}
+            {i2.meta.general.method}
             {host(i2.url, path, srch)}
           </summary>
-          <details class='row-data'>
-            <summary>Header</summary>
-            <pre>{i2.meta}</pre>
+          <details class='row-data header'>
+            <summary class='title header'>header</summary>
+            <Json json={i2.meta}/>
           </details>
-          <details class='row-data'>
-            <summary>Content</summary>
-            <pre>{i2.data}</pre>
+          <details class='row-data content'>
+            <summary class='title content'>content</summary>
+            {#if i2.meta.general.ext==='json'}
+              <Json json={i2.data}/>
+            {:else}
+              <pre>{i2.data}</pre>
+            {/if}
           </details>
         </details>        
       {/each}
@@ -104,6 +122,13 @@ summary.title, .row-data pre {
   font-size: small;
   margin: 0;
 }
+summary.st2x {
+  color:#30047e;
+}
+summary.st3x, summary.st4x, summary.st5x {
+  color: #b40000;
+}
+
 summary.title:hover {
   background-color: lightgoldenrodyellow;
 }

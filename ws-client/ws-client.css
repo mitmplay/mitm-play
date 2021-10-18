@@ -88,24 +88,46 @@ table.svelte-zpccy4 .title.svelte-zpccy4 {
   width: 50%;
 }
 
-[type=checkbox].svelte-fjlr5a.svelte-fjlr5a {
+[type=checkbox].svelte-1rq1tjf.svelte-1rq1tjf {
   vertical-align: middle;
 }
 
-details.rows.svelte-fjlr5a.svelte-fjlr5a {
+details.rows.svelte-1rq1tjf.svelte-1rq1tjf {
   padding-left: 16px;
 }
 
-details.row-data.svelte-fjlr5a.svelte-fjlr5a {
+details.row-data.svelte-1rq1tjf.svelte-1rq1tjf {
   padding-left: 14px;
 }
 
-summary.title.svelte-fjlr5a.svelte-fjlr5a, .row-data.svelte-fjlr5a pre.svelte-fjlr5a {
+summary.title.svelte-1rq1tjf.svelte-1rq1tjf, .row-data.svelte-1rq1tjf pre.svelte-1rq1tjf {
   font-family: Consolas, Monaco, Courier, monospace;
   font-size: small;
   margin: 0;
 }
 
-summary.title.svelte-fjlr5a.svelte-fjlr5a:hover {
+summary.st2x.svelte-1rq1tjf.svelte-1rq1tjf {
+  color: #30047e;
+}
+
+summary.st3x.svelte-1rq1tjf.svelte-1rq1tjf, summary.st4x.svelte-1rq1tjf.svelte-1rq1tjf, summary.st5x.svelte-1rq1tjf.svelte-1rq1tjf {
+  color: #b40000;
+}
+
+summary.title.svelte-1rq1tjf.svelte-1rq1tjf:hover {
+  background-color: lightgoldenrodyellow;
+}
+
+div.item.svelte-1kmn8hs {
+  padding-left: 14px;
+}
+
+summary.title.svelte-1kmn8hs, pre.svelte-1kmn8hs {
+  font-family: Consolas, Monaco, Courier, monospace;
+  font-size: small;
+  margin: 0;
+}
+
+summary.title.svelte-1kmn8hs:hover {
   background-color: lightgoldenrodyellow;
 }
