@@ -21,14 +21,16 @@ async function sqlUpd(data={}, tbl='kv') {
       } else {
         pre = pre.whereRaw(...parse(_upd_)).update(obj)
       }
-      if (argv.debug) {
-        logmsg(...Object.values(pre.toSQL().toNative()))
+      if (argv.debug || argv.showsql) {
+        msg = Object.values(pre.toSQL().toNative()).join(' ')
+        logmsg(msg.length>110?`${msg.slice(0,110)}...`:msg)
       }
       updated = await pre
       if (updated===0 && _upd_) {
         pre = mitm.db(tbl).insert(obj)
-        if (argv.debug) {
-          logmsg(...Object.values(pre.toSQL().toNative()))
+        if (argv.debug || argv.showsql) {
+          msg = Object.values(pre.toSQL().toNative()).join(' ')
+          logmsg(msg.length>110?`${msg.slice(0,110)}...`:msg)
         }
         updated = await pre
       }

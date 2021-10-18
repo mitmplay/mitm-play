@@ -26,7 +26,7 @@ onMount(async () => {
       csp[id] = {policy, fallback}
     }
   }
-  if (reportTo!=='JSON Error!' && reportTo.length > 15) {
+  if (reportTo!=='JSON Error!' && reportTo?.length > 15) {
     let cb = reportTo.replace(/\n/g,'').trim()
     if (cb[0]==='{' && cb.slice(-1)==='}') {
       cb = JSON.stringify(JSON.parse(`[${cb}]`), null, 2)

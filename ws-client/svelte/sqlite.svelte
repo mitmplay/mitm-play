@@ -58,8 +58,8 @@
 <label for=srch>
   <input type=checkbox id=srch bind:checked={srch} />srch
 </label>
-<label for=srch>
-  <input type=checkbox id=srch bind:checked={body} />exp-body
+<label for=body>
+  <input type=checkbox id=body bind:checked={body} />exp-body
 </label>
 {#each obj.rows as item}
   <details class='session' data-ss={item.session} on:click={detailClick}>

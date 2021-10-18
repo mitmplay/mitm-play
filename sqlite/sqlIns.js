@@ -30,9 +30,10 @@ async function sqlIns(data={}, tbl='kv') {
       }
     }
     pre = mitm.db(tbl).insert(obj)
-    if (argv.debug) {
+    if (argv.debug || argv.showsql) {
       arr && logmsg(...arr)
-      logmsg(...Object.values(pre.toSQL().toNative()))
+      msg = Object.values(pre.toSQL().toNative()).join(' ')
+      logmsg(msg.length>110?`${msg.slice(0,110)}...`:msg)
     }
     if (_where_) {
       const result = await sqlList({_distinct_, _where_, _limit_, _offset_, _pages_}, tbl)

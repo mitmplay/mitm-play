@@ -33,7 +33,7 @@ async function sqlDel(data, tbl='kv') {
       await pre
     }
     logmsg(c.blueBright(`(*${c.redBright('sqlDel')} ${msg}*)`))
-    if (argv.debug) {
+    if (argv.debug || argv.showsql) {
       arr && logmsg(...arr)
       logmsg(...Object.values(pre.toSQL().toNative()))
     }

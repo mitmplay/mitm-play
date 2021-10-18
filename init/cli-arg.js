@@ -75,7 +75,8 @@ module.exports = () => {
   argsChg('H', 'nohost'    ) // feat: _global_.args
   argsChg('I', 'inspect'   )
   argsChg('K', 'dark'      )
-  argsChg('N', 'nice'      )
+  argsChg('L', 'showsql'   )
+  argsChg('N', 'nice'      ) // feat: _global_.args
   argsChg('P', 'cdp'       )
   argsChg('Q', 'nosql'     ) 
   argsChg('R', 'redirect'  )

@@ -19,13 +19,13 @@ async function sqlList(data, tbl='kv') {
         const {_distinct_, _where_, _limit_, _offset_, _pages_} = data
         msg = c.green(`where:${JSON.stringify(data)}`)
         let parsed = parse(_where_||'id>0')
-        if (_distinct_) {
+        if (Array.isArray(_distinct_) && _distinct_.length) {
           pre = mitm.db(tbl).distinct(..._distinct_)
         }
         if (_limit_) {
-          pre = select(mitm.db(tbl).select('id'), parsed).pre
-          pre = pre.limit(_limit_).offset(_offset_===undefined ? 0 : _offset_)
-          pre = mitm.db(tbl).where('id', 'in', pre)
+          let pre2 = select(mitm.db(tbl).select('id'), parsed).pre
+          pre2 = pre2.limit(_limit_).offset(_offset_===undefined ? 0 : _offset_)
+          pre = pre.where('id', 'in', pre2)
           if (parsed[2]) {
             const order = parsed[2].map(x=>{
               const ord = x.split(':')
@@ -56,7 +56,7 @@ async function sqlList(data, tbl='kv') {
     } else {
       logmsg(c.blueBright(`(*${c.redBright('sqlList')}*)`))
     }
-    if (argv.debug) {
+    if (argv.debug || argv.showsql) {
       ttl && logmsg(...Object.values(ttl.toSQL().toNative()))
       logmsg(...Object.values(pre.toSQL().toNative()))
     }
