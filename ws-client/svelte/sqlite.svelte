@@ -21,8 +21,7 @@
   })
 
   async function detailClick(e) {
-    const ss = e.target.textContent
-    console.log(ss)
+    const ss = e.currentTarget.dataset.ss
     if (!lst[ss]?.length) {
       const obj = await mitm.fn.sqlList({_where_: `session=${ss} orderby id`}, 'log')
       lst[ss] = obj.rows.map(x => {
@@ -33,7 +32,7 @@
         }
         return x
       })
-      console.log('lst:', obj.rows)
+      console.log(ss, obj.rows)
     }
   }
 
@@ -81,7 +80,11 @@
     {#if lst[item.session].length}
       {#each lst[item.session] as i2}
         <details class='sv-rows'>
-          <summary class='sv-title st{Math.trunc(i2.meta.general.status/100)}x' data-id={i2.id} data-ss={item.session} on:click={expClick}>
+          <summary 
+          data-id={i2.id}
+          data-ss={item.session}
+          class='sv-title st{Math.trunc(i2.meta.general.status/100)}x'
+          on:click={expClick}>
             <span class=sv-{i2.meta.general.status}>{i2.meta.general.status}</span>
             <span class=sv-{i2.meta.general.method}>{i2.meta.general.method}</span>
             <span class=sv-{path?'path':'fullpath'}>{host(i2.url, path, query)}</span>
