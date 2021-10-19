@@ -41,50 +41,56 @@ summary.fallback.svelte-ws3cmd.svelte-ws3cmd {
   color: #9100cd;
 }
 
-[type=checkbox].svelte-16igz4b.svelte-16igz4b {
+[type=checkbox].svelte-1mbw9mc.svelte-1mbw9mc {
   vertical-align: middle;
 }
 
-.sv-rows.svelte-16igz4b.svelte-16igz4b {
+.sv-rows.svelte-1mbw9mc.svelte-1mbw9mc {
   padding-left: 16px;
 }
 
-.sv-row-data.svelte-16igz4b.svelte-16igz4b {
+.sv-row-data.svelte-1mbw9mc.svelte-1mbw9mc {
   padding-left: 14px;
 }
 
-.sv-title.svelte-16igz4b.svelte-16igz4b, .sv-row-data.svelte-16igz4b pre.svelte-16igz4b {
+.sv-total.svelte-1mbw9mc.svelte-1mbw9mc {
+  font-size: x-small;
+  vertical-align: text-top;
+  color: darkmagenta;
+}
+
+.sv-title.svelte-1mbw9mc.svelte-1mbw9mc, .sv-row-data.svelte-1mbw9mc pre.svelte-1mbw9mc {
   font-family: Consolas, Monaco, Courier, monospace;
   font-weight: bold;
   font-size: small;
   margin: 0;
 }
 
-summary.svelte-16igz4b.svelte-16igz4b:is(.st2x) {
+summary.svelte-1mbw9mc.svelte-1mbw9mc:is(.st2x) {
   color: #30047e;
 }
 
-summary.svelte-16igz4b.svelte-16igz4b:is(.st3x, .st4x, .st5x) {
+summary.svelte-1mbw9mc.svelte-1mbw9mc:is(.st3x, .st4x, .st5x) {
   color: #b40000;
 }
 
-.sv-POST.svelte-16igz4b.svelte-16igz4b, .sv-PUT.svelte-16igz4b.svelte-16igz4b {
+.sv-POST.svelte-1mbw9mc.svelte-1mbw9mc, .sv-PUT.svelte-1mbw9mc.svelte-1mbw9mc {
   color: crimson;
 }
 
-.sv-DELETE.svelte-16igz4b.svelte-16igz4b {
+.sv-DELETE.svelte-1mbw9mc.svelte-1mbw9mc {
   color: red;
 }
 
-.sv-path.svelte-16igz4b.svelte-16igz4b {
+.sv-path.svelte-1mbw9mc.svelte-1mbw9mc {
   color: darkgreen;
 }
 
-.sv-fullpath.svelte-16igz4b.svelte-16igz4b {
+.sv-fullpath.svelte-1mbw9mc.svelte-1mbw9mc {
   color: darkmagenta;
 }
 
-.sv-title.svelte-16igz4b.svelte-16igz4b:hover {
+.sv-title.svelte-1mbw9mc.svelte-1mbw9mc:hover {
   background-color: lightgoldenrodyellow;
 }
 

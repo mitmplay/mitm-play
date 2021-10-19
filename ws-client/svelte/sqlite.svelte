@@ -12,9 +12,10 @@
     const rows = (window.innerHeight-100)/17.5
     console.log({rows})
     const _limit_ = rows
+    const _count_ = {total:'id'}
     const _distinct_ = ['session']
     const _where_= 'id>0 orderby id:d'
-    obj = await mitm.fn.sqlList({_distinct_, _where_, _limit_}, 'log')
+    obj = await mitm.fn.sqlList({_count_, _distinct_, _where_, _limit_}, 'log')
     obj.rows.forEach(item => {
       lst[item.session] = []
     });
@@ -75,7 +76,7 @@
 {#each obj.rows as item}
   <details class=sv-session data-ss={item.session} on:click={detailClick}>
     <summary>
-      {item.session}
+      {item.session}<span class=sv-total>({item.total})</span>
     </summary>
     {#if lst[item.session].length}
       {#each lst[item.session] as i2}
@@ -86,7 +87,7 @@
           class='sv-title st{Math.trunc(i2.meta.general.status/100)}x'
           on:click={expClick}>
             <span class=sv-{i2.meta.general.status}>{i2.meta.general.status}</span>
-            <span class=sv-{i2.meta.general.method}>{i2.meta.general.method}</span>
+            <span class=sv-{i2.meta.general.method}>{i2.meta.general.method.padEnd(4,'.')}</span>
             <span class=sv-{path?'path':'fullpath'}>{host(i2.url, path, query)}</span>
           </summary>
           <details class='sv-row-data sv-header'>
@@ -119,6 +120,11 @@
 }
 .sv-row-data {
   padding-left: 14px;
+}
+.sv-total {
+  font-size: x-small;
+  vertical-align: text-top;
+  color: darkmagenta;
 }
 .sv-title, .sv-row-data pre {
   font-family: Consolas, Monaco, Courier, monospace;

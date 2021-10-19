@@ -16,29 +16,44 @@ async function sqlList(data, tbl='kv') {
         pre = p 
         msg = m
       } else {
-        const {_distinct_, _where_, _limit_, _offset_, _pages_} = data
+        let {_count_, _distinct_, _where_, _limit_, _offset_, _pages_} = data
         msg = c.green(`where:${JSON.stringify(data)}`)
         let parsed = parse(_where_||'id>0')
-        if (Array.isArray(_distinct_) && _distinct_.length) {
-          pre = mitm.db(tbl).distinct(..._distinct_)
-        }
-        if (_limit_) {
+        if (_count_ || _distinct_) {
+          if (_count_) {
+            pre = mitm.db(tbl).count(_count_)
+            if (_distinct_) {
+              pre = pre.select(_distinct_)
+            }
+          } else {
+            pre = mitm.db(tbl)
+          }
+          if (_distinct_) {
+            if (!Array.isArray(_distinct_)) {
+              _distinct_ = [_distinct_]
+            }
+            pre = _count_ ? pre.select(..._distinct_).groupBy(..._distinct_) : pre.distinct(..._distinct_)  
+          }
+          if (_limit_) {
+            pre = pre.limit(_limit_).offset(_offset_===undefined ? 0 : _offset_)
+          }
+        } else if (_limit_) {
           let pre2 = select(mitm.db(tbl).select('id'), parsed).pre
           pre2 = pre2.limit(_limit_).offset(_offset_===undefined ? 0 : _offset_)
           pre = pre.where('id', 'in', pre2)
-          if (parsed[2]) {
-            const order = parsed[2].map(x=>{
-              const ord = x.split(':')
-              if (ord.length===1) {
-                return {column: ord[0], order: 'asc'}
-              } else {
-                return {column: ord[0], order: {a:'asc',d:'desc'}[ord[1]]}
-              }
-            })
-            pre = pre.orderBy(order)
-          }
         } else {
           pre = select(pre, parsed).pre
+        }
+        if (parsed[2]) {
+          const order = parsed[2].map(x=>{
+            const ord = x.split(':')
+            if (ord.length===1) {
+              return {column: ord[0], order: 'asc'}
+            } else {
+              return {column: ord[0], order: {a:'asc',d:'desc'}[ord[1]]}
+            }
+          })
+          pre = pre.orderBy(order)
         }
         if (_pages_) {
           ttl = select(mitm.db(tbl), parsed).pre.count('id', {as: 'totalrow'})
