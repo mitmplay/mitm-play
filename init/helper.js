@@ -38,6 +38,7 @@ module.exports = (_package) => {
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*
     -K --dark     \t set chrome devtools to dark mode
+    -L --showsql  \t show sqlite generated commands 
     -N --nice     \t JSON cache save as human readable
     -R --redirect \t set redirection: true/false/manual
     -Q --nosql    \t disabling persist data using sqlite

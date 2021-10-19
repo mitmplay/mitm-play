@@ -82,6 +82,7 @@ async function sqlList(data, tbl='kv') {
       return {rows}
     }
   } catch (error) {
+    console.log(c.red(JSON.stringify(error)))
     return error
   }
 }

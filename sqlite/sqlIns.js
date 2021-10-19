@@ -43,6 +43,7 @@ async function sqlIns(data={}, tbl='kv') {
     inserted = await pre
     return {inserted}
   } catch (error) {
+    console.log(c.red(JSON.stringify(error)))
     return error
   }
 }

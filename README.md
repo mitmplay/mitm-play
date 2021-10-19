@@ -835,6 +835,7 @@ $ mitm-play --help
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
     -K --dark          set chrome devtools to dark mode
+    -L --showsql       show sqlite generated commands 
     -N --nice          JSON cache save as human readable
     -R --redirect      set redirection: true/false/manual
     -Q --nosql         disabling persist data using sqlite
@@ -1108,6 +1109,15 @@ set chrome devtools to dark mode, this option effected only when theme set to `S
 ```bash
 $ mitm-play -K  <OR>
 $ mitm-play --dark
+```
+</details>
+<details><summary><b>-L --showsql</b></summary>
+
+To switch on / show sqlite generated syntax.
+
+```bash
+$ mitm-play -L  <OR>
+$ mitm-play --showsql
 ```
 </details>
 <details><summary><b>-R --redirect</b></summary>

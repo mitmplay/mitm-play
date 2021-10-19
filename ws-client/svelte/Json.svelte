@@ -20,7 +20,7 @@ let keys = Object.keys(json)
   padding-left: 14px;
 }
 .sv-title, pre {
-  font-family: Consolas, Monaco, Courier, monospace;
+  font-family: monospace;
   font-size: small;
   margin: 0;
 }
@@ -29,6 +29,10 @@ let keys = Object.keys(json)
 }
 .sv-respBody {
   color: blueviolet;
+  font-weight: 600;
+}
+.sv-reqsBody {
+  color: mediumvioletred;
   font-weight: 600;
 }
 </style>

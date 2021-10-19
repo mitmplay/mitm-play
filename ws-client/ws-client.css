@@ -41,56 +41,56 @@ summary.fallback.svelte-ws3cmd.svelte-ws3cmd {
   color: #9100cd;
 }
 
-[type=checkbox].svelte-1mbw9mc.svelte-1mbw9mc {
+[type=checkbox].svelte-1m2hrrc.svelte-1m2hrrc {
   vertical-align: middle;
 }
 
-.sv-rows.svelte-1mbw9mc.svelte-1mbw9mc {
+.sv-rows.svelte-1m2hrrc.svelte-1m2hrrc {
   padding-left: 16px;
 }
 
-.sv-row-data.svelte-1mbw9mc.svelte-1mbw9mc {
+.sv-row-data.svelte-1m2hrrc.svelte-1m2hrrc {
   padding-left: 14px;
 }
 
-.sv-total.svelte-1mbw9mc.svelte-1mbw9mc {
+.sv-total.svelte-1m2hrrc.svelte-1m2hrrc {
   font-size: x-small;
   vertical-align: text-top;
   color: darkmagenta;
 }
 
-.sv-title.svelte-1mbw9mc.svelte-1mbw9mc, .sv-row-data.svelte-1mbw9mc pre.svelte-1mbw9mc {
-  font-family: Consolas, Monaco, Courier, monospace;
+.sv-title.svelte-1m2hrrc.svelte-1m2hrrc, .sv-row-data.svelte-1m2hrrc pre.svelte-1m2hrrc {
+  font-family: monospace;
   font-weight: bold;
   font-size: small;
   margin: 0;
 }
 
-summary.svelte-1mbw9mc.svelte-1mbw9mc:is(.st2x) {
+summary.svelte-1m2hrrc.svelte-1m2hrrc:is(.st2x) {
   color: #30047e;
 }
 
-summary.svelte-1mbw9mc.svelte-1mbw9mc:is(.st3x, .st4x, .st5x) {
+summary.svelte-1m2hrrc.svelte-1m2hrrc:is(.st3x, .st4x, .st5x) {
   color: #b40000;
 }
 
-.sv-POST.svelte-1mbw9mc.svelte-1mbw9mc, .sv-PUT.svelte-1mbw9mc.svelte-1mbw9mc {
+.sv-POST.svelte-1m2hrrc.svelte-1m2hrrc, .sv-PUT.svelte-1m2hrrc.svelte-1m2hrrc {
   color: crimson;
 }
 
-.sv-DELETE.svelte-1mbw9mc.svelte-1mbw9mc {
+.sv-DELETE.svelte-1m2hrrc.svelte-1m2hrrc {
   color: red;
 }
 
-.sv-path.svelte-1mbw9mc.svelte-1mbw9mc {
+.sv-path.svelte-1m2hrrc.svelte-1m2hrrc {
   color: darkgreen;
 }
 
-.sv-fullpath.svelte-1mbw9mc.svelte-1mbw9mc {
+.sv-fullpath.svelte-1m2hrrc.svelte-1m2hrrc {
   color: darkmagenta;
 }
 
-.sv-title.svelte-1mbw9mc.svelte-1mbw9mc:hover {
+.sv-title.svelte-1m2hrrc.svelte-1m2hrrc:hover {
   background-color: lightgoldenrodyellow;
 }
 
@@ -141,21 +141,26 @@ table.svelte-zpccy4 .title.svelte-zpccy4 {
   width: 50%;
 }
 
-.sv-item.svelte-tqqn7t {
+.sv-item.svelte-jp33b8 {
   padding-left: 14px;
 }
 
-.sv-title.svelte-tqqn7t, pre.svelte-tqqn7t {
-  font-family: Consolas, Monaco, Courier, monospace;
+.sv-title.svelte-jp33b8, pre.svelte-jp33b8 {
+  font-family: monospace;
   font-size: small;
   margin: 0;
 }
 
-.sv-title.svelte-tqqn7t:hover {
+.sv-title.svelte-jp33b8:hover {
   background-color: lightgoldenrodyellow;
 }
 
-.sv-respBody.svelte-tqqn7t {
+.sv-respBody.svelte-jp33b8 {
   color: blueviolet;
+  font-weight: 600;
+}
+
+.sv-reqsBody.svelte-jp33b8 {
+  color: mediumvioletred;
   font-weight: 600;
 }

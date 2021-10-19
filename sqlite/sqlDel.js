@@ -45,6 +45,7 @@ async function sqlDel(data, tbl='kv') {
     }
     return {deleted}
   } catch (error) {
+    console.log(c.red(JSON.stringify(error)))
     return error
   }
 }

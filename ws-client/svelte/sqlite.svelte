@@ -30,6 +30,9 @@
         if (x.meta.general.ext==='json') {
           x.data = JSON.parse(x.data)
           delete x.data.general
+          if (x.meta.general.method==='GET') {
+            delete x.data.reqsBody
+          }
         }
         return x
       })
@@ -43,10 +46,10 @@
       setTimeout(() => {
         if (details.attributes.open) {
           details.children[2].setAttribute('open','')
-          const arr = details.querySelectorAll('.sv-row-data.sv-content details:is(.sv-respBody,.sv-respHeader)')
-          for (const node of arr) {
-            node.setAttribute('open','')
-          }
+          const arr1 = details.querySelectorAll('.sv-content:is(.mt-GET,.mt-DELETE) details:is(.sv-respBody,.sv-respHeader)')
+          const arr2 = details.querySelectorAll('.sv-content:is(.mt-PUT,.mt-POST) details:is(.sv-reqsBody)')
+          for (const node of arr1) { node.setAttribute('open', '') }
+          for (const node of arr2) { node.setAttribute('open', '') }
         }
       }, 0);
     }
@@ -94,7 +97,7 @@
             <summary class='sv-title sv-header'>header</summary>
             <Json json={i2.meta}/>
           </details>
-          <details class='sv-row-data sv-content'>
+          <details class='sv-row-data sv-content mt-{i2.meta.general.method}'>
             <summary class='sv-title sv-content'>content</summary>
             {#if i2.meta.general.ext==='json'}
               <Json json={i2.data}/>
@@ -127,7 +130,7 @@
   color: darkmagenta;
 }
 .sv-title, .sv-row-data pre {
-  font-family: Consolas, Monaco, Courier, monospace;
+  font-family: monospace;
   font-weight: bold;
   font-size: small;
   margin: 0;
