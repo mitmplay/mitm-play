@@ -4,9 +4,9 @@
 
   let lst = {}
   let obj = {rows: []}
-  let path= false;
-  let srch= false;
-  let body= true;
+  let query= false;
+  let path = true;
+  let body = true;
   
   onMount(async () => {
     const rows = (window.innerHeight-100)/17.5
@@ -43,7 +43,7 @@
       setTimeout(() => {
         if (details.attributes.open) {
           details.children[2].setAttribute('open','')
-          const arr = details.querySelectorAll('.row-data.content details:is(.respBody,.respHeader)')
+          const arr = details.querySelectorAll('.sv-row-data.sv-content details:is(.sv-respBody,.sv-respHeader)')
           for (const node of arr) {
             node.setAttribute('open','')
           }
@@ -55,7 +55,7 @@
   function host(url) {
     const obj = new URL(url)
     let msg = path ? obj.pathname : obj.origin + obj.pathname
-    if (srch) {
+    if (query) {
       msg += obj.search
     }
     return msg.length>90 ? msg.slice(0, 90)+'...' : msg
@@ -64,34 +64,34 @@
 
 <div>
 <b>Sqlite Logs!</b>
-<label for=no-host>
-  <input type=checkbox id=no-host bind:checked={path} />no-host
+<label for=sv-body>
+  <input type=checkbox id=sv-body bind:checked={body} />exp-body
 </label>
-<label for=srch>
-  <input type=checkbox id=srch bind:checked={srch} />srch
+<label for=sv-no-host>
+  <input type=checkbox id=sv-no-host bind:checked={path} />no-host
 </label>
-<label for=body>
-  <input type=checkbox id=body bind:checked={body} />exp-body
+<label for=sv-query>
+  <input type=checkbox id=sv-query bind:checked={query} />query
 </label>
 {#each obj.rows as item}
-  <details class='session' data-ss={item.session} on:click={detailClick}>
+  <details class=sv-session data-ss={item.session} on:click={detailClick}>
     <summary>
       {item.session}
     </summary>
     {#if lst[item.session].length}
       {#each lst[item.session] as i2}
-        <details class='rows'>
-          <summary class='title st{Math.trunc(i2.meta.general.status/100)}x' data-id={i2.id} data-ss={item.session} on:click={expClick}>
-            {i2.meta.general.status}
-            {i2.meta.general.method}
-            {host(i2.url, path, srch)}
+        <details class='sv-rows'>
+          <summary class='sv-title st{Math.trunc(i2.meta.general.status/100)}x' data-id={i2.id} data-ss={item.session} on:click={expClick}>
+            <span class=sv-{i2.meta.general.status}>{i2.meta.general.status}</span>
+            <span class=sv-{i2.meta.general.method}>{i2.meta.general.method}</span>
+            <span class=sv-{path?'path':'fullpath'}>{host(i2.url, path, query)}</span>
           </summary>
-          <details class='row-data header'>
-            <summary class='title header'>header</summary>
+          <details class='sv-row-data sv-header'>
+            <summary class='sv-title sv-header'>header</summary>
             <Json json={i2.meta}/>
           </details>
-          <details class='row-data content'>
-            <summary class='title content'>content</summary>
+          <details class='sv-row-data sv-content'>
+            <summary class='sv-title sv-content'>content</summary>
             {#if i2.meta.general.ext==='json'}
               <Json json={i2.data}/>
             {:else}
@@ -111,25 +111,37 @@
 [type=checkbox] {
   vertical-align: middle;
 }
-details.rows {
+.sv-rows {
   padding-left: 16px;
 }
-details.row-data {
+.sv-row-data {
   padding-left: 14px;
 }
-summary.title, .row-data pre {
+.sv-title, .sv-row-data pre {
   font-family: Consolas, Monaco, Courier, monospace;
+  font-weight: bold;
   font-size: small;
   margin: 0;
 }
-summary.st2x {
+summary:is(.st2x) {
   color:#30047e;
 }
-summary.st3x, summary.st4x, summary.st5x {
+summary:is(.st3x,.st4x,.st5x) {
   color: #b40000;
 }
-
-summary.title:hover {
+.sv-POST,.sv-PUT {
+  color: crimson;
+}
+.sv-DELETE {
+  color: red
+}
+.sv-path {
+  color: darkgreen;
+}
+.sv-fullpath {
+  color: darkmagenta;
+}
+.sv-title:hover {
   background-color: lightgoldenrodyellow;
 }
 </style>
