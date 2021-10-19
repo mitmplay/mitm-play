@@ -27,4 +27,8 @@ let keys = Object.keys(json)
 .sv-title:hover {
   background-color: lightgoldenrodyellow;
 }
+.sv-respBody {
+  color: blueviolet;
+  font-weight: 600;
+}
 </style>

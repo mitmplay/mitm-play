@@ -141,16 +141,21 @@ table.svelte-zpccy4 .title.svelte-zpccy4 {
   width: 50%;
 }
 
-.sv-item.svelte-dsvxnv {
+.sv-item.svelte-tqqn7t {
   padding-left: 14px;
 }
 
-.sv-title.svelte-dsvxnv, pre.svelte-dsvxnv {
+.sv-title.svelte-tqqn7t, pre.svelte-tqqn7t {
   font-family: Consolas, Monaco, Courier, monospace;
   font-size: small;
   margin: 0;
 }
 
-.sv-title.svelte-dsvxnv:hover {
+.sv-title.svelte-tqqn7t:hover {
   background-color: lightgoldenrodyellow;
+}
+
+.sv-respBody.svelte-tqqn7t {
+  color: blueviolet;
+  font-weight: 600;
 }
