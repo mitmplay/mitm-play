@@ -93,7 +93,7 @@
 </label>
 {#each obj.rows as item}
   <details class=sv-session data-ss={item.session} on:click={detailClick}>
-    <summary>
+    <summary class=sv-main>
       {item.session}<span class=sv-total>({item.total})</span>
     </summary>
     {#if lst[item.session].length}
@@ -117,7 +117,7 @@
             {#if i2.meta.general.ext==='json'}
               <Json json={i2.data} general={i2.meta.general} />
             {:else}
-              <pre>{i2.data}</pre>
+              <pre class=sv-{i2.meta.general.ext}>{i2.data}</pre>
             {/if}
           </details>
         </details>        
@@ -129,9 +129,17 @@
 {/each}
 </div>
 
-<style>
+<style lang="scss">
 [type=checkbox] {
   vertical-align: middle;
+}
+.sv-session {
+  summary {
+    cursor: pointer;
+    &.sv-main:hover {
+      background-color: lightgoldenrodyellow;
+    }
+  }
 }
 .sv-rows {
   padding-left: 16px;
@@ -149,6 +157,9 @@
   font-weight: bold;
   font-size: small;
   margin: 0;
+  &.sv-html {
+    font-size: x-small;
+  }
 }
 summary:is(.st2x) {
   color:#30047e;

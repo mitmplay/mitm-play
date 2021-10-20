@@ -41,56 +41,68 @@ summary.fallback.svelte-ws3cmd.svelte-ws3cmd {
   color: #9100cd;
 }
 
-[type=checkbox].svelte-1m2hrrc.svelte-1m2hrrc {
+[type=checkbox].svelte-wtlyn9.svelte-wtlyn9 {
   vertical-align: middle;
 }
 
-.sv-rows.svelte-1m2hrrc.svelte-1m2hrrc {
+.sv-session.svelte-wtlyn9 summary.svelte-wtlyn9 {
+  cursor: pointer;
+}
+
+.sv-session.svelte-wtlyn9 summary.sv-main.svelte-wtlyn9:hover {
+  background-color: lightgoldenrodyellow;
+}
+
+.sv-rows.svelte-wtlyn9.svelte-wtlyn9 {
   padding-left: 16px;
 }
 
-.sv-row-data.svelte-1m2hrrc.svelte-1m2hrrc {
+.sv-row-data.svelte-wtlyn9.svelte-wtlyn9 {
   padding-left: 14px;
 }
 
-.sv-total.svelte-1m2hrrc.svelte-1m2hrrc {
+.sv-total.svelte-wtlyn9.svelte-wtlyn9 {
   font-size: x-small;
   vertical-align: text-top;
   color: darkmagenta;
 }
 
-.sv-title.svelte-1m2hrrc.svelte-1m2hrrc, .sv-row-data.svelte-1m2hrrc pre.svelte-1m2hrrc {
+.sv-title.svelte-wtlyn9.svelte-wtlyn9, .sv-row-data.svelte-wtlyn9 pre.svelte-wtlyn9 {
   font-family: monospace;
   font-weight: bold;
   font-size: small;
   margin: 0;
 }
 
-summary.svelte-1m2hrrc.svelte-1m2hrrc:is(.st2x) {
+.sv-title.sv-html.svelte-wtlyn9.svelte-wtlyn9, .sv-row-data.svelte-wtlyn9 pre.sv-html.svelte-wtlyn9 {
+  font-size: x-small;
+}
+
+summary.svelte-wtlyn9.svelte-wtlyn9:is(.st2x) {
   color: #30047e;
 }
 
-summary.svelte-1m2hrrc.svelte-1m2hrrc:is(.st3x, .st4x, .st5x) {
+summary.svelte-wtlyn9.svelte-wtlyn9:is(.st3x, .st4x, .st5x) {
   color: #b40000;
 }
 
-.sv-POST.svelte-1m2hrrc.svelte-1m2hrrc, .sv-PUT.svelte-1m2hrrc.svelte-1m2hrrc {
+.sv-POST.svelte-wtlyn9.svelte-wtlyn9, .sv-PUT.svelte-wtlyn9.svelte-wtlyn9 {
   color: crimson;
 }
 
-.sv-DELETE.svelte-1m2hrrc.svelte-1m2hrrc {
+.sv-DELETE.svelte-wtlyn9.svelte-wtlyn9 {
   color: red;
 }
 
-.sv-path.svelte-1m2hrrc.svelte-1m2hrrc {
+.sv-path.svelte-wtlyn9.svelte-wtlyn9 {
   color: darkgreen;
 }
 
-.sv-fullpath.svelte-1m2hrrc.svelte-1m2hrrc {
+.sv-fullpath.svelte-wtlyn9.svelte-wtlyn9 {
   color: darkmagenta;
 }
 
-.sv-title.svelte-1m2hrrc.svelte-1m2hrrc:hover {
+.sv-title.svelte-wtlyn9.svelte-wtlyn9:hover {
   background-color: lightgoldenrodyellow;
 }
 
@@ -141,30 +153,34 @@ table.svelte-zpccy4 .title.svelte-zpccy4 {
   width: 50%;
 }
 
-.sv-item.svelte-618m4z {
+.sv-item.svelte-1hx80ts {
   padding-left: 14px;
 }
 
-.sv-title.svelte-618m4z, pre.svelte-618m4z {
+.sv-title.svelte-1hx80ts, pre.svelte-1hx80ts {
   font-family: monospace;
   font-size: small;
   margin: 0;
 }
 
-.sv-title.svelte-618m4z:hover {
+.sv-title.sv-html.svelte-1hx80ts, pre.sv-html.svelte-1hx80ts {
+  font-size: x-small;
+}
+
+.sv-title.svelte-1hx80ts:hover {
   background-color: lightgoldenrodyellow;
 }
 
-.sv-respBody.svelte-618m4z {
+.sv-respBody.svelte-1hx80ts {
   color: blueviolet;
   font-weight: 600;
 }
 
-.sv-respBody.svelte-618m4z:is(.st4x, .st5x) {
+.sv-respBody.svelte-1hx80ts:is(.st4x, .st5x) {
   color: red;
 }
 
-.sv-reqsBody.svelte-618m4z {
+.sv-reqsBody.svelte-1hx80ts {
   color: mediumvioletred;
   font-weight: 600;
 }

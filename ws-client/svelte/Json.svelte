@@ -11,7 +11,7 @@ let keys = Object.keys(json)
 {#each keys as key}
 <details class='sv-data sv-{key} st{Math.trunc(general.status/100)}x'>
   <summary class=sv-title>{key}</summary>
-  <pre>{stringify(json[key])}</pre>
+  <pre class=sv-{general.ext}>{stringify(json[key])}</pre>
 </details>
 {/each}
 </div>
@@ -24,6 +24,9 @@ let keys = Object.keys(json)
   font-family: monospace;
   font-size: small;
   margin: 0;
+  &.sv-html {
+    font-size: x-small;
+  }
 }
 .sv-title:hover {
   background-color: lightgoldenrodyellow;
