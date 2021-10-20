@@ -48,8 +48,12 @@
           details.children[2].setAttribute('open','')
           const arr1 = details.querySelectorAll('.sv-content:is(.mt-GET,.mt-DELETE) details:is(.sv-respBody,.sv-respHeader)')
           const arr2 = details.querySelectorAll('.sv-content:is(.mt-PUT,.mt-POST) details:is(.sv-reqsBody)')
+          const arr3 = details.querySelectorAll('.sv-content:is(.mt-REDIRECT) details:is(.sv-respHeader)')
+          const arr4 = details.querySelectorAll('.sv-content:is(.mt-ERROR) details:is(.sv-respBody)')
           for (const node of arr1) { node.setAttribute('open', '') }
           for (const node of arr2) { node.setAttribute('open', '') }
+          for (const node of arr3) { node.setAttribute('open', '') }
+          for (const node of arr4) { node.setAttribute('open', '') }
         }
       }, 0);
     }
@@ -62,6 +66,17 @@
       msg += obj.search
     }
     return msg.length>90 ? msg.slice(0, 90)+'...' : msg
+  }
+
+  function err_method(i2) {
+    const {method, status} = i2.meta.general
+    const st = Math.trunc(status/100)
+    if (st===3) {
+      return 'mt-REDIRECT'
+    } else if (st>3) {
+      return 'mt-ERROR'
+    }
+    return `mt-${method}` 
   }
 </script>
 
@@ -97,10 +112,10 @@
             <summary class='sv-title sv-header'>header</summary>
             <Json json={i2.meta}/>
           </details>
-          <details class='sv-row-data sv-content mt-{i2.meta.general.method}'>
+          <details class='sv-row-data sv-content {err_method(i2)}'>
             <summary class='sv-title sv-content'>content</summary>
             {#if i2.meta.general.ext==='json'}
-              <Json json={i2.data}/>
+              <Json json={i2.data} general={i2.meta.general} />
             {:else}
               <pre>{i2.data}</pre>
             {/if}

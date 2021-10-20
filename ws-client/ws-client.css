@@ -141,26 +141,30 @@ table.svelte-zpccy4 .title.svelte-zpccy4 {
   width: 50%;
 }
 
-.sv-item.svelte-jp33b8 {
+.sv-item.svelte-618m4z {
   padding-left: 14px;
 }
 
-.sv-title.svelte-jp33b8, pre.svelte-jp33b8 {
+.sv-title.svelte-618m4z, pre.svelte-618m4z {
   font-family: monospace;
   font-size: small;
   margin: 0;
 }
 
-.sv-title.svelte-jp33b8:hover {
+.sv-title.svelte-618m4z:hover {
   background-color: lightgoldenrodyellow;
 }
 
-.sv-respBody.svelte-jp33b8 {
+.sv-respBody.svelte-618m4z {
   color: blueviolet;
   font-weight: 600;
 }
 
-.sv-reqsBody.svelte-jp33b8 {
+.sv-respBody.svelte-618m4z:is(.st4x, .st5x) {
+  color: red;
+}
+
+.sv-reqsBody.svelte-618m4z {
   color: mediumvioletred;
   font-weight: 600;
 }
