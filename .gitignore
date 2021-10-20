@@ -1,6 +1,7 @@
 log
 *.tgz
 coverage
+mydb.sqlite
 .cjsescache
 chrome-profile
 
