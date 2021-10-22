@@ -1,5 +1,4 @@
 const c = require('ansi-colors')
-const { promisify } = require('util')
 const playwright = require('playwright')
 const _options = require('./options')
 const plugins = require('./plugins')
@@ -10,9 +9,8 @@ const routes = require('../routes-play')
 const browserPath = require('./browser-path')
 const currentTab = require('./current-tab')
 const preload = require('./preload.js')
-const sleep = promisify(setTimeout)
 
-const { logmsg } = global.mitm.fn
+const { sleep, logmsg } = global.mitm.fn
 const pages = {}
 const browsers = {}
 const bcontexts = {}
@@ -34,13 +32,12 @@ function browserProxy() {
 module.exports = () => {
   logmsg(c.red('\n[playwright/index.js]'))
   cleanX()
-  const {
-    argv,
-    fn: { home }
-  } = global.mitm
+
   global.mitm.pages = pages
   global.mitm.browsers = browsers
   global.mitm.bcontexts = bcontexts
+
+  const { argv } = global.mitm
   const args = require('./args-c')(argv);
 
   async function setup(browserName, options) {

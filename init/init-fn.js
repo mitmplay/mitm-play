@@ -2,6 +2,7 @@ const fs = require('fs-extra')
 const fg = require('fast-glob')
 const c = require('ansi-colors')
 const chokidar = require('chokidar')
+const { promisify } = require('util')
 const clearModule = require('clear-module');
 
 const { _keyLength, _sortLength, _sort } = require('./fn/_key-length')
@@ -24,6 +25,7 @@ const _wsmitm = require('./fn/_wsmitm')
 const _clear = require('./fn/_clear')
 const _tag4 = require('./fn/_tag4')
 const flist = require('./fn/flist')
+const sleep = promisify(setTimeout)
 const { logmsg } = global.mitm.fn
 
 module.exports = () => {
@@ -51,6 +53,7 @@ module.exports = () => {
     _clear,
     _sort,
     _tag4,
+    sleep,
     logmsg,
     formToObj,
     objToForm,
