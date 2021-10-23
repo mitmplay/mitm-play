@@ -1,7 +1,7 @@
 const { root, filename } = require('./file-util')
 const filePath = require('./file-path')
 
-module.exports = ({ reqs, match }) => {
+module.exports = async ({ reqs, match }) => {
   let { host, route: { at, path, file } } = match
   const { __args } = global.mitm
   const fpath = filename(match)
@@ -23,6 +23,9 @@ module.exports = ({ reqs, match }) => {
   let _root
   if (typeof file === 'function') {
     file = file(reqs, match)
+    if (file instanceof Promise) {
+      file = await file
+    }
     if (file===false) {
       return {fpath1: '', fpath2: ''} // feat: skip cache!
     }

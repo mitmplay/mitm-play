@@ -24,7 +24,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
     const { url, browserName } = reqs
     const { db, response, hidden } = route
 
-    let { fpath1, fpath2 } = fpathcache({ match, reqs })
+    let { fpath1, fpath2 } = await fpathcache({ match, reqs })
     if (!fpath1 && !fpath2) {
       return {match, resp} // feat: skip cache!
     }
