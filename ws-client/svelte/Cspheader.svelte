@@ -40,16 +40,16 @@ onMount(async () => {
   <b>Content Security Policy</b>
   <p>
     CSP on:
-    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Mozilla</a>, 
-    <a href="https://content-security-policy.com/">content-security-policy.com</a>,
-    <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">OWASP-cheat-sheet</a>
+    <a target=blank href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Mozilla</a>, 
+    <a target=blank href="https://content-security-policy.com/">content-security-policy.com</a>,
+    <a target=blank href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">OWASP-cheat-sheet</a>
   </p>
   <div>
     {#each cspArr as id, i}
     {#if csp[id]}      
       <details><summary class={csp[id].fallback ? 'fallback' : ''}>
         {#if cspInfo[id].link}
-          {i+1}.{id}:({csp[id].policy.length})<a href={cspInfo[id].link}><small>v{cspInfo[id].level}</small></a>
+          {i+1}.{id}:({csp[id].policy.length})<a target=blank href={cspInfo[id].link}><small>v{cspInfo[id].level}</small></a>
         {:else}
           {i+1}.{id}:({csp[id].policy.length})<small>v{cspInfo[id].level}</small>
         {/if}
