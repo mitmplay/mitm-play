@@ -6,7 +6,7 @@ const commonjs = require('@rollup/plugin-commonjs')
 const {nodeResolve:resolve} = require('@rollup/plugin-node-resolve')
 const { path: {app}, fn: {logmsg} } = global.mitm
 
-function bundleRollup(bpath, opath) {
+async function bundleRollup(bpath, opath) {
   // see below for details on the options
   const output = opath.replace(/\.js$/,'.css')
   const inputOptions = {
@@ -56,6 +56,6 @@ function bundleRollup(bpath, opath) {
     await bundle.write(outputOptions);
     await bundle.close();
   }
-  build();
+  await build();
 }
 module.exports = bundleRollup

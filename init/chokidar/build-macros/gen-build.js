@@ -68,7 +68,6 @@ function bundling(fpath, body) {
   })  
 }
 
-let debunk
 function genBuild(msg, fpath) {
   const {argv,win32} = global.mitm
   let _global = ''
@@ -81,6 +80,7 @@ function genBuild(msg, fpath) {
     fpath = fpath.replace(/\\/g, '/')
   }
   const rpath = fpath.replace(`${argv.route}/`, '')
+  logmsg('MACR BUILD:', c.red(`${msg}: ${rpath}`))
 
   path = `${argv.route}/_global_/_macros_/macros.js`
   if (fs.existsSync(path)) {
@@ -110,14 +110,6 @@ function genBuild(msg, fpath) {
       body = __body1(_global, _body1)
     }
   }
-  if (debunk) {
-    clearTimeout(debunk)
-  }
-  debunk = setTimeout(()=>{
-    logmsg('MACR BUILD:', c.red(`${msg}: ${rpath}`))
-    bundling(fpath, body)
-    clearTimeout(debunk)
-    debunk = undefined
-  }, 1000)
+  bundling(fpath, body)
 }
 module.exports = genBuild
