@@ -1,10 +1,14 @@
 {
   "_": "auto-generated during saveTags!",
   "tags": [
+    "ads",
     "hi",
     "html:hi",
-    "tag3:there-are",
-    "there-are"
+    "mock:no-ads",
+    "no-ads",
+    "no-ads~wow",
+    "url:ads",
+    "url:no-ads~wow"
   ],
   "_subns": ""
 }

@@ -2,15 +2,15 @@
   "_": "auto-generated during saveTags!",
   "tags": [
     "2.scenario",
+    "ads",
     "html:wow",
     "mock:2.scenario",
     "mock:no-ads",
     "no-ads",
-    "no-ads~wiw",
-    "tag3:no-ads~wiw",
-    "tag3:widi",
-    "widi",
+    "no-ads~wow",
+    "url:ads",
+    "url:no-ads~wow",
     "wow"
   ],
-  "_subns": "keybr.com"
+  "_subns": ""
 }

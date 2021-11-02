@@ -59,13 +59,21 @@ function loadJS (path, msg, fn) {
 }
 
 function load (path) {
+  const apath = path.split('/')
+  apath.splice(-1, 0, '_tags_')
+
   const rpath = require.resolve(path)
   if (require.cache[rpath]) {
     delete require.cache[rpath]
   }
+
   const reslt = require(path)
-  const _jpath = rpath.replace(/\.js/, '.json')
-  reslt._jpath = _jpath.replace(/\\/g, '/')
+  const _join =  apath.join('/')
+  const _jpath = _join.replace(/\.js/, '.json')
+  reslt._jpath = _jpath
+
+  apath.pop()
+  fs.ensureDirSync(apath.join('/'))
 
   if (fs.existsSync(_jpath)) { // restore tags
     try {

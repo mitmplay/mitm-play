@@ -4,10 +4,12 @@
     "ads",
     "mock:no-ads",
     "no-ads",
-    "no-ads~wiw",
-    "tag3:no-ads~wiw",
+    "no-ads~wow",
+    "tag3",
+    "tag3:tag3",
     "tag3:url:ads",
-    "url:ads"
+    "url:ads",
+    "url:no-ads~wow"
   ],
-  "_subns": "keybr.com"
+  "_subns": ""
 }
