@@ -33,7 +33,6 @@ module.exports = (_package) => {
     -x --proxy    \t a proxy request
     -z --lazyclick\t delay ~700ms click action*
 
-    -B --build    \t rollup build w/ svelte 
     -D --debug    \t show ws messages
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*

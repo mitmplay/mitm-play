@@ -830,7 +830,6 @@ $ mitm-play --help
     -x --proxy         a proxy request
     -z --lazyclick     delay ~700ms click action*
 
-    -B --build         rollup build w/ svelte  
     -D --debug         show ws messages
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*

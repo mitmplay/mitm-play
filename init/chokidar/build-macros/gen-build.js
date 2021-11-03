@@ -1,7 +1,6 @@
 const fs = require('fs-extra')
 const c = require('ansi-colors')
 const bundleRollup = require('./rollup')
-const bundleEsbuild = require('./es-build')
 const { logmsg } = global.mitm.fn
 
 function __autoKeys(body) {
@@ -50,7 +49,6 @@ window.mitm.macros = {
 }`).replace(/\n/, '')}
 
 function bundling(fpath, body) {
-  const {argv} = global.mitm
   body = __autoKeys(body)
   const bpath = fpath.replace('macros.js', 'build.js')
   // logmsg(c.redBright('Write'), bpath)
@@ -60,11 +58,7 @@ function bundling(fpath, body) {
       return
     }
     const opath = fpath.replace('_macros_', '_bundle_')
-    if (argv.build) {
-      bundleRollup(bpath, opath)
-    } else {
-      bundleEsbuild(bpath, opath)
-    }
+    bundleRollup(bpath, opath)
   })  
 }
 
