@@ -68,6 +68,10 @@ global.mitm = {
   __tag4: {},
   __page: {},
   wscmd: {},
-  wsrun: {},
+  wsrun: {
+    $ping ({ data }) { // ws__send('ping', 'hi', d=>console.log(`result ${d}`))
+      return `pong ${data}!`
+    },
+  },
   cdp: {}
 }

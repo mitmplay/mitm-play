@@ -19,6 +19,7 @@
    * [Macros](#macros)
    * [Macro Keys](#macro-keys)
    * [Persistent](#persistent)
+   * [ws__send](#ws__send)
    * [User Route](#user-route)
    * [Use Cases](#use-cases)
    * [Early Stage](#early-stage)
@@ -1458,8 +1459,19 @@ await mitm.fn.sqlIns({
 ```
 </details>
 
-There are three tables available: `kv(default)`, log & cache. `log & cache are preserved, not yet used`.   
+There are three tables available: `kv(default)`, log & cache. `log & cache are preserved, not yet used`.
 
+# ws__send
+Create socket custom command and later it can be use to update/manipulate object, it utilize ws_send function with built-in random keys to make command send to BE is unique
+```js
+// from browser CLI terminal 
+ws__send('ping', 'hi', d=>console.log(`result ${d}`)) // >>> ws-message: `ping:G2kGPCYj{"data":"pong hi!"}`
+
+// example of socket custom command built in for the purpose of testing and validate the custom command
+window.mitm.wsrun.$ping = ({ data }) => { // it become: window.mitm.wsrun.$ping
+  return `pong ${data}!`
+},
+```
 # User Route
 [User-route](https://github.com/mitmplay/user-route) are available on this repo: https://github.com/mitmplay/user-route and it should be taken as an experiment to test `mitm-play` functionality. 
 

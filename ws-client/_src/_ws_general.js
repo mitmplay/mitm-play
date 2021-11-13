@@ -61,7 +61,12 @@ module.exports = () => {
         console.log('%cWs: ws timeout!', _c, key)
       }
     }, 5000)
+    
     const params = `${key}${JSON.stringify({ data })}`
+    const flag = window.mitm.__flag['ws-message']
+    if (flag > 1) {
+      console.log(`_ws.send: ${params}`)
+    }
     _ws.send(params)
   }
 }

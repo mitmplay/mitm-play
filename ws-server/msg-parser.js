@@ -71,7 +71,7 @@ module.exports = async (client, data) => {
     } catch (error) {
       console.error(json, error)
     }
-    let run = wscmd[cmd]
+    let run = wscmd[cmd] || wsrun[cmd]
     if (run) {
       run.call(client, json)
     } else {
