@@ -68,5 +68,6 @@ global.mitm = {
   __tag4: {},
   __page: {},
   wscmd: {},
+  wsrun: {},
   cdp: {}
 }
