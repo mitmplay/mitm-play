@@ -2,15 +2,16 @@ const fs = require('fs-extra')
 const c = require('ansi-colors')
 const _match = require('./match')
 const inject = require('./inject')
+const setSession = require('./set-session')
 const { xtype } = require('./content-type')
 const changeStatus = require('./change-status')
 const resetCookies = require('./reset-cookies')
 const filePath = require('./filepath/file-path')
 
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
+const { matched, searchFN, searchKey } = _match
+const { source, injectWS } = inject
 const { logmsg } = global.mitm.fn
-const { matched, searchFN } = _match
-const { source } = inject
 
 const mock = ({ url }, match) => {
   const resp = {
@@ -33,7 +34,7 @@ const mockResponse = async function ({ reqs }, _3d) {
   let resp, msg = ''
 
   if (match) {
-    const { response, hidden } = match.route
+    const { response, hidden, ws } = match.route
     resp = mock(reqs, match)
     let otyp
     if (typeof (match.route) === 'string') {
@@ -128,6 +129,11 @@ const mockResponse = async function ({ reqs }, _3d) {
         } else if (resp2===false) {
           return
         }
+      }
+      if (ws && resp.headers['content-type'].match('/html')) {
+        setSession(reqs, {session:true, msg: '_htmlResponse'}) // feat: session
+        const jsLib = matched(searchKey('jsLib'), reqs)
+        injectWS(resp, reqs.url, jsLib)
       }
     }
     if (!__flag.mock || match.hidden || hidden) {

@@ -10,6 +10,7 @@ module.exports = function (resp, reqs) {
     routes,
     plugins,
     version,
+    wsrun,
     fn: {
       _nameSpace
     }
@@ -64,6 +65,7 @@ module.exports = function (resp, reqs) {
     autobuttons: {},
     leftbuttons: {},
     rightbuttons: {},
+    wsrun: Object.keys(wsrun)
   }
   json = JSON.stringify(json)
   json = json.replace(/}$/g, macros)

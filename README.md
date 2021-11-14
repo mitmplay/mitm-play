@@ -440,6 +440,7 @@ mock: {
       return {body} // {status, headers, body} or false to skip
     },
     log: true, // optional - enable logging
+    ws: true,  // inject web socket (html)
   },
 },
 ```

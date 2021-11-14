@@ -69,4 +69,11 @@ module.exports = () => {
     }
     _ws.send(params)
   }
+  const wsrun = {}
+  const arr = window.mitm.wsrun
+  for (const k of arr) {
+    const cmd  = k.replace('$', '')
+    wsrun[cmd] = (data, handler) => window.ws__send(cmd, data, handler)
+  }
+  window.mitm.wsrun = wsrun
 }
