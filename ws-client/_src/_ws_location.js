@@ -74,7 +74,7 @@ function toRegex (pathMsg) {
 function createButton(buttons, pos) {
   let br
   for (const id in buttons) {
-    const [caption, color, klas] = id.split('|')
+    const [caption, color, klas] = id.split('|').map(x=>x.trim())
     const btn = document.createElement('button')
     const fn  = buttons[id]
     btn.onclick = async e => {
@@ -141,9 +141,11 @@ async function urlChange (event) {
     const {href, origin} = location
     const _href = href.replace(origin, '')
     observerfn = []
+    let none = true
     for (const key in mitm.macros) {
       const { path, msg } = toRegex(key)
       if (_href.match(path)) {
+        none = false
         button.innerHTML = msg || 'Entry'
         let fns = mitm.macros[key]()
         if (fns instanceof Promise) {
@@ -181,6 +183,11 @@ async function urlChange (event) {
           }
         }, 0)
       }
+    }
+    if (none) {
+      setButtons({}, 'right')
+      setButtons({}, 'left')
+      setButtons({}, 'topr')
     }
   }
   container.right.style = styleRight
