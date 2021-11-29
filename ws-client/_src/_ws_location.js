@@ -7,7 +7,7 @@ const play = require('./_ws_play')
 const _c = 'color: #bada55'
 const styleLeft  = 'top:  1px; left:  3px;'
 const styleTopR  = 'top: -4px; right: 3px;'
-const styleRight = 'top: 16px; right: 3px; text-align: end;'
+const styleRight = 'top: 20px; right: 3px;'
 const buttonStyle= ''
 const style = `
 .mitm-container {
@@ -42,10 +42,22 @@ const style = `
 .mitm-btn:hover{
   text-decoration:underline;
 }
-.bgroup-left button,
-.bgroup-right button {
-  display:table;
+.mitm-btn.left,
+.mitm-btn.right {
+  display: block;
+}
+.mitm-btn.right {
+  float: right;
+  margin-top: 2px;
+}
+.bgroup-left,
+.bgroup-right {
+  display: table;
   margin-top: 4px;
+}
+.bgroup-left>div,
+.bgroup-right>div {
+  padding-bottom: 2px;
 }`
 
 let container = {
@@ -72,7 +84,6 @@ function toRegex (pathMsg) {
 }
 
 function createButton(buttons, pos) {
-  let br
   for (const id in buttons) {
     const [caption, color, klas] = id.split('|').map(x=>x.trim())
     const btn = document.createElement('button')
@@ -92,11 +103,15 @@ function createButton(buttons, pos) {
     btn.classList.add(klas || caption)
     btn.style = buttonStyle + (color ? `background: ${color};` : '')
     if (pos==='topr') {
-      br = document.createElement('span')
+      const br = document.createElement('span')
       br.innerHTML = '&nbsp;'
       bgroup[pos].appendChild(br)
+      bgroup[pos].appendChild(btn)
+    } else {
+      const div = document.createElement('div')
+      div.appendChild(btn)
+      bgroup[pos].appendChild(div)
     }
-    bgroup[pos].appendChild(btn)
   }
 }
 
