@@ -1,11 +1,13 @@
 log
 *.tgz
 coverage
+*.build.js
 mydb.sqlite
 .cjsescache
 chrome-profile
-
 # Dependency directories
+_assets_/
+_bundle_/
 node_modules/
 
 user-route/*.commonspaces
