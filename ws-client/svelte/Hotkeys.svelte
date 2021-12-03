@@ -145,7 +145,6 @@ function kcode(obj) {
       }
     }
     td {
-      font-size: small;
       border: 1px solid #999;
       padding-left: 5px;
     }

@@ -5,14 +5,16 @@ const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
 const play = require('./_ws_play')
 const _c = 'color: #bada55'
-const styleLeft  = 'top: -1px; left:  3px;'
-const styleTopR  = 'top: -8px; right: 3px;'
+const styleLeft  = 'top: -2px; left:  3px;'
+const styleTopR  = 'top:  0px; right: 3px;'
 const styleRight = 'top: 14px; right: 3px;'
 const buttonStyle= ''
 const style = `
 .mitm-container {
-  position: fixed;
   z-index: 99999;
+  position: fixed;
+  font-size: 12px;
+  line-height: 14px;
 }
 .mitm-container.center {
   background: #fcffdcb0;
