@@ -5,9 +5,9 @@ const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
 const play = require('./_ws_play')
 const _c = 'color: #bada55'
-const styleLeft  = 'top:  1px; left:  3px;'
-const styleTopR  = 'top: -4px; right: 3px;'
-const styleRight = 'top: 20px; right: 3px;'
+const styleLeft  = 'top: -1px; left:  3px;'
+const styleTopR  = 'top: -8px; right: 3px;'
+const styleRight = 'top: 14px; right: 3px;'
 const buttonStyle= ''
 const style = `
 .mitm-container {
@@ -58,6 +58,10 @@ const style = `
 .bgroup-left>div,
 .bgroup-right>div {
   padding-bottom: 2px;
+}
+.bgroup-topr,
+.bgroup-topr span {
+  font-size: 14px;
 }`
 
 let container = {
@@ -180,8 +184,6 @@ async function urlChange (event) {
           onces = {} // feat: onetime fn call
           debunk = undefined
           const {autobuttons, rightbuttons, leftbuttons} = window.mitm
-          rightbuttons && setButtons(rightbuttons, 'right')
-          leftbuttons && setButtons(leftbuttons, 'left')
           if (window.mitm.autofill) {
             autobuttons && setButtons({
               ...autobuttons,
@@ -196,6 +198,8 @@ async function urlChange (event) {
           } else {
             autobuttons && setButtons(autobuttons, 'topr')
           }
+          rightbuttons && setButtons(rightbuttons, 'right')
+          leftbuttons && setButtons(leftbuttons, 'left')
         }, 0)
       }
     }
