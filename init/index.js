@@ -1,5 +1,4 @@
-const c = require('ansi-colors')
-const {logmsg} = global.mitm.fn
+const {c, logmsg} = global.mitm.fn
 
 module.exports = () => {
   logmsg(c.red('\n[init/index.js]'))

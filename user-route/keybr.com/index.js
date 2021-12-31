@@ -14,6 +14,8 @@ const preset = {
 }
 
 const css = `
+#ezoic-pub-ad-placeholder-110,
+#ezoic-pub-ad-placeholder-111,
 .Body-header,.Body-aside {
   display: none !important;
 }`

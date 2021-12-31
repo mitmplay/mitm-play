@@ -1,7 +1,7 @@
 const c = require('ansi-colors')
 const logmsg = require('./init/logmsg')
 
-global.mitm = {fn: {logmsg}}
+global.mitm = {fn: {c, logmsg}}
 let {env, argv} = process
 
 logmsg(c.red('\n[mitm-play.js]'))
