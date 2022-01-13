@@ -9,7 +9,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "runtimeExecutable": "C:/Users/whars/AppData/Local/nvs/node/15.14.0/x64/node.exe",
+            "runtimeExecutable": "/home/wharsojo/.nvm/versions/node/v17.3.0/bin/node",
             "console": "integratedTerminal",
             "skipFiles": [
                 "<node_internals>/**"
