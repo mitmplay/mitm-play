@@ -39,7 +39,7 @@
     "json-stringify-pretty-compact": "3.0.0",
     "knex": "0.95.15",
     "make-fetch-happen": "9.1.0",
-    "markdown-it": "12.0.4",
+    "markdown-it": "12.3.2",
     "markdown-it-anchor": "7.1.0",
     "markdown-it-container": "3.0.0",
     "playwright": "1.17.2",
