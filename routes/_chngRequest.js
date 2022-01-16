@@ -1,9 +1,12 @@
-const c = require('ansi-colors')
 const _match = require('./match')
 const setSession = require('./set-session')
 const { cookieToObj, objToCookie } = require('./filesave/cookier')
 
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 const { matched, searchFN } = _match
 
 const chgRequest = async function (reqs, _3d) {

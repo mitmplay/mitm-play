@@ -1,9 +1,13 @@
-const c = require('ansi-colors')
 const _match = require('./match')
 const changeStatus = require('./change-status')
 const addReplaceBody = require('./add-replace-body')
 const { matched, searchFN } = _match
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 const cssResponse = async function (reqs, responseHandler, _3d) {
   const search = searchFN('css', reqs)
   const match = _3d ? search('_global_') : matched(search, reqs)

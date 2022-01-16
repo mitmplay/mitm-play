@@ -1,10 +1,12 @@
 const _path = require('path')
-const fs = require('fs-extra')
 const fg = require('fast-glob')
-const c = require('ansi-colors')
 const prompt = require('prompt-sync')()
 const loadJS = require('./chokidar/loadJS')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib: {c,fs},
+  fn:{logmsg},
+} = global.mitm
 
 module.exports = () => {
   const {

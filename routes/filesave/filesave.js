@@ -1,6 +1,8 @@
-const fs = require('fs-extra')
-const c = require('ansi-colors')
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c, fs},
+  fn:{logmsg},
+} = global.mitm
+
 module.exports = ({ fpath1, body }, { fpath2, meta }, typ) => {
   fs.ensureFile(fpath1, err0 => {
     if (err0) {

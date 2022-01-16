@@ -1,6 +1,9 @@
 const { chromium, firefox } = require("playwright")
-const c = require('ansi-colors')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
 
 const regex = /(chromium|firefox|webkit)\/log\/page~(\d+)-(session~(\d+)|undefined)/
 

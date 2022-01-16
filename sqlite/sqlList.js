@@ -1,4 +1,4 @@
-const c = require('ansi-colors')
+const {c} = global.mitm.lib
 const parse  = require('./parse')
 const select = require('./select')
 const {argv, fn: {logmsg}} = global.mitm

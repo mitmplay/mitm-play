@@ -1,10 +1,13 @@
 /* eslint-disable camelcase */
-const c = require('ansi-colors')
 const _match = require('./match')
 const { injectWS } = require('./inject')
 const setSession = require('./set-session')
 const { matched, searchKey, searchArr } = _match
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
 
 const addWebSocket = async function (reqs, responseHandler, _3d) {
   const { url, pageUrl, headers, browserName,oriRef } = reqs

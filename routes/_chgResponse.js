@@ -1,9 +1,12 @@
-const c = require('ansi-colors')
 const _match = require('./match')
 const { ctype } = require('./content-type')
 const changeStatus = require('./change-status')
 
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 const { matched, searchFN } = _match
 
 const allRequest = async function (reqs, responseHandler, _3d) {

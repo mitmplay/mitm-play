@@ -1,10 +1,14 @@
 /* eslint-disable camelcase */
-const c = require('ansi-colors')
 const _match = require('./match')
 const _inject = require('./inject')
 const setSession = require('./set-session')
 const changeStatus = require('./change-status')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 const { matched, searchFN, searchKey } = _match
 const { script_src, head, injectWS } = _inject
 

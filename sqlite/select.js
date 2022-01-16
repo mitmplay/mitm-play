@@ -1,4 +1,4 @@
-const c = require('ansi-colors')
+const {c} = global.mitm.lib
 
 function select(pre, data) {
   let order = []

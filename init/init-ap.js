@@ -54,8 +54,8 @@ global.mitm = {
   plugins: {},
   browsers: {},
   activity: {}, // feat: activity
-  routes: { _global_: { config: {} } },
   router: { _global_: { config: {} } },
+  routes: { _global_: { config: {} } },
   __mocks: {}, // feat: __mocks
   __mockr: {},
   routex: {},

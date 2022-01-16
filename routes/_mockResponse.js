@@ -1,5 +1,3 @@
-const fs = require('fs-extra')
-const c = require('ansi-colors')
 const _match = require('./match')
 const inject = require('./inject')
 const setSession = require('./set-session')
@@ -11,7 +9,11 @@ const filePath = require('./filepath/file-path')
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const { matched, searchFN, searchKey } = _match
 const { source, injectWS } = inject
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c, fs},
+  fn:{logmsg},
+} = global.mitm
 
 const mock = ({ url }, match) => {
   const resp = {

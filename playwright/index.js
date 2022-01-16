@@ -1,4 +1,3 @@
-const c = require('ansi-colors')
 const playwright = require('playwright')
 const _options = require('./options')
 const plugins = require('./plugins')
@@ -10,7 +9,11 @@ const browserPath = require('./browser-path')
 const currentTab = require('./current-tab')
 const preload = require('./preload.js')
 
-const { sleep, logmsg } = global.mitm.fn
+const {
+  lib:{c},
+  fn:{sleep,logmsg},
+} = global.mitm
+
 const pages = {}
 const browsers = {}
 const bcontexts = {}

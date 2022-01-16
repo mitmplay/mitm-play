@@ -1,4 +1,3 @@
-const fs = require('fs-extra')
 const hj = require('highlight.js');
 const md = require('markdown-it')({
   html: true,
@@ -12,7 +11,11 @@ const md = require('markdown-it')({
     return ''; // use external default escaping
   }
 });
-const { logmsg } = global.mitm.fn
+const {
+  lib:{fs},
+  fn:{logmsg},
+} = global.mitm
+
 const anchor = require('markdown-it-anchor')
 const container = require('markdown-it-container')
 md.use(anchor);

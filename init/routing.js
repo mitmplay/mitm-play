@@ -1,4 +1,4 @@
-const fs = require('fs-extra')
+const {fs} = global.mitm.lib
 
 const contentType = {
   css: 'text/css',
@@ -85,7 +85,6 @@ module.exports = () => {
   }
   global.mitm.__mockr = mockr
   global.mitm.__mocks = mock // feat: __mocks
-  global.mitm.source = {}
   global.mitm.routes = {
     _global_: {
       mock,
@@ -106,7 +105,4 @@ module.exports = () => {
       }
     }
   }
-  global.mitm.__tag2 = {}
-  global.mitm.__tag3 = {}
-  global.mitm.__tag4 = {}
 }

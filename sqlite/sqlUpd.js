@@ -1,4 +1,4 @@
-const c = require('ansi-colors')
+const {c} = global.mitm.lib
 const parse = require('./parse')
 const sqlIns = require('./sqlIns')
 const sqlList = require('./sqlList') 

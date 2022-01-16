@@ -1,7 +1,9 @@
-const fs = require('fs-extra')
-const c = require('ansi-colors')
 const bundleRollup = require('./rollup')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c, fs},
+  fn:{logmsg},
+} = global.mitm
 
 function __autoKeys(body) {
 return (`

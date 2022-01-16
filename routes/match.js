@@ -1,9 +1,12 @@
-const c = require('ansi-colors')
-const { fn: { home, _nameSpace } } = global.mitm
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const mmethod = /^(GET|PUT|POST|DELETE):/
 const nohttp = /https?:\/\//
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg,home,_nameSpace},
+} = global.mitm
+
 const m1 = {GET: 'gt', PUT: 'pt', POST: 'ps', DELETE: 'dl' }
 const m2 = {GET: 'gt:',PUT: 'pt:',POST: 'ps:',DELETE: 'dl:'}
 

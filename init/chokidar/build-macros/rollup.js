@@ -4,7 +4,7 @@ const svelte = require('rollup-plugin-svelte')
 const preprocess = require('svelte-preprocess')
 const commonjs = require('@rollup/plugin-commonjs')
 const {nodeResolve:resolve} = require('@rollup/plugin-node-resolve')
-const { path: {app}, fn: {logmsg} } = global.mitm
+const { path: {app} } = global.mitm
 
 async function bundleRollup(bpath, opath) {
   // see below for details on the options

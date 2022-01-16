@@ -1,4 +1,4 @@
-const c = require('ansi-colors')
+const { c } = global.mitm.lib
 const { typC, typA, typO } =  require('./_typs')
 
 const { logmsg } = global.mitm.fn

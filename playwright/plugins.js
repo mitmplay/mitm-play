@@ -1,10 +1,10 @@
-const c = require('ansi-colors')
-const fs = require('fs-extra')
-const _path = require('path')
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c, fs},
+  fn:{logmsg,flist,tilde},
+} = global.mitm
 
 function chromePlugins(args) {
-  const { fn: { flist, tilde, stringify }, path: { userroute } } = global.mitm
+  const {path:{userroute}} = global.mitm
   const ppath = userroute.split('*')[0] + '_plugins_'
   const plugins = flist(ppath)
   const enabled = false

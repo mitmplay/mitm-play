@@ -1,8 +1,12 @@
-const c = require('ansi-colors')
 const _ext = require('../filepath/ext')
 const searchParams = require('./search-params')
 const _setCookie = require('./set-cookie')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 const { xjson } = searchParams
 
 module.exports = ({ reqs, resp }) => {

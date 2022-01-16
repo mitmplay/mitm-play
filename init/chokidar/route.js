@@ -1,12 +1,13 @@
-const c = require('ansi-colors')
-const fg = require('fast-glob')
-const chokidar = require('chokidar')
 const _broadcast = require('./broadcast')
 const loadJS = require('./loadJS')
 
 const broadcast = _broadcast('route')
 const slash = p => p.replace(/\\/g, '/')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c, fg, chokidar},
+  fn:{logmsg},
+} = global.mitm
 
 module.exports = () => {
   const { win32 } = global.mitm

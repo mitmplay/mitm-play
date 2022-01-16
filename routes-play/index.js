@@ -1,4 +1,3 @@
-const c = require('ansi-colors')
 const _3rdparties = require('../routes/_3rdparties')
 const _jsResponse = require('../routes/_jsResponse')
 const _chngRequest = require('../routes/_chngRequest')
@@ -15,7 +14,11 @@ const _cacheResponse = require('../routes/_cacheResponse')
 const { Events, routeCall } = require('./events')
 const { extract, fetch } = require('./fetch')
 
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const noURL = /^(puffin|brave|edge):\/\//
 const brExt = /^chrome-\w+:\/\//

@@ -1,7 +1,9 @@
-const c = require('ansi-colors')
-const chokidar = require('chokidar')
 const broadcast = require('./broadcast')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c, chokidar},
+  fn:{logmsg},
+} = global.mitm
 
 const showFiles = global._debounce(broadcast('cache'), 1002, 'cache')
 

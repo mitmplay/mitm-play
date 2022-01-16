@@ -1,5 +1,7 @@
-const fs = require('fs-extra')
-const { logmsg } = global.mitm.fn
+const {
+  lib:{fs},
+  fn:{logmsg},
+} = global.mitm
 
 module.exports = async ({data}) => {
   if (!mitm.browsers.chromium) {

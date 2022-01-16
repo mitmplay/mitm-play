@@ -1,6 +1,9 @@
-const c = require('ansi-colors')
 const WebSocket = require('ws')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
 
 module.exports = () => {
   // ex: broadcast({data:"there"});

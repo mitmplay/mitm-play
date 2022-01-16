@@ -1,8 +1,6 @@
 const stackTrace = require('stack-trace');
 const chokidar = require('chokidar')
-const c = require('ansi-colors')
-const fs = require('fs-extra')
-const { logmsg } = global.mitm.fn
+const {c, fs} = global.mitm.lib
 
 let timeout = undefined;
 let doubleCall = -1

@@ -1,5 +1,7 @@
-const c = require('ansi-colors')
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
 
 function ctype (match, resp) {
   const atype = match.route.contentType

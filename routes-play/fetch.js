@@ -1,7 +1,11 @@
-const c = require('ansi-colors')
 const _fetch = require('make-fetch-happen')
 const { cookieToObj, objToCookie } = require('../routes/filesave/cookier')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 global.mitm.fn._fetch = _fetch
 
 async function extract ({ request: r, browserName }) {

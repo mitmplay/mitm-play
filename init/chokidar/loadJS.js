@@ -1,8 +1,11 @@
-const fs = require('fs-extra')
-const c = require('ansi-colors')
 const typs = require('../fn/_typs')
 const _debounce = require('../fn/_debounce')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c, fs},
+  fn:{logmsg},
+} = global.mitm
+
 /**
  * at loadJS end of linear call will trigger the non liniear code: routeSort
  * to populate remaining: __tag1, __tag4

@@ -1,4 +1,4 @@
-const { logmsg } = global.mitm.fn
+const {logmsg} = global.mitm.fn
 
 module.exports = async function Events (responseHandler, resp, reqs) {
   const { __args } = global.mitm

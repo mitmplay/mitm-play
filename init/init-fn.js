@@ -1,6 +1,4 @@
-const fs = require('fs-extra')
 const fg = require('fast-glob')
-const c = require('ansi-colors')
 const chokidar = require('chokidar')
 const { promisify } = require('util')
 const clearModule = require('clear-module');
@@ -26,19 +24,18 @@ const _clear = require('./fn/_clear')
 const _tag4 = require('./fn/_tag4')
 const flist = require('./fn/flist')
 const sleep = promisify(setTimeout)
-const { logmsg } = global.mitm.fn
 
 module.exports = () => {
   global.mitm.lib = {
+    ...global.mitm.lib,
     clearModule,
     chokidar,
     execFile,
     exec,
     fg,
-    fs,
-    c
   }
   global.mitm.fn = {
+    ...global.mitm.fn,
     _sortLength,
     _keyLength,
     _nameSpace,
@@ -54,7 +51,6 @@ module.exports = () => {
     _sort,
     _tag4,
     sleep,
-    logmsg,
     formToObj,
     objToForm,
     stringify,

@@ -1,6 +1,9 @@
 const attach = require('../playwright/attach')
-const c = require('ansi-colors')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
 
 module.exports = async ({ data }) => {
   const c = require('ansi-colors')

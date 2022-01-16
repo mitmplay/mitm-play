@@ -1,8 +1,9 @@
-const chokidar = require('chokidar')
-const c = require('ansi-colors')
-const fg = require('fast-glob')
 const genBuild = require('./build-macros/gen-build')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c, fg, chokidar},
+  fn:{logmsg},
+} = global.mitm
 
 function addMacro (path) { genBuild('add', path) }
 function chgMacro (path) { genBuild('chg', path) }

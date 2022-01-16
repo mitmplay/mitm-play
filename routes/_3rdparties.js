@@ -1,4 +1,4 @@
-const { fn: { _tldomain, _nameSpace } } = global.mitm
+const {_tldomain,_nameSpace} = global.mitm.fn
 
 function thirdparty ({ url, headers }) {
   if (!_nameSpace(_tldomain(url))) {

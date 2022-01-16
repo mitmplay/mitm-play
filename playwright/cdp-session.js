@@ -1,8 +1,11 @@
-const c = require('ansi-colors')
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 const routeCDP = require('../routes-cdp')
 const Events = require('../routes-cdp/events')
 
-const { logmsg } = global.mitm.fn
 const patterns = [
   {urlPattern: '*', requestStage: 'Request'},
   {urlPattern: '*', requestStage: 'Response'}

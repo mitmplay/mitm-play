@@ -1,5 +1,7 @@
-const c = require('ansi-colors')
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
 
 function chromeProxy(args) {
   const {proxypac, proxy} = global.mitm.argv

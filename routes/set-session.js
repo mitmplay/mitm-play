@@ -1,6 +1,7 @@
-const c = require('ansi-colors')
-
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))

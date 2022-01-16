@@ -1,7 +1,11 @@
+const fs = require('fs-extra')
 const c = require('ansi-colors')
 const logmsg = require('./init/logmsg')
 
-global.mitm = {fn: {c, logmsg}}
+global.mitm = {
+  lib: {c, fs},
+  fn: {logmsg},
+}
 let {env, argv} = process
 
 logmsg(c.red('\n[mitm-play.js]'))

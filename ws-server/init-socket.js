@@ -1,11 +1,13 @@
-const fs = require('fs-extra')
 const https = require('https')
 const WebSocket = require('ws')
-const c = require('ansi-colors')
 const website = require('./website')
 const msgParser = require('./msg-parser')
 
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c, fs},
+  fn:{logmsg},
+} = global.mitm
+
 const path = `${global.__app}/cert`
 
 function noop() {}

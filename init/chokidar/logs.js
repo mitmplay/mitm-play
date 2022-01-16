@@ -1,8 +1,9 @@
-const fs = require('fs-extra')
-const c = require('ansi-colors')
-const chokidar = require('chokidar')
 const broadcast = require('./broadcast')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c, fs, chokidar},
+  fn:{logmsg},
+} = global.mitm
 
 const showFiles = global._debounce(broadcast('log'), 1001, 'log')
 const slash = p => p.replace(/\\/g, '/')

@@ -1,5 +1,3 @@
-const c = require('ansi-colors')
-
 module.exports = () => {
   const { fn, argv: { proxy, devtools } } = global.mitm
   const options = { headless: false }

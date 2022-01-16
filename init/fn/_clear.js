@@ -1,6 +1,7 @@
-const fs = require('fs-extra')
-const c = require('ansi-colors')
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c, fs},
+  fn:{logmsg},
+} = global.mitm
 
 function err (e) {
   e && logmsg(c.redBright('Error remove files'), e)

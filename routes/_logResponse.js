@@ -1,4 +1,3 @@
-const c = require('ansi-colors')
 const _match = require('./match')
 const ext = require('./filepath/ext')
 const { ctype } = require('./content-type')
@@ -7,7 +6,12 @@ const filesave = require('./filesave/filesave')
 const metaResp = require('./filesave/meta-resp')
 const jsonResp = require('./filesave/json-resp')
 const fpathflat = require('./filepath/fpath-flat')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 const { matched, searchFN } = _match
 
 const logResponse = async function (reqs, responseHandler, _3d, cache) {

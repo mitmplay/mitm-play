@@ -1,4 +1,4 @@
-const fs = require('fs-extra')
+const {fs} = global.mitm.lib
 const _path = require('path')
 
 function flist (path, file = false) {

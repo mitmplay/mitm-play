@@ -1,4 +1,7 @@
-const {c, logmsg} = global.mitm.fn
+const {
+  lib: {c},
+  fn:{logmsg},
+} = global.mitm
 
 module.exports = () => {
   logmsg(c.red('\n[init/index.js]'))

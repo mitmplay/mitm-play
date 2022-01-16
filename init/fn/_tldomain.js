@@ -1,6 +1,8 @@
-const c = require('ansi-colors')
+const {
+  lib:{c},
+  fn: {logmsg}
+} = global.mitm
 const rgxDomain = /^\w+:\/\/([\w-.]+)/
-const { logmsg } = global.mitm.fn
 
 function _tldomain (fullpath) {
   if (typeof (fullpath) !== 'string' || fullpath.match(/^chrome/)) {

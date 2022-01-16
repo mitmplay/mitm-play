@@ -1,4 +1,4 @@
-const fs = require('fs-extra')
+const {fs} = global.mitm.lib
 
 const profile = `/_profiles_/chromium/Default/Preferences`
 const exited = '"exited_cleanly":'

@@ -1,5 +1,8 @@
-const c = require('ansi-colors')
-const { logmsg } = global.mitm.fn
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
+
 const channel = {
   msedge: true,
   chrome: true,

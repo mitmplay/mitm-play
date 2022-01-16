@@ -1,4 +1,3 @@
-const c = require('ansi-colors')
 const _global = require('./global')
 const _client = require('./client')
 const $getLog = require('./_getLog')
@@ -23,7 +22,11 @@ const $sqlList = require('./_sqlList')
 const $sqlIns = require('./_sqlIns')
 const $sqlUpd = require('./_sqlUpd')
 const $sqlDel = require('./_sqlDel')
-const { logmsg } = global.mitm.fn
+
+const {
+  lib:{c},
+  fn:{logmsg},
+} = global.mitm
 
 // accessible from client
 const wscmd = {
