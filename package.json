@@ -1,6 +1,6 @@
 {
   "name": "mitm-play",
-  "version": "0.9.46",
+  "version": "0.9.47",
   "description": "Man in the middle using playwright",
   "main": "mitm-play.js",
   "bin": {
@@ -42,7 +42,7 @@
     "markdown-it": "12.3.2",
     "markdown-it-anchor": "8.4.1",
     "markdown-it-container": "3.0.0",
-    "playwright": "1.17.2",
+    "playwright": "1.18.0",
     "prompt-sync": "^4.1.6",
     "rollup": "2.64.0",
     "rollup-plugin-scss": "3.0.0",
