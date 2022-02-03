@@ -23,6 +23,7 @@ const css = `
 const route = {
   urls: {
     keybr: 'https://www.keybr.com/',
+    keyb2: 'https://www.keybr.com/',
   },
   screenshot: {},
   proxy: [':proxy:keybr.com'],

@@ -120,14 +120,12 @@ module.exports = () => {
       for (const namespace in routes) {
         const { url, urls } = routes[namespace]
         const urls2 = Object.keys(urls||{})
-        for (const key of argv0) {
-          const rgx = toRegex(key, 'i')
+        for (const argid of argv0) {
+          const rgx = toRegex(argid, 'i')
           let urlsSet = false
           if (urls) {
-            // "_subns": ""
-            // "_subns": "hi@keybr.com"
-            if (urls2.includes(key)) {
-              _urls[key] = urls[key]
+            if (urls2.includes(argid)) {
+              _urls[argid] = urls[argid]
               urlsSet = true // found
             } else {
               for (const loc in urls) { // feat: find in urls
@@ -156,7 +154,6 @@ module.exports = () => {
               }
               mitm._childns = _childns // feat: default app  
             }
-            break
           } else if (url && url.match(rgx)) {
             _urls.def = url
           }
