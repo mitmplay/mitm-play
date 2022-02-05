@@ -11,18 +11,24 @@ function mockClient(resp, path, ex) {
   resp.headers['content-type'] = contentType[ex]
 }
 
-function mockMacros(resp, ex) {
+function mockMacros(resp, reqs, ex) {
   const { argv, fn: { _tldomain, _nameSpace } } = global.mitm
   const namespace = _nameSpace(_tldomain(resp.url))
   let path = ''
   let path2 = ''
   if (namespace) {
+    const refURL = new URL(reqs.headers.referer)
+    const macro = refURL.searchParams.get('mitm')
     const [app, domain] = namespace.split('@')
-    if (namespace.match('@')) {
+    if (macro) {
+      path = `${argv.route}/${domain}/_bundle_/${macro}@macros`
+    } else if (namespace.match('@')) {
       path = `${argv.route}/${domain}/_bundle_/${app}@macros`
     } else {
       path = `${argv.route}/${app}/_bundle_/macros`
     }
+  }
+  if (path) {
     path2 = `${path}.${ex}`
     if (fs.existsSync(path2)) {
       mockClient(resp, path, ex)
@@ -62,8 +68,8 @@ module.exports = () => {
         resp.body = JSON.stringify(result)
       }
     },
-    '!:hidden:/mitm-play/macros.js':       { response: resp => mockMacros(resp, 'js')  },
-    '!:hidden:/mitm-play/macros.css':      { response: resp => mockMacros(resp, 'css') },
+    '!:hidden:/mitm-play/macros.js':       { response: (resp, reqs) => mockMacros(resp, reqs, 'js')  },
+    '!:hidden:/mitm-play/macros.css':      { response: (resp, reqs) => mockMacros(resp, reqs, 'css') },
     '!:hidden:/mitm-play/ws-client.js$':   { response: resp => mockClient(resp, client, 'js'     )},
     '!:hidden:/mitm-play/ws-client.css$':  { response: resp => mockClient(resp, client, 'css'    )},
     '!:hidden:/mitm-play/ws-client.js.map':{ response: resp => mockClient(resp, client, 'js.map' )},
