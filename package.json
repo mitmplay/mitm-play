@@ -42,7 +42,7 @@
     "markdown-it": "12.3.2",
     "markdown-it-anchor": "8.4.1",
     "markdown-it-container": "3.0.0",
-    "playwright": "1.18.0",
+    "playwright": "1.18.1",
     "prompt-sync": "^4.1.6",
     "rollup": "2.64.0",
     "rollup-plugin-scss": "3.0.0",
