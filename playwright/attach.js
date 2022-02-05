@@ -121,8 +121,8 @@ async function evalPage(page, _page, msg, _frame='') {
 }
 
 const regx = /[.T:-]/g
-function ids(prefix, ln=18) {
-  return prefix + (new Date()).toISOString().slice(0, ln).replace(regx, '')
+function ids(prefix, ln=17) {
+  return prefix + (new Date()).toISOString().replace(regx, '').slice(0, ln)
 }
 
 async function attachCdp(page) {
@@ -138,7 +138,7 @@ async function attachCdp(page) {
 
 module.exports = async function(page) {
   const _page = ids('page~')
-  const _session = ids('session~')
+  const _session = ids('session~', 13)
   const { __flag } = global.mitm
 
   page._page = _page
@@ -159,11 +159,6 @@ module.exports = async function(page) {
     await attachCdp(page)
     await evalPage(page, _page, 'xplay-page load ')
   })
-  
-  // page.on('dialog', async (dialog) => {
-  //   console.log(dialog.message());
-  //   await dialog.accept();
-  // });
 
   page.on('worker', worker => {
     log(`xplay-page worker ${_page}`)
@@ -172,7 +167,7 @@ module.exports = async function(page) {
 
   page.on('frameattached', async (frame) => {
     try {
-      const _frame = ids('frame~', 23)
+      const _frame = ids('frame~')
       global.mitm.__page[_page].iframes[_frame] = frame
       await evalPage(frame, _page, 'xplay-page frame', _frame)
     } catch (error) {
