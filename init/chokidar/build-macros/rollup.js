@@ -1,8 +1,10 @@
-const rollup = require('rollup')
-const scss = require('rollup-plugin-scss')
-const svelte = require('rollup-plugin-svelte')
+const path       = require('path')
+const rollup     = require('rollup')
 const preprocess = require('svelte-preprocess')
-const commonjs = require('@rollup/plugin-commonjs')
+const scss       = require('rollup-plugin-scss')
+const svelte     = require('rollup-plugin-svelte')
+const alias      = require('@rollup/plugin-alias')
+const commonjs   = require('@rollup/plugin-commonjs')
 const {nodeResolve:resolve} = require('@rollup/plugin-node-resolve')
 const { path: {app} } = global.mitm
 
@@ -12,8 +14,13 @@ async function bundleRollup(bpath, opath) {
   const inputOptions = {
     input: bpath,
     plugins: [
+      alias({
+        entries: {
+          svelte: path.join(__dirname, '../../../node_modules/svelte')
+        }
+      }),
       svelte({
-        // include: `${app}/svelte/index.js`,
+        // include: `${app}/_svelte_/index.js`,
         compilerOptions: {dev: true},
         preprocess:  preprocess()
       }),
@@ -24,7 +31,7 @@ async function bundleRollup(bpath, opath) {
         preferBuiltins: false
       }),
       commonjs({
-        dynamicRequireTargets: [`${app}/svelte/*.svelte`]
+        dynamicRequireTargets: [`${app}/_svelte_/*.svelte`]
       })
     ],
     onwarn: function ( message, warn ) {

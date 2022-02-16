@@ -1,4 +1,3 @@
-require('../_svelte_')
 const _c = 'color: cornflowerblue'
 
 const rbuttons = {

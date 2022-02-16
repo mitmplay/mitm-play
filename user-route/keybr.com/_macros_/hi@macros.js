@@ -1,4 +1,6 @@
-module.exports = () => {
+// module.exports = () => {
+  require('../_svelte_')
+
   const lol = require('./test')
   const hello = 'hi macros'
 
@@ -9,5 +11,5 @@ module.exports = () => {
       fou: '4',
   }
   console.log(lol)
-  return window.mitm.macros
-}
+  // return window.mitm.macros
+// }
