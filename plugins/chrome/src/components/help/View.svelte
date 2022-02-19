@@ -48,7 +48,7 @@ function content(src) {
     for (let node of arr) {
       const title = node.getAttribute('title')
       const details = document.createElement('details')
-      details.innerHTML = `<summary>${title}</summary>`
+      details.innerHTML = `<summary class="test">${title}</summary>`
       const childs = []
       for (let child of node.children) {
         childs.push(child)

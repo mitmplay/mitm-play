@@ -24,6 +24,17 @@ label {
   background-color: greenyellow;
 }
 
+#list-help {
+  margin-top: -19px;
+  summary {
+    cursor: pointer;
+  }
+  div.allhide,
+  details.allhide:not([open]) {
+    display: none;
+  }
+}
+
 @import 'editor'; 
 @import 'markdown'; 
 

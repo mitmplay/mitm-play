@@ -1,5 +1,6 @@
 <script>
 import { source } from './stores.js';
+export let expand;
 export let item; 
 export let key;
 
@@ -13,7 +14,7 @@ function klass(store) {
 }
 </script>    
 
-<summary class="{klass($source)}">
+<summary class="{klass($source)}" on:click={expand}>
   {@html key}
 </summary>
 

@@ -5,6 +5,7 @@ import Summary from './Summary.svelte';
 const _c = 'color: blueviolet'
 
 let rerender = 0;
+let allhide = '';
 let data = [];
 
 $: _data = data;
@@ -43,19 +44,25 @@ window.mitm.files.markdown_events.markdownTable = () => {
   console.log('markdownTable getting called!!!');
   window.ws__send('getMarkdown', '', markdownHandler);
 }
+
+function expand(e) {
+  const {open} = e.target.parentNode.parentNode.attributes
+  allhide = (open === undefined ? 'allhide' : '')
+}
+
 </script>
 
 <div id="list-help">
   {#each Object.keys(_data) as key, i}
     {#if key==='_readme_'}
-      <div class="readme">
+      <div class="readme {allhide}">
         {#each Object.keys(_data[key]) as item}
           <Item item={{element: item, ..._data[key][item]}}/>
         {/each}    
       </div>
     {:else}
-      <details>
-        <Summary item={_data[key]} {key} />
+      <details class="{allhide}">
+        <Summary item={_data[key]} {key} {expand} />
         {#each Object.keys(_data[key]) as item}
           <Item item={{element: item, ..._data[key][item]}}/>
         {/each}

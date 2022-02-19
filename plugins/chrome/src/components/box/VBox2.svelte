@@ -16,6 +16,7 @@ import BTable from '../box/BTable.svelte';
 
 <VBox>
   <BStatic {top}>
+    {#if title !== undefined}
     <BHeader>
       {#if typeof title === 'string'}
         {title}
@@ -23,6 +24,7 @@ import BTable from '../box/BTable.svelte';
         <svelte:component this={title}/>
       {/if}
     </BHeader>
+    {/if}
     <div class="details-list"><svelte:component this={List} {...props}/></div>
   </BStatic>
   {#if show}
