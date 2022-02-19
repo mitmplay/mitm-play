@@ -5,10 +5,11 @@ import Summary from './Summary.svelte';
 const _c = 'color: blueviolet'
 
 let rerender = 0;
-let allhide = '';
+let open = '';
 let data = [];
 
 $: _data = data;
+$: _open = open;
 
 onMount(async () => {
   console.log('%cHelp: onMount help/list', _c);
@@ -46,22 +47,23 @@ window.mitm.files.markdown_events.markdownTable = () => {
 }
 
 function expand(e) {
-  const {open} = e.target.parentNode.parentNode.attributes
-  allhide = (open === undefined ? 'allhide' : '')
+  setTimeout(() => {
+    const node = e.target.closest('details')
+    open = (node.getAttribute('open') === '' ? 'open': '')
+  }, 0);
 }
-
 </script>
 
-<div id="list-help">
+<div id="list-help" class="{_open}">
   {#each Object.keys(_data) as key, i}
     {#if key==='_readme_'}
-      <div class="readme {allhide}">
+      <div class="readme">
         {#each Object.keys(_data[key]) as item}
           <Item item={{element: item, ..._data[key][item]}}/>
         {/each}    
       </div>
     {:else}
-      <details class="{allhide}">
+      <details>
         <Summary item={_data[key]} {key} {expand} />
         {#each Object.keys(_data[key]) as item}
           <Item item={{element: item, ..._data[key][item]}}/>

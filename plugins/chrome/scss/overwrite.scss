@@ -29,8 +29,8 @@ label {
   summary {
     cursor: pointer;
   }
-  div.allhide,
-  details.allhide:not([open]) {
+  &.open>div,
+  &.open>details:not([open]) {
     display: none;
   }
 }

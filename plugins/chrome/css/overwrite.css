@@ -25,8 +25,8 @@ label {
   margin-top: -19px; }
   #list-help summary {
     cursor: pointer; }
-  #list-help div.allhide,
-  #list-help details.allhide:not([open]) {
+  #list-help.open > div,
+  #list-help.open > details:not([open]) {
     display: none; }
 
 .edit-container {
