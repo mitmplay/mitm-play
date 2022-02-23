@@ -55,8 +55,8 @@ function expand(e) {
 </script>
 
 <div id="list-help" class="{_open}">
-  {#each Object.keys(_data) as key, i}
-    {#if key==='_readme_'}
+  {#each Object.keys(_data).sort() as key, i}
+    {#if key==='<b>A-Mitm-play</b>'}
       <div class="readme">
         {#each Object.keys(_data[key]) as item}
           <Item item={{element: item, ..._data[key][item]}}/>

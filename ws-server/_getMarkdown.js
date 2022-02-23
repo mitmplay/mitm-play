@@ -4,7 +4,7 @@ module.exports = () => {
   const { __args, path, fn } = global.mitm 
   const { _sort } = fn
   const {app, route} = path
-  const data = {_readme_: {}}
+  const data = {'<b>A-Mitm-play</b>': {}}
   global.mitm.files.markdown.forEach(fpath => {
     let fapp = fpath.replace(app, '')
     let froute = fpath.replace(route, '')
@@ -17,7 +17,7 @@ module.exports = () => {
     const path = arr.join('/')
     // const content = global.mitm.source[fpath]
     if (fpath.match('mitm-play/README.md')) {
-      section = '_readme_'
+      section = '<b>A-Mitm-play</b>'
     }
     data[section][fpath] = {
       path,
