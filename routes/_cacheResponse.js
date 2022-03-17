@@ -59,7 +59,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           if (!ctype(match, { headers })) {
             return { match: undefined, resp: undefined }
           }
-          if (setCookie && __args.cookie) {
+          if (setCookie?.length && __args.cookie) {
             headers['set-cookie'] = resetCookies(setCookie)
           }
           const body = await fs.readFile(fname1)

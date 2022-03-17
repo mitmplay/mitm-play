@@ -1,14 +1,14 @@
-const _3rdparties = require('../routes/_3rdparties')
-const _jsResponse = require('../routes/_jsResponse')
-const _chngRequest = require('../routes/_chngRequest')
-const _cssResponse = require('../routes/_cssResponse')
-const _logResponse = require('../routes/_logResponse')
-const _jsonResponse = require('../routes/_jsonResponse')
-const _htmlResponse = require('../routes/_htmlResponse')
-const _chgResponse = require('../routes/_chgResponse')
-const _skipResponse = require('../routes/_skipResponse')
-const _mockResponse = require('../routes/_mockResponse')
-const _addWebSocket = require('../routes/_addWebSocket')
+const _3rdparties    = require('../routes/_3rdparties')
+const _jsResponse    = require('../routes/_jsResponse')
+const _chgRequest    = require('../routes/_chgRequest')
+const _chgResponse   = require('../routes/_chgResponse')
+const _cssResponse   = require('../routes/_cssResponse')
+const _logResponse   = require('../routes/_logResponse')
+const _jsonResponse  = require('../routes/_jsonResponse')
+const _htmlResponse  = require('../routes/_htmlResponse')
+const _skipResponse  = require('../routes/_skipResponse')
+const _mockResponse  = require('../routes/_mockResponse')
+const _addWebSocket  = require('../routes/_addWebSocket')
 const _cacheResponse = require('../routes/_cacheResponse')
 const Events = require('./events')
 
@@ -81,7 +81,7 @@ module.exports = async (page, client, reqEvent) => {
     return
   }
 
-  const rqs2 = await _chngRequest(reqs, _3ds)
+  const rqs2 = await _chgRequest(reqs, _3ds)
   if (rqs2) {
     reqs = { ...reqs, ...rqs2 }
     if (verbose) {

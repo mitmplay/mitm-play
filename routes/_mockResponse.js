@@ -101,7 +101,7 @@ const mockResponse = async function ({ reqs }, _3d) {
           if (fpath2) {
             const json = JSON.parse(await fs.readFile(fpath2))
             const { general: { status }, setCookie, respHeader: headers } = json
-            if (setCookie && __args.cookie) {
+            if (setCookie?.length && __args.cookie) {
               headers['set-cookie'] = resetCookies(setCookie)
             }
             resp.status = status

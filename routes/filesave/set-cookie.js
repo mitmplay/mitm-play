@@ -12,7 +12,7 @@
         const [k, v] = itm.split('=')
         items[k] = v || true
       }
-      const expire = cookie.match(/expires=([^;]+)/)
+      const expire = cookie.match(/expires=([^;]+)/i)
       if (expire) {
         const elapsed = Date.parse(expire[1]) - Date.now()
         items._elapsed = elapsed

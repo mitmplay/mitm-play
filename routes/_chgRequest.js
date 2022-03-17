@@ -1,6 +1,5 @@
 const _match = require('./match')
 const setSession = require('./set-session')
-const { cookieToObj, objToCookie } = require('./filesave/cookier')
 
 const {
   lib:{c},
