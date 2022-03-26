@@ -30,7 +30,8 @@ npm install -g mitm-play
 ```
 Execute mitm-play command with demo route, or add `-h` to see help screen:
 ```bash
-mitm-play -Gdr
+mitm-play -Gdr  #-OR-
+NODE_OPTIONS='--inspect' mitm-play -Gdr 
 ```
 
 <details><summary>Example</summary>

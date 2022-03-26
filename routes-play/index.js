@@ -74,7 +74,7 @@ module.exports = async ({ route, request, browserName }) => {
     if (verbose) {
       const msg = JSON.stringify(reqs.headers)
       const log = msg.length <= 100 ? msg : msg.slice(0, 100) + '...'
-      clogmsg(c.redBright(`>>> ${'request'.padEnd(8, ' ')} (${log})`))
+      logmsg(c.redBright(`>>> ${'request'.padEnd(8, ' ')} (${log})`))
     }
   }
 

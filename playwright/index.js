@@ -154,7 +154,7 @@ module.exports = () => {
     browserProxy()
     browserPath(browserName, options)
     const {page, browser, bcontext} = await setup(browserName, options)
-    logmsg(c.redBright(`MITM Hooked [${browserName}]`))
+    logmsg(c.redBright(`\nMITM Hooked [${browserName}]`))
     bcontext.on('page', attach)
     if (argv.cdp===undefined) {
       await bcontext.route(/.*/, (route, request) => {
@@ -182,11 +182,12 @@ module.exports = () => {
   }
 
   (async () => {
-    logmsg(c.redBright('START: INIT *PLAYWRIGHT*'))
+    logmsg(c.redBright('\nSTART: INIT *PLAYWRIGHT*'))
     for (const browserName in argv.browser) {
       await play(browserName)
     }
-    logmsg(c.redBright('END: INIT *PLAYWRIGHT*'))
+    logmsg(c.redBright('======================'))
+    logmsg(c.redBright('END: INIT *PLAYWRIGHT*\n'))
   })()
   global.mitm.play = play
 }

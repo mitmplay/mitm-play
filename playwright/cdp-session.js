@@ -18,7 +18,7 @@ module.exports = async page => {
     logmsg('CDP ALREADY INIT!!!')
     return
   }
-  logmsg('Init CDP!')
+  logmsg('\nInit CDP!')
   const client = await page.context().newCDPSession(page)
   page._CDP = client
 

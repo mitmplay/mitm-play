@@ -1,3 +1,4 @@
+console.log('\nstart:')
 const fs = require('fs-extra')
 const c = require('ansi-colors')
 const logmsg = require('./init/logmsg')

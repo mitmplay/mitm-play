@@ -1,3 +1,3 @@
-#!/usr/bin/env node --max-http-header-size=80000
+#!/usr/bin/env node
 
 require('../mitm-play')

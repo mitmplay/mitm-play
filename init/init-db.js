@@ -46,7 +46,8 @@ module.exports = async () => {
     useNullAsDefault: true
   });
   const exists = await knex.schema.hasTable('kv')
-  console.log('Is table there?', exists)
+  logmsg(c.redBright('\n[init/init-db.js]'))
+  logmsg(c.yellow(`Is table there? ${exists}`))
 
   if (!exists) {
     await knex.schema.createTable('kv', kv);
@@ -70,5 +71,5 @@ module.exports = async () => {
     })
     rows = await knex('kv').select('*')
   }
-  console.log('Knex Rows:', rows)
+  logmsg(c.yellow(`Knex Rows: ${rows.length}\n`))
 }
