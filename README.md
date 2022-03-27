@@ -39,20 +39,22 @@ NODE_OPTIONS='--inspect' mitm-play -Gdr
 ```js
 // create file: ~/user-route/keybr.com/index.js & add this content:
 const css = `
-.Body-header,.Body-aside {
+body>div,.Body-header,.Body-aside {
   display: none !important;
 }`;
- 
+
 const route = {
   url: 'https://keybr.com',
-  tags: [],
   'mock:no-ads': {
+    'cloudflareinsights.com': '',
+    '#201:google.+.com': '',
     'doubleclick.net': '',
-    'a.pub.network': '',
-    'google.+.com': '',
+    'cookiebot.com': '',
+    'btloader.com': '',
+    'pub.network': '',
   },
   css: {
-    'GET:no-ads/assets/[a-z0-9]+': `=>${css}`
+    'GET:no-ads:/assets/[a-z0-9]+': `=>${css}`,
   },
 }
 module.exports = route;
@@ -61,12 +63,12 @@ module.exports = route;
 ```js
 // create file: ~/user-route/_global_/index.js & add this content:
 const route = {
-  tags: [],
-  'config:no-logs': {
-    logs: {
-      'referer-reqs': false,
-      'no-namespace': false,
-    }
+  'args': {
+    debug: true
+  },
+  'flag': {
+    'ws-connect': true,
+    'ws-message': true,
   }
 }
 module.exports = route;
@@ -78,7 +80,8 @@ mitm-play keyb --delete --save  # --OR--
 mitm-play keyb -ds
 
 # next run should be simple as:
-mitm-play
+mitm-play #-OR-
+NODE_OPTIONS='--inspect' mitm-play
 ```
 Routing definition having `remove-ads` tag, it will be shown on chrome dev-tools "mitm-play" "tags" as an option to enabled / disabled rules. You can see the togling process on [this video.](https://www.youtube.com/watch?v=sXTsy_XxILg)
 

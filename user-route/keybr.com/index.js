@@ -1,71 +1,20 @@
-const preset = {
-  clear: {
-    title: 'clear tags',
-    tags: []
-  },
-  default: {
-    title: 'Default tags for common operation',
-    tags:[
-      'active',
-      'css:no-ads~css',
-      'mock:no-ads',
-    ]
-  }
-}
-
 const css = `
-#ezoic-pub-ad-placeholder-110,
-#ezoic-pub-ad-placeholder-111,
-.Body-header,.Body-aside {
+body>div,.Body-header,.Body-aside {
   display: none !important;
-}`
-;
+}`;
+
 const route = {
-  urls: {
-    keybr: 'https://www.keybr.com/?mitm=keyb1',
-    keyb2: 'https://www.keybr.com/?mitm=hi',
-  },
-  screenshot: {},
-  proxy: [':proxy:keybr.com'],
-  skip: [':skipper:google','woff2'],
+  url: 'https://keybr.com',
   'mock:no-ads': {
-    ':ads:cloudflareinsights.com': '',
-    '#201:ads:google.+.com': '',
-    ':ads:doubleclick.net': '',
-    ':ads:cookiebot.com': '',
-    ':ads:btloader.com': '',
-    ':ads:pub.network': '',
+    'cloudflareinsights.com': '',
+    '#201:google.+.com': '',
+    'doubleclick.net': '',
+    'cookiebot.com': '',
+    'btloader.com': '',
+    'pub.network': '',
   },
   css: {
-    'GET:no-ads~wow:/assets/[a-z0-9]+': {
-      response(resp, reqs, match) {
-        resp.body = `${resp.body}\n${css}`
-        // console.log(match.tags)
-      },
-      tags: ['tag3']
-    },
+    'GET:no-ads:/assets/[a-z0-9]+': `=>${css}`,
   },
-  mock: {
-    ':/df': {
-      file(reqs, match) {
-        match.path = '_assets_'
-        return 'me@error.json'
-      },
-      tags: 'no-ads~wiw'
-    }
-  },
-  // cache: {
-  //   '/df': {
-  //     file(reqs, match) {
-  //       const path = 'path'
-  //       const file = 'file'
-  //       return {path, file}
-  //     },
-  //   }
-  // },
-  // html: {
-  //   '/': null
-  // },
-  preset
 }
 module.exports = route;

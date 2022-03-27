@@ -84,8 +84,8 @@ module.exports = () => {
   const files = file1.concat(file2)
   logmsg(c.redBright('INIT Route'), files)
   if (!files.length) {
-    logmsg(c.red('Routes path is incorrect'), argv.route)
-    logmsg(c.yellow('Please pass option: -r=\'...\' / --route=\'your routing path\''))
+    logmsg(c.red('\nRoutes path is incorrect'), argv.route)
+    logmsg(c.yellow('Please pass option: -r=\'...\' / --route=\'your routing path\'\n'))
     process.exit()
   }
   global.mitm.data.nolog = true
