@@ -40,7 +40,7 @@ md.use(container, 'summary', {
 
 function updateUrl(md1, fpath, path, dir) {
   const arr = fpath.replace(`${path}/`, '').split('/')
-  const rpl = (s,p) => `${p}https://localhost:3001/${dir}/${arr[0] ? arr[0]+'/' : ''}_assets_/`
+  const rpl = (s,p) => `${p}https://localhost:3001/${dir}/${arr.length>1 ? arr[0]+'/' : ''}_assets_/`
   let flag = true
   while (flag) {
     const md2 = md1.replace(regx, rpl)
