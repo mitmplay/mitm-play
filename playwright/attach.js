@@ -161,8 +161,11 @@ module.exports = async function(page) {
   })
 
   page.on('worker', worker => {
-    log(`xplay-page worker ${_page}`)
-    worker.on('close', worker => log('Worker destroyed: ' + worker.url()))
+    const url = worker.url()
+    if (!url.match(/^(brave|edge|puffin):\/\//)) {
+      log(`xplay-page worker ${_page} ${url}`)
+      worker.on('close', worker2 => log('Worker destroyed: ' + worker2.url()))  
+    }
   })
 
   page.on('frameattached', async (frame) => {

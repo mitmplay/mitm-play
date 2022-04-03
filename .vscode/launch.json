@@ -17,8 +17,8 @@
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/mitm-play.js",
             "runtimeArgs": ["--max-http-header-size=80000"], 
-            "args": []
-            // "args": ["keybr,keyb2","-DBGdr", "-S='content-type'" ]
+            // "args": []
+            "args": ["keybr","-VDBGdr", "-S=content-type" ]
         }
     ]
 }
