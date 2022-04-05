@@ -10,7 +10,7 @@ const {
 async function log(msg) {
   const bypass = !msg.match(' frame')
   const { argv, __flag } = global.mitm
-  if (bypass || (argv.debug || __flag['page-load'])) {
+  if (bypass || (argv.debug?.includes('P') || __flag['page-load'])) {
     if (msg.match('undefined')) {
       const undef = c.red('undefined')
       msg = msg.replace('undefined', undef)
@@ -74,7 +74,7 @@ async function evalPage(page, _page, msg, _frame='') {
   msg2 += pagename(page)  
 
   if (_frame && page.isDetached()) {
-    if (argv.debug || __flag['page-load']) {
+    if (argv.debug?.includes('P') || __flag['page-load']) {
       grey(page, c.strikethrough('frame detached-1'))
     }
   } else if (page) {
@@ -103,7 +103,7 @@ async function evalPage(page, _page, msg, _frame='') {
       }
     } catch (error) {
       const { message } = error
-      if (argv.debug || __flag['page-load']) {
+      if (argv.debug?.includes('P') || __flag['page-load']) {
         if (message.match('detached!')) {
           grey(page, c.strikethrough('frame detached-2'))
         } else if (message.match('closed!')) {

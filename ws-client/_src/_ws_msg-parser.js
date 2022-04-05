@@ -3,7 +3,7 @@ const _ws_client = require('./_ws_client')
 const _ws_wccmd = _ws_client()
 
 module.exports = (event, msg) => {
-  if (window.mitm.argv.debug) {
+  if (window.mitm.argv.debug?.includes('W')) {
     if (msg.length > 40) {
       console.log('>>> ws-message: `%s...`', msg.slice(0, 40))
     } else {

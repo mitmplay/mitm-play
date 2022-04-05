@@ -8,14 +8,14 @@ function logmsg(msg) {
   const args = arguments
   const {argv={}} = global.mitm
   if (!argv.offline) {
-    console.log(...args)
+    console.warn(...args)
   } else {
     if (lastMsg===undefined || lastMsg!==msg) {
       if (repeat > 1) {
-        console.log(`(${repeat})`)
+        console.warn(`(${repeat})`)
         repeat = 1
       } else if ( lastMsg!==msg) {
-        console.log('')
+        console.warn('')
       }
       try {
         for (let i = 0; i <args.length; i++) {

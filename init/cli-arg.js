@@ -166,6 +166,7 @@ module.exports = () => {
       b:'pw:browser',
       c:'pw:channel*', 
       p:'pw:protocol',
+      B:'*browser*',
     }
     let arr = argv.debug===true ? ['a'] : argv.debug.split('')
     if (arr.includes('C')) {

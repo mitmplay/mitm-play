@@ -71,7 +71,7 @@ async function sqlList(data, tbl='kv') {
     } else {
       logmsg(c.blueBright(`(*${c.redBright('sqlList')}*)`))
     }
-    if (argv.debug || argv.showsql) {
+    if (argv.debug?.includes('W') || argv.showsql) {
       ttl && logmsg(...Object.values(ttl.toSQL().toNative()))
       logmsg(...Object.values(pre.toSQL().toNative()))
     }

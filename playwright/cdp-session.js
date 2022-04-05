@@ -150,7 +150,7 @@ module.exports = async page => {
     }
 
     try {
-      if (argv.debug || __flag['page-load']) {
+      if (argv.debug?.includes('P') || __flag['page-load']) {
         const msg = []
         if (url) {
           msg.push(url.split('?')[0])

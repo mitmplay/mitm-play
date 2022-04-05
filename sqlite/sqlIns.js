@@ -30,7 +30,7 @@ async function sqlIns(data={}, tbl='kv') {
       }
     }
     pre = mitm.db(tbl).insert(obj)
-    if (argv.debug || argv.showsql) {
+    if (argv.debug?.includes('W') || argv.showsql) {
       arr && logmsg(...arr)
       msg = Object.values(pre.toSQL().toNative()).join(' ')
       logmsg(msg.length>110?`${msg.slice(0,110)}...`:msg)

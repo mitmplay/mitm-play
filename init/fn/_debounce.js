@@ -5,9 +5,6 @@ function debounce (fn, delay = 500, msg='') {
   return function () {
     const _this = this
     const args = arguments
-    if (global.mitm.argv.debug) {
-      logmsg('debounce', delay, msg)
-    }
     _timeout && clearTimeout(_timeout)
     _timeout = setTimeout(() => {
       fn.apply(_this, args)

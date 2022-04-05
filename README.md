@@ -1095,6 +1095,11 @@ $ mitm-play --debug=bc
 | b  |pw:browser |
 | c  |pw:channel*|
 | p  |pw:protocol|
+| B  |\*browser\*  |
+| F  |fetch req-H|
+| P  |page load  |
+| S  |show sqlite|
+| W  |websocket  |
 
 </details>
 <details><summary><b>-G --nogppu</b></summary>

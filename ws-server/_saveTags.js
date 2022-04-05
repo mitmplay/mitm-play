@@ -5,7 +5,7 @@ const {
 
 module.exports = ({ data }) => {
   const { __args } = global.mitm
-  if (__args.debug) {
+  if (__args.debug.includes('T')) {
     logmsg('>>> saveTags')
   }
   global.mitm.__tag1 = data.__tag1

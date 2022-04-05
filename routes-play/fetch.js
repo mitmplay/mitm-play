@@ -125,8 +125,9 @@ Redirect...
   const fetchRetry = async (url, opt, n) => {
     for (let i = 1; i <= n; i++) {
       try {
-        if (global.mitm.argv.debug) {
-          logmsg(c.yellowBright(`URL:${url}`))
+        if (global.mitm.argv.debug?.includes('F')) {
+          const {browserName: browser, method, headers} = opt
+          logmsg(c.yellowBright(`${method}:${url}`), {browser, headers})
         }
         const headers = {...opt.headers}
         if (typeof headers.cookie !== 'string') {
@@ -162,10 +163,6 @@ Redirect...
   // delete reqs.headers['accept-encoding'];
   if (typeof (global.mitm.argv.browser[browserName]) === 'string' && reqs.body === null && (reqs.method === 'POST' || reqs.method === 'PUT')) {
     logmsg(c.red.bgYellowBright(`>>> WARNING!!! ${reqs.method} having request payload NULL!, might be a bug from browser? Please use --${browserName} without browser path.`))
-  }
-  if (argv.debug) {
-    const { method } = reqs
-    logmsg(method, opts)
   }
   fetchRetry(url, { ...reqs, ...opts }, 2)
 }

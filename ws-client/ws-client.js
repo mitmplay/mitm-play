@@ -88,7 +88,7 @@ var app = (function () {
 	const _ws_wccmd = _ws_client();
 
 	var _ws_msgParser$1 = (event, msg) => {
-	  if (window.mitm.argv.debug) {
+	  if (window.mitm.argv.debug.includes('W')) {
 	    if (msg.length > 40) {
 	      console.log('>>> ws-message: `%s...`', msg.slice(0, 40));
 	    } else {

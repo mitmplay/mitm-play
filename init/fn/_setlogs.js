@@ -53,7 +53,7 @@ function _setlogs () {
       logs2['mitm-mock']  = true
     }
     _gRouter.config === undefined && (_gRouter.config = {})
-    if (argv.debug || argv.verbose) {
+    if (argv.verbose) {
       logs2['ws-broadcast'] = true
       logs2['ws-message'] = true
       logs2['ws-connect'] = true
