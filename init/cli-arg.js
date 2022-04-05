@@ -160,7 +160,19 @@ module.exports = () => {
   }
 
   if (argv.debug) {
-    process.env.DEBUG = 'pw:api'
+    const dbg = {
+      V:'pw:*',
+      a:'pw:api', 
+      b:'pw:browser',
+      c:'pw:channel*', 
+      p:'pw:protocol',
+    }
+    let arr = argv.debug===true ? ['a'] : argv.debug.split('')
+    if (arr.includes('C')) {
+      process.env.PWDEBUG='console'
+      arr = arr.filter(x=>x!=='C')
+    }
+    process.env.DEBUG = arr.map(x=>dbg[x]).filter(x=>x).join(',')
   }
 
   if (browser === undefined || Object.keys(browser).length === 0) {

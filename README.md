@@ -1080,12 +1080,22 @@ $ mitm-play --csp
 </details>
 <details><summary><b>-D --debug</b></summary>
 
-More information will be shown in console.log (ex: websocket), including info from `DEBUG=pw:api`
+More information will be shown in console.log (ex: websocket), including info from `DEBUG=pw:api`. option can having chars values:
 
 ```bash
-$ mitm-play -D  <OR>
-$ mitm-play --debug
+$ mitm-play -D <OR> #pw:api
+$ mitm-play -D=b <OR>
+$ mitm-play --debug=bc
 ```
+
+|char|value      |
+|:--:|-----------|
+| V  |pw:*       | 
+| a  |pw:api     |
+| b  |pw:browser |
+| c  |pw:channel*|
+| p  |pw:protocol|
+
 </details>
 <details><summary><b>-G --nogppu</b></summary>
 
