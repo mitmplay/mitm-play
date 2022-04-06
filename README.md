@@ -1080,14 +1080,14 @@ $ mitm-play --csp
 </details>
 <details><summary><b>-D --debug</b></summary>
 
-More information will be shown in console.log (ex: websocket), including info from `DEBUG=pw:api`. option can having chars values:
+More information will be shown in console.log from `DEBUG=pw:api`, including info from Mitm-play debug logs.  
 
 ```bash
 $ mitm-play -D <OR> #pw:api
 $ mitm-play -D=b <OR>
 $ mitm-play --debug=bc
 ```
-
+Option can having combine chars, lowercase represent sepecific Playwright type of logs, but if all Playwiright, use "V"   
 |char|value      |
 |:--:|-----------|
 | V  |pw:*       | 
@@ -1098,7 +1098,7 @@ $ mitm-play --debug=bc
 | B  |\*browser\*  |
 | F  |fetch req-H|
 | P  |page load  |
-| S  |show sqlite|
+| S  |sqlite logs|
 | W  |websocket  |
 
 </details>

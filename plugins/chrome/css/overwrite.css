@@ -109,6 +109,7 @@ label {
       border-spacing: 0;
       border-color: grey;
       border-collapse: collapse;
+      font-family: monospace;
       width: max-content;
       max-width: 100%;
       overflow: auto; }
