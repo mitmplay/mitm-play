@@ -35,7 +35,7 @@ module.exports = (_package) => {
     -x --proxy    \t a proxy request
     -z --lazyclick\t delay ~700ms click action*
 
-    -D --debug    \t show ws messages
+    -D --debug    \t show playwright DEBUG
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*
     -K --dark     \t set chrome devtools to dark mode

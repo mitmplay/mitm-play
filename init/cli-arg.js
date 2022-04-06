@@ -9,6 +9,7 @@ function argsChg (id, key) {
     argv[key] = argv[id]
     delete argv[id]
   }
+
   if (argv[key] === 'false') {
     argv[key] = false
   }
@@ -28,16 +29,26 @@ function loadProfile (profile) {
   const { path } = global.mitm
   const _prfl = `${path.home}/argv/${profile}.js`
   const exist = fs.existsSync(_prfl)
+
   if (!exist) {
     return false
   }
-  const saveArgs = JSON.parse(fs.readFileSync(_prfl))
+
+  let saveArgs
+  try {
+    saveArgs = JSON.parse(fs.readFileSync(_prfl))    
+  } catch (error) {
+    return false    
+  }
+
   let msg1 = saveArgs._args
   const arr1 = msg1.match(/=['"]?([^:]+:[^@]+)@\w+/)
+
   if (arr1) {
     // feat: hide password
     msg1 = msg1.replace(arr1[1], '******:******')
   }
+
   logmsg(c.green(`>>> cmd: mitm-play ${msg1.trim()}`), `(${profile})`)
   return saveArgs
 }
@@ -106,6 +117,7 @@ module.exports = () => {
     if (argv.route===undefined) {
       argv.route = true
     }
+    
     if (argv.url===undefined) {
       argv.url = prm0
     } else {
@@ -113,6 +125,7 @@ module.exports = () => {
       process.exit(1)
     }
   }
+
   let {route} = argv
   if (route) {
     if (route===true) {
@@ -152,6 +165,7 @@ module.exports = () => {
     } = saveArgs
     browser = b
     logmsg(c.green('>>> Profile argv._'), argv._)
+
     if (rest._ && argv._.length===0) {
       delete argv._
     }
@@ -168,11 +182,13 @@ module.exports = () => {
       p:'pw:protocol',
       B:'*browser*',
     }
+
     let arr = argv.debug===true ? ['a'] : argv.debug.split('')
     if (arr.includes('C')) {
       process.env.PWDEBUG='console'
       arr = arr.filter(x=>x!=='C')
     }
+
     process.env.DEBUG = arr.map(x=>dbg[x]).filter(x=>x).join(',')
   }
 
@@ -183,11 +199,13 @@ module.exports = () => {
   if (argv.browser === undefined || Object.keys(argv.browser).length === 0) {
     argv.browser = { ...browser }
   }
+
   for (const id in argv.browser) {
     const value = argv.browser[id]
     if (typeof (value) === 'string') {
       argv.browser[id] = value.replace(/\\/g, '/')
     }
   }
+
   global.mitm._argv = {...argv} // original argv
 }

@@ -836,7 +836,7 @@ $ mitm-play --help
     -x --proxy         a proxy request
     -z --lazyclick     delay ~700ms click action*
 
-    -D --debug         show ws messages
+    -D --debug         show playwright DEBUG
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
     -K --dark          set chrome devtools to dark mode

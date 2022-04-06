@@ -1,3 +1,4 @@
+// https://stackoverflow.com/questions/69037458/selenium-chromedriver-gives-initializesandbox-called-with-multiple-threads-in
 // https://stackoverflow.com/questions/21177387/caution-provisional-headers-are-shown-in-chrome-debugger/55865689#55865689
 // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#setting-up-chrome-linux-sandbox
 // https://peter.sh/experiments/chromium-command-line-switches/#enable-automation
@@ -36,7 +37,10 @@ module.exports = argv => {
 
   if (argv.nogpu) {
     if (argv.nogpu==='all') {
-      args.push('--disable-gpu')
+      args.push(
+        '--disable-gpu',
+        '--disable-software-rasterizer',
+      )
     } else {
       args.push(
         '--disable-accelerated-2d-canvas',
