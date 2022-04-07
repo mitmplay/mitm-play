@@ -117,7 +117,7 @@ module.exports = () => {
     if (argv.route===undefined) {
       argv.route = true
     }
-    
+
     if (argv.url===undefined) {
       argv.url = prm0
     } else {
@@ -190,6 +190,8 @@ module.exports = () => {
     }
 
     process.env.DEBUG = arr.map(x=>dbg[x]).filter(x=>x).join(',')
+  } else {
+    argv.debug = ''
   }
 
   if (browser === undefined || Object.keys(browser).length === 0) {
