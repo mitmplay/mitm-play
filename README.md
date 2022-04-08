@@ -171,7 +171,7 @@ Detail structure of `Object` and `Function` shared accros **Section**
  *   url        : '',
  *   key        : '',
  *   log        : '',
- *   typ        : ''
+ *   typ        : 'cache:tag'
  * }
 */
 ```
@@ -743,14 +743,14 @@ _global_ = {
   flag: { // toggle to show/hide from console.log()
     'referer-reqs': true,
     'no-namespace': true,
-    'ws-broadcast': false, // true if --verbose/--debug
-    'ws-connect': false,   // true if --verbose/--debug
-    'ws-message': false,   // true if --verbose/--debug
-    'frame-load': false,   // true if --verbose/--debug
-    'page-load': false,    // true if --verbose/--debug
-    'mitm-mock': false,    // true if --verbose/--debug
-    'file-log': false,     // true if --verbose/--debug
-    'file-md': false,      // true if --verbose/--debug  
+    'ws-broadcast': false, // true if --verbose
+    'ws-connect': false,   // true if --verbose
+    'ws-message': false,   // true if --verbose
+    'frame-load': false,   // true if --verbose
+    'page-load': false,    // true if --verbose
+    'mitm-mock': false,    // true if --verbose
+    'file-log': false,     // true if --verbose
+    'file-md': false,      // true if --verbose  
     silent:   false,       // true: hide all
     skip:     false,
     nosocket: true,

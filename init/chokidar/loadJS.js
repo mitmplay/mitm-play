@@ -223,6 +223,18 @@ function routeSort (fn) { // feat: upadte tags
       routes[ns]._childns = _childns
     }
   }
+  const globalObj = {} // get tag1 from _global_ & combine into each routes
+  const globalArray = Object.keys(tag1._global_).filter(x=>!x.match(/\d+\.---/))
+  if (globalArray.length) {
+    for (const i of globalArray) {
+      globalObj[i] = tag1._global_[i]
+    }
+    for (const key in tag1) {
+      if (key!=='_global_') {
+        tag1[key] = {...tag1[key], ...globalObj}
+      }
+    }
+  }
   global.mitm.__tag1 = tag1
   global.mitm.fn._clear()
   global.mitm.fn._tag4()

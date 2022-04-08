@@ -28,7 +28,7 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
 
     let { fpath1, fpath2 } = await fpathcache({ match, reqs })
     if (!fpath1 && !fpath2) {
-      return {match, resp} // feat: skip cache!
+      return {match} // feat: skip cache!
     }
     let remote = true
     // feat: activity
