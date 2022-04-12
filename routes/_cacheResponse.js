@@ -1,4 +1,5 @@
 const _match = require('./match')
+const jformat = require('./jformat')
 const _ext = require('./filepath/ext')
 const { ctype } = require('./content-type')
 const changeStatus = require('./change-status')
@@ -61,6 +62,13 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
           }
           if (setCookie?.length && __args.cookie) {
             headers['set-cookie'] = resetCookies(setCookie)
+          }
+          if (match?.route?.jsonHeader) {
+            for (const key of match.route.jsonHeader) {
+              if (headers[key]!==undefined) {
+                headers[key] = JSON.stringify(headers[key])        
+              }
+            }
           }
           const body = await fs.readFile(fname1)
           resp = { url, status, headers, body }
@@ -132,12 +140,8 @@ const cacheResponse = async function (reqs, responseHandler, _3d) {
               __args.fullog && logmsg(msg) // feat: fullog
             }
           }
-          const meta = metaResp({ reqs, resp })
-          let body = resp.body
-          if (__args.nice && resp.headers['content-type'].match(/json/)) {
-            let json = JSON.parse(`${body}`)
-            body = JSON.stringify(json, null, 2)
-          }
+          const meta = metaResp({ reqs, resp, match })
+          let body = jformat(resp.body, resp, __args)
           if (db) {
             let css = __args.session
             const rec = {

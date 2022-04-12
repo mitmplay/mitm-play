@@ -9,7 +9,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "runtimeExecutable": "~/.nvm/versions/node/v17.3.0/bin/node",
+            "runtimeExecutable": "~/.nvm/versions/node/v17.8.0/bin/node",
             "console": "integratedTerminal",
             "skipFiles": [
                 "<node_internals>/**"
@@ -18,7 +18,7 @@
             "program": "${workspaceFolder}/mitm-play.js",
             "runtimeArgs": ["--max-http-header-size=80000"], 
             // "args": []
-            "args": ["keybr","-VBGdrD=a", "-S=content-type" ]
+            "args": ["fakermail","-VBGdjr=-test", "-S=content-type" ]
         }
     ]
 }

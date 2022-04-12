@@ -12,7 +12,7 @@ function mockClient(resp, path, ex) {
 }
 
 function mockMacros(resp, reqs, ex) {
-  const { argv, fn: { _tldomain, _nameSpace } } = global.mitm
+  const {__page, argv, fn: {_tldomain, _nameSpace}} = global.mitm
   const namespace = _nameSpace(_tldomain(resp.url))
   let path = ''
   let path2 = ''
@@ -20,8 +20,14 @@ function mockMacros(resp, reqs, ex) {
     const refURL = new URL(reqs.headers.referer)
     const macro = refURL.searchParams.get('mitm')
     const [app, domain] = namespace.split('@')
+    const pgid = reqs.headers["xplay-page"]
+    const page = __page[pgid]
+
     if (macro) {
       path = `${argv.route}/${domain}/_bundle_/${macro}@macros`
+      page.macro = macro
+    } else if (page.macro) {
+      path = `${argv.route}/${domain}/_bundle_/${page.macro}@macros`
     } else if (namespace.match('@')) {
       path = `${argv.route}/${domain}/_bundle_/${app}@macros`
     } else {

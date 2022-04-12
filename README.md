@@ -482,13 +482,14 @@ Save the first request to your local disk so next request will serve from there.
 cache: {
   'amazon.com': {
     contentType: ['javascript', 'image'], //required!
-    querystring: true, // hash of unique file-cache
-    hidden: true,      // optional - no consolo.log
-    log: true,         // optional - enable logging
-    path: './api',     // optional cache file-path
-    file: ':1.png',    // optional cache file-name
-    tags: 'js-img',    // optional route by tags
-    at: 'mycache',     // part of filename
+    jsonHeader: ['nel'],// convert hearder(s) to json
+    querystring: true,  // hash of unique file-cache
+    hidden: true,       // optional - no consolo.log
+    log: true,          // optional - enable logging
+    path: './api',      // optional cache file-path
+    file: ':1.png',     // optional cache file-name
+    tags: 'js-img',     // optional route by tags
+    at: 'mycache',      // part of filename
   }
 },
 ```
@@ -669,8 +670,9 @@ Special usacase like google-analytic will send contentType of `gif` with [GET] r
 log: {
   'amazon.com': {
     contentType: ['json'],
-    tags: 'json-bo' // optional route by tags
-    at: 'myjson',   // part of log filename
+    jsonHeader: ['nel'], // convert hearder(s) to json
+    tags: 'json-bo'      // optional route by tags
+    at: 'myjson',        // part of log filename
   },
   'google-analytics.com/collect': {
     contentType: ['gif'],
@@ -823,8 +825,9 @@ $ mitm-play --help
     -c --clear         clear/delete cache & log(s)
     -d --devtools      show chrome devtools on start
     -e --device        resize to mobile screen device
-    -f --fullog        show detail logs on each rule* 
-    -i --insecure      accept insecure cert in nodejs env 
+    -f --fullog        show detail logs on each rule*
+    -i --insecure      accept insecure cert in nodejs env
+    -j --jformat       JSON save as human readable format
     -n --nosocket      no websocket injection to html page*
     -o --offline       console log withount new-line
     -k --cookie        reset cookies expire date*
@@ -840,8 +843,7 @@ $ mitm-play --help
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
     -K --dark          set chrome devtools to dark mode
-    -L --showsql       show sqlite generated commands 
-    -N --nice          JSON cache save as human readable
+    -L --showsql       show sqlite generated commands
     -R --redirect      set redirection: true/false/manual
     -Q --nosql         disabling persist data using sqlite
     -S --session       sqlite session from requst header
@@ -966,6 +968,15 @@ Set NodeJS to operate within insecure / no https checking
 ```bash
 $ mitm-play -i  <OR>
 $ mitm-play --insecure
+```
+</details>
+<details><summary><b>-j --jformat</b></summary>
+
+Set Saving Json with human readable format
+
+```bash
+$ mitm-play -j  <OR>
+$ mitm-play --jformat
 ```
 </details>
 <details><summary><b>-n --nosocket</b></summary>

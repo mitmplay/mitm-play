@@ -6,8 +6,10 @@ mydb.sqlite
 .cjsescache
 chrome-profile
 # Dependency directories
+_tags_
 _assets_/
 _bundle_/
 node_modules/
+_macros_/*build.js
 
 user-route/*.commonspaces

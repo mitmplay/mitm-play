@@ -1,3 +1,5 @@
+const stringify = require("json-stringify-pretty-compact");
+
 const {
   lib:{c, fs},
   fn:{logmsg},
@@ -17,7 +19,7 @@ module.exports = ({ fpath1, body }, { fpath2, meta }, typ) => {
     if (err0) {
       logmsg(c.bgYellowBright.bold.red('>>> Error saving meta'), fpath2)
     } else {
-      fs.writeFile(fpath2, JSON.stringify(meta, null, 2), err1 => {
+      fs.writeFile(fpath2, stringify(meta, null, 2), err1 => {
         err1 && logmsg(c.bgYellowBright.bold.red(`>>> Error write meta ${typ}`), err1)
       })
     }

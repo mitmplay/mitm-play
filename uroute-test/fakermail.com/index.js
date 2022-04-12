@@ -16,11 +16,17 @@ const route = {
   'cache:css-js clean': {
     '/js': {
       contentType: ['script'],
+      jsonHeader: ['nel'],
       tags: ['tags']
     },
     '/css': {
       contentType: ['css'],
+      jsonHeader: ['nel'],
       tags: ['tags', 'togs']
+    },
+    '/domains': {
+      contentType: ['json'],
+      jsonHeader: ['nel']
     }
   },
 }

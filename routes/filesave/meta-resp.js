@@ -9,9 +9,11 @@ const {
 
 const { xjson } = searchParams
 
-module.exports = ({ reqs, resp }) => {
+module.exports = ({ reqs, resp, match }) => {
   let { method, body: reqsBody, headers: reqsHeader } = reqs
-  let meta; const { url, status, headers: respHeader } = resp
+  let meta
+  const { url, status, headers: rheaders } = resp
+  let respHeader = JSON.parse(JSON.stringify(rheaders))
   const setCookie = _setCookie(respHeader)
   let CSP = respHeader['content-security-policy'] ||
              respHeader['content-security-policy-report-only']
@@ -22,6 +24,17 @@ module.exports = ({ reqs, resp }) => {
       id && (obj[id] = arr.sort().join(' '))
     })
     CSP = obj
+  }
+  if (match?.route?.jsonHeader) {
+    for (const key of match.route.jsonHeader) {
+      if (respHeader[key]!==undefined) {
+        try {
+          respHeader[key] = JSON.parse(respHeader[key])        
+        } catch (error) {
+          respHeader[key] = 'JSON Error!'
+        }  
+      }
+    }
   }
   try {
     if (respHeader['report-to']) {

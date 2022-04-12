@@ -10,6 +10,9 @@ const css = `
 const route = {
   title: 'speedtypingonline.com',
   url: 'https://www.speedtypingonline.com/typing-test',
+  urls: {
+    stype: 'https://www.speedtypingonline.com/typing-test'
+  },
   screenshot: {
     selector: '[type=button],[type=submit],button,a',
   },

@@ -67,6 +67,7 @@ module.exports = () => {
   argsChg('g', 'group'     )
   argsChg('h', 'help'      )
   argsChg('i', 'insecure'  )
+  argsChg('j', 'jformat'   ) // feat: _global_.args
   argsChg('k', 'cookie'    ) // feat: _global_.args
   argsChg('l', 'lazylog'   )
   argsChg('n', 'nosocket'  ) // feat: _global_.args
@@ -88,7 +89,6 @@ module.exports = () => {
   argsChg('I', 'inspect'   )
   argsChg('K', 'dark'      )
   argsChg('L', 'showsql'   )
-  argsChg('N', 'nice'      ) // feat: _global_.args
   argsChg('P', 'cdp'       )
   argsChg('Q', 'nosql'     ) 
   argsChg('R', 'redirect'  )

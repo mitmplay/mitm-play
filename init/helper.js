@@ -22,8 +22,9 @@ module.exports = (_package) => {
     -c --clear    \t clear/delete cache & log(s)
     -d --devtools \t show chrome devtools on start
     -e --device   \t resize to mobile screen device
-    -f --fullog   \t show detail logs on each rule* 
-    -i --insecure \t accept insecure cert in nodejs env 
+    -f --fullog   \t show detail logs on each rule*
+    -i --insecure \t accept insecure cert in nodejs env
+    -j --jformat  \t JSON save as human readable format
     -n --nosocket \t no websocket injection to html page*
     -o --offline  \t console log withount new-line
     -k --cookie   \t reset cookies expire date*
@@ -39,11 +40,10 @@ module.exports = (_package) => {
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*
     -K --dark     \t set chrome devtools to dark mode
-    -L --showsql  \t show sqlite generated commands 
-    -N --nice     \t JSON cache save as human readable
+    -L --showsql  \t show sqlite generated commands
     -R --redirect \t set redirection: true/false/manual
     -Q --nosql    \t disabling persist data using sqlite
-    -S --session  \t sqlite session from requst header 
+    -S --session  \t sqlite session from requst header
     -U --nourl    \t set logs without URL*
     -V --verbose  \t show more detail of console log
     -X --proxypac \t set chromium proxypac

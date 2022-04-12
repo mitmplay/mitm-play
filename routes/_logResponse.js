@@ -1,4 +1,5 @@
 const _match = require('./match')
+const jformat = require('./jformat')
 const ext = require('./filepath/ext')
 const { ctype } = require('./content-type')
 const changeStatus = require('./change-status')
@@ -56,7 +57,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
           return 
         }
         const meta = metaResp({ reqs, resp })
-        const body = jsonResp({ reqs, resp, match })
+        let body = jformat(jsonResp({ reqs, resp, match }), resp, __args)
         if (db) {
           let css = __args.session
           const rec = {
