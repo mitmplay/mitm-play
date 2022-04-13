@@ -52,10 +52,22 @@ function routetag(tags, item) {
   if (item.match('url:')) {
     klas += ' url'
   }
-  for (const tag of _tags) {
-    if (__tag1[ns][tag]===false) {
+  if (_tags.length) {
+    let isTagsOk = false
+    for (const tag of _tags) { //# __tag2_TO_tag1_RULES
+      const tg = tag.replace(/^!/,'')
+      if (tag[0]==='!' && __tag1[ns][tg]!==undefined) {
+        if (!__tag1[ns][tg]) {
+          isTagsOk = true
+          break
+        }
+      } else if (__tag1[ns][tg]) {
+        isTagsOk = true
+        break
+      }
+    }
+    if (!isTagsOk) {
       klas += ' grey'
-      break
     }
   }
   return klas + ` _${tag2.pop().replace(rclass, '-')}`
@@ -132,11 +144,11 @@ function props(tags, item) {
 }
 </script>
 
-<div class="border">
+<div data-app=Tags2_1 class="border">
   <!-- feat: auto collapsed between tag2 & tag3 -->
   <Tags2Title on:message {ns}/>
   {#each itemlist(items) as item}
-    <div class="t2 {q(ns)} {checked($tags, items[item].state)}">
+    <div data-app=Tags2_1_items class="t2 {q(ns)} {checked($tags, items[item].state)}">
     {#if isGroup(item)}
       <details>
         <summary class="space1 {routetag($tags, item)}">

@@ -2,8 +2,8 @@ const { c } = global.mitm.lib
 const { typC, typA, typO } =  require('./_typs')
 
 const { logmsg } = global.mitm.fn
-const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \(\)\w.#~-]+:|)(.+)/ // feat: tags in url
-const tgInUrl = /:[ \(\)\w.#~-]+:/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \!\(\)\w.#~-]+:|)(.+)/ //# __tag2_TO_tag1_RULES // feat: tags in url
+const tgInUrl = /:[ \!\(\)\w.#~-]+:/ //# __tag2_TO_tag1_RULES // feat: tags in url
 
 function toRegex (gpath, flags = '') {
   return new RegExp(gpath

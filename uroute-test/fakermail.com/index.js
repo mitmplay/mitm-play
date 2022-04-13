@@ -9,20 +9,20 @@ h1,nav,span.text-gray-500,.py-12.bg-white,.absolute.inset-0,
 }`;
 const route = {
   url: 'https://fakermail.com/',
-  css:  {':ror clean css-js:/css/app': `=>${css}`},
-  "mock:lol": {
+  css:  {':ror !clean css-js:/css/app': `=>${css}`},
+  mock: {
     '#201:clean:google.+.com': ''
   },
   'cache:css-js clean': {
     '/js': {
       contentType: ['script'],
       jsonHeader: ['nel'],
-      tags: ['tags']
+      tags: ['js']
     },
     '/css': {
       contentType: ['css'],
       jsonHeader: ['nel'],
-      tags: ['tags', 'togs']
+      tags: ['css']
     },
     '/domains': {
       contentType: ['json'],

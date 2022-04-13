@@ -1,6 +1,6 @@
 /* global chrome */
 import App from './App.svelte'
-const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \(\)\w.#~-]+:|)(.+)/ // feat: tags in url
+const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \!\(\)\w.#~-]+:|)(.+)/ //# __tag2_TO_tag1_RULES // feat: tags in url
 const tmethod = /^(GET|PUT|POST|DELETE):/
 const rclass = /[\(\).#~/]+/g
 const _c = 'color: lightskyblue'
@@ -54,9 +54,15 @@ function isRuleOff(tags, ns, path) {
     for (const sec in secs) {
       const node = secs[sec]
       if (node.tag1.length) {
-        let skip = true
+        let skip = true //# __tag2_TO_tag1_RULES
         for (const tag of node.tag1) { //feat: tag3 depend to tag1
-          if (tag1[tag]) {
+          const tg = tag.replace(/^!/,'')
+          if (tag[0]==='!' && tag1[tg]!==undefined) {
+            if (!tag1[tg]) {
+              skip = false
+              break
+            }
+          } else if (tag1[tg]) {
             skip = false
             break
           }

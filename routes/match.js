@@ -148,8 +148,14 @@ function checkTags(tg1, tg2, tg3, typ, key) {
     isTagsOk = tg2[tag].state
     if (isTagsOk && tag1.length) {
       isTagsOk = false
-      for (const _t1 of tag1) {
-        if (tg1[_t1]) {
+      for (const _t1 of tag1) { //# __tag2_TO_tag1_RULES
+        const tg = _t1.replace(/^!/,'')
+        if (_t1[0]==='!' && tg1[tg]!==undefined) {
+          if (!tg1[tg]) {
+            isTagsOk = true
+            break
+          }
+        } else if (tg1[tg]) {
           isTagsOk = true
           break
         }

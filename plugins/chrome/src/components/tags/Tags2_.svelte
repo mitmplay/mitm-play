@@ -10,7 +10,9 @@ function nspace(ns) {
 }
 </script>
 
-<td style="width:{$states.chevron==='[<<]' ? 45 : 35}%; {cols>0 ? '' : 'display:none;'}">
+<td
+data-app=Tags2  
+style="width:{$states.chevron==='[<<]' ? 45 : 35}%; {cols>0 ? '' : 'display:none;'}">
 {#each Object.keys($tags.__tag2) as ns}
   {#if window.mitm.fn.oneSite($tags, ns)}
     <!-- feat: auto collapsed between tag2 & tag3 -->

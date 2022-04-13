@@ -35,7 +35,7 @@ function setSubns(e) {
 }
 </script>
 
-<div class="space0">
+<div data-app=Tags2_Title class="space0">
   <!-- feat: auto collapsed between tag2 & tag3 -->
   <Collapse on:message name="state2" q="{`.t2.${q(ns)}`}"></Collapse>
   <Expand on:message name="state2" q="{`.t2.${q(ns)}`}"></Expand>

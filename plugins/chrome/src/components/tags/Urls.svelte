@@ -89,8 +89,14 @@ function itemlist(tagsStore, rerender) {
           } else if (sec.match(':')) {
             let skip = false
             const tags = tag2.tag1 || []
-            for (const tag of tags) {
-              if (__tag1[ns][tag]===false) {
+            for (const tag of tags) { //# __tag2_TO_tag1_RULES
+              const tg = tag.replace(/^!/,'')
+              if (tag[0]==='!' && __tag1[ns][tg]!==undefined) {
+                if (__tag1[ns][tg]) {
+                  skip = true
+                  break
+                }
+              } else if (__tag1[ns][tg]===false) {
                 skip = true
                 break
               }
@@ -207,7 +213,7 @@ function itemlist(tagsStore, rerender) {
 </script>
 
 {itemlist($tags, $rerender)}
-<table id='table-urls'>
+<table data-app=URLs id='table-urls'>
   <tr>
     <th><Title1><TitleBtn _id="urls" items={title1} btn={btn1}/></Title1></th>
     <th><Title2><TitleBtn _id="farg" items={title2} btn={btn2}/></Title2></th>
