@@ -6,17 +6,24 @@ const _c = 'color: blueviolet'
 onMount(() => {
   console.log('%cHelp: onMount help/view', _c);
   document.querySelector('#markdown').onclick = function(e) {
-    const { hash } = e.target;
+    const { hash, href } = e.target;
+    if (href===undefined) {
+      return
+    }
     console.log('%cHelp: clicked', _c, hash);
-    if (hash) {
-      e.preventDefault();
-      e.stopPropagation();
-      // location.hash = hash;
-      const behavior = 'auto';
-      const element = document.querySelector(hash);
-      const top = element.getBoundingClientRect().top - 40;
-      const _window = document.querySelector('.show-container');
-      _window.scroll({top, behavior});
+    if (href.match(/^chrome-extension/)) {
+      if (hash) {
+        e.preventDefault();
+        e.stopPropagation();
+        // location.hash = hash;
+        const behavior = 'auto';
+        const element = document.querySelector(hash);
+        const top = element.getBoundingClientRect().top - 40;
+        const _window = document.querySelector('.show-container');
+        _window.scroll({top, behavior});
+      } else {
+        console.log('Link having incorrect href!')
+      }
     } else {
       let node = e.target
       while (node.id!=='markdown') {
