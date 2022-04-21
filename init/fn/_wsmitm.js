@@ -4,6 +4,7 @@ module.exports = function (resp, reqs) {
     argv,
     path,
     info,
+    __tag1,
     __args,
     __flag,
     client,
@@ -40,6 +41,7 @@ module.exports = function (resp, reqs) {
   info = {csp}
   macros = `,\n  "macros": {${macros.join(',')}\n  }\n}`
   let json = {
+    __tag1, //# __tag1 in-sync
     __args,
     __flag,
     info,

@@ -25,10 +25,11 @@ module.exports = () => {
       )
     },
     // ex: ws__
-    _saveTags ({ routes }) {
+    _saveTags ({ routes, __tag1 }) {
       if (!location.origin.match('chrome-extension')) {
         console.log('%cWs: Update routes', _c)
         window.mitm.routes = routes
+        window.mitm.__tag1 = __tag1 //# __tag1 in-sync
       }
     },
     // ex: ws__

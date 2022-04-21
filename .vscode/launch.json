@@ -18,7 +18,7 @@
             "program": "${workspaceFolder}/mitm-play.js",
             "runtimeArgs": ["--max-http-header-size=80000"], 
             // "args": []
-            "args": ["fakermail","-VBGdjr=-test", "-S=content-type" ]
+            "args": ["keybr","-VBGdjr", "-S=content-type" ]
         }
     ]
 }
