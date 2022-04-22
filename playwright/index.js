@@ -40,7 +40,7 @@ module.exports = () => {
   global.mitm.browsers = browsers
   global.mitm.bcontexts = bcontexts
 
-  const { argv } = global.mitm
+  const { argv, fn: { tilde }} = global.mitm
   const args = require('./args-c')(argv);
 
   async function setup(browserName, options) {
@@ -52,6 +52,8 @@ module.exports = () => {
     browsers[browserName] = undefined
     bcontext && await bcontext.close()
     browser && await browser.close()
+
+    logmsg(c.yellow(`Browser path ${tilde(playBrowser._initializer.executablePath)}`))
 
     let video = {}
     if (argv.video) {
@@ -84,7 +86,6 @@ module.exports = () => {
 
     let page
     if (argv.incognito===undefined) {
-      const { fn: { tilde } } = global.mitm
       const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
       logmsg(c.yellow(`Browser profile ${tilde(bprofile)}`))
       browser = await playBrowser.launchPersistentContext(bprofile, {
