@@ -1,5 +1,10 @@
+const tls = require('tls');
 const _fetch = require('make-fetch-happen')
 const { cookieToObj, objToCookie } = require('../routes/filesave/cookier')
+
+//# breaking-tls finger-printing
+let [t0, t1, t2, ...alt] = tls.DEFAULT_CIPHERS.split(':')
+const ciphers = [t0, t2, t1, ...alt].join(':')
 
 const {
   lib:{c},
@@ -134,7 +139,7 @@ Redirect...
           objToCookie(headers) // feat: cookie autoconvert
         }
         const {headers:h, page:p, pageUrl, oriRef, browserName, ...opt2} = opt
-        const resp = await _fetch(url, {...opt2, headers})
+        const resp = await _fetch(url, {...opt2, headers, ciphers}) //# breaking-tls finger-printing
         okCallback(resp)
         break
       } catch (err) {
