@@ -67,7 +67,7 @@ function handleMessage(event) {
 }
 </script>
 
-<div class="vbox">
+<div class="vbox tags-effect">
   <details open="true">
     <summary>Enable / Disable Tags <Preset /></summary>
     <div class="vbox-1">

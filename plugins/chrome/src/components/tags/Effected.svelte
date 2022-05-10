@@ -4,9 +4,15 @@ import { eurls } from './stores.js';
 
 function clicked(e) {
   const expanded = !$eurls.expanded
-  eurls.set({
-    expanded
-  })
+  if (expanded) {
+    const nodes = document.querySelectorAll(`.tags-effect>details[open]`)
+    nodes.forEach(node => node.removeAttribute('open'))
+    setTimeout(() => {
+      eurls.set({expanded})      
+    }, 0);
+  } else {
+    eurls.set({expanded})
+  }
 }
 </script>
 
