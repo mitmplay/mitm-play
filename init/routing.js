@@ -24,10 +24,10 @@ function mockMacros(resp, reqs, ex) {
     const page = __page[pgid]
 
     if (macro) {
-      path = `${argv.route}/${domain}/_bundle_/${macro}@macros`
+      path = `${argv.route}/${domain||app}/_bundle_/${macro}@macros`
       page.macro = macro
     } else if (page.macro) {
-      path = `${argv.route}/${domain}/_bundle_/${page.macro}@macros`
+      path = `${argv.route}/${domain||app}/_bundle_/${page.macro}@macros`
     } else if (namespace.match('@')) {
       path = `${argv.route}/${domain}/_bundle_/${app}@macros`
     } else {
