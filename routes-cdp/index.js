@@ -21,20 +21,15 @@ const noURL = /^(puffin|brave|edge):\/\//
 const brExt = /^chrome-\w+:\/\//
 const wBlob = /^blob:http/
 const wNull = /\/null$/
-const response = {
-  status: 200,
-  headers: {},
-  body: ''
-}
 const _route = {route:{}}
 
 module.exports = async (page, client, reqEvent) => {
   const {
     fn,
+    __args,
     __flag,
     argv: {
       verbose,
-      nosocket,
     },
   } = global.mitm
 
@@ -50,6 +45,11 @@ module.exports = async (page, client, reqEvent) => {
 
   // catch unknown url scheme & handle by browser
   if (url.match(noURL) || url.match(wNull)) {
+    const response = {
+      status: 200,
+      headers: {},
+      body: ''
+    }
     return {response, fulfill: true}
   } else if (url.match(brExt)) {
     return
@@ -124,9 +124,13 @@ module.exports = async (page, client, reqEvent) => {
   ])
   const {match: _m1=_route} = _html
   const {match: _m2=_route} = _resp
-  if (!(_m1.route.ws) && !(_m2.route.ws) && !nosocket) {
+  if (
+    _m1.route.ws===undefined && 
+    _m2.route.ws===undefined) {
     // --inject websocket client to html
-    await _addWebSocket(reqs, responseHandler, _3ds)
+    if ([undefined, 'off'].includes(__args.nosocket)) {
+      await _addWebSocket(reqs, responseHandler, _3ds)
+    }
   }
 
   if (resp) {

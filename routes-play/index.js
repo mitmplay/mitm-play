@@ -106,7 +106,9 @@ module.exports = async ({ route, request, browserName }) => {
   ])
   const {match: _m1=_route} = _html
   const {match: _m2=_route} = _resp
-  if (!(_m1.route.ws) && !(_m2.route.ws)) {
+  if (
+    _m1.route.ws===undefined && 
+    _m2.route.ws===undefined) {
     // --inject websocket client to html
     if ([undefined, 'off'].includes(__args.nosocket)) {
       await _addWebSocket(reqs, responseHandler, _3ds)
