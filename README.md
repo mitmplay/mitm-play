@@ -1234,7 +1234,7 @@ $ mitm-play --webkit
 </details>
 
 # Macros
-When creating rule for specific website site (ie: **autologin to gmail**), inside folder you can add `macros.js` to contains what automation need to be run 
+When creating rule for specific website site (ie: **autologin to gmail**), inside folder you can add `macros.js` to contains what automation need to be run. macros is a Javascript getting injected into the browser, by default if there is a html request then this macro will be included on the injection. To run different macros in the same SPA, just create another a `named-macros` ie: login -> `login@macros.js` and to load that macro, URL need to have a query params of '?mitm=login'.  
 
 <details><summary><b>Example</b></summary>
 
@@ -1242,6 +1242,7 @@ When creating rule for specific website site (ie: **autologin to gmail**), insid
 # folder
 ./accounts.google.com/index.js
 ./accounts.google.com/_macros_/macros.js
+./accounts.google.com/_macros_/login@macros.js
 ```
 ```js
 // .../_macros_/macros.js

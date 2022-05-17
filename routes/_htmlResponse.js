@@ -5,6 +5,7 @@ const setSession = require('./set-session')
 const changeStatus = require('./change-status')
 
 const {
+  __page,
   lib:{c},
   fn:{logmsg},
 } = global.mitm
@@ -63,6 +64,14 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
             setSession(reqs, {session:true, msg: '_htmlResponse'}) // feat: session
             const jsLib = matched(searchKey('jsLib'), reqs)
             injectWS(resp, reqs.url, jsLib)
+          } else if (ws===false) {
+            const url   = new URL(reqs.url)
+            const macro = url.searchParams.get('mitm')
+            const pgid  = reqs.headers["xplay-page"]
+            const page  = __page[pgid]
+            if (macro) {
+              page.macro = macro
+            }
           }
         }
         if (!__flag.html || match.hidden || hidden) {

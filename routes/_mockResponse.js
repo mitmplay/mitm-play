@@ -11,6 +11,7 @@ const { matched, searchFN, searchKey } = _match
 const { source, injectWS } = inject
 
 const {
+  __page,
   lib:{c, fs},
   fn:{logmsg},
 } = global.mitm
@@ -136,6 +137,14 @@ const mockResponse = async function ({ reqs }, _3d) {
         setSession(reqs, {session:true, msg: '_htmlResponse'}) // feat: session
         const jsLib = matched(searchKey('jsLib'), reqs)
         injectWS(resp, reqs.url, jsLib)
+      } else if (ws===false) {
+        const url   = new URL(reqs.url)
+        const macro = url.searchParams.get('mitm')
+        const pgid  = reqs.headers["xplay-page"]
+        const page  = __page[pgid]
+        if (macro) {
+          page.macro = macro
+        }
       }
     }
     if (!__flag.mock || match.hidden || hidden) {
