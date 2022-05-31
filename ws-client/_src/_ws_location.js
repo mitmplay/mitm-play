@@ -143,7 +143,7 @@ function defaultHotKeys() {
   }
   keys['code:KeyC']._title = 'Show CSP Header'
   keys['code:KeyQ']._title = 'Show Sqlite'
-  keys['code:KeyZ']._title = 'Execute Axe-core'
+  keys['code:KeyZ']._title = 'Exec Axe'
   mitm.macrokeys = keys
 }
 

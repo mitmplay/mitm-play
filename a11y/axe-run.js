@@ -1,5 +1,5 @@
-console.log('a11y/axe-run!')
-window.mitm.fn.axerun = () => {
+window.mitm.fn.axerun = () => { //# a11y
+  console.log('a11y/axe-run!')
   window.axe
   .run()
   .then(results => {
@@ -19,10 +19,25 @@ window.mitm.fn.axerun = () => {
 function violationHilight() {
   const {violations} = mitm.axerun.results
   for (const violation of violations) {
-    const {nodes} = violation
+    const {
+      description,
+      helpUrl,
+      impact,
+      nodes,
+      help,
+      tags,
+      id, 
+    } = violation
+    const tgs = tags.join(',')
     for (const node of nodes) {
       const el = document.querySelector(node.target)
       el.classList.add('axe-run-violation')
+      el.setAttribute('data-axe-desc'  , description)
+      el.setAttribute('data-axe-helper', helpUrl    )
+      el.setAttribute('data-axe-impact', impact     )
+      el.setAttribute('data-axe-help'  , help       )
+      el.setAttribute('data-axe-tags'  , tgs        )
+      el.setAttribute('data-axe-grp'   , id         )
     }
   }
 }

@@ -1,4 +1,5 @@
-const {fs} = global.mitm.lib
+const {mitm} = global
+const {fs}   = mitm.lib
 
 const contentType = {
   css: 'text/css',
@@ -12,7 +13,7 @@ function mockClient(resp, path, ex) {
 }
 
 function mockMacros(resp, reqs, ex) {
-  const {__page, argv, fn: {_tldomain, _nameSpace}} = global.mitm
+  const {__page, argv, fn: {_tldomain, _nameSpace}} = mitm
   const namespace = _nameSpace(_tldomain(resp.url))
   let path = ''
   let path2 = ''
@@ -49,20 +50,20 @@ function mockMacros(resp, reqs, ex) {
 }
 
 module.exports = () => {
-  const {app}  = global.mitm.path
-  const a11y   = `${app}/a11y/axe-run`
+  const {app}  = mitm.path
+  const a11y   = `${app}/a11y/axe-run` //# a11y
   const client = `${app}/ws-client/ws-client`
   const mock = {
     '!:hidden:/mitm-play/mitm.js': {
       response: (resp, reqs) => {
-        resp.body = global.mitm.fn._wsmitm(resp, reqs)
+        resp.body = mitm.fn._wsmitm(resp, reqs)
         resp.headers['content-type'] = 'application/javascript'
       }
     },
     '!:hidden:/mitm-play/play.json': {
       response: async (resp, reqs) => {
         const data = JSON.parse(reqs.body)
-        const result = await global.mitm.wscmd.$autofill({data})
+        const result = await mitm.wscmd.$autofill({data})
         resp.headers['content-type'] = 'application/json'
         resp.body = JSON.stringify(result)
       }
@@ -70,7 +71,7 @@ module.exports = () => {
     '!:hidden:/mitm-play/screnshot.json': {
       response: (resp, reqs) => {
         const data = JSON.parse(reqs.body)
-        const result = global.mitm.wscmd.$screenshot({data})
+        const result = mitm.wscmd.$screenshot({data})
         resp.headers['content-type'] = 'application/json'
         resp.body = JSON.stringify(result)
       }
@@ -92,33 +93,25 @@ module.exports = () => {
       }
     }
   }
-  const mockr = {
-    '!:hidden:/mitm-play/mitm.js':      /\/mitm-play\/mitm\.js/,
-    '!:hidden:/mitm-play/chance.js':    /\/mitm-play\/chance\.js/,
-    '!:hidden:/mitm-play/macros.js':    /\/mitm-play\/macros\.js/,
-    '!:hidden:/mitm-play/axe-run.js':   /\/mitm-play\/axe-run\.js/,
-    '!:hidden:/mitm-play/ws-client.js': /\/mitm-play\/ws-client\.js/,
-  }
-  global.mitm.__mockr = mockr
-  global.mitm.__mocks = mock // feat: __mocks
-  global.mitm.routes = {
+  mitm.__mocks = mock // feat: __mocks
+
+  mitm.routes = {
     _global_: {
-      mock,
       config: {
+        args: {},
         logs: {},
-        args: {}
-      }
+      },
+      mock
     }
   }
 
-  global.mitm.router = {
+  mitm.router = {
     _global_: {
-      _namespace_: /_global_/,
-      mock: mockr,
       config: {
+        args: {},
         logs: {},
-        args: {}
-      }
+      },
+      _namespace_: /_global_/
     }
   }
 }
