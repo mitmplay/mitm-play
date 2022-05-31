@@ -69,6 +69,9 @@ module.exports = function (resp, reqs) {
     rightbuttons: {},
     wsrun: Object.keys(wsrun)
   }
+  if (__args.a11y===true) { //# a11y
+    json.axerun = {}
+  }
   json = JSON.stringify(json)
   json = json.replace(/}$/g, macros)
   return `window.mitm = ${json}`

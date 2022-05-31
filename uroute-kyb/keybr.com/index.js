@@ -26,6 +26,7 @@ const route = {
     keyb2: 'https://www.keybr.com/?mitm=hi',
   },
   screenshot: {},
+  // jsLib: ['axe.js'],
   proxy: [':proxy:keybr.com'],
   skip: [':skipper:google','woff2'],
   'mock:no-ads': {

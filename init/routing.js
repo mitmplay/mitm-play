@@ -49,7 +49,8 @@ function mockMacros(resp, reqs, ex) {
 }
 
 module.exports = () => {
-  const {app} = global.mitm.path
+  const {app}  = global.mitm.path
+  const a11y   = `${app}/a11y/axe-run`
   const client = `${app}/ws-client/ws-client`
   const mock = {
     '!:hidden:/mitm-play/mitm.js': {
@@ -76,6 +77,8 @@ module.exports = () => {
     },
     '!:hidden:/mitm-play/macros.js':       { response: (resp, reqs) => mockMacros(resp, reqs, 'js')  },
     '!:hidden:/mitm-play/macros.css':      { response: (resp, reqs) => mockMacros(resp, reqs, 'css') },
+    '!:hidden:/mitm-play/axe-run.js$':     { response: resp => mockClient(resp,   a11y, 'js'     )},
+    '!:hidden:/mitm-play/axe-run.css$':    { response: resp => mockClient(resp,   a11y, 'css'    )},
     '!:hidden:/mitm-play/ws-client.js$':   { response: resp => mockClient(resp, client, 'js'     )},
     '!:hidden:/mitm-play/ws-client.css$':  { response: resp => mockClient(resp, client, 'css'    )},
     '!:hidden:/mitm-play/ws-client.js.map':{ response: resp => mockClient(resp, client, 'js.map' )},
@@ -93,6 +96,7 @@ module.exports = () => {
     '!:hidden:/mitm-play/mitm.js':      /\/mitm-play\/mitm\.js/,
     '!:hidden:/mitm-play/chance.js':    /\/mitm-play\/chance\.js/,
     '!:hidden:/mitm-play/macros.js':    /\/mitm-play\/macros\.js/,
+    '!:hidden:/mitm-play/axe-run.js':   /\/mitm-play\/axe-run\.js/,
     '!:hidden:/mitm-play/ws-client.js': /\/mitm-play\/ws-client\.js/,
   }
   global.mitm.__mockr = mockr

@@ -82,6 +82,7 @@ module.exports = () => {
   argsChg('x', 'proxy'     )
   argsChg('z', 'lazyclick' ) // feat: _global_.args
 
+  argsChg('A', 'a11y'      )
   argsChg('B', 'build'     )
   argsChg('D', 'debug'     )
   argsChg('G', 'nogpu'     )

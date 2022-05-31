@@ -98,22 +98,34 @@ const addCsp = (url, headers, _csp) => {
   }, 0)
 }
 
-function injectWS (resp, url, jsLib) {
+function injectWS (resp, url, jsLib=[]) {
   const { __args, fn: { _tldomain, _nameSpace } } = global.mitm
-  const js = ['/mitm-play/mitm.js', '/mitm-play/ws-client.js']
+  const js = [
+    '/mitm-play/mitm.js',
+    '/mitm-play/ws-client.js'
+  ]
+
   let {body, headers} = resp
   body = `${body}`
 
-  // console.log('injectWS')
   // do not change JS load order! 
   if (_nameSpace(_tldomain(url))) {
     body = css_src(body, ['/mitm-play/macros.css', '/mitm-play/ws-client.css'])
     js.push('/mitm-play/macros.js')
   }
   js.push('/mitm-play/jslib/selector.js')
-  if (jsLib) {
-    js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
+
+  if (__args.a11y===true) { //# a11y
+    if (!jsLib.includes('axe.js')) {
+      jsLib.push('axe.js')
+    }
   }
+  js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
+  if (__args.a11y===true) { //# a11y
+    body = css_src(body, ['/mitm-play/axe-run.css'])
+    js.push('/mitm-play/axe-run.js')
+  }
+
   resp.body = script_src(body, js)
   let csp = 'content-security-policy'
   let _cs = headers[csp]

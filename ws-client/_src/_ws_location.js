@@ -137,9 +137,13 @@ function defaultHotKeys() {
     'code:KeyQ'(_e) {
       fn.svelte(Sqlite, 'LightPastelGreen')
     },
+    'code:KeyZ'(_e) {
+      fn.axerun()
+    },
   }
   keys['code:KeyC']._title = 'Show CSP Header'
   keys['code:KeyQ']._title = 'Show Sqlite'
+  keys['code:KeyZ']._title = 'Execute Axe-core'
   mitm.macrokeys = keys
 }
 
@@ -150,6 +154,10 @@ let onces = {} // feat: onetime fn call
 async function urlChange (event) {
   const namespace = _ws_namespace()
   const {mitm} = window
+
+  if (mitm.argv.a11y===true && mitm.fn.axerun) {
+    mitm.fn.axerun()
+  }
 
   clearInterval(intervId)
   if (mitm.autointerval) {delete mitm.autointerval}
