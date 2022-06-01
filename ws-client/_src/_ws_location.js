@@ -57,6 +57,10 @@ const style = `
   display: table;
   margin-top: 4px;
 }
+.bgroup-left2 {
+  display: table;
+  margin-top: 0;
+}
 .bgroup-left>div,
 .bgroup-right>div {
   padding-bottom: 2px;
@@ -193,7 +197,12 @@ async function urlChange (event) {
         debunk = setTimeout(async () => {
           onces = {} // feat: onetime fn call
           debunk = undefined
-          const {autobuttons, rightbuttons, leftbuttons} = window.mitm
+          const {
+            autobuttons,
+            rightbuttons,
+            leftbuttons,
+            left2buttons
+          } = window.mitm
           if (window.mitm.autofill) {
             autobuttons && setButtons({
               ...autobuttons,
@@ -206,10 +215,11 @@ async function urlChange (event) {
               }
             }, 'topr')
           } else {
-            autobuttons && setButtons(autobuttons, 'topr')
+            autobuttons && setButtons(autobuttons, 'topr' )
           }
           rightbuttons && setButtons(rightbuttons, 'right')
-          leftbuttons && setButtons(leftbuttons, 'left')
+          left2buttons && setButtons(left2buttons, 'left2')
+          leftbuttons  && setButtons(leftbuttons , 'left' )
         }, 0)
       }
     }
@@ -217,6 +227,8 @@ async function urlChange (event) {
       setButtons({}, 'right')
       setButtons({}, 'left')
       setButtons({}, 'topr')
+      const {left2buttons} = window.mitm
+      left2buttons && setButtons(left2buttons, 'left2')
     }
   }
   container.right.style = styleRight
@@ -254,7 +266,7 @@ function init() {
   styleBtn.className = 'mitm-class'
   divRight.innerHTML = `<span class="bgroup-right"></span>`
   divTopR.innerHTML  = `<span class="bgroup-topr"></span>`
-  divLeft.innerHTML  = `<span class="bgroup-left"></span>`
+  divLeft.innerHTML  = `<span class="bgroup-left"></span><span class="bgroup-left2"></span>`
   divLeft.className  = 'mitm-container left'
   divTopR.className  = 'mitm-container topr'
   divRight.className = 'mitm-container right'
@@ -278,8 +290,9 @@ function init() {
     container.nodekey= divCenter.children[0]
     button.style = `${buttonStyle}background-color: azure;`
     bgroup.right = divRight.children[0]
-    bgroup.topr  = divTopR.children[0]
-    bgroup.left  = divLeft.children[0]
+    bgroup.topr  = divTopR .children[0]
+    bgroup.left  = divLeft .children[0]
+    bgroup.left2 = divLeft .children[1]
     urlChange(_urlChanged)
     observed()
     document.addEventListener('click', function(event) {

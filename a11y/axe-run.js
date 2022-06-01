@@ -15,6 +15,12 @@ window.mitm.fn.axerun = () => { //# a11y
   })
 }
 
+window.mitm.left2buttons = {
+  'A11Y-[ctl+alt+Z]|salmon': function axerun() {
+    window.mitm.fn.axerun()
+  }
+}
+
 //mitm.axerun.results.violations[0].nodes[0].target
 function violationHilight() {
   const {violations} = mitm.axerun.results
