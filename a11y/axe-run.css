@@ -1,3 +1,8 @@
+.mitm-container.popup {
+  position: relative;
+  display: block !important;
+}
+
 .axe-run-violation {
   outline: red 2px dashed;
 }

@@ -133,21 +133,16 @@ function setButtons (buttons, position) {
 }
 
 function defaultHotKeys() {
-  const {mitm: {svelte: {Cspheader, Sqlite}, fn}} = window
+  const {mitm: {svelte: {Cspheader, Sqlite, A11yPopup}, fn}} = window
   const keys = {
-    'code:KeyC'(_e) {
-      fn.svelte(Cspheader, 'LightPastelGreen')
-    },
-    'code:KeyQ'(_e) {
-      fn.svelte(Sqlite, 'LightPastelGreen')
-    },
-    'code:KeyZ'(_e) {
-      fn.axerun()
-    },
+    'code:KeyC'(_e) {fn.svelte(Cspheader, 'LightPastelGreen')},
+    'code:KeyQ'(_e) {fn.svelte(Sqlite   , 'LightPastelGreen')},
+    'code:KeyU'(_e) {fn.svelte(A11yPopup, 'LightPastelGreen')},
+    'code:KeyY'(_e) {fn.axerun(                             )},
   }
   keys['code:KeyC']._title = 'Show CSP Header'
   keys['code:KeyQ']._title = 'Show Sqlite'
-  keys['code:KeyZ']._title = 'Exec Axe'
+  keys['code:KeyY']._title = 'Exec A11Y'
   mitm.macrokeys = keys
 }
 
@@ -254,38 +249,43 @@ function observed() {
 
 const _urlChanged = new Event('urlchanged')
 function init() {
-  const html = document.querySelector('html')
-  const htmlref = html.firstElementChild
+  const body     = document.body
+  const divRight = document.createElement('div'  )
+  const divTopR  = document.createElement('div'  )
+  const divLeft  = document.createElement('div'  )
+  const divPopup = document.createElement('div'  )
+  const divCenter= document.createElement('div'  )
+  const html     = document.querySelector('html' )
   const styleBtn = document.createElement('style')
-  const divRight = document.createElement('div')
-  const divTopR  = document.createElement('div')
-  const divLeft  = document.createElement('div')
-  const divCenter= document.createElement('div')
-
-  styleBtn.innerHTML = style
-  styleBtn.className = 'mitm-class'
-  divRight.innerHTML = `<span class="bgroup-right"></span>`
-  divTopR.innerHTML  = `<span class="bgroup-topr"></span>`
-  divLeft.innerHTML  = `<span class="bgroup-left"></span><span class="bgroup-left2"></span>`
-  divLeft.className  = 'mitm-container left'
-  divTopR.className  = 'mitm-container topr'
-  divRight.className = 'mitm-container right'
-  divCenter.className= 'mitm-container center'
+  const htmlref  = html.firstElementChild
   divRight.style = styleRight
-  divTopR.style  = styleTopR
-  divLeft.style  = styleLeft
+  divTopR .style = styleTopR
+  divLeft .style = styleLeft
 
-  html.insertBefore(styleBtn, htmlref)
-  html.insertBefore(divRight, htmlref)
-  html.insertBefore(divTopR, htmlref)
-  html.insertBefore(divLeft, htmlref)
+  styleBtn .innerHTML = style
+  styleBtn .className = 'mitm-class'
+  divRight .innerHTML = `<span class="bgroup-right"></span>`
+  divTopR  .innerHTML = `<span class="bgroup-topr"></span>`
+  divLeft  .innerHTML = `<span class="bgroup-left"></span><span class="bgroup-left2"></span>`
+  divLeft  .className = 'mitm-container left'
+  divTopR  .className = 'mitm-container topr'
+  divRight .className = 'mitm-container right'
+  divPopup .className = 'mitm-container popup'
+  divCenter.className = 'mitm-container center'
+
+  html.insertBefore(styleBtn , htmlref)
+  html.insertBefore(divRight , htmlref)
+  html.insertBefore(divTopR  , htmlref)
+  html.insertBefore(divLeft  , htmlref)
   html.insertBefore(divCenter, htmlref)
+  body.appendChild (divPopup)
   const hotkey = new mitm.svelte.Hotkeys({target:divCenter})
   setTimeout(() => {
     container.topr = divTopR
     container.left = divLeft
     container.right= divRight
     container.hotkey = hotkey
+    container.popup  = divPopup
     container.target = divCenter
     container.nodekey= divCenter.children[0]
     button.style = `${buttonStyle}background-color: azure;`
@@ -578,14 +578,20 @@ const pastel = {
 }
 
 function svelte(Svelt, bg='PostIt') { // feat: svelte related
-  const {target} = container
+  const {target, popup} = container
   target.replaceChildren('')
-  window.mitm.sapp = new Svelt({target})
-  setTimeout(() => {
-    const bcolor = pastel[bg]
-    target.style = `display: block${bcolor ? ';background:'+bcolor : ''};`
-    center = true
-  }, 0)
+  popup .replaceChildren('')
+  if (typeof(bg)!=='string' && bg.popup) {
+    const props = {node: bg.node}
+    window.mitm.sapp = new Svelt({target: popup, props})
+  } else {
+    window.mitm.sapp = new Svelt({target})
+    setTimeout(() => {
+      const bcolor = pastel[bg]
+      target.style = `display: block${bcolor ? ';background:'+bcolor : ''};`
+      center = true
+    }, 0)  
+  }
 }
 
 function hotKeys(obj) {
