@@ -311,7 +311,7 @@ the execution order as documented start with `skip`, end with `response`, no nee
 
 `workspace`: will be use as the base folder for `file` option in `Mock` and `Cache`.
 
-`lib`: inject js library into html which having websocket, it can be [`jquery.js`, `faker.js`, `chance.js`, `log-patch.js`]
+`lib`: inject js library into html which having websocket, it can be [`jquery.js`, `faker.js`, `chance.js`, `log-patch.js`, `axe.js`]
 
 ```js
 route = {
@@ -839,6 +839,7 @@ $ mitm-play --help
     -x --proxy         a proxy request
     -z --lazyclick     delay ~700ms click action*
 
+    -A --a11y          axe-core a11y checker
     -D --debug         show Playwright debugger
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
@@ -1087,6 +1088,17 @@ Update CSP header on Html Page injected with wws-client.js to unblock Websocket 
 
 ```bash
 $ mitm-play --csp
+```
+</details>
+<details><summary><b>-A --a11y</b></summary>
+
+Activate Axe-core `a11y checker`, you will see a button on top-left side of screen:
+
+<b>A11Y-[ctl+alt+Y]</b> When it run, it will show the violation in <i style='color:red;'>red-dashed-border</i> color. 
+
+```bash
+$ mitm-play -A  <OR>
+$ mitm-play --a11y
 ```
 </details>
 <details><summary><b>-D --debug</b></summary>

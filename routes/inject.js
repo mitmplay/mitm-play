@@ -117,6 +117,8 @@ function injectWS (resp, url, jsLib=[]) {
 
   if (__args.a11y===true) { //# a11y
     if (!jsLib.includes('axe.js')) {
+      body = css_src(body, ['/mitm-play/highlight.css'])
+      jsLib.push('highlight.js')
       jsLib.push('axe.js')
     }
   }

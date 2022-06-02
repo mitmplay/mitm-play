@@ -53,6 +53,7 @@ module.exports = () => {
   const {app}  = mitm.path
   const a11y   = `${app}/a11y/axe-run` //# a11y
   const client = `${app}/ws-client/ws-client`
+  const hilight= `${app}/plugins/js-lib/highlight`
   const mock = {
     '!:hidden:/mitm-play/mitm.js': {
       response: (resp, reqs) => {
@@ -80,6 +81,8 @@ module.exports = () => {
     '!:hidden:/mitm-play/macros.css':      { response: (resp, reqs) => mockMacros(resp, reqs, 'css') },
     '!:hidden:/mitm-play/axe-run.js$':     { response: resp => mockClient(resp,   a11y, 'js'     )},
     '!:hidden:/mitm-play/axe-run.css$':    { response: resp => mockClient(resp,   a11y, 'css'    )},
+    '!:hidden:/mitm-play/highlight.js$':   { response: resp => mockClient(resp,hilight, 'js'     )},
+    '!:hidden:/mitm-play/highlight.css$':  { response: resp => mockClient(resp,hilight, 'css'    )},
     '!:hidden:/mitm-play/ws-client.js$':   { response: resp => mockClient(resp, client, 'js'     )},
     '!:hidden:/mitm-play/ws-client.css$':  { response: resp => mockClient(resp, client, 'css'    )},
     '!:hidden:/mitm-play/ws-client.js.map':{ response: resp => mockClient(resp, client, 'js.map' )},

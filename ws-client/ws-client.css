@@ -1,4 +1,4 @@
-.a11y-popup.svelte-1tcrfs8 {
+.a11y-popup.svelte-1b02gxv.svelte-1b02gxv {
   background-color: rgba(255, 228, 196, 0.65);
   backdrop-filter: blur(4px);
   border-radius: 6px;
@@ -8,6 +8,32 @@
   height: auto;
   width: 300px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+h4.svelte-1b02gxv.svelte-1b02gxv {
+  margin: 10px 0;
+}
+
+p.svelte-1b02gxv.svelte-1b02gxv {
+  margin: 0.2rem 0;
+}
+
+pre.svelte-1b02gxv.svelte-1b02gxv {
+  white-space: break-spaces;
+  margin: 0;
+}
+
+pre.svelte-1b02gxv code.svelte-1b02gxv {
+  padding: 5px;
+}
+
+details.svelte-1b02gxv.svelte-1b02gxv {
+  margin-bottom: 8px;
+}
+
+.pre.svelte-1b02gxv.svelte-1b02gxv {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
 }
 
 details.note.svelte-ws3cmd.svelte-ws3cmd {

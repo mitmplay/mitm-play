@@ -3,36 +3,40 @@
   const rect = node.getBoundingClientRect()
   const {top: t, left: l, height: h} = rect
   const {x,y} = document.body.getBoundingClientRect()
-  const top   = -y + t + h
+  const top   = -y + t + h + 2
   const left  = -x + l
   const style = `top:${top}px;left:${left}px;`
   const {
-    axeDesc,
-    axeGrp,
-    axeHelp,
-    axeHelper,
-    axeImpact,
-    axeTags,
-    axeTarget,
-  } = node.dataset
-/**
-axeHelp: "Elements must have sufficient color contrast"
-axeDesc: "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds"
-axeTags: "cat.color,wcag2aa,wcag143"
-axeHelper: "https://dequeuniversity.com/rules/axe/4.4/color-contrast?application=axeAPI"
-axeGrp: "color-contrast"
-axeImpact: "serious"
-axeTarget: ".QOk0QH0ZliTN6lLqgerl.KgIdWLyaOwaGazWOCLB4:nth-child(6)"
-*/
+    failureSummary,
+    description,
+    helpUrl,
+    target,
+    impact,
+    html,
+    help,
+    tgs,
+    grp
+  } = node._axe_
+  setTimeout(() => {
+    hljs.highlightAll()
+  }, 0);
 </script>
 
 <div 
 class="a11y-popup" {style}>
-  <h4>{axeHelp}</h4>
-  <p>{axeDesc}</p>
-  <p><b>tags:</b> {axeTags}</p>
-  <p><b>impact:</b> {axeImpact}</p>
-  <p><b>link:</b> <a href="{axeHelper}">{axeGrp}</a></p>
+  <h4>{help}</h4>
+  <p>{description}</p>
+  <p><b>tags:</b> {tgs}</p>
+  <p><b>link:</b> <a href="{helpUrl}">{grp}</a></p>
+  <details>
+    <summary><b>impact:</b> {impact}</summary>
+    <hr/>
+    <div class=pre>{failureSummary}</div>
+    <hr/>
+    <div class=pre>
+      <pre><code class="language-html">{html}</code></pre>
+    </div>
+  </details>
 </div>
 
 <style>
@@ -51,5 +55,25 @@ class="a11y-popup" {style}>
     rgb(0 0 0 / 12%) 0px 4px 6px, 
     rgb(0 0 0 / 17%) 0px 12px 13px, 
     rgb(0 0 0 /  9%) 0px -3px 5px;
+}
+h4 {
+  margin: 10px 0;
+}
+p {
+  margin: 0.2rem 0;
+}
+pre {
+  white-space: break-spaces;
+  margin: 0;
+}
+pre code {
+  padding: 5px;
+}
+details {
+  margin-bottom: 8px;
+}
+.pre {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
 }
 </style>

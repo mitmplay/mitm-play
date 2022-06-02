@@ -33,26 +33,30 @@ function violationHilight() {
       nodes,
       help,
       tags,
-      id, 
+      id: grp, 
     } = violation
-    const tgs = tags.join(',')
+    const tgs = tags.join(', ')
     for (const node of nodes) {
-      const {target} = node
+      const {html,target,failureSummary} = node
       const el = document.querySelector(target)
       el.classList.add('axe-run-violation')
-      el.setAttribute('data-axe-desc'  , description)
-      el.setAttribute('data-axe-helper', helpUrl    )
-      el.setAttribute('data-axe-target', target     )
-      el.setAttribute('data-axe-impact', impact     )
-      el.setAttribute('data-axe-help'  , help       )
-      el.setAttribute('data-axe-tags'  , tgs        )
-      el.setAttribute('data-axe-grp'   , id         )
+      el.classList.add(`axe-grp-${grp}`)
+      el._axe_ = {
+        failureSummary,
+        description,
+        helpUrl,
+        target,
+        impact,
+        html,
+        help,
+        tgs,
+        grp,
+      }
 
       el.onmouseover = function(e) {
         const node = e.target
-        const target = node.getAttribute('data-axe-target')
+        const target = node?._axe_?.target
         if (target && elNode.target!==target) {
-          console.log('onmouseover overeed!')
           const {mitm: {svelte: {A11yPopup}, fn}} = window
           fn.svelte(A11yPopup, {popup: true, node})
           mitm.axerun.elNode = elNode
