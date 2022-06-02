@@ -1,5 +1,12 @@
 window.mitm.fn.axerun = () => { //# a11y
   console.log('a11y/axe-run!')
+  document.querySelector('.mitm-container.popup').innerText = ''
+  const arr = document.querySelectorAll('[class*="axe-"]')
+  const rgx = /axe-[\w-]+/g
+  for (const el of arr) {
+    const text = el.classList.value.replace(rgx,'').trim()
+    el.classList.value = text
+  }
   window.axe
   .run()
   .then(results => {

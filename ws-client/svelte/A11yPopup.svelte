@@ -71,7 +71,7 @@ details {
   margin-bottom: 8px;
 }
 details summary {
-  cursor: pointerf;
+  cursor: pointer;
 }
 .pre {
   font-size: 11.5px;
