@@ -17,6 +17,11 @@
     tgs,
     grp
   } = node._axe_
+  let note  = failureSummary
+  const rst = note.match(/([\d.#:]+)( |\w+)/g)
+  rst && rst.filter(x=>x.length>2).forEach(element => {
+    note = note.replace(element, `<b>${element}</b>`)  
+  });
   setTimeout(() => {
     hljs.highlightAll()
   }, 0);
@@ -31,7 +36,7 @@ class="a11y-popup" {style}>
   <details>
     <summary><b>impact:</b> {impact}</summary>
     <hr/>
-    <div class=pre>{failureSummary}</div>
+    <div class=pre>{@html note}</div>
     <hr/>
     <div class=pre>
       <pre><code class="language-html">{html}</code></pre>
@@ -50,11 +55,11 @@ class="a11y-popup" {style}>
   height: auto;
   width: 300px;
   box-shadow: 
-    rgb(0 0 0 / 25%) 0px 54px 55px, 
+    rgb(0 0 0 / 25%) 0px  54px 55px, 
     rgb(0 0 0 / 12%) 0px -12px 30px, 
-    rgb(0 0 0 / 12%) 0px 4px 6px, 
-    rgb(0 0 0 / 17%) 0px 12px 13px, 
-    rgb(0 0 0 /  9%) 0px -3px 5px;
+    rgb(0 0 0 / 12%) 0px   4px  6px, 
+    rgb(0 0 0 / 17%) 0px  12px 13px, 
+    rgb(0 0 0 /  9%) 0px  -3px  5px;
 }
 h4 {
   margin: 10px 0;
@@ -62,18 +67,22 @@ h4 {
 p {
   margin: 0.2rem 0;
 }
+details {
+  margin-bottom: 8px;
+}
+details summary {
+  cursor: pointerf;
+}
+.pre {
+  font-size: 11.5px;
+}
 pre {
+  font-family: ui-monospace, monospace;
   white-space: break-spaces;
+  font-size: 11px;
   margin: 0;
 }
 pre code {
   padding: 5px;
-}
-details {
-  margin-bottom: 8px;
-}
-.pre {
-  font-family: ui-monospace, monospace;
-  font-size: 10px;
 }
 </style>

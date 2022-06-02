@@ -49,12 +49,12 @@
     "rollup-plugin-scss": "3.0.0",
     "rollup-plugin-svelte": "7.1.0",
     "sass": "1.49.7",
-    "sqlite3": "4.1.1",
+    "sqlite3": "5.0.8",
     "stack-trace": "0.0.10",
     "svelte": "3.46.4",
     "svelte-preprocess": "4.10.3",
     "user": "*",
-    "ws": "8.5.0",
+    "ws": "8.7.0",
     "yargs-parser": "21.0.0"
   },
   "devDependencies": {
