@@ -83,7 +83,7 @@ function handleClick(e) {
 }
 
 function ktoShow(k) {
-  return k.split('').map(x=>`${x}`).join('✧')
+  return k.split('').map(x=>`${x}`).join(' ')
 }
 
 function kcode(obj) {

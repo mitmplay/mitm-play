@@ -62,6 +62,7 @@ const style = `
   margin-top: 0;
 }
 .bgroup-left>div,
+.bgroup-left2>div,
 .bgroup-right>div {
   padding-bottom: 2px;
 }
@@ -133,16 +134,22 @@ function setButtons (buttons, position) {
 }
 
 function defaultHotKeys() {
-  const {mitm: {svelte: {Cspheader, Sqlite, A11yPopup}, fn}} = window
+  const {mitm: {svelte: {Cspheader, Sqlite}, fn}} = window
+  const qry  = '.mitm-container.popup' 
   const keys = {
     'code:KeyC'(_e) {fn.svelte(Cspheader, 'LightPastelGreen')},
     'code:KeyQ'(_e) {fn.svelte(Sqlite   , 'LightPastelGreen')},
-    'code:KeyU'(_e) {fn.svelte(A11yPopup, 'LightPastelGreen')},
-    'code:KeyY'(_e) {fn.axerun(                             )},
+    'key:y'    (_e) {fn.axerun(                             )},
+    'key:yaa'  (_e) {fn.axerun(['wcag2a','wcag2aa']         )},
+    'key:yaaa' (_e) {fn.axerun(['wcag2a','wcag2aa','wcag2aaa','best-practice'])},
+    'key:yc'   (_e) {document.querySelector(qry).innerText = ''                },
   }
   keys['code:KeyC']._title = 'Show CSP Header'
   keys['code:KeyQ']._title = 'Show Sqlite'
-  keys['code:KeyY']._title = 'Exec A11Y'
+  keys['key:y'    ]._title = 'Execs a11y check'
+  keys['key:yaa'  ]._title = 'Execs a11y wcag:aa'
+  keys['key:yaaa' ]._title = 'Execs a11y strict'
+  keys['key:yc'   ]._title = 'Clear a11y result'
   mitm.macrokeys = keys
 }
 
@@ -154,7 +161,7 @@ async function urlChange (event) {
   const namespace = _ws_namespace()
   const {mitm} = window
 
-  if (mitm.argv.a11y===true && mitm.fn.axerun) {
+  if (mitm.argv.a11y && mitm.fn.axerun) {
     mitm.fn.axerun()
   }
 
@@ -258,6 +265,7 @@ function init() {
   const html     = document.querySelector('html' )
   const styleBtn = document.createElement('style')
   const htmlref  = html.firstElementChild
+  const bodyref  = body.firstElementChild
   divRight.style = styleRight
   divTopR .style = styleTopR
   divLeft .style = styleLeft
@@ -278,7 +286,8 @@ function init() {
   html.insertBefore(divTopR  , htmlref)
   html.insertBefore(divLeft  , htmlref)
   html.insertBefore(divCenter, htmlref)
-  body.appendChild (divPopup)
+  body.insertBefore(divPopup , bodyref)
+  // body.appendChild (divPopup)
   const hotkey = new mitm.svelte.Hotkeys({target:divCenter})
   setTimeout(() => {
     container.topr = divTopR
@@ -580,7 +589,7 @@ const pastel = {
 function svelte(Svelt, bg='PostIt') { // feat: svelte related
   const {target, popup} = container
   target.replaceChildren('')
-  popup .replaceChildren('')
+  // popup .replaceChildren('')
   if (typeof(bg)!=='string' && bg.popup) {
     const props = {node: bg.node}
     window.mitm.sapp = new Svelt({target: popup, props})

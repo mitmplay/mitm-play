@@ -110,6 +110,10 @@ module.exports = () => {
     argv.activity = 'rec' // rec:tag-html
   }
 
+  if (typeof argv.a11y==='string') {
+    argv.a11y = argv.a11y.split(',')
+  }
+
   if (argv.device===true) {
     argv.device = 'iPhone 11 Pro'
   }

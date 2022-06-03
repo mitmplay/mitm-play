@@ -1,8 +1,12 @@
 .mitm-container.popup {
-  position: relative;
+  position: absolute;
   display: block !important;
+  z-index: 99998;
+  width: 100vw;
 }
 
 .axe-run-violation {
   outline: red 2px dashed;
+  position: absolute;
+  cursor: pointer;
 }

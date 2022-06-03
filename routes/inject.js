@@ -115,7 +115,7 @@ function injectWS (resp, url, jsLib=[]) {
   }
   js.push('/mitm-play/jslib/selector.js')
 
-  if (__args.a11y===true) { //# a11y
+  if (__args.a11y) { //# a11y
     if (!jsLib.includes('axe.js')) {
       body = css_src(body, ['/mitm-play/highlight.css'])
       jsLib.push('highlight.js')
@@ -123,7 +123,7 @@ function injectWS (resp, url, jsLib=[]) {
     }
   }
   js.push.apply(js, jsLib.map(x => `/mitm-play/jslib/${x}`))
-  if (__args.a11y===true) { //# a11y
+  if (__args.a11y) { //# a11y
     body = css_src(body, ['/mitm-play/axe-run.css'])
     js.push('/mitm-play/axe-run.js')
   }

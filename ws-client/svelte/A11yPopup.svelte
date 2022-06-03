@@ -1,11 +1,10 @@
 <script>
   export let node;
   const rect = node.getBoundingClientRect()
-  const {top: t, left: l, height: h} = rect
-  const {x,y} = document.body.getBoundingClientRect()
-  const top   = -y + t + h + 2
-  const left  = -x + l
-  const style = `top:${top}px;left:${left}px;`
+  const {x,y}= document.body.getBoundingClientRect()
+  const {top:t, left:l, height:h} = rect
+  const top  = -y + t + h + 2
+  const left = -x + l
   const {
     failureSummary,
     description,
@@ -17,6 +16,14 @@
     tgs,
     grp
   } = node._axe_
+
+  let style
+  if (grp.match(/page-/)) {
+    style = `top:${top}px;left:0;right:0;margin:auto;`
+  } else {
+    style = `top:${top}px;left:${left}px;`
+  }
+
   let note  = failureSummary
   const rst = note.match(/([\d.#:]+)( |\w+)/g)
   rst && rst.filter(x=>x.length>2).forEach(element => {
@@ -27,8 +34,7 @@
   }, 0);
 </script>
 
-<div 
-class="a11y-popup" {style}>
+<div class="a11y-popup" {style}>
   <h4>{help}</h4>
   <p>{description}</p>
   <p><b>tags:</b> {tgs}</p>
