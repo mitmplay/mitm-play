@@ -1,4 +1,3 @@
-const rollup = require('rollup')
 const scss = require('rollup-plugin-scss')
 const svelte = require('rollup-plugin-svelte')
 const preprocess = require('svelte-preprocess')
@@ -6,7 +5,7 @@ const commonjs = require('@rollup/plugin-commonjs')
 const {nodeResolve:resolve} = require('@rollup/plugin-node-resolve')
 
 export default {
-  input: 'ws-client/_src/ws-client.js',
+  input: 'ws-client/_client/ws-client.js',
   plugins: [
 		svelte({
 			compilerOptions: {dev: true},

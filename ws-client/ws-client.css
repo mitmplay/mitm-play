@@ -1,4 +1,4 @@
-.a11y-popup.svelte-d572or.svelte-d572or {
+.a11y-popup.svelte-fcjyx6.svelte-fcjyx6 {
   background-color: rgba(255, 228, 196, 0.65);
   backdrop-filter: blur(4px);
   border-radius: 6px;
@@ -6,38 +6,51 @@
   margin-top: 2px;
   padding: 0 10px;
   height: auto;
-  width: 300px;
+  width: 360px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-h4.svelte-d572or.svelte-d572or {
+h4.svelte-fcjyx6.svelte-fcjyx6 {
   margin: 10px 0;
+  font-size: 12px;
+  font-weight: 700;
 }
 
-p.svelte-d572or.svelte-d572or {
+p.svelte-fcjyx6.svelte-fcjyx6 {
   margin: 0.2rem 0;
+  font-size: 12px;
 }
 
-details.svelte-d572or.svelte-d572or {
+details.svelte-fcjyx6.svelte-fcjyx6 {
   margin-bottom: 8px;
 }
 
-details.svelte-d572or summary.svelte-d572or {
+details.svelte-fcjyx6 summary.svelte-fcjyx6 {
   cursor: pointer;
 }
 
-.pre.svelte-d572or.svelte-d572or {
+.tgs.svelte-fcjyx6.svelte-fcjyx6 {
+  font-family: serif;
+  text-align: inherit;
+}
+
+.pre.svelte-fcjyx6.svelte-fcjyx6 {
   font-size: 11.5px;
 }
 
-pre.svelte-d572or.svelte-d572or {
+.pre.svelte-fcjyx6 ol.svelte-fcjyx6 {
+  margin: 0;
+  padding-inline-start: 15px;
+}
+
+pre.svelte-fcjyx6.svelte-fcjyx6 {
   font-family: ui-monospace, monospace;
   white-space: break-spaces;
   font-size: 11px;
   margin: 0;
 }
 
-pre.svelte-d572or code.svelte-d572or {
+pre.svelte-fcjyx6 code.svelte-fcjyx6 {
   padding: 5px;
 }
 

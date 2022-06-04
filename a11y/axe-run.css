@@ -6,7 +6,11 @@
 }
 
 .axe-run-violation {
-  outline: red 2px dashed;
+  outline: red 5px double;
   position: absolute;
   cursor: pointer;
+}
+
+.axe-incomplete {
+  outline: #e800ff 3px double;
 }

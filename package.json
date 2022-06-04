@@ -11,6 +11,7 @@
     "start": "node --max-http-header-size=81000 --inspect ./mitm-play.js",
     "client": "esbuild ws-client/_src/ws-client.js --outdir=ws-client --sourcemap=inline --minify-whitespace --target=chrome89 --bundle  --watch",
     "client2": "rollup --config ws-client/rollup.config.js -w",
+    "client3": "rollup --config a11y/rollup.config.js -w",
     "standard": "standard --verbose | snazzy",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest --runInBand",
     "test": "jest"
