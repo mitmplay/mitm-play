@@ -1,29 +1,7 @@
 function getColor(el) {
   const {color, backgroundColor} = getComputedStyle(el)
-  // const color = getComputedStyle(el).color
-  // const backg = backgroundColor (el)
   return [color, backgroundColor]
 }
-
-// function backgroundColor(el) {
-//   const defBackground = defaultBackground()
-//   const bgcolor = getComputedStyle(el).backgroundColor
-//   if (bgcolor != defBackground) {
-//     return bgcolor
-//   }
-//   if (!el.parentElement) {
-//     return defBackground
-//   }
-//   return backgroundColor(el.parentElement)
-// }
-
-// function defaultBackground() {
-//   const div = document.createElement("div")
-//   document.head.appendChild(div)
-//   const bg = window.getComputedStyle(div).backgroundColor
-//   document.head.removeChild(div)
-//   return bg
-// }
 
 function _rgb(rgb) {
   const [r,g,b] = rgb.match(/\d+/g).map(x=>+x)

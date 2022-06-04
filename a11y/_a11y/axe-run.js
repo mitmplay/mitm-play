@@ -24,19 +24,6 @@ window.mitm.left2buttons = {
   'wcag:aa[yaa-]|lightsalmon'() {fn.axerun(wcag2)},
   'strict-[yaaa]|lightsalmon'() {fn.axerun(wcag3, rulesObj)},
   'clear--[yc--]|lightsalmon'() {clearPopup(    )},
-  // 'cat.aria                   |salmon'(){fn.axerun(['cat.aria'                   ])},
-  // 'cat.color                  |salmon'(){fn.axerun(['cat.color'                  ])},
-  // 'cat.forms                  |salmon'(){fn.axerun(['cat.forms'                  ])},
-  // 'cat.keyboard               |salmon'(){fn.axerun(['cat.keyboard'               ])},
-  // 'cat.language               |salmon'(){fn.axerun(['cat.language'               ])},
-  // 'cat.name-role-value        |salmon'(){fn.axerun(['cat.name-role-value'        ])},
-  // 'cat.parsing                |salmon'(){fn.axerun(['cat.parsing'                ])},
-  // 'cat.semantics              |salmon'(){fn.axerun(['cat.semantics'              ])},
-  // 'cat.sensory-and-visual-cues|salmon'(){fn.axerun(['cat.sensory-and-visual-cues'])},
-  // 'cat.structure              |salmon'(){fn.axerun(['cat.structure'              ])},
-  // 'cat.tables                 |salmon'(){fn.axerun(['cat.tables'                 ])},
-  // 'cat.text-alternatives      |salmon'(){fn.axerun(['cat.text-alternatives'      ])},
-  // 'cat.time-and-media         |salmon'(){fn.axerun(['cat.time-and-media'         ])},
 }
 
 //https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#getting-started
