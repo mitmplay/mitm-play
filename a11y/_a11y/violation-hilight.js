@@ -45,6 +45,7 @@ function iterate(arr, popup, {x,y}, incomplete) {
         help,
         tgs,
         grp,
+        el,
       }
 
       let style
@@ -57,6 +58,13 @@ function iterate(arr, popup, {x,y}, incomplete) {
       dv.style  = style
       dv.classList.add('axe-run-violation')
       dv.classList.add(`axe-grp-${grp}`)
+      
+      if (tgs.includes('wcag2aaa')) {
+        dv.classList.add(`axe-grp-wcag2aaa`)
+      } else if (tgs.includes('best-practice')) {
+        dv.classList.add(`axe-grp-best-practice`)
+      }
+      
       if (incomplete) {
         dv.classList.add(`axe-incomplete`)
       }

@@ -16,7 +16,8 @@
     any,
     help,
     tgs,
-    grp
+    grp,
+    el,
   } = node._axe_
 
   function reformat(arr) {
@@ -47,12 +48,12 @@
       expectedContrastRatio,
     } = node._axe_.any[0].data
     if (contrastRatio) {
-      return `. Contrast ratio: ${contrastRatio},
-      expected: ${expectedContrastRatio}.
-      `
+      return `
+      , contrast ratio: ${contrastRatio},
+      expected: ${expectedContrastRatio}.`
     } else {
-      const {getColor, contrast}  = window.mitm.fn
-      const ratio = contrast(...getColor(node))
+      const {getColor, contrast} = window.mitm.fn
+      const ratio = contrast(...getColor(el))
       return `. Contrast ratio: ${ratio}.`
     }
   }

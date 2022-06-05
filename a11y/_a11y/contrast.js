@@ -10,17 +10,16 @@ function _rgb(rgb) {
 
 function _check(color) {
   if (color <= 0.03928) {
-    return (color / 12.92);
+    return (color / 12.92)
   } else {
-    return (Math.pow(((color + 0.055)/1.055), 2.4));
+    return (Math.pow(((color + 0.055)/1.055), 2.4))
   }
 }
 
+const _hex = x => x.toString(16).padStart(2, '0')
+
 function rgbToHex(rgb) {
-  return '#' + _rgb(rgb).map(x => {
-    const hex = x.toString(16)
-    return hex.length === 1 ? '0' + hex : hex
-  }).join('')
+  return '#' + _rgb(rgb).map(_hex).join('')
 }
 
 function luminance(rgb) {
@@ -32,14 +31,11 @@ function luminance(rgb) {
 }
 
 function contrast(rgbF, rgbB) {
-  const f = rgbToHex(rgbF)
-  const b = rgbToHex(rgbB)
-  let lght
-  let dark
-
   const luminanceF = luminance(rgbF)
   const luminanceB = luminance(rgbB)
 
+  let lght
+  let dark
   if (luminanceF >= luminanceB) {
     lght = luminanceF
     dark = luminanceB
@@ -52,7 +48,14 @@ function contrast(rgbF, rgbB) {
     (dark + 0.05)
   ).toFixed(2)
   
-  console.log(`f:${rgbF}-> ${f}, b:${rgbB}-> ${b} => ${_ratio}`)
+  const f = rgbToHex(rgbF)
+  const b = rgbToHex(rgbB)
+  console.log([
+    `f:${rgbF}-> ${f}`,
+    `b:${rgbB}-> ${b}`,
+    `Contrast ratio-> ${_ratio}`
+  ].join('\n'))
+
   return _ratio
 }
 

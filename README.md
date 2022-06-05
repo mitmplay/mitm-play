@@ -1092,9 +1092,16 @@ $ mitm-play --csp
 </details>
 <details><summary><b>-A --a11y</b></summary>
 
-Activate Axe-core `a11y checker`, you will see a button on top-left side of screen:
+Enable *Axe-core* `a11y checker`, when actiaved, <b>buttons to check a11y</b> visible on top-left side of screen, click the button or use short-cut [`Ctl`]+[`Alt`]+**(**[`yyy`] or [`yy`] or [`y`] or [`c`]**)** to execute :
 
-<b>A11Y-[ctl+alt+Y]</b> When it run, it will show the violation in <i style='color:red;'>red-dashed-border</i> color. 
+* `strict-[yyy]` - most stricted rules 
+* `wcag:AA[yy-]` - WCAG AA rules
+* `a11y---[y--]` - Basic Axe-core rules
+* `clear--[c--]` - Clear/reset the page
+
+When *Axe-core* `a11y checker` is finished, it will show result in:
+* `2-border`: <b style='color:red;'>Violation</b>, <b style='color:blue;'>Wcag:AAA</b>, & <b style='color:greenyellow;'>Best-practice</b>
+* `1-border`: <b style='color:fuchsia;'>Incomplete</b> 
 
 ```bash
 $ mitm-play -A  <OR>

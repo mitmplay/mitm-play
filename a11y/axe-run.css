@@ -11,6 +11,14 @@
   cursor: pointer;
 }
 
+.axe-grp-wcag2aaa {
+  outline: blue 5px double;
+}
+
+.axe-grp-best-practice {
+  outline: greenyellow 5px double;
+}
+
 .axe-incomplete {
-  outline: #e800ff 3px double;
+  outline: fuchsia 3px double;
 }
