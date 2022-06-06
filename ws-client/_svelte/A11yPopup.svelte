@@ -52,7 +52,7 @@
     const winHeight = window.innerHeight
     const winYOffst = window.pageYOffset
     if (top+popHeight>winHeight-winYOffst) {
-      top -= (popHeight + 30) 
+      top -= (popHeight + 30)
     }
 
     const winWidth = document.body.getBoundingClientRect().width
@@ -60,8 +60,12 @@
     if (left+popWidth>winWidth-winXOffst) {
       left -= (popWidth - 18) 
     }
-
-    popup.style = `top:${top}px;left:${left}px;`
+    if (node.style.position==='fixed') {
+      // if box in fixed position, popup too(and update top position)
+      popup.style = `top:${top-winYOffst}px;left:${left}px;position:fixed;`
+    } else {
+      popup.style = `top:${top}px;left:${left}px;`
+    }
   })
 
   function ratio() {

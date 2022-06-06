@@ -51,9 +51,15 @@ function iterate(arr, popup, {x,y}, incomplete) {
       let style
       if (grp.match(/page-/)) {
         style = `left:0;top:0;width:100vw;height:10px;`
-      } else {
+      } else { // check parent element is fixed so do the box
         style = `left:${left}px;top:${top}px;width:10px;height:10px;`
-        // style = `left:${left}px;top:${top}px;width:${w}px;height:${h}px;`
+        let pnode = el.parentElement
+        while (pnode && getComputedStyle(pnode).position!=='fixed') {
+          pnode = pnode.parentElement
+        }
+        if (pnode && getComputedStyle(pnode).position==='fixed') {
+          style += 'position:fixed;'
+        }
       }
       dv.style  = style
       dv.classList.add('axe-run-violation')
