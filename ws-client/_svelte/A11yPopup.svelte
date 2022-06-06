@@ -3,8 +3,8 @@
   const rect = node.getBoundingClientRect()
   const {x,y}= document.body.getBoundingClientRect()
   const {top:t, left:l, height:h} = rect
-  const top  = -y + t + h + 2
-  const left = -x + l
+  let top  = -y + t + h + 3
+  let left = -x + l - 5
   let {
     description,
     incomplete,
@@ -39,8 +39,30 @@
   if (grp.match(/page-/)) {
     style = `top:${top}px;left:0;right:0;margin:auto;`
   } else {
-    style = `top:${top}px;left:${left}px;`
+    style = `top:0;left:0;opacity:0;`
   }
+
+  setTimeout(()=> {
+    const popup = document.querySelector('.a11y-popup')
+    const {
+      width:popWidth,
+      height:popHeight
+    } = popup.getBoundingClientRect()
+
+    const winHeight = window.innerHeight
+    const winYOffst = window.pageYOffset
+    if (top+popHeight>winHeight-winYOffst) {
+      top -= (popHeight + 30) 
+    }
+
+    const winWidth = document.body.getBoundingClientRect().width
+    const winXOffst= window.pageXOffset
+    if (left+popWidth>winWidth-winXOffst) {
+      left -= (popWidth - 18) 
+    }
+
+    popup.style = `top:${top}px;left:${left}px;`
+  })
 
   function ratio() {
     const {
