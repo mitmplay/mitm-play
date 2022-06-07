@@ -8,7 +8,8 @@
   let {
     description,
     incomplete,
-    criterion,
+    criterion1,
+    criterion2,
     helpUrl,
     impact,
     html,
@@ -87,53 +88,72 @@
   setTimeout(() => {
     hljs.highlightAll()
   }, 0);
+
+  function copyto(e) {
+    const text = document.querySelector('.a11y-content').innerHTML;
+    navigator.clipboard.writeText(text).then(() => {
+      console.log("Copied to clipboard");
+    });
+  }
 </script>
 
 <div class="a11y-popup" {style}>
-  <h4>{help}</h4>
-  <p>{description}</p>
-  <p class=tgs><b>tags:</b> {tgs}</p>
-  <p>
-    <b>criteria:</b>
-    {#if criterion}
-      <a href="{criterion.link}">{criterion.name}</a>, 
-    {/if}
-    <a href="{helpUrl}">{grp}</a>
-  </p>
-  <details open>
-    <summary><b>impact:</b> {impact}</summary>
-    {#if all.length||any.length}
-      <hr/>
+  <span on:click={copyto} style="position:absolute;right:10px;top:10px;cursor:pointer;">
+    <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
+      <g id="surface1">
+      <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 10.882812 4.027344 L 10.882812 0 L 1.730469 0 L 1.730469 12.269531 L 5.117188 12.269531 L 5.117188 16 L 14.269531 16 L 14.269531 7.417969 Z M 10.882812 5.464844 L 12.535156 7.117188 L 10.882812 7.117188 Z M 2.746094 11.253906 L 2.746094 1.015625 L 9.863281 1.015625 L 9.863281 3.730469 L 5.117188 3.730469 L 5.117188 11.253906 Z M 6.136719 14.984375 L 6.136719 4.746094 L 9.863281 4.746094 L 9.863281 8.136719 L 13.253906 8.136719 L 13.253906 14.984375 Z M 6.136719 14.984375 "/>
+      </g>
+    </svg>  
+  </span>
+  <div class="a11y-content">
+    <h4>{help}</h4>
+    <p>{description}</p>
+    <p class=tgs><b>tags:</b> {tgs}</p>
+    <p>
+      <b>criteria:</b>
+      {#if criterion1}
+        <a target="_blank" rel="noopener noreferrer" href="{criterion1.link}">{criterion1.name}</a>, 
+      {/if}
+      {#if criterion2}
+        <a target="_blank" rel="noopener noreferrer" href="{criterion2.link}">{criterion2.name}</a>, 
+      {/if}
+      <a target="_blank" rel="noopener noreferrer" href="{helpUrl}">{grp}</a>
+    </p>
+    <details open>
+      <summary><b>impact:</b> {impact}</summary>
+      {#if all.length||any.length}
+        <hr/>
+        <div class=pre>
+          {#if all.length>1}
+            <b>Fix ALL of the following:</b>
+            <ol>
+            {#each all as cat}
+              <li>{@html cat}</li>
+            {/each}
+            </ol>
+          {:else if all.length===1}
+            {@html all[0]}
+          {:else if any.length>1}
+            <b>Fix ONE of the following:</b>
+            <ol>
+            {#each any as cat}
+              <li>{@html cat}</li>
+            {/each}
+            </ol>
+          {:else if any.length===1}
+            {@html any[0]}
+          {/if}
+          {#if incomplete && grp==='color-contrast'}
+            {ratio()}
+          {/if}
+        </div>
+        <hr/>
+      {/if}
       <div class=pre>
-        {#if all.length>1}
-          <b>Fix ALL of the following:</b>
-          <ol>
-          {#each all as cat}
-            <li>{@html cat}</li>
-          {/each}
-          </ol>
-        {:else if all.length===1}
-          {@html all[0]}
-        {:else if any.length>1}
-          <b>Fix ONE of the following:</b>
-          <ol>
-          {#each any as cat}
-            <li>{@html cat}</li>
-          {/each}
-          </ol>
-        {:else if any.length===1}
-          {@html any[0]}
-        {/if}
-        {#if incomplete && grp==='color-contrast'}
-          {ratio()}
-        {/if}
+        <pre><code class="language-html">{html}</code></pre>
       </div>
-      <hr/>
-    {/if}
-    <div class=pre>
-      <pre><code class="language-html">{html}</code></pre>
-    </div>
-  </details>
+    </details>
+  </div>
 </div>
 
 <style>

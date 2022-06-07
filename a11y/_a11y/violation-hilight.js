@@ -1,4 +1,5 @@
-const _criterion = require('./criterion')
+const _criterion1 = require('./criterion1')
+const _criterion2 = require('./criterion2')
 //mitm.axerun.results.violations[0].nodes[0].target
 function violationHilight(popup) {
   const rect = document.body.getBoundingClientRect()
@@ -29,14 +30,16 @@ function iterate(arr, popup, {x,y}, incomplete) {
         continue
       }
       popup.appendChild(dv)
-      const criterion = _criterion(tags)
+      const criterion1 = _criterion1(tags)
+      const criterion2 = _criterion2(tags)
       const {top:t, left:l, width:w, height:h} = rc
       const left= -x + l
       const top = -y + t 
       dv._axe_= {
         description,
         incomplete,
-        criterion,
+        criterion1,
+        criterion2,
         helpUrl,
         impact,
         html,

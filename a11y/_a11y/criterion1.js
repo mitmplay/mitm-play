@@ -1,5 +1,6 @@
 // https://www.a11yproject.com/checklist/
 const criterionMap = {
+  baseUrl: 'https://www.w3.org/WAI/WCAG21/',
   wcag111:{id:'1.1.1',desc:'Non-text Content'      ,link:'Understanding/non-text-content'      },
   wcag131:{id:'1.3.1',desc:'Info and Relationships',link:'Understanding/info-and-relationships'},
   wcag132:{id:'1.3.2',desc:'Meaningful Sequence'   ,link:'Understanding/meaningful-sequence'   },
@@ -20,17 +21,18 @@ const criterionMap = {
   wcag411:{id:'4.1.1',desc:'Parsing'               ,link:'Understanding/parsing'               },
   wcag412:{id:'4.1.2',desc:'Name, Role, Value'     ,link:'Understanding/name-role-value'       },
 }
-function criterion(tags) {
+function criterion1(tags) {
   for(const tag of tags) {
     if (criterionMap[tag]) {
       const {id, desc, link} = criterionMap[tag]
+      const {baseUrl=''} = criterionMap
       return {
         name: `WCAG ${id}`,
         desc,
-        link: `https://www.w3.org/WAI/WCAG21/${link}`,
+        link: `${baseUrl}${link}`,
       }
     }
   }
 }
 
-module.exports = criterion
+module.exports = criterion1
