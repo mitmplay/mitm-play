@@ -114,9 +114,9 @@
       {#if criterion1}
         <a target="_blank" rel="noopener noreferrer" href="{criterion1.link}">{criterion1.name}</a>, 
       {/if}
-      {#if criterion2}
-        <a target="_blank" rel="noopener noreferrer" href="{criterion2.link}">{criterion2.name}</a>, 
-      {/if}
+      {#each Object.entries(criterion2) as [key, value]}
+        <a target="_blank" rel="noopener noreferrer" href="{value.link}">{value.name}</a>, 
+      {/each}
       <a target="_blank" rel="noopener noreferrer" href="{helpUrl}">{grp}</a>
     </p>
     <details open>
