@@ -54,7 +54,7 @@ window.mitm.fn.axerun = (values, rules) => { //# a11y
   })
   .catch(err => {
     window.mitm.axerun.err = err
-    console.error('Something bad happened:', err.message)
+    console.error('Something bad happened:', err)
   })
 }
 

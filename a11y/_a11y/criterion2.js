@@ -1,7 +1,7 @@
 function criterion2(tags) {
   for(const tag of tags) {
     const criterionMap = mitm.routes._global_.a11y
-    if (criterionMap[tag]) {
+    if (criterionMap && criterionMap[tag]) {
       const {id, desc, link} = criterionMap[tag]
       const {baseUrl=''} = criterionMap
       return {
