@@ -8,8 +8,8 @@ function violationHilight(popup) {
   iterate(r.incomplete, popup, rect, true)
 }
 
+let elNode  = {}
 function iterate(arr, popup, {x,y}, incomplete) {
-  let elNode  = {}
   for (const violation of arr) {
     const {
       description,
@@ -79,7 +79,7 @@ function iterate(arr, popup, {x,y}, incomplete) {
       }
       dv.onmouseover = function(e) {
         const node   = e.target
-        if (target && elNode.target!==target) {
+        if (elNode.node!==node) {
           document.querySelectorAll('.a11y-popup').forEach(n=>n.remove())
           const {mitm: {svelte: {A11yPopup}, fn}} = window
           fn.svelte(A11yPopup, {popup: true, node})

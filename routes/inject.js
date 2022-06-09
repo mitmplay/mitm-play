@@ -109,7 +109,7 @@ function injectWS (resp, url, jsLib=[]) {
   body = `${body}`
 
   // do not change JS load order! 
-  if (_nameSpace(_tldomain(url))) {
+  if (__args.a11y || _nameSpace(_tldomain(url))) {
     body = css_src(body, ['/mitm-play/macros.css', '/mitm-play/ws-client.css'])
     js.push('/mitm-play/macros.js')
   }

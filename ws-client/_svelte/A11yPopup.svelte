@@ -90,15 +90,19 @@
   }, 0);
 
   function copyto(e) {
-    const text = document.querySelector('.a11y-content').innerHTML;
+    const tx = 'Copied to clipboard'
+    const el = document.querySelector('.icopy')
+    const text = document.querySelector('.a11y-content').innerHTML
+    el.setAttribute('title', tx)
     navigator.clipboard.writeText(text).then(() => {
-      console.log("Copied to clipboard");
-    });
+      setTimeout(()=>el.setAttribute('title', ''), 3000)
+      console.log(tx)
+    })
   }
 </script>
 
 <div class="a11y-popup" {style}>
-  <span on:click={copyto} style="position:absolute;right:10px;top:10px;cursor:pointer;">
+  <span class="icopy" on:click={copyto}>
     <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
       <g id="surface1">
       <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 10.882812 4.027344 L 10.882812 0 L 1.730469 0 L 1.730469 12.269531 L 5.117188 12.269531 L 5.117188 16 L 14.269531 16 L 14.269531 7.417969 Z M 10.882812 5.464844 L 12.535156 7.117188 L 10.882812 7.117188 Z M 2.746094 11.253906 L 2.746094 1.015625 L 9.863281 1.015625 L 9.863281 3.730469 L 5.117188 3.730469 L 5.117188 11.253906 Z M 6.136719 14.984375 L 6.136719 4.746094 L 9.863281 4.746094 L 9.863281 8.136719 L 13.253906 8.136719 L 13.253906 14.984375 Z M 6.136719 14.984375 "/>
@@ -172,6 +176,12 @@
     rgb(0 0 0 / 12%) 0px   4px  6px, 
     rgb(0 0 0 / 17%) 0px  12px 13px, 
     rgb(0 0 0 /  9%) 0px  -3px  5px;
+}
+.icopy {
+  position: absolute;
+  cursor: pointer;
+  right: 10px;
+  top: 10px;
 }
 h4 {
   margin: 10px 0;

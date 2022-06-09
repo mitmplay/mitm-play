@@ -19,13 +19,6 @@ const rulesObj = {
   'color-contrast': { enabled: true },
 }
 
-window.mitm.left2buttons = {
-  'strict-[yyy]|lightsalmon'() {fn.axerun(wcag3, rulesObj)},
-  'wcag:AA[yy-]|lightsalmon'() {fn.axerun(wcag2)},
-  'a11y---[y--]|lightsalmon'() {fn.axerun(     )},
-  'clear--[c--]|lightsalmon'() {clearAxes(     )},
-}
-
 //https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#getting-started
 window.mitm.fn.axerun = (values, rules) => { //# a11y
   console.log('a11y/axe-run!')
@@ -43,9 +36,12 @@ window.mitm.fn.axerun = (values, rules) => { //# a11y
   }
   // runOpt.exclude = [['.mitm-btn']]
   console.log(runOpt)
+  const app = document.querySelector('.mitm-app')
+  app.style = 'display:none'
   window.axe
   .run(runOpt)
   .then(results => {
+    app.style = ''
     if (results.violations.length) {
       window.mitm.axerun.results = results
       violationHilight(popup)
@@ -53,6 +49,7 @@ window.mitm.fn.axerun = (values, rules) => { //# a11y
     }
   })
   .catch(err => {
+    app.style = ''
     window.mitm.axerun.err = err
     console.error('Something bad happened:', err)
   })

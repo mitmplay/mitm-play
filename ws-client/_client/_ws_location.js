@@ -5,17 +5,23 @@ const _ws_namespace = require('./_ws_namespace')
 const _ws_vendor = require('./_ws_vendor')
 const play = require('./_ws_play')
 const _c = 'color: #bada55'
-const styleLeft  = 'top: -2px; left:  3px;'
-const styleTopR  = 'top:  0px; right: 3px;'
-const styleRight = 'top: 14px; right: 3px;'
+const styleLeft  = ''
+const styleTopR  = ''
+const styleRight = ''
 const buttonStyle= ''
 const style = `
+.mitm-app {
+  position: absolute;  
+}
 .mitm-container {
   z-index: 99999;
   position: fixed;
   font-size: 12px;
   line-height: 14px;
 }
+.mitm-container.topr  {top:  0px; right: 3px;}
+.mitm-container.left  {top: -2px; left : 3px;}
+.mitm-container.right {top: 14px; right: 3px;}
 .mitm-container.center {
   background: #fcffdcb0;
   position: fixed;
@@ -95,6 +101,7 @@ function toRegex (pathMsg) {
 }
 
 function createButton(buttons, pos) {
+  console.warn('createButton')
   for (const id in buttons) {
     const [caption, color, klas] = id.split('|').map(x=>x.trim())
     const btn = document.createElement('button')
@@ -175,9 +182,10 @@ let onces = {} // feat: onetime fn call
 async function urlChange (event) {
   const namespace = _ws_namespace()
   const {mitm} = window
-
-  if (mitm.argv.a11y && mitm.fn.axerun) {
-    mitm.fn.axerun()
+  const {fn}   = mitm
+  
+  if (mitm.argv.a11y && fn.axerun) {
+    fn.axerun()
   }
 
   clearInterval(intervId)
@@ -187,6 +195,14 @@ async function urlChange (event) {
   if (mitm.leftbuttons)  {delete mitm.leftbuttons }
   if (mitm.rightbuttons) {delete mitm.rightbuttons}
   if (mitm.macrokeys)    {defaultHotKeys()        }
+  if (mitm.argv.a11y) {
+    mitm.left2buttons = {
+      'strict-[yyy]|lightsalmon'() {fn.axerun(wcag3, rulesObj)},
+      'wcag:AA[yy-]|lightsalmon'() {fn.axerun(wcag2)},
+      'a11y---[y--]|lightsalmon'() {fn.axerun(     )},
+      'clear--[c--]|lightsalmon'() {clearAxes(     )},
+    }
+  }
   if (namespace) {
     const {href, origin} = location
     const _href = href.replace(origin, '')
@@ -247,6 +263,12 @@ async function urlChange (event) {
       const {left2buttons} = window.mitm
       left2buttons && setButtons(left2buttons, 'left2')
     }
+  } else {
+    setButtons({}, 'right')
+    setButtons({}, 'left')
+    setButtons({}, 'topr')
+    const {left2buttons} = window.mitm
+    left2buttons && setButtons(left2buttons, 'left2')
   }
   container.right.style = styleRight
   container.topr.style  = styleTopR
@@ -272,6 +294,7 @@ function observed() {
 const _urlChanged = new Event('urlchanged')
 function init() {
   const body     = document.body
+  const divx     = document.createElement('div'  )
   const divRight = document.createElement('div'  )
   const divTopR  = document.createElement('div'  )
   const divLeft  = document.createElement('div'  )
@@ -280,6 +303,7 @@ function init() {
   const html     = document.querySelector('html' )
   const styleBtn = document.createElement('style')
   const htmlref  = html.firstElementChild
+  const divxref  = divx.firstElementChild
   const bodyref  = body.firstElementChild
   divRight.style = styleRight
   divTopR .style = styleTopR
@@ -290,17 +314,18 @@ function init() {
   divRight .innerHTML = `<span class="bgroup-right"></span>`
   divTopR  .innerHTML = `<span class="bgroup-topr"></span>`
   divLeft  .innerHTML = `<span class="bgroup-left"></span><span class="bgroup-left2"></span>`
+  divx     .className = 'mitm-app'
   divLeft  .className = 'mitm-container left'
   divTopR  .className = 'mitm-container topr'
   divRight .className = 'mitm-container right'
   divPopup .className = 'mitm-container popup'
   divCenter.className = 'mitm-container center'
-
+  html.insertBefore(divx     , htmlref)
   html.insertBefore(styleBtn , htmlref)
-  html.insertBefore(divRight , htmlref)
-  html.insertBefore(divTopR  , htmlref)
-  html.insertBefore(divLeft  , htmlref)
-  html.insertBefore(divCenter, htmlref)
+  divx.insertBefore(divRight , divxref)
+  divx.insertBefore(divTopR  , divxref)
+  divx.insertBefore(divLeft  , divxref)
+  divx.insertBefore(divCenter, divxref)
   body.insertBefore(divPopup , bodyref)
   // body.appendChild (divPopup)
   const hotkey = new mitm.svelte.Hotkeys({target:divCenter})
@@ -320,10 +345,16 @@ function init() {
     urlChange(_urlChanged)
     observed()
     document.addEventListener('click', function(event) {
-      if (center && !divCenter.contains(event.target)) {
+      const el = event.target
+      if (center && !divCenter.contains(el)) {
         divCenter.attributes.removeNamedItem('style')
         center = false
-      }
+      } else{
+        const a11yPopup = document.querySelector('.a11y-popup')
+        if (a11yPopup && !el.closest('.a11y-popup')) {
+          a11yPopup.remove()
+        }
+      } 
     });
   }, 0)
 }
