@@ -65,7 +65,11 @@
       // if box in fixed position, popup too(and update top position)
       popup.style = `top:${top-winYOffst}px;left:${left}px;position:fixed;`
     } else {
-      popup.style = `top:${top}px;left:${left}px;`
+      if (grp.match(/page-/)) {
+        popup.style = `top:${top}px;left:0;right:0;margin:auto;`
+      } else {
+        popup.style = `top:${top}px;left:${left}px;`
+      }
     }
   })
 
@@ -90,14 +94,11 @@
   }, 0);
 
   function copyto(e) {
-    const tx = 'Copied to clipboard'
-    const el = document.querySelector('.icopy')
+    const el = document.querySelector('.icopied')
     const text = document.querySelector('.a11y-content').innerHTML
-    el.setAttribute('title', tx)
-    navigator.clipboard.writeText(text).then(() => {
-      setTimeout(()=>el.setAttribute('title', ''), 3000)
-      console.log(tx)
-    })
+    setTimeout(()=>{el.style = ''}, 3000)
+    navigator.clipboard.writeText(text)
+    el.style = 'display:block;'
   }
 </script>
 
@@ -107,7 +108,8 @@
       <g id="surface1">
       <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 10.882812 4.027344 L 10.882812 0 L 1.730469 0 L 1.730469 12.269531 L 5.117188 12.269531 L 5.117188 16 L 14.269531 16 L 14.269531 7.417969 Z M 10.882812 5.464844 L 12.535156 7.117188 L 10.882812 7.117188 Z M 2.746094 11.253906 L 2.746094 1.015625 L 9.863281 1.015625 L 9.863281 3.730469 L 5.117188 3.730469 L 5.117188 11.253906 Z M 6.136719 14.984375 L 6.136719 4.746094 L 9.863281 4.746094 L 9.863281 8.136719 L 13.253906 8.136719 L 13.253906 14.984375 Z M 6.136719 14.984375 "/>
       </g>
-    </svg>  
+    </svg>
+    <span class="icopied">Copied to clipboard</span>
   </span>
   <div class="a11y-content">
     <h4>{help}</h4>
@@ -182,6 +184,19 @@
   cursor: pointer;
   right: 10px;
   top: 10px;
+}
+.icopied {
+  animation: blinker 1s linear infinite;
+  font-style: italic;
+  position: fixed;
+  font-size: 11px;
+  color: brown;
+  display: none;
+  right: 30px;
+  top: 23px;
+}
+@keyframes blinker {
+  50% {opacity: 0;}
 }
 h4 {
   margin: 10px 0;

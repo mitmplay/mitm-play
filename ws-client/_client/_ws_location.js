@@ -101,7 +101,6 @@ function toRegex (pathMsg) {
 }
 
 function createButton(buttons, pos) {
-  console.warn('createButton')
   for (const id in buttons) {
     const [caption, color, klas] = id.split('|').map(x=>x.trim())
     const btn = document.createElement('button')
@@ -195,14 +194,7 @@ async function urlChange (event) {
   if (mitm.leftbuttons)  {delete mitm.leftbuttons }
   if (mitm.rightbuttons) {delete mitm.rightbuttons}
   if (mitm.macrokeys)    {defaultHotKeys()        }
-  if (mitm.argv.a11y) {
-    mitm.left2buttons = {
-      'strict-[yyy]|lightsalmon'() {fn.axerun(wcag3, rulesObj)},
-      'wcag:AA[yy-]|lightsalmon'() {fn.axerun(wcag2)},
-      'a11y---[y--]|lightsalmon'() {fn.axerun(     )},
-      'clear--[c--]|lightsalmon'() {clearAxes(     )},
-    }
-  }
+
   if (namespace) {
     const {href, origin} = location
     const _href = href.replace(origin, '')

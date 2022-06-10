@@ -18,7 +18,12 @@ const wcag3 = [
 const rulesObj = {
   'color-contrast': { enabled: true },
 }
-
+window.mitm.left2buttons = {
+  'strict-[yyy]|lightsalmon'() {fn.axerun(wcag3, rulesObj)},
+  'wcag:AA[yy-]|lightsalmon'() {fn.axerun(wcag2)},
+  'a11y---[y--]|lightsalmon'() {fn.axerun(     )},
+  'clear--[c--]|lightsalmon'() {clearAxes(     )},
+}
 //https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#getting-started
 window.mitm.fn.axerun = (values, rules) => { //# a11y
   console.log('a11y/axe-run!')
