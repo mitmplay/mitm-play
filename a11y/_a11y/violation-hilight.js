@@ -20,7 +20,6 @@ function iterate(arr, popup, {x,y}, incomplete) {
       tags,
       id: grp, 
     } = violation
-    const tgs = tags.join(', ')
     for (const node of nodes) {
       const {html,target,all,any} = node
       const el = document.querySelector(target)
@@ -46,7 +45,7 @@ function iterate(arr, popup, {x,y}, incomplete) {
         all,
         any,
         help,
-        tgs,
+        tags,
         grp,
         el,
       }
@@ -68,9 +67,9 @@ function iterate(arr, popup, {x,y}, incomplete) {
       dv.classList.add('axe-run-violation')
       dv.classList.add(`axe-grp-${grp}`)
       
-      if (tgs.includes('wcag2aaa')) {
+      if (tags.includes('wcag2aaa')) {
         dv.classList.add(`axe-grp-wcag2aaa`)
-      } else if (tgs.includes('best-practice')) {
+      } else if (tags.includes('best-practice')) {
         dv.classList.add(`axe-grp-best-practice`)
       }
       

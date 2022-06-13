@@ -51,9 +51,8 @@ function contrast(rgbF, rgbB) {
   const f = rgbToHex(rgbF)
   const b = rgbToHex(rgbB)
   console.log([
-    `f:${rgbF}-> ${f}`,
-    `b:${rgbB}-> ${b}`,
-    `Contrast ratio-> ${_ratio}`
+    `f:${rgbF}`.padEnd(23, ' ')+`-> ${f}`,
+    `b:${rgbB}`.padEnd(23, ' ')+`-> ${b} => contrast ratio:${_ratio}`
   ].join('\n'))
 
   return _ratio

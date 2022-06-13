@@ -344,6 +344,8 @@ function init() {
       } else{
         const a11yPopup = document.querySelector('.a11y-popup')
         if (a11yPopup && !el.closest('.a11y-popup')) {
+          const {elNode={}} = mitm.axerun
+          elNode.node = undefined
           a11yPopup.remove()
         }
       } 

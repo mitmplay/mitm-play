@@ -1,6 +1,10 @@
 // https://www.a11yproject.com/checklist/
 const criterionMap = {
-  baseUrl: 'https://www.w3.org/WAI/WCAG21/',
+  baseUrl:'https://www.w3.org/WAI/WCAG21/',
+  wcag2aa        :{id:'2.a.a'    ,desc:'A&AA checkist',link:'https://www.w3.org/WAI/WCAG21/quickref/?currentsidebar=%23col_overview&levels=aaa'   },
+  wcag2aaa       :{id:'2.a.a.a'  ,desc:'AAA checkist' ,link:'https://www.w3.org/WAI/WCAG21/quickref/?currentsidebar=%23col_overview&levels=a%2Caa'},
+  'best-practice':{id:'w3devtips',desc:'w3-dev-tips'  ,link:'https://www.w3.org/WAI/tips/developing/'},
+  'cat.semantics':{id:'semantics',desc:'Semantics'    ,link:'https://dequeuniversity.com/checklists/web/other-semantics'},
   wcag111:{id:'1.1.1',desc:'Non-text Content'      ,link:'Understanding/non-text-content'      },
   wcag131:{id:'1.3.1',desc:'Info and Relationships',link:'Understanding/info-and-relationships'},
   wcag132:{id:'1.3.2',desc:'Meaningful Sequence'   ,link:'Understanding/meaningful-sequence'   },
@@ -22,17 +26,19 @@ const criterionMap = {
   wcag412:{id:'4.1.2',desc:'Name, Role, Value'     ,link:'Understanding/name-role-value'       },
 }
 function criterion1(tags) {
+  const result = {}
   for(const tag of tags) {
     if (criterionMap[tag]) {
       const {id, desc, link} = criterionMap[tag]
       const {baseUrl=''} = criterionMap
-      return {
+      result[tag] = {
         name: `WCAG ${id}`,
         desc,
-        link: `${baseUrl}${link}`,
+        link: link.includes('https://') ? link : `${baseUrl}${link}`,
       }
     }
   }
+  return result
 }
 
 module.exports = criterion1

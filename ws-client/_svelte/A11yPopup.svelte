@@ -16,7 +16,7 @@
     all,
     any,
     help,
-    tgs,
+    tags,
     grp,
     el,
   } = node._axe_
@@ -114,12 +114,18 @@
   <div class="a11y-content">
     <h4>{help}</h4>
     <p>{description}</p>
-    <p class=tgs><b>tags:</b> {tgs}</p>
+    <p class=tgs><b>tags:</b>
+      {#each tags as tag}
+        {#if criterion1[tag]}
+          <a target="_blank" rel="noopener noreferrer" href="{criterion1[tag].link}">{tag}</a>
+        {:else}
+          {tag}
+        {/if}
+        &nbsp;
+      {/each}
+    </p>
     <p>
       <b>criteria:</b>
-      {#if criterion1}
-        <a target="_blank" rel="noopener noreferrer" href="{criterion1.link}">{criterion1.name}</a>, 
-      {/if}
       {#each Object.entries(criterion2) as [key, value]}
         <a target="_blank" rel="noopener noreferrer" href="{value.link}">{value.name}</a>, 
       {/each}
