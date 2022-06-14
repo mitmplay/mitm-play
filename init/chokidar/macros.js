@@ -1,4 +1,4 @@
-const genBuild = require('./build-macros/gen-build')
+const genBuild = require('./build-macros/builder')
 
 const {
   lib:{c, fg, chokidar},
