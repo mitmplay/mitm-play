@@ -77,6 +77,49 @@ pre.svelte-tj161o code.svelte-tj161o {
   padding: 5px;
 }
 
+details.note.svelte-ws3cmd.svelte-ws3cmd {
+  padding-left: 14px;
+  padding-bottom: 3px;
+}
+
+details.note.svelte-ws3cmd summary.svelte-ws3cmd {
+  color: red;
+  cursor: pointer;
+  font-size: x-small;
+  margin-left: -14px;
+  padding-left: 14px;
+  list-style: none;
+}
+
+details.note.svelte-ws3cmd summary.svelte-ws3cmd::-webkit-details-marker {
+  display: none;
+}
+
+details.note.svelte-ws3cmd summary.svelte-ws3cmd:hover {
+  background-color: lightgoldenrodyellow;
+}
+
+summary.svelte-ws3cmd.svelte-ws3cmd, .item.svelte-ws3cmd.svelte-ws3cmd {
+  cursor: pointer;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: small;
+}
+
+summary.svelte-ws3cmd.svelte-ws3cmd:hover, .item.svelte-ws3cmd.svelte-ws3cmd:hover {
+  background-color: lightblue;
+}
+
+summary.fallback.svelte-ws3cmd.svelte-ws3cmd {
+  color: darkred;
+}
+
+.item.svelte-ws3cmd.svelte-ws3cmd {
+  padding-left: 14px;
+  font-size: smaller;
+  color: #9100cd;
+}
+
 .vbox.svelte-1e9gn7l.svelte-1e9gn7l {
   color: blue;
   left: 0;
@@ -121,49 +164,6 @@ table.svelte-1e9gn7l .kcode.svelte-1e9gn7l {
 table.svelte-1e9gn7l .title.svelte-1e9gn7l {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   width: 50%;
-}
-
-details.note.svelte-ws3cmd.svelte-ws3cmd {
-  padding-left: 14px;
-  padding-bottom: 3px;
-}
-
-details.note.svelte-ws3cmd summary.svelte-ws3cmd {
-  color: red;
-  cursor: pointer;
-  font-size: x-small;
-  margin-left: -14px;
-  padding-left: 14px;
-  list-style: none;
-}
-
-details.note.svelte-ws3cmd summary.svelte-ws3cmd::-webkit-details-marker {
-  display: none;
-}
-
-details.note.svelte-ws3cmd summary.svelte-ws3cmd:hover {
-  background-color: lightgoldenrodyellow;
-}
-
-summary.svelte-ws3cmd.svelte-ws3cmd, .item.svelte-ws3cmd.svelte-ws3cmd {
-  cursor: pointer;
-  font-family: "Courier New", Courier, monospace;
-  font-weight: bold;
-  font-size: small;
-}
-
-summary.svelte-ws3cmd.svelte-ws3cmd:hover, .item.svelte-ws3cmd.svelte-ws3cmd:hover {
-  background-color: lightblue;
-}
-
-summary.fallback.svelte-ws3cmd.svelte-ws3cmd {
-  color: darkred;
-}
-
-.item.svelte-ws3cmd.svelte-ws3cmd {
-  padding-left: 14px;
-  font-size: smaller;
-  color: #9100cd;
 }
 
 [type=checkbox].svelte-wtlyn9.svelte-wtlyn9 {

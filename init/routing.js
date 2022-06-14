@@ -31,10 +31,13 @@ function mockMacros(resp, reqs, ex) {
       } else if (page.macro) {
         path = `${argv.route}/${domain||app}/_bundle_/${page.macro}@macros`  
       }
-    } else if (namespace.match('@')) {
-      path = `${argv.route}/${domain}/_bundle_/${app}@macros`
-    } else {
-      path = `${argv.route}/${app}/_bundle_/macros`
+    }
+    if (path==='') {
+      if (namespace.match('@')) {
+        path = `${argv.route}/${domain}/_bundle_/${app}@macros`
+      } else {
+        path = `${argv.route}/${app}/_bundle_/macros`
+      }  
     }
   }
   if (path) {
