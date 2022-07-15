@@ -33,7 +33,7 @@
     "stylelint": "^13.8.0",
     "stylelint-config-standard": "^20.0.0",
     "svelma": "^0.4.0",
-    "svelte": "~3.29.7s",
+    "svelte": "~3.49.0",
     "svelte-preprocess": "^3.9.8"
   },
   "engines": {
