@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
-  import Json from './Json.svelte';
+  import Json from './json.svelte';
 
   let lst = {}
   let obj = {rows: []}

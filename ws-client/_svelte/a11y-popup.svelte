@@ -92,12 +92,32 @@
   setTimeout(() => {
     hljs.highlightAll()
   }, 0);
-
+/*
   function copyto(e) {
     const el = document.querySelector('.icopied')
     const text = document.querySelector('.a11y-content').innerHTML
     setTimeout(()=>{el.style = ''}, 3000)
     navigator.clipboard.writeText(text)
+    el.style = 'display:block;'
+  }*/
+
+  function copyto(e) {
+    const el = document.querySelector('.icopied')
+    const html = document.querySelector('.a11y-content').innerHTML
+    setTimeout(()=>{el.style = ''}, 3000)
+    
+    const type = 'text/plain'
+    const blob = new Blob([html], {type})
+    const data = [new ClipboardItem({[type]: blob})]
+    navigator.clipboard.write(data).then(
+      function() {
+        console.log('copy to clipboard ok')
+      },
+      function(err) {
+        console.warn('copy to clipboard error', err)
+      }
+    )
+
     el.style = 'display:block;'
   }
 </script>
@@ -131,41 +151,41 @@
       {/each}
       <a target="_blank" rel="noopener noreferrer" href="{helpUrl}">{grp}</a>
     </p>
-    <details open>
-      <summary><b>impact:</b> {impact}</summary>
-      {#if all.length||any.length}
-        <hr/>
-        <div class=pre>
-          {#if all.length>1}
-            <b>Fix ALL of the following:</b>
-            <ol>
-            {#each all as cat}
-              <li>{@html cat}</li>
-            {/each}
-            </ol>
-          {:else if all.length===1}
-            {@html all[0]}
-          {:else if any.length>1}
-            <b>Fix ONE of the following:</b>
-            <ol>
-            {#each any as cat}
-              <li>{@html cat}</li>
-            {/each}
-            </ol>
-          {:else if any.length===1}
-            {@html any[0]}
-          {/if}
-          {#if incomplete && grp==='color-contrast'}
-            {ratio()}
-          {/if}
-        </div>
-        <hr/>
-      {/if}
-      <div class=pre>
-        <pre><code class="language-html">{html}</code></pre>
-      </div>
-    </details>
   </div>
+  <details open>
+    <summary><b>impact:</b> {impact}</summary>
+    {#if all.length||any.length}
+      <hr/>
+      <div class=pre>
+        {#if all.length>1}
+          <b>Fix ALL of the following:</b>
+          <ol>
+          {#each all as cat}
+            <li>{@html cat}</li>
+          {/each}
+          </ol>
+        {:else if all.length===1}
+          {@html all[0]}
+        {:else if any.length>1}
+          <b>Fix ONE of the following:</b>
+          <ol>
+          {#each any as cat}
+            <li>{@html cat}</li>
+          {/each}
+          </ol>
+        {:else if any.length===1}
+          {@html any[0]}
+        {/if}
+        {#if incomplete && grp==='color-contrast'}
+          {ratio()}
+        {/if}
+      </div>
+      <hr/>
+    {/if}
+    <div class=pre>
+      <pre><code class="language-html">{html}</code></pre>
+    </div>
+  </details>
 </div>
 
 <style>

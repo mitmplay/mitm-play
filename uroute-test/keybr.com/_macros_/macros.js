@@ -1,40 +1,33 @@
 const rbuttons = {
-  'right1|yellow': async function () {
-    console.log('right')
-  },
-  'download-right|yellow': async function () {
-    console.log('download-right')
-  },
+  'right1|yellow': async function () {console.log('right' )},
+  'dright|yellow': async function () {console.log('dright')},
 }
 const lbuttons = {
-  'left1|yellow': async function () {
-    console.log('left1')
-  },
-  'left2|yellow': async function () {
-    console.log('left2')
-  },
-  'left3|yellow': async function () {
-    console.log('left3')
-  },
+  'left1|yellow': async function () {console.log('left1')},
+  'left2|yellow': async function () {console.log('left2')},
+  'left3|yellow': async function () {console.log('left3')},
 }
 module.exports = () => {
-  const hello = 'world'
   const oneOnce = async function() {
-    console.log('lol')
+    console.log('oneOnce')
   }
   return {
     '/'() {
       console.log('olah')
-      window.mitm.macrokeys = {
-        'code:KeyA'() {
-          console.log('KeyA')
-          alert('Alert KeyA')
+      const keys = {
+        'code:KeyB'() {
+          console.log('KeyB')
+          alert('Alert KeyB')
         }
       }
-      window.mitm.autofill = ['input[type="password"] => password']
-      window.mitm.rightbuttons = rbuttons
-      window.mitm.autobuttons  = rbuttons
-      window.mitm.leftbuttons  = lbuttons
+      keys['code:KeyB']._title = 'Print on console'
+
+      const {mitm} = window 
+      mitm.fn.hotKeys(keys)
+      mitm.autofill = ['input[type="password"] => password']
+      mitm.rightbuttons = rbuttons
+      mitm.autobuttons  = rbuttons
+      mitm.leftbuttons  = lbuttons
       return oneOnce
     },
     zero: '0'

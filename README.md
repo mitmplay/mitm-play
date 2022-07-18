@@ -1096,7 +1096,7 @@ Enable *Axe-core* `a11y checker`, when actiaved, <b>buttons to check a11y</b> vi
 
 * `strict-[yyy]` - most stricted rules 
 * `wcag:AA[yy-]` - WCAG AA rules
-* `a11y---[y--]` - Basic Axe-core rules
+* `a11y---[y--]` - Base Axe-core rules
 * `clear--[c--]` - Clear/reset the page
 
 When *Axe-core* `a11y checker` is finished, it will show result in:

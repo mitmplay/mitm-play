@@ -1,7 +1,7 @@
 // feat: svelte related
-const {default: A11yPopup} = require('./A11yPopup.svelte')
-const {default: Cspheader} = require('./Cspheader.svelte')
-const {default: Hotkeys}   = require('./Hotkeys.svelte')
+const {default: A11yPopup} = require('./a11y-popup.svelte')
+const {default: Cspheader} = require('./csp-header.svelte')
+const {default: Hotkeys}   = require('./hotkeys.svelte')
 const {default: Sqlite}    = require('./sqlite.svelte')
 module.exports = {
   A11yPopup,

@@ -120,52 +120,6 @@ summary.fallback.svelte-ws3cmd.svelte-ws3cmd {
   color: #9100cd;
 }
 
-.vbox.svelte-1e9gn7l.svelte-1e9gn7l {
-  color: blue;
-  left: 0;
-  right: 0;
-}
-
-table.svelte-1e9gn7l.svelte-1e9gn7l {
-  width: 100%;
-  color: maroon;
-  border-collapse: collapse;
-}
-
-table.svelte-1e9gn7l tr.svelte-1e9gn7l:hover {
-  background: rgba(199, 166, 116, 0.452);
-}
-
-table.svelte-1e9gn7l tr:hover .kcode.svelte-1e9gn7l {
-  text-decoration: underline;
-}
-
-table.svelte-1e9gn7l tr:hover .kcode.svelte-1e9gn7l:hover {
-  color: red;
-  cursor: pointer;
-}
-
-table.svelte-1e9gn7l td.svelte-1e9gn7l {
-  border: 1px solid #999;
-  padding-left: 5px;
-}
-
-table.svelte-1e9gn7l .no.svelte-1e9gn7l {
-  padding: 0;
-  width: 25px;
-  text-align: center;
-}
-
-table.svelte-1e9gn7l .kcode.svelte-1e9gn7l {
-  font-family: "Courier New", Courier, monospace;
-  font-weight: bold;
-}
-
-table.svelte-1e9gn7l .title.svelte-1e9gn7l {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  width: 50%;
-}
-
 [type=checkbox].svelte-wtlyn9.svelte-wtlyn9 {
   vertical-align: middle;
 }
@@ -229,6 +183,52 @@ summary.svelte-wtlyn9.svelte-wtlyn9:is(.st3x, .st4x, .st5x) {
 
 .sv-title.svelte-wtlyn9.svelte-wtlyn9:hover {
   background-color: lightgoldenrodyellow;
+}
+
+.vbox.svelte-1e9gn7l.svelte-1e9gn7l {
+  color: blue;
+  left: 0;
+  right: 0;
+}
+
+table.svelte-1e9gn7l.svelte-1e9gn7l {
+  width: 100%;
+  color: maroon;
+  border-collapse: collapse;
+}
+
+table.svelte-1e9gn7l tr.svelte-1e9gn7l:hover {
+  background: rgba(199, 166, 116, 0.452);
+}
+
+table.svelte-1e9gn7l tr:hover .kcode.svelte-1e9gn7l {
+  text-decoration: underline;
+}
+
+table.svelte-1e9gn7l tr:hover .kcode.svelte-1e9gn7l:hover {
+  color: red;
+  cursor: pointer;
+}
+
+table.svelte-1e9gn7l td.svelte-1e9gn7l {
+  border: 1px solid #999;
+  padding-left: 5px;
+}
+
+table.svelte-1e9gn7l .no.svelte-1e9gn7l {
+  padding: 0;
+  width: 25px;
+  text-align: center;
+}
+
+table.svelte-1e9gn7l .kcode.svelte-1e9gn7l {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+}
+
+table.svelte-1e9gn7l .title.svelte-1e9gn7l {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  width: 50%;
 }
 
 .sv-item.svelte-1hx80ts {

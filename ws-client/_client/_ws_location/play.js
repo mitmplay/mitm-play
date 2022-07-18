@@ -1,4 +1,4 @@
-const _ws_vendor = require('./_ws_vendor')
+const _ws_vendor = require('../_ws_vendor')
 const _c = 'color: #bada55'
 
 function _post(json) {

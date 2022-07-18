@@ -1,10 +1,10 @@
 /* global location, history, chrome, Event, CssSelectorGenerator */
 /* eslint-disable camelcase */
-const {codeToChar:_key} = require('../_keyboard')
+const _ws_vendor    = require('../_ws_vendor'   )
 const _ws_namespace = require('../_ws_namespace')
-const _ws_vendor = require('../_ws_vendor')
-const play = require('../_ws_play')
-const style = require('./css')
+const _key          = require('./char'          )
+const play          = require('./play'          )
+const style         = require('./css'           )
 
 const bgroup = {
   right: {},
@@ -52,7 +52,9 @@ async function urlChange (event) {
   if (mitm.autobuttons)  {delete mitm.autobuttons }
   if (mitm.leftbuttons)  {delete mitm.leftbuttons }
   if (mitm.rightbuttons) {delete mitm.rightbuttons}
-  if (mitm.macrokeys)    {defaultHotKeys()        }
+  if (!mitm.macrokeys)   {
+    mitm.macrokeys = defaultHotKeys()     
+  }
 
   if (namespace) {
     const {href, origin} = location
@@ -502,11 +504,14 @@ function svelte(Svelt, bg='PostIt') { // feat: svelte related
   }
 }
 
-function hotKeys(obj) {
-  window.mitm.macrokeys = {
-    ...window.mitm.macrokeys,
-    ...obj
-  }
+function hotKeys(newkeys) {
+  const {mitm} = window
+  const keys = mitm.macrokeys || {}
+  delete keys['key:yyy']
+  delete keys['key:yy' ]
+  delete keys['key:y'  ]
+  delete keys['key:c'  ]
+  mitm.macrokeys = {...keys,...newkeys,...defaultHotKeys()}
 }
 
 window.mitm.fn.macroAutomation = macroAutomation

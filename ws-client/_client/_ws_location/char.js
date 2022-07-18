@@ -144,10 +144,4 @@ function codeToShow(codes) {
 
 window.mitm.fn.codeToChar = codeToChar
 window.mitm.fn.codeToShow = codeToShow
-module.exports = {
-  codeToChar,
-  kcode1,
-  kcode2,
-  kcode3,
-  kshow
-}
+module.exports = codeToChar

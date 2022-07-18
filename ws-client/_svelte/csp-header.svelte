@@ -5,7 +5,7 @@ import {
   cspInfo,
   cspFetch,
   cspEAttr,
-} from './Cspdirective'
+} from './_csp-directive'
 let csp = window.mitm.info.csp
 let reportTo = csp.reportTo
 
