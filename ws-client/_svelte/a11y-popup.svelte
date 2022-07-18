@@ -89,37 +89,25 @@
     }
   }
 
-  setTimeout(() => {
-    hljs.highlightAll()
-  }, 0);
-/*
   function copyto(e) {
-    const el = document.querySelector('.icopied')
-    const text = document.querySelector('.a11y-content').innerHTML
-    setTimeout(()=>{el.style = ''}, 3000)
-    navigator.clipboard.writeText(text)
-    el.style = 'display:block;'
-  }*/
-
-  function copyto(e) {
-    const el = document.querySelector('.icopied')
     const html = document.querySelector('.a11y-content').innerHTML
-    setTimeout(()=>{el.style = ''}, 3000)
-    
     const type = 'text/plain'
     const blob = new Blob([html], {type})
-    const data = [new ClipboardItem({[type]: blob})]
-    navigator.clipboard.write(data).then(
-      function() {
-        console.log('copy to clipboard ok')
-      },
+    const data = new ClipboardItem({[type]: blob})
+
+    navigator.clipboard.write([data]).then(
+      function() {},
       function(err) {
         console.warn('copy to clipboard error', err)
       }
     )
 
-    el.style = 'display:block;'
+    const ic = document.querySelector('.icopied')
+    ic.style = 'display:block;'
+    setTimeout(()=>{ic.style = ''}, 3000)
   }
+
+  setTimeout(() => hljs.highlightAll())
 </script>
 
 <div class="a11y-popup" {style}>

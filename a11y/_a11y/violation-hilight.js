@@ -1,14 +1,28 @@
 const _criterion1 = require('./criterion1')
 const _criterion2 = require('./criterion2')
+const divPosition = require('./div-position')
+let elNode  = {}
+
 //mitm.axerun.results.violations[0].nodes[0].target
 function violationHilight(popup) {
   const rect = document.body.getBoundingClientRect()
   const r = mitm.axerun.results
   iterate(r.violations, popup, rect)
   iterate(r.incomplete, popup, rect, true)
+
+  popup.onmouseover = function(e) {
+    const node = e.target
+    if (node.classList.contains('axe-run-violation') && elNode.node!==node) {
+      document.querySelectorAll('.a11y-popup').forEach(n=>n.remove())
+      const {mitm: {svelte: {A11yPopup}, fn}} = window
+      fn.svelte(A11yPopup, {popup: true, node})
+      mitm.axerun.elNode = elNode
+      elNode.target = node?._axe_?.target
+      elNode.node   = node
+    }
+  }
 }
 
-let elNode  = {}
 function iterate(arr, popup, {x,y}, incomplete) {
   for (const violation of arr) {
     const {
@@ -41,52 +55,18 @@ function iterate(arr, popup, {x,y}, incomplete) {
         criterion2,
         helpUrl,
         impact,
+        target,
         html,
-        all,
-        any,
         help,
         tags,
+        left,
+        top,
         grp,
+        all,
+        any,
         el,
       }
-
-      let style
-      if (grp.match(/page-/)) {
-        style = `left:0;top:0;width:100vw;height:10px;`
-      } else { // check parent element is fixed so do the box
-        style = `left:${left}px;top:${top}px;width:10px;height:10px;`
-        let pnode = el.parentElement
-        while (pnode && getComputedStyle(pnode).position!=='fixed') {
-          pnode = pnode.parentElement
-        }
-        if (pnode && getComputedStyle(pnode).position==='fixed') {
-          style += 'position:fixed;'
-        }
-      }
-      dv.style  = style
-      dv.classList.add('axe-run-violation')
-      dv.classList.add(`axe-grp-${grp}`)
-      
-      if (tags.includes('wcag2aaa')) {
-        dv.classList.add(`axe-grp-wcag2aaa`)
-      } else if (tags.includes('best-practice')) {
-        dv.classList.add(`axe-grp-best-practice`)
-      }
-      
-      if (incomplete) {
-        dv.classList.add(`axe-incomplete`)
-      }
-      dv.onmouseover = function(e) {
-        const node   = e.target
-        if (elNode.node!==node) {
-          document.querySelectorAll('.a11y-popup').forEach(n=>n.remove())
-          const {mitm: {svelte: {A11yPopup}, fn}} = window
-          fn.svelte(A11yPopup, {popup: true, node})
-          mitm.axerun.elNode = elNode
-          elNode.target = target
-          elNode.node   = node
-        }
-      };
+      divPosition(dv)
     }
   }
 }
