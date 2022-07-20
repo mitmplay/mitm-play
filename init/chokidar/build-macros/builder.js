@@ -76,7 +76,7 @@ function genBuild(msg, fpath) {
     fpath = fpath.replace(/\\/g, '/')
   }
   const rpath = fpath.replace(`${argv.route}/`, '')
-  logmsg('MACR BUILD:', c.red(`${msg}: ${rpath}`))
+  logmsg('MACRO BUILD:', c.red(`${msg}: ${rpath}`))
 
   path = `${argv.route}/_global_/_macros_/macros.js`
   if (fs.existsSync(path)) {

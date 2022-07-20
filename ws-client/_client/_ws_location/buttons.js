@@ -1,3 +1,5 @@
+const play = require('./play')
+
 module.exports = bgroup => {
 
   function createButton(buttons, pos) {

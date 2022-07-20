@@ -37,7 +37,7 @@ module.exports = () => {
   ]
 
   // Initialize watcher.
-  logmsg(c.magentaBright('>>> Md watcher:'), glob)
+  logmsg(c.magentaBright('>>> Markdown watcher:'), glob)
   const markdownWatcher = chokidar.watch(glob, { persistent: true })
 
   markdownWatcher // Add event listeners.
