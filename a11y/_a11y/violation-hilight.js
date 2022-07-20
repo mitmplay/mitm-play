@@ -49,7 +49,7 @@ function iterate(arr, popup, {x,y}, incomplete) {
       const criterion1 = _criterion1(tags)
       const criterion2 = _criterion2(tags)
       const left= -x + rc.left
-      const top = -y + tc.top
+      const top = -y + rc.top
       dv._axe_= {
         description,
         incomplete,
