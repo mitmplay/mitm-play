@@ -35,8 +35,11 @@ function iterate(arr, popup, {x,y}, incomplete) {
       id: grp, 
     } = violation
     for (const node of nodes) {
-      const {html,target,all,any} = node
+      const {html, target, all, any} = node
       const el = document.querySelector(target)
+      if (el===null) {
+        continue
+      }
       const dv = document.createElement('div')
       const rc = el.getClientRects()[0]
       if (rc===undefined) {
@@ -45,9 +48,8 @@ function iterate(arr, popup, {x,y}, incomplete) {
       popup.appendChild(dv)
       const criterion1 = _criterion1(tags)
       const criterion2 = _criterion2(tags)
-      const {top:t, left:l, width:w, height:h} = rc
-      const left= -x + l
-      const top = -y + t 
+      const left= -x + rc.left
+      const top = -y + tc.top
       dv._axe_= {
         description,
         incomplete,
