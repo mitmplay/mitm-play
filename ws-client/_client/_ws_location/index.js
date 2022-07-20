@@ -515,6 +515,7 @@ function hotKeys(newkeys) {
 }
 
 window.mitm.fn.macroAutomation = macroAutomation
+window.mitm.fn.urlChange = urlChange
 window.mitm.fn.hotKeys = hotKeys
 window.mitm.fn.svelte = svelte
 window.mitm.fn.play = play

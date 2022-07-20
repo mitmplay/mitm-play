@@ -30,6 +30,10 @@ module.exports = () => {
         console.log('%cWs: Update routes', _c)
         window.mitm.routes = routes
         window.mitm.__tag1 = __tag1 //# __tag1 in-sync
+        /**
+         * run as urlChange!
+         */
+        window.mitm.fn.urlChange()
       }
     },
     // ex: ws__

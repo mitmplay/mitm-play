@@ -26,7 +26,6 @@ window.mitm.left2buttons = {
 }
 //https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#getting-started
 window.mitm.fn.axerun = (values, rules) => { //# a11y
-  console.log('a11y/axe-run!')
   const {__args} = window.mitm
   const popup = clearAxes()
   const type  = 'tag'
@@ -40,7 +39,7 @@ window.mitm.fn.axerun = (values, rules) => { //# a11y
     runOpt.rules = rules
   }
   // runOpt.exclude = [['.mitm-btn']]
-  console.log(runOpt)
+  console.log('a11y/axe-run!', runOpt)
   const app = document.querySelector('.mitm-app')
   app.style = 'display:none'
   window.axe
