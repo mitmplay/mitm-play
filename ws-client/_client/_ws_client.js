@@ -25,7 +25,7 @@ module.exports = () => {
       )
     },
     // ex: ws__
-    _saveTags ({ routes, __tag1 }) {
+    _saveTags ({ routes, __tag1, __tag2, __tag3, _id }) {
       if (!location.origin.match('chrome-extension')) {
         console.log('%cWs: Update routes', _c)
         window.mitm.routes = routes
@@ -34,6 +34,13 @@ module.exports = () => {
          * run as urlChange!
          */
         window.mitm.fn.urlChange()
+      } else if (_id!==window._ws_id) {
+        console.log('%cWs: Update routes', _c)
+        window.mitm.routes = routes
+        window.mitm.__tag1 = __tag1 //# __tag1 in-sync
+        window.mitm.__tag2 = __tag2 //# __tag2 in-sync
+        window.mitm.__tag3 = __tag3 //# __tag3 in-sync
+        window.mitm.fn.broadcastEvent()
       }
     },
     // ex: ws__

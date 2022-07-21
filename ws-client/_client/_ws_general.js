@@ -53,6 +53,7 @@ module.exports = () => {
     const { __flag } = window.mitm
     const id = nanoid()
     const key = `${cmd}:${id}`
+    window._ws_id = id
     window._ws_queue[key] = handler || (w => {})
 
     setTimeout(function () {

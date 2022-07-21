@@ -46,9 +46,15 @@ onMount(() => {
     }
   };
 
+  window.mitm.browser.broadcast_events.tagsEvent = function() {
+    console.log('%cLogs: Update tags!', _c)
+    const {__tag1, __tag2, __tag3} = window.mitm
+    tags.set({...$tags, __tag1, __tag2, __tag3})
+  }
+
   window.mitm.browser.chgUrl_events.tagsEvent = function() {
-    console.log('%cLogs: Update tags!', _c);
-    tags.set({...$tags});
+    console.log('%cLogs: Update tags!', _c)
+    tags.set({...$tags})
   }
 });
 </script>

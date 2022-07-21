@@ -78,10 +78,11 @@ module.exports = async (client, data) => {
     if (run) {
       run.call(client, json)
     } else {
-      const key = `$${cmd.split(':')[0]}`
+      const [exc, _id] = cmd.split(':')
+      const key = `$${exc}`
       run = wscmd[key] || wsrun[key]
       if (run) {
-        data = run.call(client, json)
+        data = run.call(client, json, _id)
         if (data instanceof Promise) {
           data = await data
         }

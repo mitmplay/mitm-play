@@ -205,26 +205,35 @@ function oneSite(tags, ns) {
 }
 
 const {fn} = window.mitm
-fn.tmethod = tmethod;
-fn.rmethod = rmethod;
-fn.rclass = rclass;
-fn.machMethod = machMethod
+fn.tmethod      = tmethod;
+fn.rmethod      = rmethod;
+fn.rclass       = rclass;
+fn.machMethod   = machMethod
 fn.removeMethod = removeMethod
 fn.tagsIn__tag3 = tagsIn__tag3
-fn.noTagInRule = noTagInRule
-fn.resetRule2 = resetRule2
-fn.resetRule3 = resetRule3
-fn.isRuleOff = isRuleOff
-fn.sortTag = sortTag
-fn.oneSite = oneSite
-fn.toRegex = toRegex
-fn.uniq = uniq
-window.mitm.monaco = {};
-window.mitm.editor = {};
+fn.noTagInRule  = noTagInRule
+fn.resetRule2   = resetRule2
+fn.resetRule3   = resetRule3
+fn.isRuleOff    = isRuleOff
+fn.sortTag      = sortTag
+fn.oneSite      = oneSite
+fn.toRegex      = toRegex
+fn.uniq         = uniq
+window.mitm.monaco  = {};
+window.mitm.editor  = {};
 window.mitm.browser = {
+  broadcast_events: {},
   chgUrl_events: {},
   activeUrl: '',
   page: {}
+}
+
+fn.broadcastEvent = function broadcastEvent () {
+  console.log(`%cMitm: Broadcast Event: `, _c)
+  const { browser } = window.mitm
+  for (const e in browser.broadcast_events) {
+    browser.broadcast_events[e]()
+  }
 }
 
 function chgUrl (url) {

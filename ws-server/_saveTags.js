@@ -3,7 +3,7 @@ const {
   fn:{logmsg},
 } = global.mitm
 
-module.exports = ({ data }) => {
+module.exports = ({data}, _id) => {
   const { __args } = global.mitm
   if (__args.debug.includes('T')) {
     logmsg('>>> saveTags')
@@ -37,7 +37,12 @@ module.exports = ({ data }) => {
       })
     }
   }
-  const serial = JSON.stringify({routes, __tag1}) //# __tag1 in-sync
+  const serial = JSON.stringify({
+    routes,
+    __tag1, //# __tag1 in-sync
+    __tag2, //# __tag2 in-sync
+    __tag3, //# __tag3 in-sync
+    _id})
   global.broadcast({ data: `_saveTags${serial}` })
 
   return 'OK'
