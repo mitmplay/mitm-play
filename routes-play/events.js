@@ -41,6 +41,9 @@ function routeCall(route, cmd, params) {
     delete headers['xplay-page']
     delete headers['xplay-session']  
   }
+  if (params?.method==='GET') {
+    delete params.postData
+  }
   route[cmd](params)
 }
 
