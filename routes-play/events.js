@@ -41,10 +41,13 @@ function routeCall(route, cmd, params) {
     delete headers['xplay-page']
     delete headers['xplay-session']  
   }
-  if (params?.method==='GET') {
+  if (['GET', 'DELETE'].includes(params?.method)) {
     delete params.postData
+  } else if (params?.postData===null) {
+    // playwright/issues/6479#issuecomment-1193105330
+    params.postData = Buffer.from('', "utf-8");
   }
-  route[cmd](params)
+  route[cmd](params)    
 }
 
 module.exports = {
