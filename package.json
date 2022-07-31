@@ -52,7 +52,7 @@
     "sass": "1.49.7",
     "sqlite3": "5.0.8",
     "stack-trace": "0.0.10",
-    "svelte": "3.46.4",
+    "svelte": "3.49.0",
     "svelte-preprocess": "4.10.3",
     "user": "*",
     "ws": "8.7.0",
