@@ -6,9 +6,9 @@
     "html:hi",
     "mock:no-ads",
     "no-ads",
-    "no-ads~wow",
-    "url:ads",
-    "url:no-ads~wow"
+    "no-ads~wiw",
+    "tag3:no-ads~wiw",
+    "url:ads"
   ],
   "_subns": "hi@keybr.com"
 }

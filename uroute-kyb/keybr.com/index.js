@@ -47,12 +47,17 @@ const route = {
     },
   },
   mock: {
-    ':/df': {
+    '/mock' : {file: './mock.json'},
+    '/mock2': {
       file(reqs, match) {
-        match.path = '_assets_'
-        return 'me@error.json'
+        match.path = '.' // superseded match.route.path
+        return 'mock2.html'
       },
-      tags: 'no-ads~wiw'
+      response(resp, reqs, match) {
+        let {body} = resp
+        body += '<h2>there!</h2>'
+        return {body} // {status, headers, body} or false to skip
+      },
     }
   },
   // cache: {

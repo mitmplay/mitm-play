@@ -13,7 +13,7 @@ const { source, injectWS } = inject
 const {
   __page,
   lib:{c, fs},
-  fn:{logmsg},
+  fn:{logmsg,tilde},
 } = global.mitm
 
 const mock = ({ url }, match) => {
@@ -90,7 +90,11 @@ const mockResponse = async function ({ reqs }, _3d) {
               return
             }
           }
-          match.log += `[${xfile}]`
+          if (__args.verbose) {
+            match.log += `[${tilde(fpath1)}]`
+          } else {
+            match.log += `[${xfile}]`
+          }
           const [,fheader] = xfile.split('@')
           fpath2 = `${_root}/$/${fheader}`
           if (!(fheader && await fs.pathExists(fpath2))) {

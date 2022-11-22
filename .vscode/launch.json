@@ -9,7 +9,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "runtimeExecutable": "~/.nvm/versions/node/v16.14.2/bin/node",
+            "runtimeExecutable": "node",
             "console": "integratedTerminal",
             "skipFiles": [
                 "<node_internals>/**"
@@ -17,8 +17,8 @@
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/mitm-play.js",
             "runtimeArgs": ["--max-http-header-size=80000"], 
-            // "args": []
-            "args": ["zalando","-VBGdjr=-test", "-S=content-type" ]
+            "args": ["-Vr=-kyb"]
+            // "args": ["zalando","-VBGdjr=-test", "-S=content-type" ]
         }
     ]
 }

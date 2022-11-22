@@ -17,7 +17,7 @@ function mockMacros(resp, reqs, ex) {
   const namespace = _nameSpace(_tldomain(resp.url))
   let path = ''
   let path2 = ''
-  if (namespace) {
+  if (namespace && reqs.headers.referer) {
     const refURL = new URL(reqs.headers.referer)
     const macro = refURL.searchParams.get('mitm')
     const [app, domain] = namespace.split('@')

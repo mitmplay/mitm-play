@@ -428,19 +428,24 @@ Replace **response body** with **the matcher** value
 ```js
 mock: {'2mdn.net': ''},
 ```
-
+Replace  **response body** with content from file
+```js
+mock: {'/mock': {file: './mock.json'}},
+```
+```js
+mock: {'/mock': {file: _ => './mock.json'}},
+```
 Manipulate **response** with `response` *function*
 ```js
 mock: {
-  'mitm-play/twitter.js': {
+  '/mock2': {
     file(reqs, match) {
-      match.path = 'some/path' // superseded match.route.path
-      ...
-      return 'filename' //return {path: 'some/path', file: 'filename'}
+      match.path = '.' // superseded match.route.path
+      return 'filename.html' //return {path: 'some/path', file: 'filename'}
     },
     response(resp, reqs, match) {
-      const {body} = resp
-      ...
+      let {body} = resp
+      body += '<h2>there!</h2>'
       return {body} // {status, headers, body} or false to skip
     },
     log: true, // optional - enable logging
