@@ -44,7 +44,7 @@ module.exports = function(argv) {
     }
   }
 
-  if (!argv.worker) {    
+  if (navigator.serviceWorker && !argv.worker) {    
     const fn = e => {}
     setTimeout(fnTimeout, timeout)
     navigator.serviceWorker.register = function(url) {

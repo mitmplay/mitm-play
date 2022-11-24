@@ -85,17 +85,30 @@ function replaceCSP (csp) {
   return csp
 }
 
-const addCsp = (url, headers, _csp) => {
-  setTimeout(()=>{
+const addCsp = (headers, url, csp) => {
+  const policy= headers[csp]
+  const fn = ()=>{
     let reportTo = ''
     if (headers['report-to']) {
       reportTo = headers['report-to']
     }
     const {origin, pathname} = new URL(url)
-    mitm.info.csp[`${origin}${pathname}`] = {
-      _csp, reportTo
+    const cspurl = `${origin}${pathname}`
+    const csplog = {}
+    csplog[csp]  = {
+      policy, 
+      reportTo
     }
-  }, 0)
+
+    mitm.info.csp[cspurl] = {
+      ...mitm.info.csp[cspurl],
+      ...csplog,
+    }
+  }
+  if (policy) {
+    headers[csp] = replaceCSP(policy)
+    setTimeout(fn, 0)
+  }
 }
 
 function injectWS (resp, url, jsLib=[]) {
@@ -129,18 +142,8 @@ function injectWS (resp, url, jsLib=[]) {
   }
 
   resp.body = script_src(body, js)
-  let csp = 'content-security-policy'
-  let _cs = headers[csp]
-  if (!_cs) {
-    csp = 'content-security-policy-report-only'
-    _cs = headers[csp]
-  }
-  if (_cs) {
-    addCsp(url, headers, _cs)
-    if (__args.csp) {
-      headers[csp] = replaceCSP(_cs)
-    }
-  }
+  addCsp(headers, url, 'content-security-policy')
+  addCsp(headers, url, 'content-security-policy-report-only')
   if (__args.csp==='nosts' && headers['strict-transport-security']) {
     delete headers['strict-transport-security']
   }

@@ -426,22 +426,22 @@ Basic rule:
 
 Replace **response body** with **the matcher** value 
 ```js
-mock: {'2mdn.net': ''},
+mock: {'/mock': 'Hi!'},
 ```
 Replace  **response body** with content from file
 ```js
-mock: {'/mock': {file: './mock.json'}},
+mock: {'/mock1': {file: 'mocks/mock1.json'}},
 ```
 ```js
-mock: {'/mock': {file: _ => './mock.json'}},
+mock: {'/mock2': {path: 'mocks', file: 'mock2.html'}}, // match.route.path
 ```
 Manipulate **response** with `response` *function*
 ```js
 mock: {
-  '/mock2': {
+  '/mock3': {
     file(reqs, match) {
-      match.path = '.' // superseded match.route.path
-      return 'filename.html' //return {path: 'some/path', file: 'filename'}
+      match.path = 'mocks' // superseded match.route.path
+      return 'mock2.html' //return {path: 'some/path', file: 'filename'}
     },
     response(resp, reqs, match) {
       let {body} = resp

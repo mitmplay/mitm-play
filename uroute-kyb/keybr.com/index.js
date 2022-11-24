@@ -22,8 +22,8 @@ const css = `
 ;
 const route = {
   urls: {
-    keybr: 'https://www.keybr.com/?mitm=keyb1',
-    keyb2: 'https://www.keybr.com/?mitm=hi',
+    keybr : 'https://www.keybr.com/?mitm=keyb1',
+    keybr2: 'https://www.keybr.com/?mitm=hi',
   },
   screenshot: {},
   // jsLib: ['axe.js'],
@@ -47,17 +47,20 @@ const route = {
     },
   },
   mock: {
-    '/mock' : {file: './mock.json'},
-    '/mock2': {
+    '/mock' : 'Hi!',
+    '/mock1': {file: 'mocks/mock1.json'},
+    '/mock2': {path: 'mocks', file: 'mock2.html'}, // match.route.path
+    '/mock3': {
       file(reqs, match) {
-        match.path = '.' // superseded match.route.path
+        match.path = 'mocks' // superseded match.route.path
         return 'mock2.html'
       },
       response(resp, reqs, match) {
         let {body} = resp
-        body += '<h2>there!</h2>'
+        body += '<h2>There!</h2>'
         return {body} // {status, headers, body} or false to skip
       },
+      ws: true,
     }
   },
   // cache: {
@@ -75,3 +78,4 @@ const route = {
   preset
 }
 module.exports = route;
+ 
