@@ -23,19 +23,20 @@ function ctype (match, resp) {
 }
 
 const xtype = {
-  js: 'application/javascript',
+  js  : 'application/javascript',
   json: 'application/json',
-  map: 'application/json',
-  xml: 'application/xml',
-  svg: 'image/svg+xml',
+  map : 'application/json',
+  xml : 'application/xml',
+  svg : 'image/svg+xml',
   webp: 'image/webp',
   jpeg: 'image/jpeg',
-  html: 'text/html',
   text: 'text/plain',
-  ico: 'image/x-icon',
-  png: 'image/png',
-  gif: 'image/gif',
-  css: 'text/css'
+  html: 'text/html',
+  htm : 'text/html',
+  ico : 'image/x-icon',
+  png : 'image/png',
+  gif : 'image/gif',
+  css : 'text/css'
 }
 
 module.exports = {

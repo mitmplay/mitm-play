@@ -69,9 +69,14 @@ const mockResponse = async function ({ reqs }, _3d) {
           const _root = apath.join('/')
 
           let fileMethod, fpath1, fpath2
-          const arr = file.match(/\.\w+$/)
+          let arr = file.match(/\.\w+$/)
           if (arr) {
-            fileMethod = file.replace(arr[0], `~${reqs.method}_`) + arr[0]
+            const ext = arr[0]
+            if (xtype[ext.slice(1)]) {
+              fileMethod = file.replace(ext, `~${reqs.method}_`) + ext
+            } else {
+              fileMethod = `${file}~${reqs.method}_.json`
+            }
           }
           let xfile = fileMethod
           fpath1 = `${_root}/${fileMethod}`
@@ -79,6 +84,9 @@ const mockResponse = async function ({ reqs }, _3d) {
             resp.body = await fs.readFile(fpath1)
             file = fileMethod
           } else {
+            arr = file.match(/\.\w+$/)
+            const ext = arr ? arr[0] : '.???'
+            !xtype[ext.slice(1)] && (file = `${file}.json`)
             xfile = file
             fpath1 = `${_root}/${file}`
             if (await fs.pathExists(fpath1)) {
@@ -113,9 +121,10 @@ const mockResponse = async function ({ reqs }, _3d) {
             resp.headers = headers
           } else {
             match.log += '!?'
-            const ext = file.match(/\.(\w+)$/)
-            if (ext) {
-              resp.headers['content-type'] = xtype[ext[1]]
+            const arr = file.match(/\.\w+$/)
+            const typ = arr ? xtype[ext.slice(1)] : false
+            if (typ) {
+              resp.headers['content-type'] = typ
             } else {
               msg = c.redBright('>>> WARNING: Need a proper file extension')
               __args.fullog && logmsg(msg) // feat: fullog
