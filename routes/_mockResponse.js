@@ -68,32 +68,28 @@ const mockResponse = async function ({ reqs }, _3d) {
           file = apath.pop()
           const _root = apath.join('/')
 
-          let fileMethod, fpath1, fpath2
-          let arr = file.match(/\.\w+$/)
-          if (arr) {
-            const ext = arr[0]
-            if (xtype[ext.slice(1)]) {
-              fileMethod = file.replace(ext, `~${reqs.method}_`) + ext
-            } else {
-              fileMethod = `${file}~${reqs.method}_.json`
-            }
-          }
-          let xfile = fileMethod
-          fpath1 = `${_root}/${fileMethod}`
-          if (await fs.pathExists(fpath1)) {
-            resp.body = await fs.readFile(fpath1)
-            file = fileMethod
+          const arr = file.match(/\.\w+$/)
+          const ext = arr ? arr[0] : '.???'
+          const typ = xtype[ext.slice(1)]
+          let fcache, fpath1, fllog1, fllog2
+          if (typ) {
+            fcache = file.replace(ext, `~${reqs.method}_`) + ext
           } else {
-            arr = file.match(/\.\w+$/)
-            const ext = arr ? arr[0] : '.???'
-            !xtype[ext.slice(1)] && (file = `${file}.json`)
-            xfile = file
-            fpath1 = `${_root}/${file}`
+            fcache = `${file}~${reqs.method}_.json`
+          }
+          fpath1 = `${_root}/${fcache}`
+          fllog1 = fcache
+          if (arr    && await fs.pathExists(fpath1)) {
+            resp.body = await fs.readFile(fpath1)
+          } else {
+            fcache = typ ? file : `${file}.json`
+            fpath1 = `${_root}/${fcache}`
+            fllog2 = fcache
             if (await fs.pathExists(fpath1)) {
               resp.body = await fs.readFile(fpath1)
             } else {
               const b = browser[reqs.browserName]
-              msg = c.bgYellowBright.bold.red(`${b} mock err (${_root}/${fileMethod} or ${file}) did not exists!`)
+              msg = c.bgYellowBright.bold.red(`${b} mock err (${fllog1} or ${fllog2}) did not exists!`)
               logmsg(msg)
               return
             }
@@ -101,12 +97,12 @@ const mockResponse = async function ({ reqs }, _3d) {
           if (__args.verbose) {
             match.log += `[${tilde(fpath1)}]`
           } else {
-            match.log += `[${xfile}]`
+            match.log += `[${fcache}]`
           }
-          const [,fheader] = xfile.split('@')
-          fpath2 = `${_root}/$/${fheader}`
+          const [,fheader] = fcache.split('@')
+          let fpath2 = `${_root}/$/${fheader}`
           if (!(fheader && await fs.pathExists(fpath2))) {
-            fpath2 = `${_root}/$/${xfile}`
+            fpath2 = `${_root}/$/${fcache}`
             if (!await fs.pathExists(fpath2)) {
               fpath2 = false
             }
@@ -121,8 +117,6 @@ const mockResponse = async function ({ reqs }, _3d) {
             resp.headers = headers
           } else {
             match.log += '!?'
-            const arr = file.match(/\.\w+$/)
-            const typ = arr ? xtype[ext.slice(1)] : false
             if (typ) {
               resp.headers['content-type'] = typ
             } else {
