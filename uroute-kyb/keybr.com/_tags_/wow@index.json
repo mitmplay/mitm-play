@@ -7,9 +7,11 @@
     "mock:2.scenario",
     "mock:no-ads",
     "no-ads",
-    "no-ads~wow",
+    "tag3",
+    "tag3:tag3",
+    "tag3:widi",
     "url:ads",
-    "url:no-ads~wow",
+    "widi",
     "wow"
   ],
   "_subns": "hi@keybr.com"

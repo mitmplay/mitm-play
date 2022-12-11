@@ -1,14 +1,11 @@
 {
   "_": "auto-generated during saveTags!",
   "tags": [
-    "ads",
-    "hi",
-    "html:hi",
     "mock:no-ads",
     "no-ads",
-    "no-ads~wiw",
-    "tag3:no-ads~wiw",
-    "url:ads"
+    "no-ads~css",
+    "tag3:url:no-ads~css",
+    "url:no-ads~css"
   ],
   "_subns": "hi@keybr.com"
 }

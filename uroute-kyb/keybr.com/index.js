@@ -14,8 +14,7 @@ const preset = {
 }
 
 const css = `
-#ezoic-pub-ad-placeholder-110,
-#ezoic-pub-ad-placeholder-111,
+body>nav~div,
 .Body-header,.Body-aside {
   display: none !important;
 }`
@@ -38,7 +37,7 @@ const route = {
     ':ads:pub.network': '',
   },
   css: {
-    'GET:no-ads~wow:/assets/[a-z0-9]+': {
+    'GET:no-ads~css:/assets/[a-z0-9]+': {
       response(resp, reqs, match) {
         resp.body = `${resp.body}\n${css}`
         // console.log(match.tags)
