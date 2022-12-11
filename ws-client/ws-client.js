@@ -207,7 +207,7 @@ var app = (function () {
 	  if (connect || (window.chrome && chrome.tabs)) {
 	    const vendor = ['firefox', 'webkit'].includes(_ws_vendor$4());
 	    const pre = vendor ? 'ws' : 'wss';
-	    const prt = vendor ? '3002' : '3001';
+	    const prt = vendor ? '3002' : '3005';
 	    const url = `${pre}://localhost:${prt}/ws?page=${_ws_inIframe()}&url=${document.URL.split('?')[0]}`;
 	    let ws;
 	    try {

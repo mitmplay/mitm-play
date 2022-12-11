@@ -35,10 +35,10 @@ module.exports = () => {
   wss.on('connection', connection)
   ws.on('connection', connection);
 
-  logmsg(c.yellow('Listen:3001'))
+  logmsg(c.yellow(`Listen:3005`))
   global.wsservers = wss
   global.wsserver = ws
-  server.listen(3001)
+  server.listen(3005)
 
   wss.isAlive = function(fn, ms=500) {
     // logmsg('PING!!!')

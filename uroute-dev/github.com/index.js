@@ -11,7 +11,7 @@ const route = {
         const rgx = /(script|style)-src /g
         const fnc = (s,s1)=>`${s1}-src github.com `
         resp.headers[ids] = csp.replace(rgx, fnc).
-        replace(/connect-src /, 'connect-src wss://localhost:3001 ')
+        replace(/connect-src /, 'connect-src wss://localhost:3005 ')
       }
     }
   },

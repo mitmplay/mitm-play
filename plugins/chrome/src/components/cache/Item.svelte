@@ -19,7 +19,7 @@ function clickHandler(e) {
     <div class="td-item {show}" data-item={item.element} on:click="{clickHandler}">{item.title}</div>
     {#if show}
     <div>
-      <iframe title="json" src="{item.element.replace(/^.+\.mitm-play/,'https://localhost:3001')}" frameborder="0"></iframe>
+      <iframe title="json" src="{item.element.replace(/^.+\.mitm-play/,'https://localhost:3005')}" frameborder="0"></iframe>
     </div>
     {/if}
   </td>

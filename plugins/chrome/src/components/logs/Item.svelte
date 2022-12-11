@@ -38,7 +38,7 @@ function clickHandler(e) {
       logid: logid,
       title: o.title,
       path: o.path,
-      url: logid.replace(/^.+\.mitm-play/,'https://localhost:3001'),
+      url: logid.replace(/^.+\.mitm-play/,'https://localhost:3005'),
       ext: o.ext,
     }
     if (o.title.match('.png')) {
