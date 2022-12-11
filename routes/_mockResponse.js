@@ -72,29 +72,39 @@ const mockResponse = async function ({ reqs }, _3d) {
           const ext = arr ? arr[0] : '.???'
           const typ = xtype[ext.slice(1)]
           let fcache, fpath1, fllog1, fllog2
-          if (typ) {
-            fcache = file.replace(ext, `~${reqs.method}_`) + ext
+          if (path && path.match(/https?:\//)) {
+            fcache = `remote: ${file}`
+            const bdy = await fetch(`${path}/${file}`, {
+              mode: "cors",
+              method: "GET",
+              credentials: "omit"
+            });
+            resp.body = await bdy.text()
           } else {
-            fcache = `${file}~${reqs.method}_.json`
-          }
-          fpath1 = `${_root}/${fcache}`
-          fllog1 = fcache
-          if (arr    && await fs.pathExists(fpath1)) {
-            resp.body = await fs.readFile(fpath1)
-          } else {
-            fcache = typ ? file : `${file}.json`
+            if (typ) {
+              fcache = file.replace(ext, `~${reqs.method}_`) + ext
+            } else {
+              fcache = `${file}~${reqs.method}_.json`
+            }
             fpath1 = `${_root}/${fcache}`
-            fllog2 = fcache
-            if (await fs.pathExists(fpath1)) {
+            fllog1 = fcache
+            if (arr && await fs.pathExists(fpath1)) {
               resp.body = await fs.readFile(fpath1)
             } else {
-              const b = browser[reqs.browserName]
-              msg = c.bgYellowBright.bold.red(`${b} mock err (${fllog1} or ${fllog2}) did not exists!`)
-              logmsg(msg)
-              return
+              fcache = typ ? file : `${file}.json`
+              fpath1 = `${_root}/${fcache}`
+              fllog2 = fcache
+              if (await fs.pathExists(fpath1)) {
+                resp.body = await fs.readFile(fpath1)
+              } else {
+                const b = browser[reqs.browserName]
+                msg = c.bgYellowBright.bold.red(`${b} mock err (${fllog1} or ${fllog2}) did not exists!`)
+                logmsg(msg)
+                return
+              }
             }
           }
-          if (__args.verbose) {
+          if (__args.verbose && fpath1) {
             match.log += `[${tilde(fpath1)}]`
           } else {
             match.log += `[${fcache}]`

@@ -453,6 +453,10 @@ mock: {
   },
 },
 ```
+Replace response body with content from remote
+```js
+'/mock4': {path: 'https://www.lipsum.com/feed', file: 'html'}, 
+```
 Below is the logic of `file` getting translate combine with `path` or `workspace`, if `workspace` exists, and `file` value not start with dot(`.`), it will use `workspace` (ie: `${workspace}/${file}`) and the `path` will be ignore.
 ```js
 mock: {

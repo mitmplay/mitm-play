@@ -61,7 +61,8 @@ const route = {
         return {body} // {status, headers, body} or false to skip
       },
       ws: true,
-    }
+    },
+    '/mock4': {path: 'https://www.lipsum.com/feed', file: 'html'}, 
   },
   // cache: {
   //   '/df': {
