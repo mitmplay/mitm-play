@@ -2,10 +2,7 @@ const _path = require('path')
 const fg = require('fast-glob')
 const prompt = require('prompt-sync')()
 
-const {
-  lib: {c,fs},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 function kv(t) {
   t.increments('id').primary();
@@ -46,8 +43,8 @@ module.exports = async () => {
     useNullAsDefault: true
   });
   const exists = await knex.schema.hasTable('kv')
-  logmsg(c.redBright('\n[init/init-db.js]'))
-  logmsg(c.yellow(`Is table there? ${exists}`))
+  console.log(c.redBright('[init/init-db.js]'))
+  console.log(c.yellow(`Is table there? ${exists}`))
 
   if (!exists) {
     await knex.schema.createTable('kv', kv);
@@ -71,5 +68,5 @@ module.exports = async () => {
     })
     rows = await knex('kv').select('*')
   }
-  logmsg(c.yellow(`Knex Rows: ${rows.length}\n`))
+  console.log(c.yellow(`Knex Rows: ${rows.length}\n`))
 }

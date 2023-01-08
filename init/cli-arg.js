@@ -1,7 +1,4 @@
-const {
-  lib: {c,fs},
-  fn:{logmsg},
-} = global.mitm
+const {c, fs} = global.mitm.lib
 
 function argsChg (id, key) {
   const { argv } = global.mitm
@@ -49,7 +46,7 @@ function loadProfile (profile) {
     msg1 = msg1.replace(arr1[1], '******:******')
   }
 
-  logmsg(c.green(`>>> cmd: mitm-play ${msg1.trim()}`), `(${profile})`)
+  console.log(c.green(`>>> cmd: mitm-play ${msg1.trim()}`), `(${profile})`)
   return saveArgs
 }
 
@@ -69,7 +66,7 @@ module.exports = () => {
   argsChg('i', 'insecure'  )
   argsChg('j', 'jformat'   ) // feat: _global_.args
   argsChg('k', 'cookie'    ) // feat: _global_.args
-  argsChg('l', 'lazylog'   )
+  argsChg('l', 'light'     ) // theme: light mode
   argsChg('n', 'nosocket'  ) // feat: _global_.args
   argsChg('o', 'offline'   ) // console.log without \n
   argsChg('p', 'csp'       ) // feat: _global_.args
@@ -88,7 +85,6 @@ module.exports = () => {
   argsChg('G', 'nogpu'     )
   argsChg('H', 'nohost'    ) // feat: _global_.args
   argsChg('I', 'inspect'   )
-  argsChg('K', 'dark'      )
   argsChg('L', 'showsql'   )
   argsChg('P', 'cdp'       )
   argsChg('Q', 'nosql'     ) 
@@ -126,7 +122,7 @@ module.exports = () => {
     if (argv.url===undefined) {
       argv.url = prm0
     } else {
-      logmsg(`incorrect params`)
+      console.log(`incorrect params`)
       process.exit(1)
     }
   }
@@ -158,7 +154,7 @@ module.exports = () => {
       // feat: hide password
       msg2 = msg2.replace(arr2[1], '******:******')
     }
-    logmsg(c.green(`>>> cmd2 mitm-play ${msg2}`))
+    console.log(c.green(`>>> cmd2 mitm-play ${msg2}`))
     const {
       _argv: {
         browser: b,
@@ -169,7 +165,7 @@ module.exports = () => {
       }
     } = saveArgs
     browser = b
-    logmsg(c.green('>>> Profile argv._'), argv._)
+    console.log(c.green('>>> Profile argv._'), argv._)
 
     if (rest._ && argv._.length===0) {
       delete argv._

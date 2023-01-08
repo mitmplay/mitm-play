@@ -1,10 +1,7 @@
 // feat: profile
 const broadcast = require('./broadcast')
 
-const {
-  lib:{c, fs, chokidar},
-  fn:{logmsg},
-} = global.mitm
+const {c, fs, chokidar} = global.mitm.lib
 
 const showFiles = global._debounce(broadcast('profile'), 1002, 'profile')
 
@@ -13,7 +10,7 @@ function loadSource (path) {
   win32 && (path = path.replace(/\\/g, '/'))
   fs.readFile(path, 'utf8', function (err, data) {
     if (err) {
-      logmsg(c.redBright('Error read source file'), err)
+      console.log(c.redBright('Error read source file'), err)
     } else {
       if (profile.indexOf(path) === -1) {
         profile.push(path)
@@ -48,7 +45,7 @@ module.exports = () => {
 
   // Initialize watcher.
   const msg = global.mitm.fn.tilde(glob)
-  logmsg(c.magentaBright(`>>> Profile watcher:`), [msg])
+  console.log(c.magentaBright(`>>> Profile watcher:`), [msg])
   const profileWatcher = chokidar.watch(glob, {
     ignored: /\/\$\//, // ignore /$/
     persistent: true

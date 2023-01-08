@@ -1,11 +1,7 @@
-const logmsg = require('../../init/logmsg')
-global.mitm = {fn: {logmsg}}
-
 const { _proxy, _noproxy } = require('../../init/fn/_proxies')
 const _tldomain = require('../../init/fn/_tldomain')
 global.mitm = {
   fn: {
-    logmsg,
     _proxy,
     _noproxy,
     _tldomain

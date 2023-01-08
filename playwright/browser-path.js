@@ -1,7 +1,4 @@
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 const channel = {
   msedge: true,
@@ -24,7 +21,7 @@ function browserPath(browserName, options) {
     } else {
       execPath = execPath.replace(/\\/g, '/')
       if (browserName !== 'chromium') {
-        logmsg(c.redBright('executablePath is unsupported for non Chrome!'))
+        console.log(c.redBright('executablePath is unsupported for non Chrome!'))
       } else if (process.platform === 'darwin') {
         execPath += '/Contents/MacOS/Google Chrome'
       }
@@ -35,7 +32,7 @@ function browserPath(browserName, options) {
     execPath = _browser.executablePath().replace(/\\/g, '/')
   }
   if (browserName !== 'chromium') {
-    logmsg(c.yellow(`Exec. path: ${execPath}`))
+    console.log(c.yellow(`Exec. path: ${execPath}`))
   }
 }
 module.exports = browserPath

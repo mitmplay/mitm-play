@@ -8,10 +8,7 @@ const metaResp = require('./filesave/meta-resp')
 const jsonResp = require('./filesave/json-resp')
 const fpathflat = require('./filepath/fpath-flat')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 const { matched, searchFN } = _match
 
@@ -76,7 +73,7 @@ const logResponse = async function (reqs, responseHandler, _3d, cache) {
           msg = ''
         } else {
           msg = c.bold.blueBright(match.log)
-          __args.fullog && logmsg(msg) // feat: fullog
+          __args.fullog && console.log(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'log'} : undefined // feat: fullog

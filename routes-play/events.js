@@ -1,5 +1,3 @@
-const { logmsg } = global.mitm.fn
-
 async function Events (responseHandler, resp, reqs, route) {
   const { __args } = global.mitm
   let msg
@@ -30,7 +28,7 @@ async function Events (responseHandler, resp, reqs, route) {
     if (mtyp.length) {
       msg += `[${mtyp.join(',')}]`
     }
-    logmsg(msg)  
+    console.log(msg)  
   }
   routeCall(route, 'fulfill', resp)
 }

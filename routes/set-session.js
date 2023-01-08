@@ -1,7 +1,4 @@
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -34,9 +31,9 @@ async function setSession (reqs, {session, persist=false, msg=''}) {
     const { origin } = new URL(url)
     if (persist) {
       page._persist = true
-      logmsg(c.magenta(`>>> session: ${id} ${msg} ${origin}**`))
+      console.log(c.magenta(`>>> session: ${id} ${msg} ${origin}**`))
     } else {
-      logmsg(c.magenta(`>>> session: ${id} ${msg} ${origin}`))
+      console.log(c.magenta(`>>> session: ${id} ${msg} ${origin}`))
     }
   }
 }

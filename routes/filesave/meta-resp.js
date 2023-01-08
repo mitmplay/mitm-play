@@ -2,10 +2,7 @@ const _ext = require('../filepath/ext')
 const searchParams = require('./search-params')
 const _setCookie = require('./set-cookie')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 const { xjson } = searchParams
 
@@ -78,8 +75,8 @@ module.exports = ({ reqs, resp, match }) => {
       meta.CSP = CSP
     }
   } catch (error) {
-    logmsg(c.bgYellowBright.bold.red('>>> Error JSON.stringify'))
-    logmsg(error)
+    console.log(c.bgYellowBright.bold.red('>>> Error JSON.stringify'))
+    console.log(error)
   }
   return meta
 }

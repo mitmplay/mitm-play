@@ -7,7 +7,6 @@ const changeStatus = require('./change-status')
 const {
   __page,
   lib:{c},
-  fn:{logmsg},
 } = global.mitm
 
 const { matched, searchFN, searchKey } = _match
@@ -79,7 +78,7 @@ const htmlResponse = async function (reqs, responseHandler, _3d) {
         } else {
           const len = match.log.length
           msg = `${'-'.repeat(len)}\n${msg}`
-          __args.fullog && logmsg(msg) // feat: fullog
+          __args.fullog && console.log(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'html'} : undefined // feat: fullog

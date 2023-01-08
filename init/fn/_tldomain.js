@@ -1,7 +1,4 @@
-const {
-  lib:{c},
-  fn: {logmsg}
-} = global.mitm
+const {c} = global.mitm.lib
 const rgxDomain = /^\w+:\/\/([\w-.]+)/
 
 function _tldomain (fullpath) {
@@ -12,7 +9,7 @@ function _tldomain (fullpath) {
   if (match) {
     return match[1]
   } else {
-    logmsg(c.redBright(`>>> Error _tldomain ${fullpath}`))
+    console.log(c.redBright(`>>> Error _tldomain ${fullpath}`))
     return '**tld-error**'
   }
 }

@@ -2,10 +2,7 @@ const _match = require('./match')
 const changeStatus = require('./change-status')
 const addReplaceBody = require('./add-replace-body')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 const { matched, searchFN } = _match
 
@@ -40,7 +37,7 @@ const jsResponse = async function (reqs, responseHandler, _3d) {
           msg = ''
         } else {
           msg = c.cyanBright(match.log)
-          __args.fullog && logmsg(msg) // feat: fullog
+          __args.fullog && console.log(msg) // feat: fullog
         }
       }
       resp.log = msg ? {msg, mtyp: 'js'} : undefined // feat: fullog

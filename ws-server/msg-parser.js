@@ -23,10 +23,7 @@ const $sqlIns = require('./_sqlIns')
 const $sqlUpd = require('./_sqlUpd')
 const $sqlDel = require('./_sqlDel')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 // accessible from client
 const wscmd = {
@@ -62,7 +59,7 @@ module.exports = async (client, data) => {
   const msg = `${data}`
   if (__flag['ws-message']) {
     const _msg = msg.length > 97 ? `${msg.slice(0, 97)}...` : msg
-    logmsg(c.blue(`>>> ws-message:`),_msg)
+    console.log(c.blue(`>>> ws-message:`),_msg)
   }
   const arr = msg.replace(/\s+$/, '').match(/^ *([\w:]+) *(\{.*)/)
   if (arr) {

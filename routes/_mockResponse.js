@@ -12,8 +12,8 @@ const { source, injectWS } = inject
 
 const {
   __page,
+  fn:{tilde},
   lib:{c, fs},
-  fn:{logmsg,tilde},
 } = global.mitm
 
 const mock = ({ url }, match) => {
@@ -99,7 +99,7 @@ const mockResponse = async function ({ reqs }, _3d) {
               } else {
                 const b = browser[reqs.browserName]
                 msg = c.bgYellowBright.bold.red(`${b} mock err (${fllog1} or ${fllog2}) did not exists!`)
-                logmsg(msg)
+                console.log(msg)
                 return
               }
             }
@@ -131,7 +131,7 @@ const mockResponse = async function ({ reqs }, _3d) {
               resp.headers['content-type'] = typ
             } else {
               msg = c.redBright('>>> WARNING: Need a proper file extension')
-              __args.fullog && logmsg(msg) // feat: fullog
+              __args.fullog && console.log(msg) // feat: fullog
             }
           }
         } else if (js) {
@@ -168,7 +168,7 @@ const mockResponse = async function ({ reqs }, _3d) {
       msg = ''
     } else {
       msg = c.cyanBright(match.log) + msg
-      __args.fullog && logmsg(msg) // feat: fullog
+      __args.fullog && console.log(msg) // feat: fullog
     }
     resp.log = msg ? {msg, mtyp: 'mock'} : undefined // feat: fullog
     return {match, resp}

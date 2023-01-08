@@ -1,14 +1,13 @@
-const {c} = global.mitm.lib
 const parse = require('./parse')
 const select = require('./select')
 const sqlList = require('./sqlList') 
-const {argv, fn: {logmsg}} = global.mitm
+const {argv, lib: {c}} = global.mitm
 
 async function sqlIns(data={}, tbl='kv') {
   try {
     let msg = JSON.stringify(data)
     msg = c.green(`set:${msg.length>97?`${msg.slice(0, 97)}...`:msg}`)
-    logmsg(c.blueBright(`(*${c.redBright('sqlIns')} ${msg}*)`))
+    console.log(c.blueBright(`(*${c.redBright('sqlIns')} ${msg}*)`))
     const {id, _del_, _hold_, _distinct_, _where_, _limit_, _offset_, _pages_, ...obj} = data
     obj.dtc = mitm.db.fn.now()
     obj.dtu = mitm.db.fn.now()
@@ -31,9 +30,9 @@ async function sqlIns(data={}, tbl='kv') {
     }
     pre = mitm.db(tbl).insert(obj)
     if (argv.debug?.includes('W') || argv.showsql) {
-      arr && logmsg(...arr)
+      arr && console.log(...arr)
       msg = Object.values(pre.toSQL().toNative()).join(' ')
-      logmsg(msg.length>110?`${msg.slice(0,110)}...`:msg)
+      console.log(msg.length>110?`${msg.slice(0,110)}...`:msg)
     }
     if (_where_) {
       const result = await sqlList({_distinct_, _where_, _limit_, _offset_, _pages_}, tbl)

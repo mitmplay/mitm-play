@@ -1,9 +1,6 @@
 const broadcast = require('./broadcast')
 
-const {
-  lib:{c, fs, chokidar},
-  fn:{logmsg},
-} = global.mitm
+const {c, fs, chokidar} = global.mitm.lib
 
 const showFiles = global._debounce(broadcast('log'), 1001, 'log')
 const slash = p => p.replace(/\\/g, '/')
@@ -12,7 +9,7 @@ function addLog (path) {
   const { files: { _log, log } } = global.mitm
   log.push(path)
   if (global.mitm.__flag['file-log']) {
-    logmsg(c.red(`Log add: ${path}`))
+    console.log(c.red(`Log add: ${path}`))
   }
   const meta = path.replace(/\/log\/[^/]+/, m => `${m}/$`)
   fs.readFile(meta.replace(/.\w+$/, '.json'), (err, data) => {
@@ -57,7 +54,7 @@ function delLog (path) {
   const idx = log.indexOf(path);
   (idx > -1) && log.splice(idx, 1)
   if (global.mitm.__flag['file-log']) {
-    logmsg(c.red(`Log del: ${path}`))
+    console.log(c.red(`Log del: ${path}`))
   }
   showFiles()
 }
@@ -69,7 +66,7 @@ module.exports = () => {
   const glob = Array(glob1, glob2).flat()
 
   // Initialize watcher.
-  logmsg(c.magentaBright(`>>> Log watcher:`), glob)
+  console.log(c.magentaBright(`>>> Log watcher:`), glob)
   const logWatcher = chokidar.watch(glob, {
     ignored: /\/(\$\/|\.DS_)/, // ignore /$/ -OR- /.DS_
     persistent: true
@@ -78,6 +75,6 @@ module.exports = () => {
   logWatcher // Add event listeners.
     .on('add', p => { p = slash(p); addLog(p) })
     .on('unlink', p => { p = slash(p); delLog(p) })
-    // .on('unlinkDir', p => logmsg(`Directory ${p} has been removed`))
+    // .on('unlinkDir', p => console.log(`Directory ${p} has been removed`))
   global.mitm.watcher.logWatcher = logWatcher
 }

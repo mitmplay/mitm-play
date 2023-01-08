@@ -1,10 +1,7 @@
 const _match = require('./match')
 const setSession = require('./set-session')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 const { matched, searchFN } = _match
 
@@ -19,7 +16,7 @@ const chgRequest = async function (reqs, _3d) {
     if (__flag.request && !match.hidden && !hidden) {
       if (!match.url.match('/mitm-play/websocket')) {
         if (!__args.ommit.request) {
-          logmsg(c.cyanBright(match.log))
+          console.log(c.cyanBright(match.log))
         }
       }
     }

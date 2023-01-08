@@ -1,6 +1,3 @@
-const { logmsg } = global.mitm.fn
-
 module.exports = () => {
-  logmsg('reload!')
+  console.log('Reload!')
 }
-//

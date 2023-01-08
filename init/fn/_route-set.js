@@ -1,7 +1,6 @@
 const { c } = global.mitm.lib
 const { typC, typA, typO } =  require('./_typs')
 
-const { logmsg } = global.mitm.fn
 const rmethod = /^(GET|PUT|POST|DELETE|)#?\d*!?:([ \!\(\)\w.#~-]+:|)(.+)/ //# __tag2_TO_tag1_RULES // feat: tags in url
 const tgInUrl = /:[ \!\(\)\w.#~-]+:/ //# __tag2_TO_tag1_RULES // feat: tags in url
 
@@ -17,8 +16,8 @@ function toRegex (gpath, flags = '') {
 
 function routerSet (router, typ, method, gpath) {
   if (method && method[3][0]==='!') {
-    logmsg(c.red.bgYellowBright(`Error route: ${ method[0]}`))
-    logmsg({typ, method})
+    console.log(c.red.bgYellowBright(`Error route: ${ method[0]}`))
+    console.log({typ, method})
     process.exit()
   }
   let regex // feat: url start with method: ie: GET:/api/login
@@ -149,7 +148,7 @@ function _routeSet (_r, namespace, file) {
       if (site===undefined || site===null) { // fix:empty-gpathing{'GET:/google': ''}
         const obj = {}
         obj[typ] = r[typ]
-        logmsg(c.red(`\n incorrect route: ${namespace}\n`), obj, '\n')
+        console.log(c.red(`\n incorrect route: ${namespace}\n`), obj, '\n')
         process.exit(1)
       }
  

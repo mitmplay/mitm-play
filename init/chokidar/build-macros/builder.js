@@ -1,9 +1,6 @@
 const bundleRollup = require('./rollup')
 
-const {
-  lib:{c, fs},
-  fn:{logmsg},
-} = global.mitm
+const {c, fs} = global.mitm.lib
 
 function __autoKeys(body) {
 return (`
@@ -53,10 +50,10 @@ window.mitm.macros = {
 function bundling(fpath, body) {
   body = __autoKeys(body)
   const bpath = fpath.replace('macros.js', 'build.js')
-  // logmsg(c.redBright('Write'), bpath)
+  // console.log(c.redBright('Write'), bpath)
   fs.writeFile(bpath, body, err => {
     if (err) {
-      logmsg(c.redBright('Error saving'), err)
+      console.log(c.redBright('Error saving'), err)
       return
     }
     const opath = fpath.replace('_macros_', '_bundle_')
@@ -76,7 +73,7 @@ function genBuild(msg, fpath) {
     fpath = fpath.replace(/\\/g, '/')
   }
   const rpath = fpath.replace(`${argv.route}/`, '')
-  logmsg('MACRO BUILD:', c.red(`${msg}: ${rpath}`))
+  console.log('MACRO BUILD:', `${msg}: ${rpath}`)
 
   path = `${argv.route}/_global_/_macros_/macros.js`
   if (fs.existsSync(path)) {

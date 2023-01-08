@@ -1,9 +1,6 @@
 const { chromium, firefox } = require("playwright")
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 const regex = /(chromium|firefox|webkit)\/log\/page~(\d+)-(session~(\d+)|undefined)/
 
@@ -35,7 +32,7 @@ module.exports = () => {
         path
       }  
     } else {
-      logmsg(c.red(`Error in log file ${element}`))
+      console.log(c.red(`Error in log file ${element}`))
     }
   })
   return data

@@ -1,14 +1,11 @@
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 function ctype (match, resp) {
   const atype = match.route.contentType
   const ctype = resp.headers['content-type'] || 'text'
 
   if (atype===undefined) {
-    logmsg(c.red(`Warning: no contentType`), match.log)
+    console.log(c.red(`Warning: no contentType`), match.log)
     return false
   } else if (atype.length && ctype) {
     return atype.find(t => {

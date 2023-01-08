@@ -1,12 +1,9 @@
-const {
-  lib:{fs},
-  fn:{logmsg},
-} = global.mitm
+const {fs} = global.mitm.lib
 
 module.exports = ({data}, _id) => {
   const { __args } = global.mitm
   if (__args.debug.includes('T')) {
-    logmsg('>>> saveTags')
+    console.log('>>> saveTags')
   }
   const {__tag1, __tag2, __tag3, _childns} = data
   global.mitm.__tag1 = __tag1

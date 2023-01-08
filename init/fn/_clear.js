@@ -1,10 +1,7 @@
-const {
-  lib:{c, fs},
-  fn:{logmsg},
-} = global.mitm
+const {c, fs} = global.mitm.lib
 
 function err (e) {
-  e && logmsg(c.redBright('Error remove files'), e)
+  e && console.log(c.redBright('Error remove files'), e)
 }
 
 function folders(path) {

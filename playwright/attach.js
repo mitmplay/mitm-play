@@ -2,20 +2,17 @@ const { promisify } = require('util')
 const cdpSession = require('./cdp-session')
 const sleep = promisify(setTimeout)
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 async function log(msg) {
   const bypass = !msg.match(' frame')
-  const { argv, __flag } = global.mitm
+  const {argv, __flag} = global.mitm
   if (bypass || (argv.debug?.includes('P') || __flag['page-load'])) {
     if (msg.match('undefined')) {
       const undef = c.red('undefined')
       msg = msg.replace('undefined', undef)
     }
-    logmsg(c.gray(`(*${msg}*)`))
+    console.log(c.gray(`(*${msg}*)`))
   }
 }
 
@@ -31,24 +28,31 @@ function pagename(page) {
 }
 
 function grey(page, msg) {
+  const {argv} = global.mitm
+  let msg2 = ''
   let url = ''
   if (typeof page.url==='function') {
     url = page.url()
   }
-  if (url) { //&& url!=='about:blank'
-    let msg2 = ''
+  if (url) {
     url = url.length > 97 ? `${url.slice(0, 97)}...` : url
     let { origin, pathname } = new URL(url)
     msg2 = origin!=='null' ? `${origin}${pathname}` : `${url}`
     msg2 = `${msg} url: ${msg2}`.trim()
-    logmsg(c.gray(`(*${msg2}${pagename(page)}*)`))
+    msg2 = c.gray(`(*${msg2}${pagename(page)}*)`)
+    if (url==='about:blank') {
+      argv.verbose && console.log(msg2)
+    } else {
+      console.log(msg2)  
+    }
   } else {
-    logmsg(c.gray(`(*${msg}${pagename(page)}*)`))
+    msg2 = c.gray(`(*${msg}${pagename(page)}*)`)
+    console.log(msg2)
   }
 }
 
 async function evalPage(page, _page, msg, _frame='') {
-  const { argv, __flag } = global.mitm
+  const {argv, __flag} = global.mitm
   const url = page.url()
 
   if (url==='about:blank') {
@@ -113,7 +117,7 @@ async function evalPage(page, _page, msg, _frame='') {
         } else if (message.match('destroyed')) {
           // ignore...
         } else {
-          logmsg('PAGE/IFRAME ERROR')
+          console.log('PAGE/IFRAME ERROR')
         }
       }
     }
@@ -175,7 +179,7 @@ module.exports = async function(page) {
       await evalPage(frame, _page, 'xplay-page frame', _frame)
     } catch (error) {
       if (!error.message.match('Execution Context is not available')) {
-        logmsg('ERROR', error)
+        console.log('ERROR', error)
       }
     }
   })

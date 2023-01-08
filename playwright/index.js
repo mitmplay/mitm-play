@@ -11,7 +11,7 @@ const preload = require('./preload.js')
 
 const {
   lib:{c},
-  fn:{sleep,logmsg},
+  fn:{sleep},
 } = global.mitm
 
 const pages = {}
@@ -22,18 +22,18 @@ global.browserServer = browserServer
 
 function initBrowserMsg(browserName, opt) {
   const msg = `Init Browser: [${browserName}]`
-  logmsg(c.redBright('='.repeat(msg.length + 2)))
-  logmsg(c.yellow(`${msg} ${JSON.stringify(opt, null, 2)}`))
+  console.log(c.redBright('='.repeat(msg.length + 2)))
+  console.log(c.yellow(`${msg} ${JSON.stringify(opt, null, 2)}`))
 }
 
 function browserProxy() {
   if (global.mitm.argv.proxy === true) {
-    logmsg(c.red.bgYellowBright('>>> mitm-play will use --proxy but browser will not!'))
+    console.log(c.red.bgYellowBright('>>> mitm-play will use --proxy but browser will not!'))
   }
 }
 
 module.exports = () => {
-  logmsg(c.red('\n[playwright/index.js]'))
+  console.log(c.red('[playwright/index.js]'))
   cleanX()
 
   global.mitm.pages = pages
@@ -53,7 +53,7 @@ module.exports = () => {
     bcontext && await bcontext.close()
     browser && await browser.close()
 
-    logmsg(c.yellow(`Browser path ${tilde(playBrowser._initializer.executablePath)}`))
+    console.log(c.yellow(`Browser path ${tilde(playBrowser._initializer.executablePath)}`))
 
     let video = {}
     if (argv.video) {
@@ -87,7 +87,7 @@ module.exports = () => {
     let page
     if (argv.incognito===undefined) {
       const bprofile = `${global.mitm.path.home}/_profiles_/${browserName}`  // browwser profile
-      logmsg(c.yellow(`Browser profile ${tilde(bprofile)}`))
+      console.log(c.yellow(`Browser profile ${tilde(bprofile)}`))
       browser = await playBrowser.launchPersistentContext(bprofile, {
         ...video,
         ...device,
@@ -100,14 +100,14 @@ module.exports = () => {
       if (argv.device===undefined) {
         ctxoption.viewport = null
       }
-      logmsg('>>> Browser option', options)
+      console.log('>>> Browser option', options)
       if (argv.incognito==='server') {
         const server = await playBrowser.launchServer(options)
         const wsEndpoint = server.wsEndpoint()
         browserServer[browserName] = server
         server.wsEndpoint = wsEndpoint
 
-        logmsg(c.yellow(`Browser wsEndpoint ${wsEndpoint}`))
+        console.log(c.yellow(`Browser wsEndpoint ${wsEndpoint}`))
 
         browser = await playBrowser.connect({wsEndpoint})
       } else {
@@ -155,7 +155,7 @@ module.exports = () => {
     browserProxy()
     browserPath(browserName, options)
     const {page, browser, bcontext} = await setup(browserName, options)
-    logmsg(c.redBright(`\nMITM Hooked [${browserName}]`))
+    console.log(c.redBright(`MITM Hooked [${browserName}]`))
     bcontext.on('page', attach)
     if (argv.cdp===undefined) {
       await bcontext.route(/.*/, (route, request) => {
@@ -183,12 +183,12 @@ module.exports = () => {
   }
 
   (async () => {
-    logmsg(c.redBright('\nSTART: INIT *PLAYWRIGHT*'))
+    console.log(c.redBright('START: INIT *PLAYWRIGHT*'))
     for (const browserName in argv.browser) {
       await play(browserName)
     }
-    logmsg(c.redBright('======================'))
-    logmsg(c.redBright('END: INIT *PLAYWRIGHT*\n'))
+    console.log(c.redBright('======================'))
+    console.log(c.redBright('END: INIT *PLAYWRIGHT*'))
   })()
   global.mitm.play = play
 }

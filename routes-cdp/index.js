@@ -12,10 +12,7 @@ const _addWebSocket  = require('../routes/_addWebSocket')
 const _cacheResponse = require('../routes/_cacheResponse')
 const Events = require('./events')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 const noURL = /^(puffin|brave|edge):\/\//
 const brExt = /^chrome-\w+:\/\//
@@ -76,7 +73,7 @@ module.exports = async (page, client, reqEvent) => {
   const matchSkip = await _skipResponse(reqs, _3ds)
   if (matchSkip) {
     if (__flag.skip && !matchSkip.hidden) {
-      logmsg(c.grey(matchSkip.log))
+      console.log(c.grey(matchSkip.log))
     }
     return
   }
@@ -87,7 +84,7 @@ module.exports = async (page, client, reqEvent) => {
     if (verbose) {
       const msg = JSON.stringify(reqs.headers)
       const log = msg.length <= 100 ? msg : msg.slice(0, 100) + '...'
-      logmsg(c.redBright(`>>> ${'request'.padEnd(8, ' ')} (${log})`))
+      console.log(c.redBright(`>>> ${'request'.padEnd(8, ' ')} (${log})`))
     }
   }
 

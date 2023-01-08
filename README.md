@@ -840,7 +840,7 @@ $ mitm-play --help
     -n --nosocket      no websocket injection to html page*
     -o --offline       console log withount new-line
     -k --cookie        reset cookies expire date*
-    -l --lazylog       delay ~500ms print console.log
+    -l --light         unset devtools dark mode
     -g --group         create cache group/rec
     -p --csp           relax CSP unblock websocket*
     -t --incognito     set chromium incognito
@@ -852,7 +852,6 @@ $ mitm-play --help
     -D --debug         show Playwright debugger
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
-    -K --dark          set chrome devtools to dark mode
     -L --showsql       show sqlite generated commands
     -R --redirect      set redirection: true/false/manual
     -Q --nosql         disabling persist data using sqlite
@@ -1022,18 +1021,6 @@ $ mitm-play -k  <OR>
 $ mitm-play --cookie
 ```
 </details>
-<details><summary><b>-l --lazylog</b></summary>
-
-Delay console log ~500ms or you can provide value in milisecond.
-
-```bash
-$ mitm-play -l  <OR>
-$ mitm-play --lazylog
-  <OR>
-$ mitm-play -l=400  <OR>
-$ mitm-play --lazylog=400
-```
-</details>
 <details><summary><b>-g --group</b></summary>
 
 Add group name to file cache/logs, if necessary when large capturing is done and difficult to check the files. 
@@ -1161,13 +1148,13 @@ $ mitm-play -H  <OR>
 $ mitm-play --nohost
 ```
 </details>
-<details><summary><b>-K --dark</b></summary>
+<details><summary><b>-l --light</b></summary>
 
-set chrome devtools to dark mode, this option effected only when theme set to `System preference`.
+unset devtools dark mode, this option effected only when theme set to `System preference`.
 
 ```bash
-$ mitm-play -K  <OR>
-$ mitm-play --dark
+$ mitm-play -l  <OR>
+$ mitm-play --light
 ```
 </details>
 <details><summary><b>-L --showsql</b></summary>

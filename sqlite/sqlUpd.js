@@ -1,14 +1,13 @@
-const {c} = global.mitm.lib
 const parse = require('./parse')
 const sqlIns = require('./sqlIns')
 const sqlList = require('./sqlList') 
-const {argv, fn: {logmsg}} = global.mitm
+const {argv, lib:{c}} = global.mitm
 
 async function sqlUpd(data={}, tbl='kv') {
   try {
     let msg = JSON.stringify(data)
     msg = c.green(`set:${msg.length>97?`${msg.slice(0, 97)}...`:msg}`)
-    logmsg(c.blueBright(`(*${c.redBright('sqlUpd')} ${msg}*)`))
+    console.log(c.blueBright(`(*${c.redBright('sqlUpd')} ${msg}*)`))
     const {id, _upd_, _distinct_, _where_, _limit_, _offset_, _pages_, ...obj} = data
     obj.dtu = mitm.db.fn.now()
     let pre = mitm.db(tbl)
@@ -23,14 +22,14 @@ async function sqlUpd(data={}, tbl='kv') {
       }
       if (argv.debug?.includes('W') || argv.showsql) {
         msg = Object.values(pre.toSQL().toNative()).join(' ')
-        logmsg(msg.length>110?`${msg.slice(0,110)}...`:msg)
+        console.log(msg.length>110?`${msg.slice(0,110)}...`:msg)
       }
       updated = await pre
       if (updated===0 && _upd_) {
         pre = mitm.db(tbl).insert(obj)
         if (argv.debug?.includes('W') || argv.showsql) {
           msg = Object.values(pre.toSQL().toNative()).join(' ')
-          logmsg(msg.length>110?`${msg.slice(0,110)}...`:msg)
+          console.log(msg.length>110?`${msg.slice(0,110)}...`:msg)
         }
         updated = await pre
       }

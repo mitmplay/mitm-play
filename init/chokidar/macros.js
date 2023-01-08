@@ -1,9 +1,6 @@
 const genBuild = require('./build-macros/builder')
 
-const {
-  lib:{c, fg, chokidar},
-  fn:{logmsg},
-} = global.mitm
+const {c, fg, chokidar} = global.mitm.lib
 
 function addMacro (path) { genBuild('add', path) }
 function chgMacro (path) { genBuild('chg', path) }
@@ -11,7 +8,7 @@ function chgMacro (path) { genBuild('chg', path) }
 function delMacro (path) {
   const { win32 } = global.mitm
   win32 && (path = path.replace(/\\/g, '/'))
-  logmsg(c.red(`Macro del: ${path}`))
+  console.log(c.red(`Macro del: ${path}`))
 }
 
 module.exports = () => {
@@ -22,7 +19,7 @@ module.exports = () => {
   ]
 
   // Initialize watcher.
-  logmsg(c.magentaBright('>>> Macros watcher:'), glob)
+  console.log(c.magentaBright('>>> Macros watcher:'), glob)
   const macrosWatcher = chokidar.watch(glob, { persistent: true })
 
   macrosWatcher // Add event listeners.
@@ -55,7 +52,7 @@ module.exports = () => {
     genBuild('rebuild', app)
   }
   setTimeout(() => {
-    logmsg(glob2)
+    console.log(glob2)
     macro2Watcher // Add event listeners.
     .on('add', path => rebuild(path))
     .on('change', path => rebuild(path))

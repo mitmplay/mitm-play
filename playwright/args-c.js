@@ -7,7 +7,6 @@
 // https://usefyi.com/chrome-flags/
 // chrome://chrome-urls/
 // chrome://version
-const { logmsg } = global.mitm.fn
 
 module.exports = argv => {
   const args = [
@@ -26,7 +25,7 @@ module.exports = argv => {
     '--no-experiments',
     '--test-type',
   ]
-  if (argv.dark) {
+  if (!argv.light) {
     args.push('--force-dark-mode')
   }
   // https://groups.google.com/a/chromium.org/g/headless-dev/c/eNTnQ8GKOBA
@@ -35,6 +34,11 @@ module.exports = argv => {
     args.push('--disable-web-security')
   }
 
+  const {platform, env} = global.process  //arch==='arm64'
+  if (platform==='linux' && env.XDG_SESSION_TYPE==='wayland') {
+    args.push('--ozone-platform=wayland')
+  }
+  
   if (argv.nogpu) {
     if (argv.nogpu==='all') {
       args.push(
@@ -51,7 +55,7 @@ module.exports = argv => {
     }
   }
   if (argv.verbose) {
-    logmsg('Chromium flags', args)
+    console.log('Chromium flags', args)
   }
   return args
 }

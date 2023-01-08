@@ -1,10 +1,7 @@
-const {
-  lib: {c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 module.exports = () => {
-  logmsg(c.red('\n[init/index.js]'))
+  console.log(c.red('[init/index.js]'))
   const pkg = require('../package.json')
   global.mitm.version = pkg.version
 
@@ -15,7 +12,6 @@ module.exports = () => {
     require('./helper')(pkg)
     process.exit()
   }
-  require('./console')() // init logmsg
   require('./init-fn')() // must be first, init _debounce
   require('./routing')() // populate mitm.fn object
   require('./cli-cmd')() // setup folders & clean up
@@ -38,16 +34,10 @@ module.exports = () => {
   arr2 = msg.match(/"basic": "([^:]+:\w+)"/)
   arr1 && (msg = msg.replace(arr1[1], '******:******'))
   arr2 && (msg = msg.replace(arr2[1], '******:******'))
-  const {tilde } = global.mitm.fn
-  logmsg(c.redBright('Profile Combine:'), c.greenBright(tilde(msg)))
-  logmsg(c.green(`\nv${pkg.version}\n`))
-  logmsg(c.red('\n[init/chokidar/*.js]'))
+  msg = global.mitm.fn.tilde(msg)
+  console.log(c.redBright('Profile Combine:'), msg)
+  console.log(c.green(`v${pkg.version}`))
   // must be last or other watcher wont work
-  require('./chokidar/profile')() // file watcher for profile // feat: profile
-  require('./chokidar/macros')() // file watcher for macros
-  require('./chokidar/route')() // file watcher for routes
-  require('./chokidar/logs')() // file watcher for logs
-  require('./chokidar/md')() // file watcher for md
-  // require('./chokidar/cache')(); // file watcher for cache
+  require('./chokidar')
 }
 // mitm-play zd --chromium='D:\Apps\chrome-gog\chrome.exe' -dpsr='.'

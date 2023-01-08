@@ -6,10 +6,7 @@ const { cookieToObj, objToCookie } = require('../routes/filesave/cookier')
 let [t0, t1, t2, ...alt] = tls.DEFAULT_CIPHERS.split(':')
 const ciphers = [t0, t2, t1, ...alt].join(':')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 global.mitm.fn._fetch = _fetch
 
@@ -75,7 +72,7 @@ function fetch (route, browserName, { url, proxy, ...reqs }, handler) {
     let status = resp.status
     if (proxy && argv.verbose) {
       const { origin, pathname } = new URL(url)
-      logmsg(c.grey(`>>> proxy (${origin}${pathname})`))
+      console.log(c.grey(`>>> proxy (${origin}${pathname})`))
     }
     let headerSize = 42
     const headers = {}
@@ -115,8 +112,8 @@ Redirect...
         status = headers['x-app-status']
       }
       if (status >= 400) {
-        logmsg(c.redBright(`[${reqs.method}] ${url} => ${status}`))
-        logmsg(c.red(`${body}`))
+        console.log(c.redBright(`[${reqs.method}] ${url} => ${status}`))
+        console.log(c.red(`${body}`))
       }
       headers['header-size'] = `${headerSize} ~est`
       handler({ url, status, headers, body })
@@ -132,7 +129,7 @@ Redirect...
       try {
         if (global.mitm.argv.debug?.includes('F')) {
           const {browserName: browser, method, headers} = opt
-          logmsg(c.yellowBright(`${method}:${url}`), {browser, headers})
+          console.log(c.yellowBright(`${method}:${url}`), {browser, headers})
         }
         const headers = {...opt.headers}
         if (typeof headers.cookie !== 'string') {
@@ -144,11 +141,11 @@ Redirect...
         break
       } catch (err) {
         if ((err.code === 'ECONNRESET' || err.code === 'ENETUNREACH') && i <= n) {
-          logmsg(c.yellowBright(`RETRY:${i}`), url)
+          console.log(c.yellowBright(`RETRY:${i}`), url)
           await delay(2500)
         } else if (err.code === 'ENOTFOUND') {
           const { origin } = new URL(url)
-          logmsg(c.red(`(*ENOTFOUND ${origin}*)`))
+          console.log(c.red(`(*ENOTFOUND ${origin}*)`))
           handler({
             url,
             status: 500,
@@ -167,7 +164,7 @@ Redirect...
   // delete reqs.headers['accept-language'];
   // delete reqs.headers['accept-encoding'];
   if (typeof (global.mitm.argv.browser[browserName]) === 'string' && reqs.body === null && (reqs.method === 'POST' || reqs.method === 'PUT')) {
-    logmsg(c.red.bgYellowBright(`>>> WARNING!!! ${reqs.method} having request payload NULL!, might be a bug from browser? Please use --${browserName} without browser path.`))
+    console.log(c.red.bgYellowBright(`>>> WARNING!!! ${reqs.method} having request payload NULL!, might be a bug from browser? Please use --${browserName} without browser path.`))
   }
   fetchRetry(url, { ...reqs, ...opts }, 2)
 }

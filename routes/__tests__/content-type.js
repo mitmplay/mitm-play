@@ -1,6 +1,3 @@
-const logmsg = require('../../init/logmsg')
-global.mitm = {fn: {logmsg}}
-
 const { ctype } = require('../content-type')
 
 const {

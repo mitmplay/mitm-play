@@ -1,9 +1,6 @@
 const WebSocket = require('ws')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 module.exports = () => {
   // ex: broadcast({data:"there"});
@@ -33,7 +30,7 @@ module.exports = () => {
       if (msg.length > 97) {
         msg = `${msg.slice(0, 97)}...`
       }
-      logmsg(c.blue('>>> ws-broadcast:'), msg)
+      console.log(c.blue('>>> ws-broadcast:'), msg)
     }
   }
 
@@ -53,7 +50,7 @@ module.exports = () => {
         client.send(data)
       }
     })
-    logmsg('emitpage', data, pages)
+    console.log('emitpage', data, pages)
   }
   global.broadcast = broadcast
   global.emitpage = emitpage

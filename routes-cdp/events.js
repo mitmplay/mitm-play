@@ -1,5 +1,3 @@
-const {logmsg} = global.mitm.fn
-
 module.exports = async function Events (responseHandler, resp, reqs) {
   const { __args } = global.mitm
   let msg
@@ -30,7 +28,7 @@ module.exports = async function Events (responseHandler, resp, reqs) {
     if (mtyp.length) {
       msg += `[${mtyp.join(',')}]`
     }
-    logmsg(msg) 
+    console.log(msg) 
   }
   return resp
 }

@@ -1,7 +1,4 @@
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 function currentTab (browser) {
   browser.currentTab = async function (_page, _frame) {
@@ -27,7 +24,7 @@ function currentTab (browser) {
       }
     }
 
-    logmsg(c.red('(*undetect page*)'))
+    console.log(c.red('(*undetect page*)'))
     return pages[0]
   }
 }

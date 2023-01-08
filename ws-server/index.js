@@ -1,12 +1,9 @@
 const initSocket = require('./init-socket')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 module.exports = () => {
-  logmsg(c.red('\n[ws-server/index.js]'))
-  logmsg(c.whiteBright('RUN SERVER!'))
+  console.log(c.red('[ws-server/index.js]'))
+  console.log(c.red('RUN SERVER!'))
   initSocket()
 }

@@ -3,16 +3,12 @@ const WebSocket = require('ws')
 const website = require('./website')
 const msgParser = require('./msg-parser')
 
-const {
-  lib:{c, fs},
-  fn:{logmsg},
-} = global.mitm
-
+const {c, fs} = global.mitm.lib
 const path = `${global.__app}/cert`
 
 function noop() {}
 function heartbeat() {
-  logmsg('pong:', this._page)
+  console.log('pong:', this._page)
   this.isAlive = true;
 }
 
@@ -35,29 +31,29 @@ module.exports = () => {
   wss.on('connection', connection)
   ws.on('connection', connection);
 
-  logmsg(c.yellow(`Listen:3005`))
+  console.log(c.yellow(`Listen:3005`))
   global.wsservers = wss
   global.wsserver = ws
   server.listen(3005)
 
   wss.isAlive = function(fn, ms=500) {
-    // logmsg('PING!!!')
+    // console.log('PING!!!')
     const arr = []
     wss.clients.forEach(function each(ws) {
-      // logmsg('init:', ws._page)
+      // console.log('init:', ws._page)
       ws.isAlive = false;
       arr.push(ws)
     });  
     setTimeout(() => {
       arr.forEach(function each(ws) {
-        logmsg(c.blueBright(`ping: ${ws._page}`))
+        console.log(c.blueBright(`ping: ${ws._page}`))
         ws.ping(noop);
       });  
       setTimeout(() => {
-        // logmsg('Check status!!!')
+        // console.log('Check status!!!')
         arr.forEach(function each(ws) {
           if (ws.isAlive === false) {
-            logmsg(c.redBright(`noresp: ${ws._page}`))
+            console.log(c.redBright(`noresp: ${ws._page}`))
             ws.terminate()
           };
         });
@@ -74,7 +70,7 @@ module.exports = () => {
     wsclient.on('pong', heartbeat);
 
     if (__flag['ws-connect']) {
-      logmsg(c.red('>>> ws-connect:'), `${c.redBright(host)}${c.blueBright(request.url)}`)
+      console.log(`${c.red('>>> ws-connect:')} ${c.redBright(host)}${c.blueBright(request.url)}`)
     }
     let _host
     try {
@@ -84,7 +80,7 @@ module.exports = () => {
         _host = 'null'
       }
     } catch (error) {
-      logmsg(c.redBright('>>> Error init Socket'), error)
+      console.log(c.redBright('>>> Error init Socket'), error)
     }
     const page = request.url.match(/page=(\w+)/)[1]
     wsclient._page = `${_host}:${page}`

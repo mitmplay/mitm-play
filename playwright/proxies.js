@@ -1,12 +1,9 @@
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 function chromeProxy(args) {
   const {proxypac, proxy} = global.mitm.argv
   if (proxypac) {
-    logmsg(c.red.bgYellowBright(`>>> Chromium browser will use --proxypac ${proxypac}`))
+    console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxypac ${proxypac}`))
     args.push(`--proxy-pac-url=${proxypac}`)
   } else if (typeof proxy === 'string') {
     let msg = proxy
@@ -15,7 +12,7 @@ function chromeProxy(args) {
       // feat: hide password
       msg = msg.replace(arr[1], '******:******')
     }
-    logmsg(c.red.bgYellowBright(`>>> Chromium browser will use --proxy ${msg}`))
+    console.log(c.red.bgYellowBright(`>>> Chromium browser will use --proxy ${msg}`))
   }
 }
 

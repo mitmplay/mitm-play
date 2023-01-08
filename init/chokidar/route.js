@@ -4,10 +4,7 @@ const loadJS = require('./loadJS')
 const broadcast = _broadcast('route')
 const slash = p => p.replace(/\\/g, '/')
 
-const {
-  lib:{c, fg, chokidar},
-  fn:{logmsg},
-} = global.mitm
+const {c, fg, chokidar} = global.mitm.lib
 
 module.exports = () => {
   const { win32 } = global.mitm
@@ -26,12 +23,12 @@ module.exports = () => {
   }
 
   if (!files.length) {
-    logmsg('>>> no watcher', userroute, files)
+    console.log('>>> no watcher', userroute, files)
     return
   }
 
   // Initialize watcher.
-  logmsg(c.magentaBright(`>>> Route watcher:`), [tilde(userroute)])
+  console.log(c.magentaBright(`>>> Route watcher:`), [tilde(userroute)])
   const paths = [
     userroute,
     userroute.replace('index.js', '*@index.js')

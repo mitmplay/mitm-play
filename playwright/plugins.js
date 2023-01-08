@@ -1,6 +1,6 @@
 const {
   lib:{c, fs},
-  fn:{logmsg,flist,tilde},
+  fn:{flist,tilde},
 } = global.mitm
 
 function chromePlugins(args) {
@@ -43,10 +43,10 @@ function chromePlugins(args) {
     path = path ? `${chrome},${path}`:chrome
     path = path.replace(/\\/g, '/')
     global.mitm.plugins = allPlugins
-    logmsg(c.yellow('Plugins:'), tilde(path).split(','))
+    console.log(c.yellow('Plugins:'), tilde(path).split(','))
     args.push(`--load-extension=${path}`)
   } catch (err) {
-    logmsg(c.red('Error loading Chrome-extentions'), err)
+    console.log(c.red('Error loading Chrome-extentions'), err)
   }
 }
 

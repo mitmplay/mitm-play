@@ -4,7 +4,7 @@ const nohttp = /https?:\/\//
 
 const {
   lib:{c},
-  fn:{logmsg,home,_nameSpace},
+  fn:{home,_nameSpace},
 } = global.mitm
 
 const m1 = {GET: 'gt', PUT: 'pt', POST: 'ps', DELETE: 'dl' }
@@ -39,8 +39,8 @@ function validRoute(namespace) {
   if (!namespace) {
     return false
   } else if (!routes[namespace]) {
-    logmsg(c.red(`\nUndefined namespace: ${namespace}!`))
-    logmsg(c.redBright(`Please fix: *index.json - _subns value or delete the file!\n`))
+    console.log(c.red(`\nUndefined namespace: ${namespace}!`))
+    console.log(c.redBright(`Please fix: *index.json - _subns value or delete the file!\n`))
     process.exit(1)
   }
   return true
@@ -276,7 +276,7 @@ const matched = (search, { url, oriRef }) => {
   if (!match) {
     match = search('_global_') // to global
   }
-  // logmsg('>>> Match', tld, !!match)
+  // console.log('>>> Match', tld, !!match)
   return match
 }
 

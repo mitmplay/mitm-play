@@ -1,10 +1,7 @@
-const {
-  lib: {c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 module.exports = (_package) => {
-  logmsg(c.greenBright(
+  console.log(c.greenBright(
   `
   Usage: mitm-play [args] [options]
   
@@ -28,7 +25,7 @@ module.exports = (_package) => {
     -n --nosocket \t no websocket injection to html page*
     -o --offline  \t console log withount new-line
     -k --cookie   \t reset cookies expire date*
-    -l --lazylog  \t delay ~500ms print logmsg
+    -l --light    \t unset devtools dark mode
     -g --group    \t create cache group/rec
     -p --csp      \t relax CSP, unblock websocket*
     -t --incognito\t set chromium incognito
@@ -39,7 +36,6 @@ module.exports = (_package) => {
     -D --debug    \t show Playwright debugger
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*
-    -K --dark     \t set chrome devtools to dark mode
     -L --showsql  \t show sqlite generated commands
     -R --redirect \t set redirection: true/false/manual
     -Q --nosql    \t disabling persist data using sqlite

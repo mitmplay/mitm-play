@@ -1,7 +1,6 @@
-const {c} = global.mitm.lib
 const parse  = require('./parse')
 const select = require('./select')
-const {argv, fn: {logmsg}} = global.mitm
+const {argv, lib: {c}} = global.mitm
 
 async function sqlList(data, tbl='kv') {
   try {
@@ -67,13 +66,13 @@ async function sqlList(data, tbl='kv') {
           }
         }
       }
-      logmsg(c.blueBright(`(*${c.redBright('sqlList')} ${msg}*)`))
+      console.log(c.blueBright(`(*${c.redBright('sqlList')} ${msg}*)`))
     } else {
-      logmsg(c.blueBright(`(*${c.redBright('sqlList')}*)`))
+      console.log(c.blueBright(`(*${c.redBright('sqlList')}*)`))
     }
     if (argv.debug?.includes('W') || argv.showsql) {
-      ttl && logmsg(...Object.values(ttl.toSQL().toNative()))
-      logmsg(...Object.values(pre.toSQL().toNative()))
+      ttl && console.log(...Object.values(ttl.toSQL().toNative()))
+      console.log(...Object.values(pre.toSQL().toNative()))
     }
     const rows = await pre
     if (pagination) {

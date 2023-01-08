@@ -1,10 +1,9 @@
 const c = require('ansi-colors')
-const { logmsg } = global.mitm.fn
 
 function checkOverWritten(id, obj) {
   for (const [key, value] of Object.entries(obj)) {
     if (obj[id][key]!==value) {
-      logmsg(c.red(`Warning: overwritten ${id}.${key}`))
+      console.log(c.red(`Warning: overwritten ${id}.${key}`))
     }
   }
 }
@@ -54,17 +53,17 @@ function _globalTag() {
 
   for (const [key, value] of Object.entries(_args)) {
     if (obj.args[key]!==value) {
-      logmsg(c.red(`Warning: overwritten args.${key}`))
+      console.log(c.red(`Warning: overwritten args.${key}`))
     }
   }
   for (const [key, value] of Object.entries(_flag)) {
     if (obj.flag[key]!==value) {
-      logmsg(c.red(`Warning: overwritten flag.${key}`))
+      console.log(c.red(`Warning: overwritten flag.${key}`))
     }
   }
   // halt if it having incorrect args 
   if (obj.args.activity!==undefined && typeof obj.args.activity!=='string') {
-    logmsg(c.red(`args.${c.yellow('activity')} must be a string!!!`))
+    console.log(c.red(`args.${c.yellow('activity')} must be a string!!!`))
     process.exit()
   }
   return obj

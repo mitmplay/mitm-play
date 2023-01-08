@@ -15,10 +15,7 @@ const { objToCookie } = require('../routes/filesave/cookier')
 const { Events, routeCall } = require('./events')
 const { extract, fetch    } = require('./fetch')
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 const browser = { chromium: '[C]', firefox: '[F]', webkit: '[W]' }
 const noURL = /^(puffin|brave|edge):\/\//
@@ -62,7 +59,7 @@ module.exports = async ({ route, request, browserName }) => {
   const matchSkip = await _skipResponse(reqs, _3ds)
   if (matchSkip) {
     if (__flag.skip && !matchSkip.hidden) {
-      logmsg(c.grey(matchSkip.log))
+      console.log(c.grey(matchSkip.log))
     }
     routeCall(route, 'continue')
     return
@@ -74,7 +71,7 @@ module.exports = async ({ route, request, browserName }) => {
     if (verbose) {
       const msg = JSON.stringify(reqs.headers)
       const log = msg.length <= 100 ? msg : msg.slice(0, 100) + '...'
-      logmsg(c.redBright(`>>> ${'request'.padEnd(8, ' ')} (${log})`))
+      console.log(c.redBright(`>>> ${'request'.padEnd(8, ' ')} (${log})`))
     }
   }
 
@@ -136,11 +133,11 @@ module.exports = async ({ route, request, browserName }) => {
         msg = `${c.red('(')}${c.grey(msg)}${c.red(')')}`
         if (_3ds) {
           if (__flag['no-namespace']) {
-            logmsg(c.redBright(`${browser[browserName]} no-namespace ${msg}`))
+            console.log(c.redBright(`${browser[browserName]} no-namespace ${msg}`))
           }
         } else {
           if (__flag['referer-reqs']) {
-            logmsg(c.redBright.italic(`${browser[browserName]} referer-reqs ${msg}`))
+            console.log(c.redBright.italic(`${browser[browserName]} referer-reqs ${msg}`))
           }
         }
       }

@@ -29,7 +29,7 @@ function watcher(arrayModule, pwd) {
       if (doubleCall) {
         return
       }
-      // logmsg('WATCHER', pwd, arrpath)
+      // console.log('WATCHER', pwd, arrpath)
       delete require.cache[require.resolve(p)]
       try {
         const time = new Date();

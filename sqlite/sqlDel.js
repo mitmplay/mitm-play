@@ -1,8 +1,7 @@
-const {c} = global.mitm.lib
 const parse = require('./parse')
 const select = require('./select')
 const sqlList = require('./sqlList') 
-const {argv, fn: {logmsg}} = global.mitm
+const {argv, lib: {c}} = global.mitm
 
 async function sqlDel(data, tbl='kv') {
   try {
@@ -32,10 +31,10 @@ async function sqlDel(data, tbl='kv') {
       arr = Object.values(pre.toSQL().toNative())
       await pre
     }
-    logmsg(c.blueBright(`(*${c.redBright('sqlDel')} ${msg}*)`))
+    console.log(c.blueBright(`(*${c.redBright('sqlDel')} ${msg}*)`))
     if (argv.debug?.includes('S') || argv.showsql) {
-      arr && logmsg(...arr)
-      logmsg(...Object.values(pre.toSQL().toNative()))
+      arr && console.log(...arr)
+      console.log(...Object.values(pre.toSQL().toNative()))
     }
     deleted = await pre
     if (obj._where_) {

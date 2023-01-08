@@ -4,10 +4,7 @@ const { injectWS } = require('./inject')
 const setSession = require('./set-session')
 const { matched, searchKey, searchArr } = _match
 
-const {
-  lib:{c},
-  fn:{logmsg},
-} = global.mitm
+const {c} = global.mitm.lib
 
 const addWebSocket = async function (reqs, responseHandler, _3d) {
   const { url, pageUrl, headers, browserName,oriRef } = reqs
@@ -26,7 +23,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
     let search, match
     if (__args.nosocket===true) { // feat: if request faster then __args={}
       msg = c.red(`>>> nosocket to all html`)
-      logmsg(msg) // feat: fullog
+      console.log(msg) // feat: fullog
       return
     } else {
       search = searchArr({ typ: 'nosocket', url, browserName })
@@ -36,7 +33,7 @@ const addWebSocket = async function (reqs, responseHandler, _3d) {
     if (match) { // no adding web-socket
       if (!match.hidden) {
         msg = c.redBright(`>>> nosocket (${origin}${pathname})`)
-        __args.fullog && logmsg(msg) // feat: fullog
+        __args.fullog && console.log(msg) // feat: fullog
       }
     } else {
       const que = resp => {
