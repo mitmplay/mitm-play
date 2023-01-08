@@ -988,6 +988,15 @@ $ mitm-play -j  <OR>
 $ mitm-play --jformat
 ```
 </details>
+<details><summary><b>-l --light</b></summary>
+
+unset devtools dark mode, this option effected only when theme set to `System preference`.
+
+```bash
+$ mitm-play -l  <OR>
+$ mitm-play --light
+```
+</details>
 <details><summary><b>-n --nosocket</b></summary>
 
 If only the params with no value, it will act as No Injection on HTML Page, meaning no open websocket on the page
@@ -1146,15 +1155,6 @@ set logs without host name
 ```bash
 $ mitm-play -H  <OR>
 $ mitm-play --nohost
-```
-</details>
-<details><summary><b>-l --light</b></summary>
-
-unset devtools dark mode, this option effected only when theme set to `System preference`.
-
-```bash
-$ mitm-play -l  <OR>
-$ mitm-play --light
 ```
 </details>
 <details><summary><b>-L --showsql</b></summary>
