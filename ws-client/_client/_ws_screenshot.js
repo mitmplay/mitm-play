@@ -46,7 +46,7 @@ function screenshot (e) {
         mitm.lastEvent = e
         setTimeout(() => {
           act = window.mitm.screenshot
-          if (act) {
+          if (act?.click) {
             act.click()
             act = undefined
           } else {
