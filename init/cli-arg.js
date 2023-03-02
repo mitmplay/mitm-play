@@ -82,6 +82,7 @@ module.exports = () => {
   argsChg('A', 'a11y'      )
   argsChg('B', 'build'     )
   argsChg('D', 'debug'     )
+  argsChg('E', 'websecure' )
   argsChg('G', 'nogpu'     )
   argsChg('H', 'nohost'    ) // feat: _global_.args
   argsChg('I', 'inspect'   )

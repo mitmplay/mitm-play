@@ -33,7 +33,9 @@ module.exports = (_package) => {
     -x --proxy    \t a proxy request
     -z --lazyclick\t delay ~700ms click action*
 
+    -A --a11y     \t axe-core a11y checker
     -D --debug    \t show Playwright debugger
+    -E --websecure\t enable web security 
     -G --nogpu    \t set chromium without GPU
     -H --nohost   \t set logs without host name*
     -L --showsql  \t show sqlite generated commands

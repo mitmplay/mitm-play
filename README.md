@@ -850,6 +850,7 @@ $ mitm-play --help
 
     -A --a11y          axe-core a11y checker
     -D --debug         show Playwright debugger
+    -E --websecure     enable web security 
     -G --nogpu         set chromium without GPU
     -H --nohost        set logs without host name*
     -L --showsql       show sqlite generated commands
@@ -866,7 +867,7 @@ $ mitm-play --help
 
   * _global_.config.args
     
-  v0.9.xxx
+  v0.10.xxx
 ```
 </details>
 <details><summary><b>-u --url</b></summary>
@@ -1136,6 +1137,15 @@ Option can having combine chars, lowercase represent sepecific Playwright type o
 | S  |sqlite logs|
 | W  |websocket  |
 
+</details>
+<details><summary><b>-E --websecure</b></summary>
+
+Enable web security  
+
+```bash
+$ mitm-play -E  <OR>
+$ mitm-play --websecure
+```
 </details>
 <details><summary><b>-G --nogppu</b></summary>
 

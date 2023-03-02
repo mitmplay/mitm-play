@@ -1,6 +1,7 @@
 log
 *.tgz
 coverage
+.DS_Store
 *build.js
 mydb.sqlite
 .cjsescache

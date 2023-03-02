@@ -9,6 +9,7 @@
 // chrome://version
 
 module.exports = argv => {
+  const {c} = global.mitm.lib
   const args = [
     '--disable-features=site-per-process,isolate-origins',
     '--disable-offer-store-unmasked-wallet-cards',
@@ -20,18 +21,14 @@ module.exports = argv => {
     '--disable-site-isolation',
     '--disable-notifications',
     '--disable-dev-shm-usage', //https://github.com/puppeteer/puppeteer/issues/1834
-    '--disable-web-security',
     '--disable-infobars',
     '--no-experiments',
     '--test-type',
   ]
-  if (!argv.light) {
-    args.push('--force-dark-mode')
-  }
   // https://groups.google.com/a/chromium.org/g/headless-dev/c/eNTnQ8GKOBA
   // https://github.com/chrisvfritz/prerender-spa-plugin/issues/343
-  if (argv.cdp) {
-    args.push('--disable-web-security')
+  if (!argv.light) {
+    args.push('--force-dark-mode')
   }
 
   const {platform, env} = global.process  //arch==='arm64'
@@ -54,8 +51,13 @@ module.exports = argv => {
       )  
     }
   }
-  if (argv.verbose) {
-    console.log('Chromium flags', args)
+
+  if (argv.cdp || !argv.websecure) {
+    args.push('--disable-web-security')
+  }
+
+  if (argv.verbose || argv.fullog) {
+    console.log(c.yellow('Chromium flags'), args)
   }
   return args
 }
