@@ -50,7 +50,7 @@
     "rollup-plugin-scss": "3.0.0",
     "rollup-plugin-svelte": "7.1.0",
     "sass": "1.49.7",
-    "sqlite3": "5.0.8",
+    "sqlite3": "5.1.5",
     "stack-trace": "0.0.10",
     "svelte": "3.49.0",
     "svelte-preprocess": "4.10.3",
